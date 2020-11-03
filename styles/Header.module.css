@@ -1,0 +1,13 @@
+.header_link {
+    color: var(--main-text-color);
+}
+
+.active {
+    color: var(--active-header-color);
+}
+
+.anchors {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+}
