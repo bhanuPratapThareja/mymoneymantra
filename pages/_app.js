@@ -1,6 +1,7 @@
-import Header from '../components/Header/Header'
 import '../styles/globals.css'
-import Container from '@material-ui/core/Container';
+import Header from '../components/Header/Header'
+import Footer from '../components/Footer/Footer'
+import Container from '@material-ui/core/Container'
 
 
 function MyApp({ Component, pageProps }) {
@@ -10,6 +11,7 @@ function MyApp({ Component, pageProps }) {
       <Container fixed>
         <Component {...pageProps} />
       </Container>
+      <Footer />
     </>
   )
 }

@@ -26,3 +26,35 @@ a {
   width: 100vw;
   height: calc(100vh - 100px) !important;
 }
+
+
+.credit-card-banner {
+  height: 96px;
+width: 298px;
+left: 252px;
+top: 240px;
+border-radius: nullpx;
+
+}
+
+.credit-card-description {
+  position: absolute;
+  width: 298px;
+  height: 96px;
+  left: calc(50% - 298px/2 - 319px);
+  top: 240px;
+  
+  /* Title Black 40 */
+  
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 40px;
+  line-height: 48px;
+  /* or 120% */
+  
+  
+  /* White100 */
+  
+  color: #FFFFFF;
+}

@@ -15,8 +15,10 @@ const Header = () => {
 
     useEffect(() => {
         async function getHeadersItems() {
-            let response = await fetch(`${strapi.baseUrl}/header-menu-items`)
+            let response = await fetch(`${strapi.baseUrl}/headers`)
+            console.log('res: ', response)
             const headerItems = await response.json()
+            console.log('headerItems: ', headerItems)
             setHeadersItems(headerItems)
         }
         getHeadersItems()
@@ -30,7 +32,7 @@ const Header = () => {
             <AppBar position="static" style={{ backgroundColor: 'transparent' }}>
                 <Toolbar>
                     <Typography>Logo</Typography>
-                    {headerItems ? <div style={{ marginLeft: '10%', color: 'white' }}>
+                    {/* {headerItems ? <div style={{ marginLeft: '10%', color: 'white' }}>
                         {headerItems.map((item, i) => {
                             return (
                                 <Link style={{ marginLeft: '20px' }} className={styles.header_link} href={item.url} key={i}>
@@ -39,7 +41,7 @@ const Header = () => {
                                 </Link>
                             )
                         })}
-                    </div> : null}
+                    </div> : null} */}
                 </Toolbar>
             </AppBar>
 

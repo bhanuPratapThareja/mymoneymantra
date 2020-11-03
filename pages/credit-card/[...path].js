@@ -11,7 +11,7 @@ const App = () => {
 export async function getServerSideProps(props) {
     console.log('Home Page')
 
-    const url = 'http://203.122.46.189:1337/'
+    const url = 'http://203.122.46.189:1337/credit-card'
     const method = 'GET'
 
     console.log('url: ', url)
