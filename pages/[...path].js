@@ -4,6 +4,8 @@ import PopularOffers from '../components/PopularOffers'
 import CreditScore from '../components/CreditScore'
 import TrendingOffers from '../components/TrendingOffers'
 import Banks from '../components/Banks'
+import FinancialTools from '../components/FinancialTools'
+import LearnMore from '../components/LearnMore'
 const Home = ({ data }) => {
     return (
         <>
@@ -12,6 +14,9 @@ const Home = ({ data }) => {
             <CreditScore />
             <TrendingOffers />
             <Banks />
+            <FinancialTools />
+            <LearnMore  />
+
         </>
     )
 }
