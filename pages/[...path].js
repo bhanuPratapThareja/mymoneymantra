@@ -1,31 +1,32 @@
 import Strapi from '../providers/strapi'
-const fetch = require("isomorphic-unfetch")
+import Banner from '../components/Banner'
+import PopularOffers from '../components/PopularOffers'
+import CreditScore from '../components/CreditScore'
 
-const App = () => {
-    
+const Home = ({ data }) => {
     return (
-        <></>
+        <>
+            <Banner />
+            <PopularOffers />
+            <CreditScore />
+        </>
     )
 }
 
+
 export async function getServerSideProps(props) {
-    console.log('Home Page')
-
-    const url = 'http://203.122.46.189:1337/'
-    const method = 'GET'
-
-    console.log('url: ', url)
-    const res = await fetch(url, {
-        method,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    })
-
-
-    console.log('res: ', res)
-    return { props: { } }
+    // console.log('props: ', props)
+    const strapi = new Strapi()
+    const { path } = props.params
+    console.log('PATH:: ', path)
+    const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
+    // console.log('pageData:: ', pageData)
+    const data = pageData[0]
+    if (!data) {
+        return
+    }
+    // console.log('data:: ', data)
+    return { props: { data } }
 }
 
-export default App
+export default Home
