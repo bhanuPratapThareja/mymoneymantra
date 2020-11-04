@@ -1,0 +1,13 @@
+const Banks = () => {
+    return (
+        <section data-aos="fade-up" className="banks-holder aos-init aos-animate">
+      <div className="blue-patch"></div>
+      <div className="container banks">
+         <h2>The best offers from India’s most <br /><b>trusted banks</b></h2>
+         <div className="banks-slider slick-initialized slick-slider"><button className="slick-prev slick-arrow slick-disabled" aria-label="Previous" type="button" aria-disabled="true" style={{display: "inline-block"}}>Previous</button><div className="slick-list draggable"><div className="slick-track" style={{opacity: "1", width: "1116px", transform: "translate3d(0px, 0px, 0px)"}}><div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" style={{width: "186px"}}><div><div className="slide_cell" style={{width: "100%", display: "inline-block"}}><img src="images/credit-card-flow/sbi.svg" alt="sbi" /></div></div></div><div className="slick-slide slick-active" data-slick-index="1" aria-hidden="false" style={{width: "186px"}}><div><div className="slide_cell" style={{width: "100%", display: "inline-block"}}><img src="images/credit-card-flow/hdfc.svg" alt="hdfc" /></div></div></div><div className="slick-slide slick-active" data-slick-index="2" aria-hidden="false" style={{width: "186px"}}><div><div className="slide_cell" style={{width: "100%", display: "inline-block"}}><img src="images/credit-card-flow/axis.svg" alt="axis" /></div></div></div><div className="slick-slide slick-active" data-slick-index="3" aria-hidden="false" style={{width: "186px"}}><div><div className="slide_cell" style={{width: "100%", display: "inline-block"}}><img src="images/credit-card-flow/citi.svg" alt="citi" /></div></div></div><div className="slick-slide" data-slick-index="4" aria-hidden="true" tabIndex="-1" style={{width: "186px"}}><div><div className="slide_cell" style={{width: "100%", display: "inline-block"}}><img src="images/credit-card-flow/axis.svg" alt="axis" /></div></div></div><div className="slick-slide" data-slick-index="5" aria-hidden="true" tabIndex="-1" style={{width: "186px"}}><div><div className="slide_cell" style={{width: "100%", display: "inline-block"}}><img src="images/credit-card-flow/citi.svg" alt="citi" /></div></div></div></div></div><button className="slick-next slick-arrow" aria-label="Next" type="button"  aria-disabled="false">Next</button></div>
+      </div>
+   </section>
+    )
+}
+
+export default Banks
