@@ -3,7 +3,9 @@ import Banner from '../components/Banner'
 import PopularOffers from '../components/PopularOffers'
 import CreditScore from '../components/CreditScore'
 import TrendingOffers from '../components/TrendingOffers'
-import Banks from '../components/Banks'
+import Banks from '../components/Banks';
+import Rewards from '../components/Rewards';
+import Blog from '../components/Blog';
 const Home = ({ data }) => {
     return (
         <>
@@ -12,6 +14,8 @@ const Home = ({ data }) => {
             <CreditScore />
             <TrendingOffers />
             <Banks />
+            <Rewards />
+            <Blog />
         </>
     )
 }
