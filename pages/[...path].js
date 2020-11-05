@@ -6,6 +6,8 @@ import TrendingOffers from '../components/TrendingOffers'
 import Banks from '../components/Banks'
 import FinancialTools from '../components/FinancialTools'
 import LearnMore from '../components/LearnMore'
+import Rewards from '../components/Rewards'
+import Blog from '../components/Blog'
 import Layout from '../components/Layout'
 
 const Home = ({ data }) => {
@@ -19,6 +21,8 @@ const Home = ({ data }) => {
                 <Layout><Banks /></Layout>
                 <Layout><FinancialTools /></Layout>
                 <Layout><LearnMore /></Layout>
+                <Layout><Rewards /></Layout>
+                <Layout><Blog /></Layout>
             </div>
         </>
     )
