@@ -6,17 +6,20 @@ import TrendingOffers from '../components/TrendingOffers'
 import Banks from '../components/Banks'
 import FinancialTools from '../components/FinancialTools'
 import LearnMore from '../components/LearnMore'
+import Layout from '../components/Layout'
+
 const Home = ({ data }) => {
     return (
         <>
-            <Banner />
-            <PopularOffers />
-            <CreditScore />
-            <TrendingOffers />
-            <Banks />
-            <FinancialTools />
-            <LearnMore  />
-
+            <div className="combined-wrapper">
+                <Layout><Banner /></Layout>
+                <Layout><PopularOffers /></Layout>
+                <Layout><CreditScore /></Layout>
+                <Layout><TrendingOffers /></Layout>
+                <Layout><Banks /></Layout>
+                <Layout><FinancialTools /></Layout>
+                <Layout><LearnMore /></Layout>
+            </div>
         </>
     )
 }
@@ -34,7 +37,7 @@ export async function getServerSideProps(props) {
     //     return
     // }
     // console.log('data:: ', data)
-    return { props: {  } }
+    return { props: {} }
 }
 
 export default Home
