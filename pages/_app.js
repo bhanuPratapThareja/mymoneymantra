@@ -11,7 +11,6 @@ function MyApp({ Component, pageProps }) {
       <Container fixed>
         <Component {...pageProps} />
       </Container>
-      <Footer />
     </>
   )
 }

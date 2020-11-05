@@ -1,6 +1,6 @@
 const Rewards = () =>{
     return(
-    <section data-aos="fade-up" className="container aos-init aos-animate">
+    <section data-aos="fade-up" className="container reward-cover aos-init aos-animate">
         <div className="reward">
          <div className="reward-content">
             <h3>Best Rewards Credit Card</h3>

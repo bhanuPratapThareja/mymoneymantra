@@ -1,7 +1,7 @@
 const CreditScore = () => {
     return (
         <section data-aos="fade-up" className="container score-container aos-init aos-animate">
-            <div className="score">
+            <div className="score score-cotent-cover">
                 <div className="score-content">
                     <h2>View and improve your credit score - <b>for free.</b></h2>
                     <div className="score-content-features">
@@ -25,7 +25,7 @@ const CreditScore = () => {
                     <button>Evaluate now</button>
                 </div>
                 <div className="score-chart">
-                    <img src="build/images/credit-card-flow/chart.svg" alt="" />
+                    <img src="images/credit-card-flow/chart.svg" alt="" />
                 </div>
             </div>
         </section>

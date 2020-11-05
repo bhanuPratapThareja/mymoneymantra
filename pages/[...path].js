@@ -9,6 +9,8 @@ import LearnMore from '../components/LearnMore'
 import Rewards from '../components/Rewards'
 import Blog from '../components/Blog'
 import Layout from '../components/Layout'
+import Footer from '../components/Footer'
+
 
 const Home = ({ data }) => {
     return (
@@ -19,10 +21,11 @@ const Home = ({ data }) => {
                 <Layout><CreditScore /></Layout>
                 <Layout><TrendingOffers /></Layout>
                 <Layout><Banks /></Layout>
-                <Layout><FinancialTools /></Layout>
-                <Layout><LearnMore /></Layout>
                 <Layout><Rewards /></Layout>
+                <Layout><FinancialTools /></Layout>
                 <Layout><Blog /></Layout>
+                <Layout><LearnMore /></Layout>
+                <Footer />
             </div>
         </>
     )

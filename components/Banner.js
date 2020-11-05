@@ -2,12 +2,12 @@ const Banner = () => (
     <section className="banner">
         <div className="banner-wrapper">
             <div className="normal-banner">
-                <h1><b>Business Growth</b><br />Loan</h1>
+                <h1><b>Credit Cards</b> for <br />all your needs</h1>
                 <p>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat
                         duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
                 <button>Compare and Apply</button>
             </div>
-            <img style={{ width: '50%' }} className="" src="images/business-loan/banner.svg" alt="" />
+            <img className="banner-card" src="images/credit-card-flow/card.svg" alt="" />
         </div>
         <div className="container banner-features-container">
             <div className="banner-features">
