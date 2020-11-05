@@ -1,7 +1,7 @@
 const Layout = props => {
     return (
         <>
-            <div className="page">
+            <div className="credit-card-flow">
                 {props.children}
             </div>
         </>
