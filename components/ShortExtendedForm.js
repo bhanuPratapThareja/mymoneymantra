@@ -1,6 +1,66 @@
 import { useEffect } from 'react'
+import $ from 'jquery'
 
 const ShortExtendedForm = () => {
+
+    useEffect(() => {
+
+        $("#lets-go").click(function () {
+            $(".lets-find-forms-container").removeClass("moving-in-rev")
+            $(".lets-find").removeClass("moving-out-rev")
+            $(".lets-find-forms-container").addClass("moving-in")
+            $(".lets-find").addClass("moving-out")
+        })
+
+        $(".shortforms-container-buttons #next").click(function () {
+            plusSlides(1);
+        }).bind(this)
+        $(".shortforms-container-buttons #previous").click(function () {
+            plusSlides(-1);
+        })
+        //short forms slider
+        var slideIndex = 1;
+        showSlides(slideIndex);
+        // Next/previous control
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("sf-forms");
+            if (n >= slides.length) {
+                $("#button-text").text("Submit and view offers").css("color", "#89C142");
+                $("#next").addClass("submit-short-form");
+
+            } else {
+                $("#button-text").text("Next").css("color", "#221F1F");
+                $("#next").removeClass("submit-short-form");
+            }
+            if (n > slides.length) {
+                location.reload()
+                return
+            }
+            if (n < 1) {
+                slideIndex = slides.length;
+                $(".lets-find-forms-container").removeClass("moving-in")
+                $(".lets-find").removeClass("moving-out")
+                $(".lets-find-forms-container").addClass("moving-in-rev")
+                $(".lets-find").addClass("moving-out-rev")
+                $("#button-text").text("Next")
+                $("#next").removeClass("submit-short-form");
+                slideIndex = 1;
+            }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex - 1].style.display = "block";
+            slides[slideIndex - 1].classList.add("opacity-in")
+            var width = (slideIndex * (100 / slides.length)) + "%";
+            $("#pages-count").text(slideIndex + " of " + slides.length);
+            $(".progress-blue").width(width);
+        }
+
+    }, []);
 
     return <section data-aos="fade-up" className="container lets-find-container aos-init aos-animate">
         <div className="mobile-background"></div>
@@ -286,7 +346,7 @@ const ShortExtendedForm = () => {
                         </button>
                         <div>
                             <h4 id="button-text" style={{ color: 'rgb(34, 31, 31)' }}>Next</h4>
-                            <button type="submit" id="next"> 
+                            <button type="submit" id="next">
                                 <svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M23.893 15.493a1.332 1.332 0 00-.28-.44l-6.666-6.666a1.34 1.34 0 00-1.894 1.893l4.4 4.387H9.333a1.334 1.334 0 000 2.666h10.12l-4.4 4.387a1.335 1.335 0 000 1.893 1.336 1.336 0 001.894 0l6.666-6.666c.122-.127.217-.277.28-.44a1.333 1.333 0 000-1.014z" fill="#fff"></path>
                                 </svg>

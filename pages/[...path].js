@@ -12,20 +12,29 @@ import Layout from '../components/Layout'
 import Footer from '../components/Footer'
 import ShortExtendedForm from '../components/ShortExtendedForm'
 
-const Home = ({ data }) => {
+const Home = () => {
+
+    const getComponents = () => {
+        return (
+            <>
+                <Banner />
+                <PopularOffers />
+                <ShortExtendedForm />
+                <CreditScore />
+                <TrendingOffers />
+                <Banks />
+                <Rewards />
+                <FinancialTools />
+                <Blog />
+                <LearnMore />
+            </>
+        )
+    }
+
     return (
         <>
             <div className="combined-wrapper">
-                <Layout><Banner /></Layout>
-                <Layout><PopularOffers /></Layout>
-                <Layout><ShortExtendedForm /></Layout>
-                <Layout><CreditScore /></Layout>
-                <Layout><TrendingOffers /></Layout>
-                <Layout><Banks /></Layout>
-                <Layout><Rewards /></Layout>
-                <Layout><FinancialTools /></Layout>
-                <Layout><Blog /></Layout>
-                <Layout><LearnMore /></Layout>
+                <Layout>{getComponents()}</Layout>
                 <Footer />
             </div>
         </>
