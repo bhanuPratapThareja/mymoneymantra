@@ -4,18 +4,27 @@
   width: 100vw !important;
 }
 
+.credit-card-flow {
+  /* padding-top: 128px; */
+}
+
+.credit-card-flow-score-container-div {
+  padding-top: 128px !important;
+}
+
 .container.score-container {
   border-radius: 10px;
-  background: white;
+  background: white
 }
 
 .score.score-cotent-cover {
   margin-bottom: 0;
+  width: 861px !important;
 }
 
 .combined-wrapper .financial {
   margin-top: 0 !important;
-  padding: 128px 0;
+  padding-top: 48px;
 }
 
 .combined-wrapper .reward-cover {
@@ -764,7 +773,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
       .score-content-features p {
         color: rgba(34, 31, 31, 0.6); }
   .score-chart {
-    right: 80px;
+    right: -123px;
     bottom: -123px; }
     @media (max-width: 768px) {
       .score-chart {

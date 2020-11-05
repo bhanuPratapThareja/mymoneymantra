@@ -1,5 +1,6 @@
 const TrendingOffers = () => {
     return (
+     
       <section data-aos="fade-up" className="container popular-card-container aos-init aos-animate">
       <div className="popular-cards">
          <h2>Trending Offers</h2>

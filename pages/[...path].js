@@ -10,7 +10,7 @@ import Rewards from '../components/Rewards'
 import Blog from '../components/Blog'
 import Layout from '../components/Layout'
 import Footer from '../components/Footer'
-
+import ShortExtendedForm from '../components/ShortExtendedForm'
 
 const Home = ({ data }) => {
     return (
@@ -18,6 +18,7 @@ const Home = ({ data }) => {
             <div className="combined-wrapper">
                 <Layout><Banner /></Layout>
                 <Layout><PopularOffers /></Layout>
+                <Layout><ShortExtendedForm /></Layout>
                 <Layout><CreditScore /></Layout>
                 <Layout><TrendingOffers /></Layout>
                 <Layout><Banks /></Layout>
