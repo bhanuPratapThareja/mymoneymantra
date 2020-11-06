@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Strapi from '../providers/strapi'
 
 const Banner = props => {
+    const strapi = new Strapi()
     const [uspCards, setUspCards] = useState([])
 
     useEffect(() => {
@@ -20,7 +21,7 @@ const Banner = props => {
         return uspCards.map(card => {
             return (
                 <div className="banner-features-block" key={card.id}>
-                    <img src={card.image.url} alt={card.image.name} />
+                    <img src={`${strapi.baseUrl}${card.image.url}`} alt={card.image.name} />
                     <h3>{card.heading}</h3>
                     <p>{card.description}</p>
                 </div>
@@ -38,7 +39,7 @@ const Banner = props => {
                     <p>{sub_text}</p>
                     <button>{button}</button>
                 </div>
-                <img className="banner-card" src={image.url} alt={image.name} />
+                <img className="banner-card" src={`${strapi.baseUrl}${image.url}`} alt={image.name} />
             </div>
 
             {uspCards ? <div className="container banner-features-container">
