@@ -23,6 +23,7 @@ export async function getServerSideProps(props) {
     console.log('path:::::::::::::', path)
     // const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
     // const data = pageData[0]
+    
     return { props: {  } }
 }
 

@@ -1,42 +1,54 @@
-const Banner = () => (
-    <section className="banner">
-        <div className="banner-wrapper">
-            <div className="normal-banner">
-                <h1><b>Credit Cards</b> for <br />all your needs</h1>
-                <p>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat
-                        duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
-                <button>Compare and Apply</button>
+import { useState, useEffect } from 'react'
+import Strapi from '../providers/strapi'
+
+const Banner = props => {
+    const [uspCards, setUspCards] = useState([])
+
+    useEffect(() => {
+        async function getUspCardsData() {
+            const strapi = new Strapi()
+            const uspCardsData = await strapi.processReq('GET', 'banner-cards')
+            if (uspCardsData) {
+                const { banner_cards: usp_cards } = uspCardsData
+                setUspCards(usp_cards)
+            }
+        }
+        getUspCardsData()
+    }, [])
+
+    function renderUspCards() {
+        return uspCards.map(card => {
+            return (
+                <div className="banner-features-block" key={card.id}>
+                    <img src={card.image.url} alt={card.image.name} />
+                    <h3>{card.heading}</h3>
+                    <p>{card.description}</p>
+                </div>
+            )
+        })
+    }
+
+    const { heading, sub_text, button, image } = props.data
+
+    return (
+        <section className="banner">
+            <div className="banner-wrapper">
+                <div className="normal-banner">
+                    <h1>{heading}</h1>
+                    <p>{sub_text}</p>
+                    <button>{button}</button>
+                </div>
+                <img className="banner-card" src={image.url} alt={image.name} />
             </div>
-            <img className="banner-card" src="images/credit-card-flow/card.svg" alt="" />
-        </div>
-        <div className="container banner-features-container">
-            <div className="banner-features">
-                <div className="banner-features-block">
-                    <img src="images/credit-card-flow/sheild.svg" alt="" />
-                    <h3>Safe and Secure</h3>
-                    <p>Est quis mattis elit mi. Ut vitae eget risus gravida purus a, etiam morbi. Ante quisque enim
-                    neque, varius pellentesque at.
-                        </p>
+
+            {uspCards ? <div className="container banner-features-container">
+                <div className="banner-features">
+                    {renderUspCards()}
                 </div>
-                <div className="banner-features-block">
-                    <img src="images/credit-card-flow/sheild.svg" alt="" />
-                    <h3>Fast Disbursals</h3>
-                    <p>Sed consequat ultricies sed gravida. Ridiculus cursus eget vitae, malesuada auctor. Tempor
-                    mollis
-                    pretium, ridiculus phasellus.
-                        </p>
-                </div>
-                <div className="banner-features-block">
-                    <img src="images/credit-card-flow/sheild.svg" alt="" />
-                    <h3>Personalised</h3>
-                    <p>Tristique leo aliquam ut interdum id ut. Hac quis faucibus vestibulum, amet, elit. At eu in
-                    quam
-                    eu arcu eget.
-                        </p>
-                </div>
-            </div>
-        </div>
-    </section>
-);
+            </div> : null}
+
+        </section>
+    )
+}
 
 export default Banner

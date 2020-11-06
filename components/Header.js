@@ -50,7 +50,7 @@ const Header = () => {
                     <img className="header-logo" src="images/icons/logo.png" alt="logo" />
                 </a>
                 <div className="header-links">
-                    <a href="/home-loan" className="header_active">Credit Cards</a>
+                    <a href="/credit-cards" className="header_active">Credit Cards</a>
 
                     <div className="dropdown" id="loans">
                         <button className="dropbtn header_active">Loans

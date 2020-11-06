@@ -12,49 +12,54 @@ import Layout from '../components/Layout'
 import Footer from '../components/Footer'
 import ShortExtendedForm from '../components/ShortExtendedForm'
 
-const Home = () => {
+const Home = ({ data }) => {
 
-    const getComponents = () => {
-        return (
-            <>
-                <Banner />
-                <PopularOffers />
-                <ShortExtendedForm />
-                <CreditScore />
-                <TrendingOffers />
-                <Banks />
-                <Rewards />
-                <FinancialTools />
-                <Blog />
-                <LearnMore />
-            </>
-        )
+    // console.log('data: ', data)
+
+    const getComponents = blocks => {
+        return blocks.length > 0
+            ? blocks.map(block => {
+                switch (block.__component) {
+                    case 'blocks.product-banner':
+                        return <Banner key={block.id} data={block.Banner} />
+                    case 'blocks.financial-tools':
+
+                        return <FinancialTools key={block.id} tools={block.tools} />
+                }
+            })
+            : null;
     }
+    // return (
+    //     <>
+    //         <Banner />
+    //         <PopularOffers />
+    //         <ShortExtendedForm />
+    //         <CreditScore />
+    //         <TrendingOffers />
+    //         <Banks />
+    //         <Rewards />
+    //         <FinancialTools />
+    //         <Blog />
+    //         <LearnMore />
+    //     </>
+    // )
+
 
     return (
-        <>
-            <div className="combined-wrapper">
-                <Layout>{getComponents()}</Layout>
-                <Footer />
-            </div>
-        </>
+        <div className="combined-wrapper">
+            <Layout>{getComponents(data.blocks)}</Layout>
+            <Footer />
+        </div>
     )
 }
 
-
 export async function getServerSideProps(props) {
-    // console.log('props: ', props)
-    // const strapi = new Strapi()
-    // const { path } = props.params
-    // console.log('PATH:: ', path)
-    // const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
-    // // console.log('pageData:: ', pageData)
-    // const data = pageData[0]
-    // if (!data) {
-    //     return
-    // }
-    // console.log('data:: ', data)
-    return { props: {} }
+    const strapi = new Strapi()
+    const [path] = props.params.path
+    const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
+    const data = pageData[0]
+    console.log('da: ', data)
+    return { props: { data } }
 }
 
 export default Home
