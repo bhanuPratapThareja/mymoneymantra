@@ -22,17 +22,18 @@ const Home = ({ data }) => {
             ? blocks.map(block => {
                 switch (block.__component) {
                     case 'blocks.product-banner':
-                        return <Banner key={block.id} data={block.Banner} />
+                        return <Banner key={block.id} banner={block} />
                     case 'blocks.financial-tools':
 
-                        return <FinancialTools key={block.id} tools={block.tools} />
+                        return <FinancialTools key={block.id} tools={block} />
                     case 'blocks.rewards':
                         console.log('block.rewards',block);
-                            return <Rewards key={block.id} rewards={block.rewards} />
+                            return <Rewards key={block.id} rewards={block} />
                     case 'blocks.banks':
-                        return <Banks key={block.id} banks={block.banks} />
+                        return <Banks key={block.id} banks={block} />
                     case 'blocks.credit-score':
                         return <CreditScore key={block.id} scores={block} />
+                
                 }
             })
             : null;

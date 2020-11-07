@@ -29,7 +29,7 @@ const Banner = props => {
         })
     }
 
-    const { heading, sub_text, button, image } = props.data
+    const { heading, sub_text, button, image } = props.banner;
 
     return (
         <section className="banner">
