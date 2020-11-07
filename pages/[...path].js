@@ -13,9 +13,7 @@ import Footer from '../components/Footer'
 import ShortExtendedForm from '../components/ShortExtendedForm'
 
 const Home = ({ data }) => {
-
     // console.log('data: ', data)
-
     const getComponents = blocks => {
         return blocks.length > 0
             ? blocks.map(block => {
@@ -23,27 +21,15 @@ const Home = ({ data }) => {
                     case 'blocks.product-banner':
                         return <Banner key={block.id} data={block.Banner} />
                     case 'blocks.financial-tools':
-
                         return <FinancialTools key={block.id} tools={block.tools} />
+                    case 'blocks.rewards':
+                        console.log('block.rewards:::', blocks);
+                        return <Rewards key={block.id} rewards={block} />
+
                 }
             })
             : null;
     }
-    // return (
-    //     <>
-    //         <Banner />
-    //         <PopularOffers />
-    //         <ShortExtendedForm />
-    //         <CreditScore />
-    //         <TrendingOffers />
-    //         <Banks />
-    //         <Rewards />
-    //         <FinancialTools />
-    //         <Blog />
-    //         <LearnMore />
-    //     </>
-    // )
-
 
     return (
         <div className="combined-wrapper">
@@ -56,9 +42,10 @@ const Home = ({ data }) => {
 export async function getServerSideProps(props) {
     const strapi = new Strapi()
     const [path] = props.params.path
+    console.log('props.params: ', props.params)
     const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
     const data = pageData[0]
-    console.log('da: ', data)
+    console.log('pageData: ', pageData)
     return { props: { data } }
 }
 

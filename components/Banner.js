@@ -30,7 +30,6 @@ const Banner = props => {
     }
 
     const { heading, sub_text, button, image } = props.data
-
     return (
         <section className="banner">
             <div className="banner-wrapper">
