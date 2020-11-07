@@ -17,6 +17,7 @@ const Home = ({ data }) => {
     // console.log('data: ', data)
 
     const getComponents = blocks => {
+        console.log('inside ...path.js blocks',blocks);
         return blocks.length > 0
             ? blocks.map(block => {
                 switch (block.__component) {
@@ -25,6 +26,13 @@ const Home = ({ data }) => {
                     case 'blocks.financial-tools':
 
                         return <FinancialTools key={block.id} tools={block.tools} />
+                    case 'blocks.rewards':
+                        console.log('block.rewards',block);
+                            return <Rewards key={block.id} rewards={block.rewards} />
+                    case 'blocks.banks':
+                        return <Banks key={block.id} banks={block.banks} />
+                    case 'blocks.credit-score':
+                        return <CreditScore key={block.id} scores={block} />
                 }
             })
             : null;
