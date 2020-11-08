@@ -14,8 +14,8 @@ const Header = () => {
         getHeader()
     }, [])
 
-    const renderMenuDropDown = dropdown_menu => {
-        return dropdown_menu.dropdown_links.map(link => {
+    const renderMenuDropDown = ({ dropdown_links }) => {
+        return dropdown_links.map(link => {
             return <a key={link.id} href={link.url}>{link.label}</a>
         })
     }

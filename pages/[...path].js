@@ -1,16 +1,11 @@
 import Strapi from '../providers/strapi'
-import Banner from '../components/Banner'
-import PopularOffers from '../components/PopularOffers'
-import CreditScore from '../components/CreditScore'
-import TrendingOffers from '../components/TrendingOffers'
-import Banks from '../components/Banks'
-import FinancialTools from '../components/FinancialTools'
-import LearnMore from '../components/LearnMore'
-import Rewards from '../components/Rewards'
-import Blog from '../components/Blog'
 import Layout from '../components/Layout'
 import Footer from '../components/Footer'
-import ShortExtendedForm from '../components/ShortExtendedForm'
+import Banner from '../components/Banner'
+import CreditScore from '../components/CreditScore'
+import Banks from '../components/Banks'
+import FinancialTools from '../components/FinancialTools'
+import Rewards from '../components/Rewards'
 
 const Home = ({ data }) => {
 
@@ -28,7 +23,6 @@ const Home = ({ data }) => {
                         return <Banks key={block.id} banks={block} />
                     case 'blocks.credit-score':
                         return <CreditScore key={block.id} scores={block} />
-                
                 }
             })
             : null;
@@ -47,7 +41,6 @@ export async function getServerSideProps(props) {
     const [path] = props.params.path
     const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
     const data = pageData[0]
-    console.log('data: ', data)
     return { props: { data } }
 }
 
