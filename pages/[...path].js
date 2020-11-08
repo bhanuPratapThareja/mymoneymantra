@@ -1,6 +1,5 @@
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
-import Footer from '../components/Footer'
 import Banner from '../components/Banner'
 import CreditScore from '../components/CreditScore'
 import Banks from '../components/Banks'
@@ -31,7 +30,6 @@ const Home = ({ data }) => {
     return (
         <div className="combined-wrapper">
             <Layout>{getComponents(data.blocks)}</Layout>
-            <Footer />
         </div>
     )
 }
