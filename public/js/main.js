@@ -51,7 +51,6 @@ $(document).ready(function () {
   //   $('.dropdown-content-links a').click(function(){
   //     var drop_val= $(this).text() 
   //     $(this).find(".form__group-wrapper").closest("input").val(drop_val);
-  //     console.log("hello")
   //   });
   // });
   
@@ -81,7 +80,6 @@ $(document).ready(function () {
   function number() {
     var x = document.getElementById("m-income").value;
     // numberToWords(x)
-    console.log(numberToWords(x))
 
   }
 
@@ -102,10 +100,8 @@ $(document).ready(function () {
     function addgap(newselValue) {
       if (newselValue != '') {
         $(".monthly-earn").addClass("extra-gap")
-        console.log("yes")
       } else {
         $(".monthly-earn").removeClass("extra-gap")
-        console.log("no")
       }
     }
   }

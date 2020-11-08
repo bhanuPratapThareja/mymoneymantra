@@ -17,10 +17,8 @@ const HomeLoan = (props) => {
 }
 
 export async function getServerSideProps(props) {
-  // console.log('props:::::::::::: ', props)
   const strapi = new Strapi()
     const { path } = props.params
-    console.log('path:::::::::::::', path)
     // const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
     // const data = pageData[0]
     

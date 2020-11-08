@@ -72,7 +72,6 @@ $(document).ready(function () {
     var slides = document.getElementsByClassName("sf-forms");
     if (n > slides.length) {
       slideIndex = 1;
-      console.log("last");
     }
     if (n < 1) {
       slideIndex = slides.length;
