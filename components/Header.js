@@ -16,7 +16,9 @@ const Header = () => {
 
     const renderMenuDropDown = ({ dropdown_links }) => {
         return dropdown_links.map(link => {
-            return <a key={link.id} href={link.url}>{link.label}</a>
+            return <a key={link.id} href={link.url}>
+                {link.label}
+            </a>
         })
     }
 
@@ -28,7 +30,10 @@ const Header = () => {
                 case 'dropdown':
                     return (
                         <div className="dropdown" id="loans" key={link.id}>
-                            <button className="dropbtn">{link.label}</button>
+                            <button className="dropbtn">
+                                {link.label}
+                                <img src="../images/icons/down-chevron.svg" />
+                            </button>
                             <div className="dropdown-content">
                                 <div className="dropdown-content-links">
                                     {renderMenuDropDown(link.dropdown_menu)}
