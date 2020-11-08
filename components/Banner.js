@@ -3,18 +3,16 @@ import Strapi from '../providers/strapi'
 
 const Banner = props => {
     const strapi = new Strapi()
-    const [uspCards, setUspCards] = useState([])
+    const [uspCards, setUspCards] = useState(null)
 
     useEffect(() => {
         async function getUspCardsData() {
             const strapi = new Strapi()
             const uspCardsData = await strapi.processReq('GET', 'banner-cards')
-            if (uspCardsData) {
-                const { banner_cards: usp_cards } = uspCardsData
-                setUspCards(usp_cards)
-            }
+            const { banner_cards: usp_cards } = uspCardsData
+            setUspCards(usp_cards)
         }
-        getUspCardsData()
+        // getUspCardsData()
     }, [])
 
     function renderUspCards() {
@@ -29,10 +27,11 @@ const Banner = props => {
         })
     }
 
-    const { heading, sub_text, button, image } = props.data
+    // const { heading, sub_text, button, image } = props.banner.Banner;
+
     return (
         <section className="banner">
-            <div className="banner-wrapper">
+            {/* <div className="banner-wrapper">
                 <div className="normal-banner">
                     <h1>{heading}</h1>
                     <p>{sub_text}</p>
@@ -45,7 +44,7 @@ const Banner = props => {
                 <div className="banner-features">
                     {renderUspCards()}
                 </div>
-            </div> : null}
+            </div> : null} */}
 
         </section>
     )

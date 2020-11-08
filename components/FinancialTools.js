@@ -1,5 +1,5 @@
 const FinancialTools = props => {
-   const { tools } = props
+   const { tools } = props.tools
    return (
       <section data-aos="fade-up" className="container aos-init aos-animate">
          <div className="financial">
