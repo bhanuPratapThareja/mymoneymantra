@@ -36,7 +36,6 @@ const Home = ({ data }) => {
 export async function getServerSideProps(props) {
     const strapi = new Strapi()
     const [path] = props.params.path
-    console.log('props.params: ', props.params)
     const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
     const data = pageData[0]
     return { props: { data } }
