@@ -412,7 +412,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
         .popular-cards-slider .slick-arrow.slick-prev:after {
           position: absolute;
           content: "";
-          background: url(../public/images/icons/right-chevron.svg);
+          /* background: url(../public/images/icons/right-chevron.svg); */
           height: 48px;
           width: 48px;
           -ms-transform: rotate(180deg);
@@ -429,7 +429,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
         .popular-cards-slider .slick-arrow.slick-next:after {
           position: absolute;
           content: "";
-          background: url(../public/images/icons/right-chevron.svg);
+          /* background: url(../public/images/icons/right-chevron.svg); */
           height: 48px;
           width: 48px;
           background-position: center center;
@@ -865,7 +865,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
         .banks-slider .slick-arrow.slick-prev:after {
           position: absolute;
           content: "";
-          /* background: url(../../build/images/icons/right-chevron.svg); */
+          /* background: url(../public/images/icons/right-chevron.svg); */
           height: 48px;
           width: 48px;
           -ms-transform: rotate(180deg);
@@ -882,7 +882,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
         .banks-slider .slick-arrow.slick-next:after {
           position: absolute;
           content: "";
-          /* background: url(../../build/images/icons/right-chevron.svg); */
+          /* background: url(../public/images/icons/.svg); */
           height: 48px;
           width: 48px;
           background-position: center center;
@@ -1082,7 +1082,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
           max-width: 327px; } }
       .blog-wrapper .card-1 .image_1 {
         height: 240px;
-        background: url("../public/images/credit-card-flow/blog-image-1.png");
+        /* background: url("../public/images/credit-card-flow/blog-image-1.png"); */
         background-size: cover;
         background-repeat: no-repeat; }
         @media (max-width: 768px) {
@@ -1190,7 +1190,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
       .blog-wrapper .card-3 .image_2 {
         max-width: 232px;
         width: 100%;
-        background: url("../public/images/credit-card-flow/blog-image-2.png");
+        /* background: url("../public/images/credit-card-flow/blog-image-2.png"); */
         background-size: cover;
         background-repeat: no-repeat; }
         @media (max-width: 768px) {
@@ -1207,7 +1207,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
       .blog-wrapper .card-3 .image_3 {
         max-width: 232px;
         width: 100%;
-        background: url("../public/images/credit-card-flow/blog-image-3.png");
+        /* background: url("../public/images/credit-card-flow/blog-image-3.png"); */
         background-size: cover;
         background-repeat: no-repeat; }
         @media (max-width: 768px) {
