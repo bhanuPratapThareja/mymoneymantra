@@ -1,10 +1,7 @@
 import Strapi from '../providers/strapi'
 const Banks = props => {
-    // console.log('inside banks props', props);
 let bank_sub_text= props.banks.sub_text;
-// console.log('bank_sub_text',bank_sub_text)
 let showBankImage = props.banks.repeatable_new_bank;
-
 
 const strapi = new Strapi()
     return (
@@ -31,7 +28,6 @@ const strapi = new Strapi()
                                    
                                     <div>
                                         <div className="slide_cell" style={{ width: "100%", display: "inline-block" }}>
-                                            {/* <img src="../images/icons/sbi.svg" alt="sbi" /> */}
                                             <img src={`${strapi.baseUrl}${banksImage.image.url}`} alt={banksImage.image.name} />
                                         </div>
                                     </div>
