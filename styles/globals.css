@@ -1,41 +1,3 @@
-.combined-wrapper {
-  position: absolute;
-  left: 0;
-  width: 100vw !important;
-}
-
-.footer {
-  margin-bottom: 0;
-}
-
-.credit-card-flow-score-container-div {
-  padding-top: 128px !important;
-}
-
-.container.score-container {
-  border-radius: 10px;
-  background: white
-}
-
-.score.score-cotent-cover {
-  margin-bottom: 0;
-  width: 861px !important;
-}
-
-.combined-wrapper .financial {
-  margin-top: 0 !important;
-  padding-top: 48px;
-}
-
-.combined-wrapper .reward-cover {
-  padding-top: 128px;
-}
-
-.combined-wrapper .reward {
-  margin-top: 0 !important;
-
-}
-
 @keyframes drop-open {
   0% {
     opacity: 0;
@@ -139,19 +101,19 @@
 
 .blog-wrapper {
   display: grid; }
-
-/* @font-face {
+/* 
+@font-face {
   font-family: 'Avenir-Black';
-  src: url(../../build/fonts/Avenir-Black-03.ttf); }
+  src: url(../../build/fonts/Avenir-Black-03.ttf); 
 @font-face {
-  font-family: 'Avenir-Heavy';
-  src: url(../../build/fonts/Avenir-Heavy-05.ttf); }
-@font-face {
-  font-family: 'Avenir-Medium';
-  src: url(../../build/fonts/Avenir-Medium-09.ttf); }
-@font-face {
-  font-family: 'Avenir-Roman';
-  src: url(../../build/fonts/Avenir-Roman-12.ttf); } */
+  font-family: 'Avenir-Heavy'; */
+  /* src: url(../../build/fonts/Avenir-Heavy-05.ttf); } */
+/* @font-face {
+  font-family: 'Avenir-Medium'; */
+  /* src: url(../../build/fonts/Avenir-Medium-09.ttf); } */
+/* @font-face {
+  font-family: 'Avenir-Roman'; */
+  /* src: url(../../build/fonts/Avenir-Roman-12.ttf); } */
 h1 {
   font-size: 2.5rem;
   font-family: "Avenir-Black";
@@ -250,7 +212,7 @@ body {
   text-rendering: optimizeLegibility !important;
   font-weight: 400;
   position: relative;
-  background-color: transparent !important; }
+  background-color: blue !important; }
 
 .container {
   max-width: 1176px;
@@ -412,7 +374,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
         .popular-cards-slider .slick-arrow.slick-prev:after {
           position: absolute;
           content: "";
-          /* background: url(../public/images/icons/right-chevron.svg); */
+          /* background: url(../../build/images/icons/right-chevron.svg); */
           height: 48px;
           width: 48px;
           -ms-transform: rotate(180deg);
@@ -429,7 +391,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
         .popular-cards-slider .slick-arrow.slick-next:after {
           position: absolute;
           content: "";
-          /* background: url(../public/images/icons/right-chevron.svg); */
+          /* background: url(../../build/images/icons/right-chevron.svg); */
           height: 48px;
           width: 48px;
           background-position: center center;
@@ -773,7 +735,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
       .score-content-features p {
         color: rgba(34, 31, 31, 0.6); }
   .score-chart {
-    right: -123px;
+    right: 80px;
     bottom: -123px; }
     @media (max-width: 768px) {
       .score-chart {
@@ -865,7 +827,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
         .banks-slider .slick-arrow.slick-prev:after {
           position: absolute;
           content: "";
-          /* background: url(../public/images/icons/right-chevron.svg); */
+          /* background: url(../../build/images/icons/right-chevron.svg); */
           height: 48px;
           width: 48px;
           -ms-transform: rotate(180deg);
@@ -882,7 +844,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
         .banks-slider .slick-arrow.slick-next:after {
           position: absolute;
           content: "";
-          /* background: url(../public/images/icons/.svg); */
+          /* background: url(../../build/images/icons/right-chevron.svg); */
           height: 48px;
           width: 48px;
           background-position: center center;
@@ -1082,7 +1044,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
           max-width: 327px; } }
       .blog-wrapper .card-1 .image_1 {
         height: 240px;
-        /* background: url("../public/images/credit-card-flow/blog-image-1.png"); */
+        /* background: url("../../build/images/credit-card-flow/blog-image-1.png"); */
         background-size: cover;
         background-repeat: no-repeat; }
         @media (max-width: 768px) {
@@ -1185,12 +1147,11 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
         .blog-wrapper .card-2,
         .blog-wrapper .card-3 {
           max-width: 327px; } }
-      
       .blog-wrapper .card-2 .image_2,
       .blog-wrapper .card-3 .image_2 {
         max-width: 232px;
         width: 100%;
-        /* background: url("../public/images/credit-card-flow/blog-image-2.png"); */
+        /* background: url("../../build/images/credit-card-flow/blog-image-2.png"); */
         background-size: cover;
         background-repeat: no-repeat; }
         @media (max-width: 768px) {
@@ -1207,7 +1168,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
       .blog-wrapper .card-3 .image_3 {
         max-width: 232px;
         width: 100%;
-        /* background: url("../public/images/credit-card-flow/blog-image-3.png"); */
+        /* background: url("../../build/images/credit-card-flow/blog-image-3.png"); */
         background-size: cover;
         background-repeat: no-repeat; }
         @media (max-width: 768px) {

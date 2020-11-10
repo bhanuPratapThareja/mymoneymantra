@@ -5,7 +5,7 @@ const Layout = props => {
     return (
         <>
             <Header />
-            <div className="credit-card-flow">
+            <div>
                 {props.children}
             </div>
             <Footer />

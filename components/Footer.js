@@ -8,7 +8,6 @@ const Footer = () => {
     useEffect(() => {
         async function getFooter() {
             let footer = await strapi.processReq('GET', 'footer')
-            console.log('footer: ', footer)
             setFooter(footer)
         }
         getFooter(footer)
