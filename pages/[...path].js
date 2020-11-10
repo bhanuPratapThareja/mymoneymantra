@@ -7,6 +7,7 @@ import FinancialTools from '../components/FinancialTools'
 import Rewards from '../components/Rewards'
 import Offers from '../components/Offers'
 import LearnMore from '../components/LearnMore'
+import Blog from '../components/Blog'
 
 const Home = ({ data }) => {
     const getComponents = blocks => {
@@ -28,8 +29,12 @@ const Home = ({ data }) => {
                         return <CreditScore key={block.id} data={block} />
                     case 'blocks.offer' :
                         return<Offers key={block.id} data={block} />
+                    case 'blocks.blogs' : 
+                        return <Blog key={block.id} data={block} />
                     case 'blocks.learnMore' :
-                            return<LearnMore key={block.id} data={block} />         
+                        return<LearnMore key={block.id} data={block} />  
+                    case 'blocks.credit' :
+                        return<CreditScore key={block.id} data={block} />
                 }
             })
             : null;
