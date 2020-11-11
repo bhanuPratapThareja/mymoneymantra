@@ -72,7 +72,7 @@ const ShortExtendedForm = () => {
             <div className="lets-find">
                 <div className="lets-find-content">
                     <h2>Let’s find the best credit card for you.</h2>
-                    <img className="green-underline" src="images/credit-card-flow/green-underline.png" />
+                    <img className="green-underline" src="../images/credit-card-flow/green-underline.png" />
                     <p>Leo cras nibh diam integer magnis dolor nulla ut ullamcorper. Libero ornare nec rhoncus augue morbi scelerisque in. Auctor venenatis vitae pellentesque egestas.</p>
                 </div>
                 <div className="lets-find-form">

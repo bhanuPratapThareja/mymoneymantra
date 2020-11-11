@@ -1,6 +1,6 @@
 {
     "STRAPI": {
-      "BASE_URL": "http://203.122.46.189:1338",
+      "BASE_URL": "http://localhost:1337",
       "IDENTIFIER": "apiuser",
       "PASSWORD": "apiuser",
       "JWT_TOKEN": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAxOTc4NTE2LCJleHAiOjE2MDQ1NzA1MTZ9.dhd2LYCXfiYtvP379G1zO4vMcTEl-R6TwEoAiMfTBQc"

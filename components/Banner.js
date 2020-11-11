@@ -1,48 +1,40 @@
-import { useState, useEffect } from 'react'
 import Strapi from '../providers/strapi'
+import Router from "next/router";
 
-const Banner = props => {
+
+const Banner = ({ data, basePath }) => {
+    console.log('data: ', data)
     const strapi = new Strapi()
-    const [uspCards, setUspCards] = useState(null)
+    const { heading, sub_text, button, image, usp_cards } = data
 
-    useEffect(() => {
-        async function getUspCardsData() {
-            const strapi = new Strapi()
-            const uspCardsData = await strapi.processReq('GET', 'banner-cards')
-            const { banner_cards: usp_cards } = uspCardsData
-            setUspCards(usp_cards)
-        }
-        // getUspCardsData()
-    }, [])
-
-    function renderUspCards() {
+    function renderUspCards(uspCards) {
         return uspCards.map(card => {
-            return (
-                <div className="banner-features-block" key={card.id}>
-                    <img src={`${strapi.baseUrl}${card.image.url}`} alt={card.image.name} />
-                    <h3>{card.heading}</h3>
-                    <p>{card.description}</p>
-                </div>
-            )
+            return <div className="banner-features-block" key={card.id}>
+                <img src={`${strapi.baseUrl}${card.image.url}`} alt={card.image.name} />
+                <h3>{card.heading}</h3>
+                <p>{card.sub_text}</p>
+            </div>
         })
     }
 
-    // const { heading, sub_text, button, image } = props.banner.Banner;
+    function goToPage() {
+        Router.push(`${basePath}/loan-listing`)
+    }
 
     return (
         <section className="banner">
-            {/* <div className="banner-wrapper">
+            <div className="banner-wrapper">
                 <div className="normal-banner">
                     <h1>{heading}</h1>
                     <p>{sub_text}</p>
-                    <button>{button}</button>
+                    <button onClick={goToPage}>{button}</button>
                 </div>
-                <img className="banner-card" src={`${strapi.baseUrl}${image.url}`} alt={image.name} />
+                {/* <img className="banner-card" src={`${strapi.baseUrl}${image.url}`} alt={image.name} /> */}
             </div>
 
-            {uspCards ? <div className="container banner-features-container">
+            {/* {usp_cards ? <div className="container banner-features-container">
                 <div className="banner-features">
-                    {renderUspCards()}
+                    {renderUspCards(usp_cards)}
                 </div>
             </div> : null} */}
 

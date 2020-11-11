@@ -5,31 +5,34 @@ import CreditScore from '../components/CreditScore'
 import Banks from '../components/Banks'
 import FinancialTools from '../components/FinancialTools'
 import Rewards from '../components/Rewards'
+import PopularOffers from '../components/PopularOffers'
 
-const Home = ({ data }) => {
+const Home = props => {
+
     const getComponents = blocks => {
-        return blocks.length > 0
-            ? blocks.map(block => {
-                switch (block.__component) {
-                    case 'blocks.product-banner':
-                        return <Banner key={block.id} banner={block} />
-                    case 'blocks.financial-tools':
-                        return <FinancialTools key={block.id} tools={block} />
-                    case 'blocks.rewards':
-                            return <Rewards key={block.id} rewards={block} />
-                    case 'blocks.banks':
-                        return <Banks key={block.id} banks={block} />
-                    case 'blocks.credit-score':
-                        return <CreditScore key={block.id} scores={block} />
-                }
-            })
-            : null;
+        return blocks.map(block => {
+            switch (block.__component) {
+                case 'blocks.banner':
+return <PopularOffers />
+                    // return <Banner key={block.id} data={block} basePath={props.basePath} />
+                case 'blocks.financial-tools':
+                    return <FinancialTools key={block.id} tools={block} />
+                case 'blocks.rewards':
+                    return <Rewards key={block.id} rewards={block} />
+                case 'blocks.banks':
+                    return <Banks key={block.id} data={block} />
+                case 'blocks.credit-score':
+                    return <CreditScore key={block.id} data={block} />
+            }
+        })
     }
 
     return (
-        <div className="combined-wrapper">
-            <Layout>{getComponents(data.blocks)}</Layout>
-        </div>
+        <>
+            {props ? <div className="credit-card-flow">
+                <Layout>{getComponents(props.data.blocks)}</Layout>
+            </div> : null}
+        </>
     )
 }
 
@@ -38,7 +41,8 @@ export async function getServerSideProps(props) {
     const [path] = props.params.path
     const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
     const data = pageData[0]
-    return { props: { data } }
+    console.log('checking data: ', data)
+    return { props: { data, basePath: path } }
 }
 
 export default Home

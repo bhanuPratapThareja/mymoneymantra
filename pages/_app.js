@@ -1,12 +1,7 @@
 import '../styles/globals.css'
-import Container from '@material-ui/core/Container'
 
 function MyApp({ Component, pageProps }) {
-  return (
-      <Container fixed>
-        <Component {...pageProps} />
-      </Container>
-  )
+  return <Component {...pageProps} />
 }
 
 export default MyApp
