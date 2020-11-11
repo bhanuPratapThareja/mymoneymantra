@@ -1,23 +1,31 @@
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 import ListingBanner from '../../components/Listing/ListingBanner'
+import LongFormBanner from '../../components/LongForm/LongFormBanner'
+import LearnMore from '../../components/LearnMore'
 
 const CreditCards = ({ data }) => {
 
-        const getComponents = blocks => {
-            return blocks.map(block => {
-                switch (block.__component) {
-                    case 'blocks.listing-banner':
-                        return <ListingBanner key={block.id} data={block} />
-                }
-            })
-        }
+    console.log('data: ', data)
 
-        return (
-            <div className="listings">
-                {data ? <Layout>{getComponents(data.blocks)}</Layout> : null}
-            </div>
-        )
+    const getComponents = blocks => {
+        return blocks.map(block => {
+            switch (block.__component) {
+                case 'blocks.listing-banner':
+                    return <ListingBanner key={block.id} data={block} />
+                case 'blocks.long-form-banner':
+                    return <LongFormBanner key={block.id} data={block} />
+                case 'blocks.learn-more':
+                    return <LearnMore key={block.id} data={block} />
+            }
+        })
+    }
+
+    return (
+        <div className="listings">
+            {data ? <Layout>{getComponents(data.blocks)}</Layout> : null}
+        </div>
+    )
 }
 
 export async function getServerSideProps(props) {

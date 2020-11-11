@@ -1,4 +1,4 @@
-.container .score-container {
+.container.score-container {
   background-color: white;
   border-radius: 10px;
 }
@@ -294,7 +294,6 @@ body {
   text-rendering: optimizeLegibility !important;
   font-weight: 400;
   position: relative;
-  background-color: blue !important;
 }
 
 .container {

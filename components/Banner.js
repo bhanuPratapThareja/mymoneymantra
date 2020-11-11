@@ -1,6 +1,6 @@
 import Strapi from '../providers/strapi'
 import Router from "next/router";
-
+import Link from 'next/link'
 
 const Banner = ({ data, basePath }) => {
     const strapi = new Strapi()
@@ -25,6 +25,15 @@ const Banner = ({ data, basePath }) => {
             <div className="banner-wrapper">
                 <div className="normal-banner">
                     <h1>{heading}</h1>
+
+                    <div style={{ color: 'white', textDecoration: 'underline' }}>
+                        <br /><br />
+                        <Link href="/credit-cards/loan-listing"><a>Loan Listing Page</a></Link>
+                        <br />
+                        <Link href="/credit-cards/long-form"><a>Long Form Page</a></Link>
+                        <br /><br />
+                    </div>
+
                     <p>{sub_text}</p>
                     <button onClick={goToPage}>{button}</button>
                 </div>
