@@ -54,7 +54,7 @@ const LearnMore = props => {
 
                {sectionData.map((secData,index )=> {
                   return (
-                     <div className="learn-more-wrapper-content">
+                     <div className="learn-more-wrapper-content" key={secData.id}>
                         <div className="question" id={`ques-${index}`}>
                            <h3>{secData.heading}</h3>
                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
