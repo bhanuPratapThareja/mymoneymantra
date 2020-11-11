@@ -24,33 +24,33 @@ const Footer = () => {
     }
 
     return (
-        // <div classNameName="footer">
-        //     {footer ? <section classNameName="container">
-        //         <img classNameName="footer-logo" src="../images/logo.png" alt={footer.logo.name} />
+        // <div className="footer">
+        //     {footer ? <section className="container">
+        //         <img className="footer-logo" src="../images/logo.png" alt={footer.logo.name} />
 
-        //         <div classNameName="top">
+        //         <div className="top">
 
-        //             <div classNameName="top-main-links">
+        //             <div className="top-main-links">
         //                 <ul>{renderLinks(footer.menu)}</ul>
         //             </div>
 
-        //             <div classNameName="top-primary-links">
+        //             <div className="top-primary-links">
         //                 <ul>{renderLinks(footer.quick_links)}</ul>
         //             </div>
 
-        //             <div classNameName="top-connect">
+        //             <div className="top-connect">
         //                 <h2>{footer.get_in_touch.heading}</h2>
-        //                 <a classNameName="mail" href="mailto:someone@example.com" target="_blank">
+        //                 <a className="mail" href="mailto:someone@example.com" target="_blank">
         //                     <h5>{footer.get_in_touch.contact}</h5>
         //                 </a>
 
         //                 <h2>
         //                     {footer.social_media.heading}
         //                 </h2>
-        //                 <div classNameName="top-connect-social">
+        //                 <div className="top-connect-social">
         //                     {footer.social_media.plugins.map(plugin => {
         //                         return <a key={plugin.id} href={plugin.url} target="_blank">
-        //                             <div classNameName="top-connect-social-container">
+        //                             <div className="top-connect-social-container">
         //                                 <img src={`${strapi.baseUrl}${plugin.icon.url}`} alt={plugin.icon.name} />
         //                             </div>
         //                         </a>
@@ -58,7 +58,7 @@ const Footer = () => {
         //                 </div>
 
         //                 <h2>{footer.get_our_app.heading}</h2>
-        //                 <div classNameName="stores">
+        //                 <div className="stores">
         //                     {footer.get_our_app.links.map(link => {
         //                         return <a key={link.id} href={link.url} target="_blank">
         //                             <img src={`${strapi.baseUrl}${link.image.url}`} alt={link.image.name} />
@@ -69,7 +69,7 @@ const Footer = () => {
 
         //         </div>
 
-        //         <div classNameName="bottom"><span>{footer.copyright}</span></div>
+        //         <div className="bottom"><span>{footer.copyright}</span></div>
 
         //     </section> : null}
         // </div>

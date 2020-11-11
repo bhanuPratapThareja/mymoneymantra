@@ -2,8 +2,6 @@ import { useEffect } from 'react'
 import $ from 'jquery'
 
 const LearnMore = props => {
-
-   console.log(props.data)
    const { section_heading, section } = props.data
 
    useEffect(() => {
@@ -17,13 +15,11 @@ const LearnMore = props => {
       $('input').blur(function () {
          $('input').closest("div").removeClass("active-input");
          $("#" + this.id + "-drop").hide("slow");
-
       })
          .focus(function () {
             $(this).closest(".form__group").removeClass('filled-input');
             $(this).closest(".form__group").addClass("active-input");
             $("#" + this.id + "-drop").show("slow");
-
          });
    })
 
@@ -34,7 +30,7 @@ const LearnMore = props => {
             <div className="learn-more-wrapper">
                {section.map((section, i) => {
                   return (
-                     <div className="learn-more-wrapper-content">
+                     <div className="learn-more-wrapper-content" key={section.id}>
                         <div className="question" id={`ques-${i}`}>
                            <h3>{section.heading}</h3>
                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -43,39 +39,9 @@ const LearnMore = props => {
                         </div>
                         <div className="answer" id={`ques-${i}-ans`}>
                            {section.questions_and_answers}
-                           {/* <h3>What are the benefits of using a credit card?</h3>
-                     <ol>
-                        <li>Credit Cards are the perfect alternative to cash. There is no need of carrying large
-                        amounts of money when you have a Credit Card.
-                     </li>
-                        <li>You get an interest-free window depending on the date of billing and the due date. The
-                        maximum interest-free period is between 52 and 55 days.
-                     </li>
-                        <li>Credit cardholders can avail cash advance facility on an urgent basis. Every Credit Card
-                        comes with a cash advance limit. Note that this is not an interest-free advance. You
-                        have to pay interest on the cash advance portion from day 1.
-                     </li>
-                        <li>You can own a Credit Card and enjoy various benefits that come with it such as bonus
-                        points, gift vouchers, rewards programs, cashback benefits, and multiple other benefits.
-                        Banks allow credit cardholders to apply for add-on cards for their family members. They
-                        can use these cards on an individual basis.
-                     </li>
-                        <li>Banks issue unique Credit Cards that allow the cardholders to avail travel benefits like
-                        air miles, airport lounge access, airline offers, hotel offers, and travel insurance.
-                        These cards are also known as Co-branded Credit Cards.
-                     </li>
-                     </ol>
-                     <h3>Why Apply for a Credit Card through MyMoneyMantra?</h3>
-                     <p>MyMoneyMantra can help you:</p>
-                     <p>- Choose the best option among the different cards available </p>
-                     <p>- Opt for banks that charge lower application and renewal fees </p>
-                     <p>- With a quick turnaround time </p>
-                     <p>- Understand various features of the Credit Card </p> */}
                         </div>
-
                      </div>
                   )
-
                })}
             </div>
          </div>

@@ -8,7 +8,6 @@ import Rewards from '../components/Rewards'
 import Offers from '../components/Offers'
 import LearnMore from '../components/LearnMore'
 import Blog from '../components/Blog'
-import Nothing from '../components/Nothing'
 
 const Home = props => {
     const getComponents = blocks => {
@@ -34,8 +33,6 @@ const Home = props => {
                     return <LearnMore key={block.id} data={block} />
                 case 'blocks.credit':
                     return <CreditScore key={block.id} data={block} />
-                default:
-                    return <Nothing />
             }
         })
     }
