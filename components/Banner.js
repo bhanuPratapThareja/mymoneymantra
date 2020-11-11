@@ -1,31 +1,41 @@
-
 import Strapi from '../providers/strapi'
+import Router from "next/router";
+import Link from 'next/link'
 
-const Banner = props => {
-
- const strapi = new Strapi()
+const Banner = ({ data, basePath }) => {
+    const strapi = new Strapi()
+    const { heading, sub_text, button, image, usp_cards } = data
 
     function renderUspCards(uspCards) {
         return uspCards.map(card => {
-            return (
-                <div className="banner-features-block" key={card.id}>
-                    <img src={`${strapi.baseUrl}${card.image.url}`} alt={card.image.name} />
-                    <h3>{card.heading}</h3>
-                    <p>{card.sub_text}</p>
-                </div>
-            )
+            return <div className="banner-features-block" key={card.id}>
+                <img src={`${strapi.baseUrl}${card.image.url}`} alt={card.image.name} />
+                <h3>{card.heading}</h3>
+                <p>{card.sub_text}</p>
+            </div>
         })
     }
 
-    const { heading, sub_text, button, image,usp_cards } = props.banner
+    function goToPage() {
+        Router.push(`${basePath}/loan-listing`)
+    }
 
     return (
         <section className="banner">
             <div className="banner-wrapper">
                 <div className="normal-banner">
                     <h1>{heading}</h1>
+
+                    <div style={{ color: 'white', textDecoration: 'underline' }}>
+                        <br /><br />
+                        <Link href="/credit-cards/loan-listing"><a>Loan Listing Page</a></Link>
+                        <br />
+                        <Link href="/credit-cards/long-form"><a>Long Form Page</a></Link>
+                        <br /><br />
+                    </div>
+
                     <p>{sub_text}</p>
-                    <button>{button}</button>
+                    <button onClick={goToPage}>{button}</button>
                 </div>
                 <img className="banner-card" src={`${strapi.baseUrl}${image.url}`} alt={image.name} />
             </div>

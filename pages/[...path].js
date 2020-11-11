@@ -9,14 +9,15 @@ import Offers from '../components/Offers'
 import LearnMore from '../components/LearnMore'
 import Blog from '../components/Blog'
 
-const Home = ({ data }) => {
+const Home = props => {
     const getComponents = blocks => {
-        console.log('blocks inside ...path',blocks);
         return blocks.length > 0
             ? blocks.map(block => {
+               
                 switch (block.__component) {
                     case 'blocks.product-banner':
-                        return <Banner key={block.id} banner={block} />
+                        console.log('block: ',block)
+                        return <Banner key={block.id} data={block} />
                     case 'blocks.financial-tools':
                         return <FinancialTools key={block.id} tools={block} />
                     case 'blocks.rewards':
@@ -42,7 +43,7 @@ const Home = ({ data }) => {
 
     return (
         <div className="credit-card-flow">
-            {data ? <Layout>{getComponents(data.blocks)}</Layout> : null}
+            {props ? <Layout>{getComponents(props.data.blocks)}</Layout> : null}
         </div>
     )
 }
@@ -52,7 +53,6 @@ export async function getServerSideProps(props) {
     const [path] = props.params.path
     const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
     const data = pageData[0]
-    console.log("--------path--------",data)
     return { props: { data } }
 }
 

@@ -1,12 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import $ from 'jquery'
 
 const LearnMore = props => {
-   console.log("inside Learn more props", props);
-   const sectionHeading = props.data.section_heading;
-   const sectionData = props.data.section;
-   console.log("sectionData", sectionData)
-   const [learnMore, setLearnMore] = useState([]);
+   const sectionHeading = props.data.section_heading
+   const sectionData = props.data.section
 
    useEffect(() => {
       console.log('inside useEffect');
@@ -21,28 +18,12 @@ const LearnMore = props => {
       $('input').blur(function () {
          $('input').closest("div").removeClass("active-input");
          $("#" + this.id + "-drop").hide("slow");
-
       })
          .focus(function () {
             $(this).closest(".form__group").removeClass('filled-input');
             $(this).closest(".form__group").addClass("active-input");
             $("#" + this.id + "-drop").show("slow");
-
          });
-
-
-         // sectionData.forEach((section, index) => {
-         //    let cssData = {};
-
-         //    cssData.id  ="ques-" + (index+1)
-           
-         //    sectionData[index].cssData = cssData;
-
-         // })
-
-         // console.log('sectionData ======',sectionData)
-
-
    })
 
 

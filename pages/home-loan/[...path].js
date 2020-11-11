@@ -1,22 +1,14 @@
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 import ListingBanner from '../../components/Listing/ListingBanner'
-import LongFormBanner from '../../components/LongForm/LongFormBanner'
-import LearnMore from '../../components/LearnMore'
 
-const CreditCards = ({ data }) => {
-
-    console.log('data: ', data)
+const HomeLoan = ({ data }) => {
 
     const getComponents = blocks => {
         return blocks.map(block => {
             switch (block.__component) {
                 case 'blocks.listing-banner':
                     return <ListingBanner key={block.id} data={block} />
-                case 'blocks.long-form-banner':
-                    return <LongFormBanner key={block.id} data={block} />
-                case 'blocks.learn-more':
-                    return <LearnMore key={block.id} data={block} />
             }
         })
     }
@@ -31,9 +23,9 @@ const CreditCards = ({ data }) => {
 export async function getServerSideProps(props) {
     const strapi = new Strapi()
     const [path] = props.params.path
-    const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)
+    const pageData = await strapi.processReq('GET', `pages?slug=home-loan-${path}`)
     const data = pageData[0]
     return { props: { data } }
 }
 
-export default CreditCards
+export default HomeLoan
