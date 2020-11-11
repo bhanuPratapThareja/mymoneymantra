@@ -13,7 +13,7 @@ const Home = props => {
         return blocks.map(block => {
             switch (block.__component) {
                 case 'blocks.banner':
-return <PopularOffers />
+                    return <PopularOffers />
                     // return <Banner key={block.id} data={block} basePath={props.basePath} />
                 case 'blocks.financial-tools':
                     return <FinancialTools key={block.id} tools={block} />
