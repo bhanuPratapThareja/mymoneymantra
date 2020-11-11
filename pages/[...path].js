@@ -25,13 +25,13 @@ const Home = ({ data }) => {
                         return <Banks key={block.id} banks={block} />
                     case 'blocks.bank-new': 
                         return <Banks key={block.id} banks={block} />
-                    case 'blocks.credit-score':
-                        return <CreditScore key={block.id} data={block} />
+                    // case 'blocks.credit-score':
+                    //     return <CreditScore key={block.id} data={block} />
                     case 'blocks.offer' :
                         return<Offers key={block.id} data={block} />
                     case 'blocks.blogs' : 
                         return <Blog key={block.id} data={block} />
-                    case 'blocks.learnMore' :
+                    case 'blocks.learn-more' :
                         return<LearnMore key={block.id} data={block} />  
                     case 'blocks.credit' :
                         return<CreditScore key={block.id} data={block} />
