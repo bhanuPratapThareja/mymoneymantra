@@ -2,7 +2,6 @@
   background-color: white;
   border-radius: 10px;
 }
-
 @keyframes drop-open {
   0% {
     opacity: 0;

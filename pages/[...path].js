@@ -11,30 +11,34 @@ import Blog from '../components/Blog'
 
 const Home = props => {
     const getComponents = blocks => {
-        return blocks.map(block => {
-            switch (block.__component) {
-                case 'blocks.product-banner':
-                    return <Banner key={block.id} data={block} />
-                case 'blocks.financial-tools':
-                    return <FinancialTools key={block.id} tools={block} />
-                case 'blocks.rewards':
-                    return <Rewards key={block.id} rewards={block} />
-                case 'blocks.banks':
-                    return <Banks key={block.id} banks={block} />
-                case 'blocks.bank-new':
-                    return <Banks key={block.id} banks={block} />
-                case 'blocks.credit-score':
-                    return <CreditScore key={block.id} data={block} />
-                case 'blocks.offer':
-                    return <Offers key={block.id} data={block} />
-                case 'blocks.blogs':
-                    return <Blog key={block.id} data={block} />
-                case 'blocks.learn-more':
-                    return <LearnMore key={block.id} data={block} />
-                case 'blocks.credit':
-                    return <CreditScore key={block.id} data={block} />
-            }
-        })
+        return blocks.length > 0
+            ? blocks.map(block => {
+               
+                switch (block.__component) {
+                    case 'blocks.product-banner':
+                        console.log('block: ',block)
+                        return <Banner key={block.id} data={block} />
+                    case 'blocks.financial-tools':
+                        return <FinancialTools key={block.id} tools={block} />
+                    case 'blocks.rewards':
+                            return <Rewards key={block.id} rewards={block} />
+                    case 'blocks.banks':
+                        return <Banks key={block.id} banks={block} />
+                    case 'blocks.bank-new': 
+                        return <Banks key={block.id} banks={block} />
+                    // case 'blocks.credit-score':
+                    //     return <CreditScore key={block.id} data={block} />
+                    case 'blocks.offer' :
+                        return<Offers key={block.id} data={block} />
+                    case 'blocks.blogs' : 
+                        return <Blog key={block.id} data={block} />
+                    case 'blocks.learn-more' :
+                        return<LearnMore key={block.id} data={block} />  
+                    case 'blocks.credit' :
+                        return<CreditScore key={block.id} data={block} />
+                }
+            })
+            : null;
     }
 
     return (
