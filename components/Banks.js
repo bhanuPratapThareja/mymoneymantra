@@ -1,59 +1,48 @@
-const { data } = require("jquery")
+import Strapi from '../providers/strapi'
+const strapi = new Strapi()
 
-const Banks = ({ data }) => {
+const Banks = props => {
+
+    let bank_sub_text = props.banks.sub_text;
+    let showBankImage = props.banks.repeatable_new_bank;
+
     return (
         <section data-aos="fade-up" className="banks-holder aos-init aos-animate">
             <div className="blue-patch"></div>
             <div className="container banks">
-                <h2>{data.sub_text}</h2>
+                <h2>{bank_sub_text}</h2>
                 <div className="banks-slider slick-initialized slick-slider">
-                        <button className="slick-prev slick-arrow slick-disabled" aria-label="Previous" type="button" aria-disabled="true" style={{ display: "inline-block" }}>
-                            Previous
+
+                    <button className="slick-prev slick-arrow slick-disabled" aria-label="Previous" type="button" aria-disabled="true" style={{ display: "inline-block" }}>
+                        Previous
                     </button>
+                    <div className="slick-list draggable">
 
-                        <div className="slick-list draggable">
-                            <div className="slick-track" style={{ opacity: "1", width: "1116px", transform: "translate3d(0px, 0px, 0px)" }}>
+                        <div className="slick-track" style={{ opacity: "1", width: "1116px", transform: "translate3d(0px, 0px, 0px)" }}>
+                            {showBankImage && showBankImage.map(banksImage => {
+                                return (
 
-                                <div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" style={{ width: "186px" }}>
-                                    <div>
-                                        <div className="slide_cell" style={{ width: "100%", display: "inline-block" }}>
-                                            <img src="../images/icons/sbi.svg" alt="sbi" />
+                                    <div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" style={{ width: "186px" }} key={banksImage.id}>
+
+                                        <div>
+                                            <div className="slide_cell" style={{ width: "100%", display: "inline-block" }}>
+                                                <img src={`${strapi.baseUrl}${banksImage.image.url}`} alt={banksImage.image.name} />
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
 
-                                <div className="slick-slide slick-active" data-slick-index="1" aria-hidden="false" style={{ width: "186px" }}>
-                                    <div>
-                                        <div className="slide_cell" style={{ width: "100%", display: "inline-block" }}>
-                                            <img src="../images/icons/hdfc.svg" alt="hdfc" />
-                                        </div>
                                     </div>
-                                </div>
-
-                                <div className="slick-slide slick-active" data-slick-index="2" aria-hidden="false" style={{ width: "186px" }}>
-                                    <div>
-                                        <div className="slide_cell" style={{ width: "100%", display: "inline-block" }}>
-                                            <img src="../images/icons/axis.svg" alt="axis" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="slick-slide slick-active" data-slick-index="3" aria-hidden="false" style={{ width: "186px" }}>
-                                    <div><div className="slide_cell" style={{ width: "100%", display: "inline-block" }}>
-                                        <img src="../images/icons/citi.svg" alt="citi" />
-                                    </div>
-                                    </div>
-                                </div>
-
-                            </div>
+                                )
+                            })}
                         </div>
-
-                        <button className="slick-next slick-arrow" aria-label="Next" type="button" aria-disabled="false">
-                            Next
-                    </button>
                     </div>
+
+                    <button className="slick-next slick-arrow" aria-label="Next" type="button" aria-disabled="false">
+                        Next
+                    </button>
+                </div>
             </div>
         </section>
+
     )
 }
 

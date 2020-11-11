@@ -3,7 +3,6 @@ import Router from "next/router";
 
 
 const Banner = ({ data, basePath }) => {
-    console.log('data: ', data)
     const strapi = new Strapi()
     const { heading, sub_text, button, image, usp_cards } = data
 
@@ -29,14 +28,14 @@ const Banner = ({ data, basePath }) => {
                     <p>{sub_text}</p>
                     <button onClick={goToPage}>{button}</button>
                 </div>
-                {/* <img className="banner-card" src={`${strapi.baseUrl}${image.url}`} alt={image.name} /> */}
+                <img className="banner-card" src={`${strapi.baseUrl}${image.url}`} alt={image.name} />
             </div>
 
-            {/* {usp_cards ? <div className="container banner-features-container">
+            {usp_cards ? <div className="container banner-features-container">
                 <div className="banner-features">
                     {renderUspCards(usp_cards)}
                 </div>
-            </div> : null} */}
+            </div> : null}
 
         </section>
     )
