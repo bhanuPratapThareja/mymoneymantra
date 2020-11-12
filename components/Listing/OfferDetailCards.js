@@ -19,8 +19,12 @@ const OfferDetailCards = props => {
 
     const cardButtonClick = (type) => {
         if (type == "eConnect") {
+            Router.push(`/credit-cards/long-form`)
+        }
+        if (type == "applyNow") {
             Router.push(`/credit-cards/thank-you`)
         }
+        
     }
     return (
         <section className="container long-cards">

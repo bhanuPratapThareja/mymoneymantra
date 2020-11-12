@@ -11,10 +11,14 @@ import Blog from '../../components/Blog';
 import Rewards from '../../components/Rewards';
 import ThankYouBanner from '../../components/ThankYou/ThankYouBanner';
 import OfferDetailCards from '../../components/Listing/OfferDetailCards'
-
+import { useEffect, useState } from 'react'
 const CreditCards = ({ data, basePath }) => {
 
     console.log('data: ', data)
+
+    // useEffect(() => {
+    //     window.scroll(0)
+    // })
 
     const getComponents = blocks => {
         console.log('blocks inside credit-catd ..path', blocks);
