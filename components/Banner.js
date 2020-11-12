@@ -1,5 +1,5 @@
 import Strapi from '../providers/strapi'
-import Router from "next/router";
+import Router from 'next/router';
 import Link from 'next/link'
 
 const Banner = ({ data, basePath }) => {
