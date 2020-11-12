@@ -16,6 +16,7 @@ class Strapi {
 
     processReq = async (method, endPath, body = null, headers = null) => {
         const url = `${this.baseUrl}/${endPath}`
+        console.log('insside provider strapi url',url);
         try {
             const res = await fetch(url, {
                 method,

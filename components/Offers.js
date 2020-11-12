@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
+import Strapi from '../providers/strapi'
 import $ from 'jquery'
 
 
 const Offers = props => {
+   const strapi = new Strapi()
    const [offers, setOffers] = useState([])
 
    useEffect(() => {
@@ -66,7 +68,7 @@ const Offers = props => {
                   <div className="slick-track" style={{ opacity: '1', width: '20000px', transform: 'translate3d(-170px, 0px, 0px)' }} >
 
                      {offers.map(offer => {
-
+console.log('offers@@@@',offers);
 
                         return (
                            <div key={offer.id} className={offer.classes} data-slick-index={offer['data-slick-index']} aria-hidden="false" tab-index="-1" >
@@ -75,7 +77,7 @@ const Offers = props => {
                                     <div className="popular-cards-slider-card-top">
                                        <div className="head">
                                           <h3><b className="card_name">{offer.bank_name}</b><br />{offer.product_type}</h3>
-                                          <img src="images/icons/citi-logo.png" />
+                                          <img src={`${strapi.baseUrl}${offer.image.url}`}/>
                                        </div>
                                        <div className="content">
                                           <ul>
@@ -96,10 +98,6 @@ const Offers = props => {
                            </div>
                         )
                      })}
-
-
-
-
 
                   </div></div><button className="slick-next slick-arrow" aria-label="Next" type="button" >Next</button></div>
          </div>

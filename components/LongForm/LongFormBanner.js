@@ -3,7 +3,6 @@ import { getFormCompletePercent } from '../../utils/getFormPercentage'
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 class LongFormBanner extends React.Component {
-
     state = {
         gender: '',
         maritalStatus: '',
@@ -14,7 +13,6 @@ class LongFormBanner extends React.Component {
         percentageComplete: 0,
         totalValues: 18
     }
-
     handleChange = (value, type) => {
         this.setState({ [type]: value }, () => {
             this.setState({
@@ -452,4 +450,4 @@ class LongFormBanner extends React.Component {
 
 }
 
-export default LongFormBanner
+    export default LongFormBanner
