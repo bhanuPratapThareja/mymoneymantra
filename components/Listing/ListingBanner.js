@@ -93,7 +93,7 @@ const ListingBanner = ({ data }) => {
                 </div>
             </section>
             <ListingFilter />
-            <OfferDetailCards />
+          
         </>
     )
 }

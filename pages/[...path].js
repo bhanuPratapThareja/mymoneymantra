@@ -8,15 +8,17 @@ import Rewards from '../components/Rewards'
 import Offers from '../components/Offers'
 import LearnMore from '../components/LearnMore'
 import Blog from '../components/Blog'
+import ShortExtendedForm from '../components/ShortExtendedForm';
 
 const Home = props => {
     const getComponents = blocks => {
         return blocks.length > 0
+       
             ? blocks.map(block => {
-               
+               console.log('inise ..path block====',block);
                 switch (block.__component) {
                     case 'blocks.product-banner':
-                        console.log('block: ',block)
+                     
                         return <Banner key={block.id} data={block} />
                     case 'blocks.financial-tools':
                         return <FinancialTools key={block.id} tools={block} />
@@ -36,12 +38,16 @@ const Home = props => {
                         return<LearnMore key={block.id} data={block} />  
                     case 'blocks.credit' :
                         return<CreditScore key={block.id} data={block} />
+                    case 'blocks.short-form' :
+                            return<ShortExtendedForm key={block.id} data={block} basePath={props.basePath}/>
+                    
                 }
             })
             : null;
     }
 
     return (
+
         <div className="credit-card-flow">
             {props ? <Layout>{getComponents(props.data.blocks)}</Layout> : null}
         </div>
@@ -53,7 +59,7 @@ export async function getServerSideProps(props) {
     const [path] = props.params.path
     const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
     const data = pageData[0]
-    return { props: { data } }
+    return { props: { data,basePath:path } }
 }
 
 export default Home
