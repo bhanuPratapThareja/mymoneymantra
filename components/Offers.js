@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import $ from 'jquery'
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 
 import Strapi from '../providers/strapi'
 import { offerSlick } from '../Utils/offerSlick'
@@ -12,7 +12,7 @@ const Offers = props => {
 
    useEffect(() => {
       setOffers(offerSlick(props.data.cards));
-   })
+   }, [])
 
    return (
       <section data-aos="fade-up" className="container popular-card-container aos-init aos-animate">
