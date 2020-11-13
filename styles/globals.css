@@ -559,7 +559,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 .popular-cards-slider .slick-arrow.slick-prev:after {
   position: absolute;
   content: "";
-  /* background: url(../../build/images/icons/right-chevron.svg); */
+  background: url(../public/images/icons/right-chevron.svg);
   height: 48px;
   width: 48px;
   -ms-transform: rotate(180deg);
@@ -583,7 +583,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 .popular-cards-slider .slick-arrow.slick-next:after {
   position: absolute;
   content: "";
-  /* background: url(../../build/images/icons/right-chevron.svg); */
+  background: url(../public/images/icons/right-chevron.svg);
   height: 48px;
   width: 48px;
   background-position: center center;
@@ -1295,7 +1295,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 .banks-slider .slick-arrow.slick-prev:after {
   position: absolute;
   content: "";
-  /* background: url(../../build/images/icons/right-chevron.svg); */
+  background: url(../public/images/icons/right-chevron.svg);
   height: 48px;
   width: 48px;
   -ms-transform: rotate(180deg);
@@ -1319,7 +1319,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 .banks-slider .slick-arrow.slick-next:after {
   position: absolute;
   content: "";
-  /* background: url(../../build/images/icons/right-chevron.svg); */
+  background: url(../public/images/icons/right-chevron.svg);
   height: 48px;
   width: 48px;
   background-position: center center;

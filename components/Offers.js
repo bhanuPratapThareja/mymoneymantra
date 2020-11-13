@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react'
+import $ from 'jquery'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import Strapi from '../providers/strapi'
 import { offerSlick } from '../Utils/offerSlick'
@@ -8,8 +11,8 @@ const Offers = props => {
    const [offers, setOffers] = useState([])
 
    useEffect(() => {
-      setOffers(offerSlick(props.data.cards))
-   }, [])
+      setOffers(offerSlick(props.data.cards));
+   })
 
    return (
       <section data-aos="fade-up" className="container popular-card-container aos-init aos-animate">
@@ -17,12 +20,16 @@ const Offers = props => {
             <h2>{props.data.section_heading}</h2>
             <div className="popular-cards-slider slick-initialized slick-slider" id="trending-offers-sec"><button className="slick-prev slick-arrow" aria-label="Previous" type="button" >Previous</button>
 
+               <button className="slick-prev slick-arrow" aria-label="Previous" type="button">Previous</button>
+
                <div className="slick-list draggable" style={{ padding: '0px 50px' }} >
                   <div className="slick-track" style={{ opacity: '1', width: '20000px', transform: 'translate3d(-210px, 0px, 0px)' }} >
 
+                     <button className="slick-next slick-arrow" aria-label="Next" type="button">Next</button>
+
                      {offers.map(offer => {
                         return (
-                           <div key={offer.id} className={offer.classes} data-slick-index={offer['data-slick-index']} aria-hidden="false" tab-index="-1" >
+                           <div key={offer.id} className={offer.classes} data-slick-index={offer['data-slick-index']} aria-hidden="false" tab-index={offer['data-slick-index']} >
                               <div>
                                  <div className="popular-cards-slider-card" style={{ width: '100%', display: 'inline-block' }}>
                                     <div className="popular-cards-slider-card-top">

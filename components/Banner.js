@@ -2,9 +2,9 @@ import Strapi from '../providers/strapi'
 import Router from 'next/router';
 import Link from 'next/link'
 
-const Banner = ({ data, basePath }) => {
+const Banner = props => {
     const strapi = new Strapi()
-    const { heading, sub_text, button, image, usp_cards } = data
+    const { heading, sub_text, button, image, usp_cards } = props.data
 
     function renderUspCards(uspCards) {
         return uspCards.map(card => {
