@@ -3,6 +3,7 @@ import { getFormCompletePercent } from '../../utils/getFormPercentage'
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 class LongFormBanner extends React.Component {
+
     state = {
         gender: '',
         maritalStatus: '',
@@ -13,19 +14,16 @@ class LongFormBanner extends React.Component {
         percentageComplete: 0,
         totalValues: 18
     }
+
     handleChange = (value, type) => {
         this.setState({ [type]: value }, () => {
             this.setState({
                 percentageComplete: getFormCompletePercent({ ...this.state })
-            }, () => {
-                console.log(this.state)
             })
         })
     }
 
-    getFormValues = () => {
-        console.log(this.state)
-    }
+    getFormValues = () => {}
 
     render() {
         const strapi = new Strapi()
@@ -216,7 +214,7 @@ class LongFormBanner extends React.Component {
                             {/* <!--address proof--> */}
                             <div className="long-forms-wrapper" >
                                 <h5><b>11.</b> Do you have a proof of address?</h5>
-                                <div className="shortforms-container long-proof" value={this.state.proofOfAddress}  onChange={e => this.handleChange(e.target.value, 'proofOfAddress')}>
+                                <div className="shortforms-container long-proof" value={this.state.proofOfAddress} onChange={e => this.handleChange(e.target.value, 'proofOfAddress')}>
                                     <input className="lets-checkbox" type="radio" id="l-yes" name="proof" value="l-yes" required />
                                     <input className="lets-checkbox" type="radio" id="l-no" name="proof" value="l-no" required />
 
@@ -447,7 +445,6 @@ class LongFormBanner extends React.Component {
             </div>
         )
     }
-
 }
 
-    export default LongFormBanner
+export default LongFormBanner

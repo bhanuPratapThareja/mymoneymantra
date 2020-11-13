@@ -15,7 +15,6 @@ const Home = props => {
         return blocks.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':
-
                     return <Banner key={block.id} data={block} />
                 case 'blocks.financial-tools':
                     return <FinancialTools key={block.id} tools={block} />
@@ -25,8 +24,6 @@ const Home = props => {
                     return <Banks key={block.id} banks={block} />
                 case 'blocks.bank-new':
                     return <Banks key={block.id} banks={block} />
-                case 'blocks.credit-score':
-                    return <CreditScore key={block.id} data={block} />
                 case 'blocks.offer':
                     return <Offers key={block.id} data={block} />
                 case 'blocks.blogs':
@@ -37,6 +34,7 @@ const Home = props => {
                     return <CreditScore key={block.id} data={block} />
                 case 'blocks.short-form':
                     return <ShortExtendedForm key={block.id} data={block} basePath={props.basePath} />
+
             }
         })
     }
