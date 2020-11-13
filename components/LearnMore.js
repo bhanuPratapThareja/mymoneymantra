@@ -6,9 +6,7 @@ const LearnMore = props => {
    const sectionData = props.data.section
 
    useEffect(() => {
-      console.log('inside useEffect');
       $(".learn-more-wrapper-content .question").click(function () {
-         console.log('inside useEffect 1');
          $("#" + this.id + "-ans").slideToggle("ease-in-out");
          $("#" + this.id).find("svg").toggleClass("question-active");
          $("#" + this.id).toggleClass("question-open")

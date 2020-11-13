@@ -10,9 +10,6 @@ const OfferDetailCards = props => {
     useEffect(() => {
         if (props.data) {
             setOffers(props.data.offer_cards)
-            console.log("------------------props.data", Array.isArray(offers))
-            console.log("------------------props.data", offers)
-
         }
 
     })
@@ -24,7 +21,6 @@ const OfferDetailCards = props => {
         if (type == "applyNow") {
             Router.push(`/credit-cards/thank-you`)
         }
-        
     }
     return (
         <section className="container long-cards">

@@ -23,9 +23,9 @@ const CreditCards = ({ data, basePath }) => {
 
     console.log('data: ', data)
 
-    // useEffect(() => {
-    //     window.scroll(0)
-    // })
+    useEffect(() => {
+        window.scrollTo(0,0)
+    })
 
     const getComponents = blocks => {
         console.log('inside credit-catd ..path blocks', blocks);

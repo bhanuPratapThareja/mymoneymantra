@@ -1,61 +1,15 @@
 import { useEffect, useState } from "react"
 import Strapi from '../providers/strapi'
+import  { offerSlick }  from '../Utils/offerSlick';
 import $ from 'jquery'
 
 
 const Offers = props => {
    const strapi = new Strapi()
    const [offers, setOffers] = useState([])
-
    useEffect(() => {
-      let arrLength = props.data.cards.length
-      let centerIndex = Math.round(arrLength / 3)
-      let array1 = []
-      let array2 = []
-      let array3 = []
 
-      props.data.cards.forEach((card, index) => {
-         if (index === centerIndex) {
-            card['data-slick-index'] = 0
-            array2.push(card);
-         }
-         if (index < centerIndex) {
-            array1.push(card);
-         }
-         if (index > centerIndex) {
-            array3.push(card);
-         }
-      })
-
-      var revIndex = 0
-      for (var i = array1.length - 1; i >= 0; i--) {
-         array1[i]['data-slick-index'] = revIndex - 1
-         revIndex--
-      }
-
-      for (let i = 0; i < array3.length; i++) {
-         array3[i]['data-slick-index'] = i + 1
-      }
-
-      let newCards = [...array1, ...array2, ...array3]
-      newCards.forEach(card => {
-         if (card['data-slick-index'] < -1) {
-            card.classes = "slick-slide"
-         }
-         if (card['data-slick-index'] == -1) {
-            card.classes = "slick-slide slick-active"
-         }
-         if (card['data-slick-index'] == 0) {
-            card.classes = "slick-slide slick-active slick-current slick-center"
-         }
-         if (card['data-slick-index'] == 1) {
-            card.classes = "slick-slide slick-active"
-         }
-         if (card['data-slick-index'] > 1) {
-            card.classes = "slick-slide"
-         }
-      })
-      setOffers(newCards)
+      setOffers(offerSlick(props.data.cards))
    }, [])
 
    return (
@@ -68,8 +22,6 @@ const Offers = props => {
                   <div className="slick-track" style={{ opacity: '1', width: '20000px', transform: 'translate3d(-170px, 0px, 0px)' }} >
 
                      {offers.map(offer => {
-console.log('offers@@@@',offers);
-
                         return (
                            <div key={offer.id} className={offer.classes} data-slick-index={offer['data-slick-index']} aria-hidden="false" tab-index="-1" >
                               <div>
