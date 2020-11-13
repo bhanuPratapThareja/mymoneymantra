@@ -1,4 +1,5 @@
 import Strapi from '../../providers/strapi'
+import { useEffect } from 'react'
 import Layout from '../../components/Layout'
 import ListingBanner from '../../components/Listing/ListingBanner'
 import LongFormBanner from '../../components/LongForm/LongFormBanner'
@@ -16,15 +17,7 @@ import OfferDetailCards from '../../components/Listing/OfferDetailCards'
 import OfferBankProductDetails from '../../components/BankProduct/OfferBankProductDetails';
 import BankProductBanner from '../../components/BankProduct/BankProductBanner';
 
-
-import { useEffect, useState } from 'react'
-import Banner from '../../components/Banner'
-const CreditCards = ({ data, basePath }) => {
-
-    useEffect(() => {
-        // window.scrollTo(0,0)
-       
-    }, [])
+const CreditCards = ({ data }) => {
 
     useEffect(() => {
         window.scrollTo(0,0)
@@ -65,11 +58,6 @@ const CreditCards = ({ data, basePath }) => {
                     return <BankProductBanner key={block.id} data={block} />
                 case 'blocks.bank-product-offer-details':
                     return <OfferBankProductDetails key={block.id} data={block}/>
-                
-                
-
-
-
             }
         })
     }
@@ -81,12 +69,12 @@ const CreditCards = ({ data, basePath }) => {
     )
 }
 
-export async function getServerSideProps(props) {
+export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const [path] = props.params.path
+    const [path] = ctx.params.path
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)
     const data = pageData[0]
-    return { props: { data, basePath: path } }
+    return { props: { data, path } }
 }
 
 export default CreditCards

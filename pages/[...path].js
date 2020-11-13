@@ -33,8 +33,7 @@ const Home = props => {
                 case 'blocks.credit':
                     return <CreditScore key={block.id} data={block} />
                 case 'blocks.short-form':
-                    return <ShortExtendedForm key={block.id} data={block} basePath={props.basePath} />
-
+                    return <ShortExtendedForm key={block.id} data={block} path={props.path} />
             }
         })
     }
@@ -51,7 +50,7 @@ export async function getServerSideProps(props) {
     const [path] = props.params.path
     const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
     const data = pageData[0]
-    return { props: { data, basePath: path } }
+    return { props: { data, path } }
 }
 
 export default Home

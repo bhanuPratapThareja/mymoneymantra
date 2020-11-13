@@ -342,7 +342,7 @@ class LongFormBanner extends React.Component {
                                 <h5><b>15.</b> How much do you earn monthly?</h5>
                                 <div className="shortforms-container long-work ">
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="m-income" value=""
+                                        <input className="form__field" type="text" id="m-income" value="" readOnly
                                             placeholder="Net monthly income" required />
                                         <label className="form__label" htmlFor="m-income">Net monthly income</label>
                                         <p id="word-number"></p>
@@ -382,7 +382,7 @@ class LongFormBanner extends React.Component {
                                 <h5><b>16.</b> Terms & Conditions</h5>
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="checkbox-1" name="" value="" />
+                                        <input type="checkbox" id="checkbox-1" name="" value="" readOnly />
                                         <label htmlFor="checkbox-1"><span>
                                             I Hereby consent to receiving information from Central KYC Registry through
                                             SMS/Email on the above registered number/Email address.
@@ -391,7 +391,7 @@ class LongFormBanner extends React.Component {
                                 </div>
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="checkbox-2" name="" value="" />
+                                        <input type="checkbox" id="checkbox-2" name="" value="" readOnly />
                                         <label htmlFor="checkbox-2"><span>
                                             I have read the Authorization Statement, Know Your Credit Card, Card Member Terms and conditions and Most Important Terms and conditions and fully accept it and agree to be issued the Credit Card opted for by me.
                                     </span></label>
@@ -399,7 +399,7 @@ class LongFormBanner extends React.Component {
                                 </div>
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="checkbox-3" name="" value="" />
+                                        <input type="checkbox" id="checkbox-3" name="" value="" readOnly />
                                         <label htmlFor="checkbox-3"><span>
                                             From time to time, Citibank brings great products, offers & value addition to its customers. I authorize Citibank & its affiliates and/or partners to communicate these products and offers to me.
                                     </span></label>

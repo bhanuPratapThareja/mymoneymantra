@@ -30,7 +30,7 @@ const ListingFilter = () => {
                             <div className="fields-wrapper">
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="f-checkbox-1" name="" value="" />
+                                        <input type="checkbox" id="f-checkbox-1" name="" value="" readOnly />
                                         <label htmlFor="f-checkbox-1"><span>
                                             Axis Bank
                                         </span></label>
@@ -38,7 +38,7 @@ const ListingFilter = () => {
                                 </div>
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="f-checkbox-2" name="" value="" />
+                                        <input type="checkbox" id="f-checkbox-2" name="" value="" readOnly />
                                         <label htmlFor="f-checkbox-2"><span>
                                             HDFC Bank
                                         </span></label>
@@ -46,7 +46,7 @@ const ListingFilter = () => {
                                 </div>
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="f-checkbox-3" name="" value="" />
+                                        <input type="checkbox" id="f-checkbox-3" name="" value="" readOnly />
                                         <label htmlFor="f-checkbox-3"><span>
                                             American Express
                                         </span></label>
@@ -54,7 +54,7 @@ const ListingFilter = () => {
                                 </div>
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="f-checkbox-4" name="" value="" />
+                                        <input type="checkbox" id="f-checkbox-4" name="" value="" readOnly />
                                         <label htmlFor="f-checkbox-4"><span>
                                             Kotak Bank
                                         </span></label>
@@ -81,7 +81,7 @@ const ListingFilter = () => {
                             <div className="fields-wrapper">
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="f-checkbox-5" name="" value="" />
+                                        <input type="checkbox" id="f-checkbox-5" name="" value="" readOnly />
                                         <label htmlFor="f-checkbox-5"><span>
                                             Shopping
                                         </span></label>
@@ -89,7 +89,7 @@ const ListingFilter = () => {
                                 </div>
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="f-checkbox-6" name="" value="" />
+                                        <input type="checkbox" id="f-checkbox-6" name="" value="" readOnly />
                                         <label htmlFor="f-checkbox-6"><span>
                                             Travel
                                         </span></label>
@@ -97,7 +97,7 @@ const ListingFilter = () => {
                                 </div>
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="f-checkbox-7" name="" value="" />
+                                        <input type="checkbox" id="f-checkbox-7" name="" value="" readOnly />
                                         <label htmlFor="f-checkbox-7"><span>
                                             Fuel
                                         </span></label>
@@ -105,7 +105,7 @@ const ListingFilter = () => {
                                 </div>
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="f-checkbox-8" name="" value="" />
+                                        <input type="checkbox" id="f-checkbox-8" name="" value="" readOnly />
                                         <label htmlFor="f-checkbox-8"><span>
                                             Cashback
                                         </span></label>
@@ -137,8 +137,8 @@ const ListingFilter = () => {
                                         </div>
                                         <div className="row">
                                             <div className="col-sm-12">
-                                                <input type="hidden" name="min-value" value="" />
-                                                <input type="hidden" name="max-value" value="" />
+                                                <input type="hidden" name="min-value" value="" readOnly />
+                                                <input type="hidden" name="max-value" value="" readOnly />
                                             </div>
                                         </div>
                                         <span className="min-max left">₹500</span>

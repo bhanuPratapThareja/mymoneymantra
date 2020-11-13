@@ -2,10 +2,9 @@ import { useEffect } from 'react'
 import $ from 'jquery'
 import Router from 'next/router';
 
-function ShortExtendedForm ({basePath}) {
+function ShortExtendedForm(props) {
 
     useEffect(() => {
-
         $("#lets-go").click(function () {
             $(".lets-find-forms-container").removeClass("moving-in-rev")
             $(".lets-find").removeClass("moving-out-rev")
@@ -38,7 +37,7 @@ function ShortExtendedForm ({basePath}) {
                 $("#next").removeClass("submit-short-form");
             }
             if (n > slides.length) {
-               submitShortForm();
+                submitShortForm();
                 return
             }
             if (n < 1) {
@@ -60,13 +59,12 @@ function ShortExtendedForm ({basePath}) {
             $("#pages-count").text(slideIndex + " of " + slides.length);
             $(".progress-blue").width(width);
         }
-
     }, []);
 
-    const submitShortForm = ()=>{
-        Router.push(`${basePath}/loan-listing`)
+    const submitShortForm = () => {
+        Router.push(`${props.path}/loan-listing`)
     }
-    
+
 
     return <section data-aos="fade-up" className="container lets-find-container aos-init aos-animate">
         <div className="mobile-background"></div>
@@ -85,22 +83,22 @@ function ShortExtendedForm ({basePath}) {
                     <form>
                         <div className="form__group field">
                             <input className="form__field" type="text" id="full_name" placeholder="Full name" required="" />
-                            <label className="form__label" for="full_name">Full name</label>
+                            <label className="form__label" htmlFor="full_name">Full name</label>
                         </div>
                         <div className="form__group field">
                             <input className="form__field" type="tel" id="phone" placeholder="+91" required="" />
-                            <label className="form__label" for="phone">Phone number</label>
+                            <label className="form__label" htmlFor="phone">Phone number</label>
                         </div>
                         <div className="form__group field">
                             <input className="form__field" type="text" id="email" placeholder="Email address" required="" />
-                            <label className="form__label" for="email">Email address</label>
+                            <label className="form__label" htmlFor="email">Email address</label>
                         </div>
                     </form>
                     <div className="agree">
                         <div className="checkbox-container">
                             <div className="checkbox">
-                                <input type="checkbox" id="checkbox" name="" value="" />
-                                <label for="checkbox"><span>
+                                <input type="checkbox" id="checkbox" name="" value="" readOnly />
+                                <label htmlFor="checkbox"><span>
                                     I allow and authorize MyMoneyMantra and its partners to override the DND
                                     registry
                                     and
@@ -133,12 +131,12 @@ function ShortExtendedForm ({basePath}) {
                                 <input className="lets-checkbox" type="radio" id="no" name="yes/no" required="" />
                                 <input className="lets-checkbox" type="radio" id="mumbai" name="yes/no" required="" />
                                 <input className="lets-checkbox" type="radio" id="chennai" name="yes/no" required="" />
-                                <label for="yes">Yes</label>
-                                <label for="no">No</label>
+                                <label htmlFor="yes">Yes</label>
+                                <label htmlFor="no">No</label>
                                 <div className="form__group-wrapper grid-span">
                                     <div className="form__group field">
                                         <input className="form__field drop" type="text" id="bank" placeholder="bank" required="" />
-                                        <label className="form__label" for="email">Bank</label>
+                                        <label className="form__label" htmlFor="email">Bank</label>
                                     </div>
                                     <div id="bank-drop" className="dropdown-content">
                                         <div className="dropdown-content-links">
@@ -161,10 +159,10 @@ function ShortExtendedForm ({basePath}) {
                                 <input className="lets-checkbox" type="radio" id="Self-employed-p" name="employment" required="" />
                                 <input className="lets-checkbox" type="radio" id="Self-employed-b" name="employment" required="" />
                                 <input className="lets-checkbox" type="radio" id="Not-employed" name="employment" required="" />
-                                <label for="Salaried">Salaried</label>
-                                <label for="Self-employed-p">Self-employed (Professional)</label>
-                                <label for="Self-employed-b">Self-employed (Business)</label>
-                                <label for="Not-employed">Not employed</label>
+                                <label htmlFor="Salaried">Salaried</label>
+                                <label htmlFor="Self-employed-p">Self-employed (Professional)</label>
+                                <label htmlFor="Self-employed-b">Self-employed (Business)</label>
+                                <label htmlFor="Not-employed">Not employed</label>
                             </div>
                         </div>
                         {/* <!--form-3--> */}
@@ -173,7 +171,7 @@ function ShortExtendedForm ({basePath}) {
                             <div className="shortforms-container">
                                 <div className="form__group field phone-grid-span">
                                     <div role="wrapper" className="gj-datepicker gj-datepicker-md gj-unselectable"><input className="form__field gj-textbox-md" type="text" id="dob" placeholder="MM / DD / YYYY" required="" data-type="datepicker" data-guid="951c900c-4bc7-a94b-7103-7a68da6ce3bd" data-datepicker="true" role="input" /><i className="gj-icon" role="right-icon">event</i></div>
-                                    <label className="form__label" for="dob">Date of Birth</label>
+                                    <label className="form__label" htmlFor="dob">Date of Birth</label>
                                 </div>
                             </div>
                         </div>
@@ -183,12 +181,12 @@ function ShortExtendedForm ({basePath}) {
                             <div className="shortforms-container pan-card-cont">
                                 <div className="form__group field">
                                     <input className="form__field" type="text" id="pancard" placeholder="PAN Card Number" required="" />
-                                    <label className="form__label" for="pancard">PAN Card Number</label>
+                                    <label className="form__label" htmlFor="pancard">PAN Card Number</label>
                                 </div>
                                 <div className="form__group field file-type">
                                     <input className="form__field upload-real" type="file" id="pancard-image" placeholder="PAN Card image" required="" />
                                     <input className="form__field upload-show" type="text" id="pancard-image-show" placeholder="PAN Card image" required="" />
-                                    {/* <!-- <label className="form__label" for="pancard"><svg width="24" height="24"
+                                    {/* <!-- <label className="form__label" htmlFor="pancard"><svg width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M8.71 7.71L11 5.41V15C11 15.2652 11.1054 15.5196 11.2929 15.7071C11.4804 15.8946 11.7348 16 12 16C12.2652 16 12.5196 15.8946 12.7071 15.7071C12.8946 15.5196 13 15.2652 13 15V5.41L15.29 7.71C15.383 7.80373 15.4936 7.87813 15.6154 7.92889C15.7373 7.97966 15.868 8.0058 16 8.0058C16.132 8.0058 16.2627 7.97966 16.3846 7.92889C16.5064 7.87813 16.617 7.80373 16.71 7.71C16.8037 7.61704 16.8781 7.50644 16.9289 7.38458C16.9797 7.26272 17.0058 7.13202 17.0058 7C17.0058 6.86799 16.9797 6.73729 16.9289 6.61543C16.8781 6.49357 16.8037 6.38297 16.71 6.29L12.71 2.29C12.6149 2.19896 12.5028 2.1276 12.38 2.08C12.1365 1.97999 11.8635 1.97999 11.62 2.08C11.4972 2.1276 11.3851 2.19896 11.29 2.29L7.29 6.29C7.19676 6.38324 7.1228 6.49393 7.07234 6.61575C7.02188 6.73758 6.99591 6.86814 6.99591 7C6.99591 7.13186 7.02188 7.26243 7.07234 7.38425C7.1228 7.50607 7.19676 7.61677 7.29 7.71C7.38324 7.80324 7.49393 7.8772 7.61575 7.92766C7.73757 7.97812 7.86814 8.00409 8 8.00409C8.13186 8.00409 8.26243 7.97812 8.38425 7.92766C8.50607 7.8772 8.61676 7.80324 8.71 7.71ZM21 12C20.7348 12 20.4804 12.1054 20.2929 12.2929C20.1054 12.4804 20 12.7348 20 13V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V13C4 12.7348 3.89464 12.4804 3.70711 12.2929C3.51957 12.1054 3.26522 12 3 12C2.73478 12 2.48043 12.1054 2.29289 12.2929C2.10536 12.4804 2 12.7348 2 13V19C2 19.7957 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7957 22 19V13C22 12.7348 21.8946 12.4804 21.7071 12.2929C21.5196 12.1054 21.2652 12 21 12Z"
@@ -215,7 +213,7 @@ function ShortExtendedForm ({basePath}) {
                                 <div className="form__group-wrapper grid-span">
                                     <div className="form__group field">
                                         <input className="form__field" type="text" id="company" placeholder="bank" required="" />
-                                        <label className="form__label" for="company">Company Name</label>
+                                        <label className="form__label" htmlFor="company">Company Name</label>
                                     </div>
                                     <div id="company-drop" className="dropdown-content">
                                         <div className="dropdown-content-links">
@@ -233,14 +231,14 @@ function ShortExtendedForm ({basePath}) {
                             <h2>How much do you earn monthly?</h2>
                             <div className="shortforms-container monthly-earn">
                                 <div className="form__group field">
-                                    <input className="form__field" type="text" id="m-income" value="" placeholder="Net monthly income" required="" />
-                                    <label className="form__label" for="m-income">Net monthly income</label>
+                                    <input className="form__field" type="text" id="m-income" value="" readOnly placeholder="Net monthly income" required="" />
+                                    <label className="form__label" htmlFor="m-income">Net monthly income</label>
                                     <p id="word-number"></p>
                                 </div>
                                 <div className="form__group field file-type">
-                                    <input className="form__field upload-real" value="" type="file" id="salary-image" placeholder="salary slip" required="" />
-                                    <input className="form__field upload-show" value="" type="text" id="salary-image-show" placeholder="salary slip" readonly="" />
-                                    {/* <!-- <label className="form__label" for="salary">
+                                    <input className="form__field upload-real" value="" readOnly type="file" id="salary-image" placeholder="salary slip" required="" />
+                                    <input className="form__field upload-show" value="" readOnly type="text" id="salary-image-show" placeholder="salary slip" />
+                                    {/* <!-- <label className="form__label" htmlFor="salary">
                                     </svg>
                                     Upload Salary Slips &nbsp;<b>(optional)</b></label> --> */}
                                     <svg className="file-upload-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -263,7 +261,7 @@ function ShortExtendedForm ({basePath}) {
                                 <div className="form__group-wrapper">
                                     <div className="form__group field">
                                         <input className="form__field" type="text" id="bankname" placeholder="bankname" required="" />
-                                        <label className="form__label" for="bankname">Company Name</label>
+                                        <label className="form__label" htmlFor="bankname">Company Name</label>
                                     </div>
                                     <div id="bankname-drop" className="dropdown-content">
                                         <div className="dropdown-content-links">
@@ -277,7 +275,7 @@ function ShortExtendedForm ({basePath}) {
                                 <div className="form__group field file-type">
                                     <input className="form__field upload-real" type="file" id="bank-statement" placeholder="salary slip" required="" />
                                     <input className="form__field upload-show" type="text" id="bank-statement-show" placeholder="salary slip" required="" />
-                                    {/* <!-- <label className="form__label" for="salary"><svg width="24" height="24"
+                                    {/* <!-- <label className="form__label" htmlFor="salary"><svg width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M8.71 7.71L11 5.41V15C11 15.2652 11.1054 15.5196 11.2929 15.7071C11.4804 15.8946 11.7348 16 12 16C12.2652 16 12.5196 15.8946 12.7071 15.7071C12.8946 15.5196 13 15.2652 13 15V5.41L15.29 7.71C15.383 7.80373 15.4936 7.87813 15.6154 7.92889C15.7373 7.97966 15.868 8.0058 16 8.0058C16.132 8.0058 16.2627 7.97966 16.3846 7.92889C16.5064 7.87813 16.617 7.80373 16.71 7.71C16.8037 7.61704 16.8781 7.50644 16.9289 7.38458C16.9797 7.26272 17.0058 7.13202 17.0058 7C17.0058 6.86799 16.9797 6.73729 16.9289 6.61543C16.8781 6.49357 16.8037 6.38297 16.71 6.29L12.71 2.29C12.6149 2.19896 12.5028 2.1276 12.38 2.08C12.1365 1.97999 11.8635 1.97999 11.62 2.08C11.4972 2.1276 11.3851 2.19896 11.29 2.29L7.29 6.29C7.19676 6.38324 7.1228 6.49393 7.07234 6.61575C7.02188 6.73758 6.99591 6.86814 6.99591 7C6.99591 7.13186 7.02188 7.26243 7.07234 7.38425C7.1228 7.50607 7.19676 7.61677 7.29 7.71C7.38324 7.80324 7.49393 7.8772 7.61575 7.92766C7.73757 7.97812 7.86814 8.00409 8 8.00409C8.13186 8.00409 8.26243 7.97812 8.38425 7.92766C8.50607 7.8772 8.61676 7.80324 8.71 7.71ZM21 12C20.7348 12 20.4804 12.1054 20.2929 12.2929C20.1054 12.4804 20 12.7348 20 13V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V13C4 12.7348 3.89464 12.4804 3.70711 12.2929C3.51957 12.1054 3.26522 12 3 12C2.73478 12 2.48043 12.1054 2.29289 12.2929C2.10536 12.4804 2 12.7348 2 13V19C2 19.7957 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7957 22 19V13C22 12.7348 21.8946 12.4804 21.7071 12.2929C21.5196 12.1054 21.2652 12 21 12Z"
@@ -302,25 +300,25 @@ function ShortExtendedForm ({basePath}) {
                             <h2>Please provide us your current address</h2>
                             <div className="shortforms-container current-address">
                                 <div className="form__group field">
-                                    <input className="form__field" type="text" id="pincode" value="" placeholder="pincode" required="" />
-                                    <label className="form__label" for="pincode">Pincode</label>
+                                    <input className="form__field" type="text" id="pincode" value="" readOnly placeholder="pincode" required="" />
+                                    <label className="form__label" htmlFor="pincode">Pincode</label>
                                 </div>
                                 <div className="form__group field">
-                                    <input className="form__field" type="text" id="city" value="" placeholder="city" required="" />
-                                    <label className="form__label" for="city">City</label>
+                                    <input className="form__field" type="text" id="city" value="" readOnly placeholder="city" required="" />
+                                    <label className="form__label" htmlFor="city">City</label>
                                 </div>
                                 <div className="form__group field grid-span">
-                                    <input className="form__field" type="text" id="address-l-1" value="" placeholder="address" required="" />
-                                    <label className="form__label" for="address-l-1">Address Line 1</label>
+                                    <input className="form__field" type="text" id="address-l-1" value="" readOnly placeholder="address" required="" />
+                                    <label className="form__label" htmlFor="address-l-1">Address Line 1</label>
                                 </div>
                                 <div className="form__group field grid-span">
-                                    <input className="form__field" type="text" id="address-l-2" value="" placeholder="address" required="" />
-                                    <label className="form__label" for="address-l-2">Address Line 2</label>
+                                    <input className="form__field" type="text" id="address-l-2" value="" readOnly placeholder="address" required="" />
+                                    <label className="form__label" htmlFor="address-l-2">Address Line 2</label>
                                 </div>
                                 <div className="form__group field file-type phone-grid-span">
                                     <input className="form__field upload-real" type="file" id="adhaar-image" placeholder="adhaar" required="" />
                                     <input className="form__field upload-show" type="text" id="adhaar-image-show" placeholder="adhaar" required="" />
-                                    {/* <!-- <label className="form__label" for="adhaar"><svg width="24" height="24"
+                                    {/* <!-- <label className="form__label" htmlFor="adhaar"><svg width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M8.71 7.71L11 5.41V15C11 15.2652 11.1054 15.5196 11.2929 15.7071C11.4804 15.8946 11.7348 16 12 16C12.2652 16 12.5196 15.8946 12.7071 15.7071C12.8946 15.5196 13 15.2652 13 15V5.41L15.29 7.71C15.383 7.80373 15.4936 7.87813 15.6154 7.92889C15.7373 7.97966 15.868 8.0058 16 8.0058C16.132 8.0058 16.2627 7.97966 16.3846 7.92889C16.5064 7.87813 16.617 7.80373 16.71 7.71C16.8037 7.61704 16.8781 7.50644 16.9289 7.38458C16.9797 7.26272 17.0058 7.13202 17.0058 7C17.0058 6.86799 16.9797 6.73729 16.9289 6.61543C16.8781 6.49357 16.8037 6.38297 16.71 6.29L12.71 2.29C12.6149 2.19896 12.5028 2.1276 12.38 2.08C12.1365 1.97999 11.8635 1.97999 11.62 2.08C11.4972 2.1276 11.3851 2.19896 11.29 2.29L7.29 6.29C7.19676 6.38324 7.1228 6.49393 7.07234 6.61575C7.02188 6.73758 6.99591 6.86814 6.99591 7C6.99591 7.13186 7.02188 7.26243 7.07234 7.38425C7.1228 7.50607 7.19676 7.61677 7.29 7.71C7.38324 7.80324 7.49393 7.8772 7.61575 7.92766C7.73757 7.97812 7.86814 8.00409 8 8.00409C8.13186 8.00409 8.26243 7.97812 8.38425 7.92766C8.50607 7.8772 8.61676 7.80324 8.71 7.71ZM21 12C20.7348 12 20.4804 12.1054 20.2929 12.2929C20.1054 12.4804 20 12.7348 20 13V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V13C4 12.7348 3.89464 12.4804 3.70711 12.2929C3.51957 12.1054 3.26522 12 3 12C2.73478 12 2.48043 12.1054 2.29289 12.2929C2.10536 12.4804 2 12.7348 2 13V19C2 19.7957 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7957 22 19V13C22 12.7348 21.8946 12.4804 21.7071 12.2929C21.5196 12.1054 21.2652 12 21 12Z"
