@@ -14,6 +14,8 @@ class LongFormBanner extends React.Component {
         totalValues: 18
     }
     handleChange = (value, type) => {
+        console.log('[type]',[type]);
+        console.log('value',value);
         this.setState({ [type]: value }, () => {
             this.setState({
                 percentageComplete: getFormCompletePercent({ ...this.state })
@@ -79,12 +81,12 @@ class LongFormBanner extends React.Component {
                                 {/* <!--martial status--> */}
                                 <div className="long-forms-wrapper">
                                     <h5><b>3.</b> Marital Status</h5>
-                                    <div className="shortforms-container long-gender">
-                                        <input className="lets-checkbox" type="radio" id="single" name="Marital" required />
-                                        <input className="lets-checkbox" type="radio" id="married" name="Marital" required />
-                                        <input className="lets-checkbox" type="radio" id="separated" name="Marital" required />
-                                        <input className="lets-checkbox" type="radio" id="divorced" name="Marital" required />
-                                        <input className="lets-checkbox" type="radio" id="widowed" name="Marital" required />
+                                    <div className="shortforms-container long-gender" value={this.state.maritalStatus} onChange={e => this.handleChange(e.target.value,'maritalStatus')}>
+                                        <input className="lets-checkbox" type="radio" id="single" name="maritalStatus" required />
+                                        <input className="lets-checkbox" type="radio" id="married" name="maritalStatus" required />
+                                        <input className="lets-checkbox" type="radio" id="separated" name="maritalStatus" required />
+                                        <input className="lets-checkbox" type="radio" id="divorced" name="maritalStatus" required />
+                                        <input className="lets-checkbox" type="radio" id="widowed" name="maritalStatus" required />
 
                                         <label htmlFor="single">Single</label>
                                         <label htmlFor="married">Married</label>
@@ -211,9 +213,9 @@ class LongFormBanner extends React.Component {
                                 {/* <!--address proof--> */}
                                 <div className="long-forms-wrapper">
                                     <h5><b>11.</b> Do you have a proof of address?</h5>
-                                    <div className="shortforms-container long-proof ">
-                                        <input className="lets-checkbox" type="radio" id="l-yes" name="proof" required />
-                                        <input className="lets-checkbox" type="radio" id="l-no" name="proof" required />
+                                    <div className="shortforms-container long-proof " value={this.state.proofOfAddress} onChange={e => this.handleChange(e.target.value,'proofOfAddress')}>
+                                        <input className="lets-checkbox" type="radio" id="l-yes" name="proofOfAddress" required />
+                                        <input className="lets-checkbox" type="radio" id="l-no" name="proofOfAddress" required />
 
                                         <label htmlFor="l-yes">Yes</label>
                                         <label htmlFor="l-no">No</label>
@@ -283,9 +285,9 @@ class LongFormBanner extends React.Component {
                                 {/* <!--contact proof--> */}
                                 <div className="long-forms-wrapper">
                                     <h5><b>13.</b> Which address would you prefer for communication purposes?</h5>
-                                    <div className="shortforms-container long-proof">
-                                        <input className="lets-checkbox" type="radio" id="home" name="contact" required />
-                                        <input className="lets-checkbox" type="radio" id="office" name="contact" required />
+                                    <div className="shortforms-container long-proof" value={this.state.commPurpose} onChange={e => this.handleChange(e.target.value,'commPurpose')}>
+                                        <input className="lets-checkbox" type="radio" id="home" name="commPurpose" required />
+                                        <input className="lets-checkbox" type="radio" id="office" name="commPurpose" required />
 
                                         <label htmlFor="home">Home</label>
                                         <label htmlFor="office">Office</label>
@@ -407,7 +409,7 @@ class LongFormBanner extends React.Component {
                                 {/* <!--director proof--> */}
                                 <div className="long-forms-wrapper">
                                     <h5><b>17.</b> Are you a director/senior officer of Citibank and/or their Relative AND / OR director of other banks and/or their Relative?</h5>
-                                    <div className="shortforms-container long-proof ">
+                                    <div className="shortforms-container long-proof " value={this.state.director} onChange={e => this.handleChange(e.target.value,'director')}>
                                         <input className="lets-checkbox" type="radio" id="director-yes" name="director" required />
                                         <input className="lets-checkbox" type="radio" id="director-no" name="director" required />
 
@@ -420,7 +422,7 @@ class LongFormBanner extends React.Component {
                                 {/* <!--member-account proof--> */}
                                 <div className="long-forms-wrapper">
                                     <h5><b>18.</b> Do you or your immediate family member/joint account holder or their immediate family members currently hold/have held/are being considered for a position as a senior public figure?</h5>
-                                    <div className="shortforms-container long-proof ">
+                                    <div className="shortforms-container long-proof " value={this.state.member} onChange={e => this.handleChange(e.target.value,'member')}>
                                         <input className="lets-checkbox" type="radio" id="member-yes" name="member" required />
                                         <input className="lets-checkbox" type="radio" id="member-no" name="member" required />
 

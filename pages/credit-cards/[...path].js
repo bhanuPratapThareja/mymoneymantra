@@ -8,10 +8,17 @@ import Banks from '../../components/Banks';
 import CreditScore from '../../components/CreditScore';
 import FinancialTools from '../../components/FinancialTools';
 import Blog from '../../components/Blog';
+
 import Rewards from '../../components/Rewards';
 import ThankYouBanner from '../../components/ThankYou/ThankYouBanner';
 import OfferDetailCards from '../../components/Listing/OfferDetailCards'
+
+import OfferBankProductDetails from '../../components/BankProduct/OfferBankProductDetails';
+import BankProductBanner from '../../components/BankProduct/BankProductBanner';
+
+
 import { useEffect, useState } from 'react'
+import Banner from '../../components/Banner'
 const CreditCards = ({ data, basePath }) => {
 
     console.log('data: ', data)
@@ -21,7 +28,7 @@ const CreditCards = ({ data, basePath }) => {
     // })
 
     const getComponents = blocks => {
-        console.log('blocks inside credit-catd ..path', blocks);
+        console.log('inside credit-catd ..path blocks', blocks);
         return blocks.map(block => {
             switch (block.__component) {
                 case 'blocks.listing-banner':
@@ -52,6 +59,12 @@ const CreditCards = ({ data, basePath }) => {
                     return <ThankYouBanner key={block.id} data={block} />
                 case 'blocks.offer-card':
                     return <OfferDetailCards key={block.id} data={block} basePath={basePath} />
+                case 'blocks.product-banner':
+                    return <BankProductBanner key={block.id} data={block} />
+                case 'blocks.bank-product-offer-details':
+                    return <OfferBankProductDetails key={block.id} data={block}/>
+                
+                
 
 
 

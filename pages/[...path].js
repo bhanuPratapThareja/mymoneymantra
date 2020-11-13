@@ -13,9 +13,7 @@ import ShortExtendedForm from '../components/ShortExtendedForm';
 const Home = props => {
     const getComponents = blocks => {
         return blocks.length > 0
-       
             ? blocks.map(block => {
-               console.log('inise ..path block====',block);
                 switch (block.__component) {
                     case 'blocks.product-banner':
                      
@@ -31,6 +29,7 @@ const Home = props => {
                     // case 'blocks.credit-score':
                     //     return <CreditScore key={block.id} data={block} />
                     case 'blocks.offer' :
+                        console.log('inside ...path offer block',block);
                         return<Offers key={block.id} data={block} />
                     case 'blocks.blogs' : 
                         return <Blog key={block.id} data={block} />
