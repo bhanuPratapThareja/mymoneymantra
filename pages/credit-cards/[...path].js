@@ -14,7 +14,10 @@ import OfferDetailCards from '../../components/Listing/OfferDetailCards'
 
 const CreditCards = ({ data, basePath }) => {
 
-    console.log('data: ', data)
+    useEffect(() => {
+        // window.scrollTo(0,0)
+       
+    }, [])
 
     const getComponents = blocks => {
         console.log('blocks inside credit-catd ..path', blocks);
