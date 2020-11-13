@@ -3,10 +3,14 @@ import Layout from '../../components/Layout'
 import ListingBanner from '../../components/Listing/ListingBanner'
 import LongFormBanner from '../../components/LongForm/LongFormBanner'
 import LearnMore from '../../components/LearnMore'
+import { useEffect } from 'react'
 
 const CreditCards = ({ data }) => {
 
-    console.log('data: ', data)
+    useEffect(() => {
+        // window.scrollTo(0,0)
+       
+    }, [])
 
     const getComponents = blocks => {
         return blocks.map(block => {
