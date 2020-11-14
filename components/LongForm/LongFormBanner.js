@@ -1,5 +1,5 @@
 import Strapi from "../../providers/strapi"
-import { getFormCompletePercent } from '../../utils/getFormPercentage'
+import { getFormPercentage } from '../../Utils/formPercentage'
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 class LongFormBanner extends React.Component {
@@ -14,14 +14,24 @@ class LongFormBanner extends React.Component {
         firstName: '',
         lastName: '',
         fullName: '',
+        fathersFirstName: '',
+        fathersLastName: '',
+        fathersFullName: '',
         percentageComplete: 0,
         totalValues: 18
     }
 
-    handleNameInputs = (value,type) => {
+    handleNameInputs = (value, type) => {
+        const fullName = ''
+        const fathersFullName = ''
         this.setState({ [type]: value }, () => {
-            const fullName = this.state.firstName + ' ' + this.state.lastName
-            this.setState({ fullName }, () => {
+            if (value === 'firstName' || value === 'lastName') {
+                fullName = this.state.firstName + ' ' + this.state.lastName
+            }
+            if (value === 'fathersFirstName' || value === 'fathersLastName') {
+                fathersFullName = this.state.fathersFirstName + ' ' + this.state.fathersLastName
+            }
+            this.setState({ fullName, fathersFullName }, () => {
                 this.handlePercentage()
             })
         })
@@ -34,9 +44,7 @@ class LongFormBanner extends React.Component {
     }
 
     handlePercentage = () => {
-        this.setState({
-            percentageComplete: getFormCompletePercent({ ...this.state })
-        })
+        this.setState({ percentageComplete: getFormPercentage({ ...this.state }) })
     }
 
     getFormValues = () => { }
@@ -119,11 +127,11 @@ class LongFormBanner extends React.Component {
                                 <h5><b>4.</b> Father’s Name</h5>
                                 <div className="shortforms-container long-name">
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="father-f-name" placeholder="First Name" required />
+                                        <input className="form__field" type="text" id="father-f-name" placeholder="First Name" required value={this.state.fathersFirstName} onChange={e => this.handleNameInputs(e.target.value, 'fathersFirstName')} />
                                         <label className="form__label" htmlFor="father-f-name">First Name</label>
                                     </div>
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="father-l-name" placeholder="Last Name" required />
+                                        <input className="form__field" type="text" id="father-l-name" placeholder="Last Name" required value={this.state.fathersLastName} onChange={e => this.handleNameInputs(e.target.value, 'fathersLastName')} />
                                         <label className="form__label" htmlFor="father-l-name">Last Name</label>
                                     </div>
 
