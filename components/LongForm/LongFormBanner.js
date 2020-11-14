@@ -11,19 +11,35 @@ class LongFormBanner extends React.Component {
         commPurpose: '',
         director: '',
         member: '',
+        firstName: '',
+        lastName: '',
+        fullName: '',
         percentageComplete: 0,
         totalValues: 18
     }
 
-    handleChange = (value, type) => {
+    handleNameInputs = (value,type) => {
         this.setState({ [type]: value }, () => {
-            this.setState({
-                percentageComplete: getFormCompletePercent({ ...this.state })
+            const fullName = this.state.firstName + ' ' + this.state.lastName
+            this.setState({ fullName }, () => {
+                this.handlePercentage()
             })
         })
     }
 
-    getFormValues = () => {}
+    handleChange = (value, type) => {
+        this.setState({ [type]: value }, () => {
+            this.handlePercentage()
+        })
+    }
+
+    handlePercentage = () => {
+        this.setState({
+            percentageComplete: getFormCompletePercent({ ...this.state })
+        })
+    }
+
+    getFormValues = () => { }
 
     render() {
         const strapi = new Strapi()
@@ -68,11 +84,11 @@ class LongFormBanner extends React.Component {
                                 <h5><b>2.</b> Full Name</h5>
                                 <div className="shortforms-container long-name">
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="first-name" placeholder="First Name" required />
+                                        <input className="form__field" type="text" id="first-name" placeholder="First Name" required value={this.state.firstName} onChange={e => this.handleNameInputs(e.target.value, 'firstName')} />
                                         <label className="form__label" htmlFor="first-name">First Name</label>
                                     </div>
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="last-name" placeholder="Last Name" required />
+                                        <input className="form__field" type="text" id="last-name" placeholder="Last Name" required value={this.state.lastName} onChange={e => this.handleNameInputs(e.target.value, 'lastName')} />
                                         <label className="form__label" htmlFor="last-name">Last Name</label>
                                     </div>
 
