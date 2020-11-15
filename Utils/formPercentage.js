@@ -13,10 +13,15 @@ function deleteStateKeys(state) {
     if (!state.fathersFirstName || !state.fathersLastName) {
         delete state.fathersFullName
     }
+    if (!state.mothersFirstName || !state.mothersLastName) {
+        delete state.mothersFullName
+    }
     delete state.firstName
     delete state.lastName
     delete state.fathersFirstName
     delete state.fathersLastName
+    delete state.mothersFirstName
+    delete state.mothersLastName
     delete state.percentageComplete
     delete state.totalValues
 }
