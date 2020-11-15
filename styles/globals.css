@@ -2,6 +2,13 @@
   background-color: white;
   border-radius: 10px;
 }
+
+.banner-sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
 @keyframes drop-open {
   0% {
     opacity: 0;
