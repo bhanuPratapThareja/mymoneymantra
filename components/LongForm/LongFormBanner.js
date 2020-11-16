@@ -4,6 +4,8 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 class LongFormBanner extends React.Component {
 
+    bannerRef = React.createRef()
+
     state = {
         gender: '',
         maritalStatus: '',
@@ -21,14 +23,23 @@ class LongFormBanner extends React.Component {
         totalValues: 18
     }
 
+    componentDidMount() {
+        const bannerOffset = this.bannerRef.current.offsetTop
+        window.onscroll = () => { this.bannerSticky(bannerOffset) }
+    }
+
+    bannerSticky = bannerOffset => {
+        if (window.pageYOffset >= bannerOffset) {
+            this.bannerRef.current.classList.add("banner-sticky")
+        } else {
+            this.bannerRef.current.classList.remove("banner-sticky");
+        }
+    }
+
     handleNameInputs = (value, type) => {
-       
         this.setState({ [type]: value }, () => {
-           
-               const fullName = this.state.firstName + ' ' + this.state.lastName
-               const fathersFullName = this.state.fathersFirstName + ' ' + this.state.fathersLastName
-               
-            
+            const fullName = this.state.firstName + ' ' + this.state.lastName
+            const fathersFullName = this.state.fathersFirstName + ' ' + this.state.fathersLastName
             this.setState({ fullName, fathersFullName }, () => {
                 this.handlePercentage()
             })
@@ -54,7 +65,7 @@ class LongFormBanner extends React.Component {
         return (
             <div className="long-form">
                 <section className="long-form-wrapper">
-                    <div className="card-info">
+                    <div className="card-info" ref={this.bannerRef}>
                         <h5 className="app-form">{form_heading}</h5>
                         <h3><b>{bank_name}</b><br />{product_type}</h3>
                         <img src={`${strapi.baseUrl}${banner_image.url}`} />

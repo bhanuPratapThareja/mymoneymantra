@@ -24,8 +24,8 @@ const Banner = props => {
         <section className="banner">
             <div className="banner-wrapper">
                 <div className="normal-banner">
-                    <h1>{heading}</h1>
-
+                    {/* <h1>{heading}</h1> */}
+                    <h1><b>Credit cards</b> for <br />all your needs.</h1>
                     <p>{sub_text}</p>
                     <button onClick={goToPage}>{button}</button>
                 </div>
