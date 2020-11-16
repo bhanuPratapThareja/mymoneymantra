@@ -22,15 +22,13 @@ class LongFormBanner extends React.Component {
     }
 
     handleNameInputs = (value, type) => {
-        const fullName = ''
-        const fathersFullName = ''
+       
         this.setState({ [type]: value }, () => {
-            if (value === 'firstName' || value === 'lastName') {
-                fullName = this.state.firstName + ' ' + this.state.lastName
-            }
-            if (value === 'fathersFirstName' || value === 'fathersLastName') {
-                fathersFullName = this.state.fathersFirstName + ' ' + this.state.fathersLastName
-            }
+           
+               const fullName = this.state.firstName + ' ' + this.state.lastName
+               const fathersFullName = this.state.fathersFirstName + ' ' + this.state.fathersLastName
+               
+            
             this.setState({ fullName, fathersFullName }, () => {
                 this.handlePercentage()
             })
