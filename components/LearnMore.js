@@ -1,11 +1,15 @@
 import { useEffect } from 'react'
 import $ from 'jquery'
+import MarkDown from '../Utils/markdown'
 
 const LearnMore = props => {
+
    const sectionHeading = props.data.section_heading
    const sectionData = props.data.section
 
+
    useEffect(() => {
+
       $(".learn-more-wrapper-content .question").click(function () {
          $("#" + this.id + "-ans").slideToggle("ease-in-out");
          $("#" + this.id).find("svg").toggleClass("question-active");
@@ -22,8 +26,7 @@ const LearnMore = props => {
             $(this).closest(".form__group").addClass("active-input");
             $("#" + this.id + "-drop").show("slow");
          });
-   })
-
+   }, [])
 
    return (
       <section data-aos="fade-up" className="container aos-init aos-animate">
@@ -31,7 +34,7 @@ const LearnMore = props => {
             <h2>{sectionHeading}</h2>
             <div className="learn-more-wrapper">
 
-               {sectionData.map((secData,index )=> {
+               {sectionData.map((secData, index) => {
                   return (
                      <div className="learn-more-wrapper-content" key={secData.id}>
                         <div className="question" id={`ques-${index}`}>
@@ -41,7 +44,7 @@ const LearnMore = props => {
                            </svg>
                         </div>
                         <div className="answer" id={`ques-${index}-ans`}>
-                           {secData.questions_and_answers}
+                           <MarkDown markDown={secData.questions_and_answers} />
                         </div>
                      </div>
                   )
