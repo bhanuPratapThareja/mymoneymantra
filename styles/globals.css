@@ -1,12 +1,7 @@
-.container.score-container {
-  background-color: white;
-  border-radius: 10px;
-}
-
 .banner-sticky {
-    position: fixed;
-    top: 0;
-    width: 100%;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 @keyframes drop-open {
@@ -932,7 +927,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   padding: 20px 0px 12px 32px;
   border-bottom-left-radius: 6px;
   width: 100%;
-  /* background: url(../../build/images/listings/blue-gradient.svg); */
+  background: url(../public/images/listings/blue-gradient.svg);
   background-repeat: no-repeat;
   background-position: left bottom;
 }
@@ -2135,7 +2130,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 }
 
 .file-type {
-  /* background: url(../../build/images/credit-card-flow/dash.svg); */
+  background: url(../public/images/credit-card-flow/dash.svg);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -5247,7 +5242,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   -ms-flex-align: center;
   align-items: center;
   border-radius: 6px;
-  /* background: url("../../build/images/credit-card-flow/short-form-bg.png"); */
+  background: url("../public/images/credit-card-flow/short-form-bg.png");
   background-size: 54% auto;
   background-position: left bottom;
   background-color: #ffffff;
@@ -6020,7 +6015,8 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   }
 }
 
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__field:focus~.form__label {
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__field:focus~.form__label,
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__field.datepicker~.form__label {
   position: absolute;
   top: 10px;
   display: block;
