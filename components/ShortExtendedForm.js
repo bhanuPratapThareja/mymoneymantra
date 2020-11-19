@@ -6,6 +6,9 @@ function ShortExtendedForm(props) {
 
     useEffect(() => {
         $("#lets-go").click(function () {
+
+            
+
             $(".lets-find-forms-container").removeClass("moving-in-rev")
             $(".lets-find").removeClass("moving-out-rev")
             $(".lets-find-forms-container").addClass("moving-in")
@@ -140,12 +143,12 @@ function ShortExtendedForm(props) {
                                     </div>
                                     <div id="bank-drop" className="dropdown-content">
                                         <div className="dropdown-content-links">
-                                            <a href="javascript:void(0)">Axis Bank</a>
+                                            {/* <a href="javascript:void(0)">Axis Bank</a>
                                             <a href="javascript:void(0)">American Express</a>
                                             <a href="javascript:void(0)">Andhra Bank</a>
                                             <a href="javascript:void(0)">Axis Bank</a>
                                             <a href="javascript:void(0)">American Express</a>
-                                            <a href="javascript:void(0)">Andhra Bank</a>
+                                            <a href="javascript:void(0)">Andhra Bank</a> */}
                                         </div>
                                     </div>
                                 </div>
@@ -217,10 +220,10 @@ function ShortExtendedForm(props) {
                                     </div>
                                     <div id="company-drop" className="dropdown-content">
                                         <div className="dropdown-content-links">
+                                            {/* <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
                                             <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
                                             <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
-                                            <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
-                                            <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
+                                            <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a> */}
                                         </div>
                                     </div>
                                 </div>
@@ -265,10 +268,10 @@ function ShortExtendedForm(props) {
                                     </div>
                                     <div id="bankname-drop" className="dropdown-content">
                                         <div className="dropdown-content-links">
+                                            {/* <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
                                             <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
                                             <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
-                                            <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
-                                            <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
+                                            <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a> */}
                                         </div>
                                     </div>
                                 </div>
