@@ -5,6 +5,7 @@ import Link from 'next/link'
 const Banner = props => {
     const strapi = new Strapi()
     const { heading, sub_text, button, image, usp_cards } = props.data
+    console.log('inside banner.js props.data',props.data);
 
     function renderUspCards(uspCards) {
         return uspCards.map(card => {
@@ -19,15 +20,19 @@ const Banner = props => {
     function goToPage() {
         Router.push(`${basePath}/loan-listing`)
     }
+    function scrollToShortForm(){
+        console.log('inside scrollToShortForm window',window);
+        window.scrollTo(0,925);
+    }
 
     return (
         <section className="banner">
             <div className="banner-wrapper">
                 <div className="normal-banner">
-                    <h1>{heading}</h1>
-
+                    {/* <h1>{heading}</h1> */}
+                    <h1><b>Credit cards</b> for <br />all your needs.</h1>
                     <p>{sub_text}</p>
-                    <button onClick={goToPage}>{button}</button>
+                    <button onClick={scrollToShortForm}>{button}</button>
                 </div>
                 <img className="banner-card" src={`${strapi.baseUrl}${image.url}`} alt={image.name} />
             </div>
