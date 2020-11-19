@@ -1,18 +1,27 @@
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Strapi from '../providers/strapi'
 
 const Header = () => {
    const strapi = new Strapi()
-   const [header, setHeader] = useState(null)
+   const headerRef = useRef()
+   const [headerData, setHeaderData] = useState(null)
 
    useEffect(() => {
-      async function getHeader() {
-         let header = await strapi.processReq('GET', 'header')
-         setHeader(header)
+      window.onscroll = () => headerEffect(headerRef.current)
+      getHeaderData()
+      async function getHeaderData() {
+         const header = await strapi.processReq('GET', 'header')
+         setHeaderData(header)
       }
-        getHeader()
    }, [])
+
+   const headerEffect = header => {
+      if (header) {
+         if (window.pageYOffset >= 100) header.classList.add('scrolled')
+         else header.classList.remove('scrolled')
+      }
+   }
 
    const renderMenuDropDown = ({ dropdown_links }) => {
       return dropdown_links.map(link => {
@@ -23,7 +32,7 @@ const Header = () => {
    }
 
    const renderMenu = () => {
-      return header.menu.links.map(link => {
+      return headerData.menu.links.map(link => {
          switch (link.type) {
             case 'anchor':
                return <a key={link.id} href={link.url} >{link.label}</a>
@@ -49,12 +58,12 @@ const Header = () => {
       <>
          <Head><title>Next Strapi App</title></Head>
 
-         {header ? <header className="header">
+         {headerData ? <header className="header" ref={headerRef}>
             <a href="index.html">
                <img
                   className="header-logo"
                   src="../images/logo.png"
-                  alt={header.logo.name}
+                  alt={headerData.logo.name}
                />
             </a>
 
@@ -62,10 +71,10 @@ const Header = () => {
 
             <div className="header-access">
                <div className="login-cta">
-                  <button id="log_in">{header.login.label}</button>
+                  <button id="log_in">{headerData.login.label}</button>
                </div>
                <div className="signup-cta secondary-cta">
-                  <button id="sign_up">{header.signup.label}</button>
+                  <button id="sign_up">{headerData.signup.label}</button>
                </div>
             </div>
          </header> : null}
