@@ -1,12 +1,7 @@
-.container.score-container {
-  background-color: white;
-  border-radius: 10px;
-}
-
 .banner-sticky {
-    position: fixed;
-    top: 0;
-    width: 100%;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 @keyframes drop-open {
@@ -147,24 +142,25 @@
   display: grid;
 }
 
-/* 
+
 @font-face {
   font-family: 'Avenir-Black';
-  src: url(../../build/fonts/Avenir-Black-03.ttf); 
+  src: url(fonts/Avenir-Black-03.ttf); 
+}
 @font-face {
-  font-family: 'Avenir-Heavy'; */
+  font-family: 'Avenir-Heavy';
+  src: url(fonts/Avenir-Heavy-05.ttf); 
+}
 
-/* src: url(../../build/fonts/Avenir-Heavy-05.ttf); } */
+@font-face {
+  font-family: 'Avenir-Medium';
+  src: url(fonts/Avenir-Medium-09.ttf);
+}
 
-/* @font-face {
-  font-family: 'Avenir-Medium'; */
-
-/* src: url(../../build/fonts/Avenir-Medium-09.ttf); } */
-
-/* @font-face {
-  font-family: 'Avenir-Roman'; */
-
-/* src: url(../../build/fonts/Avenir-Roman-12.ttf); } */
+@font-face {
+  font-family: 'Avenir-Roman';
+  src: url(fonts/Avenir-Roman-12.ttf); 
+}
 
 h1 {
   font-size: 2.5rem;
@@ -931,7 +927,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   padding: 20px 0px 12px 32px;
   border-bottom-left-radius: 6px;
   width: 100%;
-  /* background: url(../../build/images/listings/blue-gradient.svg); */
+  background: url(../public/images/listings/blue-gradient.svg);
   background-repeat: no-repeat;
   background-position: left bottom;
 }
@@ -1028,9 +1024,10 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 .score {
   -ms-flex-pack: justify;
   justify-content: space-between;
+  min-height: 370px;
   padding: 40px 96px 40px 192px;
   border-radius: 6px;
-  /* background: url("../../build/images/credit-card-flow/bg-2.jpg"); */
+  background: url("../public/images/credit-card-flow/bg-2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   margin-bottom: 96px;
@@ -1152,6 +1149,8 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   right: 80px;
   bottom: -123px;
 }
+
+
 
 @media (max-width: 768px) {
   .score-chart {
@@ -1492,7 +1491,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 }
 
 .financial-wrapper-card {
-  /* background: url("../../build/images/credit-card-flow/short-form-bg.png"); */
+  background: url("../public/images/credit-card-flow/short-form-bg.png");
   background-position: left bottom;
   background-repeat: no-repeat;
   background-size: auto 70%;
@@ -2131,7 +2130,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 }
 
 .file-type {
-  /* background: url(../../build/images/credit-card-flow/dash.svg); */
+  background: url(../public/images/credit-card-flow/dash.svg);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -2789,7 +2788,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 }
 
 .credit-card-flow .lets-find {
-  /* background: url("../../build/images/credit-card-flow/short-form-bg.png"); */
+  background: url("../public/images/credit-card-flow/short-form-bg.png");
   background-size: auto;
   background-position: left bottom;
   background-color: #ffffff;
@@ -5243,7 +5242,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   -ms-flex-align: center;
   align-items: center;
   border-radius: 6px;
-  /* background: url("../../build/images/credit-card-flow/short-form-bg.png"); */
+  background: url("../public/images/credit-card-flow/short-form-bg.png");
   background-size: 54% auto;
   background-position: left bottom;
   background-color: #ffffff;
@@ -6016,7 +6015,8 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   }
 }
 
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__field:focus~.form__label {
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__field:focus~.form__label,
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__field.datepicker~.form__label {
   position: absolute;
   top: 10px;
   display: block;
@@ -8022,4 +8022,19 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 
 [data-aos=flip-down].aos-animate {
   transform: perspective(2500px) rotateX(0);
+}
+
+/*-- Customised  Css --*/
+.credit-card-flow section.banner {
+  margin-top: 0;
+}
+
+.card-info.banner-sticky {
+  top: 120px;
+}
+
+.long-form .long-form-wrapper .banner-sticky+.form-wrapper {
+  max-width: 835px;
+  left: 27%;
+  position: relative;
 }
