@@ -4,6 +4,10 @@
   width: 100%;
 }
 
+.MuiLinearProgress-bar1Determinate {
+  background-color: #89C142 !important;
+}
+
 @keyframes drop-open {
   0% {
     opacity: 0;
