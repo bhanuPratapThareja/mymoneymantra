@@ -16,8 +16,8 @@ const Banner = props => {
         })
     }
 
-    function goToPage() {
-        Router.push(`${basePath}/loan-listing`)
+    function goToShortFormPage() {
+        window.scrollTo(0,1000);
     }
 
     return (
@@ -27,7 +27,7 @@ const Banner = props => {
                     {/* <h1>{heading}</h1> */}
                     <h1><b>Credit cards</b> for <br />all your needs.</h1>
                     <p>{sub_text}</p>
-                    <button onClick={goToPage}>{button}</button>
+                    <button onClick={goToShortFormPage}>{button}</button>
                 </div>
                 <img className="banner-card" src={`${strapi.baseUrl}${image.url}`} alt={image.name} />
             </div>
