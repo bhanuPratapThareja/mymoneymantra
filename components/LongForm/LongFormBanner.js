@@ -19,8 +19,27 @@ class LongFormBanner extends React.Component {
         fathersFirstName: '',
         fathersLastName: '',
         fathersFullName: '',
+        mothersFirstName : "",
+        mothersLastName : "",
+        mothersFullName :"",
+        dob:"",
+        nationality:"",
+        phoneNo:"",
+        email : "",
+        address_1 : "",
+        address_2 : "",
+        nearBy : "",
+        city : "",
+        pincode : "",
+        off_address_1:"",
+        off_address_2 :"",
+        off_nearBy_1 : "",
+        off_city : "",
+        off_pincode : "",
+        pan : "",
+        m_income : "",
         percentageComplete: 0,
-        totalValues: 18
+        totalValues: 25
     }
 
     componentDidMount() {
@@ -38,9 +57,11 @@ class LongFormBanner extends React.Component {
 
     handleNameInputs = (value, type) => {
         this.setState({ [type]: value }, () => {
-            const fullName = this.state.firstName + ' ' + this.state.lastName
-            const fathersFullName = this.state.fathersFirstName + ' ' + this.state.fathersLastName
-            this.setState({ fullName, fathersFullName }, () => {
+              let   fullName = this.state.firstName + ' ' + this.state.lastName
+              let   fathersFullName = this.state.fathersFirstName + ' ' + this.state.fathersLastName
+              let  mothersFullName = this.state.mothersFirstName + ' ' + this.state.mothersLastName
+
+            this.setState({ fullName, fathersFullName ,mothersFullName}, () => {
                 this.handlePercentage()
             })
         })
@@ -53,6 +74,7 @@ class LongFormBanner extends React.Component {
     }
 
     handlePercentage = () => {
+        
         this.setState({ percentageComplete: getFormPercentage({ ...this.state }) })
     }
 
@@ -152,11 +174,11 @@ class LongFormBanner extends React.Component {
                                 <h5><b>5.</b> Mother's Name</h5>
                                 <div className="shortforms-container long-name">
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="mother-f-name" placeholder="First Name" required />
+                                        <input className="form__field" type="text" id="mother-f-name" placeholder="First Name" required value={this.state.mothersFirstName} onChange={e => this.handleNameInputs(e.target.value, 'mothersFirstName')}/>
                                         <label className="form__label" htmlFor="mother-f-name">First Name</label>
                                     </div>
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="mother-l-name" placeholder="Last Name" required />
+                                        <input className="form__field" type="text" id="mother-l-name" placeholder="Last Name" required value={this.state.mothersLastName} onChange={e => this.handleNameInputs(e.target.value, 'mothersLastName')}/>
                                         <label className="form__label" htmlFor="mother-l-name">Last Name</label>
                                     </div>
 
@@ -170,7 +192,7 @@ class LongFormBanner extends React.Component {
                                     <div className="shortforms-container long-name">
                                         <div className="form__group field">
                                             <input className="form__field datepicker" type="text" id="dob" placeholder="MM / DD / YYYY"
-                                                required />
+                                                required value={this.state.dob} onChange={e => this.handleChange(e.target.value, 'dob')}/>
                                             <label className="form__label" htmlFor="dob">Date of Birth</label>
                                         </div>
                                     </div>
@@ -181,7 +203,7 @@ class LongFormBanner extends React.Component {
                                     <div className="shortforms-container long-name">
                                         <div className="form__group field">
                                             <input className="form__field" type="text" id="nationality" placeholder="Nationality"
-                                                required />
+                                                required value={this.state.nationality} onChange={e => this.handleChange(e.target.value, 'nationality')}/>
                                             <label className="form__label" htmlFor="nationality">Nationality</label>
                                         </div>
                                     </div>
@@ -195,7 +217,7 @@ class LongFormBanner extends React.Component {
                                     <div className="shortforms-container long-name">
                                         <div className="form__group field">
                                             <input className="form__field" type="number" id="phone-number" placeholder="Phone Number"
-                                                required />
+                                                required value={this.state.phoneNo} onChange={e => this.handleChange(e.target.value, 'phoneNo')}/>
                                             <label className="form__label" htmlFor="phone-number">Phone Number</label>
                                         </div>
                                     </div>
@@ -205,7 +227,7 @@ class LongFormBanner extends React.Component {
                                     <h5><b>9.</b> Email ID</h5>
                                     <div className="shortforms-container long-name">
                                         <div className="form__group field">
-                                            <input className="form__field" type="text" id="email" placeholder="Email ID" required />
+                                            <input className="form__field" type="text" id="email" placeholder="Email ID" required value={this.state.email} onChange={e => this.handleChange(e.target.value, 'email')}/>
                                             <label className="form__label" htmlFor="email">Email ID</label>
                                         </div>
                                     </div>
@@ -219,25 +241,25 @@ class LongFormBanner extends React.Component {
                                 <h5><b>10.</b> Residence Address</h5>
                                 <div className="shortforms-container long-address">
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="address-1" placeholder="Address Line 1" required />
+                                        <input className="form__field" type="text" id="address-1" placeholder="Address Line 1" required value={this.state.address_1} onChange={e => this.handleChange(e.target.value, 'address_1')}/>
                                         <label className="form__label" htmlFor="address-1">Address Line 1</label>
                                     </div>
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="address-2" placeholder="Address Line 2" required />
+                                        <input className="form__field" type="text" id="address-2" placeholder="Address Line 2" required  value={this.state.address_2} onChange={e => this.handleChange(e.target.value, 'address_2')}/>
                                         <label className="form__label" htmlFor="address-2">Address Line 2</label>
                                     </div>
                                     <div className="form__group field">
                                         <input className="form__field" type="text" id="address-landmark"
-                                            placeholder="Nearby Landmark (Optional)" required />
+                                            placeholder="Nearby Landmark (Optional)" required value={this.state.nearBy} onChange={e => this.handleChange(e.target.value, 'nearBy')}/>
                                         <label className="form__label" htmlFor="address-2">Nearby Landmark (Optional)</label>
                                     </div>
                                     <div className="row-input-container">
                                         <div className="form__group field long-city">
-                                            <input className="form__field" type="text" id="city" placeholder="City" required />
+                                            <input className="form__field" type="text" id="city" placeholder="City" required  value={this.state.city} onChange={e => this.handleChange(e.target.value, 'city')}/>
                                             <label className="form__label" htmlFor="city">City</label>
                                         </div>
                                         <div className="form__group field long-pincode">
-                                            <input className="form__field" type="text" id="pincode" placeholder="Pincode" required />
+                                            <input className="form__field" type="text" id="pincode" placeholder="Pincode" required value={this.state.pincode} onChange={e => this.handleChange(e.target.value, 'pincode')} />
                                             <label className="form__label" htmlFor="pincode">Pincode</label>
                                         </div>
                                     </div>
@@ -289,26 +311,26 @@ class LongFormBanner extends React.Component {
                                 <div className="shortforms-container long-address">
                                     <div className="form__group field">
                                         <input className="form__field" type="text" id="off-address-1" placeholder="Address Line 1"
-                                            required />
+                                            required value={this.state.off_address_1} onChange={e => this.handleChange(e.target.value, 'off_address_1')}/>
                                         <label className="form__label" htmlFor="off-address-1">Address Line 1</label>
                                     </div>
                                     <div className="form__group field">
                                         <input className="form__field" type="text" id="off-address-2" placeholder="Address Line 2"
-                                            required />
+                                            required value={this.state.off_address_2} onChange={e => this.handleChange(e.target.value, 'off_address_2')}/>
                                         <label className="form__label" htmlFor="off-address-2">Address Line 2</label>
                                     </div>
                                     <div className="form__group field">
                                         <input className="form__field" type="text" id="off-address-landmark"
-                                            placeholder="Nearby Landmark (Optional)" required />
+                                            placeholder="Nearby Landmark (Optional)" required value={this.state.off_nearBy_1} onChange={e => this.handleChange(e.target.value, 'off_nearBy_1')}/>
                                         <label className="form__label" htmlFor="off-address-2">Nearby Landmark (Optional)</label>
                                     </div>
                                     <div className="row-input-container">
                                         <div className="form__group field long-city">
-                                            <input className="form__field" type="text" id="off-city" placeholder="City" required />
+                                            <input className="form__field" type="text" id="off-city" placeholder="City" required  value={this.state.off_city} onChange={e => this.handleChange(e.target.value, 'off_city')}/>
                                             <label className="form__label" htmlFor="off-city">City</label>
                                         </div>
                                         <div className="form__group field long-pincode">
-                                            <input className="form__field" type="text" id="off-pincode" placeholder="Pincode" required />
+                                            <input className="form__field" type="text" id="off-pincode" placeholder="Pincode" required value={this.state.off_pincode} onChange={e => this.handleChange(e.target.value, 'off_pincode')}/>
                                             <label className="form__label" htmlFor="off-pincode">Pincode</label>
                                         </div>
                                     </div>
@@ -337,7 +359,7 @@ class LongFormBanner extends React.Component {
                                 <h5><b>14.</b> Personal Account Number (PAN)</h5>
                                 <div className="shortforms-container long-work ">
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="l-pan" placeholder="PAN" required />
+                                        <input className="form__field" type="text" id="l-pan" placeholder="PAN" required value={this.state.pan} onChange={e => this.handleChange(e.target.value, 'pan')}/>
                                         <label className="form__label" htmlFor="l-pan">PAN</label>
                                     </div>
                                     <div className="form__group field file-type">
@@ -375,8 +397,8 @@ class LongFormBanner extends React.Component {
                                 <h5><b>15.</b> How much do you earn monthly?</h5>
                                 <div className="shortforms-container long-work ">
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="m-income" value="" readOnly
-                                            placeholder="Net monthly income" required />
+                                        <input className="form__field" type="text" id="m-income"  
+                                            placeholder="Net monthly income" required value={this.state.m_income}  onChange={e => this.handleChange(e.target.value, 'm_income')}/>
                                         <label className="form__label" htmlFor="m-income">Net monthly income</label>
                                         <p id="word-number"></p>
                                     </div>
