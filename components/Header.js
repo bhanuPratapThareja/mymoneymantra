@@ -21,7 +21,7 @@ const Header = () => {
             const longFormHeight = longForm.clientHeight
             const longFormBottomPos = longFormOffset + longFormHeight
             const windowOffsetForBannerStop = longFormBottomPos - longFormBanner.clientHeight
-// console.log(windowOffsetForBannerStop)
+
             if (window.pageYOffset >= longFormOffset && window.pageYOffset < windowOffsetForBannerStop) {
                longFormBanner.classList.add("banner-sticky")
                longFormBanner.classList.remove("banner-sticky_bottom")
