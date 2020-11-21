@@ -12,14 +12,6 @@ import ShortExtendedForm from '../components/ShortExtendedForm';
 import { useEffect } from 'react'
 
 const Home = props => {
-
-    // useEffect(() => {
-    //     const script = document.createElement('script')
-    //     script.src = '../js/slick.js'
-    //     script.async = true
-    //     document.body.appendChild(script)
-    // })
-
     const getComponents = blocks => {
         return blocks.map(block => {
             switch (block.__component) {

@@ -4,48 +4,6 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 class LongFormBanner extends React.Component {
 
-    bannerRef = React.createRef()
-
-    // state = {
-    //     gender: '',
-    //     maritalStatus: '',
-    //     proofOfAddress: '',
-    //     commPurpose: '',
-    //     director: '',
-    //     member: '',
-    //     firstName: '',
-    //     lastName: '',
-    //     fullName: '',
-    //     fathersFirstName: '',
-    //     fathersLastName: '',
-    //     fathersFullName: '',
-    //     mothersFirstName: "",
-    //     mothersLastName: "",
-    //     mothersFullName: "",
-    //     dob: "",
-    //     nationality: "",
-    //     phoneNo: "",
-    //     email: "",
-    //     address1: "",
-    //     address2: "",
-    //     nearBy: "",
-    //     city: "",
-    //     pincode: "",
-    //     officeAddress1: "",
-    //     officeAddress2: "",
-    //     officeNearBy: "",
-    //     officeCity: "",
-    //     officePincode: "",
-    //     pan: "",
-    //     monthlyIncome: "",
-    //     tnc: [],
-    //     tnc1: false,
-    //     tnc2: false,
-    //     tnc3: false,
-    //     percentageComplete: 0,
-    //     totalValues: 1
-    // }
-
     state = {
         firstName: '',
         lastName: '',
@@ -72,17 +30,17 @@ class LongFormBanner extends React.Component {
     }
 
     componentDidMount() {
-        const bannerOffset = this.bannerRef.current.offsetTop
+        // const bannerOffset = this.bannerRef.current.offsetTop
         // window.onscroll = () => { this.bannerSticky(bannerOffset) }
     }
 
-    bannerSticky = bannerOffset => {
-        if (window.pageYOffset >= bannerOffset) {
-            this.bannerRef.current.classList.add("banner-sticky")
-        } else {
-            this.bannerRef.current.classList.remove("banner-sticky");
-        }
-    }
+    // bannerSticky = bannerOffset => {
+    //     if (window.pageYOffset >= bannerOffset) {
+    //         this.bannerRef.current.classList.add("banner-sticky")
+    //     } else {
+    //         this.bannerRef.current.classList.remove("banner-sticky");
+    //     }
+    // }
 
     handleInputs = (value, type) => {
         this.setState({ [type]: value }, () => {
@@ -141,7 +99,6 @@ class LongFormBanner extends React.Component {
         this.setState({ [type]: value }, () => {
             // const { tnc1, tnc2, tnc3 } = this.state
             // this.state.tnc = tnc1 || tnc2 || tnc3
-            // console.log(this.state.tnc)
             // this.setState({ tnc }, () => [
             //     this.handlePercentage()
             // ])
@@ -161,7 +118,7 @@ class LongFormBanner extends React.Component {
         return (
             <div className="long-form">
                 <section className="long-form-wrapper">
-                    <div className="card-info" ref={this.bannerRef}>
+                    <div className="card-info" style={{height: '303px'}} id="longFormBanner">
                         <h5 className="app-form">{form_heading}</h5>
                         <h3><b>{bank_name}</b><br />{product_type}</h3>
                         <img src={`${strapi.baseUrl}${banner_image.url}`} />
@@ -174,7 +131,7 @@ class LongFormBanner extends React.Component {
                         </div>
                     </div>
 
-                    <div className="form-wrapper">
+                    <div className="form-wrapper" id="longForm">
                         <form>
 
                             <h3>Personal Details</h3>

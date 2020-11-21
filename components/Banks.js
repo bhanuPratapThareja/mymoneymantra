@@ -20,6 +20,7 @@ const Banks = props => {
 
                         <div className="slick-track" style={{ opacity: "1", width: "1116px", transform: "translate3d(0px, 0px, 0px)" }}>
                             {showBankImage && showBankImage.map(banksImage => {
+                                
                                 return (
 
                                     <div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" style={{ width: "186px" }} key={banksImage.id}>
@@ -41,6 +42,7 @@ const Banks = props => {
                     </button>
                 </div>
             </div>
+       
         </section>
 
     )

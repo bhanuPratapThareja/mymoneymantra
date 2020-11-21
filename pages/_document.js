@@ -9,7 +9,7 @@ export default class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head />
-                <body>
+                <body data-aos-easing="ease" data-aos-duration="600" data-aos-delay="0">
                     <Main />
                     <NextScript />
                 </body>

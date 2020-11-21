@@ -1,10 +1,9 @@
 import { useEffect } from 'react'
 import $ from 'jquery'
-import ListingFilter from './ListingFilster'
-import OfferDetailCards from './OfferDetailCards'
+import ListingFilter from './ListingFilter'
 
 const ListingBanner = ({ data }) => {
-    const { heading_for_product, no_of_offers } = data
+    const { heading_for_product, number_of_offers } = data
 
     useEffect(() => {
 
@@ -82,11 +81,11 @@ const ListingBanner = ({ data }) => {
                     </div>
                     <div className="bottom">
                         <div className="cards">
-                            <h3><span id="count">{no_of_offers}</span> {heading_for_product.toLowerCase(0)}</h3>
+                            <h3><span id="count">{number_of_offers}</span> {heading_for_product.toLowerCase(0)}</h3>
                         </div>
                         <div className="filter">
                             <button className="filter-option" id="listing-filter">Filters
-                        <img src="../../images/icons/down-chevron.svg" />
+                                <img src="../../images/icons/down-chevron.svg" />
                             </button>
                         </div>
                     </div>

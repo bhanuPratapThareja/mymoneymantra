@@ -7,8 +7,39 @@ const Header = () => {
    const headerRef = useRef()
    const [headerData, setHeaderData] = useState(null)
 
+   let longFormBanner = null
+   let longForm = null
+
    useEffect(() => {
-      window.onscroll = () => headerEffect(headerRef.current)
+      window.onscroll = () => {
+         headerEffect(headerRef.current)
+         if (!longFormBanner) {
+            longFormBanner = document.getElementById('longFormBanner')
+            longForm = document.getElementById('longForm')
+         } else {
+            const longFormOffset = longForm.offsetTop
+            const longFormHeight = longForm.clientHeight
+            const longFormBottomPos = longFormOffset + longFormHeight
+            const windowOffsetForBannerStop = longFormBottomPos - longFormBanner.clientHeight
+// console.log(windowOffsetForBannerStop)
+            if (window.pageYOffset >= longFormOffset && window.pageYOffset < windowOffsetForBannerStop) {
+               longFormBanner.classList.add("banner-sticky")
+               longFormBanner.classList.remove("banner-sticky_bottom")
+            } 
+            
+            if (window.pageYOffset >= windowOffsetForBannerStop - 70) {
+               longFormBanner.classList.remove("banner-sticky")
+               longFormBanner.classList.add("banner-sticky_bottom")
+            } 
+            
+            if (window.pageYOffset < longFormOffset) {
+               longFormBanner.classList.remove("banner-sticky")
+               longFormBanner.classList.remove("banner-sticky_bottom")
+            }
+
+         }
+      }
+
       getHeaderData()
       async function getHeaderData() {
          const header = await strapi.processReq('GET', 'header')
@@ -56,7 +87,9 @@ const Header = () => {
 
    return (
       <>
-         <Head><title>Next Strapi App</title></Head>
+         <Head>
+            <title>Next Strapi App</title>
+         </Head>
 
          {headerData ? <header className="header" ref={headerRef}>
             <a href="index.html">

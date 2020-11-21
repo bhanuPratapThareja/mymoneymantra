@@ -2,17 +2,15 @@ export const getFormPercentage = state => {
     let valueslength = 0
     const totalValues = state.totalValues
     deleteStateKeys(state);
-    console.log('state: ', state);
+    
     if(!Object.keys(state).length) {
         return 0
     };
 
     (Object.values(state)).forEach(value => { 
-        console.log(value)
         if (value) valueslength++ 
     })
 
-    console.log('valueslength: ', valueslength)
     return Math.ceil(valueslength * 100 / totalValues)
 }
 

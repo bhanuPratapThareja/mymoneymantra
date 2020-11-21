@@ -26,12 +26,13 @@ const OfferDetailCards = props => {
                 return (
                     <div className="long-cards-wrapper" key={offer.id}>
                         <div className="long-cards-wrapper-card">
-                            <img className="recommended" src={`${strapi.baseUrl}${offer.bank_logo.url}`} alt={offer.bank_logo.name} />
-                            <div className="top">
+                        {offer.recommend ? <img className="recommended" src="../../images/icons/stamp.svg" /> : null}                           
+                        <div className="top">
                                 <div className="name">
+                                <img className="mob-logo" src={`${strapi.baseUrl}${offer.bank_logo.url}`} alt={offer.bank_logo.name} />
                                     <h3><span>{offer.bank_name}</span><br />{offer.product_type}</h3>
                                     <div>
-                                        <img src="../../images/listings/card.svg" />
+                                        <img src={`${strapi.baseUrl}${offer.card_image.url}`} alt={offer.card_image.name} />
                                     </div>
                                 </div>
                                 <div className="content">

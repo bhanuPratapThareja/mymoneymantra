@@ -2,10 +2,6 @@ import { generateInputs } from '../../Utils/inputGenerator'
 
 class ShortForm extends React.Component {
 
-    componentDidMount() {
-        console.log(this.props.data)
-    }
-
     state = {
         full_name: '',
         phone_no: '',

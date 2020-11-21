@@ -63,7 +63,7 @@ const CreditCards = ({ data }) => {
     }
 
     return (
-        <div className="listings">
+        <div className="listings" data-aos-easing="ease" data-aos-duration="600" data-aos-delay="0">
             {data ? <Layout>{getComponents(data.blocks)}</Layout> : null}
         </div>
     )

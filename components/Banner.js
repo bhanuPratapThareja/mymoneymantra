@@ -5,7 +5,6 @@ import Link from 'next/link'
 const Banner = props => {
     const strapi = new Strapi()
     const { heading, sub_text, button, image, usp_cards } = props.data
-    console.log('inside banner.js props.data', props.data);
 
     function renderUspCards(uspCards) {
         return uspCards.map(card => {
