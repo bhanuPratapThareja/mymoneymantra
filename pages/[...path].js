@@ -9,7 +9,6 @@ import Offers from '../components/Offers'
 import LearnMore from '../components/LearnMore'
 import Blog from '../components/Blog'
 import ShortExtendedForm from '../components/ShortExtendedForm';
-import { useEffect } from 'react'
 
 const Home = props => {
     const getComponents = blocks => {
@@ -34,7 +33,7 @@ const Home = props => {
                 case 'blocks.credit':
                     return <CreditScore key={block.id} data={block} />
                 case 'blocks.short-form':
-                    return <ShortExtendedForm key={block.id} data={block} path={props.path} />
+                    return <ShortExtendedForm key={block.id} data={block} />
             }
         })
     }

@@ -16,11 +16,12 @@ import OfferDetailCards from '../../components/Listing/OfferDetailCards'
 
 import OfferBankProductDetails from '../../components/BankProduct/OfferBankProductDetails';
 import BankProductBanner from '../../components/BankProduct/BankProductBanner';
+import ShortExtendedForm from '../../components/ShortExtendedForm';
 
 const CreditCards = ({ data }) => {
 
     useEffect(() => {
-        window.scrollTo(0,0)
+        window.scrollTo(0, 0)
     })
 
     const getComponents = blocks => {
@@ -57,13 +58,15 @@ const CreditCards = ({ data }) => {
                 case 'blocks.product-banner':
                     return <BankProductBanner key={block.id} data={block} />
                 case 'blocks.bank-product-offer-details':
-                    return <OfferBankProductDetails key={block.id} data={block}/>
+                    return <OfferBankProductDetails key={block.id} data={block} />
+                case 'blocks.short-form':
+                    return <ShortExtendedForm key={block.id} data={block} />
             }
         })
     }
 
     return (
-        <div className="listings" data-aos-easing="ease" data-aos-duration="600" data-aos-delay="0">
+        <div className="credit-card-flow" data-aos-easing="ease" data-aos-duration="600" data-aos-delay="0">
             {data ? <Layout>{getComponents(data.blocks)}</Layout> : null}
         </div>
     )
