@@ -69,7 +69,7 @@ function ShortExtendedForm(props) {
     }
 
 
-    return <section data-aos="fade-up" className="container lets-find-container aos-init aos-animate">
+    return <section data-aos="fade-up" className="container lets-find-container aos-init">
         <div className="mobile-background"></div>
         <div className="mobile-content">
             <h1>Credit cards for<br />all your needs.</h1>

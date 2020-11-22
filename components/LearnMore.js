@@ -29,7 +29,7 @@ const LearnMore = props => {
    }, [])
 
    return (
-      <section data-aos="fade-up" className="container aos-init aos-animate">
+      <section data-aos="fade-up" className="container aos-init">
          <div className="learn-more">
             <h2>{sectionHeading}</h2>
             <div className="learn-more-wrapper">

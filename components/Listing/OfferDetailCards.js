@@ -8,7 +8,7 @@ const OfferDetailCards = props => {
     const [offers, setOffers] = useState([])
 
     useEffect(() => {
-            setOffers(props.data.offer_cards)
+        setOffers(props.data.offer_cards)
     })
 
     const cardButtonClick = type => {
@@ -22,14 +22,20 @@ const OfferDetailCards = props => {
 
     return (
         <section className="container long-cards">
-            {offers.map(offer => {
+            {offers.map((offer, i) => {
+
+                const fadeEffect = i ? 'long-cards-wrapper-card aos-init' : 'long-cards-wrapper-card'
+                console.log('fadeEffect: ', fadeEffect)
+
                 return (
                     <div className="long-cards-wrapper" key={offer.id}>
-                        <div className="long-cards-wrapper-card">
-                        {offer.recommend ? <img className="recommended" src="../../images/icons/stamp.svg" /> : null}                           
-                        <div className="top">
+                        <div data-aos={i ? 'fade-up' : ''} className="long-cards-wrapper-card aos-init">
+                            {offer.recommend ?
+
+                                <img className="recommended" src="../../images/icons/stamp.svg" /> : null}
+                            <div className="top">
                                 <div className="name">
-                                <img className="mob-logo" src={`${strapi.baseUrl}${offer.bank_logo.url}`} alt={offer.bank_logo.name} />
+                                    <img className="mob-logo" src={`${strapi.baseUrl}${offer.bank_logo.url}`} alt={offer.bank_logo.name} />
                                     <h3><span>{offer.bank_name}</span><br />{offer.product_type}</h3>
                                     <div>
                                         <img src={`${strapi.baseUrl}${offer.card_image.url}`} alt={offer.card_image.name} />
@@ -46,6 +52,8 @@ const OfferDetailCards = props => {
                                     <p><b>{offer.intrest_rate}</b> (Second year onwards)</p>
                                 </div>
                             </div>
+
+
                             <div className="bottom">
                                 <div className="lifetime">
                                     <h5>Lifetime reward points</h5>
@@ -57,6 +65,7 @@ const OfferDetailCards = props => {
                                     {offer.button_type == "instantApproval" ? <button onClick={() => cardButtonClick(offer.button_type)} id="apply-now">{offer.button_text}</button> : null}
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 )

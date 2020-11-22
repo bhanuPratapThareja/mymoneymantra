@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useEffect, useState, useRef } from 'react'
 import Strapi from '../providers/strapi'
+import { isScrolledIntoView } from '../Utils/elementInView'
 
 const Header = () => {
    const strapi = new Strapi()
@@ -13,6 +14,15 @@ const Header = () => {
    useEffect(() => {
       window.onscroll = () => {
          headerEffect(headerRef.current)
+
+         const els = document.querySelectorAll('[data-aos="fade-up"]')
+         els.forEach(el => {
+           if(isScrolledIntoView(el)) {
+              el.classList.add('aos-animate')
+           }
+         })
+
+
          if (!longFormBanner) {
             longFormBanner = document.getElementById('longFormBanner')
             longForm = document.getElementById('longForm')

@@ -1,6 +1,6 @@
 const PopularOffers = () => {
     return (
-        <section data-aos="fade-up" className="container popular-card-container aos-init aos-animate">
+        <section data-aos="fade-up" className="container popular-card-container aos-init">
             <div className="popular-cards">
                 <h2>Popular Credit Cards</h2>
                 <div className="popular-cards-slider slick-initialized slick-slider" id="popular-cards-sec"><button className="slick-prev slick-arrow" aria-label="Previous" type="button">Previous</button><div className="slick-list draggable" style={{ padding: '0px 50px' }}><div className="slick-track" style={{ opacity: '1', width: '20000px', transform: 'translate3d(-1700px, 0px, 0px)' }}><div className="slick-slide slick-cloned" data-slick-index="-4" aria-hidden="true" tabIndex="-1"><div><div className="popular-cards-slider-card" style={{ width: '100%', display: 'inlineBlock' }}>

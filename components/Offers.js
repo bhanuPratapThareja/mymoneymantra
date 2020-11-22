@@ -15,7 +15,7 @@ const Offers = props => {
    }, [])
 
    return (
-      <section data-aos="fade-up" className="container popular-card-container aos-init aos-animate">
+      <section data-aos="fade-up" className="container popular-card-container aos-init">
          <div className="popular-cards">
             <h2>{props.data.section_heading}</h2>
             <div className="popular-cards-slider slick-initialized slick-slider" id="trending-offers-sec"><button className="slick-prev slick-arrow" aria-label="Previous" type="button" >Previous</button>

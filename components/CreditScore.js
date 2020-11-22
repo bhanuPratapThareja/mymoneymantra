@@ -5,7 +5,7 @@ const CreditScore = props => {
 
     return (
         // <div className="credit-card-flow-score-container-div">
-            <section data-aos="fade-up" className="container score-container aos-init aos-animate">
+            <section data-aos="fade-up" className="container score-container aos-init">
                 <div className="score score-cotent-cover">
                     <div className="score-content">
                         <h2>{text}</h2>

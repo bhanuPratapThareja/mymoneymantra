@@ -7,7 +7,7 @@ const Banks = props => {
     let showBankImage = props.banks.repeatable_new_bank;
 
     return (
-        <section data-aos="fade-up" className="banks-holder aos-init aos-animate">
+        <section data-aos="fade-up" className="banks-holder aos-init">
             <div className="blue-patch"></div>
             <div className="container banks">
                 <h2>{bank_sub_text}</h2>

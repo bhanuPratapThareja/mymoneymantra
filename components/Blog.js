@@ -6,7 +6,7 @@ const Blog = props => {
    const blogsData = props.data.blogs_card;
 
    return (
-      <section data-aos="fade-up" className="container blog-container aos-init aos-animate">
+      <section data-aos="fade-up" className="container blog-container aos-init">
          <div className="blog">
             <h2>{blogHeading}</h2>
             <div className="blog-wrapper" id="slider_blogs">
