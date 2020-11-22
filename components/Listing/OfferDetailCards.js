@@ -23,15 +23,10 @@ const OfferDetailCards = props => {
     return (
         <section className="container long-cards">
             {offers.map((offer, i) => {
-
-                const fadeEffect = i ? 'long-cards-wrapper-card aos-init' : 'long-cards-wrapper-card'
-                console.log('fadeEffect: ', fadeEffect)
-
                 return (
                     <div className="long-cards-wrapper" key={offer.id}>
                         <div data-aos={i ? 'fade-up' : ''} className="long-cards-wrapper-card aos-init">
                             {offer.recommend ?
-
                                 <img className="recommended" src="../../images/icons/stamp.svg" /> : null}
                             <div className="top">
                                 <div className="name">
@@ -52,8 +47,6 @@ const OfferDetailCards = props => {
                                     <p><b>{offer.intrest_rate}</b> (Second year onwards)</p>
                                 </div>
                             </div>
-
-
                             <div className="bottom">
                                 <div className="lifetime">
                                     <h5>Lifetime reward points</h5>
@@ -65,7 +58,6 @@ const OfferDetailCards = props => {
                                     {offer.button_type == "instantApproval" ? <button onClick={() => cardButtonClick(offer.button_type)} id="apply-now">{offer.button_text}</button> : null}
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 )
