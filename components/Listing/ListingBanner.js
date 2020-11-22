@@ -1,12 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import $ from 'jquery'
 import ListingFilter from './ListingFilter'
 
-const ListingBanner = ({ data }) => {
-    const { heading_for_product, number_of_offers } = data
-
-    useEffect(() => {
-
+if (typeof window != 'undefined') {
+    $(document).ready(function () {
         $(".filter-option").click(function () {
             $("#" + this.id + "-show").slideToggle("300");
             $('body', "html").css("overflow", "hidden")
@@ -16,8 +13,28 @@ const ListingBanner = ({ data }) => {
             $(".filter-cross").closest(".mm-modal").slideToggle(300);
             $('body', "html").css("overflow", "scroll")
         })
+    })
+}
 
-    }, [])
+const ListingBanner = ({ data }) => {
+    const { heading_for_product, number_of_offers } = data
+    const [selectedOption, setSelectedOption] = useState('all')
+
+    useEffect(() => {
+        onBannerCategoryChange(selectedOption)
+    })
+
+    const onBannerCategoryChange = category => {
+        const els = document.getElementsByClassName('banner_label')
+        for (let i = 0; i < els.length; i++) {
+            if (els[i].getAttribute('for') === category) {
+                els[i].classList.add('listing-banner_selected')
+            } else {
+                els[i].classList.remove('listing-banner_selected')
+            }
+        }
+
+    }
 
     return (
         <>
@@ -32,12 +49,12 @@ const ListingBanner = ({ data }) => {
                         <div className="category">
                             <h5>Browse by category:</h5>
                             <div className="category-wrapper">
-                                <div className="checkbox-container">
-                                    <input className="lets-checkbox" type="radio" id="all" name="category" required />
-                                    <input className="lets-checkbox" type="radio" id="travel" name="category" required />
-                                    <input className="lets-checkbox" type="radio" id="shopping" name="category" required />
-                                    <input className="lets-checkbox" type="radio" id="lifestyle" name="category" required />
-                                    <label htmlFor="all">
+                                <div className="checkbox-container" name="category" value={selectedOption} onChange={e => setSelectedOption(e.target.value)}>
+                                    <input className="lets-checkbox" value="all" type="radio" id="all" name="category" required />
+                                    <input className="lets-checkbox" value="travel" type="radio" id="travel" name="category" required />
+                                    <input className="lets-checkbox" value="shopping" type="radio" id="shopping" name="category" required />
+                                    <input className="lets-checkbox" value="lifestyle" type="radio" id="lifestyle" name="category" required />
+                                    <label htmlFor="all" className="banner_label">
                                         <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24.6772 21.6292H15V22.9206H24.6772V21.6292Z" fill="white" />
@@ -54,27 +71,28 @@ const ListingBanner = ({ data }) => {
                                         </svg>
                                         <h4>All</h4>
                                     </label>
-                                    <label htmlFor="travel">
+                                    <label htmlFor="travel" className="banner_label">
                                         <svg width="40" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fillRule="evenodd" clipRule="evenodd"
                                                 d="M23.119 14.443a.73.73 0 01.07 1.287l-7.293 4.375a.733.733 0 01-.736.007l-1.023-.584-4.124 2.062a.733.733 0 01-.652 0L4 18.908l-.664.663L5.92 23.45a.727.727 0 01-.272 1.053c-.856.442-1.714.977-2.192 1.353 1.03.187 3.226.187 4.045.187 4.88 0 27.709-8.947 27.709-11.667 0-.218-.207-.485-.675-.731a.708.708 0 01-.055.002c-2.521 0-3.815 1.203-3.869 1.254a.733.733 0 01-1.028-.02.729.729 0 01.012-1.027c.036-.035.513-.492 1.411-.918a20.978 20.978 0 00-.9-.018c-2.486 0-5.315.898-6.986 1.526zm-2.187-.664L8.439 10.03a.729.729 0 00-.725.182L4.797 13.13a.728.728 0 00.155 1.15l7.664 4.379-2.928 1.463-5.507-2.754a.727.727 0 00-.841.137l-1.46 1.458a.729.729 0 00-.092.92L4.26 23.59c-2.594 1.448-2.594 2.167-2.594 2.452 0 1.314 1.868 1.458 5.833 1.458 1.635 0 7.068-1.515 12.808-3.611l6.315 7.718a.725.725 0 00.894.19l2.917-1.459a.729.729 0 00.38-.828l-2.187-8.75a.727.727 0 00-.11-.242c4.622-2.165 8.15-4.43 8.15-6.143 0-.878-.639-2.917-6.563-2.917-4.086 0-8.773 2.125-9.05 2.25l-.006.003a.734.734 0 00-.116.068zm6.28 7.334a104.792 104.792 0 01-5.458 2.238l5.63 6.88 1.873-.936-2.045-8.182zM6.503 13.487l9.008 5.148 5.51-3.306-12.582-3.776-1.936 1.934z"
                                                 fill="#fff" /></svg>
                                         <h4>Travel</h4>
                                     </label>
-                                    <label htmlFor="shopping">
+                                    <label htmlFor="shopping" className="banner_label">
                                         <svg width="40" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fillRule="evenodd" clipRule="evenodd"
                                                 d="M33.367 15.124c.65 0 1.254.3 1.657.825.395.515.54 1.176.4 1.816L32.289 31.98c-.218.992-1.064 1.686-2.056 1.686h-19.99c-.992 0-1.837-.694-2.056-1.686L5.053 17.765a2.194 2.194 0 01.4-1.816 2.077 2.077 0 011.656-.825h5.87l3.182-7.568a.88.88 0 011.175-.478.941.941 0 01.461 1.22l-2.87 6.826h10.622l-2.87-6.825a.941.941 0 01.46-1.221.88.88 0 011.176.478l3.183 7.568h5.87zM10.243 31.812h19.99a.321.321 0 00.316-.245l3.134-14.216a.291.291 0 00-.056-.246.32.32 0 00-.26-.127h-5.09l.235.556a.941.941 0 01-.461 1.221.86.86 0 01-.357.078.892.892 0 01-.819-.556l-.546-1.299H14.147l-.546 1.298a.892.892 0 01-.819.557.86.86 0 01-.357-.078.941.941 0 01-.46-1.22l.233-.557H7.11a.32.32 0 00-.26.127.29.29 0 00-.056.246l3.135 14.216a.321.321 0 00.315.245zm3.745-9.89c0-.511.4-.926.893-.926s.893.415.893.927v6.799c0 .512-.4.927-.893.927s-.893-.415-.893-.927v-6.8zm6.25-.926c-.493 0-.893.415-.893.927v6.799c0 .512.4.927.893.927s.893-.415.893-.927v-6.8c0-.511-.4-.926-.893-.926zm4.465.927c0-.512.4-.927.893-.927s.892.415.892.927v6.799c0 .512-.4.927-.892.927-.494 0-.893-.415-.893-.927v-6.8z"
                                                 fill="#fff" /></svg>
                                         <h4>Shopping</h4>
                                     </label>
-                                    <label htmlFor="lifestyle">
+                                    <label htmlFor="lifestyle" className="banner_label">
                                         <svg width="40" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fillRule="evenodd" clipRule="evenodd"
                                                 d="M23.119 14.443a.73.73 0 01.07 1.287l-7.293 4.375a.733.733 0 01-.736.007l-1.023-.584-4.124 2.062a.733.733 0 01-.652 0L4 18.908l-.664.663L5.92 23.45a.727.727 0 01-.272 1.053c-.856.442-1.714.977-2.192 1.353 1.03.187 3.226.187 4.045.187 4.88 0 27.709-8.947 27.709-11.667 0-.218-.207-.485-.675-.731a.708.708 0 01-.055.002c-2.521 0-3.815 1.203-3.869 1.254a.733.733 0 01-1.028-.02.729.729 0 01.012-1.027c.036-.035.513-.492 1.411-.918a20.978 20.978 0 00-.9-.018c-2.486 0-5.315.898-6.986 1.526zm-2.187-.664L8.439 10.03a.729.729 0 00-.725.182L4.797 13.13a.728.728 0 00.155 1.15l7.664 4.379-2.928 1.463-5.507-2.754a.727.727 0 00-.841.137l-1.46 1.458a.729.729 0 00-.092.92L4.26 23.59c-2.594 1.448-2.594 2.167-2.594 2.452 0 1.314 1.868 1.458 5.833 1.458 1.635 0 7.068-1.515 12.808-3.611l6.315 7.718a.725.725 0 00.894.19l2.917-1.459a.729.729 0 00.38-.828l-2.187-8.75a.727.727 0 00-.11-.242c4.622-2.165 8.15-4.43 8.15-6.143 0-.878-.639-2.917-6.563-2.917-4.086 0-8.773 2.125-9.05 2.25l-.006.003a.734.734 0 00-.116.068zm6.28 7.334a104.792 104.792 0 01-5.458 2.238l5.63 6.88 1.873-.936-2.045-8.182zM6.503 13.487l9.008 5.148 5.51-3.306-12.582-3.776-1.936 1.934z"
                                                 fill="#fff" /></svg>
                                         <h4>Lifestyle</h4>
                                     </label>
+
                                 </div>
                             </div>
                         </div>
@@ -84,7 +102,10 @@ const ListingBanner = ({ data }) => {
                             <h3><span id="count">{number_of_offers}</span> {heading_for_product.toLowerCase(0)}</h3>
                         </div>
                         <div className="filter">
-                            <button className="filter-option" id="listing-filter">Filters
+                            <button
+                                className="filter-option"
+                                id="listing-filter">
+                                Filters
                                 <img src="../../images/icons/down-chevron.svg" />
                             </button>
                         </div>
@@ -92,7 +113,6 @@ const ListingBanner = ({ data }) => {
                 </div>
             </section>
             <ListingFilter />
-          
         </>
     )
 }

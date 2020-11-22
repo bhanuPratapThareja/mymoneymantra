@@ -13,6 +13,19 @@
   background-color: #89C142 !important;
 }
 
+.checkbox-container .lets-checkbox {
+  display: none !important;
+}
+
+.listing-banner_selected {
+  background: linear-gradient(90deg, #56AB2F 0%, #93D642 100%) !important;
+  background-size: 100% 100% !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  border: none !important;
+  transition: border 0.5s !important;
+}
+
 
 /* .filter-option {
 
@@ -4930,7 +4943,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 }
 
 .listings .banner-wrapper .top .category-wrapper input.lets-checkbox {
-  display: none;
+  /* display: none; */
 }
 
 .listings .banner-wrapper .top .category-wrapper label {
@@ -5081,14 +5094,15 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   }
 }
 
-.listings .banner-wrapper .top .category-wrapper .checkbox-container #all:checked~label[for="all"], .listings .banner-wrapper .top .category-wrapper .checkbox-container #travel:checked~label[for="travel"], .listings .banner-wrapper .top .category-wrapper .checkbox-container #shopping:checked~label[for="shopping"], .listings .banner-wrapper .top .category-wrapper .checkbox-container #lifestyle:checked~label[for="lifestyle"] {
+/* .listings .banner-wrapper .top .category-wrapper .checkbox-container #all:checked~label[for="all"], .listings .banner-wrapper .top .category-wrapper .checkbox-container #travel:checked~label[for="travel"], .listings .banner-wrapper .top .category-wrapper .checkbox-container #shopping:checked~label[for="shopping"], .listings .banner-wrapper .top .category-wrapper .checkbox-container #lifestyle:checked~label[for="lifestyle"] {
   background: linear-gradient(90deg, #56AB2F 0%, #93D642 100%);
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
   border: none;
   transition: border 0.5s;
-}
+} */
+
 
 @media (max-width: 768px) {
   .listings .banner-wrapper .top .category-wrapper .checkbox-container #all:checked~label[for="all"], .listings .banner-wrapper .top .category-wrapper .checkbox-container #travel:checked~label[for="travel"], .listings .banner-wrapper .top .category-wrapper .checkbox-container #shopping:checked~label[for="shopping"], .listings .banner-wrapper .top .category-wrapper .checkbox-container #lifestyle:checked~label[for="lifestyle"] {
