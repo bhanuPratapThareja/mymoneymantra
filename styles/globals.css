@@ -3,6 +3,9 @@
   top: 0;
   width: 100%;
 }
+.MuiLinearProgress-barColorPrimary.MuiLinearProgress-bar1Buffer {
+  background-color: #89C142;
+}
 
 @keyframes drop-open {
   0% {
