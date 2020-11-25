@@ -26,7 +26,6 @@ const CreditCards = ({ data }) => {
 
     const getComponents = dynamic => {
         return dynamic.map(block => {
-            console.log(block)
             switch (block.__component) {
                 case 'blocks.listing-banner':
                     return <ListingBanner key={block.id} data={block} />
@@ -36,12 +35,10 @@ const CreditCards = ({ data }) => {
                     return <LongFormBanner key={block.id} data={block} />
                 case 'blocks.learn-more':
                     return <LearnMore key={block.id} data={block} />
-                case 'blocks.credit':
+                case 'blocks.credit-score':
                     return <CreditScore key={block.id} data={block} />
                 case 'blocks.offer':
                     return <Offers key={block.id} data={block} />
-                case 'blocks.banks':
-                    return <Banks key={block.id} banks={block} />
                 case 'blocks.bank-new':
                     return <Banks key={block.id} banks={block} />
                 case 'blocks.financial-tools':
@@ -58,7 +55,7 @@ const CreditCards = ({ data }) => {
                     return <OfferDetailCards key={block.id} data={block} basePath={basePath} />
                 case 'blocks.product-banner':
                     return <BankProductBanner key={block.id} data={block} />
-                case 'blocks.bank-product-offer-details':
+                case 'blocks.bank-product-details-cards':
                     return <OfferBankProductDetails key={block.id} data={block} />
                 case 'blocks.short-form':
                     return <ShortExtendedForm key={block.id} data={block} />
@@ -77,7 +74,6 @@ export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const [path] = ctx.params.path
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)
-    console.log('pageData: ', pageData)
     const data = pageData[0]
     return { props: { data, path } }
 }

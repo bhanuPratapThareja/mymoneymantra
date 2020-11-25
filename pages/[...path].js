@@ -30,7 +30,7 @@ const Home = props => {
                     return <Blog key={block.id} data={block} />
                 case 'blocks.learn-more':
                     return <LearnMore key={block.id} data={block} />
-                case 'blocks.credit':
+                case 'blocks.credit-score':
                     return <CreditScore key={block.id} data={block} />
                 case 'blocks.short-form':
                     return <ShortExtendedForm key={block.id} data={block} />

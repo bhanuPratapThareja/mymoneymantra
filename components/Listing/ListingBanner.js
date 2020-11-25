@@ -18,7 +18,7 @@ if (typeof window != 'undefined') {
 }
 
 const ListingBanner = ({ data }) => {
-    const { heading_for_product, number_of_offers, listing_cateogry } = data
+    const { heading_for_product, number_of_offers, category } = data
     const [selectedOption, setSelectedOption] = useState('all')
     const strapi = new Strapi()
 
@@ -52,12 +52,12 @@ const ListingBanner = ({ data }) => {
                             <h5>Browse by category:</h5>
                             <div className="category-wrapper">
                                 <div className="checkbox-container" name="category" value={selectedOption} onChange={e => setSelectedOption(e.target.value)}>
-                                    {listing_cateogry.map(category => {
+                                    {category.map(category => {
                                         return (
                                             <React.Fragment key={category.id}>
                                                 <input className="lets-checkbox" value={category.label.toLowerCase()} type="radio" id={category.label.toLowerCase()} name="category" required />
                                                 <label htmlFor={category.label.toLowerCase()} className="banner_label">
-                                                    <img src={`${strapi.baseUrl}${category.images.url}`} alt={category.images.name} width="40" height="40" />
+                                                    <img src={`${strapi.baseUrl}${category.image.url}`} alt={category.image.name} width="40" height="40" />
                                                     <h4 className="listing-banner_category-label">{category.label}</h4>
                                                 </label>
                                             </React.Fragment>
