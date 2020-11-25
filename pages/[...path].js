@@ -11,8 +11,8 @@ import Blog from '../components/Blog'
 import ShortExtendedForm from '../components/ShortExtendedForm';
 
 const Home = props => {
-    const getComponents = blocks => {
-        return blocks.map(block => {
+    const getComponents = dynamic => {
+        return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':
                     return <Banner key={block.id} data={block} />
@@ -40,7 +40,7 @@ const Home = props => {
 
     return (
         <div className="credit-card-flow">
-            {props ? <Layout>{getComponents(props.data.blocks)}</Layout> : null}
+            {props ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
         </div>
     )
 }

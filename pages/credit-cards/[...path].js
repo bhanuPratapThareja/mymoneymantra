@@ -24,8 +24,9 @@ const CreditCards = ({ data }) => {
         window.scrollTo(0, 0)
     })
 
-    const getComponents = blocks => {
-        return blocks.map(block => {
+    const getComponents = dynamic => {
+        return dynamic.map(block => {
+            console.log(block)
             switch (block.__component) {
                 case 'blocks.listing-banner':
                     return <ListingBanner key={block.id} data={block} />
@@ -67,7 +68,7 @@ const CreditCards = ({ data }) => {
 
     return (
         <div className="listings" data-aos-easing="ease" data-aos-duration="600" data-aos-delay="0">
-            {data ? <Layout>{getComponents(data.blocks)}</Layout> : null}
+            {data ? <Layout>{getComponents(data.dynamic)}</Layout> : null}
         </div>
     )
 }
@@ -76,6 +77,7 @@ export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const [path] = ctx.params.path
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)
+    console.log('pageData: ', pageData)
     const data = pageData[0]
     return { props: { data, path } }
 }
