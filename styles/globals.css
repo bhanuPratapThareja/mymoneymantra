@@ -4999,9 +4999,9 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   }
 }
 
-.listings .banner-wrapper .top .category-wrapper input.lets-checkbox {
-  /* display: none; */
-}
+/* .listings .banner-wrapper .top .category-wrapper input.lets-checkbox {
+  display: none;
+} */
 
 .listings .banner-wrapper .top .category-wrapper label {
   display: -ms-flexbox;
