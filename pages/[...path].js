@@ -44,6 +44,9 @@ const Home = props => {
 
     return (
         <div className="credit-card-flow">
+            {/* <Button variant="contained" onClick={handleOpen}>Open Modal</Button>
+            <SmsOtpModal open={open} handleClose={handleClose} /> */}
+
             {props ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
         </div>
     )
