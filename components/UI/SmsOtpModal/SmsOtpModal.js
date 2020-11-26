@@ -34,19 +34,13 @@ export default function SmsOtpModal(props) {
             }}
         >
             <Fade in={props.open}>
-                {/* <div className={classes.paper}>
-                    <Otp submitting={false} />
-                </div> */}
-
-
-
                 <section className="container lets-find-container">
                     <div className="all-form-wrapper">
-                        <div className="lets-find-forms-container" style={{display: 'block'}}>
+                        <div className="lets-find-forms-container" style={{ display: 'block' }}>
                             <div className="lets-find-stepper-wrapper">
 
                                 <form className="short-forms-wrapper">
-                                    <div className="sf-forms mobile-otp" id="sf-2">
+                                    <div className="sf-forms mobile-otp">
                                         <div className="lets-find-content otp-card_custom">
                                             <h2>Verify your mobile<br />number</h2>
                                             <img className="green-underline" src="../../images/icons/green-underline.png" />
@@ -65,13 +59,7 @@ export default function SmsOtpModal(props) {
                         </div>
                     </div>
                 </section>
-
-
-
-
-
-
             </Fade>
         </Modal>
-    );
+    )
 }

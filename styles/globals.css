@@ -34,6 +34,55 @@
   transition: border 0.5s !important;
 }
 
+.otp-card_custom .green-underline {
+  width: 120px;
+}
+
+.lets-find-content.otp-card_custom {
+  background: #fff url(/_next/static/media/short-form-bg.15aa0cc4ada6d678f4622e7075a211e0.png) no-repeat bottom left / 300px;
+  padding: 50px 20px 50px 100px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.otp-wrapper .form__group.field {
+  padding: 25px 20px 15px;
+  border: 1px solid #88c53e;
+  margin: 10px 0;
+  border-radius: 4px;
+  position: relative;
+}
+
+.otp-wrapper .form__group.field label {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  left: 20px;
+  top: 10px;
+  font-family: "Avenir-Medium";
+  color: #999;
+  font-size: 12px;
+}
+
+.otp-wrapper span {
+  display: block;
+  text-align: right;
+  font-size: 14px;
+  color: #999;
+  margin-top: 5px;
+}
+
+.otp-wrapper {
+  max-width: 80%;
+}
+
+.otp-wrapper button {
+  background: none;
+  border: none;
+  float: right;
+  color: #88c53e;
+}
+
 
 /* .filter-option {
 
