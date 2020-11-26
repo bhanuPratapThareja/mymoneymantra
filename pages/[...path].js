@@ -13,6 +13,18 @@ import ShortExtendedForm from '../components/ShortExtendedForm';
 import { getApiData } from '../api/api'
 
 const Home = props => {
+
+    const [open, setOpen] = useState(false)
+    const [otp] = useState(false)
+
+    const handleOpen = () => {
+        setOpen(true)
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+
     const getComponents = dynamic => {
         return dynamic.map(block => {
             switch (block.__component) {
