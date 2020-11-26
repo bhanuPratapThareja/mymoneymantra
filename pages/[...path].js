@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 import Banner from '../components/Banner'
@@ -12,6 +13,7 @@ import Blog from '../components/Blog'
 import ShortExtendedForm from '../components/ShortExtendedForm';
 import { getApiData } from '../api/api'
 import SmsOtpModal from '../components/UI/SmsOtpModal/SmsOtpModal'
+import { Button } from '@material-ui/core'
 
 const Home = props => {
 
@@ -57,6 +59,7 @@ const Home = props => {
 
     return (
         <div className="credit-card-flow">
+            <br /><br /><br /><br /><br /><br /><br /><br />
             <Button variant="contained" onClick={handleOpen}>Open Modal</Button>
             <SmsOtpModal open={open} handleClose={handleClose} />
 
