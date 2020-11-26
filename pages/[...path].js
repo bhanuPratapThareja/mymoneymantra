@@ -6,9 +6,11 @@ import Banks from '../components/Banks'
 import FinancialTools from '../components/FinancialTools'
 import Rewards from '../components/Rewards'
 import Offers from '../components/Offers'
+import TrendingOffers from '../components/TrendingOffers'
 import LearnMore from '../components/LearnMore'
 import Blog from '../components/Blog'
 import ShortExtendedForm from '../components/ShortExtendedForm';
+import { getApiData } from '../api/api'
 
 const Home = props => {
     const getComponents = dynamic => {
@@ -26,6 +28,8 @@ const Home = props => {
                     return <Banks key={block.id} banks={block} />
                 case 'blocks.offer':
                     return <Offers key={block.id} data={block} />
+                case 'blocks.trending-offers':
+                    return <TrendingOffers key={block.id} data={block} trendingOffers={props.trendingOffers} />
                 case 'blocks.blogs':
                     return <Blog key={block.id} data={block} />
                 case 'blocks.learn-more':
@@ -45,12 +49,34 @@ const Home = props => {
     )
 }
 
-export async function getServerSideProps(props) {
+export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const [path] = props.params.path
-    const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
-    const data = pageData[0]
-    return { props: { data, path } }
+    let props = {}
+    let trendingOffers = null
+    let trendingProductId = '5'
+    const { url, body } = getApiData('offers')
+
+    try {
+        const res = await strapi.apiReq('POST', url, body)
+        offersData = res.response.payload
+    } catch {
+    }
+
+    try {
+        trendingOffers = await strapi.processReq('GET', `products?_where[product_id]=${trendingProductId}`)
+        trendingOffers = []
+    } catch (err) {
+    }
+
+    try {
+        const [path] = ctx.params.path
+        const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
+        const data = pageData[0]
+        props = { data, path }
+    } catch (err) {
+    }
+
+    return { props: { ...props, trendingOffers } }
 }
 
 export default Home

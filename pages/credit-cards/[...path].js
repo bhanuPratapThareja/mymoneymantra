@@ -17,9 +17,10 @@ import OfferDetailCards from '../../components/Listing/OfferDetailCards'
 import OfferBankProductDetails from '../../components/BankProduct/OfferBankProductDetails';
 import BankProductBanner from '../../components/BankProduct/BankProductBanner';
 import ShortExtendedForm from '../../components/ShortExtendedForm';
+import axios from 'axios'
+import { getApiData } from '../../api/api'
 
-const CreditCards = ({ data }) => {
-
+const CreditCards = props => {
     useEffect(() => {
         window.scrollTo(0, 0)
     })
@@ -49,7 +50,7 @@ const CreditCards = ({ data }) => {
                     return <Banks key={block.id} banks={block} />
                 case 'blocks.blogs':
                     return <Blog key={block.id} data={block} />
-                case 'blocks.thank-you':
+                case 'blocks.thank-you-banner':
                     return <ThankYouBanner key={block.id} data={block} />
                 case 'blocks.offer-card':
                     return <OfferDetailCards key={block.id} data={block} basePath={basePath} />
@@ -64,8 +65,8 @@ const CreditCards = ({ data }) => {
     }
 
     return (
-        <div className="listings" data-aos-easing="ease" data-aos-duration="600" data-aos-delay="0">
-            {data ? <Layout>{getComponents(data.dynamic)}</Layout> : null}
+        <div className="listings">
+            {props.data ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
         </div>
     )
 }

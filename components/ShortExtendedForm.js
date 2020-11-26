@@ -1,71 +1,88 @@
 import Router from 'next/router'
+import MarkDown from '../Utils/markdown'
 import $ from 'jquery'
+import { submitLetsFindForm, loadLetsFindForm } from '../Utils/shortFormHandle'
 
 class ShortExtendedForm extends React.Component {
     state = {
-        tnc: false
+        tnc: false,
+        slideIndex: 1
     }
 
     componentDidMount() {
-        console.log('short form')
-        $(".shortforms-container-buttons #next").click(function () {
-            plusSlides(1);
-        })
+        this.showSlides(this.state.slideIndex)
+        const that = this
         $(".shortforms-container-buttons #previous").click(function () {
-            plusSlides(-1);
+            that.onGoToPrevious()
         })
-        //short forms slider
-        var slideIndex = 1;
-        showSlides(slideIndex);
-        // Next/previous control
-        function plusSlides(n) {
-            showSlides(slideIndex += n);
-        }
-        function showSlides(n) {
-            var i;
-            var slides = document.getElementsByClassName("sf-forms");
-            if (n >= slides.length) {
-                $("#button-text").text("Submit and view offers").css("color", "#89C142");
-                $("#next").addClass("submit-short-form");
 
-            } else {
-                $("#button-text").text("Next").css("color", "#221F1F");
-                $("#next").removeClass("submit-short-form");
-            }
-            if (n > slides.length) {
-                submitShortForm();
-                return
-            }
-            if (n < 1) {
-                slideIndex = slides.length;
-                $(".lets-find-forms-container").removeClass("moving-in")
-                $(".lets-find").removeClass("moving-out")
-                $(".lets-find-forms-container").addClass("moving-in-rev")
-                $(".lets-find").addClass("moving-out-rev")
-                $("#button-text").text("Next")
-                $("#next").removeClass("submit-short-form");
-                slideIndex = 1;
-            }
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            slides[slideIndex - 1].style.display = "block";
-            slides[slideIndex - 1].classList.add("opacity-in")
-            var width = (slideIndex * (100 / slides.length)) + "%";
-            $("#pages-count").text(slideIndex + " of " + slides.length);
-            $(".progress-blue").width(width);
-        }
+        $(".shortforms-container-buttons #next").click(function () {
+            that.onSubmitSlide()
+        })
     }
 
-    handleChange = (type, value) => {
-        this.setState({ [type]: value }, () => console.log(this.state))
+    onGoToPrevious = () => {
+        if (this.state.slideIndex === 1) {
+            this.onGoToLetFindForm()
+            return
+        }
+        this.plusSlides(-1);
+    }
+
+    onSubmitSlide = () => {
+
+        this.plusSlides(1);
+    }
+
+    plusSlides(n) {
+        this.showSlides(this.setState({ slideIndex: this.state.slideIndex += n }));
+    }
+
+    showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("sf-forms");
+        if (n >= slides.length) {
+            $("#button-text").text("Submit and view offers").css("color", "#89C142");
+            $("#next").addClass("submit-short-form");
+
+        } else {
+            $("#button-text").text("Next").css("color", "#221F1F");
+            $("#next").removeClass("submit-short-form");
+        }
+        if (n > slides.length) {
+            submitShortForm();
+            return
+        }
+        if (n < 1) {
+            this.setState({ slideIndex: slides.length })
+            $(".lets-find-forms-container").removeClass("moving-in")
+            $(".lets-find").removeClass("moving-out")
+            $(".lets-find-forms-container").addClass("moving-in-rev")
+            $(".lets-find").addClass("moving-out-rev")
+            $("#button-text").text("Next")
+            $("#next").removeClass("submit-short-form");
+            this.setState({ slideIndex: 1 })
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[this.state.slideIndex - 1].style.display = "block";
+        slides[this.state.slideIndex - 1].classList.add("opacity-in")
+        var width = (this.state.slideIndex * (100 / slides.length)) + "%";
+        $("#pages-count").text(this.state.slideIndex + " of " + slides.length);
+        $(".progress-blue").width(width);
+    }
+
+    handleChange = e => {
+        const { name, checked } = e.target
     }
 
     onClickLetsGo = () => {
-        $(".lets-find-forms-container").removeClass("moving-in-rev")
-        $(".lets-find").removeClass("moving-out-rev")
-        $(".lets-find-forms-container").addClass("moving-in")
-        $(".lets-find").addClass("moving-out")
+        submitLetsFindForm()
+    }
+
+    onGoToLetFindForm = () => {
+        loadLetsFindForm()
     }
 
     onSubmitShortForm = () => {
@@ -74,7 +91,7 @@ class ShortExtendedForm extends React.Component {
 
     render() {
         return (
-            <section className="container lets-find-container aos-init">
+            <section data-aos="fade-up" className="container lets-find-container aos-init">
 
                 <div className="mobile-background"></div>
                 <div className="mobile-content">
@@ -84,14 +101,14 @@ class ShortExtendedForm extends React.Component {
                 <div className="all-form-wrapper">
                     <div className="lets-find">
                         <div className="lets-find-content">
-                            <h2>Let’s find the best credit card for you.</h2>
+                            <h2>{this.props.data.heading}</h2>
                             <img className="green-underline" src="../images/icons/green-underline.png" />
-                            <p>Leo cras nibh diam integer magnis dolor nulla ut ullamcorper. Libero ornare nec rhoncus augue morbi scelerisque in. Auctor venenatis vitae pellentesque egestas.</p>
+                            <p>{this.props.data.content}</p>
                         </div>
                         <div className="lets-find-form">
                             <form>
                                 <div className="form__group field">
-                                    <input className="form__field" type="text" id="full_name" placeholder="Full name" required="" />
+                                    <input className="form__field" type="text" id="full_name" placeholder="Full name" required="" name="full_name" onChange={this.handleChange} />
                                     <label className="form__label" htmlFor="full_name">Full name</label>
                                 </div>
                                 <div className="form__group field">
@@ -106,21 +123,15 @@ class ShortExtendedForm extends React.Component {
                             <div className="agree">
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="checkbox" value={this.state.tnc} onChange={e => this.handleChange('tnc', e.target.checked)} />
+                                        <input type="checkbox" id="checkbox" name="tnc" value={this.state.tnc} onChange={this.handleChange} />
                                         <label htmlFor="checkbox"><span>
-                                            I allow and authorize MyMoneyMantra and its partners to override the DND
-                                            registry
-                                            and
-                                            contact me by phone, e-mail or SMS about their products and services. I
-                                            further
-                                            accept and
-                                 agree to their <a href="#" target="_blank">Terms of Use</a> and <a href="#" target="_blank">Privacy Policy</a>.
-                              </span></label>
+                                            <MarkDown markDown={this.props.data.tnc} />
+                                        </span></label>
                                     </div>
                                 </div>
                             </div>
                             <div className='lets-go-button'>
-                                <button onClick={this.onClickLetsGo} disabled={!this.state.tnc}>Let's go!</button>
+                                <button onClick={this.onClickLetsGo} >{this.props.data.button}</button>
                             </div>
                         </div>
                     </div>

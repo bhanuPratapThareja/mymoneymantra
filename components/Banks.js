@@ -1,16 +1,16 @@
 import Strapi from '../providers/strapi'
-const strapi = new Strapi()
+import MarkDown from '../Utils/markdown'
 
 const Banks = props => {
-
-    let bank_sub_text = props.banks.sub_text;
+    const strapi = new Strapi()
+    let banks_heading = props.banks.banks_heading;
     let showBankImage = props.banks.repeatable_new_bank;
 
     return (
         <section data-aos="fade-up" className="banks-holder aos-init">
             <div className="blue-patch"></div>
             <div className="container banks">
-                <h2>{bank_sub_text}</h2>
+                <MarkDown markDown={banks_heading} />
                 <div className="banks-slider slick-initialized slick-slider">
 
                     <button className="slick-prev slick-arrow slick-disabled" aria-label="Previous" type="button" aria-disabled="true" style={{ display: "inline-block" }}>

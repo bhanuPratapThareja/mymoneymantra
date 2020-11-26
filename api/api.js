@@ -1,14 +1,15 @@
 import { env } from './../env/env';
 
 const api = {
-    mliDevBaseUrl: 'https://djedtvaxn2.execute-api.ap-south-1.amazonaws.com/posvdev/',
-    mliUatBaseUrl: 'https://oqh2u2s6hf.execute-api.ap-south-1.amazonaws.com/posvuat/',
-    mliProdBaseUrl: 'https://lg0gitgvtb.execute-api.ap-south-1.amazonaws.com/posvprod/',
+    uatBaseUrl: 'http://203.122.46.189:8580/mifinlms/',
+    devBaseUrl: 'http://203.122.46.189:8580/mifinlms/',
+    prodBaseUrl: 'http://203.122.46.189:8580/mifinlms/',
     routes: {
         offers: {
-            mliDevUrl: '/api/customer/v1/profile/offers',
-            mliUatUrl: '/api/customer/v1/profile/offers',
-            mliProdUrl: '/api/customer/v1/profile/offers'
+            uatUrl: 'api/customer/v1/profile/',
+            devUrl: 'api/customer/v1/profile/',
+            prodUrl: 'api/customer/v1/profile/',
+            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { mobileNo: "9999000090", customerId: "9999000090" } } }
         }
     }
 }
@@ -16,7 +17,7 @@ const api = {
 const getUrl = route => {
     const baseUrl = api[`${env}BaseUrl`]
     const pathUrl = `${env}Url`
-    return `${baseUrl}${api['routes'][route][pathUrl]}`
+    return `${baseUrl}${api['routes'][route][pathUrl]}${route}`
 }
 
 const getBody = route => {

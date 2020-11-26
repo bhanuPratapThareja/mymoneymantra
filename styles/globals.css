@@ -1,3 +1,7 @@
+/* .normal-banner + h1 + strong {
+  color: red !important;
+} */
+
 .banner-sticky {
   position: fixed;
   top: 100px;

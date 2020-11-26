@@ -1,13 +1,15 @@
-import Strapi from '../../providers/strapi';
+import Strapi from '../../providers/strapi'
+import MarkDown from '../../Utils/markdown'
 
 const BankProductBanner = props => {
     const strapi = new Strapi()
     const { button, heading, image, sub_text } = props.data;
     return (
-        <div className="credit-card-flow">
+        <div className="credit-card-flow c-detail-page">
+            <div class="combined-wrapper">
             <section className="banner container">
                 <div className="banner-wrapper">
-                    <h1>{heading}</h1>
+                    <MarkDown markDown={heading} />
                     <p>{sub_text}</p>
                     <button>{button}</button>
                 </div>
@@ -15,6 +17,7 @@ const BankProductBanner = props => {
                     <img className="banner-card" src={`${strapi.baseUrl}${image.url}`} alt={image.name} />
                 </div>
             </section>
+            </div>
         </div>
     )
 }

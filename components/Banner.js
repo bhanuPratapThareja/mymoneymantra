@@ -1,6 +1,5 @@
 import Strapi from '../providers/strapi'
-import Router from 'next/router';
-import Link from 'next/link'
+import Markdown from '../Utils/markdown'
 
 const Banner = props => {
     const strapi = new Strapi()
@@ -27,8 +26,7 @@ const Banner = props => {
         <section className="banner">
             <div className="banner-wrapper">
                 <div className="normal-banner">
-                    {/* <h1>{heading}</h1> */}
-                    <h1><b>Credit cards</b> for <br />all your needs.</h1>
+                    <Markdown markDown={heading} />
                     <p>{sub_text}</p>
                     <button onClick={goToShortFormPage}>{button}</button>
                 </div>
@@ -40,6 +38,12 @@ const Banner = props => {
                     {renderUspCards(usp_cards)}
                 </div>
             </div> : null}
+
+            <style jsx>{`
+                .normal-banner > h1 {
+                    color: green !important;
+                }
+            `}</style>
 
         </section>
     )

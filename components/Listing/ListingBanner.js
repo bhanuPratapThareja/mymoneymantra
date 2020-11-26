@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import ListingFilter from './ListingFilter'
 import Strapi from '../../providers/strapi'
 import $ from 'jquery'
+import MardDown from '../../Utils/markdown'
 
 if (typeof window != 'undefined') {
     $(document).ready(function () {
@@ -18,7 +19,7 @@ if (typeof window != 'undefined') {
 }
 
 const ListingBanner = ({ data }) => {
-    const { heading_for_product, number_of_offers, category } = data
+    const { heading, category, number_of_offers, product } = data
     const [selectedOption, setSelectedOption] = useState('all')
     const strapi = new Strapi()
 
@@ -45,8 +46,7 @@ const ListingBanner = ({ data }) => {
                 <div className="banner-wrapper">
                     <div className="top">
                         <div>
-                            <h1>Here are the best <span>{heading_for_product}</span> offers recommended for you.</h1>
-                            <h1 className="desk-hide">Here’s what we recommend for you.</h1>
+                            <MardDown markDown={heading} />
                         </div>
                         <div className="category">
                             <h5>Browse by category:</h5>
@@ -69,7 +69,7 @@ const ListingBanner = ({ data }) => {
                     </div>
                     <div className="bottom">
                         <div className="cards">
-                            <h3><span id="count">{number_of_offers}</span> {heading_for_product.toLowerCase(0)}</h3>
+                            <h3><span id="count">{number_of_offers}</span> {product.toLowerCase()}</h3>
                         </div>
                         <div className="filter">
                             <button
@@ -83,6 +83,7 @@ const ListingBanner = ({ data }) => {
                 </div>
             </section>
             <ListingFilter />
+            <hr className="divider" />
         </>
     )
 }

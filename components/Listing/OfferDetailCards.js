@@ -20,6 +20,10 @@ const OfferDetailCards = props => {
         }
     }
 
+    const goToVDetailsPage = () => {
+        Router.push(`/credit-cards/bank-product`)
+    }
+
     return (
         <section className="container long-cards">
             {offers.map((offer, i) => {
@@ -52,7 +56,7 @@ const OfferDetailCards = props => {
                                     <h5>Lifetime reward points</h5>
                                 </div>
                                 <div className="options">
-                                    <button id="view-details">{offer.view_details_link}</button>
+                                    <button id="view-details" onClick={goToVDetailsPage}>{offer.view_details_link}</button>
                                     {offer.button_type == "applyNow" ? <button onClick={() => cardButtonClick(offer.button_type)} id="apply-now">{offer.button_text}</button> : null}
                                     {offer.button_type == "eConnect" ? <button onClick={() => cardButtonClick(offer.button_type)} id="apply-now">{offer.button_text}</button> : null}
                                     {offer.button_type == "instantApproval" ? <button onClick={() => cardButtonClick(offer.button_type)} id="apply-now">{offer.button_text}</button> : null}
