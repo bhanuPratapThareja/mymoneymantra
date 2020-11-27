@@ -98,7 +98,7 @@ const Header = () => {
    return (
       <>
          <Head>
-            <title>Next Strapi App</title>
+            <title>My Money Mantra</title>
          </Head>
 
          {headerData ? <header className="header" ref={headerRef}>
