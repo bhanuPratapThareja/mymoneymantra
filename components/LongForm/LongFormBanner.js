@@ -1,6 +1,7 @@
 import Strapi from "../../providers/strapi"
 import { getFormPercentage } from '../../Utils/formPercentage'
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { validEmailRegex, validMobileRegex, isValidPanNumber, validPincodeRegex } from '../../Utils/validator'
 
 class LongFormBanner extends React.Component {
 
@@ -15,6 +16,10 @@ class LongFormBanner extends React.Component {
         address2: '',
         nearBy: '',
         city: '',
+        officeAddress1: '',
+        officeAddress2: '',
+        officeCity: '',
+        officePincode: '',
         pincode: '',
         dob: '',
         nationality: '',
@@ -25,6 +30,29 @@ class LongFormBanner extends React.Component {
         tnc1: false,
         tnc2: false,
         tnc3: false,
+        errors: {
+            firstName: '',
+            lastName: '',
+            fathersFirstName: '',
+            fathersLastName: '',
+            mothersFirstName: '',
+            mothersLastName: '',
+            officeAddress1: '',
+            officeAddress2: '',
+            officeCity: '',
+            officePincode: '',
+            dob: '',
+            nationality: '',
+            email: '',
+            phoneNo: '',
+            address1: '',
+            address2: '',
+            city: '',
+            pincode: '',
+            company: "",
+            pan: "",
+            monthlyIncome: ""
+        },
         percentageComplete: 0,
         totalValues: 17
     }
@@ -34,15 +62,18 @@ class LongFormBanner extends React.Component {
         // window.onscroll = () => { this.bannerSticky(bannerOffset) }
     }
 
-    // bannerSticky = bannerOffset => {
-    //     if (window.pageYOffset >= bannerOffset) {
-    //         this.bannerRef.current.classList.add("banner-sticky")
-    //     } else {
-    //         this.bannerRef.current.classList.remove("banner-sticky");
-    //     }
-    // }
+    bannerSticky = bannerOffset => {
+        if (window.pageYOffset >= bannerOffset) {
+            this.bannerRef.current.classList.add("banner-sticky")
+        } else {
+            this.bannerRef.current.classList.remove("banner-sticky");
+        }
+    }
 
-    handleInputs = (value, type) => {
+    handleInputs = (value, type, event) => {
+        let tempErrors = { ...this.state.errors };
+        tempErrors[type] = "";
+        this.setState({ errors: tempErrors });
         this.setState({ [type]: value }, () => {
 
             let fullName = {
@@ -75,6 +106,9 @@ class LongFormBanner extends React.Component {
                 officeCity: this.state.officeCity,
                 officePincode: this.state.officePincode
             }
+            let email = {
+                email: this.state.email
+            }
 
             this.setState({
                 fullName,
@@ -82,11 +116,254 @@ class LongFormBanner extends React.Component {
                 mothersFullName,
                 address,
                 officeAddress
+
             }, () => {
                 this.handlePercentage()
             })
+
+        })
+
+        const { name } = event.target;
+        this.setState({ [name]: value }, () => {
+            let errors = this.state.errors;
+            switch (name) {
+                case 'firstName':
+                    errors.firstName =
+                        value.length < 1
+                            ? "Name can't be empty"
+                            : '';
+                    break;
+                case 'lastName':
+                    errors.lastName =
+                        value.length < 1
+                            ? 'Full Name cannot be empty'
+                            : '';
+                    break;
+                case 'fathersFirstName':
+                    errors.fathersFirstName =
+                        value.length < 1
+                            ? 'Name cannot be empty'
+                            : '';
+                    break;
+                case 'fathersLastName':
+                    errors.fathersLastName =
+                        value.length < 1
+                            ? ' Name cannot be empty'
+                            : '';
+                    break;
+                case 'mothersFirstName':
+                    errors.mothersFirstName =
+                        value.length < 1
+                            ? ' Name cannot be empty'
+                            : '';
+                    break;
+                case 'mothersLastName':
+                    errors.mothersLastName =
+                        value.length < 1
+                            ? ' Name cannot be empty'
+                            : '';
+                    break;
+                case 'dob':
+                    errors.dob =
+                        value.length < 1
+                            ? ' DOB cannot be empty'
+                            : '';
+                    break;
+                case 'nationality':
+                    errors.nationality =
+                        value.length < 1
+                            ? ' Nationality cannot be empty'
+                            : '';
+                    break;
+
+                // case 'phoneNo':
+                //     errors.phoneNo = validMobileRegex.test(value) ? "" : "Number is not valid!"
+                //     break;
+                // case 'email':
+                //     errors.email = validEmailRegex.test(value) ? '' : 'Email is not valid!';
+                //     break;
+                case 'address1':
+                    errors.address1 =
+                        value.length < 1
+                            ? 'Field cannot be empty'
+                            : '';
+                    break;
+                case 'address2':
+                    errors.address2 =
+                        value.length < 1
+                            ? 'Field cannot be empty'
+                            : '';
+                    break;
+                case 'city':
+                    errors.city =
+                        !value
+                            ? 'City Name cannot be empty'
+                            : '';
+                    break;
+                case 'pincode':
+                    errors.pincode = validPincodeRegex.test(value) ? '' : 'Pincode is not valid!';
+                    break;
+                case 'officeAddress1':
+                    errors.officeAddress1 =
+                        value.length < 1
+                            ? 'Field cannot be empty'
+                            : '';
+                    break;
+                case 'officeAddress2':
+                    errors.officeAddress1 =
+                        value.length < 1
+                            ? 'Field cannot be empty'
+                            : '';
+                    break;
+                case 'officeCity':
+                    errors.officeCity =
+                        !value
+                            ? 'City Name cannot be empty'
+                            : '';
+                    break;
+                case 'officePincode':
+                    errors.officePincode = validPincodeRegex.test(value) ? '' : 'Pincode is not valid!';
+                    break;
+                // case 'pan':
+                //     errors.pan = isValidPanNumber.test(value) ? '' : 'Pan Number is not valid!';
+                //     break;
+                case 'monthlyIncome':
+                    errors.monthlyIncome =
+                        !value
+                            ? 'Monthly Income cannot be empty'
+                            : '';
+                    break;
+
+
+            }
+            this.setState({ errors, [name]: value }, () => {
+                console.log(this.state)
+
+            });
         })
     }
+
+
+    handleInputBlur = (event) => {
+        console.log("manish--------------------");
+
+        const { name, value } = event.target;
+        this.setState({ [name]: value }, () => {
+
+            let errors = this.state.errors;
+            switch (name) {
+                case 'firstName':
+
+                    errors.firstName = !value ? "mandatory field" : "";
+                    break;
+                case 'lastName':
+                    errors.lastName = !value ? "mandatory field" : "";
+                    break;
+                case 'fathersFirstName':
+                    errors.fathersFirstName = !value ? "mandatory field" : "";
+                    break;
+                case 'fathersLastName':
+                    errors.fathersLastName = !value ? "mandatory field" : "";
+                    break;
+                case 'mothersFirstName':
+                    errors.mothersFirstName = !value ? "mandatory field" : "";
+                    break;
+                case 'mothersLastName':
+                    errors.mothersLastName = !value ? "mandatory field" : "";
+                    break;
+                case 'dob':
+                    errors.dob = !value ? "mandatory field" : "";
+                    break;
+                case 'nationality':
+                    errors.nationality = !value ? "mandatory field" : "";
+                    break;
+                case 'phoneNo':
+                    if (!value) {
+                        errors.phoneNo = "mandatory fields";
+                    } else
+                        errors.phoneNo = validMobileRegex.test(value) ? "" : "Invalid Phone Number"
+
+                    break;
+                case 'email':
+                    if (!value) {
+                        errors.email = "mandatory fields";
+                    } else {
+                        errors.email = validEmailRegex.test(value) ? '' : 'Email is not valid!';
+                    }
+                    break;
+                case 'address1':
+                    errors.address1 = !value ? "mandatory field" : "";
+                    break;
+                case 'address2':
+                    errors.address2 = !value ? "mandatory field" : "";
+                    break;
+                case 'city':
+                    errors.city = !value ? "mandatory field" : "";
+                    break;
+                case 'pincode':
+                    errors.pincode = !value ? "mandatory field" : "";
+                    break;
+                case 'officeAddress1':
+                    errors.officeAddress1 = !value ? "mandatory field" : "";
+                    break;
+                case 'officeAddress2':
+                    errors.officeAddress2 = !value ? "mandatory field" : "";
+                    break;
+                case 'officeCity':
+                    errors.officeCity = !value ? "mandatory field" : "";
+                    break;
+                case 'officePincode':
+                    errors.officePincode = !value ? "mandatory field" : "";
+                    break;
+                case 'monthlyIncome':
+                    errors.monthlyIncome = !value ? "mandatory field" : "";
+                    break;
+                case 'pan':
+                    if (!value) {
+                        errors.pan = !value ? "mandatory field" : "";
+                    }
+                    else {
+                        errors.pan = isValidPanNumber.test(value) ? '' : 'Pan Number is not valid!';
+
+                    }
+                    break;
+
+            }
+            this.setState({ errors, [name]: value }, () => {
+                console.log(this.state)
+
+            });
+        })
+
+    }
+    // handleInputEmail = (value, type, e) => {
+    //     let tempErrors = { ...this.state.errors };
+    //     tempErrors[type] = "";
+    //     this.setState({ errors: tempErrors });
+    //     this.setState({ [type]: value }, () => {
+
+    //         // let email = {
+    //         //     email: this.state.email
+    //         // }
+    //         console.log("email-------------", email)
+    //         this.setState({
+
+    //             // email: value
+    //         }, () => {
+    //             this.handlePercentage()
+    //         })
+    //     })
+    // }
+
+    // onBlur = (event) => {
+    //     const { name, value } = event.target
+
+    //     if (!value) {
+    //         this.setState({ ...this.state.blur = true })
+
+    //     }
+
+    // }
 
 
     handleRadio = (value, type) => {
@@ -96,13 +373,13 @@ class LongFormBanner extends React.Component {
     }
 
     handleCheckboxes = (value, type) => {
-        this.setState({ [type]: value }, () => {
-            // const { tnc1, tnc2, tnc3 } = this.state
-            // this.state.tnc = tnc1 || tnc2 || tnc3
-            // this.setState({ tnc }, () => [
-            //     this.handlePercentage()
-            // ])
-        })
+        // this.setState({ [type]: value }, () => {
+        //     const { tnc1, tnc2, tnc3 } = this.state
+        //     this.state.tnc = tnc1 || tnc2 || tnc3
+        //     this.setState({ tnc }, () => [
+        //         this.handlePercentage()
+        //     ])
+        // })
     }
 
     handlePercentage = () => {
@@ -114,11 +391,14 @@ class LongFormBanner extends React.Component {
     render() {
         const strapi = new Strapi()
         const { bank_name, form_heading, product_type, banner_image } = this.props.data
-
+        const { errors } = this.state;
+        const firstNameStyles = errors.firstName ? { border: '1px solid red' } : null;
+        const lastNameStyles = errors.lastName ? { border: '1px solid red' } : null
+       
         return (
             <div className="long-form">
                 <section className="long-form-wrapper">
-                    <div className="card-info" style={{height: '303px'}} id="longFormBanner">
+                    <div className="card-info" style={{ height: '303px' }} id="longFormBanner">
                         <h5 className="app-form">{form_heading}</h5>
                         <h3><b>{bank_name}</b><br />{product_type}</h3>
                         <img src={`${strapi.baseUrl}${banner_image.url}`} />
@@ -137,7 +417,8 @@ class LongFormBanner extends React.Component {
                             <h3>Personal Details</h3>
                             <div className="long-forms-wrapper">
                                 <h5><b>1.</b> Gender</h5>
-                                <div className="shortforms-container long-gender" value={this.state.gender} onChange={e => this.handleRadio(e.target.value, 'gender')}>
+                                <div className="shortforms-container long-gender" required name="gender" value={this.state.gender} value={this.state.gender} onChange={e => this.handleRadio(e.target.value, 'gender')}
+                                >
                                     <input className="lets-checkbox" type="radio" id="female" name="gender" value="female" required />
                                     <input className="lets-checkbox" type="radio" id="male" name="gender" value="male" required />
                                     <input className="lets-checkbox" type="radio" id="other" name="gender" value="other" required />
@@ -153,12 +434,21 @@ class LongFormBanner extends React.Component {
                             <div className="long-forms-wrapper">
                                 <h5><b>2.</b> Full Name</h5>
                                 <div className="shortforms-container long-name">
-                                    <div className="form__group field">
-                                        <input className="form__field" type="text" id="first-name" placeholder="First Name" required value={this.state.firstName} onChange={e => this.handleInputs(e.target.value, 'firstName')} />
+                                    <div className='form__group field' style={firstNameStyles}>
+                                        <input className='form__field' type="text" id="first-name" placeholder="First Name" name="firstName" required value={this.state.firstName} onChange={e => this.handleInputs(e.target.value, 'firstName', e)}
+                                            onBlur={this.handleInputBlur} />
+                                        {errors.firstName.length > 0 &&
+                                            <span className='error'>{errors.lastName}</span>}
                                         <label className="form__label" htmlFor="first-name">First Name</label>
                                     </div>
-                                    <div className="form__group field">
-                                        <input className="form__field" type="text" id="last-name" placeholder="Last Name" required value={this.state.lastName} onChange={e => this.handleInputs(e.target.value, 'lastName')} />
+
+
+
+                                    <div className="form__group field" style={lastNameStyles}>
+                                        <input className="form__field" type="text" id="last-name" placeholder="Last Name" name="lastName" required value={this.state.lastName} onChange={e => this.handleInputs(e.target.value, 'lastName', e)}
+                                            onBlur={this.handleInputBlur} />
+                                        {errors.lastName.length > 0 &&
+                                            <span className='error'>{errors.lastName}</span>}
                                         <label className="form__label" htmlFor="last-name">Last Name</label>
                                     </div>
 
@@ -189,11 +479,18 @@ class LongFormBanner extends React.Component {
                                 <h5><b>4.</b> Father’s Name</h5>
                                 <div className="shortforms-container long-name">
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="father-f-name" placeholder="First Name" required value={this.state.fathersFirstName} onChange={e => this.handleInputs(e.target.value, 'fathersFirstName')} />
+                                        <input className="form__field" type="text" id="father-f-name" placeholder="First Name" name="fathersFirstName" required value={this.state.fathersFirstName} onChange={e => this.handleInputs(e.target.value, 'fathersFirstName', e)}
+                                            onBlur={this.handleInputBlur} />
+                                        {errors.fathersFirstName.length > 0 &&
+                                            <span className='error'>{errors.fathersFirstName}</span>}
                                         <label className="form__label" htmlFor="father-f-name">First Name</label>
                                     </div>
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="father-l-name" placeholder="Last Name" required value={this.state.fathersLastName} onChange={e => this.handleInputs(e.target.value, 'fathersLastName')} />
+                                        <input className="form__field" type="text" id="father-l-name" placeholder="Last Name" required name="fathersLastName" value={this.state.fathersLastName} onChange={e => this.handleInputs(e.target.value, 'fathersLastName', e)}
+                                            onBlur={this.handleInputBlur} />
+                                        {errors.fathersLastName.length > 0 &&
+                                            <span className='error'>{errors.fathersLastName}</span>}
+
                                         <label className="form__label" htmlFor="father-l-name">Last Name</label>
                                     </div>
 
@@ -205,11 +502,17 @@ class LongFormBanner extends React.Component {
                                 <h5><b>5.</b> Mother's Name</h5>
                                 <div className="shortforms-container long-name">
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="mother-f-name" placeholder="First Name" required value={this.state.mothersFirstName} onChange={e => this.handleInputs(e.target.value, 'mothersFirstName')} />
+                                        <input className="form__field" type="text" id="mother-f-name" placeholder="First Name" required name="mothersFirstName" value={this.state.mothersFirstName} onChange={e => this.handleInputs(e.target.value, 'mothersFirstName', e)}
+                                            onBlur={this.handleInputBlur} />
+                                        {errors.mothersFirstName.length > 0 &&
+                                            <span className='error'>{errors.mothersFirstName}</span>}
                                         <label className="form__label" htmlFor="mother-f-name">First Name</label>
                                     </div>
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="mother-l-name" placeholder="Last Name" required value={this.state.mothersLastName} onChange={e => this.handleInputs(e.target.value, 'mothersLastName')} />
+                                        <input className="form__field" type="text" id="mother-l-name" placeholder="Last Name" required name="mothersLastName" value={this.state.mothersLastName} onChange={e => this.handleInputs(e.target.value, 'mothersLastName', e)}
+                                            onBlur={this.handleInputBlur} />
+                                        {errors.mothersLastName.length > 0 &&
+                                            <span className='error'>{errors.mothersLastName}</span>}
                                         <label className="form__label" htmlFor="mother-l-name">Last Name</label>
                                     </div>
 
@@ -222,8 +525,11 @@ class LongFormBanner extends React.Component {
                                     <h5><b>6.</b> Date of Birth</h5>
                                     <div className="shortforms-container long-name">
                                         <div className="form__group field">
-                                            <input className="form__field datepicker" type="text" id="dob" placeholder="MM / DD / YYYY"
-                                                required value={this.state.dob} onChange={e => this.handleRadio(e.target.value, 'dob')} />
+                                            <input className="form__field datepicker" type="date" id="dob" placeholder="MM / DD / YYYY"
+                                                required name="dob" value={this.state.dob} onChange={e => this.handleRadio(e.target.value, 'dob')}
+                                                onBlur={this.handleInputBlur} />
+                                            {errors.dob.length > 0 &&
+                                                <span className='error'>{errors.dob}</span>}
                                             <label className="form__label" htmlFor="dob">Date of Birth</label>
                                         </div>
                                     </div>
@@ -234,7 +540,10 @@ class LongFormBanner extends React.Component {
                                     <div className="shortforms-container long-name">
                                         <div className="form__group field">
                                             <input className="form__field" type="text" id="nationality" placeholder="Nationality"
-                                                required value={this.state.nationality} onChange={e => this.handleRadio(e.target.value, 'nationality')} />
+                                                required name="nationality" value={this.state.nationality} onChange={e => this.handleRadio(e.target.value, 'nationality')}
+                                                onBlur={this.handleInputBlur} />
+                                            {errors.nationality.length > 0 &&
+                                                <span className='error'>{errors.nationality}</span>}
                                             <label className="form__label" htmlFor="nationality">Nationality</label>
                                         </div>
                                     </div>
@@ -248,7 +557,10 @@ class LongFormBanner extends React.Component {
                                     <div className="shortforms-container long-name">
                                         <div className="form__group field">
                                             <input className="form__field" type="number" id="phone-number" placeholder="Phone Number"
-                                                required value={this.state.phoneNo} onChange={e => this.handleRadio(e.target.value, 'phoneNo')} />
+                                                required name="phoneNo" value={this.state.phoneNo} onChange={e => this.handleInputs(e.target.value, 'phoneNo', e)}
+                                                onBlur={this.handleInputBlur} />
+                                            {errors.phoneNo.length > 0 &&
+                                                <span className='error'>{errors.phoneNo}</span>}
                                             <label className="form__label" htmlFor="phone-number">Phone Number</label>
                                         </div>
                                     </div>
@@ -258,7 +570,10 @@ class LongFormBanner extends React.Component {
                                     <h5><b>9.</b> Email ID</h5>
                                     <div className="shortforms-container long-name">
                                         <div className="form__group field">
-                                            <input className="form__field" type="text" id="email" placeholder="Email ID" required value={this.state.email} onChange={e => this.handleRadio(e.target.value, 'email')} />
+                                            <input className="form__field" type="text" id="email" placeholder="Email ID" required name="email" value={this.state.email} onChange={e => this.handleInputs(e.target.value, 'email', e)}
+                                                onBlur={this.handleInputBlur} />
+                                            {errors.email.length > 0 &&
+                                                <span className='error'>{errors.email}</span>}
                                             <label className="form__label" htmlFor="email">Email ID</label>
                                         </div>
                                     </div>
@@ -270,25 +585,37 @@ class LongFormBanner extends React.Component {
                                 <h5><b>10.</b> Residence Address</h5>
                                 <div className="shortforms-container long-address">
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="address-1" placeholder="Address Line 1" required value={this.state.address1} onChange={e => this.handleInputs(e.target.value, 'address1')} />
+                                        <input className="form__field" type="text" id="address-1" placeholder="Address Line 1" required name="address1" value={this.state.address1} onChange={e => this.handleInputs(e.target.value, 'address1', e)}
+                                            onBlur={this.handleInputBlur} />
+                                        {errors.address1.length > 0 &&
+                                            <span className='error'>{errors.address1}</span>}
                                         <label className="form__label" htmlFor="address-1">Address Line 1</label>
                                     </div>
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="address-2" placeholder="Address Line 2" required value={this.state.address2} onChange={e => this.handleInputs(e.target.value, 'address2')} />
+                                        <input className="form__field" type="text" id="address-2" placeholder="Address Line 2" required name="address2" value={this.state.address2} onChange={e => this.handleInputs(e.target.value, 'address2', e)}
+                                            onBlur={this.handleInputBlur} />
+                                        {errors.address2.length > 0 &&
+                                            <span className='error'>{errors.address2}</span>}
                                         <label className="form__label" htmlFor="address-2">Address Line 2</label>
                                     </div>
                                     <div className="form__group field">
                                         <input className="form__field" type="text" id="address-landmark"
-                                            placeholder="Nearby Landmark (Optional)" required value={this.state.nearBy} onChange={e => this.handleInputs(e.target.value, 'nearBy')} />
+                                            placeholder="Nearby Landmark (Optional)" required value={this.state.nearBy} onChange={e => this.handleInputs(e.target.value, 'nearBy', e)} />
                                         <label className="form__label" htmlFor="address-2">Nearby Landmark (Optional)</label>
                                     </div>
                                     <div className="row-input-container">
                                         <div className="form__group field long-city">
-                                            <input className="form__field" type="text" id="city" placeholder="City" required value={this.state.city} onChange={e => this.handleInputs(e.target.value, 'city')} />
+                                            <input className="form__field" type="text" id="city" placeholder="City" required name="city" value={this.state.city} onChange={e => this.handleInputs(e.target.value, 'city', e)}
+                                                onBlur={this.handleInputBlur} />
+                                            {errors.city.length > 0 &&
+                                                <span className='error'>{errors.city}</span>}
                                             <label className="form__label" htmlFor="city">City</label>
                                         </div>
                                         <div className="form__group field long-pincode">
-                                            <input className="form__field" type="text" id="pincode" placeholder="Pincode" required value={this.state.pincode} onChange={e => this.handleInputs(e.target.value, 'pincode')} />
+                                            <input className="form__field" type="text" id="pincode" placeholder="Pincode" required name="pincode" value={this.state.pincode} onChange={e => this.handleInputs(e.target.value, 'pincode', e)}
+                                                onBlur={this.handleInputBlur} />
+                                            {errors.pincode.length > 0 &&
+                                                <span className='error'>{errors.pincode}</span>}
                                             <label className="form__label" htmlFor="pincode">Pincode</label>
                                         </div>
                                     </div>
@@ -308,9 +635,9 @@ class LongFormBanner extends React.Component {
                                     <label htmlFor="l-no">No</label>
                                     <div className="form__group field file-type grid-span">
                                         <input className="form__field upload-real" type="file" id="l-address-image"
-                                            placeholder="address proof" required />
+                                            placeholder="address proof" />
                                         <input className="form__field upload-show" type="text" id="l-address-image-show"
-                                            placeholder="address proof" required />
+                                            placeholder="address proof" />
 
                                         <svg className="file-upload-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -342,26 +669,38 @@ class LongFormBanner extends React.Component {
                                 <div className="shortforms-container long-address">
                                     <div className="form__group field">
                                         <input className="form__field" type="text" id="off-address-1" placeholder="Address Line 1"
-                                            required value={this.state.off_address_1} onChange={e => this.handleInputs(e.target.value, 'officeAddress1')} />
+                                            required name="officeAddress1" value={this.state.off_address_1} onChange={e => this.handleInputs(e.target.value, 'officeAddress1', e)}
+                                            onBlur={this.handleInputBlur} />
+                                        {errors.officeAddress1.length > 0 &&
+                                            <span className='error'>{errors.officeAddress1}</span>}
                                         <label className="form__label" htmlFor="off-address-1">Address Line 1</label>
                                     </div>
                                     <div className="form__group field">
                                         <input className="form__field" type="text" id="off-address-2" placeholder="Address Line 2"
-                                            required value={this.state.off_address_2} onChange={e => this.handleInputs(e.target.value, 'officeAddress2')} />
+                                            required name="officeAddress2" value={this.state.off_address_2} onChange={e => this.handleInputs(e.target.value, 'officeAddress2', e)}
+                                            onBlur={this.handleInputBlur} />
+                                        {errors.officeAddress2.length > 0 &&
+                                            <span className='error'>{errors.officeAddress2}</span>}
                                         <label className="form__label" htmlFor="off-address-2">Address Line 2</label>
                                     </div>
                                     <div className="form__group field">
                                         <input className="form__field" type="text" id="off-address-landmark"
-                                            placeholder="Nearby Landmark (Optional)" required value={this.state.off_nearBy_1} onChange={e => this.handleInputs(e.target.value, 'officeNearBy')} />
+                                            placeholder="Nearby Landmark (Optional)" required value={this.state.off_nearBy_1} onChange={e => this.handleInputs(e.target.value, 'officeNearBy', e)} />
                                         <label className="form__label" htmlFor="off-address-2">Nearby Landmark (Optional)</label>
                                     </div>
                                     <div className="row-input-container">
                                         <div className="form__group field long-city">
-                                            <input className="form__field" type="text" id="off-city" placeholder="City" required value={this.state.off_city} onChange={e => this.handleInputs(e.target.value, 'officeCity')} />
+                                            <input className="form__field" type="text" id="off-city" placeholder="City" required name="officeCity" value={this.state.off_city} onChange={e => this.handleInputs(e.target.value, 'officeCity', e)}
+                                                onBlur={this.handleInputBlur} />
+                                            {errors.officeCity.length > 0 &&
+                                                <span className='error'>{errors.officeCity}</span>}
                                             <label className="form__label" htmlFor="off-city">City</label>
                                         </div>
                                         <div className="form__group field long-pincode">
-                                            <input className="form__field" type="text" id="off-pincode" placeholder="Pincode" required value={this.state.off_pincode} onChange={e => this.handleInputs(e.target.value, 'officePincode')} />
+                                            <input className="form__field" type="text" id="off-pincode" placeholder="Pincode" required name="officePincode" value={this.state.off_pincode} onChange={e => this.handleInputs(e.target.value, 'officePincode', e)}
+                                                onBlur={this.handleInputBlur} />
+                                            {errors.officePincode.length > 0 &&
+                                                <span className='error'>{errors.officePincode}</span>}
                                             <label className="form__label" htmlFor="off-pincode">Pincode</label>
                                         </div>
                                     </div>
@@ -388,14 +727,17 @@ class LongFormBanner extends React.Component {
                                 <h5><b>14.</b> Personal Account Number (PAN)</h5>
                                 <div className="shortforms-container long-work ">
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="l-pan" placeholder="PAN" required value={this.state.pan} onChange={e => this.handleRadio(e.target.value, 'pan')} />
+                                        <input className="form__field" type="text" id="l-pan" placeholder="PAN" required name="pan" value={this.state.pan} onChange={e => this.handleInputs(e.target.value, 'pan', e)}
+                                            onBlur={this.handleInputBlur} />
+                                        {errors.pan.length > 0 &&
+                                            <span className=' error'>{errors.pan}</span>}
                                         <label className="form__label" htmlFor="l-pan">PAN</label>
                                     </div>
                                     <div className="form__group field file-type">
                                         <input className="form__field upload-real" type="file" id="l-pancard-image"
-                                            placeholder="PAN Card image" required />
+                                            placeholder="PAN Card image" />
                                         <input className="form__field upload-show" type="text" id="l-pancard-image-show"
-                                            placeholder="PAN Card image" required />
+                                            placeholder="PAN Card image" />
 
                                         <svg className="file-upload-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -427,15 +769,18 @@ class LongFormBanner extends React.Component {
                                 <div className="shortforms-container long-work ">
                                     <div className="form__group field">
                                         <input className="form__field" type="text" id="m-income"
-                                            placeholder="Net monthly income" required value={this.state.monthlyIncome} onChange={e => this.handleRadio(e.target.value, 'monthlyIncome')} />
+                                            placeholder="Net monthly income" required name="monthlyIncome" value={this.state.monthlyIncome} onChange={e => this.handleRadio(e.target.value, 'monthlyIncome', e)}
+                                            onBlur={this.handleInputBlur} />
+                                        {errors.monthlyIncome.length > 0 &&
+                                            <span className=' error'>{errors.monthlyIncome}</span>}
                                         <label className="form__label" htmlFor="m-income">Net monthly income</label>
                                         <p id="word-number"></p>
                                     </div>
                                     <div className="form__group field file-type">
                                         <input className="form__field upload-real" type="file" id="salary-image" placeholder="salary"
-                                            required />
+                                        />
                                         <input className="form__field upload-show" type="text" id="salary-image-show"
-                                            placeholder="salary" required />
+                                            placeholder="salary" />
 
                                         <svg className="file-upload-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -518,8 +863,8 @@ class LongFormBanner extends React.Component {
                             </div>
 
                             {/* <!--submit--> */}
-                            <div className="long-form-submit">
-                                <button onClick={this.getFormValues} id="long-submit">Submit Application</button>
+                            <div className="long-form-submit ">
+                                <button className="bordershadow" disabled={!this.state.tnc1 && !this.state.tnc2 && !this.state.tnc3} onClick={this.getFormValues} id="long-submit">Submit Application</button>
                             </div>
 
                         </form>
