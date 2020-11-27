@@ -8133,7 +8133,9 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 }
 
 
-.banner-wrapper .normal-banner h1:first-child strong:first-child {
+.banner-wrapper .normal-banner h1:first-child strong:first-child,
+.score-content h2 strong:nth-child(2),
+.banks-holder .banks h2 strong:nth-child(2) {
   color: #89C142;
 }
 .lets-find-form .agree .checkbox span p {
@@ -8143,4 +8145,8 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 
 .lets-find-form .agree .checkbox span p a {
   display: inline-block;
+}
+
+.thankyou-page {
+  margin-bottom: 70px;
 }
