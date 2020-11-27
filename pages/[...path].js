@@ -73,7 +73,7 @@ export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     let props = {}
     let trendingOffers = null
-    let trendingProductId = '5'
+    let trendingProductId = ''
     const { url, body } = getApiData('offers')
 
     try {
@@ -84,7 +84,7 @@ export async function getServerSideProps(ctx) {
 
     try {
         trendingOffers = await strapi.processReq('GET', `products?_where[product_id]=${trendingProductId}`)
-        trendingOffers = []
+        console.log(trendingOffers)
     } catch (err) {
     }
 
