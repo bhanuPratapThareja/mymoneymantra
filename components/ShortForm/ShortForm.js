@@ -2,10 +2,6 @@ import { generateInputs } from '../../Utils/inputGenerator'
 
 class ShortForm extends React.Component {
 
-    componentDidMount() {
-        console.log(this.props.data)
-    }
-
     state = {
         full_name: '',
         phone_no: '',
@@ -30,7 +26,7 @@ class ShortForm extends React.Component {
     render() {
         const { heading_text, content_text, button_text } = this.props.data
         return (
-            <section data-aos="fade-up" className="container lets-find-container aos-init aos-animate">
+            <section data-aos="fade-up" className="container lets-find-container aos-init">
                 <div className="mobile-background"></div>
                 <div className="mobile-content">
                     <h1>{heading_text}</h1>

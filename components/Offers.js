@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
-import $ from 'jquery'
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
-
 import Strapi from '../providers/strapi'
+import axios from 'axios'
+import { getApiData } from '../api/api'
 import { offerSlick } from '../Utils/offerSlick'
 
 const Offers = props => {
@@ -11,13 +9,21 @@ const Offers = props => {
    const [offers, setOffers] = useState([])
 
    useEffect(() => {
-      setOffers(offerSlick(props.data.cards));
+      loadOffers()
    }, [])
 
+   const loadOffers = async () => {
+      setOffers(offerSlick(props.data.cards))
+   }
+
+   if (!offers.length) {
+      return null
+   }
+
    return (
-      <section data-aos="fade-up" className="container popular-card-container aos-init aos-animate">
+      <section data-aos="fade-up" className="container popular-card-container aos-init">
          <div className="popular-cards">
-            <h2>{props.data.section_heading}</h2>
+            <h2>Popular Credit Cards</h2>
             <div className="popular-cards-slider slick-initialized slick-slider" id="trending-offers-sec"><button className="slick-prev slick-arrow" aria-label="Previous" type="button" >Previous</button>
 
                <button className="slick-prev slick-arrow" aria-label="Previous" type="button">Previous</button>

@@ -16,15 +16,17 @@ import OfferDetailCards from '../../components/Listing/OfferDetailCards'
 
 import OfferBankProductDetails from '../../components/BankProduct/OfferBankProductDetails';
 import BankProductBanner from '../../components/BankProduct/BankProductBanner';
+import ShortExtendedForm from '../../components/ShortExtendedForm';
+import axios from 'axios'
+import { getApiData } from '../../api/api'
 
-const CreditCards = ({ data }) => {
-
+const CreditCards = props => {
     useEffect(() => {
-        window.scrollTo(0,0)
+        window.scrollTo(0, 0)
     })
 
-    const getComponents = blocks => {
-        return blocks.map(block => {
+    const getComponents = dynamic => {
+        return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.listing-banner':
                     return <ListingBanner key={block.id} data={block} />
@@ -34,12 +36,10 @@ const CreditCards = ({ data }) => {
                     return <LongFormBanner key={block.id} data={block} />
                 case 'blocks.learn-more':
                     return <LearnMore key={block.id} data={block} />
-                case 'blocks.credit':
+                case 'blocks.credit-score':
                     return <CreditScore key={block.id} data={block} />
                 case 'blocks.offer':
                     return <Offers key={block.id} data={block} />
-                case 'blocks.banks':
-                    return <Banks key={block.id} banks={block} />
                 case 'blocks.bank-new':
                     return <Banks key={block.id} banks={block} />
                 case 'blocks.financial-tools':
@@ -50,21 +50,23 @@ const CreditCards = ({ data }) => {
                     return <Banks key={block.id} banks={block} />
                 case 'blocks.blogs':
                     return <Blog key={block.id} data={block} />
-                case 'blocks.thank-you':
+                case 'blocks.thank-you-banner':
                     return <ThankYouBanner key={block.id} data={block} />
                 case 'blocks.offer-card':
                     return <OfferDetailCards key={block.id} data={block} basePath={basePath} />
                 case 'blocks.product-banner':
                     return <BankProductBanner key={block.id} data={block} />
-                case 'blocks.bank-product-offer-details':
-                    return <OfferBankProductDetails key={block.id} data={block}/>
+                case 'blocks.bank-product-details-cards':
+                    return <OfferBankProductDetails key={block.id} data={block} />
+                case 'blocks.short-form':
+                    return <ShortExtendedForm key={block.id} data={block} />
             }
         })
     }
 
     return (
         <div className="listings">
-            {data ? <Layout>{getComponents(data.blocks)}</Layout> : null}
+            {props.data ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
         </div>
     )
 }

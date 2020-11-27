@@ -1,27 +1,47 @@
+import MarkDown from '../../Utils/markdown'
+import { useState, useEffect } from 'react';
+
 const OfferBankProductDetails = props => {
-    const { annual_fee, eligibility_criteria, joining_bonus, logo, points_and_rewards } = props.data;
+    const [leftPositionedOffers, setlLeftPositionedOffers] = useState([])
+    const [rightPositionedOffers, setlRightPositionedOffers] = useState([])
+
+    useEffect(() => {
+        let leftOffers = []
+        let rightOffers = []
+        props.data.offers.forEach(offer => {
+            if (offer.position === 'left') {
+                leftOffers.push(offer)
+            } else {
+                rightOffers.push(offer)
+            }
+        })
+        setlLeftPositionedOffers(leftOffers)
+        setlRightPositionedOffers(rightOffers)
+    }, [])
+
     return (
         <div className="c-detail-page">
-            <section class="container annual-fee">
-                <div class="annual-fee-wrapper">
-                    <div class="left">
-                        <h3>{points_and_rewards.headimg}</h3>
-                        <ul>
-                            <li>Earn 10 reward points for every ₹125 spent at apparel & department stores</li>
-                            <li>Instant Redemption at select partner stores</li>
-                            <li>Spend and get up to 300 bonus rewards points in a month</li>
-                            <li>Get 5% Cashback on all utility bill payments through Citibank Online Bill Pay</li>
-                        </ul>
+            <section className="container annual-fee">
+                <div className="annual-fee-wrapper">
+                    <div className="left">
+                        {leftPositionedOffers.map(offer => {
+                            return (
+                                <React.Fragment key={offer.id}>
+                                    <h1>{offer.heading}</h1>
+                                    <MarkDown markDown={offer.content} />
+                                </React.Fragment>
+                            )
+                        })}
                     </div>
-                    <div class="right">
-                        <h3>{annual_fee.heading}</h3>
-                        <p class="right-para">{annual_fee.annual_fee_fy}</p>
-                        <p class="right-para">{annual_fee.annual_fee_fy}</p>
-                        <h3>{joining_bonus.heading}</h3>
-                        <p>{joining_bonus.sub_text}</p>
-                        <h3>{eligibility_criteria.heading}</h3>
-                        <p>{eligibility_criteria.sub_text}</p>
-
+                    <div className="right">
+                        {rightPositionedOffers.map(offer => {
+                            return (
+                                <React.Fragment key={offer.id}>
+                                    <h1>{offer.heading}</h1>
+                                    <MarkDown markDown={offer.content} />
+                                </React.Fragment>
+                            )
+                        })}
                     </div>
                 </div>
             </section>

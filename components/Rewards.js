@@ -5,7 +5,7 @@ const Rewards = props => {
    const { heading, sub_text, button } = props.rewards
 
    return (
-      <section data-aos="fade-up" className="container reward-cover aos-init aos-animate">
+      <section data-aos="fade-up" className="container reward-cover aos-init">
          <div className="reward">
             <div className="reward-content">
                <h3>{heading}</h3>
