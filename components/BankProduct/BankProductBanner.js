@@ -7,7 +7,7 @@ const BankProductBanner = props => {
     return (
         <div className="credit-card-flow c-detail-page">
             <div class="combined-wrapper">
-            <section className="banner container">
+            <section className="banner container cstm-mb">
                 <div className="banner-wrapper">
                     <MarkDown markDown={heading} />
                     <p>{sub_text}</p>

@@ -392,9 +392,9 @@ class LongFormBanner extends React.Component {
         const strapi = new Strapi()
         const { bank_name, form_heading, product_type, banner_image } = this.props.data
         const { errors } = this.state;
-        const firstNameStyles = errors.firstName ? { border: '1px solid red' } : null;
+        const firstNameStyles = errors.firstName;
         const lastNameStyles = errors.lastName ? { border: '1px solid red' } : null
-       
+
         return (
             <div className="long-form">
                 <section className="long-form-wrapper">
@@ -434,11 +434,22 @@ class LongFormBanner extends React.Component {
                             <div className="long-forms-wrapper">
                                 <h5><b>2.</b> Full Name</h5>
                                 <div className="shortforms-container long-name">
-                                    <div className='form__group field' style={firstNameStyles}>
+
+                                    {/* <div className='form__group field' style={firstNameStyles}>
                                         <input className='form__field' type="text" id="first-name" placeholder="First Name" name="firstName" required value={this.state.firstName} onChange={e => this.handleInputs(e.target.value, 'firstName', e)}
                                             onBlur={this.handleInputBlur} />
                                         {errors.firstName.length > 0 &&
                                             <span className='error'>{errors.lastName}</span>}
+                                        <label className="form__label" htmlFor="first-name">First Name</label>
+                                    </div> */}
+
+                                    {/* <div className='form__group field'> */}
+
+                                    <div className={`form__group field ${errors.firstName ? "error-input" : "success"}`}>
+                                        <input className='form__field' type="text" id="first-name" placeholder="First Name" name="firstName" required value={this.state.firstName} onChange={e => this.handleInputs(e.target.value, 'firstName', e)}
+                                            onBlur={this.handleInputBlur} />
+                                        {errors.firstName.length > 0 &&
+                                            <span className='error'>{errors.firstName}</span>}
                                         <label className="form__label" htmlFor="first-name">First Name</label>
                                     </div>
 
@@ -581,6 +592,7 @@ class LongFormBanner extends React.Component {
                             </div>
 
                             {/* <!--address details--> */}
+                            <h3>Address Details</h3>
                             <div className="long-forms-wrapper">
                                 <h5><b>10.</b> Residence Address</h5>
                                 <div className="shortforms-container long-address">
@@ -624,7 +636,7 @@ class LongFormBanner extends React.Component {
                             </div>
 
                             {/* <!--address proof--> */}
-                            <h3>Address Details</h3>
+                            {/* <h3>Address Details</h3> */}
                             <div className="long-forms-wrapper" >
                                 <h5><b>11.</b> Do you have a proof of address?</h5>
                                 <div className="shortforms-container long-proof" value={this.state.proofOfAddress} onChange={e => this.handleRadio(e.target.value, 'proofOfAddress')}>

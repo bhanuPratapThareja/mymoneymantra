@@ -6,6 +6,7 @@
   /* box-shadow: 0 0 6px rgb(35 173 255); */
 }
 .long-address .form__group.field.error {
+  border: 1px solid #DC3737 !important;
   margin: 0 0 15px;
 }
 
@@ -526,6 +527,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 
 .popular-cards-slider .popular-cards-slider-card-top .content ul {
   width: 100%;
+  padding-left: 16px;
 }
 
 .popular-cards-slider .popular-cards-slider-card-top .content ul li {
@@ -533,7 +535,8 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   font-family: "Avenir-Roman";
   line-height: 1.5rem;
   color: rgba(34, 31, 31, 0.6);
-  list-style-position: inside;
+  /* list-style-position: inside; */
+  list-style: none;
   white-space: nowrap;
   width: 360px;
   overflow: hidden;
@@ -1667,9 +1670,9 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   }
 }
 
-.blog {
+/* .blog {
   padding-bottom: 64px;
-}
+} */
 
 @media (max-width: 768px) {
   .blog {
@@ -1746,7 +1749,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 
 .blog-wrapper .card-1 .image_1 {
   height: 240px;
-  /* background: url("../../build/images/credit-card-flow/blog-image-1.png"); */
+  background: url("../public/images/credit-card-flow/blog-image-1.png");
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -1904,7 +1907,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 .blog-wrapper .card-2 .image_2, .blog-wrapper .card-3 .image_2 {
   max-width: 232px;
   width: 100%;
-  /* background: url("../../build/images/credit-card-flow/blog-image-2.png"); */
+  background: url("../public/images/credit-card-flow/blog-image-2.png");
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -1926,7 +1929,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 .blog-wrapper .card-2 .image_3, .blog-wrapper .card-3 .image_3 {
   max-width: 232px;
   width: 100%;
-  /* background: url("../../build/images/credit-card-flow/blog-image-3.png"); */
+  background: url("../public/images/credit-card-flow/blog-image-3.png");
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -2747,7 +2750,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 .credit-card-flow .banner-wrapper {
   padding: 128px 0 128px 0px;
   max-width: 360px;
-  margin-left: 256px;
+  margin-left: 252px;
 }
 
 @media (max-width: 768px) {
@@ -4317,9 +4320,26 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 .header-access .secondary-cta {
   border: 2px solid transparent;
   border-radius: 6px;
+  background-image: -webkit-gradient(linear, left top, right top, from(#0d2333), color-stop(0%, #040a0f)), -webkit-gradient(linear, left top, right top, from(#56ab2f), to(#93d642));
   background-image: linear-gradient(90deg, #0d2333 0%, #040a0f 0%), linear-gradient(90deg, #56ab2f 0%, #93d642 100%);
   background-origin: border-box;
+  height: 100%;
+  display: block;
+  background: transparent;
   background-clip: content-box, border-box;
+  position: relative;
+}
+
+.header-access .secondary-cta .border {
+  background: url("../public/images/icons/sec-cta-bg.png");
+  background-size: 100% 100%;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 .header-access .secondary-cta button {
@@ -8167,7 +8187,9 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 
 .banner-wrapper .normal-banner h1:first-child strong:first-child,
 .score-content h2 strong:nth-child(2),
-.banks-holder .banks h2 strong:nth-child(2) {
+.banks-holder .banks h2 strong:nth-child(2),
+.cstm-bnr-txt h1:nth-child(2) strong:first-child,
+.c-detail-page .banner-wrapper h1:first-child strong {
   color: #89C142;
 }
 .lets-find-form .agree .checkbox span p {
@@ -8181,4 +8203,41 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 
 .thankyou-page {
   margin-bottom: 70px;
+}
+
+.credit-card-flow.c-detail-page button {
+  max-width: 134px;
+}
+
+.long-form .long-form-wrapper .form-wrapper form .long-form-submit button:hover {
+  -webkit-box-shadow: 0px 4px 16px rgba(137, 193, 66, 0.25), 0px 2px 8px rgba(137, 193, 66, 0.25);
+  box-shadow: 0px 4px 16px rgba(137, 193, 66, 0.25), 0px 2px 8px rgba(137, 193, 66, 0.25);
+}
+
+.header-links > a:last-child {
+  margin: 0 0 0 1px;
+}
+
+.banks-holder {
+  margin-top: 128px !important;
+}
+
+.category-wrapper .checkbox-container .banner_label img {
+  opacity: 0.5;
+}
+
+.category-wrapper .checkbox-container .banner_label.listing-banner_selected img {
+  opacity: 1;
+}
+
+.long-cards-wrapper-card .top .content ul {
+  list-style: none;
+}
+
+.credit-card-flow .banner.cstm-mb {
+  margin-bottom: 64px;
+}
+
+.long-form .long-form-wrapper .card-info .form-range .green-range-wrapper .MuiLinearProgress-colorPrimary {
+  background: rgba(255, 255, 255, 0.1);
 }
