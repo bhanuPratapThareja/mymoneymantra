@@ -28,7 +28,6 @@ const Otp = props => {
             return
         }
         setTimeout(() => {
-            console.log('dsa')
             if (val < 3 && keyCode !== 8) {
                 inputs[val].value = event.target.value
                 inputs[val + 1].focus()

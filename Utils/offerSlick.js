@@ -32,13 +32,16 @@ export const offerSlick = (cards) => {
     let newCards = array1.concat(array2, array3);
     newCards.forEach(card => {
         if (card['data-slick-index'] < -1 || card['data-slick-index'] > 1) {
-            card.classes = "slick-slide"
+            card.tabIndex = -1
+            card.classes = "slick-slide slick-cloned"
         }
         if (card['data-slick-index'] == -1 || card['data-slick-index'] == 1) {
-            card.classes = "slick-slide slick-active"
+            card.tabIndex = 0
+            card.classes = "slick-slide slick-cloned slick-active"
         }
         if (card['data-slick-index'] == 0) {
-            card.classes = "slick-slide slick-active slick-current slick-center"
+            card.tabIndex = -1
+            card.classes = "slick-slide slick-current slick-active slick-center"
         }
     })
 
