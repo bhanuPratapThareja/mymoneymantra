@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { useEffect, useState, useRef } from 'react'
 import Strapi from '../providers/strapi'
 import { isScrolledIntoView } from '../Utils/elementInView'
+import $ from 'jquery'
 
 const Header = () => {
    const strapi = new Strapi()
@@ -17,9 +18,9 @@ const Header = () => {
 
          const els = document.querySelectorAll('[data-aos="fade-up"]')
          els.forEach(el => {
-           if(isScrolledIntoView(el)) {
-              el.classList.add('aos-animate')
-           }
+            if (isScrolledIntoView(el)) {
+               el.classList.add('aos-animate')
+            }
          })
 
 
@@ -35,13 +36,13 @@ const Header = () => {
             if (window.pageYOffset >= longFormOffset && window.pageYOffset < windowOffsetForBannerStop) {
                longFormBanner.classList.add("banner-sticky")
                longFormBanner.classList.remove("banner-sticky_bottom")
-            } 
-            
+            }
+
             if (window.pageYOffset >= windowOffsetForBannerStop - 70) {
                longFormBanner.classList.remove("banner-sticky")
                longFormBanner.classList.add("banner-sticky_bottom")
-            } 
-            
+            }
+
             if (window.pageYOffset < longFormOffset) {
                longFormBanner.classList.remove("banner-sticky")
                longFormBanner.classList.remove("banner-sticky_bottom")
@@ -98,7 +99,13 @@ const Header = () => {
    return (
       <>
          <Head>
-            <title>Next Strapi App</title>
+            <title>My Money Mantra</title>
+            <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+            <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+            <link rel="preload" href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+            <script type="text/javascript" src="https://www.jsdelivr.com/package/npm/slick-carousel"></script>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+            <link rel="preload" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.css" />
          </Head>
 
          {headerData ? <header className="header" ref={headerRef}>

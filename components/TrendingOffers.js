@@ -15,7 +15,55 @@ const TrendingOffers = props => {
         } else {
             offers = props.data.trending_offers
         }
+
         loadOffers(offers)
+
+        $(document).ready(function () {
+            console.log('doc: ', document)
+            $('.slick-slider').not('.slick-initialized').slick({
+                centerMode: true,
+                slidesToShow: 3,
+                cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
+                speed: 1000,
+                variableWidth: true,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 3,
+                            infinite: true,
+                            dots: true,
+                            variableWidth: true,
+                            arrows: true
+                        }
+                    },
+                    {
+                        breakpoint: 1023,
+                        settings: {
+                            arrows: true,
+                            centerMode: true,
+                            centerPadding: '0px',
+                            slidesToShow: 1,
+                            variableWidth: true,
+                            infinite: false,
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            arrows: true,
+                            centerMode: true,
+                            centerPadding: '0px',
+                            slidesToShow: 1,
+                            variableWidth: true,
+                            infinite: false,
+                        },
+                    },
+                ]
+            })
+        })
+
     }, [])
 
     const loadOffers = async offers => {
@@ -32,12 +80,12 @@ const TrendingOffers = props => {
                 <h2>Trending Offers</h2>
                 <div className="popular-cards-slider slick-initialized slick-slider" id="trending-offers-sec"><button className="slick-prev slick-arrow" aria-label="Previous" type="button" >Previous</button>
 
-                    <button className="slick-prev slick-arrow" aria-label="Previous" type="button">Previous</button>
+                    <button className="slick-prev slick-arrow" aria-label="Previous" id="slick-prev" type="button">Previous</button>
 
                     <div className="slick-list draggable" style={{ padding: '0px 50px' }} >
                         <div className="slick-track" style={{ opacity: '1', width: '20000px', transform: 'translate3d(-210px, 0px, 0px)' }} >
 
-                            <button className="slick-next slick-arrow" aria-label="Next" type="button">Next</button>
+                            {/* <button className="slick-next slick-arrow" id="slick-next" aria-label="Next" type="button">Next</button> */}
 
                             {offers.map(offer => {
                                 return (
@@ -69,7 +117,7 @@ const TrendingOffers = props => {
                                 )
                             })}
 
-                        </div></div><button className="slick-next slick-arrow" aria-label="Next" type="button" >Next</button></div>
+                        </div></div><button className="slick-next slick-arrow" id="slick-next" aria-label="Next" type="button" >Next</button></div>
             </div>
         </section>
     )
