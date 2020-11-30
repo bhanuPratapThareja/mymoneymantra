@@ -1,4 +1,3 @@
-import MarkDown from '../../Utils/markdown'
 import { useState, useEffect } from 'react';
 
 const OfferBankProductDetails = props => {
@@ -28,7 +27,7 @@ const OfferBankProductDetails = props => {
                             return (
                                 <React.Fragment key={offer.id}>
                                     <h1>{offer.heading}</h1>
-                                    <MarkDown markDown={offer.content} />
+                                    <div dangerouslySetInnerHTML={{ __html: offer.content }}></div>
                                 </React.Fragment>
                             )
                         })}
@@ -38,7 +37,7 @@ const OfferBankProductDetails = props => {
                             return (
                                 <React.Fragment key={offer.id}>
                                     <h1>{offer.heading}</h1>
-                                    <MarkDown markDown={offer.content} />
+                                    <div dangerouslySetInnerHTML={{ __html: offer.content }}></div>
                                 </React.Fragment>
                             )
                         })}
