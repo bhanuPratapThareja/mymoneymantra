@@ -30,7 +30,10 @@ class ShortExtendedForm extends React.Component {
     }
 
     onSubmitSlide = () => {
-
+        if(this.state.slideIndex === 8) {
+            this.onSubmitShortForm()
+            return
+        }
         this.plusSlides(1);
     }
 
@@ -86,7 +89,7 @@ class ShortExtendedForm extends React.Component {
     }
 
     onSubmitShortForm = () => {
-        Router.push(`${props.path}/loan-listing`)
+        Router.push(`${this.props.path}/loan-listing`)
     }
 
     render() {

@@ -28,7 +28,7 @@ const Home = props => {
         setOpen(false);
     }
 
-    const getComponents = dynamic => {
+    const getComponents = (dynamic, path) => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':
@@ -52,10 +52,12 @@ const Home = props => {
                 case 'blocks.credit-score':
                     return <CreditScore key={block.id} data={block} />
                 case 'blocks.short-form':
-                    return <ShortExtendedForm key={block.id} data={block} />
+                    return <ShortExtendedForm key={block.id} data={block} path={path} />
             }
         })
     }
+
+    const { data, path } = props
 
     return (
         <div className="credit-card-flow">
@@ -64,7 +66,7 @@ const Home = props => {
             <Button variant="contained" onClick={handleOpen}>Open OTP Popup</Button>
             <SmsOtpModal open={open} handleClose={handleClose} />            */}
 
-            {props ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
+            {props ? <Layout>{getComponents(data.dynamic, path)}</Layout> : null}
         </div>
     )
 }
