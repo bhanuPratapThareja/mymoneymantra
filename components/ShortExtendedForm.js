@@ -1,23 +1,48 @@
 import Router from 'next/router'
-import MarkDown from '../Utils/markdown'
 import $ from 'jquery'
 import { submitLetsFindForm, loadLetsFindForm } from '../Utils/shortFormHandle'
+import { generateInputs } from '../Utils/inputGenerator'
+import { uniqBy } from 'lodash'
 
 class ShortExtendedForm extends React.Component {
     state = {
-        tnc: false,
-        slideIndex: 1
+        slideIndex: 1,
+        currentSlide: 'onboard',
+        slides: []
+    }
+
+    setInputsInState = (inputsArray, slideId) => {
+        let formInputs = []
+        let slides = [...this.state.slides]
+        inputsArray.forEach(item => {
+            item.error = false
+            formInputs.push(item)
+        })
+
+        let upDatedSlides = [...slides, { slideId, inputs: formInputs }]
+        this.setState({ ...this.state, slides: [...upDatedSlides] })
     }
 
     componentDidMount() {
+        let slideNo = 1
+        const { side_form, form_slide } = this.props.data.onboard_short_form
+
+        this.setInputsInState(side_form, 'onboard')
+        form_slide.forEach(slide => {
+            setTimeout(() => {
+                let slideId = `sf-${slideNo}`
+                this.setInputsInState(slide.onboard_form_slide.fields, slideId)
+                slideNo++
+            }, 500)
+        })
+        
         this.showSlides(this.state.slideIndex)
-        const that = this
-        $(".shortforms-container-buttons #previous").click(function () {
-            that.onGoToPrevious()
+        $(".shortforms-container-buttons #previous").click(() => {
+            this.onGoToPrevious()
         })
 
-        $(".shortforms-container-buttons #next").click(function () {
-            that.onSubmitSlide()
+        $(".shortforms-container-buttons #next").click(() => {
+            this.onSubmitSlide()
         })
     }
 
@@ -26,25 +51,28 @@ class ShortExtendedForm extends React.Component {
             this.onGoToLetFindForm()
             return
         }
-        this.plusSlides(-1);
+        this.plusSlides(-1)
     }
 
     onSubmitSlide = () => {
-        if(this.state.slideIndex === 8) {
+        if (this.state.slideIndex === 8) {
             this.onSubmitShortForm()
             return
         }
         this.plusSlides(1);
     }
 
-    plusSlides(n) {
-        this.showSlides(this.setState({ slideIndex: this.state.slideIndex += n }));
+    plusSlides = (n) => {
+        this.setState({ slideIndex: this.state.slideIndex += n }, () => {
+            this.showSlides(n)
+        })
     }
 
-    showSlides(n) {
+    showSlides = (n) => {
+
         var i;
         var slides = document.getElementsByClassName("sf-forms");
-        if (n >= slides.length) {
+        if (this.state.slideIndex == slides.length) {
             $("#button-text").text("Submit and view offers").css("color", "#89C142");
             $("#next").addClass("submit-short-form");
 
@@ -52,10 +80,12 @@ class ShortExtendedForm extends React.Component {
             $("#button-text").text("Next").css("color", "#221F1F");
             $("#next").removeClass("submit-short-form");
         }
-        if (n > slides.length) {
-            submitShortForm();
+
+        if (this.state.slideIndex > slides.length) {
+            // this.submitShortForm();
             return
         }
+
         if (n < 1) {
             this.setState({ slideIndex: slides.length })
             $(".lets-find-forms-container").removeClass("moving-in")
@@ -64,10 +94,13 @@ class ShortExtendedForm extends React.Component {
             $(".lets-find").addClass("moving-out-rev")
             $("#button-text").text("Next")
             $("#next").removeClass("submit-short-form");
-            this.setState({ slideIndex: 1 })
+            // this.setState({ slideIndex: 1 })
+
         }
+
         for (i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
+
         }
         slides[this.state.slideIndex - 1].style.display = "block";
         slides[this.state.slideIndex - 1].classList.add("opacity-in")
@@ -76,11 +109,37 @@ class ShortExtendedForm extends React.Component {
         $(".progress-blue").width(width);
     }
 
-    handleChange = e => {
-        const { name, checked } = e.target
+    handleChange = field => {
+        const slide = this.state.slides.filter(slide => slide.slideId === this.state.currentSlide) 
+        const inputs = slide[0].inputs
+        
+        inputs.forEach(inp => {
+            if(inp.input_id === field.name) {
+                inp.value = field.value
+            }
+        })
+
+        console.log('inp: ', inputs)
+
+        // if (field.type === 'checkbox') {
+        //     this.state[this.state.currentSlide].forEach(item => {
+        //         if (item.name === field.name) {
+        //             item.checked = field.checked
+        //         }
+        //     })
+        // }
+
+        // const newState = uniqBy(this.state[this.state.currentSlide], field, 'name')
+
+        // this.setState({
+        //     [this.state.currentSlide]: newState
+        // }, () => {
+        //     console.log(this.state)
+        // })
     }
 
     onClickLetsGo = () => {
+        this.setState({ currentSlide: 'sf-1' })
         submitLetsFindForm()
     }
 
@@ -93,6 +152,8 @@ class ShortExtendedForm extends React.Component {
     }
 
     render() {
+        const { heading, description } = this.props.data.onboard_short_form
+        const sfSlides = this.state.slides.slice(1)
         return (
             <section data-aos="fade-up" className="container lets-find-container aos-init">
 
@@ -104,37 +165,20 @@ class ShortExtendedForm extends React.Component {
                 <div className="all-form-wrapper">
                     <div className="lets-find">
                         <div className="lets-find-content">
-                            <h2>{this.props.data.heading}</h2>
+                            <h2>{heading}</h2>
                             <img className="green-underline" src="../images/icons/green-underline.png" />
-                            <p>{this.props.data.content}</p>
+                            <div dangerouslySetInnerHTML={{ __html: description }}></div>
                         </div>
                         <div className="lets-find-form">
-                            <form>
-                                <div className="form__group field">
-                                    <input className="form__field" type="text" id="full_name" placeholder="Full name" required="" name="full_name" onChange={this.handleChange} />
-                                    <label className="form__label" htmlFor="full_name">Full name</label>
-                                </div>
-                                <div className="form__group field">
-                                    <input className="form__field" type="tel" id="phone" placeholder="+91" required="" />
-                                    <label className="form__label" htmlFor="phone">Phone number</label>
-                                </div>
-                                <div className="form__group field">
-                                    <input className="form__field" type="text" id="email" placeholder="Email address" required="" />
-                                    <label className="form__label" htmlFor="email">Email address</label>
-                                </div>
-                            </form>
-                            <div className="agree">
-                                <div className="checkbox-container">
-                                    <div className="checkbox">
-                                        <input type="checkbox" id="checkbox" name="tnc" value={this.state.tnc} onChange={this.handleChange} />
-                                        <label htmlFor="checkbox"><span>
-                                            <MarkDown markDown={this.props.data.tnc} />
-                                        </span></label>
-                                    </div>
-                                </div>
-                            </div>
+
+                            {this.state.slides.length ? <form>
+                                {this.state.slides[0].inputs.map(input => {
+                                    return generateInputs(input, this.handleChange)
+                                })}
+                            </form> : null}
+
                             <div className='lets-go-button'>
-                                <button onClick={this.onClickLetsGo} >{this.props.data.button}</button>
+                                <button onClick={this.onClickLetsGo} >{'Lets Go'}</button>
                             </div>
                         </div>
                     </div>
@@ -145,9 +189,28 @@ class ShortExtendedForm extends React.Component {
                                 <div className="progress-blue" style={{ width: '12.5%' }}></div>
                             </div>
                             <h5 className="pages"><span id="pages-count">1 of 8</span></h5>
-                            <form className="short-forms-wrapper">
-                                {/* <!--form-1--> */}
-                                <div className="sf-forms opacity-in" id="sf-1" style={{ display: 'block' }}>
+
+                            {sfSlides && sfSlides.length ? <form className="short-forms-wrapper">
+                                {sfSlides.map(slide => {
+                                    return (
+                                        <div className="sf-forms opacity-in" id={slide.slideId} style={{ display: 'block' }} key={slide.slideId}>
+                                            <div className="shortforms-container">
+                                                <div className="form__group-wrapper grid-span">
+                                                    {slide.inputs.map(input => {
+                                                        return (
+                                                            <React.Fragment key={input.id}>
+                                                                {generateInputs(input, this.handleChange)}
+                                                            </React.Fragment>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+
+
+                                {/* <div className="sf-forms opacity-in" id="sf-1" style={{ display: 'block' }}>
                                     <h2>Are you a credit card holder?</h2>
                                     <div className="shortforms-container">
                                         <input className="lets-checkbox" type="radio" id="yes" name="yes/no" required="" />
@@ -163,18 +226,17 @@ class ShortExtendedForm extends React.Component {
                                             </div>
                                             <div id="bank-drop" className="dropdown-content">
                                                 <div className="dropdown-content-links">
-                                                    {/* <a href="javascript:void(0)">Axis Bank</a>
+                                                    <a href="javascript:void(0)">Axis Bank</a>
                                             <a href="javascript:void(0)">American Express</a>
                                             <a href="javascript:void(0)">Andhra Bank</a>
                                             <a href="javascript:void(0)">Axis Bank</a>
                                             <a href="javascript:void(0)">American Express</a>
-                                            <a href="javascript:void(0)">Andhra Bank</a> */}
+                                            <a href="javascript:void(0)">Andhra Bank</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                {/* <!--form-2--> */}
                                 <div className="sf-forms" id="sf-2" style={{ display: 'none' }}>
                                     <h2>What employment type best describes you?</h2>
                                     <div className="shortforms-container">
@@ -188,7 +250,6 @@ class ShortExtendedForm extends React.Component {
                                         <label htmlFor="Not-employed">Not employed</label>
                                     </div>
                                 </div>
-                                {/* <!--form-3--> */}
                                 <div className="sf-forms" id="sf-3" style={{ display: 'none' }}>
                                     <h2>Please provide us your date of birth</h2>
                                     <div className="shortforms-container">
@@ -198,7 +259,6 @@ class ShortExtendedForm extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                                {/* <!--form-4--> */}
                                 <div className="sf-forms" id="sf-4" style={{ display: 'none' }}>
                                     <h2>Please provide us your PAN card details</h2>
                                     <div className="shortforms-container pan-card-cont">
@@ -209,13 +269,7 @@ class ShortExtendedForm extends React.Component {
                                         <div className="form__group field file-type">
                                             <input className="form__field upload-real" type="file" id="pancard-image" placeholder="PAN Card image" required="" />
                                             <input className="form__field upload-show" type="text" id="pancard-image-show" placeholder="PAN Card image" required="" />
-                                            {/* <!-- <label className="form__label" htmlFor="pancard"><svg width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M8.71 7.71L11 5.41V15C11 15.2652 11.1054 15.5196 11.2929 15.7071C11.4804 15.8946 11.7348 16 12 16C12.2652 16 12.5196 15.8946 12.7071 15.7071C12.8946 15.5196 13 15.2652 13 15V5.41L15.29 7.71C15.383 7.80373 15.4936 7.87813 15.6154 7.92889C15.7373 7.97966 15.868 8.0058 16 8.0058C16.132 8.0058 16.2627 7.97966 16.3846 7.92889C16.5064 7.87813 16.617 7.80373 16.71 7.71C16.8037 7.61704 16.8781 7.50644 16.9289 7.38458C16.9797 7.26272 17.0058 7.13202 17.0058 7C17.0058 6.86799 16.9797 6.73729 16.9289 6.61543C16.8781 6.49357 16.8037 6.38297 16.71 6.29L12.71 2.29C12.6149 2.19896 12.5028 2.1276 12.38 2.08C12.1365 1.97999 11.8635 1.97999 11.62 2.08C11.4972 2.1276 11.3851 2.19896 11.29 2.29L7.29 6.29C7.19676 6.38324 7.1228 6.49393 7.07234 6.61575C7.02188 6.73758 6.99591 6.86814 6.99591 7C6.99591 7.13186 7.02188 7.26243 7.07234 7.38425C7.1228 7.50607 7.19676 7.61677 7.29 7.71C7.38324 7.80324 7.49393 7.8772 7.61575 7.92766C7.73757 7.97812 7.86814 8.00409 8 8.00409C8.13186 8.00409 8.26243 7.97812 8.38425 7.92766C8.50607 7.8772 8.61676 7.80324 8.71 7.71ZM21 12C20.7348 12 20.4804 12.1054 20.2929 12.2929C20.1054 12.4804 20 12.7348 20 13V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V13C4 12.7348 3.89464 12.4804 3.70711 12.2929C3.51957 12.1054 3.26522 12 3 12C2.73478 12 2.48043 12.1054 2.29289 12.2929C2.10536 12.4804 2 12.7348 2 13V19C2 19.7957 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7957 22 19V13C22 12.7348 21.8946 12.4804 21.7071 12.2929C21.5196 12.1054 21.2652 12 21 12Z"
-                                        fill="white" />
-                                    </svg>
-                                    Upload PAN Card &nbsp;<b>(optional)</b></label> --> */}
+                                            
                                             <svg className="file-upload-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M8.71 7.71L11 5.41V15C11 15.2652 11.1054 15.5196 11.2929 15.7071C11.4804 15.8946 11.7348 16 12 16C12.2652 16 12.5196 15.8946 12.7071 15.7071C12.8946 15.5196 13 15.2652 13 15V5.41L15.29 7.71C15.383 7.80373 15.4936 7.87813 15.6154 7.92889C15.7373 7.97966 15.868 8.0058 16 8.0058C16.132 8.0058 16.2627 7.97966 16.3846 7.92889C16.5064 7.87813 16.617 7.80373 16.71 7.71C16.8037 7.61704 16.8781 7.50644 16.9289 7.38458C16.9797 7.26272 17.0058 7.13202 17.0058 7C17.0058 6.86799 16.9797 6.73729 16.9289 6.61543C16.8781 6.49357 16.8037 6.38297 16.71 6.29L12.71 2.29C12.6149 2.19896 12.5028 2.1276 12.38 2.08C12.1365 1.97999 11.8635 1.97999 11.62 2.08C11.4972 2.1276 11.3851 2.19896 11.29 2.29L7.29 6.29C7.19676 6.38324 7.1228 6.49393 7.07234 6.61575C7.02188 6.73758 6.99591 6.86814 6.99591 7C6.99591 7.13186 7.02188 7.26243 7.07234 7.38425C7.1228 7.50607 7.19676 7.61677 7.29 7.71C7.38324 7.80324 7.49393 7.8772 7.61575 7.92766C7.73757 7.97812 7.86814 8.00409 8 8.00409C8.13186 8.00409 8.26243 7.97812 8.38425 7.92766C8.50607 7.8772 8.61676 7.80324 8.71 7.71ZM21 12C20.7348 12 20.4804 12.1054 20.2929 12.2929C20.1054 12.4804 20 12.7348 20 13V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V13C4 12.7348 3.89464 12.4804 3.70711 12.2929C3.51957 12.1054 3.26522 12 3 12C2.73478 12 2.48043 12.1054 2.29289 12.2929C2.10536 12.4804 2 12.7348 2 13V19C2 19.7957 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7957 22 19V13C22 12.7348 21.8946 12.4804 21.7071 12.2929C21.5196 12.1054 21.2652 12 21 12Z" fill="white"></path>
                                             </svg>
@@ -229,7 +283,6 @@ class ShortExtendedForm extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                                {/* <!--form-5--> */}
                                 <div className="sf-forms" id="sf-5" style={{ display: 'none' }}>
                                     <h2>Which company do you work for?</h2>
                                     <div className="shortforms-container">
@@ -240,16 +293,15 @@ class ShortExtendedForm extends React.Component {
                                             </div>
                                             <div id="company-drop" className="dropdown-content">
                                                 <div className="dropdown-content-links">
-                                                    {/* <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
+                                                    <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
                                             <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
                                             <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
-                                            <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a> */}
+                                            <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                {/* <!--form-6--> */}
                                 <div className="sf-forms" id="sf-6" style={{ display: 'none' }}>
                                     <h2>How much do you earn monthly?</h2>
                                     <div className="shortforms-container monthly-earn">
@@ -261,9 +313,7 @@ class ShortExtendedForm extends React.Component {
                                         <div className="form__group field file-type">
                                             <input className="form__field upload-real" value="" readOnly type="file" id="salary-image" placeholder="salary slip" required="" />
                                             <input className="form__field upload-show" value="" readOnly type="text" id="salary-image-show" placeholder="salary slip" />
-                                            {/* <!-- <label className="form__label" htmlFor="salary">
-                                    </svg>
-                                    Upload Salary Slips &nbsp;<b>(optional)</b></label> --> */}
+                                            
                                             <svg className="file-upload-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M8.71 7.71L11 5.41V15C11 15.2652 11.1054 15.5196 11.2929 15.7071C11.4804 15.8946 11.7348 16 12 16C12.2652 16 12.5196 15.8946 12.7071 15.7071C12.8946 15.5196 13 15.2652 13 15V5.41L15.29 7.71C15.383 7.80373 15.4936 7.87813 15.6154 7.92889C15.7373 7.97966 15.868 8.0058 16 8.0058C16.132 8.0058 16.2627 7.97966 16.3846 7.92889C16.5064 7.87813 16.617 7.80373 16.71 7.71C16.8037 7.61704 16.8781 7.50644 16.9289 7.38458C16.9797 7.26272 17.0058 7.13202 17.0058 7C17.0058 6.86799 16.9797 6.73729 16.9289 6.61543C16.8781 6.49357 16.8037 6.38297 16.71 6.29L12.71 2.29C12.6149 2.19896 12.5028 2.1276 12.38 2.08C12.1365 1.97999 11.8635 1.97999 11.62 2.08C11.4972 2.1276 11.3851 2.19896 11.29 2.29L7.29 6.29C7.19676 6.38324 7.1228 6.49393 7.07234 6.61575C7.02188 6.73758 6.99591 6.86814 6.99591 7C6.99591 7.13186 7.02188 7.26243 7.07234 7.38425C7.1228 7.50607 7.19676 7.61677 7.29 7.71C7.38324 7.80324 7.49393 7.8772 7.61575 7.92766C7.73757 7.97812 7.86814 8.00409 8 8.00409C8.13186 8.00409 8.26243 7.97812 8.38425 7.92766C8.50607 7.8772 8.61676 7.80324 8.71 7.71ZM21 12C20.7348 12 20.4804 12.1054 20.2929 12.2929C20.1054 12.4804 20 12.7348 20 13V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V13C4 12.7348 3.89464 12.4804 3.70711 12.2929C3.51957 12.1054 3.26522 12 3 12C2.73478 12 2.48043 12.1054 2.29289 12.2929C2.10536 12.4804 2 12.7348 2 13V19C2 19.7957 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7957 22 19V13C22 12.7348 21.8946 12.4804 21.7071 12.2929C21.5196 12.1054 21.2652 12 21 12Z" fill="white"></path>
                                             </svg>
@@ -277,7 +327,6 @@ class ShortExtendedForm extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                                {/* <!--form-7--> */}
                                 <div className="sf-forms" id="sf-7" style={{ display: 'none' }}>
                                     <h2>Your salary gets credited in which bank?</h2>
                                     <div className="shortforms-container pan-card-cont">
@@ -288,23 +337,17 @@ class ShortExtendedForm extends React.Component {
                                             </div>
                                             <div id="bankname-drop" className="dropdown-content">
                                                 <div className="dropdown-content-links">
-                                                    {/* <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
+                                                    <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
                                             <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
                                             <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
-                                            <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a> */}
+                                            <a href="javascript:void(0)">Ernst &amp; Young Consulting India Pvt Ltd</a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="form__group field file-type">
                                             <input className="form__field upload-real" type="file" id="bank-statement" placeholder="salary slip" required="" />
                                             <input className="form__field upload-show" type="text" id="bank-statement-show" placeholder="salary slip" required="" />
-                                            {/* <!-- <label className="form__label" htmlFor="salary"><svg width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M8.71 7.71L11 5.41V15C11 15.2652 11.1054 15.5196 11.2929 15.7071C11.4804 15.8946 11.7348 16 12 16C12.2652 16 12.5196 15.8946 12.7071 15.7071C12.8946 15.5196 13 15.2652 13 15V5.41L15.29 7.71C15.383 7.80373 15.4936 7.87813 15.6154 7.92889C15.7373 7.97966 15.868 8.0058 16 8.0058C16.132 8.0058 16.2627 7.97966 16.3846 7.92889C16.5064 7.87813 16.617 7.80373 16.71 7.71C16.8037 7.61704 16.8781 7.50644 16.9289 7.38458C16.9797 7.26272 17.0058 7.13202 17.0058 7C17.0058 6.86799 16.9797 6.73729 16.9289 6.61543C16.8781 6.49357 16.8037 6.38297 16.71 6.29L12.71 2.29C12.6149 2.19896 12.5028 2.1276 12.38 2.08C12.1365 1.97999 11.8635 1.97999 11.62 2.08C11.4972 2.1276 11.3851 2.19896 11.29 2.29L7.29 6.29C7.19676 6.38324 7.1228 6.49393 7.07234 6.61575C7.02188 6.73758 6.99591 6.86814 6.99591 7C6.99591 7.13186 7.02188 7.26243 7.07234 7.38425C7.1228 7.50607 7.19676 7.61677 7.29 7.71C7.38324 7.80324 7.49393 7.8772 7.61575 7.92766C7.73757 7.97812 7.86814 8.00409 8 8.00409C8.13186 8.00409 8.26243 7.97812 8.38425 7.92766C8.50607 7.8772 8.61676 7.80324 8.71 7.71ZM21 12C20.7348 12 20.4804 12.1054 20.2929 12.2929C20.1054 12.4804 20 12.7348 20 13V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V13C4 12.7348 3.89464 12.4804 3.70711 12.2929C3.51957 12.1054 3.26522 12 3 12C2.73478 12 2.48043 12.1054 2.29289 12.2929C2.10536 12.4804 2 12.7348 2 13V19C2 19.7957 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7957 22 19V13C22 12.7348 21.8946 12.4804 21.7071 12.2929C21.5196 12.1054 21.2652 12 21 12Z"
-                                        fill="white" />
-                                    </svg>
-                                    </label> --> */}
+                                           
                                             <svg className="file-upload-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M8.71 7.71L11 5.41V15C11 15.2652 11.1054 15.5196 11.2929 15.7071C11.4804 15.8946 11.7348 16 12 16C12.2652 16 12.5196 15.8946 12.7071 15.7071C12.8946 15.5196 13 15.2652 13 15V5.41L15.29 7.71C15.383 7.80373 15.4936 7.87813 15.6154 7.92889C15.7373 7.97966 15.868 8.0058 16 8.0058C16.132 8.0058 16.2627 7.97966 16.3846 7.92889C16.5064 7.87813 16.617 7.80373 16.71 7.71C16.8037 7.61704 16.8781 7.50644 16.9289 7.38458C16.9797 7.26272 17.0058 7.13202 17.0058 7C17.0058 6.86799 16.9797 6.73729 16.9289 6.61543C16.8781 6.49357 16.8037 6.38297 16.71 6.29L12.71 2.29C12.6149 2.19896 12.5028 2.1276 12.38 2.08C12.1365 1.97999 11.8635 1.97999 11.62 2.08C11.4972 2.1276 11.3851 2.19896 11.29 2.29L7.29 6.29C7.19676 6.38324 7.1228 6.49393 7.07234 6.61575C7.02188 6.73758 6.99591 6.86814 6.99591 7C6.99591 7.13186 7.02188 7.26243 7.07234 7.38425C7.1228 7.50607 7.19676 7.61677 7.29 7.71C7.38324 7.80324 7.49393 7.8772 7.61575 7.92766C7.73757 7.97812 7.86814 8.00409 8 8.00409C8.13186 8.00409 8.26243 7.97812 8.38425 7.92766C8.50607 7.8772 8.61676 7.80324 8.71 7.71ZM21 12C20.7348 12 20.4804 12.1054 20.2929 12.2929C20.1054 12.4804 20 12.7348 20 13V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V13C4 12.7348 3.89464 12.4804 3.70711 12.2929C3.51957 12.1054 3.26522 12 3 12C2.73478 12 2.48043 12.1054 2.29289 12.2929C2.10536 12.4804 2 12.7348 2 13V19C2 19.7957 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7957 22 19V13C22 12.7348 21.8946 12.4804 21.7071 12.2929C21.5196 12.1054 21.2652 12 21 12Z" fill="white"></path>
                                             </svg>
@@ -318,7 +361,6 @@ class ShortExtendedForm extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                                {/* <!--form-8--> */}
                                 <div className="sf-forms extra-margin" id="sf-8" style={{ display: 'none' }}>
                                     <h2>Please provide us your current address</h2>
                                     <div className="shortforms-container current-address">
@@ -341,13 +383,7 @@ class ShortExtendedForm extends React.Component {
                                         <div className="form__group field file-type phone-grid-span">
                                             <input className="form__field upload-real" type="file" id="adhaar-image" placeholder="adhaar" required="" />
                                             <input className="form__field upload-show" type="text" id="adhaar-image-show" placeholder="adhaar" required="" />
-                                            {/* <!-- <label className="form__label" htmlFor="adhaar"><svg width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M8.71 7.71L11 5.41V15C11 15.2652 11.1054 15.5196 11.2929 15.7071C11.4804 15.8946 11.7348 16 12 16C12.2652 16 12.5196 15.8946 12.7071 15.7071C12.8946 15.5196 13 15.2652 13 15V5.41L15.29 7.71C15.383 7.80373 15.4936 7.87813 15.6154 7.92889C15.7373 7.97966 15.868 8.0058 16 8.0058C16.132 8.0058 16.2627 7.97966 16.3846 7.92889C16.5064 7.87813 16.617 7.80373 16.71 7.71C16.8037 7.61704 16.8781 7.50644 16.9289 7.38458C16.9797 7.26272 17.0058 7.13202 17.0058 7C17.0058 6.86799 16.9797 6.73729 16.9289 6.61543C16.8781 6.49357 16.8037 6.38297 16.71 6.29L12.71 2.29C12.6149 2.19896 12.5028 2.1276 12.38 2.08C12.1365 1.97999 11.8635 1.97999 11.62 2.08C11.4972 2.1276 11.3851 2.19896 11.29 2.29L7.29 6.29C7.19676 6.38324 7.1228 6.49393 7.07234 6.61575C7.02188 6.73758 6.99591 6.86814 6.99591 7C6.99591 7.13186 7.02188 7.26243 7.07234 7.38425C7.1228 7.50607 7.19676 7.61677 7.29 7.71C7.38324 7.80324 7.49393 7.8772 7.61575 7.92766C7.73757 7.97812 7.86814 8.00409 8 8.00409C8.13186 8.00409 8.26243 7.97812 8.38425 7.92766C8.50607 7.8772 8.61676 7.80324 8.71 7.71ZM21 12C20.7348 12 20.4804 12.1054 20.2929 12.2929C20.1054 12.4804 20 12.7348 20 13V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V13C4 12.7348 3.89464 12.4804 3.70711 12.2929C3.51957 12.1054 3.26522 12 3 12C2.73478 12 2.48043 12.1054 2.29289 12.2929C2.10536 12.4804 2 12.7348 2 13V19C2 19.7957 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7957 22 19V13C22 12.7348 21.8946 12.4804 21.7071 12.2929C21.5196 12.1054 21.2652 12 21 12Z"
-                                        fill="white" />
-                                    </svg>
-                                    Upload Address Proof &nbsp;<b>(optional)</b></label> --> */}
+                                          
                                             <svg className="file-upload-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M8.71 7.71L11 5.41V15C11 15.2652 11.1054 15.5196 11.2929 15.7071C11.4804 15.8946 11.7348 16 12 16C12.2652 16 12.5196 15.8946 12.7071 15.7071C12.8946 15.5196 13 15.2652 13 15V5.41L15.29 7.71C15.383 7.80373 15.4936 7.87813 15.6154 7.92889C15.7373 7.97966 15.868 8.0058 16 8.0058C16.132 8.0058 16.2627 7.97966 16.3846 7.92889C16.5064 7.87813 16.617 7.80373 16.71 7.71C16.8037 7.61704 16.8781 7.50644 16.9289 7.38458C16.9797 7.26272 17.0058 7.13202 17.0058 7C17.0058 6.86799 16.9797 6.73729 16.9289 6.61543C16.8781 6.49357 16.8037 6.38297 16.71 6.29L12.71 2.29C12.6149 2.19896 12.5028 2.1276 12.38 2.08C12.1365 1.97999 11.8635 1.97999 11.62 2.08C11.4972 2.1276 11.3851 2.19896 11.29 2.29L7.29 6.29C7.19676 6.38324 7.1228 6.49393 7.07234 6.61575C7.02188 6.73758 6.99591 6.86814 6.99591 7C6.99591 7.13186 7.02188 7.26243 7.07234 7.38425C7.1228 7.50607 7.19676 7.61677 7.29 7.71C7.38324 7.80324 7.49393 7.8772 7.61575 7.92766C7.73757 7.97812 7.86814 8.00409 8 8.00409C8.13186 8.00409 8.26243 7.97812 8.38425 7.92766C8.50607 7.8772 8.61676 7.80324 8.71 7.71ZM21 12C20.7348 12 20.4804 12.1054 20.2929 12.2929C20.1054 12.4804 20 12.7348 20 13V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V13C4 12.7348 3.89464 12.4804 3.70711 12.2929C3.51957 12.1054 3.26522 12 3 12C2.73478 12 2.48043 12.1054 2.29289 12.2929C2.10536 12.4804 2 12.7348 2 13V19C2 19.7957 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7957 22 19V13C22 12.7348 21.8946 12.4804 21.7071 12.2929C21.5196 12.1054 21.2652 12 21 12Z" fill="white"></path>
                                             </svg>
@@ -361,7 +397,8 @@ class ShortExtendedForm extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                             */}
+                            </form> : null}
 
 
                             {/* <!--next and prev buttons--> */}

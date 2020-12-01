@@ -1,22 +1,53 @@
 export const generateInputs = (component, updateField) => {
 
-    let { type, name, placeholder, mandatory, label, value, id, } = component
+    const handleChange = (e, type) => {
+        const { name, value, checked } = e.target
+        let field = {}
+        if (type === 'checkbox') {
+            field = { name, checked, type }
+        } else {
+            field = { name, value, type }
+        }
+        updateField(field)
+    }
 
-    if (type === 'text' || type === 'number' || type === 'email') {
+
+    let { type, input_id, placeholder, mandatory, label, value, id, checkbox } = component
+
+    if (type === 'text' || type === 'email' || type === 'number' || type === 'tel') {
         return (
             <div className="form__group field" key={id}>
-                <label className="form__label" htmlFor={name}>{label}</label>
-                <input className="form__field" onChange={e => updateField(e.target.value, name)} type={type} value={value} id={name} placeholder={placeholder} required={mandatory == 'true'} />
+                <label className="form__label">{label}</label>
+                <input className="form__field"
+                    name={input_id}
+                    type={type}
+                    value={value}
+                    placeholder={placeholder}
+                    required={mandatory}
+                    onChange={e => handleChange(e, type)}
+                />
+                {/* <p>Required</p> */}
             </div>
         )
     }
 
     if (type === 'checkbox') {
+        const { checkbox_input } = checkbox
         return (
-            <React.Fragment key={id}>
-                <input type={type} id={name} name={name} checked={value} onChange={e => updateField(e.target.checked, name)} />
-                <label htmlFor={type}><span>{label}</span></label>
-            </React.Fragment>
+            <div key={id}>
+                {checkbox_input.map(box => {
+                    return(
+                        <div key={box.id}>
+                        <input
+                            type={type}
+                            name={box.input_id}
+                            checked={box.checked}
+                            onChange={e => handleChange(e, type)} />
+                        <label><span dangerouslySetInnerHTML={{ __html: box.label }}></span></label>
+                    </div>
+                    )
+                })}
+            </div>
         )
     }
 

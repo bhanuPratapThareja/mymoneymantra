@@ -29,6 +29,7 @@ const Home = props => {
     }
 
     const getComponents = (dynamic, path) => {
+        // console.log(dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':
@@ -51,13 +52,14 @@ const Home = props => {
                     return <LearnMore key={block.id} data={block} />
                 case 'blocks.credit-score':
                     return <CreditScore key={block.id} data={block} />
-                case 'blocks.short-form':
+                case 'form-components.onboarding-short-form':
                     return <ShortExtendedForm key={block.id} data={block} path={path} />
             }
         })
     }
 
     const { data, path } = props
+
 
     return (
         <div className="credit-card-flow">
@@ -82,9 +84,7 @@ export async function getServerSideProps(ctx) {
         const { url, body } = getApiData('offers')
         const res = await strapi.apiReq('POST', url, body)
         offersData = res.response.payload
-        console.log('offersData: ', offersData)
     } catch(err) {
-        console.log('trnding err: ', err)
     }
 
     try {
