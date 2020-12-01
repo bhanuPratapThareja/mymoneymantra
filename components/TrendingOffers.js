@@ -19,7 +19,6 @@ const TrendingOffers = props => {
         loadOffers(offers)
 
         $(document).ready(function () {
-            console.log('doc: ', document)
             $('.slick-slider').not('.slick-initialized').slick({
                 centerMode: true,
                 slidesToShow: 3,
