@@ -44,8 +44,8 @@ const Home = props => {
                     return <Banks key={block.id} banks={block} />
                 case 'blocks.offer':
                     return <Offers key={block.id} data={block} />
-                case 'blocks.trending-offers':
-                    return <TrendingOffers key={block.id} data={block} trendingOffers={props.trendingOffers} />
+                // case 'blocks.trending-offers':
+                //     return <TrendingOffers key={block.id} data={block} trendingOffers={props.trendingOffers} />
                 case 'blocks.blogs':
                     return <Blog key={block.id} data={block} />
                 case 'blocks.learn-more':

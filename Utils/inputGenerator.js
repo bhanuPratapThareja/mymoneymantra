@@ -1,4 +1,4 @@
-export const textTypeInputs = ['text', 'number', 'email', 'tel']
+export const textTypeInputs = ['text', 'number', 'email', 'tel', 'input_with_dropdown']
 
 export const getCurrentSlideInputs = state => {
     const newSlides = [...state.slides]
@@ -7,8 +7,7 @@ export const getCurrentSlideInputs = state => {
     return inputs
 }
 
-export const generateInputs = (component, updateField, checkInputValidity) => {
-
+export const generateInputs = (component, updateField, checkInputValidity, handleInputDropdownChange) => {
     const handleChange = (e, type) => {
         const { name, value, checked } = e.target
         let field = {}
@@ -23,30 +22,108 @@ export const generateInputs = (component, updateField, checkInputValidity) => {
     const validate = (e, type) => {
         const { name, value } = e.target
         const field = { name, value, type }
+        console.log(field)
         checkInputValidity(field)
     }
 
+    const onSelect = (input_id, type, item) => {
+        handleInputDropdownChange(input_id, type, item)
+    }
 
-    let { type, input_id, placeholder, mandatory, label, value, id, checkbox, radio, question, error, errorMsg } = component
+    const handleDateInput = (input_id, value, type) => {
+       setTimeout(() => {
+        console.log(input_id)
+        console.log(value)
+     
+        console.log(type)
+       }, 1000)
+       const v = document.getElementById(input_id).value
+       console.log(v)
+
+    }
+
+
+    let { type, input_id, placeholder, mandatory, label, value, id,
+        checkbox, radio, question, error, errorMsg, list } = component
+
+    const borderInputInvalid = { border: '1px solid red' }
+    const borderInputValid = null
+    const borderStyles = error ? borderInputInvalid : borderInputValid
 
     if (type === 'text' || type === 'email' || type === 'number' || type === 'tel') {
         return (
-            <div className="form__group field" key={id}>
-                <label className="form__label">{label}</label>
-                <input className="form__field"
-                    name={input_id}
-                    type={type}
-                    value={value}
-                    placeholder={placeholder}
-                    required={mandatory}
-                    onBlur={e => validate(e, type)}
-                    onChange={e => handleChange(e, type)}
-                />
+            <>
+                <div className="form__group field" key={id} style={borderStyles}>
+                    <label className="form__label">{label}</label>
+                    <input className="form__field"
+                        name={input_id}
+                        type={type}
+                        value={value}
+                        placeholder={placeholder}
+                        required={mandatory}
+                        onBlur={e => validate(e, type)}
+                        onChange={e => handleChange(e, type)}
+                    />
+                    {error ? <div className='input-error'>
+                        <p>{errorMsg}</p>
+                    </div> : null}
+
+                </div>
+            </>
+        )
+    }
+
+    if (type === 'input_with_dropdown') {
+        return (
+            <>
+                <div className="form__group field" key={id} style={borderStyles}>
+                    <label className="form__label">{label}</label>
+                    <input className="form__field"
+                        name={input_id}
+                        type='text'
+                        value={value}
+                        placeholder={placeholder}
+                        required={mandatory}
+                        onBlur={e => validate(e, type)}
+                        onChange={e => handleChange(e, type)}
+                    />
+                    {error ? <div className='input-error'>
+                        <p>{errorMsg}</p>
+                    </div> : null}
+
+                    {list && list.length ? <div className="dropdown-content" style={{ display: 'block' }}>
+                        <div className="dropdown-content-links">
+                            {list.map(item => <a key={item.id} onClick={() => onSelect(input_id, type, item)}>{item.name}</a>)}
+                        </div>
+                    </div> : null}
+                </div>
+            </>
+        )
+    }
+
+    if (type === 'input_with_calendar') {
+        return (
+            <>
+            <h2>{question}</h2>
+                <div className="form__group field" key={id} style={borderStyles}>
+                    <label className="form__label">{label}</label>
+                    <input
+                        className="form__field phone-grid-span"
+                        id={input_id}
+                        placeholder={placeholder}
+                        name={input_id}
+                        type='text'
+                        value={value}
+                        required={mandatory}
+                        onFocus={() => $(`#${input_id}`).datepicker()}
+                        onBlur={() => handleDateInput(input_id, $(`#${input_id}`).datepicker().value(), type)}
+                        onChange={e => handleDateInput(input_id, $(`#${input_id}`).datepicker().value(), type)}
+                    />
+                </div>
                 {error ? <div className='input-error'>
                     <p>{errorMsg}</p>
                 </div> : null}
-                {/* <div>dropdown</div> */}
-            </div>
+            </>
         )
     }
 
@@ -75,7 +152,7 @@ export const generateInputs = (component, updateField, checkInputValidity) => {
         const { radio_buttons } = radio
         return (
             <>
-                <h2>{question}</h2>
+                {/* <h2>{question}</h2> */}
                 <div key={id} name={input_id} required={mandatory}>
                     {radio_buttons.map(button => {
                         const labelStyles = value === button.value ? { border: '1px solid green' } : null
