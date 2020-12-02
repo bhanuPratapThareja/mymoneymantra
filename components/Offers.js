@@ -33,7 +33,7 @@ const Offers = props => {
 
                      <button className="slick-next slick-arrow" aria-label="Next" type="button">Next</button>
 
-                     {offers.map(offer => {
+                     {/* {offers.map(offer => {
                         return (
                            <div key={offer.id} className={offer.classes} data-slick-index={offer['data-slick-index']} aria-hidden="false" tab-index={offer['data-slick-index']} >
                               <div>
@@ -61,7 +61,7 @@ const Offers = props => {
                               </div>
                            </div>
                         )
-                     })}
+                     })} */}
 
                   </div></div><button className="slick-next slick-arrow" aria-label="Next" type="button" >Next</button></div>
          </div>

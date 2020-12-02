@@ -2,6 +2,21 @@
   color: red !important;
 } */
 
+.input-error {
+  color: red;
+  padding: 0;
+  width: 100%;
+  position: relative;
+}
+
+.input-error p {
+  position: absolute;
+  right: 0;
+  font-size: 0.8rem;
+  margin: 0.5rem auto;
+  font-weight: 700;
+}
+
 .banner-sticky {
   position: fixed;
   top: 100px;
@@ -82,7 +97,6 @@
   float: right;
   color: #88c53e;
 }
-
 
 /* .filter-option {
 
@@ -226,14 +240,14 @@
   display: grid;
 }
 
-
 @font-face {
   font-family: 'Avenir-Black';
-  src: url(fonts/Avenir-Black-03.ttf); 
+  src: url(fonts/Avenir-Black-03.ttf);
 }
+
 @font-face {
   font-family: 'Avenir-Heavy';
-  src: url(fonts/Avenir-Heavy-05.ttf); 
+  src: url(fonts/Avenir-Heavy-05.ttf);
 }
 
 @font-face {
@@ -243,7 +257,7 @@
 
 @font-face {
   font-family: 'Avenir-Roman';
-  src: url(fonts/Avenir-Roman-12.ttf); 
+  src: url(fonts/Avenir-Roman-12.ttf);
 }
 
 h1 {
@@ -1233,8 +1247,6 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   right: 80px;
   bottom: -123px;
 }
-
-
 
 @media (max-width: 768px) {
   .score-chart {
@@ -5160,7 +5172,6 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   transition: border 0.5s;
 } */
 
-
 @media (max-width: 768px) {
   .listings .banner-wrapper .top .category-wrapper .checkbox-container #all:checked~label[for="all"], .listings .banner-wrapper .top .category-wrapper .checkbox-container #travel:checked~label[for="travel"], .listings .banner-wrapper .top .category-wrapper .checkbox-container #shopping:checked~label[for="shopping"], .listings .banner-wrapper .top .category-wrapper .checkbox-container #lifestyle:checked~label[for="lifestyle"] {
     background: #ffffff;
@@ -6108,8 +6119,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   }
 }
 
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__field:focus~.form__label,
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__field.datepicker~.form__label {
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__field:focus~.form__label, .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__field.datepicker~.form__label {
   position: absolute;
   top: 10px;
   display: block;
@@ -7179,7 +7189,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 }
 
 [data-aos][data-aos][data-aos-delay="100"], body[data-aos-delay="100"] [data-aos] {
-  transition-delay: 0 !important; 
+  transition-delay: 0 !important;
 }
 
 [data-aos][data-aos][data-aos-delay="100"].aos-animate, body[data-aos-delay="100"] [data-aos].aos-animate {
@@ -8118,6 +8128,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 }
 
 /*-- Customised  Css --*/
+
 .credit-card-flow section.banner {
   margin-top: 0;
 }
@@ -8132,12 +8143,10 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   position: relative;
 }
 
-
-.banner-wrapper .normal-banner h1:first-child strong:first-child,
-.score-content h2 strong:nth-child(2),
-.banks-holder .banks h2 strong:nth-child(2) {
+.banner-wrapper .normal-banner h1:first-child strong:first-child, .score-content h2 strong:nth-child(2), .banks-holder .banks h2 strong:nth-child(2) {
   color: #89C142;
 }
+
 .lets-find-form .agree .checkbox span p {
   font-size: 0.75rem;
   line-height: 1.25rem;

@@ -1,14 +1,17 @@
 import Router from 'next/router'
 import $ from 'jquery'
 import { submitLetsFindForm, loadLetsFindForm } from '../Utils/shortFormHandle'
-import { generateInputs } from '../Utils/inputGenerator'
-import { uniqBy } from 'lodash'
+import { generateInputs, textTypeInputs, getCurrentSlideInputs } from '../Utils/inputGenerator'
+import { isEmailValid } from '../Utils/formValidations'
 
 class ShortExtendedForm extends React.Component {
     state = {
         slideIndex: 1,
         currentSlide: 'onboard',
-        slides: []
+        slides: [],
+        letsGoButtonDisabled: true,
+        mandatoryErrorMsg: 'Required Field',
+        emailErrorMsg: 'Invalid Email ID'
     }
 
     setInputsInState = (inputsArray, slideId) => {
@@ -35,7 +38,11 @@ class ShortExtendedForm extends React.Component {
                 slideNo++
             }, 500)
         })
-        
+
+        setTimeout(() => {
+            // console.log(this.state)
+        }, 1000);
+
         this.showSlides(this.state.slideIndex)
         $(".shortforms-container-buttons #previous").click(() => {
             this.onGoToPrevious()
@@ -63,13 +70,38 @@ class ShortExtendedForm extends React.Component {
     }
 
     plusSlides = (n) => {
-        this.setState({ slideIndex: this.state.slideIndex += n }, () => {
+        if (n === 1) {
+            let errors = false
+            const newSlides = [...this.state.slides]
+            const slide = newSlides.filter(slide => slide.slideId === this.state.currentSlide)
+            const inputs = slide[0].inputs
+            inputs.forEach(inp => {
+                if ((textTypeInputs.includes(inp.type) || inp.type === 'radio') && !inp.value) {
+                    inp.error = true
+                    inp.errorMsg = this.state.mandatoryErrorMsg
+                    errors = true
+                }
+            })
+            this.setState({
+                ...this.state, slides: newSlides
+            }, () => {
+                if (!errors) {
+                    let slideId = this.state.currentSlide
+                    let [slide, id] = slideId.split('-')
+                    slideId = `${slide}-${++id}`
+                    this.setState({ slideIndex: this.state.slideIndex += n, currentSlide: slideId }, () => {
+                        this.showSlides(n)
+                    })
+                }
+
+            })
+        } else {
             this.showSlides(n)
-        })
+        }
+
     }
 
     showSlides = (n) => {
-
         var i;
         var slides = document.getElementsByClassName("sf-forms");
         if (this.state.slideIndex == slides.length) {
@@ -110,37 +142,108 @@ class ShortExtendedForm extends React.Component {
     }
 
     handleChange = field => {
-        const slide = this.state.slides.filter(slide => slide.slideId === this.state.currentSlide) 
+        let letsGoButtonDisabled = this.state.letsGoButtonDisabled
+        const newSlides = [...this.state.slides]
+        const slide = newSlides.filter(slide => slide.slideId === this.state.currentSlide)
         const inputs = slide[0].inputs
-        
+
+        if (field.type === 'checkbox') {
+            inputs.forEach(inp => {
+                if (inp.type === 'checkbox') {
+                    inp.checkbox.checkbox_input.forEach(box => {
+                        if (box.input_id === field.name) {
+                            box.value = field.checked
+                            if (box.input_id === 'tnc') {
+                                letsGoButtonDisabled = !field.checked
+                            }
+                        }
+                    })
+                }
+            })
+
+        } else if (field.type === 'radio') {
+
+            inputs.forEach(inp => {
+                if (inp.input_id === field.name) {
+                    inp.value = field.value
+                }
+            })
+        } else {
+            inputs.forEach(inp => {
+                if (inp.input_id === field.name) {
+                    inp.value = field.value
+                }
+            })
+        }
+
+
+        this.setState({
+            ...this.state, slides: newSlides, letsGoButtonDisabled
+        }, () => {
+            if (textTypeInputs.includes(field.type) || field.type === 'radio') {
+                this.checkInputValidity(field)
+            }
+        })
+    }
+
+    checkInputValidity = field => {
+        const newSlides = [...this.state.slides]
+        const slide = newSlides.filter(slide => slide.slideId === this.state.currentSlide)
+        const inputs = slide[0].inputs
+
         inputs.forEach(inp => {
-            if(inp.input_id === field.name) {
-                inp.value = field.value
+            if (inp.input_id === field.name) {
+                if (inp.mandatory && !inp.value) {
+                    console.log('checking inp' , inp)
+                    inp.error = true
+                    inp.errorMsg = this.state.mandatoryErrorMsg
+                } else if(inp.type === 'email' && !isEmailValid(inp.value)) {
+                    console.log('checking inp' , inp)
+                    inp.error = true
+                    inp.errorMsg = this.state.emailErrorMsg
+                } else {
+                    console.log('checking inp for no error' , inp)
+                    inp.error = false
+                    inp.errorMsg = ''
+                }
             }
         })
 
-        console.log('inp: ', inputs)
+        this.setState({
+            ...this.state, slides: newSlides
+        }, () => {
+            // console.log(this.state)
+        })
 
-        // if (field.type === 'checkbox') {
-        //     this.state[this.state.currentSlide].forEach(item => {
-        //         if (item.name === field.name) {
-        //             item.checked = field.checked
-        //         }
-        //     })
-        // }
-
-        // const newState = uniqBy(this.state[this.state.currentSlide], field, 'name')
-
-        // this.setState({
-        //     [this.state.currentSlide]: newState
-        // }, () => {
-        //     console.log(this.state)
-        // })
     }
 
     onClickLetsGo = () => {
-        this.setState({ currentSlide: 'sf-1' })
-        submitLetsFindForm()
+        let errors = false
+        const newSlides = [...this.state.slides]
+        const slide = newSlides.filter(slide => slide.slideId === this.state.currentSlide)
+        const inputs = slide[0].inputs
+        inputs.forEach(inp => {
+            console.log('inps:: ', inp)
+            if(inp.type === 'email' && inp && !isEmailValid(inp.value)) {
+                inp.error = true
+                inp.errorMsg = this.state.emailErrorMsg
+                errors = true
+            }
+            if (textTypeInputs.includes(inp.type) && !inp.value) {
+                inp.error = true
+                inp.errorMsg = this.state.mandatoryErrorMsg
+                errors = true
+            }
+        })
+        this.setState({
+            ...this.state, slides: newSlides
+        }, () => {
+            console.log(this.state.slides)
+            if (!errors) {
+                this.setState({ currentSlide: 'sf-1' })
+                submitLetsFindForm()
+            }
+        })
     }
 
     onGoToLetFindForm = () => {
@@ -154,6 +257,7 @@ class ShortExtendedForm extends React.Component {
     render() {
         const { heading, description } = this.props.data.onboard_short_form
         const sfSlides = this.state.slides.slice(1)
+
         return (
             <section data-aos="fade-up" className="container lets-find-container aos-init">
 
@@ -173,12 +277,15 @@ class ShortExtendedForm extends React.Component {
 
                             {this.state.slides.length ? <form>
                                 {this.state.slides[0].inputs.map(input => {
-                                    return generateInputs(input, this.handleChange)
+                                    return generateInputs(input, this.handleChange, this.checkInputValidity)
                                 })}
                             </form> : null}
 
                             <div className='lets-go-button'>
-                                <button onClick={this.onClickLetsGo} >{'Lets Go'}</button>
+                                <button
+                                    onClick={this.onClickLetsGo}
+                                    disabled={this.state.letsGoButtonDisabled}
+                                >{'Lets Go'}</button>
                             </div>
                         </div>
                     </div>
@@ -193,13 +300,13 @@ class ShortExtendedForm extends React.Component {
                             {sfSlides && sfSlides.length ? <form className="short-forms-wrapper">
                                 {sfSlides.map(slide => {
                                     return (
-                                        <div className="sf-forms opacity-in" id={slide.slideId} style={{ display: 'block' }} key={slide.slideId}>
+                                        <div className="sf-forms opacity-in" id={slide.slideId} style={slide.slideId === this.state.currentSlide ? { display: 'block' } : { display: 'none' }} key={slide.slideId}>
                                             <div className="shortforms-container">
                                                 <div className="form__group-wrapper grid-span">
                                                     {slide.inputs.map(input => {
                                                         return (
                                                             <React.Fragment key={input.id}>
-                                                                {generateInputs(input, this.handleChange)}
+                                                                {generateInputs(input, this.handleChange, this.checkInputValidity)}
                                                             </React.Fragment>
                                                         )
                                                     })}

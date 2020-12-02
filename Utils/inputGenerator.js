@@ -1,4 +1,13 @@
-export const generateInputs = (component, updateField) => {
+export const textTypeInputs = ['text', 'number', 'email', 'tel']
+
+export const getCurrentSlideInputs = state => {
+    const newSlides = [...state.slides]
+    const slide = newSlides.filter(slide => slide.slideId === state.currentSlide)
+    const inputs = slide[0].inputs
+    return inputs
+}
+
+export const generateInputs = (component, updateField, checkInputValidity) => {
 
     const handleChange = (e, type) => {
         const { name, value, checked } = e.target
@@ -11,8 +20,14 @@ export const generateInputs = (component, updateField) => {
         updateField(field)
     }
 
+    const validate = (e, type) => {
+        const { name, value } = e.target
+        const field = { name, value, type }
+        checkInputValidity(field)
+    }
 
-    let { type, input_id, placeholder, mandatory, label, value, id, checkbox } = component
+
+    let { type, input_id, placeholder, mandatory, label, value, id, checkbox, radio, question, error, errorMsg } = component
 
     if (type === 'text' || type === 'email' || type === 'number' || type === 'tel') {
         return (
@@ -24,9 +39,13 @@ export const generateInputs = (component, updateField) => {
                     value={value}
                     placeholder={placeholder}
                     required={mandatory}
+                    onBlur={e => validate(e, type)}
                     onChange={e => handleChange(e, type)}
                 />
-                {/* <p>Required</p> */}
+                {error ? <div className='input-error'>
+                    <p>{errorMsg}</p>
+                </div> : null}
+                {/* <div>dropdown</div> */}
             </div>
         )
     }
@@ -36,18 +55,49 @@ export const generateInputs = (component, updateField) => {
         return (
             <div key={id}>
                 {checkbox_input.map(box => {
-                    return(
+                    return (
                         <div key={box.id}>
-                        <input
-                            type={type}
-                            name={box.input_id}
-                            checked={box.checked}
-                            onChange={e => handleChange(e, type)} />
-                        <label><span dangerouslySetInnerHTML={{ __html: box.label }}></span></label>
-                    </div>
+                            <input
+                                type={type}
+                                name={box.input_id}
+                                value={box.checked}
+                                onChange={e => handleChange(e, type)}
+                            />
+                            <label><span dangerouslySetInnerHTML={{ __html: box.label }}></span></label>
+                        </div>
                     )
                 })}
             </div>
+        )
+    }
+
+    if (type === 'radio') {
+        const { radio_buttons } = radio
+        return (
+            <>
+                <h2>{question}</h2>
+                <div key={id} name={input_id} required={mandatory}>
+                    {radio_buttons.map(button => {
+                        const labelStyles = value === button.value ? { border: '1px solid green' } : null
+                        return (
+                            <React.Fragment key={button.id}>
+                                <label htmlFor={button.value} style={labelStyles}>{button.label}</label>
+                                <input
+                                    className="lets-checkbox"
+                                    type="radio"
+                                    name={input_id}
+                                    id={button.value}
+                                    value={button.value}
+                                    onChange={e => handleChange(e, type)}
+                                />
+                            </React.Fragment>
+                        )
+                    })}
+                </div>
+                {error ? <div className='input-error'>
+                    <p>{errorMsg}</p>
+                </div> : null}
+            </>
         )
     }
 
