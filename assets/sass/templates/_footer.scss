@@ -1,0 +1,274 @@
+.footer {
+    background: $blue;
+    padding-top: 96px;
+    padding-bottom: 32px;
+    margin-top: 128px;
+
+    @include xs{
+        padding-top: 40px;
+        padding-bottom: 16px;
+        margin-top: 64px;
+    }
+
+
+    .container {
+        @extend %flex-col;
+
+        .footer-logo {
+            max-width: 160px;
+            width: 100%;
+
+            @include xs {
+                max-width: 120px;
+            }
+        }
+
+        .top {
+            @extend %flex-row;
+            justify-content: space-between;
+            margin-top: 40px;
+
+            @include xs {
+                flex-direction: column;
+            }
+
+            > div {
+                margin-right: 24px;
+
+                @include xs{
+                    max-width: 100%;
+                    margin-right: 0;
+                }
+            }
+
+            &-main-links {
+                @extend %flex-col;
+                width: 23.4%;
+
+                @include xs{
+                    width: 100%;
+                }
+
+                ul {
+
+                    @include xs{
+                        column-count: 2;
+                    }
+                    a {
+                        &:not(:first-child) {
+                            margin-top: 16px;
+
+                            @include xs{
+                                margin-top: 8px;
+                            }
+                        }
+
+
+                        li {
+                            color: $white;
+                            list-style: none;
+                            font-size: 1rem;
+                            font-family: "Avenir-Heavy";
+                            // font-weight: 800;
+                            line-height: 1.5rem;
+
+                            @include xs {
+                                font-size: 0.875rem;
+                                line-height: 1.5rem;
+                                color: $white-70;
+                            }
+
+                            &:not(:first-child) {
+                                margin-top: 16px;
+                            }
+
+                            &:hover {
+                                color: $green;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &-primary-links {
+                @extend %flex-col;
+                width: 49%;
+
+                @include xs{
+                    display: none;
+                }
+
+                ul {
+                    column-count: 2;
+                    column-gap: 8px;
+                    a {
+                        &:not(:first-child) {
+                            margin-top: 16px;
+                        }
+
+                        li {
+                            color: $white-50;
+                            list-style: none;
+                            font-size: 1rem;
+                            font-family: "Avenir-Heavy";
+                            // font-weight: 800;
+                            line-height: 1.5rem;
+
+                            @include xs {
+                                font-size: 0.875rem;
+                                line-height: 1.5rem;
+                            }
+
+                            &:hover {
+                                color: $white;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &-connect {
+                margin-right: 0 !important;
+                width: 27.6%;
+
+                @include xs{
+                    width: 100%;
+                }
+
+                @include xs{
+                    margin-top: 64px;
+                }
+
+                h2 {
+                    color: $white;
+                }
+
+                h5 {
+                    color: $green;
+                    margin-top: 8px;
+                }
+
+                h2:not(:first-child) {
+                    margin-top: 32px;
+                }
+
+                .mail{
+                    position: relative;
+                    width: fit-content;
+                    &:after {
+                        border-radius: 1em;
+                        border-top: .1em solid #ffffff;
+                        content: "";
+                        position: absolute;
+                          right: 100%;
+                          bottom: .14em;
+                          left: 0;
+                        transition: right .4s cubic-bezier(0,.5,0,1);
+                      }
+                      &:hover {
+                          &:after{
+                            right: 0;
+                          }
+                      }
+                }
+
+                .stores {
+                    margin-top: 16px;
+                    display: flex;
+                    flex-direction: row;
+
+                    img {
+                        max-width: 120px;
+                        width: 100%;
+
+                        @include xs {
+                            max-width: 100px;
+                        }
+
+                        &:first-child{
+                            margin-right: 16px;
+                        }
+                    }
+                }
+
+                &-social {
+                    @extend %flex-row;
+                    margin-top: 16px;
+
+                    @include xs{
+                        margin-top: 8px;
+                    }
+
+                    a:not(:last-child) {
+                        margin-right: 24px;
+                    }
+
+                    &-container {
+                        background: transparent;
+                        padding: 12px;
+                        height: 48px;
+                        cursor: pointer;
+                        transition: background 0.5s;
+
+                        &:hover {
+                            background: $white-10;
+                            transition: background 0.5s;
+                            border-radius: 6px;
+
+
+                            svg {
+                                path {
+                                    fill: $white;
+                                    transition: fill 0.5s;
+                                }
+                            }
+                        }
+
+                        svg {
+                            path {
+                                fill: $white-50;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .bottom {
+            @extend %flex-row;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 48px;
+            @extend %pos-relative;
+
+            @include xs{
+                flex-direction: column-reverse;
+                justify-content: center;
+                align-items: center;
+                margin-top: 32px;
+            }
+
+            span {
+                color: $white-70;
+
+                @include xs{
+                    margin-top: 16px;
+                }
+            }
+
+            img {
+                padding-bottom: 8px;
+                width: 160px;
+                @extend %pos-absolute;
+                right: 0;
+                bottom: 0;
+
+                @include xs{
+                    position: relative;
+                    width: 128px;
+                    // height: 32px;
+                }
+            }
+        }
+    }
+}

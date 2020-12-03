@@ -83,7 +83,7 @@ const Header = () => {
                   <div className="dropdown" id="loans" key={link.id}>
                      <button className="dropbtn">
                         {link.label}
-                        <img src="../images/icons/down-chevron.svg" />
+                        <img src="/assets/images/icons/down-chevron.svg" />
                      </button>
                      <div className="dropdown-content">
                         <div className="dropdown-content-links">
@@ -100,8 +100,6 @@ const Header = () => {
       <>
          <Head>
             <title>My Money Mantra</title>
-            <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-            <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
             <link rel="preload" href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
          </Head>
 
@@ -109,7 +107,7 @@ const Header = () => {
             <a href="index.html">
                <img
                   className="header-logo"
-                  src="../images/logo.png"
+                  src="/assets/images/icons/logo.png"
                   alt={headerData.logo.name}
                />
             </a>

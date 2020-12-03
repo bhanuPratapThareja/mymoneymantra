@@ -1,0 +1,718 @@
+.profile-flow {
+    .profile-head {
+        width: 100%;
+        margin-top: 0 !important;
+        padding-top: 244px !important;
+
+        @include xs {
+            margin-top: 64px !important;
+            padding-top: 32px !important;
+        }
+
+        .profile-container {
+            @extend %flex-col;
+            justify-content: flex-start;
+            align-items: center;
+
+            .profile-head-wrapper {
+                @extend %flex-col;
+                justify-content: flex-start;
+                align-items: center;
+                position: relative;
+
+                .profile-image {
+                    width: 160px;
+                    height: 160px;
+                    border-radius: 50%;
+                    background: $green-gradient;
+                    background-repeat: no-repeat;
+
+                    @include xs {
+                        width: 80px;
+                        height: 80px;
+                        background: $white;
+                    }
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        border: 4px solid transparent;
+
+                    }
+                }
+
+                h1 {
+                    margin-top: 24px;
+                    color: $white;
+
+                    @include xs {
+                        margin-top: 16px;
+                    }
+                }
+
+                .profile-progress {
+                    max-width: 560px;
+                    margin: 0 auto;
+                    padding-top: 20px;
+                    border-top: 0.5px solid $white-50;
+                    width: 100%;
+                    margin-top: 24px;
+
+                    .inner {
+                        max-width: 480px;
+                        width: 100%;
+                        margin: 0 auto;
+                        height: 12px;
+                        background: $white-10;
+                        border-radius: 50px;
+                        position: relative;
+                        margin-top: 18px;
+
+                        @include xs {
+                            height: 8px;
+                        }
+
+
+                        .percent-bar {
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            width: 57%;
+                            height: 100%;
+                            background: $blue-gradient;
+                            border-radius: 50px;
+                            z-index: 99;
+
+                            .perctange-wrap {
+                                width: 48px;
+                                height: 48px;
+                                position: absolute;
+                                right: 0;
+                                background: $dark-gradient;
+                                top: -18px;
+                                border-radius: 50%;
+                                border: 4px solid $white-50;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                z-index: 99999;
+
+                                @include xs {
+                                    width: 36px;
+                                    height: 36px;
+                                    background: $green-gradient;
+                                    border: 3px solid $green;
+                                    top: -13px;
+                                }
+
+                                h6 {
+                                    color: $white;
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+                p {
+                    margin-top: 30px;
+                    color: $white;
+
+                    @include xs {
+                        text-align: center;
+                        margin-top: 28px;
+                    }
+                }
+            }
+
+            .profile-options-wrapper {
+                @extend %flex-col;
+                justify-content: flex-start;
+                align-items: center;
+                width: 100%;
+                margin-top: 40px;
+
+                .option-wrapper {
+                    @extend %flex-col;
+                    justify-content: flex-start;
+                    width: 100%;
+                    border-bottom: 0.5px solid $white-50;
+
+                    .option {
+                        @extend %flex-row;
+                        justify-content: space-between;
+                        align-items: center;
+                        width: 100%;
+                        padding: 40px 0 24px 0;
+                        cursor: pointer;
+
+                        @include xs {
+                            padding: 24px 0;
+                        }
+
+                        h3 {
+                            color: $white;
+                        }
+
+                        svg {
+                            max-width: 32px;
+                            transition: all 0.5s ease-in-out;
+                            path {
+                                fill: $green;
+                            }
+                        }
+                    }
+
+                    .option-data {
+                        display: none;
+                        margin-top: 40px;
+                        padding-bottom: 32px;
+
+                        @include xs {
+                            margin-top: 0;
+                            padding-bottom: 24px;
+                        }
+                    }
+
+                    #option-8-data {
+                        p {
+                            color: $white;
+                        }
+
+                        a {
+                            display: block;
+                            margin-top: 24px;
+
+                            @include xs {
+                                margin-top: 16px;
+                            }
+                            button {
+                                @include primary-cta;
+                            }
+                        }
+                    }
+
+                    #option-7-data > .refer-cards-wrapper {
+                        display: grid;
+                        grid-template-columns: auto auto;
+                        grid-gap: 24px;
+
+                        @include xs {
+                            grid-template-columns: auto;
+                        }
+
+                        .refer-card {
+                            background: $white;
+                            border-radius: 6px;
+                            @extend %flex-col;
+                            justify-content: flex-start;
+                            padding: 32px;
+                            max-width: 552px;
+                            width: 100%;
+                            height: 100%;
+
+                            @include xs {
+                                padding: 16px;
+                            }
+
+                            h3 {
+                                background: $blue-gradient;
+                                -webkit-background-clip: text;
+                                -webkit-text-fill-color: transparent;
+                            }
+
+                            ul {
+                                margin-top: 16px;
+                                width: 100%;
+                                padding-left: 16px;
+
+                                li {
+                                    font-size: 0.875rem;
+                                    font-family: "Avenir-Roman";
+                                    line-height: 1.5rem;
+                                    color: $black-60;
+                                    max-width: 344px;
+                                    width: 100%;
+
+                                    &:not(:first-child) {
+                                        margin-top: 8px;
+                                    }
+
+                                    @include xs {
+                                        font-size: 0.75rem;
+                                        line-height: 1.25rem;
+                                    }
+                                }
+                            }
+
+                            .redeem {
+                                @extend %flex-row;
+                                justify-content: space-between;
+                                align-items: center;
+                                margin-top: 32px;
+
+                                @include xs {
+                                    margin-top: 16px;
+                                }
+
+                                .points {
+                                    @extend %flex-col;
+                                    justify-content: flex-start;
+
+                                    span {
+                                        color: $black-60;
+                                    }
+                                    h5 {
+                                        color: $black;
+                                    }
+                                }
+
+                                button {
+                                    @include primary-cta;
+                                }
+                            }
+                        }
+                    }
+
+                    #option-6-data > .offers-cards-wrapper {
+                        display: grid;
+                        grid-template-columns: auto auto;
+                        grid-gap: 24px;
+
+                        @include xs {
+                            grid-template-columns: auto;
+                        }
+
+                        .popular-cards-slider-card-top .head {
+                            @include xs {
+                                max-width: 100%;
+                                width: 100%;
+                            }
+                            
+                        }
+
+                        .content ul li {
+                            max-width: 344px;
+                            width: 100%;
+                        }
+                    }
+
+                    #option-5-data > .applications-cards-wrapper {
+                        display: grid;
+                        grid-template-columns: auto auto;
+                        grid-gap: 24px;
+
+                        @include xs {
+                            grid-template-columns: auto;
+                        }
+
+                        .popular-cards-slider-card-top {
+                            padding: 32px 32px 24px 32px;
+
+                            @include xs {
+                                padding: 16px;
+                            }
+
+                            .head {
+                                @include xs {
+                                    max-width: 100%;
+                                    width: 100%;
+                                }
+                            }
+
+                            h2 {
+                                margin-top: 24px;
+                                background: $blue-gradient;
+                                -webkit-background-clip: text;
+                                -webkit-text-fill-color: transparent;
+
+                                @include xs {
+                                    margin-top: 14px;
+                                }
+                            }
+
+                            h5 {
+                                margin-top: 40px;
+                                color: $black;
+
+                                @include xs {
+                                    margin-top: 14px;
+                                }
+                            }
+                        }
+                    }
+
+                    #option-1-data > .personal-wrapper {
+                        .personal-forms-wrapper {
+                            max-width: 650px;
+                            width: 100%;
+                            display: none;
+                            h5 {
+                                color: $white;
+
+                                &:not(:first-child) {
+                                    margin-top: 24px;
+                                }
+                            }
+                            .shortforms-container {
+                                @include input;
+                                display: grid;
+                                margin-top: 16px;
+
+                                @include xs {
+                                    margin-top: 8px;
+                                }
+
+                                .form__group,
+                                .form__group:hover {
+                                    border: 1px solid $white-50;
+                                    max-width: 312px;
+                                    width: 100%;
+
+                                    label {
+                                        color: $white-50;
+                                    }
+
+                                    input {
+                                        color: $white;
+                                    }
+                                    .form__field:placeholder-shown ~ .form__label {
+                                        color: $white-50;
+                                    }
+                                }
+                            }
+
+                            .shortforms-container .filled-input {
+                                border: 1px solid $white-50 !important;
+                            }
+
+                            .shortforms-container.personal-style {
+                                grid-template-columns: auto auto;
+                                grid-gap: 24px;
+
+                                @include xs {
+                                    grid-template-columns: auto;
+                                    grid-gap: 8px;
+                                }
+                            }
+
+                            .shortforms-container.gender-style,
+                            .shortforms-container.marital-style {
+                                @include stepper-checkbox;
+                                grid-template-columns: 168px 168px 168px;
+                                grid-gap: 24px;
+
+                                @include xs {
+                                    grid-template-columns: auto auto;
+                                    grid-gap: 8px;
+                                }
+
+                                label {
+                                    border: 1px solid $white-50;
+                                    color: $white;
+                                }
+                                #female:checked ~ label[for="female"],
+                                #male:checked ~ label[for="male"],
+                                #other:checked ~ label[for="other"],
+                                #married:checked ~ label[for="married"],
+                                #single:checked ~ label[for="single"],
+                                #separated:checked ~ label[for="separated"],
+                                #divorced:checked ~ label[for="divorced"],
+                                #widowed:checked ~ label[for="widowed"] {
+                                    background: transparent;
+                                }
+                            }
+
+                            .save-options {
+                                margin-top: 32px;
+                                @extend %flex-row;
+                                justify-content: flex-start;
+                                align-items: center;
+
+                                #save-personal {
+                                    @include primary-cta;
+                                    margin-right: 24px;
+                                }
+
+                                #cancel {
+                                    @include tab;
+
+                                    &:hover {
+                                        background: none;
+                                    }
+                                }
+                            }
+                        }
+
+                        .before-edit {
+                            width: 100%;
+
+                            position: relative;
+                            .shortforms-container {
+                                max-width: 650px;
+                                width: 100%;
+                                display: grid;
+                                grid-gap: 16px;
+                                grid-template-columns: auto auto;
+                                @include input;
+
+                                @include xs {
+                                    grid-template-columns: auto;
+                                }
+
+                                .form__group {
+                                    border: none !important;
+
+                                    @include xs {
+                                        padding-left: 0;
+                                    }
+
+                                    &:hover {
+                                        border: none;
+                                    }
+
+                                    label {
+                                        color: $white-50;
+                                    }
+                                    input {
+                                        color: $white;
+                                    }
+                                }
+                            }
+
+                            .edit-button {
+                                position: absolute;
+                                right: 0;
+                                top: 0;
+                                color: $green;
+                                text-decoration: underline;
+                                border: none;
+                                background: transparent;
+                                outline: none;
+                                font-size: 1rem;
+                                font-family: "Avenir-Heavy";
+                                // font-weight: 800;
+                                line-height: 1.5rem;
+                                cursor: pointer;
+
+                                @include xs {
+                                    font-size: 0.875rem;
+                                    line-height: 1.5rem;
+                                }
+                            }
+                        }
+                    }
+
+                    .contact-wrapper,
+                    .work-wrapper {
+                        width: 100%;
+                        position: relative;
+                        .shortforms-container {
+                            max-width: 650px;
+                            width: 100%;
+                            display: grid;
+                            grid-gap: 16px;
+                            grid-template-columns: auto auto;
+                            @include input;
+
+                            @include xs {
+                                grid-template-columns: auto;
+                                grid-gap: 16px;
+                            }
+                            .form__field:placeholder-shown ~ .form__label {
+                                color: $white-50;
+                            }
+
+                            .form__group.read-part {
+                                border: none !important;
+
+                                @include xs {
+                                    padding-left: 0;
+                                }
+
+                                &:hover {
+                                    border: none;
+                                }
+
+                                label {
+                                    color: $white-50 !important;
+                                    width: 85%;
+                                }
+                                input {
+                                    color: $white;
+                                }
+                            }
+
+                            .form__group.edit-part {
+                                border: 1px solid $white-50;
+
+                                @include xs {
+                                    padding-left: 20px;
+                                }
+
+                                &:hover {
+                                    border: 1px solid $white-50;
+                                }
+
+                                label {
+                                    color: $white-50 !important;
+                                    width: 85%;
+                                }
+
+                                input {
+                                    color: $white;
+                                }
+
+                                .active-input {
+                                    border: 2px solid $green !important;
+                                }
+                            }
+
+                            .form__group.edit-part.filled-input {
+                                border: 2px solid $white-50 !important;
+                            }
+                        }
+
+                        .save-options {
+                            margin-top: 32px;
+                            @extend %flex-row;
+                            justify-content: flex-start;
+                            align-items: center;
+                            display: none;
+
+                            #save-contact,
+                            #save-work {
+                                @include primary-cta;
+                                margin-right: 24px;
+                            }
+
+                            #cancel {
+                                @include tab;
+
+                                &:hover {
+                                    background: none;
+                                }
+                            }
+                        }
+
+                        .edit-button {
+                            position: absolute;
+                            right: 0;
+                            top: 0;
+                            color: $green;
+                            text-decoration: underline;
+                            border: none;
+                            background: transparent;
+                            outline: none;
+                            font-size: 1rem;
+                            font-family: "Avenir-Heavy";
+                            // font-weight: 800;
+                            line-height: 1.5rem;
+                            cursor: pointer;
+
+                            @include xs {
+                                font-size: 0.875rem;
+                                line-height: 1.5rem;
+                            }
+                        }
+                    }
+
+                    .documents-wrapper {
+                        .docs-container {
+                            display: grid;
+                            grid-template-columns: 320px auto;
+                            grid-gap: 16px;
+                            padding-bottom: 24px;
+                            border-bottom: 0.5px solid $white-25;
+
+                            @include xs{
+                                grid-template-columns: auto;
+                                grid-gap: 8px;
+                                padding-bottom: 16px;
+                            }
+
+                            &:not(:first-child) {
+                                padding-top: 24px;
+                                @include xs {
+                                    padding-top: 16px;
+                                }
+                            }
+
+                            &:last-child {
+                                border-bottom: none;
+                                padding-bottom: 0;
+                            }
+
+                            span {
+                                color: $white-25;
+                            }
+
+                            .identity-options {
+                                max-width: auto;
+                                width: 100%;
+                                .options {
+                                    @extend %flex-col;
+                                    justify-content: flex-start;
+
+                                    h5 {
+                                        color: $white;
+                                    }
+
+                                    > div {
+                                        @extend %flex-row;
+                                        justify-content: flex-start;
+                                        align-items: center;
+                                        margin-top: 10px;
+
+                                        svg {
+                                            margin-right: 4px;
+
+                                            path {
+                                                fill: $white-50;
+                                            }
+                                        }
+
+                                        h6 {
+                                            color: $white;
+                                        }
+                                    }
+
+                                    span {
+                                        color: $white-50;
+                                        margin-left: 28px;
+                                    }
+
+                                    span.error {
+                                        color: $red;
+                                        margin-left: 0;
+                                        margin-top: 10px;
+                                    }
+                                }
+                            }
+
+                            .identity-options.col-span {
+                                grid-column: 2/ 1;
+                            }
+                        }
+                    }
+
+                    .question-active {
+                        transform: rotate(180deg);
+                        transition: transform 0.5s ease-in-out;
+
+                        path {
+                            opacity: 1 !important;
+                            transition: transform 0.5s ease-in-out;
+                        }
+                    }
+
+                    .question-open {
+                        h3 {
+                            color: $green;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

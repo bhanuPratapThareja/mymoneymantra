@@ -1,0 +1,82 @@
+.personal-detail-flow {
+    .banner-wrapper {
+        max-width: 560px !important;
+        margin: 0 auto;
+        @extend %flex-col;
+        justify-content: center;
+        align-items: center;
+        margin-left: inherit !important;
+
+        h1 {
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        button {
+            margin-top: 60px;
+        }
+    }
+
+    .annual-fee-wrapper {
+        .left {
+            h3 {
+                &:last-of-type {
+                    margin-top: 64px;
+
+                    @include xs {
+                        margin-top: 32px;
+                    }
+                }
+            }
+
+            h3 + p {
+                margin-top: 16px;
+                color: $black;
+            }
+
+            .logo {
+                margin-bottom: 40px;
+
+                @include xs {
+                    margin-bottom: 32px;
+                }
+            }
+        }
+        .right {
+            @extend %flex-col;
+            max-width: 50%;
+            width: 100%;
+            padding-right: 120px;
+            margin-top: 142px;
+
+            @include xs {
+                max-width: 100%;
+                padding-right: 0px;
+                margin-top: 32px;
+            }
+
+            ul {
+                margin-top: 8px;
+                padding-left: 16px;
+                li {
+                    color: $black-60;
+                    font-size: 14px;
+                    line-height: 24px;
+                    margin-top: 8px;
+                    list-style-position: outside;
+                    font-size: 0.875rem;
+                    font-family: "Avenir-Roman";
+                    line-height: 1.5rem;
+
+                    @include xs {
+                        font-size: 0.75rem;
+                        line-height: 1.25rem;
+                    }
+                }
+            }
+        }
+    }
+}

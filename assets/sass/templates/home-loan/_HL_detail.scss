@@ -1,0 +1,51 @@
+.home-loan-flow-detail {
+    .annual-fee {
+        .annual-fee-wrapper {
+            @extend %flex-col;
+
+             .left, .right{
+                max-width: 100%;
+                width: 100%;
+                @extend %flex-row;
+                justify-content: space-between;
+                padding-right: 0;
+
+                @include xs {
+                    flex-direction: column;
+                }
+
+                div {
+                    max-width: 50%;
+                    width: 100%;
+
+                    @include xs {
+                        max-width: 100%;
+                    }
+
+                    p {
+                        color: $black;
+                    }
+
+                    
+                }
+
+                div.first-set {
+                    padding-right: 120px;
+
+                    @include xs {
+                        padding-right: 0;
+                    }
+                }
+
+            }
+
+            .right {
+                margin-top: 64px;
+
+                @include xs {
+                    margin-top: 32px;
+                }
+            }
+        }
+    }
+}

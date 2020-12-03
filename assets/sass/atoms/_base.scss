@@ -1,0 +1,56 @@
+@import 'colors';
+@import 'keyframes';
+@import 'breakpoints';
+@import 'mixins';
+@import 'fonts';
+@import 'typography';
+
+
+
+html {
+    height: 100%;
+    background: #ffffff !important;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    display: inherit;
+}
+a:hover{
+    color: inherit;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    text-rendering: optimizeLegibility !important;
+    font-weight: 400;
+    position: relative;
+    background-color: transparent !important;    
+}
+
+.container{
+    max-width: 1176px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+h1, h2, h3, h4, h5, h6, b, span, strong, a {
+    font-weight: inherit;
+}
+
+@import 'components';
+
+

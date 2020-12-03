@@ -1,0 +1,72 @@
+//large devices (larger desktops)
+$screen-lg-min: 1200px;
+
+//medium devices (tabs)
+$screen-sm-min: 769px;
+$screen-sm-max: 1023px;
+
+//tab (tabs)
+$screen-mid-min: 1024px;
+$screen-mid-max: 1350px;
+
+//extra small devices (mobiles)
+$screen-xs-max: 768px;
+
+$screen-md-min: 768px;
+$screen-md-max: 1200px;
+
+
+$mini-screen: 576px;
+$macro-screen: 321px;
+
+@mixin mini {
+    @media (max-width: $mini-screen) {
+        @content;
+    }
+}
+
+@mixin macro {
+    @media (max-width: $macro-screen) {
+        @content;
+    }
+}
+
+//large devices
+@mixin lg {
+    @media (min-width: #{$screen-lg-min}) {
+        @content;
+    }
+}
+
+//small devices
+@mixin sm {
+    @media (min-width: #{$screen-sm-min}) and (max-width: #{$screen-sm-max}) {
+        @content;
+    }
+}
+
+// mobile devices
+@mixin xs {
+    @media (max-width: #{$screen-xs-max}) {
+        @content;
+    }
+}
+
+//mid devices
+@mixin mid {
+    @media (min-width: #{$screen-mid-min}) and (max-width: #{$screen-mid-max}) {
+        @content;
+    }
+}
+
+//medium devices
+@mixin md {
+    @media (min-width: #{$screen-md-min}) and (max-width: #{$screen-md-max}) {
+        @content;
+    }
+}
+
+/*@minxin mini {
+    @media (max-width: 320px) {}
+}
+*/

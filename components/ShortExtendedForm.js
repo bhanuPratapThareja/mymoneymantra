@@ -29,7 +29,7 @@ class ShortExtendedForm extends React.Component {
     componentDidMount() {
         let slideNo = 1
         const { side_form, form_slide } = this.props.data.onboard_short_form
-        console.log(this.props.data.onboard_short_form)
+        // console.log(this.props.data.onboard_short_form)
 
         this.setInputsInState(side_form, 'onboard')
         form_slide.forEach(slide => {
@@ -315,7 +315,7 @@ class ShortExtendedForm extends React.Component {
                     <div className="lets-find">
                         <div className="lets-find-content">
                             <h2>{heading}</h2>
-                            <img className="green-underline" src="../images/icons/green-underline.png" />
+                            <img className="green-underline" src="/assets/images/credit-card-flow/green-underline.png" />
                             <div dangerouslySetInnerHTML={{ __html: description }}></div>
                         </div>
                         <div className="lets-find-form">

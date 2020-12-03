@@ -1,0 +1,263 @@
+.long-form {
+    padding-top: 110px;
+    background: $dark-gradient;
+    .long-form-wrapper {
+        max-width: 1191px;
+        margin: 0 auto;
+        padding-left: 24px;
+        padding-right: 24px;
+        @extend %flex-row;
+        padding-top: 128px;
+        margin-bottom: 128px;
+        z-index: 9999;
+        @extend %pos-relative;
+
+        @include xs {
+            flex-direction: column;
+            padding-top: 0;
+            margin-bottom: 64px;
+            max-width: 100%;
+        }
+
+        .card-info {
+            max-width: 303px;
+            width: 100%;
+            padding-right: 24px;
+           
+
+            @include xs {
+                padding: 16px;
+                padding-bottom: 0;
+                max-width: 100%;
+                width: 100%;
+                border-top-left-radius: 6px;
+                border-top-right-radius: 6px;
+                background: $white;
+            }
+
+            .app-form {
+                display: none;
+
+                @include xs {
+                    display: flex;
+                    color: $black-40;
+                }
+            }
+
+            h3 {
+                color: $white;
+                @include xs {
+                    margin-top: 8px;
+                    color: $black;
+                }
+
+                b {
+                    font-size: 1.25rem;
+                    font-family: "Avenir-Heavy";
+                    line-height: 2rem;
+                    color: $green;
+
+                    @include xs {
+                        font-size: 1rem;
+                        line-height: 1.5rem;
+                    }
+                }
+            }
+
+            img {
+                margin-top: 22px;
+                width: 100%;
+
+                @include xs {
+                    margin-top: 24px;
+                    max-width: 295px;
+                    width: 100%;
+                }
+            }
+
+            h4 {
+                color: $white;
+                margin-top: 24px;
+
+                @include xs {
+                    display: none;
+                }
+            }
+
+            .form-range {
+                margin-top: 32px;
+
+                @include xs {
+                    display: none;
+                }
+
+                h5 {
+                    color: $white;
+
+                    b {
+                        color: $green;
+                    }
+                }
+
+                .green-range-wrapper {
+                    margin-top: 8px;
+                    border-radius: 2px;
+                    background: $white-10;
+                    height: 4px;
+
+                    .green-range-track {
+                        background: $green;
+                        height: 100%;
+                        border-radius: 2px;
+                        width: 50%;
+                    }
+                }
+            }
+        }
+
+        .form-wrapper {
+            background: $white;
+            border-radius: 6px;
+            box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.08), 0px 16px 64px rgba(0, 0, 0, 0.08);
+            width: 100%;
+
+            @include xs {
+                box-shadow: none;
+                border-top-left-radius: 0px;
+                border-top-right-radius: 0px;
+            }
+
+            form {
+                padding-bottom: 80px;
+                padding-left: 16px;
+                padding-right: 16px;
+                padding-top: 0;
+                max-width: 680px;
+                margin: 0 auto;
+
+                h3 {
+                    color: $green;
+                    margin-top: 64px;
+
+                    &:first-of-type {
+                        margin-top: 48px;
+                    }
+                }
+
+                .long-forms-wrapper {
+                    margin-top: 48px;
+                    width: 100%;
+
+                    @include xs {
+                        margin-top: 32px;
+                    }
+                    h5 {
+                        color: $blue;
+
+                        b {
+                            color: $green;
+                            font-size: 1rem;
+                            font-family: "Avenir-Heavy";
+                            line-height: 1.5rem;
+
+                            @include xs {
+                                font-size: 0.875rem;
+                                line-height: 1.5rem;
+                            }
+                        }
+                    }
+
+                    .shortforms-container {
+                        @include stepper-checkbox;
+                        @include input;
+                        margin-top: 16px;
+
+                        @include xs {
+                            margin-top: 8px;
+                        }
+                    }
+
+                    .shortforms-container.long-gender {
+                        grid-template-columns: 168px 168px 168px;
+                        grid-gap: 24px;
+
+                        @include xs {
+                            grid-template-columns: auto auto;
+                            grid-gap: 8px;
+                        }
+                    }
+                    .shortforms-container.long-name,
+                    .shortforms-container.long-work {
+                        grid-template-columns: repeat(2, 1fr);
+                        grid-gap: 24px;
+
+                        @include xs {
+                            grid-template-columns: auto;
+                            grid-gap: 8px;
+                        }
+                    }
+                    .shortforms-container.long-address {
+                        grid-template-columns: repeat(1, 1fr);
+                        grid-gap: 16px;
+
+                        @include xs {
+                            grid-gap: 8px;
+                        }
+                    }
+                    .shortforms-container.long-proof {
+                        grid-template-columns: 168px 168px;
+                        grid-gap: 16px;
+                        column-gap: 24px;
+
+                        @include xs {
+                            grid-template-columns: auto auto;
+                            grid-gap: 8px;
+                        }
+
+                        .file-type {
+                            display: grid;
+                            grid-template-columns: 244px;
+
+                            @include xs {
+                                grid-template-columns: auto;
+                            }
+                        }
+                    }
+                }
+
+                .long-terms {
+                    label span {
+                        font-size: 1rem;
+                        font-family: "Avenir-Roman";
+                        line-height: 1.75rem;
+
+                        @include xs {
+                            font-size: 0.875rem;
+                            line-height: 1.5rem;
+                        }
+                    }
+
+                    .checkbox-container {
+                        margin-top: 24px;
+                        padding-left: 16px;
+
+                        &:first-of-type {
+                            margin-top: 14px;
+                        }
+                    }
+                }
+
+                .long-form-submit {
+                    margin-top: 64px;
+                    @extend %flex-row;
+                    justify-content: center;
+
+                    button {
+                        @include primary-cta;
+                        padding: 12px 24px;
+                    }
+                }
+            }
+        }
+    }
+}

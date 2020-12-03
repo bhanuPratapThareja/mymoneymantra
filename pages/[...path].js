@@ -29,7 +29,7 @@ const Home = props => {
     }
 
     const getComponents = (dynamic, path) => {
-        // console.log(dynamic)
+        console.log('dynamic:: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':
@@ -44,8 +44,8 @@ const Home = props => {
                     return <Banks key={block.id} banks={block} />
                 case 'blocks.offer':
                     return <Offers key={block.id} data={block} />
-                // case 'blocks.trending-offers':
-                //     return <TrendingOffers key={block.id} data={block} trendingOffers={props.trendingOffers} />
+                case 'blocks.trending-offers':
+                    return <TrendingOffers key={block.id} data={block} trendingOffers={props.trendingOffers} />
                 case 'blocks.blogs':
                     return <Blog key={block.id} data={block} />
                 case 'blocks.learn-more':
@@ -77,20 +77,20 @@ export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     let props = {}
     let trendingOffers = null
-    let trendingProductId = 5
+    let trendingProductId = ''
     let offersData = []
 
-    try {
-        const { url, body } = getApiData('offers')
-        const res = await strapi.apiReq('POST', url, body)
-        offersData = res.response.payload
-    } catch(err) {
-    }
+    // try {
+    //     const { url, body } = getApiData('offers')
+    //     const res = await strapi.apiReq('POST', url, body)
+    //     offersData = res.response.payload
+    // } catch(err) {
+    // }
 
-    try {
-        trendingOffers = await strapi.processReq('GET', `products?_where[product_id]=${trendingProductId}`)
-    } catch (err) {
-    }
+    // try {
+    //     trendingOffers = await strapi.processReq('GET', `products?_where[product_id]=${trendingProductId}`)
+    // } catch (err) {
+    // }
 
     try {
         const [path] = ctx.params.path
@@ -100,7 +100,7 @@ export async function getServerSideProps(ctx) {
     } catch (err) {
     }
 
-    return { props: { ...props, trendingOffers } }
+    return { props: { ...props } }
 }
 
 export default Home

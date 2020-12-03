@@ -6,10 +6,10 @@ const Footer = () => {
     const [footer, setFooter] = useState(null)
 
     useEffect(() => {
-        async function getFooter() {
-            let footer = await strapi.processReq('GET', 'footer')
-            setFooter(footer)
-        }
+        // async function getFooter() {
+        //     let footer = await strapi.processReq('GET', 'footer')
+        //     setFooter(footer)
+        // }
         // getFooter(footer)
     }, [])
 
@@ -76,7 +76,7 @@ const Footer = () => {
 
         <div className="footer">
             <section className="container">
-                <img className="footer-logo" src="../images/logo.png" />
+                <img className="footer-logo" src="/assets/images/icons/logo.png" />
 
                 <div className="top">
                     <div className="top-main-links">
@@ -200,8 +200,8 @@ const Footer = () => {
                         </div>
                         <h2>Get our app</h2>
                         <div className="stores">
-                            <a href="#" target="_blank"><img src="../images/icons/google.svg" /></a>
-                            <a href="#" target="_blank"><img src="../images/icons/apple.svg" /></a>
+                            <a href="#" target="_blank"><img src="/assets/images/icons/google.svg" /></a>
+                            <a href="#" target="_blank"><img src="/assets/images/icons/apple.svg" /></a>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,51 @@
+.personal-loan-listing {
+    .banner-wrapper {
+        .top {
+            max-width: 100%;
+            @extend %flex-row;
+            justify-content: center;
+            align-items: center;
+
+            h1 {
+                max-width: 653px;
+                margin: 0 auto;
+                text-align: center;
+            }
+        }
+    }
+
+    .long-cards-wrapper-card {
+        .top .name {
+            div > img {
+                margin-left: -20px;
+                max-width: 120px;
+            }
+            h3 {
+                margin-top: 0;
+            }
+
+            .mob-logo {
+                display: none;
+                height: auto;
+
+                @include xs {
+                    display: flex;
+                }
+            }
+        }
+
+        .top .fee {
+            max-width: 250px;
+            width: 100%;
+
+            @include xs {
+                max-width: 100%;
+            }
+        }
+
+        .top .content ul {
+            padding-left: 16px;
+            margin-top: 8px;
+        }
+    }
+}

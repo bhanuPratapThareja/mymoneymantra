@@ -1,0 +1,15 @@
+.b2b-flow {
+    .sf-forms {
+        .current-address {
+            .line-1 {
+                grid-column: 1 / 1;
+            }
+        }
+
+        .shortforms-container {
+            @include xs {
+                grid-template-columns: repeat(1, 1fr) !important;
+            }
+        }
+    }
+}
