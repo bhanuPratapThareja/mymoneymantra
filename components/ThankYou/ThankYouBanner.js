@@ -7,6 +7,7 @@ const ThankYouBanner = props => {
 
     return (
         <div className="thankyou-page">
+            <div className="mobile-background"></div>
             <div className="combined-wrapper">
                 <section className="banner container">
                     <div className="thankyou-banner">

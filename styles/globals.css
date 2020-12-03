@@ -1705,6 +1705,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
     -ms-flex-direction: row;
     flex-direction: row;
     overflow-x: scroll;
+    padding: 0 20px;
     width: 100%;
     grid-template-columns: auto;
     margin-top: 16px;
@@ -5214,11 +5215,12 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 
 
 @media (max-width: 768px) {
+  .listings .banner-wrapper .top .category-wrapper .checkbox-container .listing-banner_selected,
   .listings .banner-wrapper .top .category-wrapper .checkbox-container #all:checked~label[for="all"], .listings .banner-wrapper .top .category-wrapper .checkbox-container #travel:checked~label[for="travel"], .listings .banner-wrapper .top .category-wrapper .checkbox-container #shopping:checked~label[for="shopping"], .listings .banner-wrapper .top .category-wrapper .checkbox-container #lifestyle:checked~label[for="lifestyle"] {
-    background: #ffffff;
-    background-position: center;
+    background: #ffffff !important;
+    background-position: center !important;
     background-repeat: no-repeat;
-    animation: gradient 0.3s ease-in-out forwards;
+    animation: gradient 0.3s ease-in-out forwards !important;
     border: none;
     transition: border 0.5s;
   }
@@ -5235,6 +5237,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 }
 
 @media (max-width: 768px) {
+  .listings .banner-wrapper .top .category-wrapper .checkbox-container .listing-banner_selected h4,
   .listings .banner-wrapper .top .category-wrapper .checkbox-container #all:checked~label[for="all"] h4, .listings .banner-wrapper .top .category-wrapper .checkbox-container #travel:checked~label[for="travel"] h4, .listings .banner-wrapper .top .category-wrapper .checkbox-container #shopping:checked~label[for="shopping"] h4, .listings .banner-wrapper .top .category-wrapper .checkbox-container #lifestyle:checked~label[for="lifestyle"] h4 {
     color: #89C142;
   }
@@ -8179,8 +8182,8 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 } */
 
 .long-form .long-form-wrapper .banner-sticky+.form-wrapper {
-  max-width: 835px;
-  left: 27%;
+  max-width: 840px;
+  left: 26.5%;
   position: relative;
 }
 
@@ -8230,9 +8233,9 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   opacity: 1;
 }
 
-.long-cards-wrapper-card .top .content ul {
+/* .long-cards-wrapper-card .top .content ul {
   list-style: none;
-}
+} */
 
 .credit-card-flow .banner.cstm-mb {
   margin-bottom: 64px;
@@ -8240,4 +8243,70 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 
 .long-form .long-form-wrapper .card-info .form-range .green-range-wrapper .MuiLinearProgress-colorPrimary {
   background: rgba(255, 255, 255, 0.1);
+}
+
+@media(max-width: 1199px) {
+  .banks h2 strong:nth-child(2) {
+    display: block;
+  }
+
+  .banner-sticky {
+    position: static;
+    top: 0;
+    width: 100%;
+  }
+
+  .banner-sticky_bottom {
+    margin-top: 0;
+  }
+
+  .long-form .long-form-wrapper .banner-sticky+.form-wrapper {
+    max-width: 100%;
+    left: 0;
+    position: relative;
+  }
+
+}
+
+@media(max-width: 1023px) and (min-width: 769px){
+  .footer .container .top-connect-social a:not(:last-child) {
+    margin-right: 0;
+  }
+
+}
+
+@media(max-width: 991px) and (min-width: 769px){
+  .footer .container .top-primary-links ul a li {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .footer .container .top-main-links {
+    width: 16.4%;
+  }
+
+  .footer .container .top-primary-links {
+    width: 38%;
+  }
+
+  .footer .container .top-connect {
+    /* margin-right: 0 !important; */
+    width: 29.6%;
+  }
+
+  .footer .container .top-main-links ul a li {
+    font-size: 15px;
+  }
+
+  .footer .container .top-connect h5 {
+    margin-top: 8px;
+    font-size: 13px;
+  }
+
+}
+
+@media(max-width: 767px) {
+  .banks-slider {
+    overflow-x: hidden;
+}
 }
