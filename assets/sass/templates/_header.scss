@@ -1,0 +1,194 @@
+.header {
+    padding: 36px 40px;
+    @extend %flex-row;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: $dark-gradient;
+    z-index: 99999999;
+    width: 100%;
+    transition-duration: 0.4s;
+    @include xs{
+        padding: 16px 24px !important;
+        background: $green-gradient;
+    }
+
+    @include md{
+        padding: 16px 24px !important;
+        background: $green-gradient;
+    }
+
+
+    &-logo {
+        width: 160px;
+        margin-right: 16px;
+        height: 40px;
+
+        @include xs{
+            margin-right: 0;
+            width: 128px;
+            height: 32px;
+        }
+
+        @include md{
+            margin-right: 0;
+            width: 128px;
+            height: 32px;
+        }
+    }
+
+    &-menu-icon{
+        display: none;
+
+        @include xs{
+            padding: 4px;
+            display: flex;
+            
+        }
+
+        @include md{
+            padding: 4px;
+            display: flex;
+        }
+
+        &:hover{
+            border-radius: 6px;
+            background: $white-10;
+        }
+    }
+
+    &-links {
+        @extend %flex-row;
+        justify-content: space-between;
+
+        @include xs{
+            display: none;
+        }
+
+        @include md{
+            display: none;
+        }
+
+        > a,
+        > .dropdown {
+            margin-right: 8px;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        a {
+            padding: 8px 12px;
+            font-size: 1rem;
+            font-family: "Avenir-Heavy";
+            // font-weight: 800;
+            line-height: 1.5rem;
+            color: $white;
+            display: block;
+
+            &:hover {
+                background: $green-gradient;
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+            }
+
+            @include xs {
+                font-size: 0.875rem;
+                line-height: 1.5rem;
+            }
+
+            @include md{
+                font-size: 0.875rem;
+                line-height: 1.5rem;
+            }
+            &.header_active {
+                background: $green-gradient;
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+
+            }
+            &.dropbtn {
+                width: auto;
+                border-radius: 6px;
+                -ms-flex-pack: justify;
+                justify-content: space-between;
+                -ms-flex-align: center;
+                align-items: center;
+                background: transparent;
+                border: none;
+                color: $white;
+                display: table;
+                &:hover {
+                    background: rgba(255, 255, 255, 0.1);
+                }
+            }
+        }
+
+        .credit-score{
+            display: table;
+            &:hover{
+                background: $white-10;
+                border-radius: 6px;
+            }
+        }
+
+        .dropdown {
+            position: relative;
+            height: max-content;
+            @include dropdown;
+
+            &:hover .dropdown-content {
+                display: block;
+                animation: drop-open 0.3s ease-in;
+                transform-origin: left top;
+                transform: scale(1);
+            }
+
+            .dropdown-content-links a{
+                padding-right: 0 !important;
+
+                &:hover{
+                    margin-right: 0 !important;
+                }
+            }
+        }
+    }
+
+    &-access {
+        @extend %flex-row;
+        align-items: center;
+
+        @include xs{
+            display: none;
+        }
+
+        @include md{
+            display: none;
+        }
+
+        .login-cta{
+            button{
+                @include tab;
+                cursor: pointer;
+                padding: 8px 16px;
+                height: 100%;
+                margin-right: 16px;
+            }
+        }
+        @include secondary-cta;
+    }
+    &.scrolled {
+        padding: 14px 40px;
+        transition-duration: 0.4s;
+        box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.25), 0px 4px 16px rgba(0, 0, 0, 0.25);
+
+        @include xs{
+            box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.25), 0px 4px 16px rgba(0, 0, 0, 0.25);
+            transition-duration: 0.4s;
+        }
+    }
+}

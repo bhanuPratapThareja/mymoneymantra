@@ -1,0 +1,47 @@
+// .credit-utilization-head{
+//     padding-top: 0 !important;
+// }
+
+// .utilization-block{
+//     max-width: 128px !important;
+// }
+
+// .content-section{
+//     @extend %flex-row;
+
+//     &-left{
+//         &-block{
+//             margin-top: 22px;
+//         }
+//         p{
+//             margin-top: 0 !important;
+//             color: $black !important;
+//         }
+//     }
+
+//     &-right{
+//         padding-right: 150px;
+
+//         @include  mid{
+//             padding-right: 90px;
+//         }
+
+//         @include sm{
+//             padding-right: 70px;
+//         }
+
+//         @include xs{
+//             padding-right: 66px;
+//         }
+
+//         &-percentage{
+//             max-width: 80px;
+//             width: 100%;
+//             margin-top: 17px;
+
+//             img{
+//                 max-width: 80px;
+//             }
+//         }
+//     }
+// }

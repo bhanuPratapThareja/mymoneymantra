@@ -1,0 +1,645 @@
+.blogs-flow {
+    .mobile-background {
+        @include xs {
+            height: 164px;
+        }
+    }
+    .main-head {
+        padding-top: 176px;
+        padding-bottom: 64px;
+
+        @include xs {
+            display: flex;
+            padding-top: 32px;
+            padding-bottom: 0;
+        }
+        .container {
+            @extend %flex-row;
+            justify-content: space-between;
+            align-items: center;
+            @include input;
+
+            @include xs {
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+            h1 {
+                max-width: 549px;
+                width: 100%;
+                @include xs {
+                    text-align: center;
+                    z-index: 99999;
+                    position: relative;
+                }
+            }
+
+            div {
+                max-width: 578px;
+                width: 100%;
+                border-radius: 6px;
+                background: $white-10;
+                max-height: 64px;
+                min-height: 64px;
+                @extend %flex-row;
+                justify-content: flex-start;
+                position: relative;
+
+                @include xs {
+                    width: 100%;
+                    margin-top: 12px;
+                    max-height: 48px;
+                    min-height: 48px;
+                }
+
+                input {
+                    background: transparent;
+                    color: $white;
+                    font-size: 1rem;
+                    font-family: "Avenir-Heavy";
+                    line-height: 1.5rem;
+                    border: none;
+                    outline: none;
+                    height: -webkit-fill-available;
+                    padding: 20px 16px 20px 64px;
+                    width: 90%;
+
+                    @include xs {
+                        font-size: 0.875rem;
+                        line-height: 1.5rem;
+                        padding: 12px 12px 12px 52px;
+                        color: $white;
+                    }
+                    &::placeholder {
+                        font-size: 1rem;
+                        font-family: "Avenir-Heavy";
+                        line-height: 1.5rem;
+                        color: $white-50;
+
+                        @include xs {
+                            font-size: 0.875rem;
+                            line-height: 1.5rem;
+                            color: $white !important;
+                        }
+                    }
+                }
+
+                svg,
+                img {
+                    @extend %pos-absolute;
+                    width: 24px;
+                }
+
+                svg {
+                    right: 16px;
+                    top: 16px;
+
+                    @include xs {
+                        top: 10px;
+                        right: 16px;
+                    }
+
+                    path {
+                        fill: $white-50;
+                    }
+                }
+
+                img {
+                    left: 24px;
+                    top: 20px;
+
+                    @include xs {
+                        top: 12px;
+                        left: 16px;
+                    }
+                }
+            }
+        }
+    }
+
+    .banks-holder {
+        h2 {
+            @extend %flex-col;
+            justify-content: center;
+            align-items: flex-start;
+
+            @include xs {
+                br {
+                    display: none;
+                }
+            }
+        }
+
+        .banks-slider {
+            .slide_cell {
+                background: $white;
+                border-radius: 6px;
+                @extend %flex-row;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 28px 24px;
+                max-width: 168px;
+                width: 100%;
+                min-height: 120px;
+
+                @include xs {
+                    min-width: 112px;
+                }
+
+                h3 {
+                    color: $black-60;
+                }
+            }
+        }
+    }
+
+    .popular-cards {
+        padding-top: 64px;
+
+        @include xs {
+            padding-top: 0;
+        }
+    }
+
+    .featured-wrapper {
+        h2 {
+            color: $white;
+            text-align: center;
+
+            @include xs {
+                text-align: left;
+                padding-left: 24px;
+            }
+        }
+        .container {
+            padding-top: 32px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 24px;
+
+            @include xs {
+                padding-top: 16px;
+                grid-gap: 12px;
+            }
+
+            .people {
+                background: $white;
+                border-radius: 6px;
+                @extend %flex-row;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 36px 52px;
+
+                @include xs {
+                    flex-direction: column;
+                    padding: 12px 24px;
+                }
+
+                .image {
+                    max-width: 112px;
+                    border-radius: 50%;
+                    border: 6px solid $green;
+                    margin-right: 16px;
+                    @extend %flex-row;
+
+                    img {
+                        border-radius: 50%;
+                        width: 100%;
+                    }
+                }
+
+                .detail {
+                    @extend %flex-col;
+                    justify-content: flex-start;
+
+                    h3 {
+                        color: $black;
+
+                        @include xs {
+                            text-align: center;
+                            margin-top: 8px;
+                        }
+                    }
+
+                    h5 {
+                        color: $black-60;
+                        margin-top: 8px;
+                        @include xs {
+                            text-align: center;
+                            margin-top: 0;
+                            font-size: 0.625rem;
+                            line-height: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        .view-all {
+            display: flex !important;
+            justify-content: flex-end;
+            align-items: center;
+            padding-top: 40px !important;
+
+            @include xs {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 16px;
+                padding-top: 0 !important;
+            }
+
+            button {
+                @include tab;
+                background: transparent;
+                color: $green;
+                float: right;
+                cursor: pointer;
+
+                svg {
+                    path {
+                        fill: $green;
+                    }
+                }
+            }
+        }
+    }
+
+    .blogs-filter {
+        margin-top: 64px;
+        .blogs-filter-wrapper {
+            border-bottom: 2px solid $white-25;
+            padding-left: 0;
+        }
+        .filters {
+            @extend %flex-row;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 83px;
+
+            @include xs {
+                margin-top: 0;
+            }
+
+            h3 {
+                color: $white;
+
+                span {
+                    font-size: 1.25rem;
+                    font-family: "Avenir-Heavy";
+                    line-height: 2rem;
+                    color: $white-50;
+
+                    @include xs {
+                        font-size: 1rem;
+                        line-height: 1.5rem;
+                    }
+                }
+            }
+
+            button {
+                @include tab;
+            }
+        }
+
+        .filter-cards-wrapper {
+            padding-top: 64px;
+            grid-template-columns: auto auto auto;
+            grid-gap: 24px;
+            display: grid;
+
+            @include xs {
+                grid-template-columns: auto;
+                grid-gap: 16px;
+                justify-content: center;
+            }
+
+            .single.card-1 {
+                grid-row: auto !important;
+            }
+        }
+
+        .load-more {
+            margin-top: 64px;
+
+            @include xs {
+                margin-top: 40px;
+            }
+        }
+    }
+}
+
+//blogs search page
+.blogs-search {
+    .blogs-filter {
+        margin-top: 0 !important;
+        @include xs {
+            margin-top: 64px !important;
+        }
+        .filter-cards-wrapper {
+            padding-top: 0;
+        }
+    }
+}
+
+//blogs-details
+.blog-details {
+    .blog-head {
+        padding-top: 128px;
+
+        @include xs {
+            padding-top: 32px;
+        }
+    }
+
+    .blog-detail-wrapper {
+        .blog-wrapper-content {
+            background: $white;
+            border-radius: 6px;
+            @extend %flex-col;
+            justify-content: flex-start;
+            width: 100%;
+
+            .blog-wrap-top {
+                padding: 48px 40px 64px 40px;
+                @extend %flex-col;
+                justify-content: flex-start;
+                align-items: center;
+
+                @include xs {
+                    padding: 32px 0 32px 0;
+                }
+                h1 {
+                    text-align: center;
+                    color: $black;
+                }
+
+                span {
+                    color: $black-60;
+                    margin-top: 24px;
+                    text-align: center;
+                    margin-bottom: 24px;
+
+                    @include xs {
+                        margin-top: 16px;
+                        margin-bottom: 8px;
+                    }
+                }
+
+                img {
+                    margin-top: 40px;
+                    border-radius: 6px;
+                    width: 100%;
+                    height: auto;
+                    display: block;
+
+                    @include xs {
+                        margin-top: 24px;
+                        border-radius: 0;
+                    }
+                }
+
+                img + p {
+                    max-width: 688px;
+                    margin: 0 auto;
+                    margin-top: 40px;
+                    padding: 0 24px;
+
+                    @include xs {
+                        margin-top: 24px;
+                    }
+                }
+            }
+            .comment-section {
+                background: $black-10;
+                width: 100%;
+
+                .comment-section-wrapper {
+                    max-width: 688px;
+                    margin: 0 auto;
+                    padding: 30px 24px 42px 24px;
+
+                    @include xs {
+                        padding: 24px;
+                    }
+
+                    .options {
+                        @extend %flex-row;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        .like-dislike-wrap {
+                            @extend %flex-row;
+                            justify-content: flex-start;
+                            align-items: center;
+
+                            .like-dislike {
+                                margin-right: 40px;
+                                border: none;
+                                background: transparent;
+                                outline: none;
+                                @extend %flex-row;
+                                justify-content: flex-start;
+                                align-items: center;
+                                cursor: pointer;
+
+                                @include xs {
+                                    margin-right: 20px;
+                                }
+
+                                h6 {
+                                    color: $black-60;
+                                }
+
+                                svg {
+                                    margin-right: 8px;
+
+                                    @include xs {
+                                        width: 24px;
+                                        height: 24px;
+                                        margin-right: 4px;
+                                    }
+                                }
+                            }
+                        }
+
+                        .share-blog {
+                            @extend %flex-row;
+                            justify-content: flex-end;
+                            align-items: center;
+                            border: none;
+                            outline: none;
+                            background: transparent;
+                            cursor: pointer;
+
+                            svg {
+                                margin-right: 8px;
+
+                                @include xs {
+                                    margin-right: 4px;
+                                    width: 24px;
+                                    height: 24px;
+                                }
+                            }
+
+                            h6 {
+                                color: $black-60;
+                            }
+                        }
+                    }
+
+                    .comment-wrap {
+                        margin-top: 24px;
+
+                        @include xs {
+                            margin-top: 16px;
+                        }
+
+                        input {
+                            width: 100%;
+                            background: $white;
+                            border-radius: 6px;
+                            padding: 24px;
+                            font-size: 1.25rem;
+                            font-family: "Avenir-Heavy";
+                            line-height: 2rem;
+                            color: $black;
+                            outline: none;
+                            border: none;
+
+                            @include xs {
+                                font-size: 1rem;
+                                line-height: 1.5rem;
+                                padding: 16px 24px;
+                            }
+
+                            &::placeholder {
+                                color: $black-20;
+                            }
+                        }
+
+                        .added-comments {
+                            width: 100%;
+
+                            .user {
+                                margin-top: 24px;
+                                @extend %flex-row;
+                                justify-content: flex-start;
+                                align-items: flex-start;
+                                width: 100%;
+                                padding-bottom: 16px;
+
+                                @include xs {
+                                    margin-top: 16px;
+                                    padding-bottom: 12px;
+                                }
+
+                                &:not(:last-child) {
+                                    border-bottom: 1px solid $black-10;
+                                }
+
+                                .image {
+                                    max-width: 56px;
+                                    width: 100%;
+                                    height: 56px;
+                                    border-radius: 50%;
+                                    background: url('/assets/images/icons/user.png');
+                                    background-size: cover;
+                                    background-repeat: no-repeat;
+                                    margin-right: 8px;
+
+                                    @include xs {
+                                        max-width: 40px;
+                                        width: 100%;
+                                        height: 40px;
+                                    }
+                                }
+
+                                .comment {
+                                    @extend %flex-col;
+                                    justify-content: flex-start;
+                                    align-items: flex-start;
+                                    @extend %pos-relative;
+                                    width: 100%;
+
+                                    h5 {
+                                        color: $black;
+                                    }
+
+                                    h6 {
+                                        margin-top: 8px;
+                                        color: $black-60;
+
+                                        @include xs {
+                                            margin-top: 4px;
+                                        }
+                                    }
+
+                                    .like-dislike-click {
+                                        @extend %flex-row;
+                                        justify-content: flex-start;
+                                        align-items: center;
+                                        margin-top: 24px;
+
+                                        @include xs {
+                                            margin-top: 8px;
+                                        }
+
+                                        svg {
+                                            margin-right: 16px;
+                                            width: auto;
+
+                                            @include xs {
+                                                width: 16px;
+                                                height: 16px;
+                                            }
+                                        }
+                                    }
+
+                                    span {
+                                        color: $black-60;
+                                        @extend %pos-absolute;
+                                        right: 0;
+                                        top: 0;
+                                    }
+                                }
+
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .banks-holder {
+        margin-top: 128px !important;
+
+        @include xs {
+            margin-top: 64px !important;
+        }
+
+        h2 {
+            @include xs {
+                display: block !important;
+            }
+        }
+    }
+
+    .banks-holder h2 br {
+        @include xs {
+            display: none !important;
+
+        }
+    }
+
+    .blog h2 {
+        padding-top: 0;
+    }
+
+    .header {
+            background: $dark-gradient;
+    }
+}

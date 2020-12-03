@@ -1,0 +1,637 @@
+.dashboard {
+    .dash-head {
+        padding-top: 240px;
+        margin-top: 0;
+        z-index: 9999;
+        position: relative;
+
+        @include xs {
+            padding-top: 0px;
+        }
+
+        .container {
+            @extend %flex-col;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            position: relative;
+
+            h1 {
+                text-align: center;
+                color: $white;
+
+                strong {
+                    color: $green;
+
+                    @include xs {
+                        color: $white;
+                    }
+                }
+            }
+        }
+    }
+
+    .applications {
+        z-index: 99999;
+        position: relative;
+        .container {
+            .content {
+                padding: 44px 0 44px 0;
+                @extend %flex-row;
+                justify-content: space-between;
+                align-items: center;
+                background: url("/assets/images/credit-card-flow/short-form-bg.png");
+                background-color: $white;
+                background-size: 25% 50%;
+                background-position: left bottom;
+                background-repeat: no-repeat;
+                border-radius: 6px;
+
+                @include xs {
+                    flex-direction: column;
+                    background-size: 60%;
+                }
+                .inside-width {
+                    @extend %flex-row;
+                    justify-content: space-between !important;
+                    align-items: center !important;
+                    width: 100%;
+
+                    @include xs {
+                        flex-direction: column;
+                    }
+                    .filled {
+                        width: 50%;
+                        @extend %flex-col;
+                        justify-content: flex-start;
+
+                        @include xs {
+                            width: 100%;
+                        }
+
+                        h3 {
+                            color: $black;
+                            max-width: 314px;
+                            padding-bottom: 32px;
+
+                            @include xs {
+                                max-width: 100%;
+                                text-align: center;
+                            }
+                        }
+
+                        .notation {
+                            padding-top: 16px;
+                            border-top: 2px solid $black-10;
+                            @extend %flex-col;
+                            justify-content: space-between;
+
+                            .item {
+                                @extend %flex-row;
+                                align-items: center;
+                                justify-content: space-between;
+                                margin-top: 16px;
+                                max-width: 301px;
+                                @include xs {
+                                    max-width: 100%;
+                                }
+
+                                > div {
+                                    @extend %flex-row;
+                                    align-items: center;
+                                    .color1 {
+                                        width: 16px;
+                                        height: 16px;
+                                        border-radius: 2px;
+                                        background: $green;
+                                        margin-right: 12px;
+                                    }
+                                    .color2 {
+                                        width: 16px;
+                                        height: 16px;
+                                        border-radius: 2px;
+                                        background: $blue;
+                                        margin-right: 12px;
+                                    }
+                                    .color3 {
+                                        width: 16px;
+                                        height: 16px;
+                                        border-radius: 2px;
+                                        background: $red;
+                                        margin-right: 12px;
+                                    }
+
+                                    h5 {
+                                        color: $black-40;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .meter {
+                        width: 50%;
+                        @extend %flex-row;
+                        justify-content: flex-end;
+                        align-items: center;
+
+                        @include xs {
+                            width: 100%;
+                            justify-content: center;
+                            margin-top: 32px;
+                        }
+
+                        img {
+                            width: auto;
+                            height: auto;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .create-lead {
+        .content {
+            padding-top: 48px;
+            padding-bottom: 32px;
+            @extend %flex-col;
+            align-items: flex-start;
+            border-radius: 6px;
+            background: $blue-gradient;
+
+            @include xs {
+                padding-top: 16px;
+                padding-bottom: 24px;
+            }
+
+            .inside-width {
+                .zap {
+                    @extend %flex-row;
+                    align-items: center;
+
+                    img {
+                        margin-right: 8px;
+                    }
+
+                    h3 {
+                        color: $white;
+                    }
+                }
+
+                p {
+                    margin-top: 16px;
+                    color: $white-70;
+                }
+
+                button {
+                    margin-top: 32px;
+                    @include primary-cta;
+                }
+            }
+        }
+    }
+    .create {
+        margin-top: 128px !important;
+
+        @include xs {
+            margin-top: 64px !important;
+        }
+    }
+
+    .application-progress {
+        .app-prog-wrap {
+            @extend %flex-col;
+            justify-content: center;
+            align-items: center;
+            h2 {
+                color: $white;
+            }
+
+            .cards-wrap {
+                @extend %flex-row;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                margin-top: 32px;
+
+                .card {
+                    width: 49%;
+                    background: $white;
+                    border-radius: 6px;
+                    padding: 24px 16px 32px 16px;
+
+                    @include xs {
+                        padding: 16px 20px 16px 20px;
+                        width: 47%;
+                    }
+
+                    h1 {
+                        color: $green;
+                        max-width: 320px;
+                        margin: 0 auto;
+                    }
+
+                    h5 {
+                        color: $black-60;
+                        margin-top: 16px;
+                        max-width: 320px;
+                        margin: 0 auto;
+                    }
+                }
+            }
+        }
+    }
+
+    .earning {
+        .earnings {
+            @extend %flex-col;
+            justify-content: flex-start;
+            align-items: center;
+
+            h2 {
+                color: $white;
+            }
+
+            .cards-wrap {
+                background: $white;
+                margin-top: 32px;
+                width: 100%;
+                border-radius: 6px;
+                @extend %flex-col;
+
+                .card {
+                    padding-top: 40px;
+                    padding-bottom: 40px;
+                    width: 100%;
+
+                    @include xs {
+                        padding-top: 16px;
+                        padding-bottom: 16px;
+                    }
+
+                    h3 {
+                        color: $black;
+
+                        strong {
+                            color: $green;
+                            font-weight: 800;
+                        }
+                    }
+
+                    h6 {
+                        color: $black-60;
+                        margin-top: 16px;
+                        max-width: 570px;
+                    }
+                }
+            }
+
+            .blue-bottom {
+                background: $blue-gradient;
+                padding-top: 12px;
+                padding-bottom: 12px;
+                width: 100%;
+                border-bottom-left-radius: 6px;
+                border-bottom-right-radius: 6px;
+
+                h5 {
+                    color: $white;
+                }
+            }
+        }
+    }
+
+    .product-offer {
+        .product-wrapper {
+            @extend %flex-col;
+
+            .head {
+                @include xs {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                h2 {
+                    color: $white;
+                    text-align: center;
+                }
+
+                .filters {
+                    @extend %flex-row;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-top: 83px;
+
+                    @include xs {
+                        margin-top: 0;
+                    }
+
+                    h3 {
+                        color: $white;
+
+                        @include xs {
+                            display: none;
+                        }
+
+                        strong {
+                            color: $white-50;
+                        }
+                    }
+
+                    button {
+                        @include tab;
+                    }
+                }
+            }
+
+            .cards-wrapper {
+                margin-top: 32px;
+                display: grid;
+                grid-template-columns: auto auto;
+                grid-gap: 24px;
+
+                @include xs {
+                    grid-template-columns: auto;
+                    grid-gap: 16px;
+                    margin-top: 16px;
+                }
+            }
+
+            hr {
+                height: 1px;
+                background: $white-25;
+                width: 100%;
+                margin: 0;
+                border: none !important;
+
+                @include xs {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .product-offer,
+    .earning,
+    .application-progress,
+    .create-lead,
+    .applications {
+        margin-top: 128px !important;
+
+        @include xs {
+            margin-top: 64px !important;
+        }
+    }
+
+    .content-one {
+        .view-all {
+            margin-top: 24px;
+            border-bottom: 0.5px solid $gray;
+            padding-bottom: 16px;
+        }
+    }
+}
+
+//application progresss css
+
+.app-progress {
+    .product-offer {
+        margin-top: 100px !important;
+
+        @include xs {
+            margin-top: 64px !important;
+        }
+
+        .filters {
+            @include xs {
+                width: 100%;
+            }
+            h3 {
+                @include xs {
+                    display: block !important;
+                }
+            }
+        }
+
+        .popular-cards-slider-card {
+            .popular-cards-slider-card-top {
+                p {
+                    color: $black-60;
+                    margin-top: 8px;
+
+                    strong {
+                        color: $black;
+                    }
+                }
+                .app_progress_card_content {
+                    margin-top: 20px;
+                    @extend %flex-row;
+                    justify-content: space-between;
+
+                    .left {
+                        width: 45%;
+
+                        .value:last-child {
+                            margin-top: 24px;
+                        }
+
+                        span {
+                            color: $black-60;
+                        }
+                    }
+
+                    .right {
+                        width: 55%;
+                        @extend %flex-col;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+
+                        span {
+                            color: $black-60;
+                        }
+
+                        img {
+                            margin-top: 16px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .header {
+        background: inherit;
+    }
+
+    .dash-head {
+        @include xs {
+            padding-top: 32px;
+        }
+    }
+}
+
+//status of the application
+.app-status {
+    .dash-head {
+        .container {
+            @include xs {
+                align-items: initial;
+            }
+        }
+        h2 {
+            color: $white;
+            margin-top: 96px;
+            text-align: center;
+
+            @include xs {
+                margin-top: 64px;
+                text-align: left;
+            }
+        }
+    }
+
+    .product-offer {
+        @include xs {
+            margin-top: 32px !important;
+        }
+        .switch-tab {
+            @extend %flex-row;
+            justify-content: space-around;
+            align-items: center;
+            position: relative;
+
+            .line {
+                border-bottom: 2px solid $white-25;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+            }
+        }
+        .popular-cards-slider-card-top .head {
+            width: 100%;
+        }
+    }
+
+    .app_progress_card_content {
+        margin-top: 32px;
+        .left {
+            width: 100% !important;
+            @extend %flex-row;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+
+            span {
+                color: $black-60;
+            }
+
+            .value {
+                width: 50%;
+
+                &:nth-last-child(2) {
+                    margin-top: 24px;
+                }
+            }
+        }
+    }
+
+    #rejected {
+        display: none;
+
+        .rejected-red {
+            background: $red-gradient;
+        }
+
+        .app_progress_card_content {
+            margin-top: 0;
+        }
+    }
+}
+
+//best offers
+
+.best-offers {
+    .content-one {
+        .view-all {
+            margin-top: 24px;
+            padding-bottom: 0 !important;
+            border-bottom: none;
+
+            &:last-child {
+                padding-bottom: 16px;
+            }
+        }
+    }
+
+    .mm-modal .mm-modal-wrapper .content form .content-one {
+        border-bottom: 0.5px solid $gray !important;
+    }
+}
+
+.inside-width {
+    max-width: 812px;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin: 0 auto;
+}
+
+.tabcontent {
+    display: none;
+    border-top: none;
+
+    @include xs {
+        margin-top: 32px !important;
+    }
+}
+
+.tab {
+    overflow: hidden;
+    width: 100%;
+}
+
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px 24px 16px;
+    transition: 0.3s;
+    position: relative;
+
+    @include xs {
+        padding: 8px 8px 10px 8px;
+    }
+
+    > h2 {
+        color: $white-70 !important;
+
+        @include xs {
+            font-family: Avenir;
+            font-style: normal;
+            font-weight: 800;
+            font-size: 14px;
+            line-height: 24px;
+        }
+    }
+}
+
+.tab button.active > h2 {
+    color: $green !important;
+}
+
+.tab button.active > span {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 8px;
+    border-radius: 6px;
+    background: $green;
+    width: 100%;
+
+    @include xs {
+        height: 4px;
+    }
+}

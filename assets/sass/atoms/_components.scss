@@ -1,0 +1,1877 @@
+/*popular credits card slider*/
+.popular-card-container {
+    overflow: hidden;
+    @include xs {
+        padding: 0px 0px !important;
+    }
+}
+
+.popular-cards {
+    @extend %flex-col;
+    padding: 96px 0px;
+
+    @include xs {
+        padding: 0;
+    }
+
+    h2 {
+        color: $white;
+        text-align: center;
+        margin-bottom: 32px;
+
+        @include xs {
+            margin-bottom: 16px;
+            text-align: left;
+            padding-left: 24px;
+        }
+    }
+
+    &-slider {
+        @extend %flex-row;
+        align-items: center;
+
+        // @include sm{
+        //     padding-left: 24px;
+        // }
+        .popular-cards-slider-card {
+            background: $white;
+            border-radius: 6px;
+            @extend %flex-col;
+            overflow: hidden;
+
+            @include xs {
+                width: 327px !important;
+            }
+
+            &-top {
+                padding: 32px;
+                @extend %flex-col;
+
+                @include xs {
+                    padding: 16px;
+                }
+
+                .head {
+                    @extend %flex-row;
+                    justify-content: space-between;
+                    width: 100%;
+
+                    @include xs {
+                        width: 300px;
+                    }
+
+                    h3 {
+                        color: $black;
+
+                        b {
+                            // font-weight: 800;
+                            color: $green;
+                        }
+                    }
+
+                    img {
+                        width: 64px;
+                        height: 32px;
+
+                        @include xs {
+                            width: 48px;
+                            height: 24px;
+                        }
+                    }
+                }
+
+                .content {
+                    margin-top: 16px;
+                    ul {
+                        width: 100%;
+                        // padding-left: 16px;
+                        li {
+                            font-size: 0.875rem;
+                            font-family: "Avenir-Roman";
+                            // font-weight: normal;
+                            line-height: 1.5rem;
+                            color: $black-60;
+                            list-style-position: inside;
+                            white-space: nowrap;
+                            width: 360px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+
+                            @include xs {
+                                font-size: 0.75rem;
+                                line-height: 1.25rem;
+                                width: 295px;
+                            }
+
+                            &:not(:first-child) {
+                                margin-top: 8px;
+                                @include xs {
+                                    margin-top: 4px;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .fee {
+                    margin-top: 24px;
+                    @include xs {
+                        margin-top: 16px;
+                    }
+                    h5 {
+                        color: $black-60;
+
+                        b {
+                            color: $black;
+                        }
+                    }
+                }
+            }
+
+            &-bottom {
+                padding: 12px 32px;
+                background: $blue-gradient;
+
+                @include xs {
+                    padding: 6px 16px;
+                }
+                h5 {
+                    color: $white;
+                }
+            }
+        }
+        .slick-slide {
+            transform: scale(0.81, 0.81);
+            transition: transform 0.3s;
+            opacity: 0.2;
+            margin: 0 -30px;
+
+            @include xs {
+                transform: none;
+                opacity: 1;
+                margin: 0;
+                /*width: 327px !important;*/
+            }
+
+            @include sm {
+                transform: none;
+                opacity: 1;
+                margin: 0;
+                /*width: 327px !important;*/
+            }
+
+            &:not(:last-child) {
+                @include xs {
+                    margin-right: 12px;
+                }
+                @include sm {
+                    margin-right: 12px;
+                }
+            }
+
+            &.slick-center {
+                z-index: 9;
+                transform: scale(1);
+                position: relative;
+                opacity: 1;
+            }
+        }
+
+        .slick-track {
+            @extend %flex-row;
+            align-items: center;
+            @include xs {
+                overflow-x: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        .slick-list {
+            @include xs {
+                padding-left: 24px;
+            }
+        }
+
+        .slick-arrow {
+            position: absolute;
+            top: 45%;
+            font-size: 0;
+            background: transparent;
+            border: none;
+            &.slick-prev {
+                left: 18%;
+
+                @include mid {
+                    left: 11%;
+                }
+                &:after {
+                    position: absolute;
+                    content: "";
+                    background: url(/assets/images/icons/right-chevron.svg);
+                    height: 48px;
+                    width: 48px;
+                    transform: rotate(180deg);
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    z-index: 99;
+                    background-size: cover;
+                }
+            }
+            &.slick-next {
+                right: 23%;
+                @include mid {
+                    right: 16%;
+                }
+                &:after {
+                    position: absolute;
+                    content: "";
+                    background: url(/assets/images/icons/right-chevron.svg);
+                    height: 48px;
+                    width: 48px;
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    z-index: 99;
+                }
+            }
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+/*cards-basic*/
+.popular-cards-slider-card {
+    background: $white;
+    border-radius: 6px;
+    @extend %flex-col;
+    overflow: hidden;
+    max-width: 552px;
+    &-top {
+        padding: 32px;
+        @extend %flex-col;
+
+        @include xs {
+            padding: 16px;
+        }
+
+        .head {
+            @extend %flex-row;
+            justify-content: space-between;
+            width: 100%;
+
+            @include xs {
+                width: 300px;
+            }
+
+            h3 {
+                color: $black;
+
+                b {
+                    // font-weight: 800;
+                    color: $green;
+                }
+            }
+
+            img {
+                width: 64px;
+                height: 32px;
+
+                @include xs {
+                    width: 48px;
+                    height: 24px;
+                }
+            }
+        }
+
+        .content {
+            margin-top: 16px;
+            ul {
+                // padding-left: 16px;
+                li {
+                    font-size: 0.875rem;
+                    font-family: "Avenir-Roman";
+                    // font-weight: normal;
+                    line-height: 1.5rem;
+                    color: $black-60;
+                    list-style-position: inside;
+
+                    @include xs {
+                        font-size: 0.75rem;
+                        line-height: 1.25rem;
+                    }
+
+                    &:not(:first-child) {
+                        margin-top: 8px;
+
+                        @include xs {
+                            margin-top: 4px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .fee {
+            margin-top: 24px;
+
+            @include xs {
+                margin-top: 16px;
+            }
+            h5 {
+                color: $black-60;
+
+                b {
+                    color: $black;
+                }
+            }
+        }
+    }
+
+    &-bottom {
+        padding: 12px 32px;
+        background: $blue-gradient;
+
+        @include xs {
+            padding: 6px 16px;
+        }
+        h5 {
+            color: $white;
+        }
+    }
+}
+
+//popular cards from big to small according to device
+.long-cards-wrapper-card {
+    background: $white;
+    border-radius: 6px;
+    margin-top: 32px;
+    @extend %pos-relative;
+
+    @include xs {
+        margin-top: 12px;
+    }
+
+    &:first-child {
+        @include xs {
+            margin-top: 24px;
+        }
+    }
+
+    .recommended {
+        @extend %pos-absolute;
+        top: 9px;
+        left: 32px;
+        width: 80px;
+        z-index: 1;
+
+        @include xs {
+            display: none;
+        }
+    }
+
+    .top {
+        padding: 32px;
+        @extend %flex-row;
+        justify-content: space-between;
+        z-index: 11;
+        @extend %pos-relative;
+
+        @include xs {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .name {
+            max-width: 200px;
+            @extend %flex-col;
+
+            @include xs {
+                max-width: 100%;
+                display: flex;
+                flex-direction: row-reverse;
+                justify-content: space-between;
+            }
+            h3 {
+                color: $black;
+                margin-top: 8px;
+
+                @include xs {
+                    margin-top: 0;
+                }
+
+                span {
+                    color: $green;
+                    font-size: 1.25rem;
+                    font-family: "Avenir-Heavy";
+                    line-height: 2rem;
+
+                    @include xs {
+                        font-size: 1rem;
+                        line-height: 1.5rem;
+                    }
+                }
+            }
+
+            > div {
+                max-width: 153px;
+
+                @include xs {
+                    display: none;
+                }
+
+                img {
+                    width: 100%;
+                    height: auto;
+                    margin-top: 32px;
+                }
+            }
+
+            .mob-logo {
+                // display: none;
+                max-width: 40px;
+                margin-left: -4px;
+
+                @include xs {
+                    display: block;
+                    max-width: 48px;
+                    width: 100%;
+                    height: 24px;
+                    margin-left: 0;
+                }
+            }
+        }
+
+        .content {
+            max-width: 360px;
+
+            @include xs {
+                margin-top: 16px;
+            }
+
+            ul {
+                @include xs {
+                    padding-left: 16px;
+                }
+                li {
+                    font-size: 0.875rem;
+                    font-family: "Avenir-Roman";
+                    line-height: 1.5rem;
+                    color: $black-60;
+                    list-style-position: outside;
+
+                    @include xs {
+                        font-size: 0.75rem;
+                        line-height: 1.25rem;
+                    }
+
+                    &:not(:first-child) {
+                        margin-top: 8px;
+
+                        @include xs {
+                            margin-top: 4px;
+                        }
+                    }
+
+                    @include xs {
+                        &:nth-last-of-type(-n + 2) {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        .fee {
+            @include xs {
+                margin-top: 16px;
+            }
+            h5 {
+                margin-bottom: 8px;
+
+                @include xs {
+                    display: none;
+                }
+            }
+
+            p {
+                color: $black-60;
+
+                b {
+                    color: $black;
+                    font-weight: 800px;
+                }
+
+                @include xs {
+                    &:last-child {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .bottom {
+        @extend %flex-row;
+        justify-content: space-between;
+        height: 56px;
+
+        @include xs {
+            height: auto;
+        }
+
+        .lifetime {
+            max-width: 672px;
+            padding: 20px 0px 12px 32px;
+            border-bottom-left-radius: 6px;
+            width: 100%;
+            background: url(/assets/images/listings/blue-gradient.svg);
+            background-repeat: no-repeat;
+            background-position: left bottom;
+
+            @include sm {
+                background-size: 100% 84%;
+            }
+
+            @include xs {
+                background: $blue-gradient;
+                max-width: 100%;
+                padding: 6px 16px;
+            }
+            h5 {
+                color: $white;
+            }
+        }
+
+        .options {
+            padding-right: 32px;
+            @extend %flex-row;
+            justify-content: flex-end;
+            align-items: flex-start;
+
+            @include sm {
+                width: -webkit-fill-available;
+            }
+
+            @include xs {
+                display: none;
+            }
+            button {
+                @include primary-cta;
+            }
+            #view-details {
+                background: $white;
+                color: $green;
+                font-family: "Avenir-Heavy";
+                margin-right: 8px;
+            }
+        }
+    }
+}
+
+//head banner of page
+.banner {
+    width: 100%;
+    @extend %pos-relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding-top: 110px !important;
+
+    @include xs {
+        padding-top: 0 !important;
+    }
+
+    @include md {
+        padding-top: 64px !important;
+    }
+}
+
+//View and improve your credit score - for free.
+.score {
+    @extend %flex-row;
+    justify-content: space-between;
+    padding: 40px 96px 40px 192px;
+    border-radius: 6px;
+    background: url("/assets/images/credit-card-flow/bg-2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    @extend %pos-relative;
+    margin-bottom: 96px;
+
+    @include xs {
+        display: flex;
+        background: $white;
+        flex-direction: column;
+        padding: 24px 16px 64px 16px;
+        align-items: center;
+        margin-bottom: 64px;
+    }
+
+    @include md {
+        padding: 46px 46px 46px 46px;
+        background: $white;
+    }
+
+    &-content {
+        max-width: 360px;
+        @include xs {
+            max-width: 242px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            color: $black;
+            margin-bottom: 32px;
+
+            @include xs {
+                text-align: center;
+            }
+
+            b {
+                color: $green;
+            }
+        }
+
+        button {
+            @include primary-cta;
+            margin-top: 32px;
+
+            @include xs {
+                position: absolute;
+                bottom: 46px;
+            }
+        }
+
+        &-features {
+            margin-top: 8px;
+            @extend %flex-row;
+
+            @include xs {
+                width: 100%;
+            }
+
+            svg {
+                margin-right: 16px;
+
+                @include xs {
+                    margin-right: 6px;
+                }
+                path {
+                    fill: $green;
+                }
+            }
+
+            p {
+                color: $black-60;
+            }
+        }
+    }
+
+    &-chart {
+        @extend %pos-absolute;
+        right: 80px;
+        bottom: -123px;
+
+        @include xs {
+            position: relative;
+            right: initial;
+            bottom: initial;
+            margin-top: 32px;
+            margin-bottom: 32px;
+        }
+
+        img {
+            @include xs {
+                max-width: 240px;
+            }
+
+            @include md {
+                margin-bottom: 20px;
+            }
+        }
+    }
+}
+
+//offers banks slider
+.banks {
+    @extend %flex-row;
+    justify-content: space-between;
+    @extend %pos-relative;
+    z-index: 9;
+    padding-top: 64px;
+    padding-bottom: 64px;
+
+    @include xs {
+        flex-direction: column;
+        padding-right: 0;
+        padding-left: 0;
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+    @include md {
+        flex-direction: column;
+    }
+
+    h2 {
+        width: 264px;
+        color: $white;
+        margin-right: 16px;
+
+        @include xs {
+            width: 100%;
+            margin-right: 0;
+            padding-left: 24px;
+        }
+        @include md {
+            width: 100%;
+            margin-right: 0;
+        }
+
+        b {
+            color: $green;
+        }
+    }
+
+    &-slider {
+        max-width: 744px;
+        @extend %flex-row;
+
+        @include xs {
+            margin-top: 16px;
+        }
+        @include md {
+            margin-top: 16px;
+            max-width: 100%;
+        }
+
+        img {
+            width: 168px;
+            margin: 0 auto;
+            @include xs {
+                width: 112px;
+                margin: unset;
+            }
+
+            @include sm {
+                width: 120px;
+            }
+            &:not(:last-child) {
+                margin-right: 24px;
+            }
+
+            @include md {
+                margin: unset;
+            }
+        }
+        .slick-slide {
+            @include xs {
+                margin-right: 12px;
+            }
+        }
+
+        .slick-list {
+            @include xs {
+                padding-left: 24px;
+            }
+        }
+        .slick-arrow {
+            position: absolute;
+            font-size: 0;
+            background: transparent;
+            border: none;
+            top: 25%;
+            &.slick-disabled {
+                display: none !important;
+            }
+            &.slick-prev {
+                left: -6%;
+                &:after {
+                    position: absolute;
+                    content: "";
+                    background: url(/assets/images/icons/right-chevron.svg);
+                    height: 48px;
+                    width: 48px;
+                    transform: rotate(180deg);
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    z-index: 99;
+                    background-size: cover;
+                }
+                @include md {
+                    display: none !important;
+                }
+            }
+            &.slick-next {
+                right: 0;
+                &:after {
+                    position: absolute;
+                    content: "";
+                    background: url(/assets/images/icons/right-chevron.svg);
+                    height: 48px;
+                    width: 48px;
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    z-index: 99;
+                }
+
+                @include md {
+                    display: none !important;
+                }
+            }
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+//blue patch on banks slider
+.banks-holder {
+    @extend %pos-relative;
+    .blue-patch {
+        background: $blue-2-gradient;
+        height: 100%;
+        width: 47%;
+        @extend %pos-absolute;
+        z-index: 8;
+
+        @include xs {
+            display: none;
+        }
+    }
+}
+
+//best reward credit card
+.reward {
+    @extend %flex-row;
+    padding: 48px 16px;
+    background: $green-gradient;
+    border-radius: 6px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 128px;
+
+    @include xs {
+        flex-direction: column;
+        padding: 16px 16px 32px 16px;
+        margin-top: 0;
+    }
+
+    &-content {
+        max-width: 552px;
+        width: 100%;
+
+        @include xs {
+            max-width: 100%;
+        }
+
+        h3 {
+            color: $white;
+        }
+
+        p {
+            color: $white-70;
+            margin-top: 16px;
+
+            @include xs {
+                margin-top: 8px;
+            }
+        }
+    }
+
+    &-button {
+        @extend %flex-row;
+        justify-content: flex-start;
+        align-items: center;
+
+        @include xs {
+            justify-content: flex-start;
+            align-items: flex-start;
+            width: 100%;
+            margin-top: 32px;
+        }
+        button {
+            @include primary-cta;
+            background: $white;
+            color: $green;
+            margin-left: 66px;
+
+            @include xs {
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+//financial tools
+.financial {
+    margin-top: 128px;
+
+    @include xs {
+        margin-top: 64px;
+    }
+
+    h2 {
+        color: $white;
+        text-align: center;
+        @include xs {
+            text-align: left;
+        }
+    }
+    &-wrapper {
+        @extend %flex-row;
+        justify-content: space-between;
+        margin-top: 32px;
+
+        @include xs {
+            flex-direction: column;
+            margin-top: 16px;
+        }
+
+        &-card {
+            background: url("/assets/images/credit-card-flow/short-form-bg.png");
+            background-position: left bottom;
+            background-repeat: no-repeat;
+            background-size: auto 70%;
+            background-color: $white;
+            border-radius: 6px;
+            @extend %flex-col;
+            width: 49%;
+            max-width: 552px;
+            padding: 48px;
+            align-items: flex-start;
+
+            @include xs {
+                padding: 24px;
+                width: 100%;
+                max-width: 100%;
+                padding-left: 44px;
+            }
+
+            &-content {
+                max-width: 320px;
+                margin-left: 40px;
+
+                @include xs {
+                    width: 100%;
+                    margin-left: 0px;
+                }
+                h3 {
+                    color: $black;
+                }
+
+                h5 {
+                    color: $black-60;
+                    margin-top: 8px;
+                }
+            }
+
+            &:last-child {
+                @include xs {
+                    margin-top: 16px;
+                }
+            }
+
+            &:hover {
+                box-shadow: 9px 13px 24px 0px rgba(255, 255, 255, 0.25);
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+//blogs section
+.blog-container {
+    @include xs {
+        padding: 0;
+    }
+}
+
+.blog {
+
+    @include xs {
+        padding-bottom: 0;
+    }
+
+    h2 {
+        color: $white;
+        padding-top: 64px;
+        text-align: center;
+
+        @include xs {
+            text-align: left;
+            padding-left: 24px;
+            padding-top: 0;
+        }
+    }
+
+    &-wrapper {
+        margin-top: 32px;
+        @extend %display-grid;
+        grid-template-columns: 456px 648px;
+        column-gap: 24px;
+
+        @include xs {
+            flex-direction: row;
+            overflow-x: scroll;
+            width: 100%;
+            grid-template-columns: auto;
+            margin-top: 16px;
+        }
+
+        @include md {
+            flex-direction: row;
+            overflow-x: scroll;
+            width: 100%;
+            grid-template-columns: auto;
+            margin-top: 16px;
+        }
+
+        // @include sm{
+        //     padding-left: 24px;
+        // }
+
+        .card-1 {
+            grid-row: 1 / span 2;
+            max-width: 456px;
+            border-radius: 6px;
+            overflow: hidden;
+            @extend %flex-col;
+
+            @include xs {
+                max-width: 376px;
+            }
+
+            @include md {
+                max-width: 327px;
+            }
+            @include mini {
+                max-width: 327px;
+            }
+            .image_1 {
+                height: 240px;
+                background: url("/assets/images/credit-card-flow/blog-image-1.png");
+                background-size: cover;
+                background-repeat: no-repeat;
+
+                @include xs {
+                    height: 160px;
+                    max-width: 100%;
+                }
+
+                @include md {
+                    height: 160px;
+                    max-width: 100%;
+                }
+            }
+
+            .content {
+                padding: 40px 32px 16px 32px;
+                background: $white;
+                @extend %flex-col;
+
+                @include xs {
+                    padding: 24px 24px 16px 24px;
+                }
+
+                @include md {
+                    padding: 24px 24px 16px 24px;
+                }
+
+                h3 {
+                    color: $black;
+                }
+
+                h6 {
+                    color: $black-60;
+                    margin-top: 8px;
+                }
+
+                .details {
+                    @extend %flex-row;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding-top: 24px;
+
+                    @include xs {
+                        flex-direction: row-reverse;
+                        align-items: center;
+                    }
+
+                    @include md {
+                        flex-direction: row-reverse;
+                        align-items: center;
+                    }
+
+                    span {
+                        color: $black-60;
+                    }
+
+                    button {
+                        @include tertiary-cta;
+                        color: $green;
+                        margin-right: -16px;
+
+                        @include xs {
+                            padding-left: 0;
+                            margin-right: 0px;
+                        }
+
+                        @include md {
+                            padding-left: 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        .card-2,
+        .card-3 {
+            max-width: 648px;
+            width: 100%;
+            border-radius: 6px;
+            overflow: hidden;
+            @extend %flex-row;
+
+            @include xs {
+                display: flex;
+                flex-direction: column;
+                margin-left: 0;
+                max-width: 376px;
+            }
+
+            @include md {
+                display: flex;
+                flex-direction: column;
+                margin-left: 0;
+                max-width: 327px;
+            }
+
+            @include mini {
+                max-width: 327px;
+            }
+
+            .image_2 {
+                max-width: 232px;
+                width: 100%;
+                background: url("/assets/images/credit-card-flow/blog-image-2.png");
+                background-size: cover;
+                background-repeat: no-repeat;
+
+                @include xs {
+                    height: 160px;
+                    max-width: 100%;
+                }
+
+                @include md {
+                    height: 160px;
+                    max-width: 100%;
+                }
+            }
+            .image_3 {
+                max-width: 232px;
+                width: 100%;
+                background: url("/assets/images/credit-card-flow/blog-image-3.png");
+                background-size: cover;
+                background-repeat: no-repeat;
+
+                @include xs {
+                    height: 160px;
+                    max-width: 100%;
+                }
+                @include md {
+                    height: 160px;
+                    max-width: 100%;
+                }
+            }
+
+            .content {
+                padding: 32px 32px 16px 32px;
+                background: $white;
+                @extend %flex-col;
+
+                @include xs {
+                    padding: 24px 24px 16px 24px;
+                }
+                @include md {
+                    padding: 24px 24px 16px 24px;
+                }
+
+                h3 {
+                    color: $black;
+                }
+
+                h6 {
+                    color: $black-60;
+                    margin-top: 8px;
+                }
+
+                .details {
+                    @extend %flex-row;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding-top: 24px;
+
+                    @include xs {
+                        flex-direction: row-reverse;
+                        align-items: center;
+                    }
+                    @include md {
+                        flex-direction: row-reverse;
+                        align-items: center;
+                    }
+
+                    span {
+                        color: $black-60;
+                    }
+
+                    button {
+                        @include tertiary-cta;
+                        color: $green;
+                        margin-right: -16px;
+
+                        @include xs {
+                            padding-left: 0;
+                            margin-right: 0px;
+                        }
+                        @include md {
+                            padding-left: 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        .card-2 {
+            margin-bottom: 16px;
+
+            @include xs {
+                margin-bottom: 0;
+            }
+            @include md {
+                margin-bottom: 0;
+            }
+        }
+
+        .slick-slide {
+            margin-left: 12px;
+        }
+
+        .slick-list {
+            @include xs {
+                padding-left: 24px;
+            }
+        }
+
+        .slick-track {
+            @include xs {
+                overflow-x: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    }
+}
+
+//learn more section
+.learn-more {
+    margin-top: 128px;
+
+    @include xs {
+        margin-top: 64px;
+    }
+    h2 {
+        color: $white;
+        text-align: center;
+        margin-bottom: 32px;
+
+        @include xs {
+            text-align: left;
+            width: 220px;
+            margin-bottom: 16px;
+        }
+    }
+
+    &-wrapper {
+        @extend %flex-col;
+        padding-bottom: 0;
+
+        @include xs {
+            padding-bottom: 0;
+        }
+
+        &-content {
+            @extend %flex-col;
+            width: 100%;
+            border-radius: 6px;
+            cursor: pointer;
+
+            &:not(:first-child) {
+                margin-top: 16px;
+
+                @include xs {
+                    margin-top: 12px;
+                }
+            }
+
+            .question {
+                @extend %flex-row;
+                justify-content: space-between;
+                align-items: center;
+                background: $white-10;
+                border-radius: 6px;
+                &:hover {
+                    background: $white-25;
+                    cursor: pointer;
+                }
+                h3 {
+                    color: $white;
+                    padding: 20px 20px 20px 32px;
+
+                    @include xs {
+                        padding: 12px 16px;
+                    }
+                }
+
+                svg {
+                    margin: 20px 20px 20px 20px;
+                    transition: transform 0.5s ease-in-out;
+
+                    @include xs {
+                        margin: 12px 12px 12px 12px;
+                    }
+                    path {
+                        opacity: 0.5;
+                        transition: transform 0.5s ease-in-out;
+                    }
+                }
+            }
+
+            .answer {
+                padding-top: 16px;
+                padding-bottom: 64px;
+                background: $white-10;
+                border-radius: 6px;
+                border-top-left-radius: 0px;
+                border-top-right-radius: 0px;
+                display: none;
+
+                @include xs {
+                    padding-bottom: 24px;
+                }
+
+                h3,
+                p,
+                ul,
+                ol {
+                    max-width: 776px;
+                    margin: 0 auto;
+                    padding: 0 16px;
+                }
+
+                h3 {
+                    color: $white;
+                    margin-top: 48px;
+
+                    @include xs {
+                        margin-top: 32px;
+                    }
+                }
+
+                p,
+                ul,
+                li,
+                ol {
+                    color: $white-70;
+                    font-family: "Avenir-Roman";
+                    margin-top: 16px;
+                    line-height: 28px;
+
+                    @include xs {
+                        font-size: 14px;
+                        line-height: 24px;
+                    }
+                }
+
+                ol,
+                ul {
+                    padding-left: 33px;
+                }
+            }
+        }
+        .question-active {
+            transform: rotate(180deg);
+            transition: transform 0.5s ease-in-out;
+
+            path {
+                opacity: 1 !important;
+                transition: transform 0.5s ease-in-out;
+            }
+        }
+
+        .question-open {
+            background: $white-25;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+    }
+}
+
+//green background on mobile
+.mobile-background {
+    display: none;
+    @include xs {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 332px;
+        border-radius: 0px 0px 24px 24px;
+        background: $green-gradient;
+    }
+}
+
+//type file input
+.file-type {
+    @extend %pos-relative;
+    background: url(/assets/images/credit-card-flow/dash.svg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none !important;
+    .upload-real {
+        opacity: 0;
+        z-index: 99;
+        @extend %pos-relative;
+    }
+
+    .upload-show {
+        @extend %pos-absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9;
+        padding-left: 52px;
+        padding-right: 52px;
+        padding-bottom: 26px;
+        overflow-x: auto;
+    }
+
+    .file-upload-icon,
+    .file-upload-attach,
+    .file-upload-cross,
+    h5 {
+        @extend %pos-absolute;
+    }
+
+    .file-upload-icon {
+        top: 20px;
+        left: 20px;
+
+        path {
+            fill: $green;
+        }
+    }
+
+    .file-upload-attach {
+        top: 20px;
+        left: 20px;
+        display: none;
+
+        path {
+            fill: $green;
+        }
+    }
+
+    .file-upload-cross {
+        top: 20px;
+        right: 20px;
+        display: none;
+        z-index: 99999;
+
+        path {
+            fill: $black-40;
+        }
+    }
+    .file-upload-hidden {
+        display: none;
+    }
+    .file-upload-visible {
+        display: block;
+    }
+
+    h5 {
+        top: 20px;
+        left: 52px;
+        color: $green !important;
+        b {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 28px;
+            color: $black-40;
+        }
+    }
+}
+
+.file-type-back {
+    background: none !important;
+}
+
+//two inputs in a single row used in long form
+.row-input-container {
+    @extend %flex-row;
+    justify-content: space-between;
+
+    @include xs {
+        flex-direction: column;
+    }
+
+    .shortforms-container {
+        grid-template-columns: repeat(1, 1fr) !important;
+    }
+
+    .long-forms-wrapper {
+        width: 48% !important;
+
+        @include xs {
+            width: 100% !important;
+        }
+    }
+
+    .long-city {
+        width: 60% !important;
+        @include xs {
+            width: 100% !important;
+        }
+    }
+
+    .long-pincode {
+        width: 38% !important;
+        @include xs {
+            width: 100% !important;
+            margin-top: 8px;
+        }
+    }
+}
+
+//filter modal of listings
+.mm-modal {
+    display: none;
+    width: 100%;
+    @extend %pos-fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99999999;
+    margin-top: 0 !important;
+    padding-top: 64px;
+    padding-bottom: 64px;
+    height: 100%;
+    overflow-y: auto;
+
+    .overlay {
+        background: $black;
+        opacity: 0.5;
+        width: 100%;
+        @extend %pos-fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+    }
+
+    .mm-modal-wrapper {
+        max-width: 1128px;
+        @extend %pos-relative;
+        width: 100%;
+        margin: 0 auto;
+        background: $white;
+        box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.08), 0px 16px 64px rgba(0, 0, 0, 0.08);
+        border-radius: 6px;
+        z-index: 1000000000;
+        padding: 40px;
+        @extend %flex-col;
+        justify-content: flex-start;
+
+        @include xs {
+            padding: 24px;
+        }
+
+        .head {
+            @extend %flex-row;
+            justify-content: space-between;
+            align-items: center;
+
+            svg {
+                cursor: pointer;
+                path {
+                    fill: $blue;
+                }
+            }
+        }
+
+        .content {
+            max-width: 744px;
+            width: 100%;
+            margin: 0 auto;
+
+            form {
+                .apply-filter {
+                    margin-top: 64px;
+                    @extend %flex-row;
+                    justify-content: flex-end;
+
+                    @include xs {
+                        margin-top: 40px;
+                        justify-content: center;
+                    }
+
+                    button {
+                        @include primary-cta;
+                    }
+                }
+
+                .content-one {
+                    @extend %flex-col;
+                    padding-bottom: 16px;
+                    border-bottom: 0.5px solid $gray;
+                    margin-top: 40px;
+
+                    &:first-of-type {
+                        margin-top: 32px;
+                    }
+
+                    .shortforms-container {
+                        @include stepper-checkbox;
+                        margin-top: 16px;
+                    }
+                    .fields-wrapper {
+                        margin-top: 16px;
+                        display: grid;
+                        grid-template-columns: 50% 50%;
+                        grid-gap: 16px;
+
+                        @include xs {
+                            display: block;
+                            margin-top: 0;
+                        }
+
+                        .checkbox-container {
+                            @include xs {
+                                margin-top: 16px;
+                            }
+                            .checkbox {
+                                label {
+                                    min-height: auto;
+
+                                    span {
+                                        font-size: 1rem;
+                                        font-family: "Avenir-Heavy";
+                                        // font-weight: 800;
+                                        line-height: 1.5rem;
+                                        color: $black-60;
+
+                                        @include xs {
+                                            font-size: 0.875rem;
+                                            line-height: 1.5rem;
+                                        }
+                                    }
+
+                                    &::before {
+                                        width: 16px;
+                                        height: 16px;
+                                    }
+
+                                    &::after {
+                                        top: 5px;
+                                        left: 4px;
+                                    }
+                                }
+                            }
+
+                            .checkbox input[type="checkbox"]:checked ~ label:after {
+                                transform: rotate(-45deg) scale(0.8);
+                            }
+                            .checkbox input[type="checkbox"]:checked ~ label span {
+                                color: $black;
+                            }
+                        }
+                    }
+                    .view-all {
+                        grid-column: 2 / 3;
+
+                        @include xs {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            margin-top: 16px;
+                        }
+
+
+                        button {
+                            @include tab;
+                            background: $white;
+                            color: $green;
+                            float: right;
+                            cursor: pointer;
+
+                            svg {
+                                path {
+                                    fill: $green;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .content-one:nth-last-of-type(2) {
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+}
+
+//calender icon
+.gj-icon {
+    top: 18px !important;
+}
+
+//blogs card
+.single.card-1 {
+    grid-row: 1 / span 2;
+    max-width: 456px;
+    border-radius: 6px;
+    overflow: hidden;
+    @extend %flex-col;
+
+    @include xs {
+        max-width: 376px;
+    }
+
+    @include md {
+        max-width: 327px;
+    }
+    @include mini {
+        max-width: 327px;
+    }
+    .image_1 {
+        height: 240px;
+        background: url("/assets/images/credit-card-flow/blog-image-1.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        @include xs {
+            height: 160px;
+            max-width: 100%;
+        }
+
+        @include md {
+            height: 160px;
+            max-width: 100%;
+        }
+    }
+
+    .content {
+        padding: 40px 32px 16px 32px;
+        background: $white;
+        @extend %flex-col;
+
+        @include xs {
+            padding: 24px 24px 16px 24px;
+        }
+
+        @include md {
+            padding: 24px 24px 16px 24px;
+        }
+
+        h3 {
+            color: $black;
+        }
+
+        h6 {
+            color: $black-60;
+            margin-top: 8px;
+        }
+
+        .details {
+            @extend %flex-row;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 24px;
+
+            @include xs {
+                flex-direction: row-reverse;
+                align-items: center;
+            }
+
+            @include md {
+                flex-direction: row-reverse;
+                align-items: center;
+            }
+
+            span {
+                color: $black-60;
+            }
+
+            button {
+                @include tertiary-cta;
+                color: $green;
+                margin-right: -16px;
+
+                @include xs {
+                    padding-left: 0;
+                    margin-right: 0px;
+                }
+
+                @include md {
+                    padding-left: 0;
+                }
+            }
+        }
+    }
+}
+
+//fixed-social-icons
+#blog-socials {
+    @extend %pos-fixed;
+    right: 0;
+    top: 50%;
+    @extend %flex-col;
+    justify-content: flex-start;
+    padding: 12px 40px 12px 12px;
+
+    @include xs {
+        background: $white;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+        border-bottom-left-radius: 6px;
+        border-top-left-radius: 6px;
+        padding: 12px 8px;
+    }
+
+    a {
+        display: block;
+        &:not(:first-child) {
+            margin-top: 12px;
+        }
+
+        svg {
+        
+
+            path {
+                fill: $white;
+    
+                @include xs {
+                    fill: $black-60;
+                }
+            }
+        }
+    }
+    
+    
+}

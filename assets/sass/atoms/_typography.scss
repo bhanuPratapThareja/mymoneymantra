@@ -1,0 +1,105 @@
+//FS: (FontSize)
+
+//FS-40px
+h1 {
+    font-size: 2.5rem;
+    font-family: "Avenir-Black";
+    // font-weight: 900;
+    line-height: 3rem;
+
+    @include xs {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    }
+}
+
+//FS-28px
+h2 {
+    font-size: 1.75rem;
+    font-family: "Avenir-Heavy";
+    // font-weight: 800;
+    line-height: 2.5rem;
+
+    @include xs {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    }
+}
+
+//FS-20px
+h3 {
+    font-size: 1.25rem;
+    font-family: "Avenir-Heavy";
+    // font-weight: 800;
+    line-height: 2rem;
+
+    @include xs {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+}
+
+//FS-16px-BLACK
+h4 {
+    font-size: 1rem;
+    font-family: "Avenir-Black";
+    // font-weight: 900;
+    line-height: 1.5rem;
+
+    @include xs {
+        font-size: 0.875rem;
+        line-height: 1.5rem;
+    }
+}
+
+//FS-16px-HEAVY
+h5 {
+    font-size: 1rem;
+    font-family: "Avenir-Heavy";
+    // font-weight: 800;
+    line-height: 1.5rem;
+
+    @include xs {
+        font-size: 0.875rem;
+        line-height: 1.5rem;
+    }
+}
+
+//FS-16px-ROMAN
+p {
+    font-size: 1rem;
+    font-family: "Avenir-Roman";
+    // font-weight: normal;
+    line-height: 1.75rem;
+
+    @include xs {
+        font-size: 0.875rem;
+        line-height: 1.5rem;
+    }
+}
+
+//FS-14px
+h6 {
+    font-size: 0.875rem;
+    font-family: "Avenir-Roman";
+    // font-weight: normal;
+    line-height: 1.5rem;
+
+    @include xs {
+        font-size: 0.75rem;
+        line-height: 1.25rem;
+    }
+}
+
+//FS-12px
+span {
+    font-size: 0.75rem;
+    font-family: "Avenir-Medium";
+    // font-weight: 500;
+    line-height: 1.25rem;
+
+    @include xs {
+        font-size: 0.625rem;
+        line-height: 1rem;
+    }
+}

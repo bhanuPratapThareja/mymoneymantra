@@ -1,4 +1,3 @@
-import MarkDown from '../../Utils/markdown'
 import { useState, useEffect } from 'react';
 
 const OfferBankProductDetails = props => {
@@ -27,8 +26,8 @@ const OfferBankProductDetails = props => {
                         {leftPositionedOffers.map(offer => {
                             return (
                                 <React.Fragment key={offer.id}>
-                                    <h3>{offer.heading}</h3>
-                                    <MarkDown markDown={offer.content} />
+                                    <h1>{offer.heading}</h1>
+                                    <div dangerouslySetInnerHTML={{ __html: offer.content }}></div>
                                 </React.Fragment>
                             )
                         })}
@@ -37,8 +36,8 @@ const OfferBankProductDetails = props => {
                         {rightPositionedOffers.map(offer => {
                             return (
                                 <React.Fragment key={offer.id}>
-                                    <h3>{offer.heading}</h3>
-                                    <MarkDown markDown={offer.content} />
+                                    <h1>{offer.heading}</h1>
+                                    <div dangerouslySetInnerHTML={{ __html: offer.content }}></div>
                                 </React.Fragment>
                             )
                         })}

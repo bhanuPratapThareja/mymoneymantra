@@ -1,0 +1,204 @@
+.c-detail-page {
+    .combined-wrapper {
+        .banner {
+            .banner-card {
+                transform: none;
+                border-radius: 0;
+                animation: slide-card 2s ease-in-out;
+                margin-top: 0;
+                position: relative;
+                top: 0;
+    
+                @include mid {
+                    width: 100% !important;
+                }
+    
+                @include sm {
+                    animation: none;
+                    text-align: center;
+                }
+    
+                @include sm {
+                    width: 100% !important;
+                }
+    
+                
+            }
+        }
+        
+
+        .banner {
+            @extend %flex-row;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 984px;
+            margin: 0 auto;
+
+            @include xs {
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                div {
+                    width: 100%;
+                    @include xs {
+                        display: flex;
+                        flex-direction: column-reverse;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                   
+                    .banner-card {
+                        display: block;
+                        max-width: 100%;
+                        box-shadow: none;
+                        animation: none;
+
+                        @include md {
+                            max-width: 40%;
+                        }
+
+                        
+                    }
+                }
+            }
+
+            .banner-wrapper {
+                padding-top: 128px;
+                padding-bottom: 64px;
+                max-width: 395px;
+                margin-left: 0;
+
+                @include xs {
+                    display: flex;
+                    padding-top: 16px;
+                    padding-bottom: 24px;
+                    margin-top: 64px;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    flex-direction: column;
+
+
+                    h1 {
+                        display: block;
+                        color: $white;
+                        text-align: center;
+
+                        b {
+                            font-weight: 900;
+                            color: $white;
+                        }
+                    }
+    
+                    p, button {
+                        display: none;
+                    }
+                }
+                
+            }
+        }
+    }
+
+    .annual-fee {
+        margin-bottom: 128px;
+
+
+        @include xs {
+            margin-bottom: 64px;
+            position: relative;
+            z-index: 99; 
+            margin-top: 24px !important;    
+        }
+        &-wrapper {
+            border-radius: 6px;
+            background: $white;
+            padding: 32px 96px 64px 96px;
+            @extend %flex-row;
+            justify-content: space-between;
+            width: 100%;
+
+            @include xs {
+                flex-direction: column;
+                padding: 16px;
+            }
+
+            .left {
+                @extend %flex-col;
+                max-width: 50%;
+                width: 100%;
+                padding-right: 120px;
+
+                @include xs {
+                    max-width: 100%;
+                    padding-right: 0px;
+                }
+
+                ul {
+                    margin-top: 8px;
+                    padding-left: 16px;
+                    li {
+                        color: $black-60;
+                        font-size: 14px;
+                        line-height: 24px;
+                        margin-top: 8px;
+                        list-style-position: outside;
+                        font-size: 0.875rem;
+                        font-family: "Avenir-Roman";
+                        line-height: 1.5rem;
+
+                        @include xs {
+                            font-size: 0.75rem;
+                            line-height: 1.25rem;
+                        }
+                    }
+                }
+            }
+
+            .right {
+                max-width: 50%;
+                width: 100%;
+
+                @include xs {
+                    max-width: 100%;
+                    margin-top: 32px;
+                }
+
+                &-para {
+                    color: $black-60;
+                    margin-top: 0;
+
+                    b{
+                        color: $black;
+                    }
+
+                    &:nth-of-type(2) {
+                        margin-top: 0;
+                    }
+                }
+
+                p{
+                    margin-top: 16px;
+                    color: $black-60;
+
+                    @include xs {
+                        margin-top: 8px;
+                    }
+                }
+
+                h3{
+                    margin-top: 64px;
+
+                    @include xs {
+                        margin-top: 32px;
+                    }
+
+                    &:first-child {
+                        margin-top: 0;
+                    }
+                }
+
+                
+            }
+        }
+    }
+}

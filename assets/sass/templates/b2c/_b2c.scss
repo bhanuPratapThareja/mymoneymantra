@@ -1,0 +1,209 @@
+.b2c-flow {
+    .main-head {
+       
+        padding-top: 244px;
+        @include xs {
+            display: none;
+        }
+        div {
+            @extend %flex-col;
+            justify-content: center;
+            align-items: center;
+
+            h1 {
+                color: $white;
+                b {
+                    color: $green;
+                }
+            }
+
+            p {
+                color: $white;
+                margin-top: 24px;
+            }
+        }
+    }
+
+    .lets-find-container {
+        margin-top: 128px !important;
+
+        @include xs {
+            margin-top: 64px !important;
+        }
+    }
+    .lets-find-forms-container {
+        z-index: 999;
+    }
+
+    .mobile-content {
+        @extend %flex-col;
+        flex-direction: column !important;
+        justify-content: center;
+        align-items: center;
+         h3 {
+             color: $white;
+             margin-top: 16px;
+             text-align: center;
+         }
+    }
+
+    .lets-find-stepper-wrapper {
+        padding-top: 0;
+        padding-bottom: 0;
+        padding: 96px 0 163px 0 !important;
+
+        @include xs {
+            padding-top: 24px !important;
+            padding-bottom: 160px !important;
+        }
+
+        .lets-find-content {
+            width: 100%;
+            max-width: 100%;
+
+            .login-options {
+                @include input;
+                @extend %flex-row;
+                justify-content: space-between;
+                margin-top: 32px;
+                align-items: flex-start;
+
+                @include xs {
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .form__group {
+                    max-width: 372px;
+                }
+
+                h5 {
+                    color: $black-20;
+                    margin-top: 32px;
+                    text-align: center;
+                }
+
+                .login-options-wrapper {
+                    width: 48%;
+
+                    @include xs {
+                        width: 100%;
+                    }
+                }
+
+                .social-options {
+                    @extend %flex-row;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-top: 24px;
+
+                    button {
+                        border: 1px solid $black-20;
+                        box-sizing: border-box;
+                        border-radius: 6px;
+                        padding: 16px;
+                        background: $white;
+                        @extend %flex-row;
+                        justify-content: flex-start;
+                        align-items: center;
+                        width: 47.5%;
+                        cursor: pointer;
+                        outline: none;
+
+                        img {
+                            width: 24px;
+                            height: 24px;
+                            margin-right: 12px;
+                        }
+
+                        p {
+                            color: $black-60;
+                            margin-top: 0;
+                            display: block;
+                            @include xs {
+                                display: block;
+                            }
+                        }
+                    }
+                }
+
+                .login-terms {
+                    width: 47.5%;
+                    @include xs {
+                        margin-top: 32px;
+                        width: 100%;
+                    }
+
+                    span {
+                        color: $black-60;
+
+                        a {
+                            color: $black;
+                            text-decoration: underline;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                
+            }
+        }
+    }
+    .mobile-otp {
+        margin-bottom: 90px;
+
+        #opt {
+            letter-spacing: 16px;
+        }
+
+        .lets-find-content .login-options.otp-wrapper {
+            max-width: 372px;
+            @extend %flex-col;
+            justify-content: flex-end;
+            align-items: flex-end;
+
+            span {
+                margin-top: 8px;
+                color: $black-40;
+            }
+
+            button {
+                background: none;
+                border: none;
+                
+                h6 {
+                    color: $green;
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
+            }
+
+        }
+    }
+
+    .new-button-align {
+        justify-content: flex-end !important;
+    }
+
+    .all-form-wrapper {
+        min-height: 599px;
+
+        @include xs {
+            min-height: auto;
+        }
+    }
+    .register-cta {
+        @extend %flex-row;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.b2c-thank-you {
+    .popular-card-container{
+        @include xs {
+            padding-bottom: 64px !important;
+        }
+    }
+}

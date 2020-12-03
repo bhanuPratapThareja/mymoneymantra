@@ -28,7 +28,8 @@ const Home = props => {
         setOpen(false);
     }
 
-    const getComponents = dynamic => {
+    const getComponents = (dynamic, path) => {
+        console.log('dynamic:: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':
@@ -44,18 +45,21 @@ const Home = props => {
                 case 'blocks.offer':
                     return <Offers key={block.id} data={block} />
                 case 'blocks.trending-offers':
-                    return <TrendingOffers key={block.id} data={block} trendingOffers={props.trendingOffers} />
+                    return <TrendingOffers key={block.id} data={block}  />
                 case 'blocks.blogs':
                     return <Blog key={block.id} data={block} />
                 case 'blocks.learn-more':
                     return <LearnMore key={block.id} data={block} />
                 case 'blocks.credit-score':
                     return <CreditScore key={block.id} data={block} />
-                case 'blocks.short-form':
-                    return <ShortExtendedForm key={block.id} data={block} />
+                case 'form-components.onboarding-short-form':
+                    return <ShortExtendedForm key={block.id} data={block} path={path} />
             }
         })
     }
+
+    const { data, path } = props
+
 
     return (
         <div className="credit-card-flow">
@@ -64,7 +68,7 @@ const Home = props => {
             <Button variant="contained" onClick={handleOpen}>Open OTP Popup</Button>
             <SmsOtpModal open={open} handleClose={handleClose} />            */}
 
-            {props ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
+            {props ? <Layout>{getComponents(data.dynamic, path)}</Layout> : null}
         </div>
     )
 }
@@ -74,19 +78,19 @@ export async function getServerSideProps(ctx) {
     let props = {}
     let trendingOffers = null
     let trendingProductId = ''
-    const { url, body } = getApiData('offers')
+    let offersData = []
 
-    try {
-        const res = await strapi.apiReq('POST', url, body)
-        offersData = res.response.payload
-    } catch {
-    }
+    // try {
+    //     const { url, body } = getApiData('offers')
+    //     const res = await strapi.apiReq('POST', url, body)
+    //     offersData = res.response.payload
+    // } catch(err) {
+    // }
 
-    try {
-        trendingOffers = await strapi.processReq('GET', `products?_where[product_id]=${trendingProductId}`)
-        console.log(trendingOffers)
-    } catch (err) {
-    }
+    // try {
+    //     trendingOffers = await strapi.processReq('GET', `products?_where[product_id]=${trendingProductId}`)
+    // } catch (err) {
+    // }
 
     try {
         const [path] = ctx.params.path
@@ -96,7 +100,7 @@ export async function getServerSideProps(ctx) {
     } catch (err) {
     }
 
-    return { props: { ...props, trendingOffers } }
+    return { props: { ...props } }
 }
 
 export default Home

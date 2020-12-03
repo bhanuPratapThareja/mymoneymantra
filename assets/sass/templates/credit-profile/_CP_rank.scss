@@ -1,0 +1,189 @@
+// .credit-rank-flow{
+
+// // Your Payment Rank
+// .paymentRank{
+//     @include main-container();
+//     @include mobile-alignment();
+
+//     &-wrapper{
+
+//         @include xs{
+//             padding: 32px 24px;
+//             background-size: 150.49px 90.73px;
+//         }
+
+//         padding: 40px 56px;
+//         background: url("/assets/images/homepage/app-download-bg.png");
+//         background-color: $white;
+//         background-repeat: no-repeat;
+//         background-size: 300px 235.82px;
+//         background-position: left bottom;
+//         z-index: 1;
+//         width: inherit;
+//         border-radius: 6px;
+        
+//         &-head{
+//             .underline-img{
+//                 max-width: 80px;
+//                 margin-top: 8px;
+//             }
+//         }
+
+//         &-content{
+//             padding: 40px 192px 40px 140px;
+//             @extend %flex-row;
+//             justify-content: space-between;
+
+//             @include xs{
+//                 display: flex;
+//                 flex-direction: column;
+//                 padding: 16px 0;
+//             }
+
+//             &-left{
+//                 max-width: 240px;
+
+//                 .rank-desktop{
+//                     display: flex;
+                
+//                     @include xs{
+//                         display: none;
+//                     }
+//                 }
+//                 .rank-mobile{
+//                     display: none;
+                
+//                     @include xs{
+//                         display: flex;
+//                     }
+//                 }
+
+
+//                 img{
+//                     width: 100%;
+//                 }
+//                 @include xs{
+//                     margin: 0 auto;
+//                 }
+//             }
+
+//             .left-mobile-view{
+//                 @include xs{
+//                     max-width: 70px;
+//                 }
+//             }
+
+//             &-right{
+//                 max-width: 400px;
+//                 width: 100%;
+//                 text-align: center;
+
+//                 p{
+//                     color: $black-60;
+//                     padding-top: 10px;
+//                     padding-bottom: 16px;
+//                 }
+
+//                 .progress-bar{
+//                     max-width: 400px;
+//                     width: 100%;
+
+//                     img{
+//                         width: 100%;
+//                         margin-bottom: 24px;
+//                     }
+//                 }
+
+//                 .grading-section{
+//                     max-width: 320px;
+//                     width: 100%;
+//                     @extend %flex-row;
+//                     justify-content: space-between;
+//                     margin: 0 auto;
+
+//                     .grade-block{
+//                         max-width: 108px;
+//                         width: 100%;
+//                         @extend %flex-row;
+//                         margin-bottom: 28px;
+
+//                         @include xs{
+//                             margin-bottom: 16px;
+//                         }
+
+//                         .blocks{
+//                             width: 16px;
+//                             height: 16px;
+//                             border-radius: 2px;
+//                             margin-right: 12px;
+//                             margin-top: 3px;
+//                         }
+//                         .red-block{
+//                             background: $red;
+//                         }
+//                         .yellow-block{
+//                             background: $yellow;
+//                         }
+//                         .orange-block{
+//                             background: $orange;
+//                         }
+//                         .green-block{
+//                             background: $green;
+//                         }
+
+//                         span{
+//                             color: $black-40;
+//                         }
+//                     }
+//                 }
+
+//                 hr{
+//                     color: $black-10;
+//                     margin-bottom: 24px;
+//                 }
+
+//                 .formula-section{
+//                     @extend %flex-row;   
+//                     max-width: 250px;
+//                     width: 100%;
+//                     margin: 0 auto;
+
+//                     &-left{
+//                         padding-top: 20px;
+//                         span{
+//                             max-width: 105px;
+//                             width: 100%;
+//                             color: $black-60;
+//                             margin-right: 16px;
+
+//                             @include xs{
+//                                 margin-right: 8px;
+//                             }
+//                         }
+//                     }
+//                     &-right{
+//                         max-width: 135px;
+//                         width: 100%;
+//                         span{
+//                             color: $black;
+//                         }
+//                         hr{
+//                             margin: 11px 0;
+//                             color: $green;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+    
+// }
+
+// //Payments Record
+// .payment-record-account-number{
+//     padding-top: 25px;
+// }
+// .delayed-days{
+//     color: $black-60;
+// }
+// }

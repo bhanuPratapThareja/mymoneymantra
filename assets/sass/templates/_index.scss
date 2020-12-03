@@ -1,0 +1,635 @@
+.credit-card-flow {
+    background: $dark-gradient;
+
+    section:not(:first-child) {
+        margin-top: 64px;
+    }
+
+    .combined-wrapper {
+        @include xs {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+    }
+
+    .banner {
+        // max-width: 1128px;
+        // margin-left: auto;
+        // margin-right: auto;
+        width: 100%;
+        @extend %pos-relative;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        padding-top: 110px !important;
+
+        @include xs {
+            padding-top: 0 !important;
+        }
+
+        @include md {
+            padding-top: 64px !important;
+        }
+
+        &-wrapper {
+            padding: 128px 0 128px 0px;
+            max-width: 360px;
+            margin-left: 256px;
+
+            @include xs {
+                display: none;
+            }
+
+            @include mid {
+                margin-left: 12%;
+            }
+
+            @include sm {
+                margin-left: 12%;
+            }
+
+            h1 {
+                color: $white;
+
+                b {
+                    // font-weight: 900;
+                    color: $green;
+                }
+            }
+
+            p {
+                color: $white-70;
+                margin-top: 32px;
+            }
+
+            button {
+                margin-top: 32px;
+                @include primary-cta;
+                padding: 12px 24px;
+            }
+        }
+
+        &-card {
+            @extend %pos-absolute;
+            right: 0;
+            top: 92px;
+            box-shadow: 0px 32px 64px rgba(0, 0, 0, 0.25), 0px 16px 32px rgba(0, 0, 0, 0.25) inset;
+            transform: rotate(-9deg);
+            border-radius: 24px;
+            animation: rotate-card 2s ease-in-out;
+            margin-top: 110px;
+
+            @include xs {
+                display: none;
+            }
+
+            @include mid {
+                width: 48%;
+            }
+
+            @include sm {
+                width: 43%;
+            }
+        }
+
+        &-features {
+            border-radius: 6px;
+            background: $green-gradient;
+            padding: 64px 96px;
+            @extend %flex-row;
+            justify-content: space-between;
+
+            @include xs {
+                flex-direction: column;
+                display: flex;
+                margin-top: 64px;
+                padding: 24px 16px 32px 16px;
+            }
+
+            @include md {
+                margin-top: 0;
+            }
+
+            &-block {
+                max-width: 264px;
+
+                @include md {
+                    max-width: 100%;
+                }
+                
+
+                h3,
+                p {
+                    margin-top: 16px;
+
+                    @include xs {
+                        margin-top: 8px;
+                    }
+                }
+
+                h3 {
+                    color: $white;
+                }
+
+                p {
+                    color: $white-70;
+                }
+
+                img {
+                    @include xs {
+                        width: 40px;
+                        height: 40px;
+                    }
+                }
+
+                &:not(:first-child) {
+                    @include xs {
+                        margin-top: 32px;
+
+                    }
+                }
+            }
+        }
+    }
+
+    .lets-find {
+        background: url("/assets/images/credit-card-flow/short-form-bg.png");
+        background-size: auto;
+        background-position: left bottom;
+        background-color: $white;
+        background-repeat: no-repeat;
+        border-radius: 6px;
+        @extend %flex-row;
+        justify-content: space-between;
+        padding: 96px 192px;
+        @extend %pos-relative;
+        z-index: 11;
+        flex: none;
+        width: inherit;
+
+        @include xs {
+            padding: 24px 24px;
+            display: flex;
+            flex-direction: column;
+            background-size: 45%;
+            width: 100%;
+        }
+
+        @include md {
+            padding: 96px 100px;
+        }
+
+        &-content {
+            max-width: 264px;
+
+            @include xs {
+                max-width: 180px;
+            }
+
+            h2 {
+                color: $black;
+            }
+
+            img {
+                width: 120px;
+
+                @include xs {
+                    width: 80px;
+                }
+            }
+
+            p {
+                margin-top: 32px;
+                color: $black-60;
+
+                @include xs {
+                    display: none;
+                }
+            }
+        }
+
+        &-form {
+            max-width: 360px;
+            width: 360px;
+
+            @include xs {
+                width: 100%;
+                max-width: 100%;
+                margin-top: 24px;
+            }
+            form {
+                @include input;
+                @extend %flex-col;
+
+                .form__group:not(:first-child) {
+                    margin-top: 16px;
+                }
+            }
+        }
+
+        .lets-go-button {
+            margin-top: 32px;
+            width: 100%;
+            @extend %flex-row;
+            justify-content: flex-end;
+
+            @include xs {
+                justify-content: center;
+            }
+            button {
+                @include primary-cta;
+            }
+        }
+
+        .agree {
+            @extend %flex-row;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 16px;
+
+            .checkbox-container {
+                input {
+                    border-radius: 0;
+                    width: 24px;
+                    height: 24px;
+                }
+                label {
+                    color: $black-60;
+                    width: 100%;
+
+                    a {
+                        color: $black;
+                        text-decoration: underline;
+
+                        &:hover {
+                            color: $black;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .lets-find-container {
+        @extend %pos-relative;
+        overflow: hidden;
+        display: flex;
+
+        @include xs {
+            padding-top: 32px;
+            z-index: 1;
+            transform: none !important;
+            flex-direction: column;
+            margin-top: 64px;
+        }
+        .mobile-background {
+            display: none;
+
+            @include xs {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 332px;
+                display: block;
+                background: $green-gradient;
+                width: 100%;
+                z-index: 0;
+                border-radius: 0px 0px 24px 24px;
+            }
+        }
+
+        .mobile-content {
+            display: none;
+            @include xs {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                z-index: 11;
+                position: relative;
+                margin-bottom: 24px;
+
+                h1 {
+                    color: $white;
+                    text-align: center;
+                }
+            }
+        }
+
+        .all-form-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .lets-find-forms-container {
+            background: $white;
+            width: 100%;
+            height: 100%;
+            border-radius: 6px;
+            background: url("/assets/images/credit-card-flow/short-form-bg.png");
+            background-color: $white;
+            background-size: 50% 50%;
+            background-position: left bottom;
+            background-repeat: no-repeat;
+            display: none;
+            flex: none;
+            width: inherit;
+            padding-left: 16px;
+            padding-right: 16px;
+
+            @include xs {
+                width: 100%;
+                background-size: 58%;
+            }
+
+            .lets-find-stepper-wrapper {
+                max-width: 744px;
+                margin: 0 auto;
+                padding-bottom: 64px;
+                padding-top: 32px;
+                height: 100%;
+                @extend %pos-relative;
+
+                @include xs {
+                    padding-top: 16px;
+                    min-height: 524px;
+                }
+
+                .progress-grey {
+                    width: 100%;
+                    height: 4px;
+                    background: $black-10;
+                    border-radius: 2px;
+                    @extend %flex-row;
+                    justify-content: flex-start;
+                    align-items: center;
+
+                    .progress-blue {
+                        background: $blue-gradient;
+                        border-radius: 2px;
+                        width: 12.5%;
+                        height: 100%;
+                        transition: width 1s ease-in-out;
+                        @extend %pos-relative;
+                    }
+                }
+
+                .pages {
+                    color: $black-40;
+                    margin-top: 32px;
+
+                    span {
+                        font-size: 1rem;
+                        font-family: "Avenir-Heavy";
+                        line-height: 1.5rem;
+
+                        @include xs {
+                            font-size: 0.875rem;
+                            line-height: 1.5rem;
+                        }
+                    }
+                }
+
+                .short-forms-wrapper {
+                    @extend %flex-row;
+                }
+
+                .sf-forms {
+                    margin-top: 4px;
+                    flex: none;
+                    width: 100%;
+
+                    @include xs {
+                        margin-top: 4px;
+                    }
+
+                    h5 {
+                        margin-bottom: 16px;
+                    }
+
+                    h2 {
+                        max-width: 372px;
+                    }
+
+                    .shortforms-container {
+                        @include stepper-checkbox;
+                        @include input;
+                        @include dropdown;
+                        margin-top: 32px;
+
+                        @include xs {
+                            margin-top: 16px;
+                        }
+                    }
+
+                    .shortforms-container.pan-card-cont, .shortforms-container.monthly-earn {
+                        @include xs {
+                            grid-template-columns: auto;
+                        }
+                    }
+                }
+
+                .extra-margin {
+                    margin-bottom: 89px;
+
+                    @include xs {
+                        margin-bottom: 76px;
+                    }
+                }
+
+                .extra-gap {
+                    display: grid;
+                    @include xs {
+                        grid-gap: 40px !important; 
+                    }
+                }
+
+                .shortforms-container-buttons {
+                    @extend %flex-row;
+                    justify-content: space-between;
+                    @extend %pos-absolute;
+                    bottom: 64px;
+                    max-width: 744px;
+                    width: 100%;
+
+                    button {
+                        width: 56px;
+                        height: 56px;
+                        @extend %flex-row;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 28px;
+                        cursor: pointer;
+                        outline: none;
+                    }
+
+                    > div {
+                        @extend %flex-row;
+                        justify-content: center;
+                        align-items: center;
+
+                        h4 {
+                            margin-right: 16px;
+                        }
+                    }
+
+                    #next {
+                        background: $black;
+                        border: 2px solid $black;
+
+                        // &:hover svg path {
+                        //     fill: $green;
+                        // }
+
+                        &:active {
+                            svg path {
+                                fill: $green;
+                            }
+                        }
+                    }
+
+                    #next.submit-short-form {
+                        background: $green;
+                        border: 2px solid $green;
+
+                        &:hover svg path {
+                            fill: $white;
+                        }
+                    }
+
+                    #next.disabled {
+                        background: $black-40;
+                    }
+                    #previous.disabled {
+                        background: $black-10;
+
+                        svg path {
+                            fill: $black-20;
+                        }
+                    }
+
+                    #previous {
+                        background: $white;
+                        border: 2px solid $black-10;
+
+                        &:hover {
+                            border: 2px solid $black;
+                            transition: border-color 0.8s ease;
+
+                            svg path {
+                                fill: $black;
+                            }
+                        }
+
+                        &:active {
+                            border: 2px solid $green;
+
+                            svg path {
+                                fill: $green;
+                            }
+                        }
+
+                        svg {
+                            transform: rotate(180deg);
+                            path {
+                                fill: $black-60;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .moving-in {
+            display: block;
+            animation: moving-in 0.8s forwards ease-in-out;
+        }
+        .moving-out {
+            animation: moving-out 0.8s forwards ease-in-out;
+        }
+        .moving-in-rev {
+            animation: moving-in-rev 0.8s forwards ease-in-out;
+        }
+        .moving-out-rev {
+            animation: moving-out-rev 0.8s forwards ease-in-out;
+        }
+        .opacity-in {
+            animation: opacity-in 0.8s ease-in-out;
+        }
+    }
+
+    .blog-container {
+        @include xs {
+            padding: 0;
+        }
+    }
+}
+.gj-datepicker-md [role=right-icon] {
+    display: none;
+}
+
+.checkbox {
+    width: 100%;
+    margin: 0;
+    position: relative;
+    display: block;
+    label {
+        position: relative;
+        min-height: 34px;
+        display: block;
+        padding-left: 36px;
+        margin-bottom: 0;
+        // font-weight: normal;
+        cursor: pointer;
+        &:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin: 0px;
+            width: 20px;
+            height: 20px;
+            transition: transform 0.28s ease;
+            border: 2px solid $black-20;
+            border-radius: 2px;
+        }
+        &:after {
+            content: "";
+            display: block;
+            width: 10px;
+            height: 5px;
+            border-bottom: 2px solid #fff;
+            border-left: 2px solid #fff;
+            transform: rotate(-45deg) scale(0);
+            transition: transform ease 0.25s;
+            position: absolute;
+            top: 7px;
+            left: 6px;
+        }
+    }
+    input[type="checkbox"] {
+        width: auto;
+        opacity: 0.00000001;
+        position: absolute;
+        left: 0;
+        margin-left: -20px;
+        &:checked ~ label {
+            &:before {
+                border: 2px solid $green;
+                background: $green;
+            }
+            &:after {
+                transform: rotate(-45deg) scale(1);
+            }
+        }
+        &:focus + label::before {
+            outline: 0;
+        }
+    }
+}
+
+#trending-offers-sec, #popular-cards-sec {
+    .popular-cards-slider-card-top .head {
+        width: 488px !important;
+    }
+}

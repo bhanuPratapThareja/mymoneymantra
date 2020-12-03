@@ -18,6 +18,9 @@ const OfferDetailCards = props => {
         if (type == "applyNow") {
             Router.push(`/credit-cards/thank-you`)
         }
+        if(type == "instantApproval") {
+            Router.push(`/credit-cards/long-form`) 
+        }
     }
 
     const goToVDetailsPage = () => {

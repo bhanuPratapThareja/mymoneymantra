@@ -1,0 +1,28 @@
+$green: #89C142;
+$blue: #0D2333;
+$red: #DC3737;
+$black: #221F1F;
+$black-60: rgba(34, 31, 31, 0.6);
+$black-40: rgba(34, 31, 31, 0.4);
+$black-20: rgba(34, 31, 31, 0.2);
+$black-10: rgba(34, 31, 31, 0.1);
+$white: #ffffff;
+$white-70: rgba(255, 255, 255, 0.7);
+$white-50: rgba(255, 255, 255, 0.5);
+$white-25: rgba(255, 255, 255, 0.25);
+$white-10: rgba(255, 255, 255, 0.1);
+$gray: #d1d1d1;
+
+//Gradients
+$green-gradient: linear-gradient(90deg, #56AB2F 0%, #93D642 100%);
+$blue-gradient: linear-gradient(90deg, #3080CF 0%, #356BB5 35.94%, #263A73 100%);
+$black-gradient: linear-gradient(90deg, #0D2333 0%, #040A0F 100%);
+$white-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+$dark-gradient: linear-gradient(90deg, #0D2333 0%, #040A0F 100%);
+$red-gradient: linear-gradient(90deg, #F03535 0%, #C02020 100%);
+
+//additions
+$blue-2-gradient: linear-gradient(0deg, #263A73, #263A73);
+$dark-blue-gradient: linear-gradient(90deg, #3080CF 0%, #263A73 100%);
+$yellow: #F9F900;
+$orange: #FF9839;
