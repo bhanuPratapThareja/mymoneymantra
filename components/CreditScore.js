@@ -9,7 +9,7 @@ const CreditScore = props => {
         <section data-aos="fade-up" className="container score-container aos-init">
             <div className="score score-cotent-cover">
                 <div className="score-content">
-                    <MarkDown markDown={heading} />
+                    <div dangerouslySetInnerHTML={{ __html: heading }}></div>
                     {credit_score_features.map(scoreData => {
                         return (
                             <div className="score-content-features" key={scoreData.id}>

@@ -38,7 +38,7 @@ const Offers = props => {
                })}
 
 
-               <div className="popular-cards-slider-card" style={{ display: 'none' }}>
+               {/* <div className="popular-cards-slider-card" style={{ display: 'none' }}>
                   <div className="popular-cards-slider-card-top">
                      <div className="head">
                         <h3><b className="card_name">RBL Bank</b><br />Platinum Delight Credit Card</h3>
@@ -105,7 +105,7 @@ const Offers = props => {
                         <h5>Lifetime reward points</h5>
                      </div>
                   </div>
-               </div>
+               </div> */}
 
             </div>
          </div>

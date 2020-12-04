@@ -1,5 +1,4 @@
 import Strapi from '../../providers/strapi'
-import MarkDown from '../../Utils/markdown'
 
 const BankProductBanner = props => {
     const strapi = new Strapi()
@@ -9,7 +8,7 @@ const BankProductBanner = props => {
             <div className="combined-wrapper">
             <section className="banner container">
                 <div className="banner-wrapper">
-                    <MarkDown markDown={heading} />
+                    <div dangerouslySetInnerHTML={{ __html: heading }}></div>
                     <p>{sub_text}</p>
                     <button>{button}</button>
                 </div>

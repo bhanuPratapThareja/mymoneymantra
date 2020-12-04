@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import $ from 'jquery'
-import MarkDown from '../Utils/markdown'
 
 const LearnMore = props => {
 
@@ -44,7 +43,7 @@ const LearnMore = props => {
                            </svg>
                         </div>
                         <div className="answer" id={`ques-${index}-ans`}>
-                           <MarkDown markDown={secData.questions_and_answers} />
+                           <div dangerouslySetInnerHTML={{ __html: secData.questions_and_answers }}></div>
                         </div>
                      </div>
                   )

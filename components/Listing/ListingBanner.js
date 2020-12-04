@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import ListingFilter from './ListingFilter'
 import Strapi from '../../providers/strapi'
 import $ from 'jquery'
-import MardDown from '../../Utils/markdown'
 
 if (typeof window != 'undefined') {
     $(document).ready(function () {
@@ -24,6 +23,7 @@ const ListingBanner = ({ data }) => {
     const strapi = new Strapi()
 
     useEffect(() => {
+        console.log(selectedOption)
         onBannerCategoryChange(selectedOption)
     })
 
@@ -45,9 +45,7 @@ const ListingBanner = ({ data }) => {
                 <div className="mobile-background"></div>
                 <div className="banner-wrapper">
                     <div className="top">
-                        <div>
-                            <MardDown markDown={heading} />
-                        </div>
+                        <div dangerouslySetInnerHTML={{ __html: heading }}></div>
                         <div className="category">
                             <h5>Browse by category:</h5>
                             <div className="category-wrapper">
@@ -76,7 +74,7 @@ const ListingBanner = ({ data }) => {
                                 className="filter-option"
                                 id="listing-filter">
                                 Filters
-                                <img src="../../images/icons/down-chevron.svg" />
+                                <img src="/assets/images/icons/down-chevron.svg" />
                             </button>
                         </div>
                     </div>

@@ -10,13 +10,13 @@ AOS.init({
 $(document).ready(function () {
 
   // if ($(window).width() > 786) {
-  $(window).scroll(function () {
-    var sticky = $('header'),
-      scroll = $(window).scrollTop();
+  // $(window).scroll(function () {
+  //   var sticky = $('header'),
+  //     scroll = $(window).scrollTop();
 
-    if (scroll >= 100) sticky.addClass('scrolled');
-    else sticky.removeClass('scrolled');
-  });
+  //   if (scroll >= 100) sticky.addClass('scrolled');
+  //   else sticky.removeClass('scrolled');
+  // });
   // }
 
   //active input
@@ -36,11 +36,11 @@ $(document).ready(function () {
     });
 
   //learn more toggle
-  $(".learn-more-wrapper-content .question").click(function () {
-    $("#" + this.id + "-ans").slideToggle("ease-in-out");
-    $("#" + this.id).find("svg").toggleClass("question-active");
-    $("#" + this.id).toggleClass("question-open")
-  })
+  // $(".learn-more-wrapper-content .question").click(function () {
+  //   $("#" + this.id + "-ans").slideToggle("ease-in-out");
+  //   $("#" + this.id).find("svg").toggleClass("question-active");
+  //   $("#" + this.id).toggleClass("question-open")
+  // })
 
   //inputs with dropdown
   $('input').blur(function () {
@@ -68,12 +68,12 @@ $(document).ready(function () {
 
 
   //short forms on credit flow
-  $("#lets-go").click(function () {
-    $(".lets-find-forms-container").removeClass("moving-in-rev")
-    $(".lets-find").removeClass("moving-out-rev")
-    $(".lets-find-forms-container").addClass("moving-in")
-    $(".lets-find").addClass("moving-out")
-  })
+  // $("#lets-go").click(function () {
+  //   $(".lets-find-forms-container").removeClass("moving-in-rev")
+  //   $(".lets-find").removeClass("moving-out-rev")
+  //   $(".lets-find-forms-container").addClass("moving-in")
+  //   $(".lets-find").addClass("moving-out")
+  // })
 
 
   //convert number to word
@@ -161,14 +161,14 @@ $(document).ready(function () {
   })
 
   //filter modal
-  $(".filter-option").click(function () {
-    $("#" + this.id + "-show").slideToggle("300");
-    $('body', "html").css("overflow", "hidden")
-  })
-  $(".filter-cross").click(function () {
-    $(".filter-cross").closest(".mm-modal").slideToggle(300);
-    $('body', "html").css("overflow", "scroll")
-  })
+  // $(".filter-option").click(function () {
+  //   $("#" + this.id + "-show").slideToggle("300");
+  //   $('body', "html").css("overflow", "hidden")
+  // })
+  // $(".filter-cross").click(function () {
+  //   $(".filter-cross").closest(".mm-modal").slideToggle(300);
+  //   $('body', "html").css("overflow", "scroll")
+  // })
 
   //menu toggle
   $("#menu-icon").click(function () {
@@ -195,52 +195,52 @@ $(document).ready(function () {
 
 
   // function initTendingOffers() {
- 
-      $('#popular-cards-sec, #trending-offers-sec').not('.slick-initialized').slick({
-        centerMode: true,
-        slidesToShow: 3,
-        cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
-        speed: 1000,
-        variableWidth: true,
-        responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 3,
-              infinite: false,
-              dots: false,
-              variableWidth: true,
-              arrows: false
-            }
-          },
-          {
-            breakpoint: 1023,
-            settings: {
-              arrows: false,
-              centerMode: false,
-              centerPadding: '0px',
-              slidesToShow: 1,
-              variableWidth: true,
-              infinite: false,
-            }
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              arrows: false,
-              centerMode: false,
-              centerPadding: '0px',
-              slidesToShow: 1,
-              variableWidth: true,
-              infinite: false,
-            },
-          },
-        ]
 
-      })
-      $('#popular-cards-sec, #trending-offers-sec').slick("refresh");
-  
+  $('#popular-cards-sec, #trending-offers-sec').not('.slick-initialized').slick({
+    centerMode: true,
+    slidesToShow: 3,
+    cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
+    speed: 1000,
+    variableWidth: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: false,
+          dots: false,
+          variableWidth: true,
+          arrows: false
+        }
+      },
+      {
+        breakpoint: 1023,
+        settings: {
+          arrows: false,
+          centerMode: false,
+          centerPadding: '0px',
+          slidesToShow: 1,
+          variableWidth: true,
+          infinite: false,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          arrows: false,
+          centerMode: false,
+          centerPadding: '0px',
+          slidesToShow: 1,
+          variableWidth: true,
+          infinite: false,
+        },
+      },
+    ]
+
+  })
+  $('#popular-cards-sec, #trending-offers-sec').slick("refresh");
+
   // }
 
 
@@ -290,26 +290,26 @@ $(document).ready(function () {
 
 
 
-  $('#slider_blogs').slick({
-    dots: false,
-    arrows: false,
-    infinite: true,
-    autoplay: false,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    pauseOnHover: true,
-    responsive: [
-      {
-        breakpoint: 1186,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          variableWidth: true,
-          infinite: false,
-        }
-      }
-    ]
-  });
+  // $('#slider_blogs').slick({
+  //   dots: false,
+  //   arrows: false,
+  //   infinite: true,
+  //   autoplay: false,
+  //   slidesToShow: 2,
+  //   slidesToScroll: 1,
+  //   pauseOnHover: true,
+  //   responsive: [
+  //     {
+  //       breakpoint: 1186,
+  //       settings: {
+  //         slidesToShow: 1,
+  //         slidesToScroll: 1,
+  //         variableWidth: true,
+  //         infinite: false,
+  //       }
+  //     }
+  //   ]
+  // });
 
   $('#dob').datepicker();
 

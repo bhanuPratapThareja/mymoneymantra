@@ -2,34 +2,12 @@
   color: red !important;
 } */
 
-input:focus {
-  border: 1px solid green;
-}
-
-.input-error {
-  color: red;
-  padding: 0;
-  width: 100%;
-  position: relative;
-}
-
 .input-error p {
   position: absolute;
   right: 0;
   font-size: 0.8rem;
   margin: 0.5rem auto;
   font-weight: 700;
-}
-
-.banner-sticky {
-  position: fixed;
-  top: 100px;
-  width: 100%;
-}
-
-.banner-sticky_bottom {
-  position: static;
-  margin-top: 3440px;
 }
 
 .MuiLinearProgress-bar1Determinate {
@@ -44,14 +22,7 @@ input:focus {
   text-transform: capitalize;
 }
 
-.listing-banner_selected {
-  background: linear-gradient(90deg, #56AB2F 0%, #93D642 100%) !important;
-  background-size: 100% 100% !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  border: none !important;
-  transition: border 0.5s !important;
-}
+
 
 .otp-card_custom .green-underline {
   width: 120px;
@@ -8162,4 +8133,24 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 
 .thankyou-page {
   margin-bottom: 70px;
+}
+
+.listing-banner_selected {
+  background: linear-gradient(90deg, #56AB2F 0%, #93D642 100%) !important;
+  background-size: 100% 100% !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  border: none !important;
+  transition: border 0.5s !important;
+}   
+
+.banner-sticky {
+  position: fixed;
+  top: 100px;
+  width: 100%;
+}
+
+.banner-sticky_bottom {
+  position: static;
+  margin-top: 3440px;
 }

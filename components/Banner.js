@@ -1,5 +1,4 @@
 import Strapi from '../providers/strapi'
-import Markdown from '../Utils/markdown'
 
 const Banner = props => {
     const strapi = new Strapi()
@@ -26,7 +25,7 @@ const Banner = props => {
         <section className="banner">
             <div className="banner-wrapper">
                 <div className="normal-banner">
-                    <Markdown markDown={heading} />
+                    <div dangerouslySetInnerHTML={{ __html: heading }}></div>
                     <p>{sub_text}</p>
                     <button onClick={goToShortFormPage}>{button}</button>
                 </div>

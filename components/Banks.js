@@ -11,7 +11,7 @@ const Banks = props => {
         <section data-aos="fade-up" className="banks-holder">
             <div className="blue-patch"></div>
             <div className="container banks">
-                <h2>The best offers from India’s most <br /><b>trusted banks</b></h2>
+                <div dangerouslySetInnerHTML={{ __html: banks_heading }}></div>
                 <div className="banks-slider">
                     <div className="slide_cell"><img src="/assets/images/credit-card-flow/sbi.svg" alt="sbi" /></div>
                     <div className="slide_cell"><img src="/assets/images/credit-card-flow/hdfc.svg" alt="hdfc" /></div>
