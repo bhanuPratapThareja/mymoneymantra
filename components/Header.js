@@ -119,6 +119,7 @@ const Header = () => {
                   <button id="log_in">{headerData.login.label}</button>
                </div>
                <div className="signup-cta secondary-cta">
+                  <div className="border"></div>
                   <button id="sign_up">{headerData.signup.label}</button>
                </div>
             </div>

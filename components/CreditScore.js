@@ -4,7 +4,7 @@ import MarkDown from '../Utils/markdown'
 const CreditScore = props => {
     const strapi = new Strapi();
     const { heading, button, image, credit_score_features } = props.data
-
+    
     return (
         <section data-aos="fade-up" className="container score-container aos-init">
             <div className="score score-cotent-cover">

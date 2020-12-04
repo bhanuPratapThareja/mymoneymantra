@@ -43,7 +43,7 @@ const ListingBanner = ({ data }) => {
         <>
             <section className="container banner">
                 <div className="mobile-background"></div>
-                <div className="banner-wrapper">
+                <div className="banner-wrapper cstm-bnr-txt">
                     <div className="top">
                         <div dangerouslySetInnerHTML={{ __html: heading }}></div>
                         <div className="category">

@@ -5,8 +5,8 @@ const BankProductBanner = props => {
     const { button, heading, image, sub_text } = props.data;
     return (
         <div className="credit-card-flow c-detail-page">
-            <div className="combined-wrapper">
-            <section className="banner container">
+            <div class="combined-wrapper">
+            <section className="banner container cstm-mb">
                 <div className="banner-wrapper">
                     <div dangerouslySetInnerHTML={{ __html: heading }}></div>
                     <p>{sub_text}</p>

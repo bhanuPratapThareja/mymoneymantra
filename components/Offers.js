@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import Strapi from '../providers/strapi'
 
 const Offers = props => {
+   if(!props.data.cards){
+      return null;
+   }
    console.log('ppp props: ', props)
    const strapi = new Strapi()
    return (

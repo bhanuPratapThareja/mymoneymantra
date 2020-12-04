@@ -1,17 +1,9 @@
-import { useEffect, useState } from 'react'
 import Strapi from '../providers/strapi'
 
 const TrendingOffers = props => {
-    console.log('trend props: ', props)
     const strapi = new Strapi()
-    const [offers, setOffers] = useState([])
 
-    // useEffect(() => {
-    //     const script = document.createElement('script')
-    //     script.src = '/assets/js/main.js'
-    //     document.body.append(script)
-    // }, [])
-
+   
     return (
         <section data-aos="fade-up" className="container popular-card-container">
             <div className="popular-cards">
@@ -24,8 +16,8 @@ const TrendingOffers = props => {
                             <div className="popular-cards-slider-card" >
                                 <div className="popular-cards-slider-card-top">
                                     <div className="head">
-                                        <h3><b className="card_name">RBL Bank</b><br />Platinum Delight Credit Card</h3>
-                                        <img src="build/images/icons/citi-logo.png" />
+                                        <h3><b className="card_name">{offer.bank_name}</b><br />Platinum Delight Credit Card</h3>
+                                        <img src={`${strapi.baseUrl}${offer.image.url}`} />
                                     </div>
                                     <div className="content">
                                         <ul>
