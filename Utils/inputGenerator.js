@@ -1,13 +1,7 @@
 export const textTypeInputs = ['text', 'number', 'email', 'tel', 'input_with_dropdown']
 
-export const getCurrentSlideInputs = state => {
-    const newSlides = [...state.slides]
-    const slide = newSlides.filter(slide => slide.slideId === state.currentSlide)
-    const inputs = slide[0].inputs
-    return inputs
-}
-
 export const generateInputs = (component, updateField, checkInputValidity, handleInputDropdownChange) => {
+
     const handleChange = (e, type) => {
         const { name, value, checked } = e.target
         let field = {}
@@ -22,7 +16,6 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
     const validate = (e, type) => {
         const { name, value } = e.target
         const field = { name, value, type }
-        // console.log(field)
         checkInputValidity(field)
     }
 
@@ -30,16 +23,13 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
         handleInputDropdownChange(input_id, type, item)
     }
 
-    const handleDateInput = (input_id, value, type) => {
-        //    setTimeout(() => {
-        //     console.log(input_id)
-        //     console.log(value)
-
-        //     console.log(type)
-        //    }, 1000)
-        const v = document.getElementById(input_id).value
-        //    console.log(v)
-
+    const onChangeDate = (name, type) => {
+        setTimeout(() => {
+            const datepicker = $(`#${input_id}`).datepicker()
+            const value = datepicker.val()
+            const field = { name, value, type }
+            updateField(field)
+        }, 100);
     }
 
 
@@ -113,6 +103,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
     }
 
     if (type === 'input_with_calendar') {
+        const datepicker = $(`#${input_id}`).datepicker()
         return (
             <>
                 <h2>{question}</h2>
@@ -126,9 +117,9 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
                         type='text'
                         value={value}
                         required={mandatory}
-                        onFocus={() => $(`#${input_id}`).datepicker()}
-                        onBlur={() => handleDateInput(input_id, $(`#${input_id}`).datepicker().value(), type)}
-                        onChange={e => handleDateInput(input_id, $(`#${input_id}`).datepicker().value(), type)}
+                        onFocus={() => datepicker.open()}
+                        onBlur={() => onChangeDate(input_id, type)}
+                        onChange={() => { }}
                     />
                 </div>
                 {error ? <div className='input-error'>
