@@ -161,14 +161,14 @@ $(document).ready(function () {
   })
 
   //filter modal
-  $(".filter-option").click(function () {
-    $("#" + this.id + "-show").slideToggle("300");
-    $('body', "html").css("overflow", "hidden")
-  })
-  $(".filter-cross").click(function () {
-    $(".filter-cross").closest(".mm-modal").slideToggle(300);
-    $('body', "html").css("overflow", "scroll")
-  })
+  // $(".filter-option").click(function () {
+  //   $("#" + this.id + "-show").slideToggle("300");
+  //   $('body', "html").css("overflow", "hidden")
+  // })
+  // $(".filter-cross").click(function () {
+  //   $(".filter-cross").closest(".mm-modal").slideToggle(300);
+  //   $('body', "html").css("overflow", "scroll")
+  // })
 
   //menu toggle
   $("#menu-icon").click(function () {
@@ -290,26 +290,26 @@ $(document).ready(function () {
 
 
 
-  $('#slider_blogs').slick({
-    dots: false,
-    arrows: false,
-    infinite: true,
-    autoplay: false,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    pauseOnHover: true,
-    responsive: [
-      {
-        breakpoint: 1186,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          variableWidth: true,
-          infinite: false,
-        }
-      }
-    ]
-  });
+  // $('#slider_blogs').slick({
+  //   dots: false,
+  //   arrows: false,
+  //   infinite: true,
+  //   autoplay: false,
+  //   slidesToShow: 2,
+  //   slidesToScroll: 1,
+  //   pauseOnHover: true,
+  //   responsive: [
+  //     {
+  //       breakpoint: 1186,
+  //       settings: {
+  //         slidesToShow: 1,
+  //         slidesToScroll: 1,
+  //         variableWidth: true,
+  //         infinite: false,
+  //       }
+  //     }
+  //   ]
+  // });
 
   $('#dob').datepicker();
 

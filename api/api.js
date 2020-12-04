@@ -10,7 +10,26 @@ const api = {
             devUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { mobileNo: "9999000090", customerId: "9999000090" } } }
+        },
+        cities: {
+            uatUrl: 'api/master/v1/',
+            devUrl: 'api/master/v1/',
+            prodUrl: 'api/master/v1/',
+            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { stateID: "9999000090", cityMasterId: "14448" } } }
+        },
+        pincode:{
+            uatUrl: 'api/master/v1/',
+            devUrl: 'api/master/v1/',
+            prodUrl: 'api/master/v1/',
+            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { stateID: "9999000090", cityMasterId: "14448" } } }
+        },
+        generate :{
+            uatUrl: 'api/lead/v1/',
+            devUrl: 'api/master/v1/',
+            prodUrl: 'api/master/v1/',
+            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { gender : "", fullName : {firstName: "", lastName: ""}, dob:"",nationality:"",phoneNo :"",email :"",pan:"",monthlyIncome:"",stateID: "9999000090", cityMasterId: "14448" } } }
         }
+
     }
 }
 

@@ -24,7 +24,7 @@
   position: relative;
 }
 .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.success::after {
-  background: url("../public/images/icons/right-check.jpg") no-repeat 0 0;
+  background: url("/assets/images/icons/right-check.jpg") no-repeat 0 0;
   content: "";
   position: absolute;
   right: 15px;
@@ -681,7 +681,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 .popular-cards-slider .slick-arrow.slick-prev:after {
   position: absolute;
   content: "";
-  background: url(../public/images/icons/right-chevron.svg);
+  background: url(/assets/images/icons/right-chevron.svg);
   height: 48px;
   width: 48px;
   -ms-transform: rotate(180deg);
@@ -705,7 +705,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 .popular-cards-slider .slick-arrow.slick-next:after {
   position: absolute;
   content: "";
-  background: url(../public/images/icons/right-chevron.svg);
+  background: url(/assets/images/icons/right-chevron.svg);
   height: 48px;
   width: 48px;
   background-position: center center;
@@ -1046,7 +1046,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   padding: 20px 0px 12px 32px;
   border-bottom-left-radius: 6px;
   width: 100%;
-  background: url(../public/images/listings/blue-gradient.svg);
+  background: url(/assets/images/listings/blue-gradient.svg);
   background-repeat: no-repeat;
   background-position: left bottom;
 }
@@ -1146,7 +1146,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   min-height: 370px;
   padding: 40px 96px 40px 192px;
   border-radius: 6px;
-  background: url("../public/images/credit-card-flow/bg-2.jpg");
+  background: url("/assets/images/credit-card-flow/bg-2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   margin-bottom: 96px;
@@ -1420,7 +1420,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 .banks-slider .slick-arrow.slick-prev:after {
   position: absolute;
   content: "";
-  background: url(../public/images/icons/right-chevron.svg);
+  background: url(/assets/images/icons/right-chevron.svg);
   height: 48px;
   width: 48px;
   -ms-transform: rotate(180deg);
@@ -1444,7 +1444,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 .banks-slider .slick-arrow.slick-next:after {
   position: absolute;
   content: "";
-  background: url(../public/images/icons/right-chevron.svg);
+  background: url(/assets/images/icons/right-chevron.svg);
   height: 48px;
   width: 48px;
   background-position: center center;
@@ -1610,7 +1610,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 }
 
 .financial-wrapper-card {
-  background: url("../public/images/credit-card-flow/short-form-bg.png");
+  background: url("/assets/images/credit-card-flow/short-form-bg.png");
   background-position: left bottom;
   background-repeat: no-repeat;
   background-size: auto 70%;
@@ -1750,7 +1750,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 
 .blog-wrapper .card-1 .image_1 {
   height: 240px;
-  background: url("../public/images/credit-card-flow/blog-image-1.png");
+  background: url("/assets/images/credit-card-flow/blog-image-1.png");
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -1908,7 +1908,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 .blog-wrapper .card-2 .image_2, .blog-wrapper .card-3 .image_2 {
   max-width: 232px;
   width: 100%;
-  background: url("../public/images/credit-card-flow/blog-image-2.png");
+  background: url("/assets/images/credit-card-flow/blog-image-2.png");
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -1930,7 +1930,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 .blog-wrapper .card-2 .image_3, .blog-wrapper .card-3 .image_3 {
   max-width: 232px;
   width: 100%;
-  background: url("../public/images/credit-card-flow/blog-image-3.png");
+  background: url("/assets/images/credit-card-flow/blog-image-3.png");
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -2250,7 +2250,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 }
 
 .file-type {
-  background: url(../public/images/credit-card-flow/dash.svg);
+  background: url(/assets/images/credit-card-flow/dash.svg);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -2351,27 +2351,27 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 
 @media (max-width: 768px) {
   .row-input-container .long-forms-wrapper {
-    width: 100% !important;
+    width: 100%;
   }
 }
 
 .row-input-container .long-city {
-  width: 60% !important;
+  width: 100%;
 }
 
 @media (max-width: 768px) {
   .row-input-container .long-city {
-    width: 100% !important;
+    width: 100%;
   }
 }
 
 .row-input-container .long-pincode {
-  width: 38% !important;
+  width: 100%;
 }
 
 @media (max-width: 768px) {
   .row-input-container .long-pincode {
-    width: 100% !important;
+    width: 100%;
     margin-top: 8px;
   }
 }
@@ -2908,7 +2908,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 }
 
 .credit-card-flow .lets-find {
-  background: url("../public/images/credit-card-flow/short-form-bg.png");
+  background: url("/assets/images/credit-card-flow/short-form-bg.png");
   background-size: auto;
   background-position: left bottom;
   background-color: #ffffff;
@@ -4332,7 +4332,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 }
 
 .header-access .secondary-cta .border {
-  background: url("../public/images/icons/sec-cta-bg.png");
+  background: url("/assets/images/icons/sec-cta-bg.png");
   background-size: 100% 100%;
   background-position: center;
   width: 100%;
@@ -5390,7 +5390,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   -ms-flex-align: center;
   align-items: center;
   border-radius: 6px;
-  background: url("../public/images/credit-card-flow/short-form-bg.png");
+  background: url("/assets/images/credit-card-flow/short-form-bg.png");
   background-size: 54% auto;
   background-position: left bottom;
   background-color: #ffffff;
@@ -6024,14 +6024,14 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 }
 
 .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .dropdown-content {
-  width: 100% !important;
-  top: 72px !important;
-  left: 0 !important;
-  -ms-transform: scale(1) !important;
-  transform: scale(1) !important;
-  padding: 12px !important;
-  height: 152px !important;
-  min-height: 152px !important;
+  width: 100%;
+  top: 72px;
+  left: 0;
+  -ms-transform: scale(1);
+  transform: scale(1);
+  padding: 12px;
+  height: 152px;
+  min-height: 152px;
 }
 
 @media (max-width: 768px) {
@@ -8245,6 +8245,26 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   background: rgba(255, 255, 255, 0.1);
 }
 
+/*-- Checkbox code fateh --*/
+.lets-find-form span p {
+  display: inline-block;
+  padding-left: 25px;
+  color: rgba(34,31,31,0.6);
+  font-size: 12px;
+  line-height: 22px;
+}
+
+.lets-find-form span p a {
+  color: #221F1F;
+  text-decoration: underline;
+}
+
+.lets-find-form input[type="checkbox"] {
+  float: left;
+  position: relative;
+  top: 17px;
+}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
@@ -8310,3 +8330,4 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
     overflow-x: hidden;
 }
 }
+

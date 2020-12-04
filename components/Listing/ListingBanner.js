@@ -76,7 +76,7 @@ const ListingBanner = ({ data }) => {
                                 className="filter-option"
                                 id="listing-filter">
                                 Filters
-                                <img src="../../images/icons/down-chevron.svg" />
+                                <img src="/assets/images/icons/down-chevron.svg" />
                             </button>
                         </div>
                     </div>

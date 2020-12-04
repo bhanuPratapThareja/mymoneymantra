@@ -8,9 +8,9 @@ export const getFormPercentage = state => {
     };
 
     (Object.values(state)).forEach(value => { 
-        if (value) valueslength++ 
+        if (value ) valueslength++ 
     })
-
+    
     return Math.ceil(valueslength * 100 / totalValues)
 }
 
@@ -25,12 +25,12 @@ function deleteStateKeys(state) {
         delete state.mothersFullName
     }
     if(!state.address1 || !state.address2 || !state.city || !state.pincode) {
-        delete state.address
+        delete state.residenceAddress
     }
     if(!state.officeAddress1 || !state.officeAddress2 || !state.officeCity || !state.officePincode) {
         delete state.officeAddress
     }
-
+    
     delete state.firstName
     delete state.lastName
     delete state.fathersFirstName
