@@ -37,7 +37,7 @@ const Home = props => {
                 case 'blocks.financial-tools':
                     return <FinancialTools key={block.id} tools={block} />
                 case 'blocks.rewards':
-                    return <Rewards key={block.id} rewards={block} />
+                    return <Rewards key={block.id} rewards={block}  path={path}/>
                 case 'blocks.banks':
                     return <Banks key={block.id} banks={block} />
                 case 'blocks.bank-new':
@@ -59,6 +59,7 @@ const Home = props => {
     }
 
     const { data, path } = props
+    console.log("rewardspropssssssssssss-----------------------------",props.path)
 
 
     return (
