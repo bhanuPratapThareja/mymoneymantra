@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { isEmailValid, isNumberValid, isPanValid, isPincodeValid } from './formValidations'
+import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel',
     'input_with_dropdown', 'input_with_calendar', 'upload_button']
@@ -38,19 +38,64 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                 }
                 inp.value = field.value
                 inp.selectedId = null
-                inp.list = [{
-                    name: 'Axis Bank',
-                    id: 1
-                }, {
-                    name: 'ICICI',
-                    id: 2
-                }, {
-                    name: 'HDFC',
-                    id: 3
-                }, {
-                    name: 'SBI',
-                    id: 4
-                }]
+                if(inp.input_id === 'bank' || inp.input_id === 'bank_name') {
+                    inp.list = [{
+                        name: 'Axis Bank',
+                        id: 1
+                    }, {
+                        name: 'ICICI',
+                        id: 2
+                    }, {
+                        name: 'HDFC',
+                        id: 3
+                    }, {
+                        name: 'SBI',
+                        id: 4
+                    }]
+                } else if(inp.input_id === 'company_name') {
+                    inp.list = [{
+                        name: 'Company 1',
+                        id: 1
+                    }, {
+                        name: 'Company 2',
+                        id: 2
+                    }, {
+                        name: 'Company 3',
+                        id: 3
+                    }, {
+                        name: 'Company 4',
+                        id: 4
+                    }]
+                } else if(inp.input_id === 'pincode') {
+                    inp.list = [{
+                        name: '101011',
+                        id: 1
+                    }, {
+                        name: '101021',
+                        id: 2
+                    }, {
+                        name: '101031',
+                        id: 3
+                    }, {
+                        name: '101041',
+                        id: 4
+                    }]
+                } else if(inp.input_id === 'city') {
+                    inp.list = [{
+                        name: 'Delhi',
+                        id: 1
+                    }, {
+                        name: 'Mumbai',
+                        id: 2
+                    }, {
+                        name: 'Here',
+                        id: 3
+                    }, {
+                        name: 'There',
+                        id: 4
+                    }]
+                }
+                
             } else {
                 inp.list = []
             }
@@ -122,11 +167,6 @@ export const updateInputsValidity = (inputs, field, mandatoryErrorMsg, emailErro
             else if ((inp.type === 'tel' || inp.type === 'number') && inp.input_id === 'phone_no' && !isNumberValid(inp.value)) {
                 inp.error = true
                 inp.errorMsg = 'Invalid Mobile No.'
-                errors = true
-            }
-            else if ((inp.type === 'number' && inp.input_id === 'pincode') && !isPincodeValid(inp.value)) {
-                inp.error = true
-                inp.errorMsg = 'Invalid Pincode'
                 errors = true
             }
             else if ((inp.type === 'text' && inp.input_id === 'pan') && !isPanValid(inp.value)) {

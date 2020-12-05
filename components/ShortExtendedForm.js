@@ -107,11 +107,9 @@ class ShortExtendedForm extends React.Component {
     }
 
     showSlides = (n) => {
-        var i;
         var slides = document.getElementsByClassName("sf-forms")
-
         if (this.state.slideIndex > slides.length) {
-            console.log('sumbit short form')
+            this.onSubmitShortForm()
             return
         }
 
@@ -137,6 +135,13 @@ class ShortExtendedForm extends React.Component {
         }
     }
 
+    onGoToLetFindForm = () => {
+        loadLetsFindForm()
+    }
+
+    onSubmitShortForm = () => {
+        Router.push(`${this.props.path}/loan-listing`)
+    }
 
     handleInputDropdownChange = (name, type, item) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
@@ -169,14 +174,6 @@ class ShortExtendedForm extends React.Component {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateInputsValidity(inputs, field, this.state.mandatoryErrorMsg, this.state.emailErrorMsg)
         this.setState({ ...this.state, slides: newSlides })
-    }
-
-    onGoToLetFindForm = () => {
-        loadLetsFindForm()
-    }
-
-    onSubmitShortForm = () => {
-        Router.push(`${this.props.path}/loan-listing`)
     }
 
     handleClickOnSlideBackground = () => {

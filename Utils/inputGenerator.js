@@ -96,13 +96,14 @@ export const generateInputs = (component, updateField,
     }
 
     if (type === 'input_with_dropdown') {
+        const { input_type } = component
         return (
             <>
                 <div className="form__group field" key={id} style={borderStyles}>
                     <label className="form__label">{label}</label>
                     <input className="form__field"
                         name={input_id}
-                        type='text'
+                        type={input_type}
                         value={value}
                         placeholder={placeholder}
                         autoComplete='off'
