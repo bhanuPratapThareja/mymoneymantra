@@ -199,6 +199,17 @@ export const decrementSlideId = slideId => {
     return slideId
 }
 
+export const updateSelectionFromDropdown = (inputs, name, item) => {
+    inputs.forEach(inp => {
+        if (inp.input_id === name) {
+            inp.list = []
+            inp.value = item.name
+            inp.selectedId = item.id
+            inp.error = false
+        }
+    })
+}
+
 export const resetDropdowns = inputs => {
     inputs.forEach(inp => {
         if(inp.type === 'input_with_dropdown') {

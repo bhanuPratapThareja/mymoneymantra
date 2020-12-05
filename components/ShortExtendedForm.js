@@ -1,6 +1,6 @@
 import Router from 'next/router'
 import $ from 'jquery'
-import { submitLetsFindForm, loadLetsFindForm } from '../Utils/shortFormHandle'
+import {  } from '../Utils/shortFormHandle'
 import { generateInputs } from '../Utils/inputGenerator'
 import {
     textTypeInputs,
@@ -9,7 +9,10 @@ import {
     updateInputsValidity,
     incrementSlideId,
     decrementSlideId,
-    resetDropdowns
+    updateSelectionFromDropdown,
+    resetDropdowns,
+    loadLetsFindForm,
+    submitLetsFindForm
 } from '../Utils/shortFormHandle'
 
 class ShortExtendedForm extends React.Component {
@@ -145,18 +148,8 @@ class ShortExtendedForm extends React.Component {
 
     handleInputDropdownChange = (name, type, item) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        inputs.forEach(inp => {
-            if (inp.input_id === name) {
-                inp.list = []
-                inp.value = item.name
-                inp.selectedId = item.id
-                inp.error = false
-            }
-        })
-        this.setState({
-            ...this.state, slides: newSlides
-        }, () => {
-        })
+        updateSelectionFromDropdown(inputs, name, item)
+        this.setState({...this.state, slides: newSlides })
     }
 
     handleChange = field => {
