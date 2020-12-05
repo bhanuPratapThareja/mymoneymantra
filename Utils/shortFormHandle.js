@@ -153,6 +153,12 @@ export const incrementSlideId = slideId => {
     return slideId
 }
 
+export const decrementSlideId = slideId => {
+    let [slide, id] = slideId.split('-')
+    slideId = `${slide}-${--id}`
+    return slideId
+}
+
 export const resetDropdowns = inputs => {
     inputs.forEach(inp => {
         if(inp.type === 'input_with_dropdown') {

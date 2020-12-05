@@ -34,7 +34,6 @@ class Strapi {
 
     processReq = async (method, endPath, body = null, headers = null) => {
         const url = `${this.baseUrl}/${endPath}`
-        console.log(url)
         try {
             const res = await fetch(url, {
                 method,
@@ -44,7 +43,6 @@ class Strapi {
                 },
                 body: body ? JSON.stringify(body) : null
             })
-            console.log(res)
             const json = await res.json()
             return json
         } catch (err) {

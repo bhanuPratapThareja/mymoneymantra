@@ -8,12 +8,13 @@ import {
     handleChangeInputs,
     updateInputsValidity,
     incrementSlideId,
+    decrementSlideId,
     resetDropdowns
 } from '../Utils/shortFormHandle'
 
 class ShortExtendedForm extends React.Component {
     state = {
-        slideIndex: 1,
+        slideIndex: 0,
         currentSlide: 'onboard',
         slides: [],
         letsGoButtonDisabled: true,
@@ -30,7 +31,7 @@ class ShortExtendedForm extends React.Component {
         })
         let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading }]
         this.setState({ ...this.state, slides: [...upDatedSlides] }, () => {
-            console.log(this.state)
+
         })
     }
 
@@ -47,6 +48,7 @@ class ShortExtendedForm extends React.Component {
                 slideNo++
             }, 500)
         })
+
 
         this.showSlides(this.state.slideIndex)
         $(".shortforms-container-buttons #previous").click(() => {
@@ -67,11 +69,7 @@ class ShortExtendedForm extends React.Component {
     }
 
     onSubmitSlide = () => {
-        if (this.state.slideIndex === 8) {
-            this.onSubmitShortForm()
-            return
-        }
-        this.plusSlides(1);
+        this.plusSlides(1)
     }
 
     onClickLetsGo = () => {
@@ -79,73 +77,64 @@ class ShortExtendedForm extends React.Component {
         const errorsPresent = updateInputsValidity(inputs, null, this.state.mandatoryErrorMsg, this.state.emailErrorMsg)
         this.setState({ ...this.state, slides: newSlides }, () => {
             if (!errorsPresent) {
-                this.setState({ currentSlide: 'sf-1' })
-                submitLetsFindForm()
+                this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
+                    submitLetsFindForm()
+                    this.showSlides()
+                })
             }
         })
     }
 
     plusSlides = (n) => {
-        if (n === 1) {
+        if (n >= 1) {
             const { newSlides, inputs } = getCurrentSlideInputs(this.state)
             const errorsPresent = updateInputsValidity(inputs, null, this.state.mandatoryErrorMsg, this.state.emailErrorMsg)
             this.setState({ ...this.state, slides: newSlides }, () => {
                 if (!errorsPresent) {
                     const newSlideId = incrementSlideId(this.state.currentSlide)
-                    this.setState({ slideIndex: this.state.slideIndex += n, currentSlide: newSlideId }, () => {
+                    this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId }, () => {
                         this.showSlides(n)
                     })
                 }
             })
         } else {
-            this.showSlides(n)
+            const newSlideId = decrementSlideId(this.state.currentSlide)
+            this.setState({ slideIndex: this.state.slideIndex - 1, currentSlide: newSlideId }, () => {
+                this.showSlides(n)
+            })
         }
 
     }
 
     showSlides = (n) => {
         var i;
-        var slides = document.getElementsByClassName("sf-forms");
+        var slides = document.getElementsByClassName("sf-forms")
+
+        if (this.state.slideIndex > slides.length) {
+            console.log('sumbit short form')
+            return
+        }
+
         if (this.state.slideIndex == slides.length) {
             $("#button-text").text("Submit and view offers").css("color", "#89C142");
             $("#next").addClass("submit-short-form");
-
         } else {
             $("#button-text").text("Next").css("color", "#221F1F");
             $("#next").removeClass("submit-short-form");
         }
 
-        if (this.state.slideIndex > slides.length) {
-            // this.submitShortForm();
-            return
-        }
+        var width = (this.state.slideIndex * (100 / slides.length)) + "%";
+        $("#pages-count").text(this.state.slideIndex + " of " + slides.length);
+        $(".progress-blue").width(width)
 
         if (n < 1) {
-            this.setState({ slideIndex: this.state.slideIndex - 1 }, () => {
-                $(".lets-find-forms-container").removeClass("moving-in")
-                $(".lets-find").removeClass("moving-out")
-                $(".lets-find-forms-container").addClass("moving-in-rev")
-                $(".lets-find").addClass("moving-out-rev")
-                $("#button-text").text("Next")
-                $("#next").removeClass("submit-short-form");
-            })
-
-            // this.setState({ slideIndex: 1 })
-
-
-        }
-
-        setTimeout(() => {
-            for (i = 0; i < this.state.slideIndex; i++) {
-                slides[i].style.display = "none";
-
+            if (this.state.slidesIndex) {
+                slides[this.state.slideIndex].style.display = "block"
+                slides[this.state.slideIndex].classList.add("opacity-in")
             }
-            slides[this.state.slideIndex - 1].style.display = "block";
-            slides[this.state.slideIndex - 1].classList.add("opacity-in")
-            var width = (this.state.slideIndex * (100 / slides.length)) + "%";
-            $("#pages-count").text(this.state.slideIndex + " of " + slides.length);
-            $(".progress-blue").width(width);
-        }, 500)
+            $("#button-text").text("Next")
+            $("#next").removeClass("submit-short-form");
+        }
     }
 
 
@@ -162,7 +151,6 @@ class ShortExtendedForm extends React.Component {
         this.setState({
             ...this.state, slides: newSlides
         }, () => {
-            console.log(this.state.slides)
         })
     }
 
