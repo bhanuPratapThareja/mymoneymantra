@@ -300,7 +300,7 @@ class ShortExtendedForm extends React.Component {
     }
 
     render() {
-        const { heading, description } = this.props.data.onboard_short_form
+        const { heading, description ,button_text} = this.props.data.onboard_short_form
         const sfSlides = this.state.slides.slice(1)
 
         return (
@@ -332,7 +332,7 @@ class ShortExtendedForm extends React.Component {
                                 <button
                                     onClick={this.onClickLetsGo}
                                     disabled={this.state.letsGoButtonDisabled}
-                                >{'Lets Go'}</button>
+                                >{button_text}</button>
                             </div>
                         </div>
                     </div>
