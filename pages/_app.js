@@ -1,5 +1,5 @@
-//import '../assets/sass/main.scss'
- import '../styles/globals.css'
+import '../styles/globals.css'
+import '../styles/custom.css'
 import axios from 'axios';
 import { generateCorrelationId } from '../Utils/correlationId'
 
