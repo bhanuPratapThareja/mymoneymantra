@@ -103,7 +103,7 @@ $(document).ready(function () {
     var word = numberToWords(selValue)
     var new_word = capitalizeFirstLetter(word)
     $("#word-number").text(new_word)
-    addgap(selValue);
+    // addgap(selValue);
   });
 
   if ($(window).width() < 786) {
