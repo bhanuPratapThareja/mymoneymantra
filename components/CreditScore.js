@@ -1,5 +1,4 @@
 import Strapi from '../providers/strapi'
-import MarkDown from '../Utils/markdown'
 
 const CreditScore = props => {
     const strapi = new Strapi();
