@@ -3,7 +3,6 @@ import Strapi from "../../providers/strapi"
 import { getApiData } from '../../api/api';
 import { getCityData, getPinCodeData } from '../../Utils/commonServices';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import axios from "axios";
 import {getFormPercentage} from '../../Utils/formPercentage';
 import { validEmailRegex, validMobileRegex, isValidPanNumber, validPincodeRegex } from '../../Utils/validator';
 // import converter from 'number-to-words';

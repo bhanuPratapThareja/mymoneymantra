@@ -17,8 +17,6 @@ import OfferDetailCards from '../../components/Listing/OfferDetailCards'
 import OfferBankProductDetails from '../../components/BankProduct/OfferBankProductDetails';
 import BankProductBanner from '../../components/BankProduct/BankProductBanner';
 import ShortExtendedForm from '../../components/ShortExtendedForm';
-import axios from 'axios'
-import { getApiData } from '../../api/api'
 
 const CreditCards = props => {
     useEffect(() => {
