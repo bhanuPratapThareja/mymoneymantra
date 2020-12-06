@@ -1,5 +1,7 @@
 import $ from 'jquery'
 import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
+import { getDropdownList } from '../services/formService'
+import { getApiToHit } from '../api/apiConfig'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel',
     'input_with_dropdown', 'input_with_calendar', 'upload_button']
@@ -30,72 +32,23 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
         inputs.forEach(inp => {
 
             if (inp.input_id === field.name) {
+                inp.selectedId = null
                 if (!field.value) {
                     inp.value = field.value
+                    inp.selectedItem = null
                     inp.selectedId = null
                     inp.list = []
                     return
                 }
                 inp.value = field.value
-                inp.selectedId = null
-                if(inp.input_id === 'bank' || inp.input_id === 'bank_name') {
-                    inp.list = [{
-                        name: 'Axis Bank',
-                        id: 1
-                    }, {
-                        name: 'ICICI',
-                        id: 2
-                    }, {
-                        name: 'HDFC',
-                        id: 3
-                    }, {
-                        name: 'SBI',
-                        id: 4
-                    }]
-                } else if(inp.input_id === 'company_name') {
-                    inp.list = [{
-                        name: 'Company 1',
-                        id: 1
-                    }, {
-                        name: 'Company 2',
-                        id: 2
-                    }, {
-                        name: 'Company 3',
-                        id: 3
-                    }, {
-                        name: 'Company 4',
-                        id: 4
-                    }]
-                } else if(inp.input_id === 'pincode') {
-                    inp.list = [{
-                        name: '101011',
-                        id: 1
-                    }, {
-                        name: '101021',
-                        id: 2
-                    }, {
-                        name: '101031',
-                        id: 3
-                    }, {
-                        name: '101041',
-                        id: 4
-                    }]
-                } else if(inp.input_id === 'city') {
-                    inp.list = [{
-                        name: 'Delhi',
-                        id: 1
-                    }, {
-                        name: 'Mumbai',
-                        id: 2
-                    }, {
-                        name: 'Here',
-                        id: 3
-                    }, {
-                        name: 'There',
-                        id: 4
-                    }]
-                }
                 
+                let listType = getApiToHit(inp.input_id)
+                getDropdownList(listType)
+                    .then(list => {
+                        inp.listType = listType
+                        inp.list = list
+                    })
+
             } else {
                 inp.list = []
             }
@@ -123,7 +76,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
         inputs.forEach(inp => {
             if (inp.input_id === field.name) {
                 inp.value = field.value
-                if(inp.input_id === 'pan' && inp.value) {
+                if (inp.input_id === 'pan' && inp.value) {
                     inp.value = inp.value.toUpperCase()
                 }
             }
@@ -178,7 +131,7 @@ export const updateInputsValidity = (inputs, field, mandatoryErrorMsg, emailErro
                 inp.error = true
                 inp.errorMsg = 'Invalid Selection'
                 errors = true
-            } 
+            }
 
         })
     }
@@ -205,6 +158,7 @@ export const updateSelectionFromDropdown = (inputs, name, item) => {
             inp.list = []
             inp.value = item.name
             inp.selectedId = item.id
+            inp.selectedItem = item.selectedItem
             inp.error = false
         }
     })
@@ -212,13 +166,11 @@ export const updateSelectionFromDropdown = (inputs, name, item) => {
 
 export const resetDropdowns = inputs => {
     inputs.forEach(inp => {
-        if(inp.type === 'input_with_dropdown') {
+        if (inp.type === 'input_with_dropdown') {
             inp.list = []
         }
     })
 }
-
-
 
 export const submitLetsFindForm = () => {
     $(".lets-find-forms-container").removeClass("moving-in-rev")

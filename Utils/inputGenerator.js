@@ -1,3 +1,5 @@
+import { properties } from '../api/apiConfig'
+
 export const generateInputs = (component, updateField,
     checkInputValidity, handleInputDropdownChange) => {
 
@@ -18,7 +20,8 @@ export const generateInputs = (component, updateField,
         checkInputValidity(field)
     }
 
-    const onSelect = (input_id, type, item) => {
+    const onSelect = (input_id, type, name, id, selectedItem) => {
+        const item = { name, id, selectedItem }
         handleInputDropdownChange(input_id, type, item)
     }
 
@@ -45,7 +48,7 @@ export const generateInputs = (component, updateField,
 
 
     let { type, input_id, placeholder, mandatory, label, value, id,
-        checkbox, radio, question, error, errorMsg, list,
+        checkbox, radio, question, error, errorMsg, list, listType,
         upload_text } = component
 
     const borderInputInvalid = { border: '1px solid red' }
@@ -97,6 +100,9 @@ export const generateInputs = (component, updateField,
 
     if (type === 'input_with_dropdown') {
         const { input_type } = component
+
+        const { listName, id, name } = properties(listType)
+        // console.log('propertToDisplay: ', property)
         return (
             <>
                 <div className="form__group field" key={id} style={borderStyles}>
@@ -116,9 +122,13 @@ export const generateInputs = (component, updateField,
                         <p>{errorMsg}</p>
                     </div> : null}
 
-                    {list && list.length ? <div className="dropdown-content" style={{ display: 'block' }}>
+                    {list && list[listName] && list[listName].length ? <div className="dropdown-content" style={{ display: 'block' }}>
                         <div className="dropdown-content-links">
-                            {list.map(item => <a key={item.id} onClick={() => onSelect(input_id, type, item)}>{item.name}</a>)}
+                            {list.cityList.map(item => {
+                                return (
+                                    <a key={item[id]} onClick={() => onSelect(input_id, type, item[name], item[id], item)}>{item[name]}</a>
+                                )
+                            })}
                         </div>
                     </div> : null}
                 </div>

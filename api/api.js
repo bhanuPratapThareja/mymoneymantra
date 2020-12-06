@@ -11,6 +11,9 @@ const api = {
             prodUrl: 'api/customer/v1/profile/',
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { mobileNo: "9999000090", customerId: "9999000090" } } }
         },
+        bank: {
+
+        },
         cities: {
             uatUrl: 'api/master/v1/',
             devUrl: 'api/master/v1/',

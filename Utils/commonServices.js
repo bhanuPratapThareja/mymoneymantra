@@ -6,18 +6,12 @@ async function getCityData(name,fieldName) {
     console.log('inside comm fieldName',fieldName);
     const strapi = new Strapi()
         const { url, body } = getApiData('cities');
+        console.log(url)
+        console.log(body)
         try {
             const res = await strapi.apiReq('POST', url, body)
             const { cityList } = res.response.payload;
             return cityList;
-           
-            // const block = { ...this.state[fieldName] }
-            // console.log('inside comm blockData',blockData)
-            // block.cityList = cityList;
-
-            // this.setState({ [fieldName]: block }, () => {
-            //     console.log('=====', this.state);
-            // })
 
         } catch (error) {
         }

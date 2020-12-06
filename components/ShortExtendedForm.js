@@ -33,9 +33,7 @@ class ShortExtendedForm extends React.Component {
             formInputs.push(item)
         })
         let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading }]
-        this.setState({ ...this.state, slides: [...upDatedSlides] }, () => {
-
-        })
+        this.setState({ ...this.state, slides: [...upDatedSlides] })
     }
 
     componentDidMount() {
@@ -149,7 +147,9 @@ class ShortExtendedForm extends React.Component {
     handleInputDropdownChange = (name, type, item) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateSelectionFromDropdown(inputs, name, item)
-        this.setState({...this.state, slides: newSlides })
+        this.setState({...this.state, slides: newSlides }, () => {
+            console.log(this.state.slides)
+        })
     }
 
     handleChange = field => {
@@ -160,6 +160,7 @@ class ShortExtendedForm extends React.Component {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
             }
+            console.log(this.state.slides)
         })
     }
 
