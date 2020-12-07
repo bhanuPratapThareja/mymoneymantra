@@ -1,6 +1,6 @@
 import Router from 'next/router'
 import $ from 'jquery'
-import {  } from '../Utils/shortFormHandle'
+import { } from '../Utils/shortFormHandle'
 import { generateInputs } from '../Utils/inputGenerator'
 import {
     textTypeInputs,
@@ -14,6 +14,7 @@ import {
     loadLetsFindForm,
     submitLetsFindForm
 } from '../Utils/shortFormHandle'
+import Otp from './Otp';
 
 class ShortExtendedForm extends React.Component {
     state = {
@@ -147,7 +148,7 @@ class ShortExtendedForm extends React.Component {
     handleInputDropdownChange = (name, type, item) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateSelectionFromDropdown(inputs, name, item)
-        this.setState({...this.state, slides: newSlides }, () => {
+        this.setState({ ...this.state, slides: newSlides }, () => {
             console.log(this.state.slides)
         })
     }
@@ -220,6 +221,26 @@ class ShortExtendedForm extends React.Component {
                             <div className="progress-grey">
                                 <div className="progress-blue" style={{ width: '12.5%' }}></div>
                             </div>
+
+
+                            <form className="short-forms-wrapper">
+                                <div className="sf-forms mobile-otp">
+                                    <div className="lets-find-content otp-card_custom">
+                                        <h2>Verify your mobile<br />number</h2>
+                                        <img className="green-underline" src="/assets/images/icons/green-underline.png" />
+                                        <div className="otp-wrapper login-options">
+                                            <div className="form__group field">
+                                                <Otp submitting={false} />
+                                                <label className="form__label" htmlFor="phone">One time password</label>
+                                            </div>
+                                            <span>Haven’t received the OTP yet?</span>
+                                            <button><h6>Resend</h6></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+
                             <h5 className="pages"><span id="pages-count">1 of 8</span></h5>
 
                             {sfSlides && sfSlides.length ? <form className="short-forms-wrapper" onClick={this.handleClickOnSlideBackground}>

@@ -1,9 +1,9 @@
 import { env } from './../env/env';
 
 const api = {
-    uatBaseUrl: 'http://203.122.46.189:8580/mifinlms/',
-    devBaseUrl: 'http://203.122.46.189:8580/mifinlms/',
-    prodBaseUrl: 'http://203.122.46.189:8580/mifinlms/',
+    uatBaseUrl: 'http://203.122.46.189:8060/masters/',
+    devBaseUrl: 'http://203.122.46.189:8060/masters/',
+    prodBaseUrl: 'http://203.122.46.189:8060/masters/',
     routes: {
         offers: {
             uatUrl: 'api/customer/v1/profile/',
@@ -27,7 +27,7 @@ const api = {
             uatUrl: 'api/master/v1/',
             devUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
-            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { stateID: "9999000090", cityMasterId: "14448" } } }
+            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         generate :{
             uatUrl: 'api/lead/v1/',
