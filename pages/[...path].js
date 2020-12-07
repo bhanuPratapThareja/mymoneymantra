@@ -29,7 +29,6 @@ const Home = props => {
     }
 
     const getComponents = (dynamic, path) => {
-        console.log('dynamic:: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':
@@ -59,7 +58,6 @@ const Home = props => {
     }
 
     const { data, path } = props
-    console.log("rewardspropssssssssssss-----------------------------",props.path)
 
 
     return (

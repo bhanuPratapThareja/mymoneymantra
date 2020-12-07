@@ -21,7 +21,7 @@ class Strapi {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsZWFkZ2VuZXJhdGVhcGkiLCJleHAiOjE2MDcxNDU3NDMsImlhdCI6MTYwNzA1OTM0M30.WK8H-CbIczCtsfKRaCBMdaoFsadPt0i6AKcJD1nTS_Lm3vW43pTRIhbKX-8uZz_s9QHXCk7EJB0V8_qDutpM7Q'
+                    'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsZWFkZ2VuZXJhdGVhcGkiLCJleHAiOjE2MDczMzM3NzAsImlhdCI6MTYwNzI0NzM3MH0.Z4T4EVuX7FsOlRQUfUHVuADyQX_rtgOOAA3I5m1LqN6pIzdRFWt2I-4a2tFIHUBzzQYj2VQmy6qInlk3axLH3w'
                 },
                 body: body ? JSON.stringify(body) : null
             })
@@ -34,7 +34,6 @@ class Strapi {
 
     processReq = async (method, endPath, body = null, headers = null) => {
         const url = `${this.baseUrl}/${endPath}`
-        console.log(url)
         try {
             const res = await fetch(url, {
                 method,
@@ -44,7 +43,6 @@ class Strapi {
                 },
                 body: body ? JSON.stringify(body) : null
             })
-            console.log(res)
             const json = await res.json()
             return json
         } catch (err) {
