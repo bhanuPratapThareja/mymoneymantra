@@ -32,16 +32,6 @@
   width: 20px;
   height: 20px;
 }
-.banner-sticky {
-  position: fixed;
-  top: 100px;
-  width: 100%;
-}
-
-.banner-sticky_bottom {
-  position: static;
-  margin-top: 3440px;
-}
 
 .MuiLinearProgress-bar1Determinate {
   background-color: #89C142 !important;
@@ -8345,9 +8335,4 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   .banks-slider {
     overflow-x: hidden;
 }
-}
-
-
-.annual-fee-wrapper.right div:nth-child(2) {
-  margin-top: 30px !important;
 }

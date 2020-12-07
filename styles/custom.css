@@ -1,0 +1,15 @@
+.banner-sticky {
+    position: fixed;
+    top: 100px;
+    width: 100%;
+  }
+  
+  .banner-sticky_bottom {
+    position: static;
+    margin-top: 3440px;
+  }
+
+  .listing-banner_selected {
+      background-color: #89C142 !important;
+      opacity: 1;
+  }

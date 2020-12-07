@@ -6,7 +6,6 @@ const Layout = props => {
 
     useEffect(() => {
         if (typeof window !== undefined) {
-            console.log(window)
             const script = document.createElement('script')
             script.src = '/assets/js/main.js'
             document.body.append(script)

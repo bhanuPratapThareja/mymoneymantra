@@ -5,7 +5,7 @@ const Offers = props => {
    if(!props.data.cards){
       return null;
    }
-   console.log('ppp props: ', props)
+
    const strapi = new Strapi()
    return (
       <section data-aos="fade-up" className="container popular-card-container">
