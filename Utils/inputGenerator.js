@@ -1,4 +1,4 @@
-import { properties } from '../api/apiConfig'
+import { properties } from '../api/dropdownApiConfig'
 
 export const generateInputs = (component, updateField,
     checkInputValidity, handleInputDropdownChange) => {

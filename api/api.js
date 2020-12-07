@@ -21,7 +21,7 @@ const api = {
             uatUrl: 'api/master/v1/',
             devUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
-            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { stateID: "9999000090", cityMasterId: "14448" } } }
+            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         pincode:{
             uatUrl: 'api/master/v1/',

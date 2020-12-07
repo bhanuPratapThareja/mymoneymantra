@@ -1,7 +1,6 @@
 // for requests
 
 export const getApiToHit = apiEndPoint => {
-    // console.log('api end point: ', apiEndPoint)
     switch (apiEndPoint) {
         case 'bank':
         case 'bank_name':

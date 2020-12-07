@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
 import { getDropdownList } from '../services/formService'
-import { getApiToHit } from '../api/apiConfig'
+import { getApiToHit } from '../api/dropdownApiConfig'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel',
     'input_with_dropdown', 'input_with_calendar', 'upload_button']
@@ -28,7 +28,6 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
             }
         })
     } else if (field.type === 'input_with_dropdown') {
-
         inputs.forEach(inp => {
 
             if (inp.input_id === field.name) {
@@ -41,9 +40,9 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                     return
                 }
                 inp.value = field.value
-                
                 let listType = getApiToHit(inp.input_id)
-                getDropdownList(listType)
+
+                getDropdownList(listType, inp.value)
                     .then(list => {
                         inp.listType = listType
                         inp.list = list
