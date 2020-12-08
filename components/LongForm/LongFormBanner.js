@@ -40,13 +40,11 @@ class LongFormBanner extends React.Component {
             officeNearBy: "",
             officeCity: "",
             officePincode: "",
-        },
-        
+        },  
         dob: "",
         nationality: "",
         phoneNo: "",
-        email: "",
-        
+        email: "",      
         pan: "",
         selectedPan: null,
         selectedSalarySlip : null,
@@ -55,7 +53,6 @@ class LongFormBanner extends React.Component {
         percentageComplete : 0,
         totalValues: 17,
         tnc:[],
-        
         errors: {
             gender:'',
             maritalStatus :'',
@@ -65,7 +62,6 @@ class LongFormBanner extends React.Component {
             bankMember :'',
             firstName: '',
             lastName: '',
-            
             phoneNo: '',
             email: '',
             dob: '',
@@ -78,12 +74,15 @@ class LongFormBanner extends React.Component {
             monthlyIncome: '',
             address1: '',
             address2: '',
-            officeAddress1: '',
-            officeAddress2: '',
-            officeCity: '',
-            officePincode: '',
+            nearBy :'',
             city: '',
             pincode: '',
+            officeAddress1: '',
+            officeAddress2: '',
+            officeNearBy :'',
+            officeCity: '',
+            officePincode: '',
+            
         }
     }
 
@@ -102,6 +101,7 @@ class LongFormBanner extends React.Component {
         const { name, value } = e.target;
 
         this.setState({ [name]: value }, () => {
+         
             this.handlePercentage()
 
         });
@@ -144,8 +144,6 @@ class LongFormBanner extends React.Component {
                     })
 
                 });
-
-
             })
         }
 
@@ -195,11 +193,9 @@ class LongFormBanner extends React.Component {
     handleInputBlur = (event) => {
         const { name, value } = event.target;
         this.setState({ [name]: value }, () => {
-
             let errors = this.state.errors;
             switch (name) {
                 case 'firstName':
-
                     errors.firstName = !value ? "mandatory field" : "";
                     break;
                 case 'lastName':
@@ -624,7 +620,8 @@ class LongFormBanner extends React.Component {
                                 <h5><b>10.</b> Residence Address</h5>
                                 <div className="shortforms-container long-address">
                                     <div className="form__group field" style={errors.address1 ? { border: "1px solid red" } : null}>
-                                        <input className="form__field" type="text" id="address-1" placeholder="Address Line 1" name="address1"
+                                        <input className="form__field" type="text" id="address-1" placeholder="Address Line 1" 
+                                        name="address1"
                                           required  onChange={e => this.handleInput(e, "address1")} onBlur={this.handleInputBlur}
                                         />
                                         {errors.address1.length > 0 &&
@@ -640,8 +637,8 @@ class LongFormBanner extends React.Component {
                                         <label className="form__label" htmlFor="address-2">Address Line 2</label>
                                     </div>
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="address-landmark"
-                                            placeholder="Nearby Landmark (Optional)" value={this.state.nearBy} onChange={e => this.handleInput(e, "nearBy")} />
+                                        <input className="form__field" type="text" id="address-landmark" name="nearBy"
+                                            placeholder="Nearby Landmark (Optional)"  onChange={e => this.handleInput(e, "nearBy")} />
                                         <label className="form__label" htmlFor="address-2">Nearby Landmark (Optional)</label>
                                     </div>
                                     <div className="row-input-container">
@@ -699,12 +696,8 @@ class LongFormBanner extends React.Component {
 
                                                 </div>
                                             </div> : null}
-
                                         </div>
-
-
-
-                                    </div>
+                                  </div>
 
                                 </div>
                             </div>
@@ -756,7 +749,8 @@ class LongFormBanner extends React.Component {
                                 <div className="shortforms-container long-address">
                                     <div className="form__group field" style={errors.officeAddress1 ? { border: "1px solid red" } : null}>
                                         <input className="form__field" type="text" id="off-address-1" placeholder="Address Line 1"
-                                          required  name="officeAddress1" onChange={e => this.handleInput(e, "officeAddress1")}
+                                          required  name="officeAddress1"  
+                                          onChange={e => this.handleInput(e, "officeAddress1")}
                                             onBlur={this.handleInputBlur} />
                                         {errors.officeAddress1.length > 0 &&
                                             <span className='error'>{errors.officeAddress1}</span>}
@@ -774,7 +768,9 @@ class LongFormBanner extends React.Component {
                                     </div>
                                     <div className="form__group field">
                                         <input className="form__field" type="text" id="off-address-landmark" name="officeNearBy"
-                                            placeholder="Nearby Landmark (Optional)" onChange={e => this.handleInput(e, "officeNearBy")} />
+                                            placeholder="Nearby Landmark (Optional)" 
+                                             onChange={e => this.handleInput(e, "officeNearBy")} />
+                                             
                                         <label className="form__label" htmlFor="off-address-2">Nearby Landmark (Optional)</label>
                                     </div>
                                     <div className="row-input-container">
@@ -783,7 +779,7 @@ class LongFormBanner extends React.Component {
                                         <div className="custom-wrapper">
                                             <div className="form__group field long-city" style={errors.officeCity ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="off-city" placeholder="City" name="officeCity"
-                                                 required   value={this.state.officeAddress.officeCity} onChange={e => this.handleInput(e, "officeAddress")}
+                                                 required  onChange={e => this.handleInput(e, "officeAddress")}
                                                     onBlur={this.handleInputBlur}
                                                 />
                                                 {errors.officeCity.length > 0 &&
@@ -794,7 +790,7 @@ class LongFormBanner extends React.Component {
                                                 <div className="dropdown-content-links">
                                                     {this.state.officeAddress.officeCityList.map(cityOfc => {
                                                         return (
-                                                            <a key={cityOfc.cityMasterId} name={cityOfc.cityMasterName}
+                                                            <a key={cityOfc.cityMasterId} name={cityOfc.cityMasterName} className="form__label"
                                                                 value={cityOfc.cityMasterId} onClick={e => this.onSelectOfficeCity(cityOfc.cityMasterName, cityOfc.cityMasterId, "officeAddress")} >{cityOfc.cityMasterName}</a>
                                                         )
                                                     }
@@ -809,7 +805,7 @@ class LongFormBanner extends React.Component {
 
                                         <div className="form__group field long-pincode" style={errors.officePincode ? { border: "1px solid red" } : null}>
                                             <input className="form__field" type="text" id="off-pincode" placeholder="Pincode" name="officePincode" 
-                                               required onChange={e => this.handleInput(e, "officePincode")} onBlur={this.handleInputBlur} />
+                                            required  onChange={e => this.handleInput(e, "officePincode")} onBlur={this.handleInputBlur} />
                                             {errors.officePincode.length > 0 &&
                                                 <span className='error'>{errors.officePincode}</span>}
                                             <label className="form__label" htmlFor="off-pincode">Pincode</label>

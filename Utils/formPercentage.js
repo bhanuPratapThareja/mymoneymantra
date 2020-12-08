@@ -3,14 +3,13 @@ export const getFormPercentage = state => {
     const totalValues = state.totalValues
     deleteStateKeys(state);
 
-    console.log(state)
-    
     if(!Object.keys(state).length) {
         return 0
     };
 
     (Object.values(state)).forEach(value => { 
-        if (value ) valueslength++ 
+        if (value)
+        valueslength++ 
     })
     
     return Math.ceil(valueslength * 100 / totalValues)
@@ -26,15 +25,22 @@ function deleteStateKeys(state) {
     if (!state.mothersFirstName || !state.mothersLastName) {
         delete state.mothersFullName
     }
-    if(!state.residenceAddress.address1 || !state.residenceAddress.address2 || !state.residenceAddress.city || !state.residenceAddress.pincode) {
-        delete state.residenceAddress
+    // if(!state.residenceAddress.address1 || !state.residenceAddress.address2 || !state.residenceAddress.city || !state.residenceAddress.pincode) {
+    //     delete state.residenceAddress;
+    // }
+    // if(!state.officeAddress.officeAddress1 || !state.officeAddress.officeAddress2 || !state.officeAddress.officeCity || !state.officeAddress.officePincode) {
+    //     delete state.officeAddress;
+    // }
+   
+    if(!state.address1 || !state.address2 || !state.nearBy || !state.city || !state.pincode) {
+        delete state.residenceAddress;
     }
-    if(!state.officeAddress.officeAddress1 || !state.officeAddress.officeAddress2 || !state.officeAddress.officeCity || !state.officeAddress.officePincode) {
-        delete state.officeAddress
+    if(!state.officeAddress1 || !state.officeAddress2 || !state.officeNearBy || !state.officeCity || !state.officePincode) {
+        delete state.officeAddress;
     }
     
-    delete state.monthlyNumToText
-    delete state.tnc
+   
+     delete state.tnc
     delete state.errors
     delete state.firstName
     delete state.lastName
@@ -52,6 +58,9 @@ function deleteStateKeys(state) {
     delete state.officeNearBy
     delete state.officeCity
     delete state.officePincode
+    delete state.selectedPan
+    delete state.selectedSalarySlip
+    delete state.selectedAddressProof
     delete state.percentageComplete
     delete state.totalValues
 }
