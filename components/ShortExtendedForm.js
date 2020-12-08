@@ -201,7 +201,7 @@ class ShortExtendedForm extends React.Component {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
             }
-            // console.log(this.state.slides)
+            console.log(this.state.slides)
         })
     }
 
