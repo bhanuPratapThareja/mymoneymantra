@@ -30,7 +30,7 @@ const OfferDetailCards = props => {
     }
 
     const goToVDetailsPage = () => {
-        Router.push(`/credit-cards/bank-product`)
+        Router.push(`/credit-cards/details`)
     }
 
     return (
