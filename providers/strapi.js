@@ -21,7 +21,7 @@ class Strapi {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsZWFkZ2VuZXJhdGVhcGkiLCJleHAiOjE2MDczMzM3NzAsImlhdCI6MTYwNzI0NzM3MH0.Z4T4EVuX7FsOlRQUfUHVuADyQX_rtgOOAA3I5m1LqN6pIzdRFWt2I-4a2tFIHUBzzQYj2VQmy6qInlk3axLH3w'
+                    'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsZWFkZ2VuZXJhdGVhcGkiLCJleHAiOjE2MDc0OTE5NjEsImlhdCI6MTYwNzQwNTU2MX0.syizBywNz4WCsuB2dCnkQXm2MHj-hvcNo84UAo914_UhOtLsjHN7WEo3xNlS4PqWpll8W-q_LKtLyZSkR3WAHg'
                 },
                 body: body ? JSON.stringify(body) : null
             })

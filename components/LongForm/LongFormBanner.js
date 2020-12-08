@@ -794,7 +794,7 @@ class LongFormBanner extends React.Component {
                                                 <div className="dropdown-content-links">
                                                     {this.state.officeAddress.officeCityList.map(cityOfc => {
                                                         return (
-                                                            <a key={cityOfc.cityMasterId} name={cityOfc.cityMasterName} className="form__label"
+                                                            <a key={cityOfc.cityMasterId} name={cityOfc.cityMasterName}
                                                                 value={cityOfc.cityMasterId} onClick={e => this.onSelectOfficeCity(cityOfc.cityMasterName, cityOfc.cityMasterId, "officeAddress")} >{cityOfc.cityMasterName}</a>
                                                         )
                                                     }
