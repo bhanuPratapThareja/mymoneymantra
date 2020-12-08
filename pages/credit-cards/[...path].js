@@ -14,8 +14,8 @@ import Rewards from '../../components/Rewards';
 import ThankYouBanner from '../../components/ThankYou/ThankYouBanner';
 import OfferDetailCards from '../../components/Listing/OfferDetailCards'
 
-import OfferBankProductDetails from '../../components/BankProduct/OfferBankProductDetails';
-import BankProductBanner from '../../components/BankProduct/BankProductBanner';
+import OfferBankProductDetails from '../../components/Details/OfferBankProductDetails';
+import BankProductBanner from '../../components/Details/BankProductBanner';
 import ShortExtendedForm from '../../components/ShortExtendedForm';
 
 const CreditCards = props => {

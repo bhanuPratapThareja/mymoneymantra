@@ -55,7 +55,7 @@ class LongFormBanner extends React.Component {
         percentageComplete : 0,
         totalValues: 17,
         tnc:[],
-        monthlyNumToText : 0,
+        
         errors: {
             gender:'',
             maritalStatus :'',
@@ -168,11 +168,7 @@ class LongFormBanner extends React.Component {
             }
             )
         }
-        if (name=="monthlyIncome" && value){
-            this.setState({monthlyNumToText : converter.toWords(value)},() =>{
-                
-            });
-        }
+
         // if (name === "officePincode") {
         //     const block = { ...this.state[type] }
         //     block.officePincode = value;
@@ -431,8 +427,7 @@ class LongFormBanner extends React.Component {
         const strapi = new Strapi()
         const { bank_name, form_heading, product_type, banner_image } = this.props.data
         const { errors } = this.state;
-      
-
+       
         return (
             <div className="long-form">
                 <section className="long-form-wrapper">
@@ -566,7 +561,7 @@ class LongFormBanner extends React.Component {
                                     <h5><b>6.</b> Date of Birth</h5>
                                     <div className="shortforms-container long-name">
                                         <div className="form__group field" style={errors.dob ? { border: "1px solid red" } : null}>
-                                            <input className="form__field datepicker" type="date" id="dob" placeholder="MM / DD / YYYY"
+                                            <input className="form__field datepicker" type ="date" id="dob" placeholder="MM / DD / YYYY"
                                              required   name="dob" onChange={e => this.handleInput(e, "dob")} onBlur={this.handleInputBlur}
                                             />
                                             {errors.dob.length > 0 &&
@@ -667,7 +662,7 @@ class LongFormBanner extends React.Component {
                                                 <div className="dropdown-content-links">
                                                     {this.state.residenceAddress.cityList.map(city => {
                                                         return (
-                                                            <a key={city.cityMasterId} name={city.cityMasterName} className="form__label"
+                                                            <a key={city.cityMasterId} name={city.cityMasterName}
                                                                 value={city.cityMasterId} onClick={e => this.onSelect(city.cityMasterName, city.cityMasterId, "residenceAddress")} >{city.cityMasterName}</a>
                                                         )
                                                     }
@@ -799,7 +794,7 @@ class LongFormBanner extends React.Component {
                                                 <div className="dropdown-content-links">
                                                     {this.state.officeAddress.officeCityList.map(cityOfc => {
                                                         return (
-                                                            <a key={cityOfc.cityMasterId} name={cityOfc.cityMasterName} className="form__label"
+                                                            <a key={cityOfc.cityMasterId} name={cityOfc.cityMasterName}
                                                                 value={cityOfc.cityMasterId} onClick={e => this.onSelectOfficeCity(cityOfc.cityMasterName, cityOfc.cityMasterId, "officeAddress")} >{cityOfc.cityMasterName}</a>
                                                         )
                                                     }
@@ -899,7 +894,7 @@ class LongFormBanner extends React.Component {
                                         />
                                         {errors.monthlyIncome.length > 0 &&
                                             <span className='error'>{errors.monthlyIncome}</span>}
-                                           {this.state.monthlyNumToText ?  <div className="form__field">{this.state.monthlyNumToText}</div> :""}
+                                          
                                         <label className="form__label" htmlFor="m-income">Net monthly income</label>
                                         <p id="word-number"></p>
                                     </div>
