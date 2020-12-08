@@ -561,9 +561,9 @@ class LongFormBanner extends React.Component {
                                     <h5><b>6.</b> Date of Birth</h5>
                                     <div className="shortforms-container long-name">
                                         <div className="form__group field" style={errors.dob ? { border: "1px solid red" } : null}>
-                                            <input className="form__field datepicker" type ="text" id="dob" placeholder="MM / DD / YYYY"
+                                            <input className="form__field datepicker" type ="date" id="dob" placeholder="MM / DD / YYYY"
                                              required   name="dob" onChange={e => this.handleInput(e, "dob")} onBlur={this.handleInputBlur}
-                                             onFocus={() => datepicker.open()}/>
+                                            />
                                             {errors.dob.length > 0 &&
                                                 <span className='error'>{errors.dob}</span>}
                                             <label className="form__label" htmlFor="dob">Date of Birth</label>
