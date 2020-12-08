@@ -1,6 +1,4 @@
 import Strapi from '../../providers/strapi'
-import { getApiData } from '../../api/api';
-
 import { useEffect, useState } from 'react'
 import Router from 'next/router';
 
@@ -8,10 +6,7 @@ import Router from 'next/router';
 const OfferDetailCards = props => {
     const strapi = new Strapi()
     const [offers, setOffers] = useState([])
-    const { url, body } = getApiData('leadProductDecision');
-    console.log("getApiData('leadProductDecision')",getApiData('leadProductDecision'))
-    let reqBody = body.request.payload;
-    console.log("reqBody----------------------------",reqBody)
+    
 
     useEffect(() => {
         setOffers(props.data.offer_cards)
