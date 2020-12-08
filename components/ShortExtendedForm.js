@@ -12,7 +12,9 @@ import {
     updateSelectionFromDropdown,
     resetDropdowns,
     loadLetsFindForm,
-    submitLetsFindForm
+    submitLetsFindForm,
+    submitOtpForm,
+    loadOtpForm
 } from '../Utils/shortFormHandle'
 import Otp from './Otp';
 
@@ -22,6 +24,7 @@ class ShortExtendedForm extends React.Component {
         currentSlide: 'onboard',
         slides: [],
         letsGoButtonDisabled: true,
+        disableOtpSubmitButton: false,
         mandatoryErrorMsg: 'Required Field',
         emailErrorMsg: 'Invalid Email ID',
     }
@@ -51,6 +54,7 @@ class ShortExtendedForm extends React.Component {
             }, 500)
         })
 
+        document.addEventListener('keyup', this.inputFunction);
 
         this.showSlides(this.state.slideIndex)
         $(".shortforms-container-buttons #previous").click(() => {
@@ -64,9 +68,12 @@ class ShortExtendedForm extends React.Component {
 
     onGoToPrevious = () => {
         if (this.state.slideIndex === 1) {
-            this.onGoToLetFindForm()
+            // this.onGoToLetFindForm()
+            loadOtpForm()
             return
         }
+        console.log('dont')
+
         this.plusSlides(-1)
     }
 
@@ -79,12 +86,42 @@ class ShortExtendedForm extends React.Component {
         const errorsPresent = updateInputsValidity(inputs, null, this.state.mandatoryErrorMsg, this.state.emailErrorMsg)
         this.setState({ ...this.state, slides: newSlides }, () => {
             if (!errorsPresent) {
-                this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
-                    submitLetsFindForm()
-                    this.showSlides()
-                })
+                // this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
+                //     submitLetsFindForm()
+                //     this.showSlides()
+                // })
+                submitLetsFindForm()
             }
         })
+    }
+
+    inputFunction = () => {
+        const [i0, i1, i2, i3] = document.querySelectorAll('.input_otp');
+        if (i0.value && i1.value && i2.value && i3.value) {
+            // this.setState({ disableOtpSubmitButton: false })
+        } else {
+            // this.setState({ disableOtpSubmitButton: true })
+        }
+    }
+
+    onSubmitOtp = () => {
+        const inps = document.getElementsByClassName('input_otp');
+        let otp = '';
+        for (let inp of inps) {
+            otp += inp.value
+        }
+        console.log('full otp is: ', otp)
+        console.log('otp length: ', otp.length)
+        
+        if(otp.length !== 4) {
+            return
+        }
+
+        this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
+            submitOtpForm()
+            this.showSlides()
+        })
+
     }
 
     plusSlides = (n) => {
@@ -138,7 +175,9 @@ class ShortExtendedForm extends React.Component {
     }
 
     onGoToLetFindForm = () => {
-        loadLetsFindForm()
+        this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
+            loadLetsFindForm()
+        })
     }
 
     onSubmitShortForm = () => {
@@ -216,18 +255,16 @@ class ShortExtendedForm extends React.Component {
                         </div>
                     </div>
 
-                    <div className="lets-find-forms-container">
-                        <div className="lets-find-stepper-wrapper">
-                            <div className="progress-grey">
-                                <div className="progress-blue" style={{ width: '12.5%' }}></div>
-                            </div>
 
+
+                    <div className="lets-find-forms-container sms-otp" id="sms-otp">
+                        <div className="lets-find-stepper-wrapper" >
 
                             <form className="short-forms-wrapper">
-                                <div className="sf-forms mobile-otp">
+                                <div className="mobile-otp">
                                     <div className="lets-find-content otp-card_custom">
                                         <h2>Verify your mobile<br />number</h2>
-                                        <img className="green-underline" src="/assets/images/icons/green-underline.png" />
+                                        <img className="green-underline" src="../../images/icons/green-underline.png" />
                                         <div className="otp-wrapper login-options">
                                             <div className="form__group field">
                                                 <Otp submitting={false} />
@@ -239,6 +276,33 @@ class ShortExtendedForm extends React.Component {
                                     </div>
                                 </div>
                             </form>
+
+                            <div className="shortforms-container-buttons">
+                                <button className="to-main" id="previous" onClick={this.onGoToLetFindForm}>
+                                    <svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M23.893 15.493a1.332 1.332 0 00-.28-.44l-6.666-6.666a1.34 1.34 0 00-1.894 1.893l4.4 4.387H9.333a1.334 1.334 0 000 2.666h10.12l-4.4 4.387a1.335 1.335 0 000 1.893 1.336 1.336 0 001.894 0l6.666-6.666c.122-.127.217-.277.28-.44a1.333 1.333 0 000-1.014z" fill="#fff"></path>
+                                    </svg>
+                                </button>
+                                <div>
+                                    <h4 id="button-text" style={{ color: 'rgb(34, 31, 31)' }}>Next</h4>
+                                    <button type="button"  onClick={this.onSubmitOtp} disabled={this.state.disableOtpSubmitButton}>
+                                        <svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M23.893 15.493a1.332 1.332 0 00-.28-.44l-6.666-6.666a1.34 1.34 0 00-1.894 1.893l4.4 4.387H9.333a1.334 1.334 0 000 2.666h10.12l-4.4 4.387a1.335 1.335 0 000 1.893 1.336 1.336 0 001.894 0l6.666-6.666c.122-.127.217-.277.28-.44a1.333 1.333 0 000-1.014z" fill="#fff"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    <div className="lets-find-forms-container" id="lets-form-slides">
+                        <div className="lets-find-stepper-wrapper">
+                            <div className="progress-grey">
+                                <div className="progress-blue" style={{ width: '12.5%' }}></div>
+                            </div>
 
 
                             <h5 className="pages"><span id="pages-count">1 of 8</span></h5>

@@ -8,7 +8,9 @@ export const textTypeInputs = ['text', 'number', 'email', 'tel',
 
 export const getCurrentSlideInputs = state => {
     const newSlides = [...state.slides]
+    console.log('newSlides: ', newSlides)
     const slide = newSlides.filter(slide => slide.slideId === state.currentSlide)
+    console.log('slide: ', slide)
     const inputs = slide[0].inputs
     return { newSlides, inputs }
 }
@@ -127,9 +129,9 @@ export const updateInputsValidity = (inputs, field, mandatoryErrorMsg, emailErro
                 errors = true
             }
             else if (inp.type === 'input_with_dropdown' && !inp.selectedId) {
-                inp.error = true
-                inp.errorMsg = 'Invalid Selection'
-                errors = true
+                // inp.error = true
+                // inp.errorMsg = 'Invalid Selection'
+                // errors = true
             }
 
         })
@@ -172,15 +174,41 @@ export const resetDropdowns = inputs => {
 }
 
 export const submitLetsFindForm = () => {
-    $(".lets-find-forms-container").removeClass("moving-in-rev")
-    $(".lets-find").removeClass("moving-out-rev")
-    $(".lets-find-forms-container").addClass("moving-in")
     $(".lets-find").addClass("moving-out")
+    $(".lets-find").removeClass("moving-out-rev")
+    setTimeout(() => {
+        $(".sms-otp").addClass("moving-in")
+        $(".sms-otp").removeClass("moving-in-rev")
+    }, 50);
+}
+
+export const submitOtpForm = () => {
+    $(".sms-otp").addClass("moving-out")
+    $(".sms-otp").removeClass("moving-in")
+    $(".sms-otp").removeClass("moving-out-rev")
+    $("#lets-form-slides").removeClass("moving-in-rev")
+    $("#lets-form-slides").addClass("moving-in")
+}
+
+export const loadOtpForm = () => {
+    $("#lets-form-slides").addClass("moving-in-rev")
+    $("#lets-form-slides").removeClass("moving-in")
+
+    setTimeout(() => {
+        $(".sms-otp").removeClass("moving-out")
+        $(".sms-otp").addClass("moving-out-rev")
+        $(".sms-otp").addClass("moving-in")
+        $(".sms-otp").css('margin-left', '-100%')
+    }, 100);
 }
 
 export const loadLetsFindForm = () => {
-    $(".lets-find-forms-container").removeClass("moving-in")
-    $(".lets-find").removeClass("moving-out")
-    $(".lets-find-forms-container").addClass("moving-in-rev")
-    $(".lets-find").addClass("moving-out-rev")
+    $(".sms-otp").removeClass("moving-out-rev")
+    $(".sms-otp").removeClass("moving-in")
+    $(".sms-otp").addClass("moving-out")
+
+    setTimeout(() => {
+        $(".lets-find").removeClass("moving-out")
+        $(".lets-find").addClass("moving-out-rev")
+    }, 150);
 }

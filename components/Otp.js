@@ -1,5 +1,4 @@
 import { allowedOtpKeys } from '../Utils/allowedOtpKeys';
-import { getDevice } from '../Utils/getDevice';
 import { useEffect, useRef } from 'react';
 
 const Otp = props => {
@@ -40,14 +39,14 @@ const Otp = props => {
 
     }
 
-    const device = getDevice();
-    let type;
+    // const device = getDevice()
+    let type = 'number'
 
-    if (device === 'mobile') {
-        type = 'tel';
-    } else {
-        type = 'number';
-    }
+    // if (device === 'mobile') {
+    //     type = 'tel';
+    // } else {
+    //     type = 'number';
+    // }
 
     return (
         <>

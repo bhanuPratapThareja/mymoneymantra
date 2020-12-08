@@ -13,3 +13,7 @@
       background-color: #89C142 !important;
       opacity: 1;
   }
+
+  .credit-card-flow .sms-otp {
+    background: url("/assets/images/credit-card-flow/short-form-bg.png");
+  }
