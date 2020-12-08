@@ -1,9 +1,9 @@
 import { env } from './../env/env';
 
 const api = {
-    uatBaseUrl: 'http://203.122.46.189:8580/mifinlms/',
-    devBaseUrl: 'http://203.122.46.189:8580/mifinlms/',
-    prodBaseUrl: 'http://203.122.46.189:8580/mifinlms/',
+    uatBaseUrl: 'https://mmmwebapp.herokuapp.com/api/',
+    devBaseUrl: 'https://mmmwebapp.herokuapp.com/api/',
+    prodBaseUrl: 'https://mmmwebapp.herokuapp.com/api/',
     routes: {
         offers: {
             uatUrl: 'api/customer/v1/profile/',
@@ -34,7 +34,14 @@ const api = {
             devUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { gender : "", fullName : {firstName: "", lastName: ""}, dob:"",nationality:"",phoneNo :"",email :"",pan:"",monthlyIncome:"",stateID: "9999000090", cityMasterId: "14448" } } }
+        },
+        leadProductDecision  :{
+            uatUrl: 'lead/v1/ ',
+            devUrl: 'lead/v1/ ',
+            prodUrl: 'lead/v1/ ',
+            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: {"leadId":"PR12344343"} } }
         }
+
 
     }
 }
