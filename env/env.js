@@ -1,5 +1,5 @@
-export const env = 'uat'
+export const env = 'dev'
 
-// uat
 // dev
+// uat
 // prod
