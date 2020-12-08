@@ -6045,6 +6045,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   border: 1px solid rgba(34, 31, 31, 0.2);
   height: 64px;
   width: 100%;
+  margin-bottom: 10px;
 }
 
 .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group #word-number {
