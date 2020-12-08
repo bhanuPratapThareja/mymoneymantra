@@ -16,7 +16,7 @@ export const generateInputs = (component, updateField,
 
     const validate = (e, type) => {
         const { name, value } = e.target
-        const field = { name, value, type }
+        const field = { name, value, type, blur: true, currentActiveInput: name }
         checkInputValidity(field)
     }
 
@@ -51,11 +51,12 @@ export const generateInputs = (component, updateField,
         checkbox, radio, question, error, errorMsg, list, listType,
         upload_text } = component
 
-    const borderInputInvalid = { border: '1px solid red' }
+    const borderInputInvalid = { border: '1px solid var(--error-color)' }
     const borderInputValid = null
     const borderStyles = error ? borderInputInvalid : borderInputValid
 
     if (type === 'text' || type === 'email' || type === 'number' || type === 'tel') {
+        if(!value) value = ''
         return (
             <>
                 <div className="form__group field" key={id} style={borderStyles}>
@@ -66,7 +67,7 @@ export const generateInputs = (component, updateField,
                         value={value}
                         placeholder={placeholder}
                         required={mandatory}
-                        onBlur={e => validate(e, type, 'blur')}
+                        onBlur={e => validate(e, type)}
                         onChange={e => handleChange(e, type)}
                     />
                     {error ? <div className='input-error'>
@@ -80,7 +81,6 @@ export const generateInputs = (component, updateField,
 
     if (type === 'upload_button') {
         const inputFileId = `input_file_${input_id}`
-
         return (
             <>
                 <div className="form__group field file-type">
@@ -99,10 +99,11 @@ export const generateInputs = (component, updateField,
     }
 
     if (type === 'input_with_dropdown') {
+        if(!value) value = ''
         const { input_type } = component
 
         const { listName, id, name } = properties(listType)
-        // console.log('propertToDisplay: ', property)
+        // console.log('checking:: ', listType, listName, id, name)
         return (
             <>
                 <div className="form__group field" key={id} style={borderStyles}>
@@ -124,7 +125,8 @@ export const generateInputs = (component, updateField,
 
                     {list && list[listName] && list[listName].length ? <div className="dropdown-content" style={{ display: 'block' }}>
                         <div className="dropdown-content-links">
-                            {list.cityList.map(item => {
+                            {list[listName].map(item => {
+                                // console.log(list[listName])
                                 return (
                                     <a key={item[id]} onClick={() => onSelect(input_id, type, item[name], item[id], item)}>{item[name]}</a>
                                 )
@@ -137,6 +139,7 @@ export const generateInputs = (component, updateField,
     }
 
     if (type === 'input_with_calendar') {
+        if(!value) value = ''
         const datepicker = $(`#${input_id}`).datepicker()
         return (
             <>

@@ -75,7 +75,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
         inputs.forEach(inp => {
             if (inp.input_id === field.name) {
                 inp.value = field.value
-                if (inp.input_id === 'pan' && inp.value) {
+                if (inp.input_id === 'pan_card' && inp.value) {
                     inp.value = inp.value.toUpperCase()
                 }
             }
@@ -86,57 +86,96 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
 }
 
 
-export const updateInputsValidity = (inputs, field, mandatoryErrorMsg, emailErrorMsg) => {
+export const updateInputsValidity = (inputs, field, errorMsgs) => {
     let errors = false
-    // for check while input and blur
+
+    // check on input 
     if (field) {
         inputs.forEach(inp => {
             if (inp.input_id === field.name) {
                 if (inp.mandatory && !inp.value) {
                     inp.error = true
-                    inp.errorMsg = mandatoryErrorMsg
-
+                    inp.errorMsg = errorMsgs.mandatory
                 } else {
                     inp.error = false
                     inp.errorMsg = ''
                 }
             }
+
+            // check on blur
+
+            if (field.blur) {
+                // console.log(field)
+                if (inp.type === 'email' && inp.input_id === field.currentActiveInput && !isEmailValid(inp.value)) {
+                    inp.error = true
+                    errors = true
+                    if (!inp.value) {
+                        inp.errorMsg = errorMsgs.mandatory
+                    } else {
+                        inp.errorMsg = errorMsgs.email
+                    }
+                } else if ((inp.type === 'tel' || inp.type === 'number') && inp.input_id === field.currentActiveInput && inp.input_id === 'phone_no' && !isNumberValid(inp.value)) {
+                    inp.error = true
+                    errors = true
+                    if (!inp.value) {
+                        inp.errorMsg = errorMsgs.mandatory
+                    } else {
+                        inp.errorMsg = errorMsgs.mobile
+                    }
+                } else if ((inp.type === 'text' && inp.input_id === 'pan_card') && inp.input_id === field.currentActiveInput && !isPanValid(inp.value)) {
+                    inp.error = true
+                    errors = true
+                    if (!inp.value) {
+                        inp.errorMsg = errorMsgs.mandatory
+                    } else {
+                        inp.errorMsg = errorMsgs.pancard
+                    }
+                } else if (inp.type === 'input_with_dropdown' && inp.input_id === field.currentActiveInput && !inp.selectedId) {
+                    // inp.error = true
+                    // errors = true
+                    // if(!inp.value){
+                    //     inp.errorMsg = errorMsgs.mandatory
+                    // } else {
+                    //     inp.errorMsg = errorMsgs.dropdown
+                    // }
+                }
+            }
         })
 
-        // on slide or form submit
+        // check on slide or form submit
+
     } else {
         inputs.forEach(inp => {
             if ((textTypeInputs.includes(inp.type) || inp.type === 'radio') && !inp.value && inp.mandatory) {
+                inp.errorMsg = errorMsgs.mandatory
                 inp.error = true
-                inp.errorMsg = mandatoryErrorMsg
                 errors = true
             }
             else if (inp.type === 'email' && !isEmailValid(inp.value)) {
+                inp.errorMsg = errorMsgs.email
                 inp.error = true
-                inp.errorMsg = emailErrorMsg
                 errors = true
             }
             else if ((inp.type === 'tel' || inp.type === 'number') && inp.input_id === 'phone_no' && !isNumberValid(inp.value)) {
+                inp.errorMsg = errorMsgs.mobile
                 inp.error = true
-                inp.errorMsg = 'Invalid Mobile No.'
                 errors = true
             }
-            else if ((inp.type === 'text' && inp.input_id === 'pan') && !isPanValid(inp.value)) {
+            else if ((inp.type === 'text' && inp.input_id === 'pan_card') && !isPanValid(inp.value)) {
+                inp.errorMsg = errorMsgs.pancard
                 inp.error = true
-                inp.errorMsg = 'Invalid Pan Card No.'
                 errors = true
             }
             else if (inp.type === 'input_with_dropdown' && !inp.selectedId) {
-                inp.error = true
-                inp.errorMsg = 'Invalid Selection'
-                errors = true
+                // inp.error = true
+                // inp.errorMsg = errorMsgs.dropdown
+                // errors = true
             }
 
         })
     }
 
     return errors
-
 }
 
 export const incrementSlideId = slideId => {
@@ -172,15 +211,40 @@ export const resetDropdowns = inputs => {
 }
 
 export const submitLetsFindForm = () => {
-    $(".lets-find-forms-container").removeClass("moving-in-rev")
-    $(".lets-find").removeClass("moving-out-rev")
-    $(".lets-find-forms-container").addClass("moving-in")
     $(".lets-find").addClass("moving-out")
+    $(".lets-find").removeClass("moving-out-rev")
+    setTimeout(() => {
+        $(".sms-otp").addClass("moving-in")
+        $(".sms-otp").removeClass("moving-in-rev")
+    }, 50);
+}
+
+export const submitOtpForm = () => {
+    $(".sms-otp").addClass("moving-out")
+    $(".sms-otp").removeClass("moving-in")
+    $(".sms-otp").removeClass("moving-out-rev")
+    $("#lets-form-slides").removeClass("moving-in-rev")
+    $("#lets-form-slides").addClass("moving-in")
+}
+
+export const loadOtpForm = () => {
+    $("#lets-form-slides").addClass("moving-in-rev")
+    $("#lets-form-slides").removeClass("moving-in")
+
+    setTimeout(() => {
+        $(".sms-otp").removeClass("moving-out")
+        $(".sms-otp").addClass("moving-out-rev")
+        $(".sms-otp").addClass("moving-in")
+        $(".sms-otp").css('margin-left', '-100%')
+    }, 100);
 }
 
 export const loadLetsFindForm = () => {
-    $(".lets-find-forms-container").removeClass("moving-in")
-    $(".lets-find").removeClass("moving-out")
-    $(".lets-find-forms-container").addClass("moving-in-rev")
-    $(".lets-find").addClass("moving-out-rev")
+    $(".sms-otp").addClass("moving-in-rev")
+    $(".sms-otp").removeClass("moving-in")
+
+    setTimeout(() => {
+        $(".lets-find").removeClass("moving-out")
+        $(".lets-find").addClass("moving-out-rev")
+    }, 150);
 }

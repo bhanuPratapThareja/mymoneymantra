@@ -5,7 +5,10 @@ export const getDropdownList = async (type, value) => {
     const strapi = new Strapi()
     const { url, body } = getApiData(type)
     body.request.payload.name = value
-    console.log(body)
+
+    // console.log('url: ', url)
+    // console.log('body: ', body)
+
     const res = await strapi.apiReq('POST', url, body)
     if(res && res.response) return res.response.payload
     else return []
