@@ -39,15 +39,8 @@ const Otp = props => {
 
     }
 
-    // const device = getDevice()
     let type = 'number'
-
-    // if (device === 'mobile') {
-    //     type = 'tel';
-    // } else {
-    //     type = 'number';
-    // }
-
+    
     return (
         <>
             <input type={type} maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" disabled={props.submitting} className="input_otp" onKeyDown={event => onInputChange(event, 0)} ref={inpRef} />

@@ -16,7 +16,8 @@ export const generateInputs = (component, updateField,
 
     const validate = (e, type) => {
         const { name, value } = e.target
-        const field = { name, value, type }
+        console.log(name)
+        const field = { name, value, type, blur: true, currentActiveInput: name }
         checkInputValidity(field)
     }
 
@@ -51,11 +52,12 @@ export const generateInputs = (component, updateField,
         checkbox, radio, question, error, errorMsg, list, listType,
         upload_text } = component
 
-    const borderInputInvalid = { border: '1px solid red' }
+    const borderInputInvalid = { border: '1px solid var(--error-color)' }
     const borderInputValid = null
     const borderStyles = error ? borderInputInvalid : borderInputValid
 
     if (type === 'text' || type === 'email' || type === 'number' || type === 'tel') {
+        if(!value) value = ''
         return (
             <>
                 <div className="form__group field" key={id} style={borderStyles}>
@@ -66,7 +68,7 @@ export const generateInputs = (component, updateField,
                         value={value}
                         placeholder={placeholder}
                         required={mandatory}
-                        onBlur={e => validate(e, type, 'blur')}
+                        onBlur={e => validate(e, type)}
                         onChange={e => handleChange(e, type)}
                     />
                     {error ? <div className='input-error'>
@@ -102,7 +104,6 @@ export const generateInputs = (component, updateField,
         const { input_type } = component
 
         const { listName, id, name } = properties(listType)
-        // console.log('propertToDisplay: ', property)
         return (
             <>
                 <div className="form__group field" key={id} style={borderStyles}>

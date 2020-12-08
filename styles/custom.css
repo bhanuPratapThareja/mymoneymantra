@@ -1,19 +1,42 @@
+:root {
+  --error-color: #DC3737;
+  --next-btn: #221F1F;
+}
+
+.input-error {
+  color: var(--error-color);
+  line-height: 1.5rem;
+  float: right;
+  position: relative;
+  top: 14px;
+  text-transform: capitalize;
+  font-weight: 600;
+  font-size: 5px;
+  text-transform: none;
+  margin: 0 0 15px;
+}
+
 .banner-sticky {
-    position: fixed;
-    top: 100px;
-    width: 100%;
-  }
-  
-  .banner-sticky_bottom {
-    position: static;
-    margin-top: 3440px;
-  }
+  position: fixed;
+  top: 100px;
+  width: 100%;
+}
 
-  .listing-banner_selected {
-      background-color: #89C142 !important;
-      opacity: 1;
-  }
+.banner-sticky_bottom {
+  position: static;
+  margin-top: 3440px;
+}
 
-  .credit-card-flow .sms-otp {
-    background: url("/assets/images/credit-card-flow/short-form-bg.png");
-  }
+.listing-banner_selected {
+  background-color: #89C142 !important;
+  opacity: 1;
+}
+
+.credit-card-flow .sms-otp {
+  background: url("/assets/images/credit-card-flow/short-form-bg.png");
+}
+
+.next-otp-button {
+  background: var(--next-btn) !important;
+  border: 2px solid var(--next-btn) !important;
+}

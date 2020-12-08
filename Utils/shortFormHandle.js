@@ -8,9 +8,7 @@ export const textTypeInputs = ['text', 'number', 'email', 'tel',
 
 export const getCurrentSlideInputs = state => {
     const newSlides = [...state.slides]
-    console.log('newSlides: ', newSlides)
     const slide = newSlides.filter(slide => slide.slideId === state.currentSlide)
-    console.log('slide: ', slide)
     const inputs = slide[0].inputs
     return { newSlides, inputs }
 }
@@ -88,7 +86,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
 }
 
 
-export const updateInputsValidity = (inputs, field, mandatoryErrorMsg, emailErrorMsg) => {
+export const updateInputsValidity = (inputs, field, errorMsgs) => {
     let errors = false
     // for check while input and blur
     if (field) {
@@ -96,11 +94,47 @@ export const updateInputsValidity = (inputs, field, mandatoryErrorMsg, emailErro
             if (inp.input_id === field.name) {
                 if (inp.mandatory && !inp.value) {
                     inp.error = true
-                    inp.errorMsg = mandatoryErrorMsg
-
+                    inp.errorMsg = errorMsgs.mandatory
                 } else {
                     inp.error = false
                     inp.errorMsg = ''
+                }
+            }
+
+            if(field.blur) {
+                // console.log(field)
+                if (inp.type === 'email' && inp.input_id === field.currentActiveInput && !isEmailValid(inp.value)) {
+                    inp.error = true
+                    errors = true
+                    if(!inp.value){
+                        inp.errorMsg = errorMsgs.mandatory
+                    } else {
+                        inp.errorMsg = errorMsgs.email
+                    }
+                }else if ((inp.type === 'tel' || inp.type === 'number') && inp.input_id === field.currentActiveInput && inp.input_id === 'phone_no' && !isNumberValid(inp.value)) {
+                    inp.error = true
+                    errors = true
+                    if(!inp.value){
+                        inp.errorMsg = errorMsgs.mandatory
+                    } else {
+                        inp.errorMsg = errorMsgs.mobile
+                    }
+                } else if ((inp.type === 'text' && inp.input_id === 'pan') && inp.input_id === field.currentActiveInput && !isPanValid(inp.value)) {
+                    inp.error = true
+                    errors = true
+                    if(!inp.value){
+                        inp.errorMsg = errorMsgs.mandatory
+                    } else {
+                        inp.errorMsg = errorMsgs.pancard
+                    }
+                } else if (inp.type === 'input_with_dropdown' && inp.input_id === field.currentActiveInput && !inp.selectedId) {
+                    // inp.error = true
+                    // errors = true
+                    // if(!inp.value){
+                    //     inp.errorMsg = errorMsgs.mandatory
+                    // } else {
+                    //     inp.errorMsg = errorMsgs.dropdown
+                    // }
                 }
             }
         })
@@ -110,27 +144,27 @@ export const updateInputsValidity = (inputs, field, mandatoryErrorMsg, emailErro
         inputs.forEach(inp => {
             if ((textTypeInputs.includes(inp.type) || inp.type === 'radio') && !inp.value && inp.mandatory) {
                 inp.error = true
-                inp.errorMsg = mandatoryErrorMsg
+                inp.errorMsg = errorMsgs.mandatory
                 errors = true
             }
             else if (inp.type === 'email' && !isEmailValid(inp.value)) {
                 inp.error = true
-                inp.errorMsg = emailErrorMsg
+                inp.errorMsg = errorMsgs.email
                 errors = true
             }
             else if ((inp.type === 'tel' || inp.type === 'number') && inp.input_id === 'phone_no' && !isNumberValid(inp.value)) {
                 inp.error = true
-                inp.errorMsg = 'Invalid Mobile No.'
+                inp.errorMsg = errorMsgs.mobile
                 errors = true
             }
             else if ((inp.type === 'text' && inp.input_id === 'pan') && !isPanValid(inp.value)) {
                 inp.error = true
-                inp.errorMsg = 'Invalid Pan Card No.'
+                inp.errorMsg = errorMsgs.pancard
                 errors = true
             }
             else if (inp.type === 'input_with_dropdown' && !inp.selectedId) {
                 // inp.error = true
-                // inp.errorMsg = 'Invalid Selection'
+                // inp.errorMsg = errorMsgs.dropdown
                 // errors = true
             }
 

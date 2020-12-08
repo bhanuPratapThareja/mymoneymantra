@@ -25,8 +25,13 @@ class ShortExtendedForm extends React.Component {
         slides: [],
         letsGoButtonDisabled: true,
         disableOtpSubmitButton: false,
-        mandatoryErrorMsg: 'Required Field',
-        emailErrorMsg: 'Invalid Email ID',
+        errorMsgs: {
+            mandatory: 'Required Field',
+            email: 'Email is not Valid',
+            mobile: 'Invalid Mobile No',
+            pancard: 'Please enter a valid PAN number' ,
+            dropdown: 'Invalid selection'
+        }
     }
 
     setInputsInState = (inputsArray, slideId, heading) => {
@@ -72,8 +77,6 @@ class ShortExtendedForm extends React.Component {
             loadOtpForm()
             return
         }
-        console.log('dont')
-
         this.plusSlides(-1)
     }
 
@@ -83,7 +86,7 @@ class ShortExtendedForm extends React.Component {
 
     onClickLetsGo = () => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const errorsPresent = updateInputsValidity(inputs, null, this.state.mandatoryErrorMsg, this.state.emailErrorMsg)
+        const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
         this.setState({ ...this.state, slides: newSlides }, () => {
             if (!errorsPresent) {
                 // this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
@@ -110,8 +113,6 @@ class ShortExtendedForm extends React.Component {
         for (let inp of inps) {
             otp += inp.value
         }
-        console.log('full otp is: ', otp)
-        console.log('otp length: ', otp.length)
         
         if(otp.length !== 4) {
             return
@@ -127,7 +128,7 @@ class ShortExtendedForm extends React.Component {
     plusSlides = (n) => {
         if (n >= 1) {
             const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-            const errorsPresent = updateInputsValidity(inputs, null, this.state.mandatoryErrorMsg, this.state.emailErrorMsg)
+            const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
             this.setState({ ...this.state, slides: newSlides }, () => {
                 if (!errorsPresent) {
                     const newSlideId = incrementSlideId(this.state.currentSlide)
@@ -188,7 +189,7 @@ class ShortExtendedForm extends React.Component {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateSelectionFromDropdown(inputs, name, item)
         this.setState({ ...this.state, slides: newSlides }, () => {
-            console.log(this.state.slides)
+            // console.log(this.state.slides)
         })
     }
 
@@ -200,13 +201,13 @@ class ShortExtendedForm extends React.Component {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
             }
-            console.log(this.state.slides)
+            // console.log(this.state.slides)
         })
     }
 
     checkInputValidity = field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        updateInputsValidity(inputs, field, this.state.mandatoryErrorMsg, this.state.emailErrorMsg)
+        updateInputsValidity(inputs, field, this.state.errorMsgs)
         this.setState({ ...this.state, slides: newSlides })
     }
 
@@ -285,7 +286,7 @@ class ShortExtendedForm extends React.Component {
                                 </button>
                                 <div>
                                     <h4 id="button-text" style={{ color: 'rgb(34, 31, 31)' }}>Next</h4>
-                                    <button type="button"  onClick={this.onSubmitOtp} disabled={this.state.disableOtpSubmitButton}>
+                                    <button type="button" className="next-otp-button"  onClick={this.onSubmitOtp} disabled={this.state.disableOtpSubmitButton}>
                                         <svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M23.893 15.493a1.332 1.332 0 00-.28-.44l-6.666-6.666a1.34 1.34 0 00-1.894 1.893l4.4 4.387H9.333a1.334 1.334 0 000 2.666h10.12l-4.4 4.387a1.335 1.335 0 000 1.893 1.336 1.336 0 001.894 0l6.666-6.666c.122-.127.217-.277.28-.44a1.333 1.333 0 000-1.014z" fill="#fff"></path>
                                         </svg>
