@@ -16,7 +16,6 @@ export const generateInputs = (component, updateField,
 
     const validate = (e, type) => {
         const { name, value } = e.target
-        console.log(name)
         const field = { name, value, type, blur: true, currentActiveInput: name }
         checkInputValidity(field)
     }
@@ -101,6 +100,7 @@ export const generateInputs = (component, updateField,
     }
 
     if (type === 'input_with_dropdown') {
+        if(!value) value = ''
         const { input_type } = component
 
         const { listName, id, name } = properties(listType)

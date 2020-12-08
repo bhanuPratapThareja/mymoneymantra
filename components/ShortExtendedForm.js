@@ -29,7 +29,7 @@ class ShortExtendedForm extends React.Component {
             mandatory: 'Required Field',
             email: 'Email is not Valid',
             mobile: 'Invalid Mobile No',
-            pancard: 'Please enter a valid PAN number' ,
+            pancard: 'Please enter a valid PAN number',
             dropdown: 'Invalid selection'
         }
     }

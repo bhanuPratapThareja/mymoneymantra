@@ -75,7 +75,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
         inputs.forEach(inp => {
             if (inp.input_id === field.name) {
                 inp.value = field.value
-                if (inp.input_id === 'pan' && inp.value) {
+                if (inp.input_id === 'pan_card' && inp.value) {
                     inp.value = inp.value.toUpperCase()
                 }
             }
@@ -88,7 +88,8 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
 
 export const updateInputsValidity = (inputs, field, errorMsgs) => {
     let errors = false
-    // for check while input and blur
+
+    // check on input 
     if (field) {
         inputs.forEach(inp => {
             if (inp.input_id === field.name) {
@@ -101,28 +102,30 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                 }
             }
 
-            if(field.blur) {
+            // check on blur
+
+            if (field.blur) {
                 // console.log(field)
                 if (inp.type === 'email' && inp.input_id === field.currentActiveInput && !isEmailValid(inp.value)) {
                     inp.error = true
                     errors = true
-                    if(!inp.value){
+                    if (!inp.value) {
                         inp.errorMsg = errorMsgs.mandatory
                     } else {
                         inp.errorMsg = errorMsgs.email
                     }
-                }else if ((inp.type === 'tel' || inp.type === 'number') && inp.input_id === field.currentActiveInput && inp.input_id === 'phone_no' && !isNumberValid(inp.value)) {
+                } else if ((inp.type === 'tel' || inp.type === 'number') && inp.input_id === field.currentActiveInput && inp.input_id === 'phone_no' && !isNumberValid(inp.value)) {
                     inp.error = true
                     errors = true
-                    if(!inp.value){
+                    if (!inp.value) {
                         inp.errorMsg = errorMsgs.mandatory
                     } else {
                         inp.errorMsg = errorMsgs.mobile
                     }
-                } else if ((inp.type === 'text' && inp.input_id === 'pan') && inp.input_id === field.currentActiveInput && !isPanValid(inp.value)) {
+                } else if ((inp.type === 'text' && inp.input_id === 'pan_card') && inp.input_id === field.currentActiveInput && !isPanValid(inp.value)) {
                     inp.error = true
                     errors = true
-                    if(!inp.value){
+                    if (!inp.value) {
                         inp.errorMsg = errorMsgs.mandatory
                     } else {
                         inp.errorMsg = errorMsgs.pancard
@@ -139,27 +142,28 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
             }
         })
 
-        // on slide or form submit
+        // check on slide or form submit
+
     } else {
         inputs.forEach(inp => {
             if ((textTypeInputs.includes(inp.type) || inp.type === 'radio') && !inp.value && inp.mandatory) {
-                inp.error = true
                 inp.errorMsg = errorMsgs.mandatory
+                inp.error = true
                 errors = true
             }
             else if (inp.type === 'email' && !isEmailValid(inp.value)) {
-                inp.error = true
                 inp.errorMsg = errorMsgs.email
+                inp.error = true
                 errors = true
             }
             else if ((inp.type === 'tel' || inp.type === 'number') && inp.input_id === 'phone_no' && !isNumberValid(inp.value)) {
-                inp.error = true
                 inp.errorMsg = errorMsgs.mobile
+                inp.error = true
                 errors = true
             }
-            else if ((inp.type === 'text' && inp.input_id === 'pan') && !isPanValid(inp.value)) {
-                inp.error = true
+            else if ((inp.type === 'text' && inp.input_id === 'pan_card') && !isPanValid(inp.value)) {
                 inp.errorMsg = errorMsgs.pancard
+                inp.error = true
                 errors = true
             }
             else if (inp.type === 'input_with_dropdown' && !inp.selectedId) {
@@ -172,7 +176,6 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
     }
 
     return errors
-
 }
 
 export const incrementSlideId = slideId => {
@@ -237,9 +240,8 @@ export const loadOtpForm = () => {
 }
 
 export const loadLetsFindForm = () => {
-    $(".sms-otp").removeClass("moving-out-rev")
+    $(".sms-otp").addClass("moving-in-rev")
     $(".sms-otp").removeClass("moving-in")
-    $(".sms-otp").addClass("moving-out")
 
     setTimeout(() => {
         $(".lets-find").removeClass("moving-out")
