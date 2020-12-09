@@ -12,7 +12,6 @@ import LearnMore from '../components/LearnMore'
 import Blog from '../components/Blog'
 import ShortExtendedForm from '../components/ShortExtendedForm';
 import { getApiData } from '../api/api'
-import SmsOtpModal from '../components/UI/SmsOtpModal/SmsOtpModal'
 import { Button } from '@material-ui/core'
 
 const Home = props => {

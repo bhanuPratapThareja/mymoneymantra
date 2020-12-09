@@ -1,4 +1,5 @@
 import { properties } from '../api/dropdownApiConfig'
+import { getDevice } from './getDevice'
 
 export const generateInputs = (component, updateField,
     checkInputValidity, handleInputDropdownChange) => {
@@ -64,6 +65,31 @@ export const generateInputs = (component, updateField,
                     <input className="form__field"
                         name={input_id}
                         type={type}
+                        value={value}
+                        placeholder={placeholder}
+                        required={mandatory}
+                        onBlur={e => validate(e, type)}
+                        onChange={e => handleChange(e, type)}
+                    />
+                    {error ? <div className='input-error'>
+                        <p>{errorMsg}</p>
+                    </div> : null}
+
+                </div>
+            </>
+        )
+    }
+
+    if (type === 'phone_no') {
+        console.log(getDevice())
+        if(!value) value = ''
+        return (
+            <>
+                <div className="form__group field" key={id} style={borderStyles}>
+                    <label className="form__label">{label}</label>
+                    <input className="form__field"
+                        name={input_id}
+                        type={getDevice() === 'desktop' ? 'number' : 'tel'}
                         value={value}
                         placeholder={placeholder}
                         required={mandatory}

@@ -3,7 +3,7 @@ import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
 import { getDropdownList } from '../services/formService'
 import { getApiToHit } from '../api/dropdownApiConfig'
 
-export const textTypeInputs = ['text', 'number', 'email', 'tel',
+export const textTypeInputs = ['text', 'number', 'email', 'tel', 'phone_no',
     'input_with_dropdown', 'input_with_calendar', 'upload_button']
 
 export const getCurrentSlideInputs = state => {
@@ -114,7 +114,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                     } else {
                         inp.errorMsg = errorMsgs.email
                     }
-                } else if ((inp.type === 'tel' || inp.type === 'number') && inp.input_id === field.currentActiveInput && inp.input_id === 'phone_no' && !isNumberValid(inp.value)) {
+                } else if (inp.type === 'phone_no' && inp.input_id === field.currentActiveInput && !isNumberValid(inp.value)) {
                     inp.error = true
                     errors = true
                     if (!inp.value) {
@@ -156,7 +156,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                 inp.error = true
                 errors = true
             }
-            else if ((inp.type === 'tel' || inp.type === 'number') && inp.input_id === 'phone_no' && !isNumberValid(inp.value)) {
+            else if (inp.type=== 'phone_no' && !isNumberValid(inp.value)) {
                 inp.errorMsg = errorMsgs.mobile
                 inp.error = true
                 errors = true
