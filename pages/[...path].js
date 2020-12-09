@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 import Banner from '../components/Banner'
@@ -12,20 +11,8 @@ import LearnMore from '../components/LearnMore'
 import Blog from '../components/Blog'
 import ShortExtendedForm from '../components/ShortExtendedForm';
 import { getApiData } from '../api/api'
-import { Button } from '@material-ui/core'
 
 const Home = props => {
-
-    const [open, setOpen] = useState(false)
-    const [otp] = useState(false)
-
-    const handleOpen = () => {
-        setOpen(true)
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    }
 
     const getComponents = (dynamic, path) => {
         return dynamic.map(block => {
