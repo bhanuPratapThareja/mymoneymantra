@@ -8312,12 +8312,12 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   margin: 15px 0;
 }
 
-.credit-card-flow .lets-find-container .lets-find-forms-container
+/* .credit-card-flow .lets-find-container .lets-find-forms-container
 .lets-find-stepper-wrapper .sf-forms .shortforms-container label {
   width: 48.9%;
   display: inline-block;
   margin-right: 15px;
-}
+} */
 
 .credit-card-flow .lets-find-container .lets-find-forms-container 
 .lets-find-stepper-wrapper .sf-forms .shortforms-container label:last-child {
@@ -8339,6 +8339,29 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 
 .credit-card-flow .lets-find-form form .form__label {
   z-index: -1;
+}
+
+.shortforms-container .form__group.field.file-type {
+  margin: 15px 0 0;
+  display: inline-block;
+  max-width: 50%;
+}
+
+.credit-card-flow .sf-forms .form__group.field.file-type input[type="file"] {
+  position: relative;
+  top: 15px;
+  visibility: hidden;
+}
+
+.credit-card-flow .sf-forms .form__group.field.file-type > img {
+  position: absolute;
+  left: 20px;
+  background: none !important;
+  top: 20px;
+}
+
+.credit-card-flow .sf-forms .form__group.field.file-type {
+  position: relative;
 }
 
 @media(max-width: 1199px) {
