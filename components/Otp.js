@@ -23,7 +23,7 @@ const Otp = props => {
                     inputs[val].value = ''
                 }
                 tempVal = null
-            }, 10);
+            }, 10)
             return
         }
         setTimeout(() => {
