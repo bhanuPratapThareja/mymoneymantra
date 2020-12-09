@@ -3466,14 +3466,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   border: none;
 }
 
-.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .form__group {
-  position: relative;
-  padding: 0px 20px 10px 20px;
-  border-radius: 6px;
-  border: 1px solid rgba(34, 31, 31, 0.2);
-  height: 64px;
-  width: 100%;
-}
+
 
 .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container .form__group #word-number {
   color: rgba(34, 31, 31, 0.4);
@@ -3785,10 +3778,6 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   justify-content: center;
   -ms-flex-align: center;
   align-items: center;
-}
-
-.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .shortforms-container-buttons>div h4 {
-  margin-right: 16px;
 }
 
 .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .shortforms-container-buttons #next {
@@ -8190,6 +8179,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   transform: perspective(2500px) rotateX(0) !important;
 }
 
+<<<<<<< HEAD
 /*-- Customised  Css --*/
 .credit-card-flow section.banner {
   margin-top: 0;
@@ -8447,3 +8437,5 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 .long-forms-wrapper > .long-address > .row-input-container > .long-pincode{
   width: 238px!important;
 }
+=======
+>>>>>>> origin/mmm-short-form-css-changes

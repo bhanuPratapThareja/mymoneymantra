@@ -175,6 +175,7 @@ export const generateInputs = (component, updateField,
         return (
             <>
                 <h2>{question}</h2>
+                <div className="cstm-cal">
                 <div className="form__group field" key={id} style={borderStyles}>
                     <label className="form__label">{label}</label>
                     <input
@@ -194,6 +195,7 @@ export const generateInputs = (component, updateField,
                     {error ? <div className='input-error'>
                         <p>{errorMsg}</p>
                     </div> : null}
+                </div>
                 </div>
             </>
 
