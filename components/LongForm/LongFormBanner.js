@@ -52,7 +52,7 @@ class LongFormBanner extends React.Component {
         monthlyIncome: "",
         percentageComplete : 0,
         totalValues: 17,
-        tnc:[],
+         tnc:[],
         errors: {
             gender:'',
             maritalStatus :'',
@@ -101,7 +101,6 @@ class LongFormBanner extends React.Component {
         const { name, value } = e.target;
 
         this.setState({ [name]: value }, () => {
-         
             this.handlePercentage()
 
         });
@@ -116,16 +115,39 @@ class LongFormBanner extends React.Component {
                     this.setState({ [type]: { ...block } })
                     return;
                 }
-                getCityData(name, type).then((value) => {
+
+                getCityData(name, value).then((value) => {
                     const block = { ...this.state[type] }
                     block.cityList = value;
 
                     this.setState({ [type]: block }, () => {
                     })
                 });
-
             })
         }
+
+        // if (name === "city") {
+        //     console.log('inside type city value',value);
+        //     const block = { ...this.state[type] }
+        //     block.city = value;
+        //     this.setState({ [type]: block }, () => {
+        //         if (!value) {
+        //             block.cityList = null
+        //             block.cityId = "";
+        //             this.setState({ [type]: { ...block } })
+        //             return;
+        //         }
+
+        //         getCityData(name, type).then((value) => {
+        //             const block = { ...this.state[type] }
+        //             block.cityList = value;
+
+        //             this.setState({ [type]: block }, () => {
+        //             })
+        //         });
+        //     })
+        // }
+
         if (name === "officeCity") {
             const block = { ...this.state[type] }
             block.officeCity = value;
@@ -136,7 +158,7 @@ class LongFormBanner extends React.Component {
                     this.setState({ [type]: { ...block } })
                     return;
                 }
-                getCityData(name, type).then((value) => {
+                getCityData(name, value).then((value) => {
                     const block = { ...this.state[type] }
                     block.officeCityList = value;
 
@@ -157,7 +179,7 @@ class LongFormBanner extends React.Component {
                     this.setState({ [type]: { ...block } })
                     return;
                 }
-                getPinCodeData(name, type).then((value) => {
+                getPinCodeData(name, value).then((value) => {
                     const block = { ...this.state[type] }
                     block.pinList = value;
                     this.setState({ [type]: block }, () => {
@@ -283,24 +305,26 @@ class LongFormBanner extends React.Component {
     onSelect = (name, value, type) => {
 
         const block = { ...this.state[type] }
-
+console.log('inside resi city select block',block);
         block.city = name;
         block.cityId = value;
         block.cityList = null
 
         this.setState({ [type]: { ...block } }, () => {
+            console.log('inside resi city select state',this.state);
         })
 
     }
     onSelectOfficeCity = (name, value, type) => {
 
         const block = { ...this.state[type] }
-
+        console.log('inside onSelectOfficeCity block',block);
         block.officeCity = name;
         block.officeCityId = value;
         block.officeCityList = null
 
         this.setState({ [type]: { ...block } }, () => {
+            console.log('inside office city select state',this.state);
         })
 
     }
@@ -406,16 +430,16 @@ class LongFormBanner extends React.Component {
 
     //   document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
-    handleCheckbox = (event) =>{
+    // handleCheckbox = (event) =>{
         
-         let selectedTnc = [...this.state.tnc, event.target.id]
-         if (this.state.tnc.includes(event.target.id)) {
-            selectedTnc = selectedTnc.filter(tncVal => tncVal !== event.target.id);
+    //      let selectedTnc = [...this.state.tnc, event.target.id]
+    //      if (this.state.tnc.includes(event.target.id)) {
+    //         selectedTnc = selectedTnc.filter(tncVal => tncVal !== event.target.id);
         
-          }
-          this.setState({tnc: selectedTnc}, ()=>{
-          });
-    }
+    //       }
+    //       this.setState({tnc: selectedTnc}, ()=>{
+    //       });
+    // }
 
 
 
@@ -779,7 +803,7 @@ class LongFormBanner extends React.Component {
                                         <div className="custom-wrapper">
                                             <div className="form__group field long-city" style={errors.officeCity ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="off-city" placeholder="City" name="officeCity"
-                                                 required  onChange={e => this.handleInput(e, "officeAddress")}
+                                                 required  onChange={e => this.handleInput(e, "officeAddress")} value={this.state.officeAddress.officeCity}
                                                     onBlur={this.handleInputBlur}
                                                 />
                                                 {errors.officeCity.length > 0 &&
@@ -789,8 +813,10 @@ class LongFormBanner extends React.Component {
                                             {this.state.officeAddress.officeCityList && this.state.officeAddress.officeCityList.length ? <div id="bank-drop" className="dropdown-content">
                                                 <div className="dropdown-content-links">
                                                     {this.state.officeAddress.officeCityList.map(cityOfc => {
+                                                        console.log('cityOfc',cityOfc)
                                                         return (
-                                                            <a key={cityOfc.cityMasterId} name={cityOfc.cityMasterName} className="form__label"
+                                                            
+                                                            <a key={cityOfc.cityMasterId} name={cityOfc.cityMasterName} 
                                                                 value={cityOfc.cityMasterId} onClick={e => this.onSelectOfficeCity(cityOfc.cityMasterName, cityOfc.cityMasterId, "officeAddress")} >{cityOfc.cityMasterName}</a>
                                                         )
                                                     }
@@ -931,33 +957,33 @@ class LongFormBanner extends React.Component {
                             <div className="long-forms-wrapper long-terms">
                                 <h5><b>16.</b> Terms & Conditions</h5>
                                 <div className="checkbox-container">
-                                    <div className="checkbox">
-                                        <input type="checkbox" id="tnc1" name="tnc1" onChange={this.handleCheckbox}/>
+                                    <div className="checkbox" >
+                                        <input type="checkbox" id="checkbox" name="tnc" />
                                         <label htmlFor="checkbox-1"><span>
                                             I Hereby consent to receiving information from Central KYC Registry through
                                             SMS/Email on the above registered number/Email address.
                                     </span></label>
                                     </div>
                                 </div>
+
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="tnc2" name="tnc2"  onChange={this.handleCheckbox} />
+                                        <input type="checkbox" id="checkbox" name="tnc2"  />
                                         <label htmlFor="checkbox-2"><span>
                                             I have read the Authorization Statement, Know Your Credit Card, Card Member Terms and conditions and Most Important Terms and conditions and fully accept it and agree to be issued the Credit Card opted for by me.
                                     </span></label>
                                     </div>
                                 </div>
+
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="tnc3" name="tnc3" 
-                                        onChange={this.handleCheckbox}
-                                         
-                                         />
+                                        <input type="checkbox" id="tnc3" name="tnc3" />
                                         <label htmlFor="checkbox-3"><span>
                                             From time to time, Citibank brings great products, offers & value addition to its customers. I authorize Citibank & its affiliates and/or partners to communicate these products and offers to me.
                                     </span></label>
                                     </div>
                                 </div>
+                                
                             </div>
 
                             {/* <!--director proof--> */}
