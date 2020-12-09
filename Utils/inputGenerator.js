@@ -61,7 +61,6 @@ export const generateInputs = (component, updateField,
         return (
             <>
                 <div className="form__group field" key={id} style={borderStyles}>
-                    <label className="form__label">{label}</label>
                     <input className="form__field"
                         name={input_id}
                         type={type}
@@ -71,6 +70,7 @@ export const generateInputs = (component, updateField,
                         onBlur={e => validate(e, type)}
                         onChange={e => handleChange(e, type)}
                     />
+                    <label className="form__label">{label}</label>
                     {error ? <div className='input-error'>
                         <p>{errorMsg}</p>
                     </div> : null}
@@ -81,12 +81,10 @@ export const generateInputs = (component, updateField,
     }
 
     if (type === 'phone_no') {
-        console.log(getDevice())
         if(!value) value = ''
         return (
             <>
                 <div className="form__group field" key={id} style={borderStyles}>
-                    <label className="form__label">{label}</label>
                     <input className="form__field"
                         name={input_id}
                         type={getDevice() === 'desktop' ? 'number' : 'tel'}
@@ -99,7 +97,7 @@ export const generateInputs = (component, updateField,
                     {error ? <div className='input-error'>
                         <p>{errorMsg}</p>
                     </div> : null}
-
+                    <label className="form__label">{label}</label>
                 </div>
             </>
         )
@@ -133,7 +131,6 @@ export const generateInputs = (component, updateField,
         return (
             <>
                 <div className="form__group field" key={id} style={borderStyles}>
-                    <label className="form__label">{label}</label>
                     <input className="form__field"
                         name={input_id}
                         type={input_type}
@@ -144,6 +141,7 @@ export const generateInputs = (component, updateField,
                         onBlur={e => validate(e, type)}
                         onChange={e => handleChange(e, type)}
                     />
+                    <label className="form__label">{label}</label>
 
                     {error ? <div className='input-error'>
                         <p>{errorMsg}</p>
@@ -198,10 +196,11 @@ export const generateInputs = (component, updateField,
     if (type === 'checkbox') {
         const { checkbox_input } = checkbox
         return (
-            <div key={id}>
+            <div className="agree">
+            <div className="checkbox-container" key={id}>
                 {checkbox_input.map(box => {
                     return (
-                        <div key={box.id}>
+                        <div key={box.id} className="checkbox">
                             <input
                                 type={type}
                                 name={box.input_id}
@@ -213,6 +212,7 @@ export const generateInputs = (component, updateField,
                     )
                 })}
             </div>
+            </div>
         )
     }
 
@@ -221,7 +221,7 @@ export const generateInputs = (component, updateField,
         return (
             <>
                 {/* <h2>{question}</h2> */}
-                <div key={id} name={input_id} required={mandatory}>
+                <div class="shortforms-container" key={id} name={input_id} required={mandatory}>
                     {radio_buttons.map(button => {
                         const labelStyles = value === button.value ? { border: '1px solid green' } : null
                         return (

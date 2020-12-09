@@ -265,7 +265,7 @@ class ShortExtendedForm extends React.Component {
                                 <div className="mobile-otp">
                                     <div className="lets-find-content otp-card_custom">
                                         <h2>Verify your mobile<br />number</h2>
-                                        <img className="green-underline" src="../../images/icons/green-underline.png" />
+                                        <img className="green-underline" src="/assets/images/icons/green-underline.png" />
                                         <div className="otp-wrapper login-options">
                                             <div className="form__group field">
                                                 <Otp submitting={false} />
