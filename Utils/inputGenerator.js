@@ -81,7 +81,7 @@ export const generateInputs = (component, updateField,
 
     if (type === 'upload_button') {
         const inputFileId = `input_file_${input_id}`
-
+        let uploadText = value ? value.length === 1 ? value[0].name : value.length + ' files' : upload_text 
         return (
             <>
                 <div className="form__group field file-type">
@@ -90,7 +90,7 @@ export const generateInputs = (component, updateField,
                     {value ? <img src="/assets/images/icons/Attach.svg" onClick={() => document.getElementById(inputFileId).click()} style={{ background: 'red' }} /> : null}
                     {value ? <img src="/assets/images/icons/Cross.svg" onClick={() => onUploadAttachment(input_id, type, inputFileId, false)} style={{ background: 'red' }} /> : null}
 
-                    <h5>{upload_text} {!mandatory ? <b>(optional)</b> : null}</h5>
+                    <h5 onClick={() => document.getElementById(inputFileId).click()}>{uploadText} {!mandatory ? <b>(optional)</b> : null}</h5>
                 </div>
                 {error ? <div className='input-error'>
                     <p>{errorMsg}</p>
