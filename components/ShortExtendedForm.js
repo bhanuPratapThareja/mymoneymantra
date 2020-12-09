@@ -36,7 +36,6 @@ class ShortExtendedForm extends React.Component {
     }
 
     setInputsInState = (inputsArray, slideId, heading) => {
-        setBankMaster(this.props.bankMaster)
         let formInputs = []
         let slides = [...this.state.slides]
         inputsArray.forEach(item => {
@@ -45,11 +44,12 @@ class ShortExtendedForm extends React.Component {
         })
         let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading }]
         this.setState({ ...this.state, slides: [...upDatedSlides] }, () => {
-            console.log(this.state)
+            // console.log(this.state)
         })
     }
 
     componentDidMount() {
+        setBankMaster(this.props.bankMaster)
         let slideNo = 1
         const { side_form, form_slide } = this.props.data.onboard_short_form
         this.setInputsInState(side_form, 'onboard')
@@ -204,7 +204,7 @@ class ShortExtendedForm extends React.Component {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
             }
-            // console.log(this.state.slides)
+            console.log(this.state.slides)
         })
 
     }

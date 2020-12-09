@@ -52,11 +52,6 @@ const Home = props => {
 
     return (
         <div className="credit-card-flow">
-
-            {/* <br /><br /><br /><br /><br /><br /><br /><br />
-            <Button variant="contained" onClick={handleOpen}>Open OTP Popup</Button>
-            <SmsOtpModal open={open} handleClose={handleClose} />            */}
-
             {props ? <Layout>{getComponents(data.dynamic, path, bankMaster)}</Layout> : null}
         </div>
     )
@@ -68,13 +63,10 @@ export async function getServerSideProps(ctx) {
     let bankMaster = []
     try{
         const masterData = await getMastersData()
-        console.log('masterData from master: ', masterData)
         bankMaster = masterData.bankMaster
-
     } catch(err) {
 
     }
-        
 
     try {
         const [path] = ctx.params.path

@@ -30,7 +30,6 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
             })
         } else if (field.type === 'input_with_dropdown') {
             inputs.forEach(inp => {
-    
                 if (inp.input_id === field.name) {
                     inp.selectedId = null
                     if (!field.value) {
