@@ -6,6 +6,7 @@ import Router from 'next/router';
 const OfferDetailCards = props => {
     const strapi = new Strapi()
     const [offers, setOffers] = useState([])
+    
 
     useEffect(() => {
         setOffers(props.data.offer_cards)
@@ -24,7 +25,7 @@ const OfferDetailCards = props => {
     }
 
     const goToVDetailsPage = () => {
-        Router.push(`/credit-cards/bank-product`)
+        Router.push(`/credit-cards/details`)
     }
 
     return (

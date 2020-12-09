@@ -40,13 +40,11 @@ class LongFormBanner extends React.Component {
             officeNearBy: "",
             officeCity: "",
             officePincode: "",
-        },
-        
+        },  
         dob: "",
         nationality: "",
         phoneNo: "",
-        email: "",
-        
+        email: "",      
         pan: "",
         selectedPan: null,
         selectedSalarySlip : null,
@@ -54,8 +52,7 @@ class LongFormBanner extends React.Component {
         monthlyIncome: "",
         percentageComplete : 0,
         totalValues: 17,
-        tnc:[],
-        monthlyNumToText : 0,
+         tnc:[],
         errors: {
             gender:'',
             maritalStatus :'',
@@ -65,7 +62,6 @@ class LongFormBanner extends React.Component {
             bankMember :'',
             firstName: '',
             lastName: '',
-            
             phoneNo: '',
             email: '',
             dob: '',
@@ -78,12 +74,15 @@ class LongFormBanner extends React.Component {
             monthlyIncome: '',
             address1: '',
             address2: '',
-            officeAddress1: '',
-            officeAddress2: '',
-            officeCity: '',
-            officePincode: '',
+            nearBy :'',
             city: '',
             pincode: '',
+            officeAddress1: '',
+            officeAddress2: '',
+            officeNearBy :'',
+            officeCity: '',
+            officePincode: '',
+            
         }
     }
 
@@ -116,16 +115,39 @@ class LongFormBanner extends React.Component {
                     this.setState({ [type]: { ...block } })
                     return;
                 }
-                getCityData(name, type).then((value) => {
+
+                getCityData(name, value).then((value) => {
                     const block = { ...this.state[type] }
                     block.cityList = value;
 
                     this.setState({ [type]: block }, () => {
                     })
                 });
-
             })
         }
+
+        // if (name === "city") {
+        //     console.log('inside type city value',value);
+        //     const block = { ...this.state[type] }
+        //     block.city = value;
+        //     this.setState({ [type]: block }, () => {
+        //         if (!value) {
+        //             block.cityList = null
+        //             block.cityId = "";
+        //             this.setState({ [type]: { ...block } })
+        //             return;
+        //         }
+
+        //         getCityData(name, type).then((value) => {
+        //             const block = { ...this.state[type] }
+        //             block.cityList = value;
+
+        //             this.setState({ [type]: block }, () => {
+        //             })
+        //         });
+        //     })
+        // }
+
         if (name === "officeCity") {
             const block = { ...this.state[type] }
             block.officeCity = value;
@@ -136,7 +158,7 @@ class LongFormBanner extends React.Component {
                     this.setState({ [type]: { ...block } })
                     return;
                 }
-                getCityData(name, type).then((value) => {
+                getCityData(name, value).then((value) => {
                     const block = { ...this.state[type] }
                     block.officeCityList = value;
 
@@ -144,8 +166,6 @@ class LongFormBanner extends React.Component {
                     })
 
                 });
-
-
             })
         }
 
@@ -159,7 +179,7 @@ class LongFormBanner extends React.Component {
                     this.setState({ [type]: { ...block } })
                     return;
                 }
-                getPinCodeData(name, type).then((value) => {
+                getPinCodeData(name, value).then((value) => {
                     const block = { ...this.state[type] }
                     block.pinList = value;
                     this.setState({ [type]: block }, () => {
@@ -168,11 +188,7 @@ class LongFormBanner extends React.Component {
             }
             )
         }
-        if (name=="monthlyIncome" && value){
-            this.setState({monthlyNumToText : converter.toWords(value)},() =>{
-                
-            });
-        }
+
         // if (name === "officePincode") {
         //     const block = { ...this.state[type] }
         //     block.officePincode = value;
@@ -199,11 +215,9 @@ class LongFormBanner extends React.Component {
     handleInputBlur = (event) => {
         const { name, value } = event.target;
         this.setState({ [name]: value }, () => {
-
             let errors = this.state.errors;
             switch (name) {
                 case 'firstName':
-
                     errors.firstName = !value ? "mandatory field" : "";
                     break;
                 case 'lastName':
@@ -291,24 +305,26 @@ class LongFormBanner extends React.Component {
     onSelect = (name, value, type) => {
 
         const block = { ...this.state[type] }
-
+console.log('inside resi city select block',block);
         block.city = name;
         block.cityId = value;
         block.cityList = null
 
         this.setState({ [type]: { ...block } }, () => {
+            console.log('inside resi city select state',this.state);
         })
 
     }
     onSelectOfficeCity = (name, value, type) => {
 
         const block = { ...this.state[type] }
-
+        console.log('inside onSelectOfficeCity block',block);
         block.officeCity = name;
         block.officeCityId = value;
         block.officeCityList = null
 
         this.setState({ [type]: { ...block } }, () => {
+            console.log('inside office city select state',this.state);
         })
 
     }
@@ -343,10 +359,14 @@ class LongFormBanner extends React.Component {
        
         let reqBody = body.request.payload;
         reqBody.pan = this.state.pan;
+        reqBody.phoneNo = this.state.phoneNo;
+        reqBody.email=this.state.email;
         
         const strapi = new Strapi()
         try {
             const res = await strapi.apiReq('POST', url, reqBody)
+            console.log('url in submit',url);
+            console.log('body in submit',body);
             let resMessage = res.response.msgInfo.msgDescription;
             alert(resMessage);
             
@@ -414,16 +434,16 @@ class LongFormBanner extends React.Component {
 
     //   document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
-    handleCheckbox = (event) =>{
+    // handleCheckbox = (event) =>{
         
-         let selectedTnc = [...this.state.tnc, event.target.id]
-         if (this.state.tnc.includes(event.target.id)) {
-            selectedTnc = selectedTnc.filter(tncVal => tncVal !== event.target.id);
+    //      let selectedTnc = [...this.state.tnc, event.target.id]
+    //      if (this.state.tnc.includes(event.target.id)) {
+    //         selectedTnc = selectedTnc.filter(tncVal => tncVal !== event.target.id);
         
-          }
-          this.setState({tnc: selectedTnc}, ()=>{
-          });
-    }
+    //       }
+    //       this.setState({tnc: selectedTnc}, ()=>{
+    //       });
+    // }
 
 
 
@@ -431,8 +451,7 @@ class LongFormBanner extends React.Component {
         const strapi = new Strapi()
         const { bank_name, form_heading, product_type, banner_image } = this.props.data
         const { errors } = this.state;
-      
-
+       
         return (
             <div className="long-form">
                 <section className="long-form-wrapper">
@@ -566,7 +585,7 @@ class LongFormBanner extends React.Component {
                                     <h5><b>6.</b> Date of Birth</h5>
                                     <div className="shortforms-container long-name">
                                         <div className="form__group field" style={errors.dob ? { border: "1px solid red" } : null}>
-                                            <input className="form__field datepicker" type="date" id="dob" placeholder="MM / DD / YYYY"
+                                            <input className="form__field datepicker" type ="date" id="dob" placeholder="MM / DD / YYYY"
                                              required   name="dob" onChange={e => this.handleInput(e, "dob")} onBlur={this.handleInputBlur}
                                             />
                                             {errors.dob.length > 0 &&
@@ -629,7 +648,8 @@ class LongFormBanner extends React.Component {
                                 <h5><b>10.</b> Residence Address</h5>
                                 <div className="shortforms-container long-address">
                                     <div className="form__group field" style={errors.address1 ? { border: "1px solid red" } : null}>
-                                        <input className="form__field" type="text" id="address-1" placeholder="Address Line 1" name="address1"
+                                        <input className="form__field" type="text" id="address-1" placeholder="Address Line 1" 
+                                        name="address1"
                                           required  onChange={e => this.handleInput(e, "address1")} onBlur={this.handleInputBlur}
                                         />
                                         {errors.address1.length > 0 &&
@@ -645,8 +665,8 @@ class LongFormBanner extends React.Component {
                                         <label className="form__label" htmlFor="address-2">Address Line 2</label>
                                     </div>
                                     <div className="form__group field">
-                                        <input className="form__field" type="text" id="address-landmark"
-                                            placeholder="Nearby Landmark (Optional)" value={this.state.nearBy} onChange={e => this.handleInput(e, "nearBy")} />
+                                        <input className="form__field" type="text" id="address-landmark" name="nearBy"
+                                            placeholder="Nearby Landmark (Optional)"  onChange={e => this.handleInput(e, "nearBy")} />
                                         <label className="form__label" htmlFor="address-2">Nearby Landmark (Optional)</label>
                                     </div>
                                     <div className="row-input-container">
@@ -667,7 +687,7 @@ class LongFormBanner extends React.Component {
                                                 <div className="dropdown-content-links">
                                                     {this.state.residenceAddress.cityList.map(city => {
                                                         return (
-                                                            <a key={city.cityMasterId} name={city.cityMasterName} className="form__label"
+                                                            <a key={city.cityMasterId} name={city.cityMasterName}
                                                                 value={city.cityMasterId} onClick={e => this.onSelect(city.cityMasterName, city.cityMasterId, "residenceAddress")} >{city.cityMasterName}</a>
                                                         )
                                                     }
@@ -696,7 +716,7 @@ class LongFormBanner extends React.Component {
                                                             // <a key={city.pincode} className="form__label" onClick={e => this.onSelectPin(pin.cityId, pin.pincode, "residenceAddress")}
                                                             // >{pin.pincode}</a>
 
-                                                            <a key={city.pincode} className="form__label" onClick={e => this.onSelectPin(pin.cityMasterName, pin.pincode, "residenceAddress")}
+                                                            <a key={city.pincode}  onClick={e => this.onSelectPin(pin.cityMasterName, pin.pincode, "residenceAddress")}
                                                             >{pin.pincode}</a>
                                                         )
                                                     }
@@ -704,12 +724,8 @@ class LongFormBanner extends React.Component {
 
                                                 </div>
                                             </div> : null}
-
                                         </div>
-
-
-
-                                    </div>
+                                  </div>
 
                                 </div>
                             </div>
@@ -761,7 +777,8 @@ class LongFormBanner extends React.Component {
                                 <div className="shortforms-container long-address">
                                     <div className="form__group field" style={errors.officeAddress1 ? { border: "1px solid red" } : null}>
                                         <input className="form__field" type="text" id="off-address-1" placeholder="Address Line 1"
-                                          required  name="officeAddress1" onChange={e => this.handleInput(e, "officeAddress1")}
+                                          required  name="officeAddress1"  
+                                          onChange={e => this.handleInput(e, "officeAddress1")}
                                             onBlur={this.handleInputBlur} />
                                         {errors.officeAddress1.length > 0 &&
                                             <span className='error'>{errors.officeAddress1}</span>}
@@ -779,7 +796,9 @@ class LongFormBanner extends React.Component {
                                     </div>
                                     <div className="form__group field">
                                         <input className="form__field" type="text" id="off-address-landmark" name="officeNearBy"
-                                            placeholder="Nearby Landmark (Optional)" onChange={e => this.handleInput(e, "officeNearBy")} />
+                                            placeholder="Nearby Landmark (Optional)" 
+                                             onChange={e => this.handleInput(e, "officeNearBy")} />
+                                             
                                         <label className="form__label" htmlFor="off-address-2">Nearby Landmark (Optional)</label>
                                     </div>
                                     <div className="row-input-container">
@@ -788,7 +807,7 @@ class LongFormBanner extends React.Component {
                                         <div className="custom-wrapper">
                                             <div className="form__group field long-city" style={errors.officeCity ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="off-city" placeholder="City" name="officeCity"
-                                                 required   value={this.state.officeAddress.officeCity} onChange={e => this.handleInput(e, "officeAddress")}
+                                                 required  onChange={e => this.handleInput(e, "officeAddress")} value={this.state.officeAddress.officeCity}
                                                     onBlur={this.handleInputBlur}
                                                 />
                                                 {errors.officeCity.length > 0 &&
@@ -799,7 +818,8 @@ class LongFormBanner extends React.Component {
                                                 <div className="dropdown-content-links">
                                                     {this.state.officeAddress.officeCityList.map(cityOfc => {
                                                         return (
-                                                            <a key={cityOfc.cityMasterId} name={cityOfc.cityMasterName} className="form__label"
+                                                            
+                                                            <a key={cityOfc.cityMasterId} name={cityOfc.cityMasterName} 
                                                                 value={cityOfc.cityMasterId} onClick={e => this.onSelectOfficeCity(cityOfc.cityMasterName, cityOfc.cityMasterId, "officeAddress")} >{cityOfc.cityMasterName}</a>
                                                         )
                                                     }
@@ -814,7 +834,7 @@ class LongFormBanner extends React.Component {
 
                                         <div className="form__group field long-pincode" style={errors.officePincode ? { border: "1px solid red" } : null}>
                                             <input className="form__field" type="text" id="off-pincode" placeholder="Pincode" name="officePincode" 
-                                               required onChange={e => this.handleInput(e, "officePincode")} onBlur={this.handleInputBlur} />
+                                            required  onChange={e => this.handleInput(e, "officePincode")} onBlur={this.handleInputBlur} />
                                             {errors.officePincode.length > 0 &&
                                                 <span className='error'>{errors.officePincode}</span>}
                                             <label className="form__label" htmlFor="off-pincode">Pincode</label>
@@ -899,7 +919,7 @@ class LongFormBanner extends React.Component {
                                         />
                                         {errors.monthlyIncome.length > 0 &&
                                             <span className='error'>{errors.monthlyIncome}</span>}
-                                           {this.state.monthlyNumToText ?  <div className="form__field">{this.state.monthlyNumToText}</div> :""}
+                                          
                                         <label className="form__label" htmlFor="m-income">Net monthly income</label>
                                         <p id="word-number"></p>
                                     </div>
@@ -940,33 +960,33 @@ class LongFormBanner extends React.Component {
                             <div className="long-forms-wrapper long-terms">
                                 <h5><b>16.</b> Terms & Conditions</h5>
                                 <div className="checkbox-container">
-                                    <div className="checkbox">
-                                        <input type="checkbox" id="tnc1" name="tnc1" onChange={this.handleCheckbox}/>
+                                    <div className="checkbox" >
+                                        <input type="checkbox" id="checkbox" name="tnc" />
                                         <label htmlFor="checkbox-1"><span>
                                             I Hereby consent to receiving information from Central KYC Registry through
                                             SMS/Email on the above registered number/Email address.
                                     </span></label>
                                     </div>
                                 </div>
+
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="tnc2" name="tnc2"  onChange={this.handleCheckbox} />
+                                        <input type="checkbox" id="checkbox" name="tnc2"  />
                                         <label htmlFor="checkbox-2"><span>
                                             I have read the Authorization Statement, Know Your Credit Card, Card Member Terms and conditions and Most Important Terms and conditions and fully accept it and agree to be issued the Credit Card opted for by me.
                                     </span></label>
                                     </div>
                                 </div>
+
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="tnc3" name="tnc3" 
-                                        onChange={this.handleCheckbox}
-                                         
-                                         />
+                                        <input type="checkbox" id="tnc3" name="tnc3" />
                                         <label htmlFor="checkbox-3"><span>
                                             From time to time, Citibank brings great products, offers & value addition to its customers. I authorize Citibank & its affiliates and/or partners to communicate these products and offers to me.
                                     </span></label>
                                     </div>
                                 </div>
+                                
                             </div>
 
                             {/* <!--director proof--> */}

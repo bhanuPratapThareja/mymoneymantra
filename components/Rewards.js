@@ -3,6 +3,28 @@ import Strapi from '../providers/strapi'
 
 const Rewards = props => {
    const { heading, sub_text, button } = props.rewards
+   function goToShortFormPage() {
+      window.scrollTo({
+          top: 1000,
+          behavior: 'smooth'
+      });
+  }
+
+  function rewardsCta(){
+     if(props.path==='credit-cards'){
+      goToShortFormPage()
+     }
+  }
+
+   function goToShortForm(){
+      if(props.path == "credit-cards"){
+      window.scrollTo({
+            top: 1000,
+            behavior: 'smooth'
+      
+      })
+   }
+   }
 
    return (
       <section data-aos="fade-up" className="container reward-cover aos-init">
@@ -12,7 +34,9 @@ const Rewards = props => {
                <p>{sub_text}</p>
             </div>
             <div className="reward-button">
-               <button>{button}</button>
+              
+           <button onClick={rewardsCta}>{button}</button>
+               
             </div>
          </div>
       </section>

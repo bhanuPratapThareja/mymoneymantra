@@ -39,11 +39,12 @@ const api = {
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         generate :{
-            devUrl: 'api/master/v1/',
+            devUrl: 'api/lead/v1/',
             uatUrl: 'api/lead/v1/',
             prodUrl: 'api/master/v1/',
-            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { gender : "", fullName : {firstName: "", lastName: ""}, dob:"",nationality:"",phoneNo :"",email :"",pan:"",monthlyIncome:"",stateID: "9999000090", cityMasterId: "14448" } } }
-        }
+            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { leadId:"PR12344343" , gender : "", fullName : {firstName: "", lastName: ""}, dob:"",nationality:"",phoneNo :"",email :"",pan:"",monthlyIncome:"",stateID: "9999000090", cityMasterId: "14448" } } }
+        }       
+
 
     }
 }
