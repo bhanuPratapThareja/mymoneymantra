@@ -71,6 +71,7 @@ export const generateInputs = (component, updateField,
                         type={type}
                         value={value}
                         placeholder={placeholder}
+                        autoComplete='off'
                         required={mandatory}
                         onBlur={e => validate(e, type)}
                         onChange={e => handleChange(e, type)}
@@ -95,6 +96,7 @@ export const generateInputs = (component, updateField,
                         type={getDevice() === 'desktop' ? 'number' : 'tel'}
                         value={value}
                         placeholder={placeholder}
+                        autoComplete='off'
                         required={mandatory}
                         onBlur={e => validate(e, type)}
                         onChange={e => handleChange(e, type)}
