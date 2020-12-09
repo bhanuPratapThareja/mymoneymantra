@@ -359,10 +359,14 @@ console.log('inside resi city select block',block);
        
         let reqBody = body.request.payload;
         reqBody.pan = this.state.pan;
+        reqBody.phoneNo = this.state.phoneNo;
+        reqBody.email=this.state.email;
         
         const strapi = new Strapi()
         try {
             const res = await strapi.apiReq('POST', url, reqBody)
+            console.log('url in submit',url);
+            console.log('body in submit',body);
             let resMessage = res.response.msgInfo.msgDescription;
             alert(resMessage);
             
@@ -712,7 +716,7 @@ console.log('inside resi city select block',block);
                                                             // <a key={city.pincode} className="form__label" onClick={e => this.onSelectPin(pin.cityId, pin.pincode, "residenceAddress")}
                                                             // >{pin.pincode}</a>
 
-                                                            <a key={city.pincode} className="form__label" onClick={e => this.onSelectPin(pin.cityMasterName, pin.pincode, "residenceAddress")}
+                                                            <a key={city.pincode}  onClick={e => this.onSelectPin(pin.cityMasterName, pin.pincode, "residenceAddress")}
                                                             >{pin.pincode}</a>
                                                         )
                                                     }
@@ -813,7 +817,6 @@ console.log('inside resi city select block',block);
                                             {this.state.officeAddress.officeCityList && this.state.officeAddress.officeCityList.length ? <div id="bank-drop" className="dropdown-content">
                                                 <div className="dropdown-content-links">
                                                     {this.state.officeAddress.officeCityList.map(cityOfc => {
-                                                        console.log('cityOfc',cityOfc)
                                                         return (
                                                             
                                                             <a key={cityOfc.cityMasterId} name={cityOfc.cityMasterName} 
