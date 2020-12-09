@@ -11,10 +11,15 @@ import LearnMore from '../components/LearnMore'
 import Blog from '../components/Blog'
 import ShortExtendedForm from '../components/ShortExtendedForm';
 import { getApiData } from '../api/api'
+import { getMastersData } from '../services/mastersService'
+import { useEffect, useState } from 'react';
 
 const Home = props => {
 
-    const getComponents = (dynamic, path) => {
+    const { data, path, bankMaster } = props
+
+
+    const getComponents = (dynamic, path, bankMaster) => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':
@@ -30,7 +35,7 @@ const Home = props => {
                 case 'blocks.offer':
                     return <Offers key={block.id} data={block} />
                 case 'blocks.trending-offers':
-                    return <TrendingOffers key={block.id} data={block}  />
+                    return <TrendingOffers key={block.id} data={block} />
                 case 'blocks.blogs':
                     return <Blog key={block.id} data={block} />
                 case 'blocks.learn-more':
@@ -38,12 +43,11 @@ const Home = props => {
                 case 'blocks.credit-score':
                     return <CreditScore key={block.id} data={block} />
                 case 'form-components.onboarding-short-form':
-                    return <ShortExtendedForm key={block.id} data={block} path={path} />
+                    return <ShortExtendedForm key={block.id} data={block} path={path} bankMaster={bankMaster} />
             }
         })
     }
-
-    const { data, path } = props
+    
 
 
     return (
@@ -53,7 +57,7 @@ const Home = props => {
             <Button variant="contained" onClick={handleOpen}>Open OTP Popup</Button>
             <SmsOtpModal open={open} handleClose={handleClose} />            */}
 
-            {props ? <Layout>{getComponents(data.dynamic, path)}</Layout> : null}
+            {props ? <Layout>{getComponents(data.dynamic, path, bankMaster)}</Layout> : null}
         </div>
     )
 }
@@ -61,21 +65,16 @@ const Home = props => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     let props = {}
-    let trendingOffers = null
-    let trendingProductId = ''
-    let offersData = []
+    let bankMaster = []
+    try{
+        const masterData = await getMastersData()
+        console.log('masterData from master: ', masterData)
+        bankMaster = masterData.bankMaster
 
-    // try {
-    //     const { url, body } = getApiData('offers')
-    //     const res = await strapi.apiReq('POST', url, body)
-    //     offersData = res.response.payload
-    // } catch(err) {
-    // }
+    } catch(err) {
 
-    // try {
-    //     trendingOffers = await strapi.processReq('GET', `products?_where[product_id]=${trendingProductId}`)
-    // } catch (err) {
-    // }
+    }
+        
 
     try {
         const [path] = ctx.params.path
@@ -85,7 +84,7 @@ export async function getServerSideProps(ctx) {
     } catch (err) {
     }
 
-    return { props: { ...props } }
+    return { props: { ...props, bankMaster } }
 }
 
 export default Home

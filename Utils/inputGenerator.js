@@ -221,7 +221,7 @@ export const generateInputs = (component, updateField,
         return (
             <>
                 {/* <h2>{question}</h2> */}
-                <div class="shortforms-container" key={id} name={input_id} required={mandatory}>
+                <div className="shortforms-container" key={id} name={input_id} required={mandatory}>
                     {radio_buttons.map(button => {
                         const labelStyles = value === button.value ? { border: '1px solid green' } : null
                         return (

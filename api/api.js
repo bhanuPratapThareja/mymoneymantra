@@ -5,6 +5,12 @@ const api = {
     uatBaseUrl: 'http://203.122.46.189:8060/masters/',
     prodBaseUrl: 'http://203.122.46.189:8060/masters/',
     routes: {
+        masters:{
+            devUrl: 'api/master/v1/',
+            uatUrl: 'api/customer/v1/profile/',
+            prodUrl: 'api/customer/v1/profile/',
+            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '111' } } }
+        },
         offers: {
             devUrl: 'api/customer/v1/profile/',
             uatUrl: 'api/customer/v1/profile/',

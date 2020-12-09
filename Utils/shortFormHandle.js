@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
-import { getDropdownList } from '../services/formService'
+import { getDropdownList, getBankList } from '../services/formService'
 import { getApiToHit } from '../api/dropdownApiConfig'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel', 'phone_no',
@@ -14,75 +14,87 @@ export const getCurrentSlideInputs = state => {
 }
 
 export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
-    if (field.type === 'checkbox') {
-        inputs.forEach(inp => {
-            if (inp.type === 'checkbox') {
-                inp.checkbox.checkbox_input.forEach(box => {
-                    if (box.input_id === field.name) {
-                        box.value = field.checked
-                        if (box.input_id === 'tnc') {
-                            letsGoButtonDisabled = !field.checked
+    return new Promise((resolve) => {
+        if (field.type === 'checkbox') {
+            inputs.forEach(inp => {
+                if (inp.type === 'checkbox') {
+                    inp.checkbox.checkbox_input.forEach(box => {
+                        if (box.input_id === field.name) {
+                            box.value = field.checked
+                            if (box.input_id === 'tnc') {
+                                letsGoButtonDisabled = !field.checked
+                            }
                         }
-                    }
-                })
-            }
-        })
-    } else if (field.type === 'input_with_dropdown') {
-        inputs.forEach(inp => {
-
-            if (inp.input_id === field.name) {
-                inp.selectedId = null
-                if (!field.value) {
-                    inp.value = field.value
-                    inp.selectedItem = null
-                    inp.selectedId = null
-                    inp.list = []
-                    return
-                }
-                inp.value = field.value
-                let listType = getApiToHit(inp.input_id)
-
-                getDropdownList(listType, inp.value)
-                    .then(list => {
-                        inp.listType = listType
-                        inp.list = list
                     })
-
-            } else {
-                inp.list = []
-            }
-        })
-    } else if (field.type === 'input_with_calendar') {
-        inputs.forEach(inp => {
-            if (inp.input_id === field.name) {
-                inp.value = field.value
-            }
-        })
-    } else if (field.type === 'upload_button') {
-        inputs.forEach(inp => {
-            if (inp.input_id === field.name) {
-                inp.value = field.value
-            }
-        })
-
-    } else if (field.type === 'radio') {
-        inputs.forEach(inp => {
-            if (inp.input_id === field.name) {
-                inp.value = field.value
-            }
-        })
-    } else {
-        inputs.forEach(inp => {
-            if (inp.input_id === field.name) {
-                inp.value = field.value
-                if (inp.input_id === 'pan_card' && inp.value) {
-                    inp.value = inp.value.toUpperCase()
                 }
-            }
-        })
-    }
-
-    return { newstate: { letsGoButtonDisabled } }
+            })
+        } else if (field.type === 'input_with_dropdown') {
+            inputs.forEach(inp => {
+    
+                if (inp.input_id === field.name) {
+                    inp.selectedId = null
+                    if (!field.value) {
+                        inp.value = field.value
+                        inp.selectedItem = null
+                        inp.selectedId = null
+                        inp.list = []
+                        return
+                    }
+                    inp.value = field.value
+                    if (inp.input_id === 'bank' || inp.input_id === 'bank_name') {
+                        let listType = 'bank'
+                        getBankList(inp.value)
+                            .then(list => {
+                                inp.listType = listType
+                                inp.list = list
+                            })
+    
+                    } else {
+                        let listType = getApiToHit(inp.input_id)
+    
+                        getDropdownList(listType, inp.value)
+                            .then(list => {
+                                inp.listType = listType
+                                inp.list = list
+                            })
+                    }
+    
+    
+                } else {
+                    inp.list = []
+                }
+            })
+        } else if (field.type === 'input_with_calendar') {
+            inputs.forEach(inp => {
+                if (inp.input_id === field.name) {
+                    inp.value = field.value
+                }
+            })
+        } else if (field.type === 'upload_button') {
+            inputs.forEach(inp => {
+                if (inp.input_id === field.name) {
+                    inp.value = field.value
+                }
+            })
+    
+        } else if (field.type === 'radio') {
+            inputs.forEach(inp => {
+                if (inp.input_id === field.name) {
+                    inp.value = field.value
+                }
+            })
+        } else {
+            inputs.forEach(inp => {
+                if (inp.input_id === field.name) {
+                    inp.value = field.value
+                    if (inp.input_id === 'pan_card' && inp.value) {
+                        inp.value = inp.value.toUpperCase()
+                    }
+                }
+            })
+        }
+        resolve ({ newstate: { letsGoButtonDisabled } })
+    })
 }
 
 export const updateInputsValidity = (inputs, field, errorMsgs) => {
@@ -155,7 +167,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                 inp.error = true
                 errors = true
             }
-            else if (inp.type=== 'phone_no' && !isNumberValid(inp.value)) {
+            else if (inp.type === 'phone_no' && !isNumberValid(inp.value)) {
                 inp.errorMsg = errorMsgs.mobile
                 inp.error = true
                 errors = true
