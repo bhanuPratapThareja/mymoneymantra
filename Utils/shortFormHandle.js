@@ -85,7 +85,6 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
     return { newstate: { letsGoButtonDisabled } }
 }
 
-
 export const updateInputsValidity = (inputs, field, errorMsgs) => {
     let errors = false
 
