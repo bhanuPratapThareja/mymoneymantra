@@ -1,6 +1,5 @@
 import Router from 'next/router'
 import $ from 'jquery'
-import { } from '../Utils/shortFormHandle'
 import { generateInputs } from '../Utils/inputGenerator'
 import { setBankMaster } from '../services/formService'
 import {
