@@ -20,7 +20,7 @@ const Rewards = props => {
       if(props.path == "credit-cards"){
       window.scrollTo({
             top: 1000,
-            behavior: 'smooth'
+            // behavior: 'smooth'
       
       })
    }
@@ -35,7 +35,7 @@ const Rewards = props => {
             </div>
             <div className="reward-button">
               
-           <button onClick={rewardsCta}>{button}</button>
+           <button onClick={goToShortForm}>{button}</button>
                
             </div>
          </div>
