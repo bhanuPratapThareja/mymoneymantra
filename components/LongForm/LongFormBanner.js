@@ -671,7 +671,7 @@ console.log('inside resi city select block',block);
                                     </div>
                                     <div className="row-input-container">
 
-                                        <div className="custom-wrapper">
+                                        {/* <div className="custom-wrapper"> */}
 
                                             <div className="form__group field long-city" style={errors.city ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="city" placeholder="City"
@@ -696,9 +696,9 @@ console.log('inside resi city select block',block);
                                                 </div>
                                             </div> : null}
 
-                                        </div>
+                                        {/* </div>
 
-                                        <div className="custom-wrapper">
+                                        <div className="custom-wrapper"> */}
                                             <div className="form__group field long-pincode" style={errors.pincode ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="pincode" name="pincode" placeholder="Pincode"
                                                   required   value={this.state.residenceAddress.pincode}
@@ -724,7 +724,7 @@ console.log('inside resi city select block',block);
 
                                                 </div>
                                             </div> : null}
-                                        </div>
+                                        {/* </div> */}
                                   </div>
 
                                 </div>
@@ -804,7 +804,7 @@ console.log('inside resi city select block',block);
                                     <div className="row-input-container">
 
 
-                                        <div className="custom-wrapper">
+                                        {/* <div className="custom-wrapper"> */}
                                             <div className="form__group field long-city" style={errors.officeCity ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="off-city" placeholder="City" name="officeCity"
                                                  required  onChange={e => this.handleInput(e, "officeAddress")} value={this.state.officeAddress.officeCity}
@@ -828,7 +828,7 @@ console.log('inside resi city select block',block);
                                                 </div>
                                             </div> : null}
 
-                                        </div>
+                                        {/* </div> */}
 
 
 

@@ -2338,9 +2338,9 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   }
 }
 
-.row-input-container .long-city {
+/* .row-input-container .long-city {
   width: 100%;
-}
+} */
 
 @media (max-width: 768px) {
   .row-input-container .long-city {
@@ -2348,9 +2348,9 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   }
 }
 
-.row-input-container .long-pincode {
+/* .row-input-container .long-pincode {
   width: 100%;
-}
+} */
 
 @media (max-width: 768px) {
   .row-input-container .long-pincode {

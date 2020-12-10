@@ -315,6 +315,18 @@ input[type=number]::-webkit-outer-spin-button {
   bottom: 30px;
 }
 
+.long-forms-wrapper .shortforms-container .form__group.field.file-type {
+  max-width: 100%;
+}
+
+.row-input-container .long-city {
+  width: 60% !important;
+}
+
+.row-input-container .long-pincode {
+  width: 38% !important;
+}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
