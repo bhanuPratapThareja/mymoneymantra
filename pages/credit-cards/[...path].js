@@ -9,11 +9,9 @@ import Banks from '../../components/Banks';
 import CreditScore from '../../components/CreditScore';
 import FinancialTools from '../../components/FinancialTools';
 import Blog from '../../components/Blog';
-
 import Rewards from '../../components/Rewards';
 import ThankYouBanner from '../../components/ThankYou/ThankYouBanner';
 import OfferDetailCards from '../../components/Listing/OfferDetailCards'
-
 import OfferBankProductDetails from '../../components/Details/OfferBankProductDetails';
 import BankProductBanner from '../../components/Details/BankProductBanner';
 import ShortExtendedForm from '../../components/ShortExtendedForm';
