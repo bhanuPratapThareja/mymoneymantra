@@ -13,23 +13,19 @@ import Blog from '../../../../components/Blog'
 import LearnMore from '../../../../components/LearnMore'
 
 const Details = props => {
-    const [buttonType, setButtonType] = useState('')
-    const [buttonText, setButtonText] = useState('')
+    const [productBannerButton, setProductBannerButton] = useState(null)
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        const { buttonType, buttonText } = Router.query
-        if (buttonType && buttonText) {
-            setButtonType(buttonType)
-            setButtonText(buttonText)
-        }
+
     })
 
     const getProductDetailsComponents = (details, path) => {
+        console.log('props: ', props)
         return details.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':
-                    return <BankProductBanner key={block.id} data={block} buttonType={buttonType} buttonText={buttonText} />
+                    return <BankProductBanner key={block.id} data={block} />
                 case 'blocks.bank-product-details-cards':
                     return <OfferBankProductDetails key={block.id} data={block} />
                 case 'blocks.credit-score':
