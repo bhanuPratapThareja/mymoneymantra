@@ -47,7 +47,6 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                                 inp.listType = listType
                                 inp.list = list
                             })
-    
                     } 
                     
                     // else if (inp.input_id === 'company_name') {

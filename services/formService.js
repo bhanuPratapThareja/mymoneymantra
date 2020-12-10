@@ -32,6 +32,7 @@ export const getBankList = (val) => {
 
 export const getCompanyList = (val) => {
     const promise =  new Promise((resolve) => {
+        console.log(companymaster)
         if (companymaster.companyList.length) {
             let filteredCompanyList = companymaster.companyList.filter(company => {
                 return company.companyName.startsWith(val.toUpperCase())
