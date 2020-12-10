@@ -5,6 +5,8 @@ import { getCityData, getPinCodeData } from '../../Utils/commonServices';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { getFormPercentage } from '../../Utils/formPercentage';
 import { validEmailRegex, validMobileRegex, isValidPanNumber, validPincodeRegex } from '../../Utils/validator';
+import Router from 'next/router';
+import ThankYouBanner from '../ThankYou/ThankYouBanner';
 // import converter from 'number-to-words';
 class LongFormBanner extends React.Component {
 
@@ -53,6 +55,7 @@ class LongFormBanner extends React.Component {
         percentageComplete: 0,
         totalValues: 17,
         tnc: [],
+        leadId:"",
         errors: {
             gender: '',
             maritalStatus: '',
@@ -305,13 +308,13 @@ class LongFormBanner extends React.Component {
     onSelect = (name, value, type) => {
 
         const block = { ...this.state[type] }
-        console.log('inside resi city select block', block);
+        // console.log('inside resi city select block', block);
         block.city = name;
         block.cityId = value;
         block.cityList = null
 
         this.setState({ [type]: { ...block } }, () => {
-            console.log('inside resi city select state', this.state);
+            // console.log('inside resi city select state', this.state);
         })
 
     }
@@ -357,24 +360,30 @@ class LongFormBanner extends React.Component {
         e.preventDefault();
         const { url, body } = getApiData('generate');
 
-        let reqBody = body.request.payload;
-        reqBody.pan = this.state.pan;
-        reqBody.phoneNo = this.state.phoneNo;
-        reqBody.email = this.state.email;
+        // let reqBody = body.request.payload;
+        // reqBody.pan = this.state.pan;
+        // reqBody.phoneNo = this.state.phoneNo;
+        // reqBody.email = this.state.email;
 
         const strapi = new Strapi()
         try {
-            const res = await strapi.apiReq('POST', url, reqBody)
+            const res = await strapi.apiReq('POST', url, body)
             console.log('url in submit', url);
             console.log('body in submit', body);
-            let resMessage = res.response.msgInfo.msgDescription;
+            let resMessage = res.response.msgInfo.message;
+            let leadId = res.response.payload.leadId;
+            
+            this.setState({leadId : leadId})
             alert(resMessage);
+            Router.push(`/credit-cards/thank-you`)
 
         } catch (error) {
 
         }
 
     }
+
+
 
     onFileChange = event => {
         this.setState({ selectedPan: event.target.files[0] }, () => {
@@ -451,8 +460,11 @@ class LongFormBanner extends React.Component {
         const strapi = new Strapi()
         const { bank_name, form_heading, product_type, banner_image } = this.props.data
         const { errors } = this.state;
+        // console.log('inside render this.state',this.state)
+        const { leadId } = this.state.leadId;
 
         return (
+            <>
             <div className="long-form">
                 <section className="long-form-wrapper">
                     <div className="card-info" style={{ height: '303px' }} id="longFormBanner">
@@ -1024,6 +1036,8 @@ class LongFormBanner extends React.Component {
 
                 </section>
             </div>
+           
+            </>
         )
     }
 }

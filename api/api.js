@@ -5,7 +5,7 @@ const api = {
     uatBaseUrl: 'http://203.122.46.189:8060/masters/',
     prodBaseUrl: 'http://203.122.46.189:8060/masters/',
     routes: {
-        masters:{
+        masters: {
             devUrl: 'api/master/v1/',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
@@ -32,19 +32,18 @@ const api = {
             prodUrl: 'api/master/v1/',
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
-        pincode:{
+        pincode: {
             devUrl: 'api/master/v1/',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
-        generate :{
+        generate: {
             devUrl: 'api/lead/v1/',
             uatUrl: 'api/lead/v1/',
-            prodUrl: 'api/master/v1/',
-            // body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { leadId:"PR12344343" , gender : "", fullName : {firstName: "", lastName: ""}, dob:"",nationality:"",phoneNo :"",email :"",pan:"",monthlyIncome:"",stateID: "9999000090", cityMasterId: "14448" } } }
-            
-            body : {
+            prodUrl: 'api/master/v1/', 
+
+            body: {
                 "request": {
                     "header": {
                         "correlationId": "25478965874",
@@ -52,7 +51,7 @@ const api = {
                     },
                     "payload": {
                         "personal": {
-                            "title": "1000000001",   
+                            "title": "1000000001",
                             "firstName": "Kumar",
                             "lastName": "Anilll",
                             "middleName": "",
@@ -118,7 +117,7 @@ const api = {
                         "exisLoanAmount": "",
                         "loanStartYear": "",
                         "totalExisTenor": "",
-                        "offerId":"123",
+                        "offerId": "123",
                         "address": [
                             {
                                 "addressTypeMasterId": "1000000001",
@@ -145,9 +144,10 @@ const api = {
                         ]
                     }
                 }
+
             }
-            
-        }       
+
+        }
 
 
     }
