@@ -38,16 +38,15 @@ export const getBankList = (val) => {
 export const getCompanyList = (val) => {
     const promise =  new Promise((resolve) => {
         if (companymaster.companyList.length) {
-            setTimeout(() => {
+           
             let filteredCompanyList = companymaster.companyList.filter(company => {
-                return company.companyName.includes((val.toUpperCase())) !== -1
+                return company.companyName.startsWith((val.toUpperCase())) !== -1
             })
             if (filteredCompanyList.length) {
                     resolve({ companyList: filteredCompanyList })
                 } else {
                     resolve([])
                 }
-            },100)
             } else {
             resolve([])
         }
