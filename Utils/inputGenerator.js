@@ -198,8 +198,8 @@ export const generateInputs = (component, updateField,
     }
 
     if (type === 'checkbox') {
-        const { checkbox_input } = checkbox
-        const fieldId = `${type}_container`
+        const { checkbox_input, checkboxes_for } = checkbox
+        const fieldId = `${checkboxes_for}_${type}_container`
         return (
             <div className="agree" id={fieldId}>
                 <div className="checkbox-container" key={id}>
