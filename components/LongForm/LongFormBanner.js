@@ -671,8 +671,34 @@ class LongFormBanner extends React.Component {
                                     </div>
                                     <div className="row-input-container">
 
+                                        {/* <div className="custom-wrapper"> */}
 
-                                        <div className="custom-wrapper">
+                                            <div className="form__group field long-city" style={errors.city ? { border: "1px solid red" } : null}>
+                                                <input className="form__field" type="text" id="city" placeholder="City"
+                                                  required  name="city" value={this.state.residenceAddress.city}
+                                                    onChange={e => this.handleInput(e, "residenceAddress")} onBlur={this.handleInputBlur}
+                                                />
+                                                {errors.city.length > 0 &&
+                                                    <span className='error'>{errors.city}</span>}
+                                                <label className="form__label" htmlFor="city">City</label>
+
+                                            </div>
+                                            {this.state.residenceAddress.cityList && this.state.residenceAddress.cityList.length ? <div id="bank-drop" className="dropdown-content">
+                                                <div className="dropdown-content-links">
+                                                    {this.state.residenceAddress.cityList.map(city => {
+                                                        return (
+                                                            <a key={city.cityMasterId} name={city.cityMasterName}
+                                                                value={city.cityMasterId} onClick={e => this.onSelect(city.cityMasterName, city.cityMasterId, "residenceAddress")} >{city.cityMasterName}</a>
+                                                        )
+                                                    }
+                                                    )}
+
+                                                </div>
+                                            </div> : null}
+
+                                        {/* </div>
+
+                                        <div className="custom-wrapper"> */}
                                             <div className="form__group field long-pincode" style={errors.pincode ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="pincode" name="pincode" placeholder="Pincode"
                                                     autoComplete="off" required value={this.state.residenceAddress.pincode}
@@ -698,34 +724,8 @@ class LongFormBanner extends React.Component {
 
                                                 </div>
                                             </div> : null}
-                                        </div>
-
-                                        <div className="custom-wrapper">
-                                            <div className="form__group field long-city" style={errors.city ? { border: "1px solid red" } : null}>
-                                                <input className="form__field" type="text" id="city" placeholder="City"
-                                                    autoComplete="off" required name="city" value={this.state.residenceAddress.city}
-                                                    onChange={e => this.handleInput(e, "residenceAddress")} onBlur={this.handleInputBlur}
-                                                />
-                                                {errors.city.length > 0 &&
-                                                    <span className='error'>{errors.city}</span>}
-                                                <label className="form__label" htmlFor="city">City</label>
-
-                                            </div>
-                                            {this.state.residenceAddress.cityList && this.state.residenceAddress.cityList.length ? <div id="bank-drop" className="dropdown-content">
-                                                <div className="dropdown-content-links">
-                                                    {this.state.residenceAddress.cityList.map(city => {
-                                                        return (
-                                                            <a key={city.cityMasterId} name={city.cityMasterName}
-                                                                value={city.cityMasterId} onClick={e => this.onSelect(city.cityMasterName, city.cityMasterId, "residenceAddress")} >{city.cityMasterName}</a>
-                                                        )
-                                                    }
-                                                    )}
-
-                                                </div>
-                                            </div> : null}
-                                        </div>
-
-                                    </div>
+                                        {/* </div> */}
+                                  </div>
 
                                 </div>
                             </div>
@@ -813,7 +813,7 @@ class LongFormBanner extends React.Component {
                                             </div>
                                         </div>
 
-                                        <div className="custom-wrapper">
+                                        {/* <div className="custom-wrapper"> */}
                                             <div className="form__group field long-city" style={errors.officeCity ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="off-city" placeholder="City" name="officeCity"
                                                     required onChange={e => this.handleInput(e, "officeAddress")} value={this.state.officeAddress.officeCity}
@@ -837,7 +837,7 @@ class LongFormBanner extends React.Component {
                                                 </div>
                                             </div> : null}
 
-                                        </div>
+                                        {/* </div> */}
 
                                     </div>
 
