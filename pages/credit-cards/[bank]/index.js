@@ -1,9 +1,9 @@
-import Strapi from '../../../providers/strapi'
 import { useEffect } from 'react'
+import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
 import LearnMore from '../../../components/LearnMore'
 import Offers from '../../../components/Offers'
-import Banks from '../../../components/Banks';
+import Banks from '../../../components/Banks'
 import CreditScore from '../../../components/CreditScore';
 import FinancialTools from '../../../components/FinancialTools';
 import Blog from '../../../components/Blog';
@@ -50,7 +50,7 @@ const CreditCards = props => {
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const path = 'details'
+    const path = 'long-form'
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)
     const data = pageData[0]
     return { props: { data, path } }

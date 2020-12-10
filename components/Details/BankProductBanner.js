@@ -4,17 +4,24 @@ import { useEffect, useState } from 'react';
 
 const BankProductBanner = props => {
     const strapi = new Strapi()
-    const { heading, image, sub_text, listing_offer_button : { buttonType, buttonText } } = props.data
+    const { heading, image, sub_text, listing_offer_button } = props.data
+    let buttonType;
+    let buttonText;
+    if(listing_offer_button) {
+        buttonType = listing_offer_button.buttonType
+        buttonText = listing_offer_button.buttonText
+    }
 
     const cardButtonClick = type => {
+        const { bank, product } = Router.query
         if (type == "eConnect") {
-            Router.push(`/credit-cards/long-form`)
+            Router.push(`/credit-cards/long-form/${bank}/${product}`)
         }
         if (type == "applyNow") {
             Router.push(`/credit-cards/thank-you`)
         }
         if (type == "instantApproval") {
-            Router.push(`/credit-cards/long-form`)
+            Router.push(`/credit-cards/long-form/${bank}/${product}`)
         }
     }
 

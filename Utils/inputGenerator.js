@@ -63,64 +63,61 @@ export const generateInputs = (component, updateField,
 
     if (type === 'text' || type === 'email' || type === 'number' || type === 'tel') {
         if (!value) value = ''
+        const fieldId = `${input_id}_${type}`
         return (
-            <>
-                <div className="form__group field" key={id} style={borderStyles}>
-                    <input className="form__field"
-                        name={input_id}
-                        type={type}
-                        value={value}
-                        placeholder={placeholder}
-                        autoComplete='off'
-                        required={mandatory}
-                        onBlur={e => validate(e, type)}
-                        onChange={e => handleChange(e, type)}
-                    />
-                    <label className="form__label">{label}</label>
-                    {error ? <div className='input-error'>
-                        <p>{errorMsg}</p>
-                    </div> : null}
-
-                </div>
-            </>
+            <div className="form__group field" type={type} id={fieldId} key={id} style={borderStyles}>
+                <input className="form__field"
+                    name={input_id}
+                    type={type}
+                    value={value}
+                    placeholder={placeholder}
+                    autoComplete='off'
+                    required={mandatory}
+                    onBlur={e => validate(e, type)}
+                    onChange={e => handleChange(e, type)}
+                />
+                <label className="form__label">{label}</label>
+                {error ? <div className='input-error'>
+                    <p>{errorMsg}</p>
+                </div> : null}
+            </div>
         )
     }
 
     if (type === 'phone_no') {
         if (!value) value = ''
+        const fieldId = `${input_id}_${type}`
         return (
-            <>
-                <div className="form__group field" key={id} style={borderStyles}>
-                    <input className="form__field"
-                        name={input_id}
-                        type={getDevice() === 'desktop' ? 'number' : 'tel'}
-                        value={value}
-                        placeholder={placeholder}
-                        autoComplete='off'
-                        required={mandatory}
-                        onBlur={e => validate(e, type)}
-                        onChange={e => handleChange(e, type)}
-                    />
-                    {error ? <div className='input-error'>
-                        <p>{errorMsg}</p>
-                    </div> : null}
-                    <label className="form__label">{label}</label>
-                </div>
-            </>
+            <div className="form__group field" key={id} id={fieldId} style={borderStyles}>
+                <input className="form__field"
+                    name={input_id}
+                    type={getDevice() === 'desktop' ? 'number' : 'tel'}
+                    value={value}
+                    placeholder={placeholder}
+                    autoComplete='off'
+                    required={mandatory}
+                    onBlur={e => validate(e, type)}
+                    onChange={e => handleChange(e, type)}
+                />
+                <label className="form__label">{label}</label>
+                {error ? <div className='input-error'>
+                    <p>{errorMsg}</p>
+                </div> : null}
+            </div>
         )
     }
 
     if (type === 'upload_button') {
         const inputFileId = `input_file_${input_id}`
+        const fieldId = `${input_id}_${type}`
         let uploadText = value ? value.length === 1 ? value[0].name : value.length + ' files' : upload_text
         return (
             <>
-                <div className="form__group field file-type" >
+                <div className="form__group field file-type" id={fieldId}>
                     <input id={inputFileId} type="file" accept="application/pdf, image/*" multiple onChange={() => onUploadAttachment(input_id, type, inputFileId, true)} />
                     {!value ? <img src="/assets/images/icons/Upload.svg" onClick={() => document.getElementById(inputFileId).click()} style={{ background: 'red' }} /> : null}
                     {value ? <img src="/assets/images/icons/Attach.svg" onClick={() => document.getElementById(inputFileId).click()} style={{ background: 'red' }} /> : null}
                     {value ? <img src="/assets/images/icons/cross.svg" onClick={() => onUploadAttachment(input_id, type, inputFileId, false)} style={{ background: 'red' }} /> : null}
-
                     <h5 onClick={() => document.getElementById(inputFileId).click()}>{uploadText} {!mandatory ? <b>(optional)</b> : null}</h5>
                 </div>
                 {error ? <div className='input-error'>
@@ -133,86 +130,83 @@ export const generateInputs = (component, updateField,
     if (type === 'input_with_dropdown') {
         if (!value) value = ''
         const { input_type, selectedId } = component
-
+        const fieldId = `${input_id}_${type}`
         const { listName, id, name } = properties(listType)
         const dropDownClasses = ['form__group', 'field', selectedId === '*' ? 'dropdown_disabled' : 'dropdown_enabled']
         const dropDownStyles = selectedId !== '*' ? borderStyles : null
         return (
-            <>
-                <div className={dropDownClasses.join(' ')} key={id} style={dropDownStyles}>
-                    <input className="form__field"
-                        name={input_id}
-                        id={input_id}
-                        type={input_type}
-                        value={value}
-                        placeholder={placeholder}
-                        autoComplete='off'
-                        disabled={selectedId === '*'}
-                        required={mandatory}
-                        onBlur={e => validate(e, type)}
-                        onChange={e => handleChange(e, type)}
-                    />
-                    <label className="form__label">{label}</label>
+            <div className={dropDownClasses.join(' ')} id={fieldId} key={id} style={dropDownStyles}>
+                <input className="form__field"
+                    name={input_id}
+                    id={input_id}
+                    type={input_type}
+                    value={value}
+                    placeholder={placeholder}
+                    autoComplete='off'
+                    disabled={selectedId === '*'}
+                    required={mandatory}
+                    onBlur={e => validate(e, type)}
+                    onChange={e => handleChange(e, type)}
+                />
+                <label className="form__label">{label}</label>
 
-                    {error ? <div className='input-error'>
-                        <p>{errorMsg}</p>
-                    </div> : null}
+                {error ? <div className='input-error'>
+                    <p>{errorMsg}</p>
+                </div> : null}
 
-                    {list && list[listName] && list[listName].length ? <div className="dropdown-content" style={{ display: 'block' }}>
-                        <div className="dropdown-content-links">
-                            {list[listName].map((item, i) => {
-                                return (
-                                    <a key={i} onClick={() => onSelect(input_id, type, item[name], item[id], item)}>{item[name]}</a>
-                                )
-                            })}
-                        </div>
-                    </div> : null}
-                </div>
-            </>
+                {list && list[listName] && list[listName].length ? <div className="dropdown-content" style={{ display: 'block' }}>
+                    <div className="dropdown-content-links">
+                        {list[listName].map((item, i) => {
+                            return (
+                                <a key={i} onClick={() => onSelect(input_id, type, item[name], item[id], item)}>{item[name]}</a>
+                            )
+                        })}
+                    </div>
+                </div> : null}
+            </div>
         )
     }
 
     if (type === 'input_with_calendar') {
         if (!value) value = ''
         const datepicker = $(`#${input_id}`).datepicker()
+        const fieldId = `${input_id}_${type}`
         return (
-            <>
-                <h2>{question}</h2>
-                <div className="cstm-cal">
-                    <div className="form__group field" key={id} style={borderStyles}>
-                        <label className="form__label">{label}</label>
-                        <input
-                            className="form__field phone-grid-span"
-                            id={input_id}
-                            placeholder={placeholder}
-                            name={input_id}
-                            type='text'
-                            value={value}
-                            autoComplete='off'
-                            required={mandatory}
-                            onFocus={() => datepicker.open()}
-                            onBlur={() => onChangeDate(input_id, type)}
-                            onChange={e => e.preventDefault()}
-                            onKeyDown={e => e.preventDefault()}
-                        />
-                        {error ? <div className='input-error'>
-                            <p>{errorMsg}</p>
-                        </div> : null}
-                    </div>
+            <div className="cstm-cal" id={fieldId}>
+                <div className="form__group field" key={id} style={borderStyles}>
+                    <label className="form__label">{label}</label>
+                    <input
+                        className="form__field phone-grid-span"
+                        id={input_id}
+                        placeholder={placeholder}
+                        name={input_id}
+                        type='text'
+                        value={value}
+                        autoComplete='off'
+                        required={mandatory}
+                        onFocus={() => datepicker.open()}
+                        onBlur={() => onChangeDate(input_id, type)}
+                        onChange={e => e.preventDefault()}
+                        onKeyDown={e => e.preventDefault()}
+                    />
+                    {error ? <div className='input-error'>
+                        <p>{errorMsg}</p>
+                    </div> : null}
                 </div>
-            </>
-
+            </div>
         )
     }
 
     if (type === 'checkbox') {
         const { checkbox_input } = checkbox
+        const fieldId = `${type}_container`
         return (
-            <div className="agree">
+            <div className="agree" id={fieldId}>
                 <div className="checkbox-container" key={id}>
                     {checkbox_input.map(box => {
+                        const boxId = `${box.input_id}_${type}`
                         return (
-                            <div key={box.id} className="checkbox">
+                            <div key={box.id} className="checkbox" id={boxId}>
                                 <input
                                     type={type}
                                     name={box.input_id}
@@ -230,14 +224,16 @@ export const generateInputs = (component, updateField,
 
     if (type === 'radio') {
         const { radio_buttons } = radio
+        const radioParentId = `${input_id}_radio_container`
         return (
             <>
                 {radio_buttons ? <>
-                    <div className="shortforms-container" key={id} name={input_id} required={mandatory}>
+                    <div className="shortforms-container" key={id} name={input_id} id={radioParentId} required={mandatory}>
                         {radio_buttons.map(button => {
                             const labelStyles = value === button.value ? { border: '1px solid green' } : null
+                            const radioId = `${input_id}_${type}`
                             return (
-                                <React.Fragment key={button.id}>
+                                <div key={button.id} id={radioId}>
                                     <label htmlFor={button.value} style={labelStyles}>{button.label}</label>
                                     <input
                                         className="lets-checkbox"
@@ -247,7 +243,7 @@ export const generateInputs = (component, updateField,
                                         value={button.value}
                                         onChange={e => handleChange(e, type)}
                                     />
-                                </React.Fragment>
+                                </div>
                             )
                         })}
                     </div>

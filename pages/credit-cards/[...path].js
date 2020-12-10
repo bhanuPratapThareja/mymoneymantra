@@ -69,7 +69,6 @@ const CreditCards = props => {
 }
 
 export async function getServerSideProps(ctx) {
-    console.log('index page')
     const strapi = new Strapi()
     const [path] = ctx.params.path
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)

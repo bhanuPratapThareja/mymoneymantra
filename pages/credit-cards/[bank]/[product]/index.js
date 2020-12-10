@@ -19,7 +19,6 @@ const Details = props => {
     })
 
     const getProductDetailsComponents = (details, path) => {
-        console.log('props: ', props)
         return details.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':

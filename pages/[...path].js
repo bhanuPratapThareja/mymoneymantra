@@ -83,7 +83,6 @@ export async function getServerSideProps(ctx) {
         const masterData = await getMastersData()
         bankMaster = masterData.bankMaster
     } catch (err) {
-        console.log('maste error: ', err)
     }
 
 
