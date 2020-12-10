@@ -9,11 +9,9 @@ import Banks from '../../components/Banks';
 import CreditScore from '../../components/CreditScore';
 import FinancialTools from '../../components/FinancialTools';
 import Blog from '../../components/Blog';
-
 import Rewards from '../../components/Rewards';
 import ThankYouBanner from '../../components/ThankYou/ThankYouBanner';
 import OfferDetailCards from '../../components/Listing/OfferDetailCards'
-
 import OfferBankProductDetails from '../../components/Details/OfferBankProductDetails';
 import BankProductBanner from '../../components/Details/BankProductBanner';
 import ShortExtendedForm from '../../components/ShortExtendedForm';
@@ -24,6 +22,7 @@ const CreditCards = props => {
     })
 
     const getComponents = dynamic => {
+        
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.listing-banner':
@@ -70,6 +69,7 @@ const CreditCards = props => {
 }
 
 export async function getServerSideProps(ctx) {
+    console.log('index page')
     const strapi = new Strapi()
     const [path] = ctx.params.path
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)

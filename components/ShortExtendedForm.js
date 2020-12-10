@@ -1,7 +1,7 @@
 import Router from 'next/router'
 import $ from 'jquery'
 import { generateInputs } from '../Utils/inputGenerator'
-import { setBankMaster, setCompanyMaster } from '../services/formService'
+import { setBankMaster, setCompanyMaster, setPincodeMaster } from '../services/formService'
 import {
     textTypeInputs,
     getCurrentSlideInputs,
@@ -50,6 +50,7 @@ class ShortExtendedForm extends React.Component {
     componentDidMount() {
         setBankMaster(this.props.bankMaster)
         setCompanyMaster(this.props.companyMaster)
+        setPincodeMaster(this.props.pincodeMaster)
         let slideNo = 1
         const { side_form, form_slide } = this.props.data.onboard_short_form
         this.setInputsInState(side_form, 'onboard')
@@ -85,6 +86,9 @@ class ShortExtendedForm extends React.Component {
                 //     this.showSlides()
                 // })
                 submitLetsFindForm()
+                setTimeout(() => {
+                    document.getElementsByClassName('input_otp')[0].focus()
+                }, 500)
             }
         })
     }
@@ -132,6 +136,7 @@ class ShortExtendedForm extends React.Component {
         if (this.state.slideIndex == slides.length) {
             $("#button-text").text("Submit and view offers").css("color", "#89C142");
             $("#next").addClass("submit-short-form");
+           
         } else {
             $("#button-text").text("Next").css("color", "#221F1F");
             $("#next").removeClass("submit-short-form");
@@ -204,7 +209,7 @@ class ShortExtendedForm extends React.Component {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
             }
-            console.log(this.state.slides)
+            // console.log(this.state.slides)
         })
 
     }
@@ -289,7 +294,7 @@ class ShortExtendedForm extends React.Component {
                                     </svg>
                                 </button>
                                 <div>
-                                    <h4 id="button-text" style={{ color: 'rgb(34, 31, 31)' }}>Next</h4>
+                                    <h4 id="sms-button-text" style={{ color: 'rgb(34, 31, 31)' }}>Next</h4>
                                     <button type="button" className="next-otp-button" onClick={this.onSubmitOtp} disabled={this.state.disableOtpSubmitButton}>
                                         <svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M23.893 15.493a1.332 1.332 0 00-.28-.44l-6.666-6.666a1.34 1.34 0 00-1.894 1.893l4.4 4.387H9.333a1.334 1.334 0 000 2.666h10.12l-4.4 4.387a1.335 1.335 0 000 1.893 1.336 1.336 0 001.894 0l6.666-6.666c.122-.127.217-.277.28-.44a1.333 1.333 0 000-1.014z" fill="#fff"></path>

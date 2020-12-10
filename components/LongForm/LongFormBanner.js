@@ -5,6 +5,8 @@ import { getCityData, getPinCodeData } from '../../Utils/commonServices';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { getFormPercentage } from '../../Utils/formPercentage';
 import { validEmailRegex, validMobileRegex, isValidPanNumber, validPincodeRegex } from '../../Utils/validator';
+import Router from 'next/router';
+import ThankYouBanner from '../ThankYou/ThankYouBanner';
 // import converter from 'number-to-words';
 class LongFormBanner extends React.Component {
 
@@ -53,6 +55,7 @@ class LongFormBanner extends React.Component {
         percentageComplete: 0,
         totalValues: 17,
         tnc: [],
+        leadId:"",
         errors: {
             gender: '',
             maritalStatus: '',
@@ -305,13 +308,13 @@ class LongFormBanner extends React.Component {
     onSelect = (name, value, type) => {
 
         const block = { ...this.state[type] }
-        console.log('inside resi city select block', block);
+        // console.log('inside resi city select block', block);
         block.city = name;
         block.cityId = value;
         block.cityList = null
 
         this.setState({ [type]: { ...block } }, () => {
-            console.log('inside resi city select state', this.state);
+            // console.log('inside resi city select state', this.state);
         })
 
     }
@@ -357,24 +360,30 @@ class LongFormBanner extends React.Component {
         e.preventDefault();
         const { url, body } = getApiData('generate');
 
-        let reqBody = body.request.payload;
-        reqBody.pan = this.state.pan;
-        reqBody.phoneNo = this.state.phoneNo;
-        reqBody.email = this.state.email;
+        // let reqBody = body.request.payload;
+        // reqBody.pan = this.state.pan;
+        // reqBody.phoneNo = this.state.phoneNo;
+        // reqBody.email = this.state.email;
 
         const strapi = new Strapi()
         try {
-            const res = await strapi.apiReq('POST', url, reqBody)
+            const res = await strapi.apiReq('POST', url, body)
             console.log('url in submit', url);
             console.log('body in submit', body);
-            let resMessage = res.response.msgInfo.msgDescription;
+            let resMessage = res.response.msgInfo.message;
+            let leadId = res.response.payload.leadId;
+            
+            this.setState({leadId : leadId})
             alert(resMessage);
+            Router.push(`/credit-cards/thank-you`)
 
         } catch (error) {
 
         }
 
     }
+
+
 
     onFileChange = event => {
         this.setState({ selectedPan: event.target.files[0] }, () => {
@@ -451,8 +460,11 @@ class LongFormBanner extends React.Component {
         const strapi = new Strapi()
         const { bank_name, form_heading, product_type, banner_image } = this.props.data
         const { errors } = this.state;
+        // console.log('inside render this.state',this.state)
+        const { leadId } = this.state.leadId;
 
         return (
+            <>
             <div className="long-form">
                 <section className="long-form-wrapper">
                     <div className="card-info" style={{ height: '303px' }} id="longFormBanner">
@@ -671,8 +683,34 @@ class LongFormBanner extends React.Component {
                                     </div>
                                     <div className="row-input-container">
 
+                                        {/* <div className="custom-wrapper"> */}
 
-                                        <div className="custom-wrapper">
+                                            <div className="form__group field long-city" style={errors.city ? { border: "1px solid red" } : null}>
+                                                <input className="form__field" type="text" id="city" placeholder="City"
+                                                  required  name="city" value={this.state.residenceAddress.city}
+                                                    onChange={e => this.handleInput(e, "residenceAddress")} onBlur={this.handleInputBlur}
+                                                />
+                                                {errors.city.length > 0 &&
+                                                    <span className='error'>{errors.city}</span>}
+                                                <label className="form__label" htmlFor="city">City</label>
+
+                                            </div>
+                                            {this.state.residenceAddress.cityList && this.state.residenceAddress.cityList.length ? <div id="bank-drop" className="dropdown-content">
+                                                <div className="dropdown-content-links">
+                                                    {this.state.residenceAddress.cityList.map(city => {
+                                                        return (
+                                                            <a key={city.cityMasterId} name={city.cityMasterName}
+                                                                value={city.cityMasterId} onClick={e => this.onSelect(city.cityMasterName, city.cityMasterId, "residenceAddress")} >{city.cityMasterName}</a>
+                                                        )
+                                                    }
+                                                    )}
+
+                                                </div>
+                                            </div> : null}
+
+                                        {/* </div>
+
+                                        <div className="custom-wrapper"> */}
                                             <div className="form__group field long-pincode" style={errors.pincode ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="pincode" name="pincode" placeholder="Pincode"
                                                     autoComplete="off" required value={this.state.residenceAddress.pincode}
@@ -698,34 +736,8 @@ class LongFormBanner extends React.Component {
 
                                                 </div>
                                             </div> : null}
-                                        </div>
-
-                                        <div className="custom-wrapper">
-                                            <div className="form__group field long-city" style={errors.city ? { border: "1px solid red" } : null}>
-                                                <input className="form__field" type="text" id="city" placeholder="City"
-                                                    autoComplete="off" required name="city" value={this.state.residenceAddress.city}
-                                                    onChange={e => this.handleInput(e, "residenceAddress")} onBlur={this.handleInputBlur}
-                                                />
-                                                {errors.city.length > 0 &&
-                                                    <span className='error'>{errors.city}</span>}
-                                                <label className="form__label" htmlFor="city">City</label>
-
-                                            </div>
-                                            {this.state.residenceAddress.cityList && this.state.residenceAddress.cityList.length ? <div id="bank-drop" className="dropdown-content">
-                                                <div className="dropdown-content-links">
-                                                    {this.state.residenceAddress.cityList.map(city => {
-                                                        return (
-                                                            <a key={city.cityMasterId} name={city.cityMasterName}
-                                                                value={city.cityMasterId} onClick={e => this.onSelect(city.cityMasterName, city.cityMasterId, "residenceAddress")} >{city.cityMasterName}</a>
-                                                        )
-                                                    }
-                                                    )}
-
-                                                </div>
-                                            </div> : null}
-                                        </div>
-
-                                    </div>
+                                        {/* </div> */}
+                                  </div>
 
                                 </div>
                             </div>
@@ -813,7 +825,7 @@ class LongFormBanner extends React.Component {
                                             </div>
                                         </div>
 
-                                        <div className="custom-wrapper">
+                                        {/* <div className="custom-wrapper"> */}
                                             <div className="form__group field long-city" style={errors.officeCity ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="off-city" placeholder="City" name="officeCity"
                                                     required onChange={e => this.handleInput(e, "officeAddress")} value={this.state.officeAddress.officeCity}
@@ -837,7 +849,7 @@ class LongFormBanner extends React.Component {
                                                 </div>
                                             </div> : null}
 
-                                        </div>
+                                        {/* </div> */}
 
                                     </div>
 
@@ -1024,6 +1036,8 @@ class LongFormBanner extends React.Component {
 
                 </section>
             </div>
+           
+            </>
         )
     }
 }

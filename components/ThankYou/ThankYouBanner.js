@@ -1,6 +1,7 @@
 import Strapi from '../../providers/strapi'
 
 const ThankYouBanner = props => {
+    console.log('inside ThankYouBanner props',props);
     const strapi = new Strapi()
     const { thank_you_icon, thankyou_text, sub_text, sub_text_1, button } = props.data
 
@@ -17,6 +18,7 @@ const ThankYouBanner = props => {
                         </div>
                         <div className="bottom">
                             <h6>{sub_text_1}</h6>
+                            
                             <div className="track-button">
                                 <button>{button}</button>
                             </div>

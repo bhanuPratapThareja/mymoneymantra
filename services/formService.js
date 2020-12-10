@@ -3,6 +3,7 @@ import Strapi from '../providers/strapi'
 
 let bankmaster = []
 let companymaster = []
+let pincodemaster = []
 
 export const setBankMaster = data => {
     bankmaster = { bankList: data }
@@ -10,6 +11,10 @@ export const setBankMaster = data => {
 
 export const setCompanyMaster = data => {
     companymaster = { companyList: data }
+}
+
+export const setPincodeMaster = data => {
+    pincodemaster = { pinList: data }
 }
 
 export const getBankList = (val) => {
@@ -32,13 +37,31 @@ export const getBankList = (val) => {
 
 export const getCompanyList = (val) => {
     const promise =  new Promise((resolve) => {
-        console.log(companymaster)
         if (companymaster.companyList.length) {
+           
             let filteredCompanyList = companymaster.companyList.filter(company => {
-                return company.companyName.startsWith(val.toUpperCase())
+                return company.companyName.startsWith((val.toUpperCase())) !== -1
             })
             if (filteredCompanyList.length) {
-                resolve({ companyList: filteredCompanyList })
+                    resolve({ companyList: filteredCompanyList })
+                } else {
+                    resolve([])
+                }
+            } else {
+            resolve([])
+        }
+    })
+    return promise
+}
+
+export const getPincodeList = (val) => {
+    const promise =  new Promise((resolve) => {
+        if (pincodemaster.pinList.length) {
+            let filteredPinList = pincodemaster.pinList.filter(pin => {
+                return pin.pincode.startsWith(val.toUpperCase())
+            })
+            if (filteredPinList.length) {
+                resolve({ pinList: filteredPinList })
             } else {
                 resolve([])
             }

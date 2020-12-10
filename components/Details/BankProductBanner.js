@@ -1,12 +1,10 @@
 import Strapi from '../../providers/strapi'
 import Router from 'next/router';
+import { useEffect, useState } from 'react';
 
 const BankProductBanner = props => {
     const strapi = new Strapi()
-    const { button, heading, image, sub_text } = props.data;
-    const buttonType = localStorage.getItem('buttonType')
-    const buttonText = localStorage.getItem('buttonText')
-    localStorage.clear()
+    const { heading, image, sub_text, listing_offer_button : { buttonType, buttonText } } = props.data
 
     const cardButtonClick = type => {
         if (type == "eConnect") {
@@ -15,10 +13,12 @@ const BankProductBanner = props => {
         if (type == "applyNow") {
             Router.push(`/credit-cards/thank-you`)
         }
-        if(type == "instantApproval") {
-            Router.push(`/credit-cards/long-form`) 
+        if (type == "instantApproval") {
+            Router.push(`/credit-cards/long-form`)
         }
     }
+
+    // const { buttonType, buttonText } = productBannerButton
 
     return (
         <div className="credit-card-flow c-detail-page">
@@ -27,14 +27,14 @@ const BankProductBanner = props => {
                     <div className="banner-wrapper">
                         <div dangerouslySetInnerHTML={{ __html: heading }}></div>
                         <p>{sub_text}</p>
-                        {!buttonType ? <button>{button}</button> : <div>
-                            {buttonType == "applyNow" ? <button onClick={() => cardButtonClick(buttonType)} id="apply-now">{buttonText}</button> : null}
-                            {buttonType == "eConnect" ? <button onClick={() => cardButtonClick(buttonType)} id="apply-now">{buttonText}</button> : null}
-                            {buttonType == "instantApproval" ? <button onClick={() => cardButtonClick(buttonType)} id="apply-now">{buttonText}</button> : null}
-                        </div>}
+
+                        {buttonType == "applyNow" ? <button onClick={() => cardButtonClick(buttonType)} id="apply-now">{buttonText}</button> : null}
+                        {buttonType == "eConnect" ? <button onClick={() => cardButtonClick(buttonType)} id="apply-now">{buttonText}</button> : null}
+                        {buttonType == "instantApproval" ? <button onClick={() => cardButtonClick(buttonType)} id="apply-now">{buttonText}</button> : null}
+
                     </div>
                     <div>
-                        <img className="banner-card" src={`${strapi.baseUrl}${image.url}`} alt={image.name} />
+                        {image ? <img className="banner-card" src={`${strapi.baseUrl}${image.url}`} alt={image.name} /> : null}
                     </div>
                 </section>
             </div>
@@ -42,4 +42,4 @@ const BankProductBanner = props => {
     )
 }
 
-export default BankProductBanner;
+export default BankProductBanner

@@ -51,6 +51,7 @@ const LoanListing = props => {
 }
 
 export async function getServerSideProps(ctx) {
+    console.log('loan -listing')
     const strapi = new Strapi()
     const path = 'loan-listing'
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)
