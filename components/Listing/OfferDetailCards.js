@@ -53,13 +53,14 @@ const OfferDetailCards = props => {
                                 </div>
                                 <div className="fee">
                                     <h5>Annual fee:</h5>
-                                    <p><b></b> (First year)</p>
-                                    <p><b>{offer.interest_rate}</b> (Second year onwards)</p>
+                                    <p><b>₹ {offer.interest_rate}</b> (First Year)</p>
+                                    {offer.annual_fee_sye ?<p><b>₹ {offer.annual_fee_sye}</b> (Second year onwards)</p>:null}
+                                    
                                 </div>
                             </div>
                             <div className="bottom">
                                 <div className="lifetime">
-                                    <h5>Lifetime reward points</h5>
+                                    <h5>{offer.usp_highlights}</h5>
                                 </div>
                                 <div className="options">
                                     <button id="view-details" onClick={() => goToDetailsPage(offer.bank_slug, offer.product_slug, offer.button_type, offer.button_text)}>{offer.view_details_link}</button>
