@@ -75,7 +75,7 @@ export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     let props = {}
     let bankMaster = []
-    let companyMaster = []
+
     try {
         const masterData = await getMastersData()
         bankMaster = masterData.bankMaster
