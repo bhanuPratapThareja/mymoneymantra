@@ -3,6 +3,9 @@ import Strapi from '../providers/strapi'
 const CreditScore = props => {
     const strapi = new Strapi();
     const { heading, button, image, credit_score_features } = props.data
+    function comingSoon(){
+       alert("Coming Soon")
+     }
     
     return (
         <section data-aos="fade-up" className="container score-container aos-init">
@@ -19,7 +22,7 @@ const CreditScore = props => {
                             </div>
                         )
                     })}
-                    <button>{button}</button>
+                    <button onClick={comingSoon}>{button}</button>
                 </div>
                 <div className="score-chart">
                     <img src={`${strapi.baseUrl}${image.url}`} alt={image.name} />

@@ -14,6 +14,9 @@ const Rewards = props => {
      if(props.path==='credit-cards'){
       goToShortFormPage()
      }
+     else{
+      alert("Coming Soon")
+     }
   }
 
    function goToShortForm(){
