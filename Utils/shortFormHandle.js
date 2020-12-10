@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
-import { getDropdownList, getBankList } from '../services/formService'
+import { getDropdownList, getBankList, getCompanyList } from '../services/formService'
 import { getApiToHit } from '../api/dropdownApiConfig'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel', 'phone_no',
@@ -47,8 +47,18 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                                 inp.listType = listType
                                 inp.list = list
                             })
-    
-                    } else {
+                    } 
+                    
+                    // else if (inp.input_id === 'company_name') {
+                    //     let listType = 'companies'
+                    //     getCompanyList(inp.value)
+                    //         .then(list => {
+                    //             inp.listType = listType
+                    //             inp.list = list
+                    //         })
+                    // } 
+                    
+                    else {
                         let listType = getApiToHit(inp.input_id)
     
                         getDropdownList(listType, inp.value)
@@ -141,13 +151,13 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.errorMsg = errorMsgs.pancard
                     }
                 } else if (inp.type === 'input_with_dropdown' && inp.input_id === field.currentActiveInput && !inp.selectedId) {
-                    // inp.error = true
-                    // errors = true
-                    // if(!inp.value){
-                    //     inp.errorMsg = errorMsgs.mandatory
-                    // } else {
-                    //     inp.errorMsg = errorMsgs.dropdown
-                    // }
+                    inp.error = true
+                    errors = true
+                    if(!inp.value){
+                        inp.errorMsg = errorMsgs.mandatory
+                    } else {
+                        inp.errorMsg = errorMsgs.dropdown
+                    }
                 }
             }
         })
@@ -177,9 +187,9 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                 errors = true
             }
             else if (inp.type === 'input_with_dropdown' && !inp.selectedId) {
-                // inp.error = true
-                // inp.errorMsg = errorMsgs.dropdown
-                // errors = true
+                inp.error = true
+                inp.errorMsg = errorMsgs.dropdown
+                errors = true
             }
 
         })

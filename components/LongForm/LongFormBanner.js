@@ -3,7 +3,7 @@ import Strapi from "../../providers/strapi"
 import { getApiData } from '../../api/api';
 import { getCityData, getPinCodeData } from '../../Utils/commonServices';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import {getFormPercentage} from '../../Utils/formPercentage';
+import { getFormPercentage } from '../../Utils/formPercentage';
 import { validEmailRegex, validMobileRegex, isValidPanNumber, validPincodeRegex } from '../../Utils/validator';
 // import converter from 'number-to-words';
 class LongFormBanner extends React.Component {
@@ -12,13 +12,13 @@ class LongFormBanner extends React.Component {
         gender: "",
         maritalStatus: "",
         proofOfAddress: "",
-        communication :'',
-        director:'',
-        bankMember :'',
+        communication: '',
+        director: '',
+        bankMember: '',
         fullName: {
             firstName: "",
             lastName: "",
-        },      
+        },
         fathersFullName: {
             fathersFirstName: "",
             fathersLastName: "",
@@ -40,26 +40,26 @@ class LongFormBanner extends React.Component {
             officeNearBy: "",
             officeCity: "",
             officePincode: "",
-        },  
+        },
         dob: "",
         nationality: "",
         phoneNo: "",
-        email: "",      
+        email: "",
         pan: "",
         selectedPan: null,
-        selectedSalarySlip : null,
-        selectedAddressProof : null,
+        selectedSalarySlip: null,
+        selectedAddressProof: null,
         monthlyIncome: "",
-        percentageComplete : 0,
+        percentageComplete: 0,
         totalValues: 17,
-         tnc:[],
+        tnc: [],
         errors: {
-            gender:'',
-            maritalStatus :'',
-            proofOfAddress :'',
-            communication:'',
-            director :'',
-            bankMember :'',
+            gender: '',
+            maritalStatus: '',
+            proofOfAddress: '',
+            communication: '',
+            director: '',
+            bankMember: '',
             firstName: '',
             lastName: '',
             phoneNo: '',
@@ -74,15 +74,15 @@ class LongFormBanner extends React.Component {
             monthlyIncome: '',
             address1: '',
             address2: '',
-            nearBy :'',
+            nearBy: '',
             city: '',
             pincode: '',
             officeAddress1: '',
             officeAddress2: '',
-            officeNearBy :'',
+            officeNearBy: '',
             officeCity: '',
             officePincode: '',
-            
+
         }
     }
 
@@ -92,7 +92,7 @@ class LongFormBanner extends React.Component {
 
     handleRadio = (value, type) => {
         this.setState({ [type]: value }, () => {
-            
+
             this.handlePercentage()
         })
     }
@@ -236,7 +236,7 @@ class LongFormBanner extends React.Component {
                     errors.mothersLastName = !value ? "mandatory field" : "";
                     break;
                 case 'phoneNo':
-                    
+
                     if (!value) {
                         errors.phoneNo = "mandatory fields";
                     } else
@@ -294,7 +294,7 @@ class LongFormBanner extends React.Component {
                     break;
             }
             this.setState({ errors, [name]: value }, () => {
-              
+
 
             });
         })
@@ -305,26 +305,26 @@ class LongFormBanner extends React.Component {
     onSelect = (name, value, type) => {
 
         const block = { ...this.state[type] }
-console.log('inside resi city select block',block);
+        console.log('inside resi city select block', block);
         block.city = name;
         block.cityId = value;
         block.cityList = null
 
         this.setState({ [type]: { ...block } }, () => {
-            console.log('inside resi city select state',this.state);
+            console.log('inside resi city select state', this.state);
         })
 
     }
     onSelectOfficeCity = (name, value, type) => {
 
         const block = { ...this.state[type] }
-        console.log('inside onSelectOfficeCity block',block);
+        console.log('inside onSelectOfficeCity block', block);
         block.officeCity = name;
         block.officeCityId = value;
         block.officeCityList = null
 
         this.setState({ [type]: { ...block } }, () => {
-            console.log('inside office city select state',this.state);
+            console.log('inside office city select state', this.state);
         })
 
     }
@@ -353,39 +353,39 @@ console.log('inside resi city select block',block);
     }
 
 
-    handleLongForm = async (e) => {        
+    handleLongForm = async (e) => {
         e.preventDefault();
         const { url, body } = getApiData('generate');
-       
+
         let reqBody = body.request.payload;
         reqBody.pan = this.state.pan;
         reqBody.phoneNo = this.state.phoneNo;
-        reqBody.email=this.state.email;
-        
+        reqBody.email = this.state.email;
+
         const strapi = new Strapi()
         try {
             const res = await strapi.apiReq('POST', url, reqBody)
-            console.log('url in submit',url);
-            console.log('body in submit',body);
+            console.log('url in submit', url);
+            console.log('body in submit', body);
             let resMessage = res.response.msgInfo.msgDescription;
             alert(resMessage);
-            
+
         } catch (error) {
-           
+
         }
 
     }
 
     onFileChange = event => {
         this.setState({ selectedPan: event.target.files[0] }, () => {
-           
+
         });
 
     };
     fileData = () => {
 
         if (this.state.selectedPan) {
-          
+
             return (
                 <div>
                     <p>File Name: {this.state.selectedPan.name}</p>
@@ -394,28 +394,28 @@ console.log('inside resi city select block',block);
             );
         }
     };
-    removePanCard = () =>{
-        this.setState({selectedPan:null})
+    removePanCard = () => {
+        this.setState({ selectedPan: null })
     }
 
     onSalarySlipChange = event => {
         this.setState({ selectedSalarySlip: event.target.files[0] }, () => {
-           
+
         });
 
     };
-    removeSalarySlip = () =>{
-        this.setState({selectedSalarySlip : null})
+    removeSalarySlip = () => {
+        this.setState({ selectedSalarySlip: null })
     }
 
     onAddressProofChange = event => {
         this.setState({ selectedAddressProof: event.target.files[0] }, () => {
-           
+
         });
 
     };
-    removeAddressProof = () =>{
-        this.setState({selectedAddressProof : null})
+    removeAddressProof = () => {
+        this.setState({ selectedAddressProof: null })
     }
 
     // function handleFileSelect(evt) {
@@ -435,11 +435,11 @@ console.log('inside resi city select block',block);
     //   document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
     // handleCheckbox = (event) =>{
-        
+
     //      let selectedTnc = [...this.state.tnc, event.target.id]
     //      if (this.state.tnc.includes(event.target.id)) {
     //         selectedTnc = selectedTnc.filter(tncVal => tncVal !== event.target.id);
-        
+
     //       }
     //       this.setState({tnc: selectedTnc}, ()=>{
     //       });
@@ -451,7 +451,7 @@ console.log('inside resi city select block',block);
         const strapi = new Strapi()
         const { bank_name, form_heading, product_type, banner_image } = this.props.data
         const { errors } = this.state;
-       
+
         return (
             <div className="long-form">
                 <section className="long-form-wrapper">
@@ -469,13 +469,13 @@ console.log('inside resi city select block',block);
                     </div>
 
                     <div className="form-wrapper" id="longForm">
-                        <form onSubmit={this.handleLongForm}>
+                        <form onSubmit={this.handleLongForm} autoComplete="off">
 
                             <h3>Personal Details</h3>
                             <div className="long-forms-wrapper">
                                 <h5><b>1.</b> Gender</h5>
                                 <div className="shortforms-container long-gender" name="gender" value={this.state.gender}
-                                onChange={e => this.handleRadio(e.target.value,'gender')}
+                                    onChange={e => this.handleRadio(e.target.value, 'gender')}
                                 >
                                     <input className="lets-checkbox" type="radio" id="female" name="gender" value="female" />
                                     <input className="lets-checkbox" type="radio" id="male" name="gender" value="male" />
@@ -494,7 +494,7 @@ console.log('inside resi city select block',block);
                                 <div className="shortforms-container long-name">
                                     <div className='form__group field' style={errors.firstName ? { border: "1px solid red" } : null} >
                                         <input className="form__field" type="text" name="firstName" id="firstName" placeholder="First Name"
-                                          required onChange={e => this.handleInput(e, "firstName")} onBlur={this.handleInputBlur}
+                                            autoComplete="off" required onChange={e => this.handleInput(e, "firstName")} onBlur={this.handleInputBlur}
                                         />
                                         {errors.firstName.length > 0 &&
                                             <span className='error'>{errors.firstName}</span>}
@@ -503,7 +503,7 @@ console.log('inside resi city select block',block);
 
                                     <div className="form__group field" style={errors.lastName ? { border: "1px solid red" } : null}>
                                         <input className="form__field" type="text" id="last-name" placeholder="Last Name" name="lastName"
-                                          required  onChange={e => this.handleInput(e, "lastName")} onBlur={this.handleInputBlur}
+                                            autoComplete="off" required onChange={e => this.handleInput(e, "lastName")} onBlur={this.handleInputBlur}
                                         />
                                         {errors.lastName.length > 0 &&
                                             <span className='error'>{errors.lastName}</span>}
@@ -515,7 +515,7 @@ console.log('inside resi city select block',block);
                             {/* <!--martial status--> */}
                             <div className="long-forms-wrapper">
                                 <h5><b>3.</b> Marital Status</h5>
-                                <div className="shortforms-container long-gender" name="maritalStatus" value={this.state.maritalStatus} onChange={e => this.handleRadio(e.target.value,'maritalStatus')} >
+                                <div className="shortforms-container long-gender" name="maritalStatus" value={this.state.maritalStatus} onChange={e => this.handleRadio(e.target.value, 'maritalStatus')} >
                                     <input className="lets-checkbox" type="radio" id="single" name="maritalStatus" value="single" />
                                     <input className="lets-checkbox" type="radio" id="married" name="maritalStatus" value="married" />
                                     <input className="lets-checkbox" type="radio" id="separated" name="maritalStatus" value="separated" />
@@ -537,7 +537,7 @@ console.log('inside resi city select block',block);
                                 <div className="shortforms-container long-name">
                                     <div className="form__group field" style={errors.fathersFirstName ? { border: "1px solid red" } : null}>
                                         <input className="form__field" type="text" id="father-f-name" placeholder="First Name" name="fathersFirstName"
-                                          required  onChange={e => this.handleInput(e, "fathersFirstName")} onBlur={this.handleInputBlur}
+                                            autoComplete="off" required onChange={e => this.handleInput(e, "fathersFirstName")} onBlur={this.handleInputBlur}
                                         />
                                         {errors.fathersFirstName.length > 0 &&
                                             <span className='error'>{errors.fathersFirstName}</span>}
@@ -545,8 +545,8 @@ console.log('inside resi city select block',block);
                                     </div>
                                     <div className="form__group field" style={errors.fathersLastName ? { border: "1px solid red" } : null}>
                                         <input className="form__field" type="text" id="father-l-name" placeholder="Last Name"
-                                            name="fathersLastName" onChange={e => this.handleInput(e, "fathersLastName")}
-                                            required    onBlur={this.handleInputBlur} />
+                                            autoComplete="off" name="fathersLastName" onChange={e => this.handleInput(e, "fathersLastName")}
+                                            required onBlur={this.handleInputBlur} />
                                         {errors.fathersLastName.length > 0 &&
                                             <span className='error'>{errors.fathersLastName}</span>}
                                         <label className="form__label" htmlFor="father-l-name">Last Name</label>
@@ -561,7 +561,7 @@ console.log('inside resi city select block',block);
                                 <div className="shortforms-container long-name">
                                     <div className="form__group field" style={errors.mothersFirstName ? { border: "1px solid red" } : null}>
                                         <input className="form__field" type="text" id="mother-f-name" placeholder="First Name" name="mothersFirstName"
-                                          required  onChange={e => this.handleInput(e, "mothersFirstName")} onBlur={this.handleInputBlur}
+                                            autoComplete="off" required onChange={e => this.handleInput(e, "mothersFirstName")} onBlur={this.handleInputBlur}
                                         />
                                         {errors.mothersFirstName.length > 0 &&
                                             <span className='error'>{errors.mothersFirstName}</span>}
@@ -569,7 +569,7 @@ console.log('inside resi city select block',block);
                                     </div>
                                     <div className="form__group field" style={errors.mothersLastName ? { border: "1px solid red" } : null}>
                                         <input className="form__field" type="text" id="mother-l-name" placeholder="Last Name" name="mothersLastName"
-                                         required   onChange={e => this.handleInput(e, "mothersLastName")} onBlur={this.handleInputBlur}
+                                            autoComplete="off" required onChange={e => this.handleInput(e, "mothersLastName")} onBlur={this.handleInputBlur}
 
                                         />
                                         {errors.mothersLastName.length > 0 &&
@@ -585,8 +585,8 @@ console.log('inside resi city select block',block);
                                     <h5><b>6.</b> Date of Birth</h5>
                                     <div className="shortforms-container long-name">
                                         <div className="form__group field" style={errors.dob ? { border: "1px solid red" } : null}>
-                                            <input className="form__field datepicker" type ="date" id="dob" placeholder="MM / DD / YYYY"
-                                             required   name="dob" onChange={e => this.handleInput(e, "dob")} onBlur={this.handleInputBlur}
+                                            <input className="form__field datepicker" type="date" id="dob" placeholder="MM / DD / YYYY"
+                                                autoComplete="off" required name="dob" onChange={e => this.handleInput(e, "dob")} onBlur={this.handleInputBlur}
                                             />
                                             {errors.dob.length > 0 &&
                                                 <span className='error'>{errors.dob}</span>}
@@ -600,7 +600,7 @@ console.log('inside resi city select block',block);
                                     <div className="shortforms-container long-name">
                                         <div className="form__group field" style={errors.nationality ? { border: "1px solid red" } : null}>
                                             <input className="form__field" type="text" id="nationality" placeholder="Nationality"
-                                              required  name="nationality" onChange={e => this.handleInput(e, "nationality")}
+                                                autoComplete="off" required name="nationality" onChange={e => this.handleInput(e, "nationality")}
                                                 onBlur={this.handleInputBlur}
                                             />
                                             {errors.nationality.length > 0 &&
@@ -618,8 +618,8 @@ console.log('inside resi city select block',block);
                                     <div className="shortforms-container long-name">
                                         <div className="form__group field" style={errors.phoneNo ? { border: "1px solid red" } : null}>
                                             <input className="form__field" type="number" id="phone-number" placeholder="Phone Number"
-                                              required  name="phoneNo" value={this.state.phoneNo} onChange={e => this.handleInput(e, "phoneNo")}
-                                                  onBlur={this.handleInputBlur}
+                                                autoComplete="off" required name="phoneNo" value={this.state.phoneNo} onChange={e => this.handleInput(e, "phoneNo")}
+                                                onBlur={this.handleInputBlur}
                                             />
                                             {errors.phoneNo.length > 0 &&
                                                 <span className='error'>{errors.phoneNo}</span>}
@@ -633,7 +633,7 @@ console.log('inside resi city select block',block);
                                     <div className="shortforms-container long-name">
                                         <div className="form__group field" style={errors.email ? { border: "1px solid red" } : null}>
                                             <input className="form__field" type="text" id="email" placeholder="Email ID" name="email"
-                                              required  onChange={e => this.handleInput(e, "email")} onBlur={this.handleInputBlur} />
+                                                autoComplete="off" required onChange={e => this.handleInput(e, "email")} onBlur={this.handleInputBlur} />
                                             {errors.email.length > 0 &&
                                                 <span className='error'>{errors.email}</span>}
                                             <label className="form__label" htmlFor="email">Email ID</label>
@@ -648,9 +648,9 @@ console.log('inside resi city select block',block);
                                 <h5><b>10.</b> Residence Address</h5>
                                 <div className="shortforms-container long-address">
                                     <div className="form__group field" style={errors.address1 ? { border: "1px solid red" } : null}>
-                                        <input className="form__field" type="text" id="address-1" placeholder="Address Line 1" 
-                                        name="address1"
-                                          required  onChange={e => this.handleInput(e, "address1")} onBlur={this.handleInputBlur}
+                                        <input className="form__field" type="text" id="address-1" placeholder="Address Line 1"
+                                            autoComplete="off" name="address1"
+                                            required onChange={e => this.handleInput(e, "address1")} onBlur={this.handleInputBlur}
                                         />
                                         {errors.address1.length > 0 &&
                                             <span className='error'>{errors.address1}</span>}
@@ -658,7 +658,7 @@ console.log('inside resi city select block',block);
                                     </div>
                                     <div className="form__group field" style={errors.address2 ? { border: "1px solid red" } : null}>
                                         <input className="form__field" type="text" id="address-2" placeholder="Address Line 2" name="address2"
-                                            required onChange={e => this.handleInput(e, "address2")} onBlur={this.handleInputBlur}
+                                            autoComplete="off" required onChange={e => this.handleInput(e, "address2")} onBlur={this.handleInputBlur}
                                         />
                                         {errors.address2.length > 0 &&
                                             <span className='error'>{errors.address2}</span>}
@@ -666,16 +666,44 @@ console.log('inside resi city select block',block);
                                     </div>
                                     <div className="form__group field">
                                         <input className="form__field" type="text" id="address-landmark" name="nearBy"
-                                            placeholder="Nearby Landmark (Optional)"  onChange={e => this.handleInput(e, "nearBy")} />
+                                            autoComplete="off" placeholder="Nearby Landmark (Optional)" onChange={e => this.handleInput(e, "nearBy")} />
                                         <label className="form__label" htmlFor="address-2">Nearby Landmark (Optional)</label>
                                     </div>
                                     <div className="row-input-container">
 
-                                        <div className="custom-wrapper">
 
+                                        <div className="custom-wrapper">
+                                            <div className="form__group field long-pincode" style={errors.pincode ? { border: "1px solid red" } : null}>
+                                                <input className="form__field" type="text" id="pincode" name="pincode" placeholder="Pincode"
+                                                    autoComplete="off" required value={this.state.residenceAddress.pincode}
+                                                    onChange={e => this.handleInput(e, "residenceAddress")}
+                                                    onBlur={this.handleInputBlur}
+                                                />
+                                                {errors.pincode.length > 0 &&
+                                                    <span className='error'>{errors.pincode}</span>}
+                                                <label className="form__label" htmlFor="pincode">Pincode</label>
+                                            </div>
+                                            {this.state.residenceAddress.pinList ? <div id="bank-drop" className="dropdown-content">
+                                                <div className="dropdown-content-links">
+                                                    {this.state.residenceAddress.pinList.map(pin => {
+                                                        return (
+                                                            // <a key={city.pincode} className="form__label" onClick={e => this.onSelectPin(pin.cityId, pin.pincode, "residenceAddress")}
+                                                            // >{pin.pincode}</a>
+
+                                                            <a key={city.pincode} onClick={e => this.onSelectPin(pin.cityMasterName, pin.pincode, "residenceAddress")}
+                                                            >{pin.pincode}</a>
+                                                        )
+                                                    }
+                                                    )}
+
+                                                </div>
+                                            </div> : null}
+                                        </div>
+
+                                        <div className="custom-wrapper">
                                             <div className="form__group field long-city" style={errors.city ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="city" placeholder="City"
-                                                  required  name="city" value={this.state.residenceAddress.city}
+                                                    autoComplete="off" required name="city" value={this.state.residenceAddress.city}
                                                     onChange={e => this.handleInput(e, "residenceAddress")} onBlur={this.handleInputBlur}
                                                 />
                                                 {errors.city.length > 0 &&
@@ -695,37 +723,9 @@ console.log('inside resi city select block',block);
 
                                                 </div>
                                             </div> : null}
-
                                         </div>
 
-                                        <div className="custom-wrapper">
-                                            <div className="form__group field long-pincode" style={errors.pincode ? { border: "1px solid red" } : null}>
-                                                <input className="form__field" type="text" id="pincode" name="pincode" placeholder="Pincode"
-                                                  required   value={this.state.residenceAddress.pincode}
-                                                    onChange={e => this.handleInput(e, "residenceAddress")}
-                                                    onBlur={this.handleInputBlur}
-                                                />
-                                                {errors.pincode.length > 0 &&
-                                                    <span className='error'>{errors.pincode}</span>}
-                                                <label className="form__label" htmlFor="pincode">Pincode</label>
-                                            </div>
-                                            {this.state.residenceAddress.pinList ? <div id="bank-drop" className="dropdown-content">
-                                                <div className="dropdown-content-links">
-                                                    {this.state.residenceAddress.pinList.map(pin => {
-                                                        return (
-                                                            // <a key={city.pincode} className="form__label" onClick={e => this.onSelectPin(pin.cityId, pin.pincode, "residenceAddress")}
-                                                            // >{pin.pincode}</a>
-
-                                                            <a key={city.pincode}  onClick={e => this.onSelectPin(pin.cityMasterName, pin.pincode, "residenceAddress")}
-                                                            >{pin.pincode}</a>
-                                                        )
-                                                    }
-                                                    )}
-
-                                                </div>
-                                            </div> : null}
-                                        </div>
-                                  </div>
+                                    </div>
 
                                 </div>
                             </div>
@@ -734,7 +734,7 @@ console.log('inside resi city select block',block);
                             {/* <h3>Address Details</h3> */}
                             <div className="long-forms-wrapper" >
                                 <h5><b>11.</b> Do you have a proof of address?</h5>
-                                <div className="shortforms-container long-proof" name="proofOfAddress" value={this.state.proofOfAddress} onChange={e => this.handleRadio(e.target.value,'proofOfAddress')} >
+                                <div className="shortforms-container long-proof" name="proofOfAddress" value={this.state.proofOfAddress} onChange={e => this.handleRadio(e.target.value, 'proofOfAddress')} >
                                     <input className="lets-checkbox" type="radio" id="l-yes" name="proof" value="l-yes" />
                                     <input className="lets-checkbox" type="radio" id="l-no" name="proof" value="l-no" />
 
@@ -758,7 +758,7 @@ console.log('inside resi city select block',block);
                                             <path
                                                 d="M13.4099 12L17.7099 7.71C17.8982 7.5217 18.004 7.2663 18.004 7C18.004 6.7337 17.8982 6.47831 17.7099 6.29C17.5216 6.1017 17.2662 5.99591 16.9999 5.99591C16.7336 5.99591 16.4782 6.1017 16.2899 6.29L11.9999 10.59L7.70994 6.29C7.52164 6.1017 7.26624 5.99591 6.99994 5.99591C6.73364 5.99591 6.47824 6.1017 6.28994 6.29C6.10164 6.47831 5.99585 6.7337 5.99585 7C5.99585 7.2663 6.10164 7.5217 6.28994 7.71L10.5899 12L6.28994 16.29C6.19621 16.383 6.12182 16.4936 6.07105 16.6154C6.02028 16.7373 5.99414 16.868 5.99414 17C5.99414 17.132 6.02028 17.2627 6.07105 17.3846C6.12182 17.5064 6.19621 17.617 6.28994 17.71C6.3829 17.8037 6.4935 17.8781 6.61536 17.9289C6.73722 17.9797 6.86793 18.0058 6.99994 18.0058C7.13195 18.0058 7.26266 17.9797 7.38452 17.9289C7.50638 17.8781 7.61698 17.8037 7.70994 17.71L11.9999 13.41L16.2899 17.71C16.3829 17.8037 16.4935 17.8781 16.6154 17.9289C16.7372 17.9797 16.8679 18.0058 16.9999 18.0058C17.132 18.0058 17.2627 17.9797 17.3845 17.9289C17.5064 17.8781 17.617 17.8037 17.7099 17.71C17.8037 17.617 17.8781 17.5064 17.9288 17.3846C17.9796 17.2627 18.0057 17.132 18.0057 17C18.0057 16.868 17.9796 16.7373 17.9288 16.6154C17.8781 16.4936 17.8037 16.383 17.7099 16.29L13.4099 12Z"
                                                 fill="white" />
-                                        </svg> : null }
+                                        </svg> : null}
                                         <svg className="file-upload-attach" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -777,8 +777,8 @@ console.log('inside resi city select block',block);
                                 <div className="shortforms-container long-address">
                                     <div className="form__group field" style={errors.officeAddress1 ? { border: "1px solid red" } : null}>
                                         <input className="form__field" type="text" id="off-address-1" placeholder="Address Line 1"
-                                          required  name="officeAddress1"  
-                                          onChange={e => this.handleInput(e, "officeAddress1")}
+                                            autoComplete="off" required name="officeAddress1"
+                                            onChange={e => this.handleInput(e, "officeAddress1")}
                                             onBlur={this.handleInputBlur} />
                                         {errors.officeAddress1.length > 0 &&
                                             <span className='error'>{errors.officeAddress1}</span>}
@@ -787,7 +787,7 @@ console.log('inside resi city select block',block);
                                     </div>
                                     <div className="form__group field" style={errors.officeAddress2 ? { border: "1px solid red" } : null}>
                                         <input className="form__field" type="text" id="off-address-2" placeholder="Address Line 2"
-                                           required name="officeAddress2" onChange={e => this.handleInput(e, "officeAddress2")}
+                                            autoComplete="off" required name="officeAddress2" onChange={e => this.handleInput(e, "officeAddress2")}
                                             onBlur={this.handleInputBlur}
                                         />
                                         {errors.officeAddress2.length > 0 &&
@@ -796,19 +796,28 @@ console.log('inside resi city select block',block);
                                     </div>
                                     <div className="form__group field">
                                         <input className="form__field" type="text" id="off-address-landmark" name="officeNearBy"
-                                            placeholder="Nearby Landmark (Optional)" 
-                                             onChange={e => this.handleInput(e, "officeNearBy")} />
-                                             
+                                            placeholder="Nearby Landmark (Optional)"
+                                            autoComplete="off" onChange={e => this.handleInput(e, "officeNearBy")} />
+
                                         <label className="form__label" htmlFor="off-address-2">Nearby Landmark (Optional)</label>
                                     </div>
                                     <div className="row-input-container">
 
+                                        <div className="custom-wrapper">
+                                            <div className="form__group field long-pincode" style={errors.officePincode ? { border: "1px solid red" } : null}>
+                                                <input className="form__field" type="text" id="off-pincode" placeholder="Pincode" name="officePincode"
+                                                    autoComplete="off" required onChange={e => this.handleInput(e, "officePincode")} onBlur={this.handleInputBlur} />
+                                                {errors.officePincode.length > 0 &&
+                                                    <span className='error'>{errors.officePincode}</span>}
+                                                <label className="form__label" htmlFor="off-pincode">Pincode</label>
+                                            </div>
+                                        </div>
 
                                         <div className="custom-wrapper">
                                             <div className="form__group field long-city" style={errors.officeCity ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="off-city" placeholder="City" name="officeCity"
-                                                 required  onChange={e => this.handleInput(e, "officeAddress")} value={this.state.officeAddress.officeCity}
-                                                    onBlur={this.handleInputBlur}
+                                                    required onChange={e => this.handleInput(e, "officeAddress")} value={this.state.officeAddress.officeCity}
+                                                    autoComplete="off" onBlur={this.handleInputBlur}
                                                 />
                                                 {errors.officeCity.length > 0 &&
                                                     <span className='error'>{errors.officeCity}</span>}
@@ -818,8 +827,8 @@ console.log('inside resi city select block',block);
                                                 <div className="dropdown-content-links">
                                                     {this.state.officeAddress.officeCityList.map(cityOfc => {
                                                         return (
-                                                            
-                                                            <a key={cityOfc.cityMasterId} name={cityOfc.cityMasterName} 
+
+                                                            <a key={cityOfc.cityMasterId} name={cityOfc.cityMasterName}
                                                                 value={cityOfc.cityMasterId} onClick={e => this.onSelectOfficeCity(cityOfc.cityMasterName, cityOfc.cityMasterId, "officeAddress")} >{cityOfc.cityMasterName}</a>
                                                         )
                                                     }
@@ -830,16 +839,6 @@ console.log('inside resi city select block',block);
 
                                         </div>
 
-
-
-                                        <div className="form__group field long-pincode" style={errors.officePincode ? { border: "1px solid red" } : null}>
-                                            <input className="form__field" type="text" id="off-pincode" placeholder="Pincode" name="officePincode" 
-                                            required  onChange={e => this.handleInput(e, "officePincode")} onBlur={this.handleInputBlur} />
-                                            {errors.officePincode.length > 0 &&
-                                                <span className='error'>{errors.officePincode}</span>}
-                                            <label className="form__label" htmlFor="off-pincode">Pincode</label>
-                                        </div>
-
                                     </div>
 
                                 </div>
@@ -848,7 +847,7 @@ console.log('inside resi city select block',block);
                             {/* <!--communication address--> */}
                             <div className="long-forms-wrapper">
                                 <h5><b>13.</b> Which address would you prefer for communication purposes?</h5>
-                                <div className="shortforms-container long-proof" name="communication" value={this.state.communication} onChange={e => this.handleRadio(e.target.value,'communication')}>
+                                <div className="shortforms-container long-proof" name="communication" value={this.state.communication} onChange={e => this.handleRadio(e.target.value, 'communication')}>
                                     <input className="lets-checkbox" type="radio" id="home" name="contact" value="home" />
                                     <input className="lets-checkbox" type="radio" id="office" name="contact" value="office" />
 
@@ -865,7 +864,7 @@ console.log('inside resi city select block',block);
                                 <div className="shortforms-container long-work ">
                                     <div className="form__group field" style={errors.pan ? { border: "1px solid red" } : null}>
                                         <input className="form__field" type="text" id="l-pan" placeholder="PAN" name="pan" value={this.state.pan}
-                                           required onChange={e => this.handleInput(e, "pan")} onBlur={this.handleInputBlur} />
+                                            autoComplete="off" required onChange={e => this.handleInput(e, "pan")} onBlur={this.handleInputBlur} />
                                         {errors.pan.length > 0 &&
                                             <span className='error'>{errors.pan}</span>}
                                         <label className="form__label" htmlFor="l-pan">PAN</label>
@@ -876,7 +875,7 @@ console.log('inside resi city select block',block);
                                         <input className="form__field upload-real" type="file" id="l-pancard-image"
                                             name="panImage" onChange={this.onFileChange}
                                             placeholder="PAN Card image" />
-                                      
+
                                         <input className="form__field upload-show" type="text" id="l-pancard-image-show"
                                             placeholder="PAN Card image" />
 
@@ -887,13 +886,13 @@ console.log('inside resi city select block',block);
                                                 fill="white" />
                                         </svg>
 
-                                        {this.state.selectedPan ? <svg onClick = {this.removePanCard} className="file-upload-cross file-upload-visible" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        {this.state.selectedPan ? <svg onClick={this.removePanCard} className="file-upload-cross file-upload-visible" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
 
                                             <path
                                                 d="M13.4099 12L17.7099 7.71C17.8982 7.5217 18.004 7.2663 18.004 7C18.004 6.7337 17.8982 6.47831 17.7099 6.29C17.5216 6.1017 17.2662 5.99591 16.9999 5.99591C16.7336 5.99591 16.4782 6.1017 16.2899 6.29L11.9999 10.59L7.70994 6.29C7.52164 6.1017 7.26624 5.99591 6.99994 5.99591C6.73364 5.99591 6.47824 6.1017 6.28994 6.29C6.10164 6.47831 5.99585 6.7337 5.99585 7C5.99585 7.2663 6.10164 7.5217 6.28994 7.71L10.5899 12L6.28994 16.29C6.19621 16.383 6.12182 16.4936 6.07105 16.6154C6.02028 16.7373 5.99414 16.868 5.99414 17C5.99414 17.132 6.02028 17.2627 6.07105 17.3846C6.12182 17.5064 6.19621 17.617 6.28994 17.71C6.3829 17.8037 6.4935 17.8781 6.61536 17.9289C6.73722 17.9797 6.86793 18.0058 6.99994 18.0058C7.13195 18.0058 7.26266 17.9797 7.38452 17.9289C7.50638 17.8781 7.61698 17.8037 7.70994 17.71L11.9999 13.41L16.2899 17.71C16.3829 17.8037 16.4935 17.8781 16.6154 17.9289C16.7372 17.9797 16.8679 18.0058 16.9999 18.0058C17.132 18.0058 17.2627 17.9797 17.3845 17.9289C17.5064 17.8781 17.617 17.8037 17.7099 17.71C17.8037 17.617 17.8781 17.5064 17.9288 17.3846C17.9796 17.2627 18.0057 17.132 18.0057 17C18.0057 16.868 17.9796 16.7373 17.9288 16.6154C17.8781 16.4936 17.8037 16.383 17.7099 16.29L13.4099 12Z"
                                                 fill="white" />
-                                        </svg>:null}
+                                        </svg> : null}
 
                                         <svg className="file-upload-attach" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -914,18 +913,18 @@ console.log('inside resi city select block',block);
                                 <div className="shortforms-container long-work ">
                                     <div className="form__group field" style={errors.monthlyIncome ? { border: "1px solid red" } : null}>
                                         <input className="form__field" type="number" id="m-income"
-                                          required  placeholder="Net monthly income" name="monthlyIncome" value={this.state.monthlyIncome}
-                                            onChange={e => this.handleInput(e, "monthlyIncome")} onBlur={this.handleInputBlur}
+                                            required placeholder="Net monthly income" name="monthlyIncome" value={this.state.monthlyIncome}
+                                            autoComplete="off" onChange={e => this.handleInput(e, "monthlyIncome")} onBlur={this.handleInputBlur}
                                         />
                                         {errors.monthlyIncome.length > 0 &&
                                             <span className='error'>{errors.monthlyIncome}</span>}
-                                          
+
                                         <label className="form__label" htmlFor="m-income">Net monthly income</label>
                                         <p id="word-number"></p>
                                     </div>
                                     <div className="form__group field file-type">
                                         <input className="form__field upload-real" type="file" id="salary-image" placeholder="salary"
-                                       onChange={this.onSalarySlipChange} />
+                                            onChange={this.onSalarySlipChange} />
                                         <input className="form__field upload-show" type="text" id="salary-image-show"
                                             placeholder="salary" />
 
@@ -936,7 +935,7 @@ console.log('inside resi city select block',block);
                                                 fill="white" />
                                         </svg>
 
-                                       {this.state.selectedSalarySlip ?  <svg onClick = {this.removeSalarySlip} className="file-upload-cross file-upload-visible" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        {this.state.selectedSalarySlip ? <svg onClick={this.removeSalarySlip} className="file-upload-cross file-upload-visible" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M13.4099 12L17.7099 7.71C17.8982 7.5217 18.004 7.2663 18.004 7C18.004 6.7337 17.8982 6.47831 17.7099 6.29C17.5216 6.1017 17.2662 5.99591 16.9999 5.99591C16.7336 5.99591 16.4782 6.1017 16.2899 6.29L11.9999 10.59L7.70994 6.29C7.52164 6.1017 7.26624 5.99591 6.99994 5.99591C6.73364 5.99591 6.47824 6.1017 6.28994 6.29C6.10164 6.47831 5.99585 6.7337 5.99585 7C5.99585 7.2663 6.10164 7.5217 6.28994 7.71L10.5899 12L6.28994 16.29C6.19621 16.383 6.12182 16.4936 6.07105 16.6154C6.02028 16.7373 5.99414 16.868 5.99414 17C5.99414 17.132 6.02028 17.2627 6.07105 17.3846C6.12182 17.5064 6.19621 17.617 6.28994 17.71C6.3829 17.8037 6.4935 17.8781 6.61536 17.9289C6.73722 17.9797 6.86793 18.0058 6.99994 18.0058C7.13195 18.0058 7.26266 17.9797 7.38452 17.9289C7.50638 17.8781 7.61698 17.8037 7.70994 17.71L11.9999 13.41L16.2899 17.71C16.3829 17.8037 16.4935 17.8781 16.6154 17.9289C16.7372 17.9797 16.8679 18.0058 16.9999 18.0058C17.132 18.0058 17.2627 17.9797 17.3845 17.9289C17.5064 17.8781 17.617 17.8037 17.7099 17.71C17.8037 17.617 17.8781 17.5064 17.9288 17.3846C17.9796 17.2627 18.0057 17.132 18.0057 17C18.0057 16.868 17.9796 16.7373 17.9288 16.6154C17.8781 16.4936 17.8037 16.383 17.7099 16.29L13.4099 12Z"
@@ -961,7 +960,7 @@ console.log('inside resi city select block',block);
                                 <h5><b>16.</b> Terms & Conditions</h5>
                                 <div className="checkbox-container">
                                     <div className="checkbox" >
-                                        <input type="checkbox" id="checkbox" name="tnc" />
+                                        <input type="checkbox" id="checkbox-1" name="" value="" readOnly />
                                         <label htmlFor="checkbox-1"><span>
                                             I Hereby consent to receiving information from Central KYC Registry through
                                             SMS/Email on the above registered number/Email address.
@@ -971,7 +970,7 @@ console.log('inside resi city select block',block);
 
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="checkbox" name="tnc2"  />
+                                        <input type="checkbox" id="checkbox-2" name="" value="" readOnly/>
                                         <label htmlFor="checkbox-2"><span>
                                             I have read the Authorization Statement, Know Your Credit Card, Card Member Terms and conditions and Most Important Terms and conditions and fully accept it and agree to be issued the Credit Card opted for by me.
                                     </span></label>
@@ -980,19 +979,19 @@ console.log('inside resi city select block',block);
 
                                 <div className="checkbox-container">
                                     <div className="checkbox">
-                                        <input type="checkbox" id="tnc3" name="tnc3" />
+                                        <input type="checkbox" id="checkbox-3" name="" value="" readOnly/>
                                         <label htmlFor="checkbox-3"><span>
                                             From time to time, Citibank brings great products, offers & value addition to its customers. I authorize Citibank & its affiliates and/or partners to communicate these products and offers to me.
                                     </span></label>
                                     </div>
                                 </div>
-                                
+
                             </div>
 
                             {/* <!--director proof--> */}
                             <div className="long-forms-wrapper">
                                 <h5><b>17.</b> Are you a director/senior officer of Citibank and/or their Relative AND / OR director of other banks and/or their Relative?</h5>
-                                <div className="shortforms-container long-proof" value={this.state.director} name="director" onChange={e => this.handleRadio(e.target.value,'director')}>
+                                <div className="shortforms-container long-proof" value={this.state.director} name="director" onChange={e => this.handleRadio(e.target.value, 'director')}>
                                     <input className="lets-checkbox" type="radio" id="director-yes" name="director" value="director-yes" />
                                     <input className="lets-checkbox" type="radio" id="director-no" name="director" value="director-no" />
 
@@ -1005,7 +1004,7 @@ console.log('inside resi city select block',block);
                             {/* <!--member-account proof--> */}
                             <div className="long-forms-wrapper">
                                 <h5><b>18.</b> Do you or your immediate family member/joint account holder or their immediate family members currently hold/have held/are being considered for a position as a senior public figure?</h5>
-                                <div className="shortforms-container long-proof" name="bankMember" value={this.state.bankMember} onChange={e => this.handleRadio(e.target.value,'bankMember')}>
+                                <div className="shortforms-container long-proof" name="bankMember" value={this.state.bankMember} onChange={e => this.handleRadio(e.target.value, 'bankMember')}>
                                     <input className="lets-checkbox" type="radio" id="member-yes" name="member" value="member-yes" />
                                     <input className="lets-checkbox" type="radio" id="member-no" name="member" value="member-no" />
 

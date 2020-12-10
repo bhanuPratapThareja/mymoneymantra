@@ -1,8 +1,7 @@
 import Router from 'next/router'
 import $ from 'jquery'
-import { } from '../Utils/shortFormHandle'
 import { generateInputs } from '../Utils/inputGenerator'
-import { setBankMaster } from '../services/formService'
+import { setBankMaster, setCompanyMaster } from '../services/formService'
 import {
     textTypeInputs,
     getCurrentSlideInputs,
@@ -50,6 +49,7 @@ class ShortExtendedForm extends React.Component {
 
     componentDidMount() {
         setBankMaster(this.props.bankMaster)
+        setCompanyMaster(this.props.companyMaster)
         let slideNo = 1
         const { side_form, form_slide } = this.props.data.onboard_short_form
         this.setInputsInState(side_form, 'onboard')
@@ -75,19 +75,6 @@ class ShortExtendedForm extends React.Component {
         })
     }
 
-    onGoToPrevious = () => {
-        if (this.state.slideIndex === 1) {
-            // this.onGoToLetFindForm()
-            loadOtpForm()
-            return
-        }
-        this.plusSlides(-1)
-    }
-
-    onSubmitSlide = () => {
-        this.plusSlides(1)
-    }
-
     onClickLetsGo = () => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
@@ -99,6 +86,12 @@ class ShortExtendedForm extends React.Component {
                 // })
                 submitLetsFindForm()
             }
+        })
+    }
+
+    onGoToLetFindForm = () => {
+        this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
+            loadLetsFindForm()
         })
     }
 
@@ -126,27 +119,6 @@ class ShortExtendedForm extends React.Component {
             submitOtpForm()
             this.showSlides()
         })
-
-    }
-
-    plusSlides = (n) => {
-        if (n >= 1) {
-            const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-            const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
-            this.setState({ ...this.state, slides: newSlides }, () => {
-                if (!errorsPresent) {
-                    const newSlideId = incrementSlideId(this.state.currentSlide)
-                    this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId }, () => {
-                        this.showSlides(n)
-                    })
-                }
-            })
-        } else {
-            const newSlideId = decrementSlideId(this.state.currentSlide)
-            this.setState({ slideIndex: this.state.slideIndex - 1, currentSlide: newSlideId }, () => {
-                this.showSlides(n)
-            })
-        }
 
     }
 
@@ -179,10 +151,38 @@ class ShortExtendedForm extends React.Component {
         }
     }
 
-    onGoToLetFindForm = () => {
-        this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
-            loadLetsFindForm()
-        })
+    onSubmitSlide = () => {
+        this.plusSlides(1)
+    }
+
+    onGoToPrevious = () => {
+        if (this.state.slideIndex === 1) {
+            // this.onGoToLetFindForm()
+            loadOtpForm()
+            return
+        }
+        this.plusSlides(-1)
+    }
+
+    plusSlides = (n) => {
+        if (n >= 1) {
+            const { newSlides, inputs } = getCurrentSlideInputs(this.state)
+            const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
+            this.setState({ ...this.state, slides: newSlides }, () => {
+                if (!errorsPresent) {
+                    const newSlideId = incrementSlideId(this.state.currentSlide)
+                    this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId }, () => {
+                        this.showSlides(n)
+                    })
+                }
+            })
+        } else {
+            const newSlideId = decrementSlideId(this.state.currentSlide)
+            this.setState({ slideIndex: this.state.slideIndex - 1, currentSlide: newSlideId }, () => {
+                this.showSlides(n)
+            })
+        }
+
     }
 
     onSubmitShortForm = () => {

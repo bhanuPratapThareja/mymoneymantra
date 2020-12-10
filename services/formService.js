@@ -2,9 +2,14 @@ import { getApiData } from '../api/api';
 import Strapi from '../providers/strapi'
 
 let bankmaster = []
+let companymaster = []
 
 export const setBankMaster = data => {
     bankmaster = { bankList: data }
+}
+
+export const setCompanyMaster = data => {
+    companymaster = { companyList: data }
 }
 
 export const getBankList = (val) => {
@@ -15,6 +20,25 @@ export const getBankList = (val) => {
             })
             if (filteredBankList.length) {
                 resolve({ bankList: filteredBankList })
+            } else {
+                resolve([])
+            }
+        } else {
+            resolve([])
+        }
+    })
+    return promise
+}
+
+export const getCompanyList = (val) => {
+    const promise =  new Promise((resolve) => {
+        console.log(companymaster)
+        if (companymaster.companyList.length) {
+            let filteredCompanyList = companymaster.companyList.filter(company => {
+                return company.companyName.startsWith(val.toUpperCase())
+            })
+            if (filteredCompanyList.length) {
+                resolve({ companyList: filteredCompanyList })
             } else {
                 resolve([])
             }
