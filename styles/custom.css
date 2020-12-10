@@ -233,7 +233,7 @@
 }
 
 .shortforms-container .form__group.field.file-type {
-  margin: 15px 0 0;
+  margin: 0 0 15px;
   display: inline-block;
   max-width: 50%;
 }
@@ -271,14 +271,6 @@
   color: rgb(34, 31, 31) !important;
 }
 
-/* input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
-  background:none;
-  color: rgb(0, 0, 0);
-}
-input:-internal-autofill-selected  {
-  background:#fff !important;
-} */
-
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus
@@ -300,7 +292,7 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0; 
 }
 
-.credit-card-flow .sf-forms .form__group.field.file-type > img[src="/assets/images/icons/Cross.svg"] {
+.credit-card-flow .sf-forms .form__group.field.file-type > img[src="/assets/images/icons/cross.svg"] {
   position: absolute;
   left: 90%;
   top: 20px;
@@ -325,6 +317,41 @@ input[type=number]::-webkit-outer-spin-button {
 
 .row-input-container .long-pincode {
   width: 38% !important;
+}
+
+.checkbox input[type="checkbox"] {
+  width: auto;
+  opacity: 0.00000001;
+  position: absolute;
+  left: 0;
+  z-index: 1000;
+  cursor: pointer;
+  margin-left: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group {
+  margin-bottom: 0 !important;
+}
+
+
+.form__group span.error {
+  text-align: center;
+  color: #f7091d;
+  line-height: 1.5rem;
+  float: right;
+  position: relative;
+  top: 6px;
+  text-transform: capitalize;
+}
+
+
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group #word-number {
+  bottom:-38px;
+  line-height: 16px;
+  left: 0;
+  font-size: 14px;
 }
 
 @media(max-width: 1199px) {
