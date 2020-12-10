@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
-import { getDropdownList, getBankList, getCompanyList } from '../services/formService'
+import { getDropdownList, getBankList, getCompanyList, getPincodeList } from '../services/formService'
 import { getApiToHit } from '../api/dropdownApiConfig'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel', 'phone_no',
@@ -49,14 +49,24 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                             })
                     } 
                     
-                    // else if (inp.input_id === 'company_name') {
-                    //     let listType = 'companies'
-                    //     getCompanyList(inp.value)
-                    //         .then(list => {
-                    //             inp.listType = listType
-                    //             inp.list = list
-                    //         })
-                    // } 
+                    else if (inp.input_id === 'company_name') {
+                        let listType = 'companies'
+                        getCompanyList(inp.value)
+                            .then(list => {
+                                inp.listType = listType
+                                inp.list = list
+                                console.log('inp: ', inp)
+                            })
+
+                    } else if(inp.input_id === 'pincode') {
+                        let listType = 'pincode'
+                        getPincodeList(inp.value)
+                            .then(list => {
+                                inp.listType = listType
+                                inp.list = list
+                                console.log('inp: ', inp)
+                            })
+                    }
                     
                     else {
                         let listType = getApiToHit(inp.input_id)

@@ -1,7 +1,7 @@
 import Router from 'next/router'
 import $ from 'jquery'
 import { generateInputs } from '../Utils/inputGenerator'
-import { setBankMaster, setCompanyMaster } from '../services/formService'
+import { setBankMaster, setCompanyMaster, setPincodeMaster } from '../services/formService'
 import {
     textTypeInputs,
     getCurrentSlideInputs,
@@ -50,6 +50,7 @@ class ShortExtendedForm extends React.Component {
     componentDidMount() {
         setBankMaster(this.props.bankMaster)
         setCompanyMaster(this.props.companyMaster)
+        setPincodeMaster(this.props.pincodeMaster)
         let slideNo = 1
         const { side_form, form_slide } = this.props.data.onboard_short_form
         this.setInputsInState(side_form, 'onboard')
@@ -204,7 +205,7 @@ class ShortExtendedForm extends React.Component {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
             }
-            console.log(this.state.slides)
+            // console.log(this.state.slides)
         })
 
     }

@@ -13,14 +13,18 @@ import ShortExtendedForm from '../components/ShortExtendedForm';
 import { getMastersData, getCompanyMastersData } from '../services/mastersService'
 import { useEffect, useState } from 'react';
 import { getCompanyMaster } from '../services/companiesMaster'
+import { getPincodeMaster } from '../services/pincodeMaster'
 
 const Home = props => {
 
     const [companyMaster, setCompanyMaster] = useState([])
+    const [pincodeMaster, setPincodeMaster] = useState([])
 
     useEffect(() => {
         const { companyMaster } = getCompanyMaster()
+        const { pincodeMaster } = getPincodeMaster()
         setCompanyMaster(companyMaster)
+        setPincodeMaster(pincodeMaster)
     }, [])
 
     const { data, path, bankMaster } = props
@@ -57,6 +61,7 @@ const Home = props => {
                                 path={path} 
                                 bankMaster={bankMaster}
                                 companyMaster={companyMaster}
+                                pincodeMaster={pincodeMaster}
                             />
             }
         })
