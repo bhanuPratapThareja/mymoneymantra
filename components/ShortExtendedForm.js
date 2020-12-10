@@ -81,10 +81,6 @@ class ShortExtendedForm extends React.Component {
         const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
         this.setState({ ...this.state, slides: newSlides }, () => {
             if (!errorsPresent) {
-                // this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
-                //     submitLetsFindForm()
-                //     this.showSlides()
-                // })
                 submitLetsFindForm()
                 setTimeout(() => {
                     document.getElementsByClassName('input_otp')[0].focus()
@@ -209,7 +205,7 @@ class ShortExtendedForm extends React.Component {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
             }
-            // console.log(this.state.slides)
+            console.log(this.state.slides)
         })
 
     }

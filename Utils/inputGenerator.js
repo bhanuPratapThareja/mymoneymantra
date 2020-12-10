@@ -57,7 +57,7 @@ export const generateInputs = (component, updateField,
         checkbox, radio, question, error, errorMsg, list, listType,
         upload_text } = component
 
-    const borderInputInvalid = { border: '1px solid var(--error-color)' }
+    const borderInputInvalid = { border: '2px solid var(--error-color)' }
     const borderInputValid = null
     const borderStyles = error ? borderInputInvalid : borderInputValid
 
@@ -132,12 +132,14 @@ export const generateInputs = (component, updateField,
 
     if (type === 'input_with_dropdown') {
         if (!value) value = ''
-        const { input_type } = component
+        const { input_type, selectedId } = component
 
         const { listName, id, name } = properties(listType)
+        const dropDownClasses = ['form__group', 'field', selectedId === '*' ? 'dropdown_disabled' : 'dropdown_enabled']
+        const dropDownStyles = selectedId !== '*' ? borderStyles : null
         return (
             <>
-                <div className="form__group field" key={id} style={borderStyles}>
+                <div className={dropDownClasses.join(' ')} key={id} style={dropDownStyles}>
                     <input className="form__field"
                         name={input_id}
                         id={input_id}
@@ -145,6 +147,7 @@ export const generateInputs = (component, updateField,
                         value={value}
                         placeholder={placeholder}
                         autoComplete='off'
+                        disabled={selectedId === '*'}
                         required={mandatory}
                         onBlur={e => validate(e, type)}
                         onChange={e => handleChange(e, type)}

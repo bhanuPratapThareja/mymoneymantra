@@ -101,6 +101,28 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
                     inp.value = field.value
+
+                    // special case
+
+                    if(inp.input_id === 'cc_holder') {
+                        inputs.forEach(secondary => {
+                            if(secondary.input_id === 'bank') {
+                                if(inp.value === 'no'){
+                                    secondary.value = ''
+                                    secondary.list = []
+                                    secondary.selectedId = '*'
+                                    secondary.selectedItem = null
+                                    secondary.mandatory = false
+                                    secondary.error = false
+                                    secondary.errorMsg = ''
+                                } else {
+                                    secondary.selectedId = null
+                                    secondary.mandatory = true
+                                }
+                            }
+                        })
+                    }
+
                 }
             })
         } else {
