@@ -26,7 +26,7 @@ export const properties = listType => {
     switch (listType) {
         case 'bank':
         case 'bank_name':
-            properties = { listName: 'cityList', id: 'cityMasterId', name: 'cityMasterName' }
+            properties = { listName: 'bankList', id: 'bankId', name: 'bankName' }
             break
 
         case 'cities':

@@ -5,6 +5,12 @@ const api = {
     uatBaseUrl: 'http://203.122.46.189:8060/masters/',
     prodBaseUrl: 'http://203.122.46.189:8060/masters/',
     routes: {
+        masters:{
+            devUrl: 'api/master/v1/',
+            uatUrl: 'api/customer/v1/profile/',
+            prodUrl: 'api/customer/v1/profile/',
+            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '111' } } }
+        },
         offers: {
             devUrl: 'api/customer/v1/profile/',
             uatUrl: 'api/customer/v1/profile/',
@@ -33,10 +39,10 @@ const api = {
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         generate :{
-            devUrl: 'api/master/v1/',
+            devUrl: 'api/lead/v1/',
             uatUrl: 'api/lead/v1/',
             prodUrl: 'api/master/v1/',
-            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { gender : "", fullName : {firstName: "", lastName: ""}, dob:"",nationality:"",phoneNo :"",email :"",pan:"",monthlyIncome:"",stateID: "9999000090", cityMasterId: "14448" } } }
+            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { leadId:"PR12344343" , gender : "", fullName : {firstName: "", lastName: ""}, dob:"",nationality:"",phoneNo :"",email :"",pan:"",monthlyIncome:"",stateID: "9999000090", cityMasterId: "14448" } } }
         }       
 
 

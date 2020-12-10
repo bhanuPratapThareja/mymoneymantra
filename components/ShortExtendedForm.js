@@ -2,6 +2,7 @@ import Router from 'next/router'
 import $ from 'jquery'
 import { } from '../Utils/shortFormHandle'
 import { generateInputs } from '../Utils/inputGenerator'
+import { setBankMaster } from '../services/formService'
 import {
     textTypeInputs,
     getCurrentSlideInputs,
@@ -42,10 +43,13 @@ class ShortExtendedForm extends React.Component {
             formInputs.push(item)
         })
         let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading }]
-        this.setState({ ...this.state, slides: [...upDatedSlides] })
+        this.setState({ ...this.state, slides: [...upDatedSlides] }, () => {
+            // console.log(this.state)
+        })
     }
 
     componentDidMount() {
+        setBankMaster(this.props.bankMaster)
         let slideNo = 1
         const { side_form, form_slide } = this.props.data.onboard_short_form
         this.setInputsInState(side_form, 'onboard')
@@ -113,8 +117,8 @@ class ShortExtendedForm extends React.Component {
         for (let inp of inps) {
             otp += inp.value
         }
-        
-        if(otp.length !== 4) {
+
+        if (otp.length !== 4) {
             return
         }
 
@@ -193,16 +197,16 @@ class ShortExtendedForm extends React.Component {
         })
     }
 
-    handleChange = field => {
+    handleChange = async field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const { newstate: { letsGoButtonDisabled } } = handleChangeInputs(inputs, field, this.state.letsGoButtonDisabled)
-
+        const { newstate: { letsGoButtonDisabled } } = await handleChangeInputs(inputs, field, this.state.letsGoButtonDisabled)
         this.setState({ ...this.state, slides: newSlides, letsGoButtonDisabled }, () => {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
             }
             console.log(this.state.slides)
         })
+
     }
 
     checkInputValidity = field => {
@@ -265,7 +269,7 @@ class ShortExtendedForm extends React.Component {
                                 <div className="mobile-otp">
                                     <div className="lets-find-content otp-card_custom">
                                         <h2>Verify your mobile<br />number</h2>
-                                        <img className="green-underline" src="../../images/icons/green-underline.png" />
+                                        <img className="green-underline" src="/assets/images/credit-card-flow/green-underline.png" />
                                         <div className="otp-wrapper login-options">
                                             <div className="form__group field">
                                                 <Otp submitting={false} />
@@ -286,7 +290,7 @@ class ShortExtendedForm extends React.Component {
                                 </button>
                                 <div>
                                     <h4 id="button-text" style={{ color: 'rgb(34, 31, 31)' }}>Next</h4>
-                                    <button type="button" className="next-otp-button"  onClick={this.onSubmitOtp} disabled={this.state.disableOtpSubmitButton}>
+                                    <button type="button" className="next-otp-button" onClick={this.onSubmitOtp} disabled={this.state.disableOtpSubmitButton}>
                                         <svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M23.893 15.493a1.332 1.332 0 00-.28-.44l-6.666-6.666a1.34 1.34 0 00-1.894 1.893l4.4 4.387H9.333a1.334 1.334 0 000 2.666h10.12l-4.4 4.387a1.335 1.335 0 000 1.893 1.336 1.336 0 001.894 0l6.666-6.666c.122-.127.217-.277.28-.44a1.333 1.333 0 000-1.014z" fill="#fff"></path>
                                         </svg>
