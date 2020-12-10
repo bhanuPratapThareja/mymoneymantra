@@ -29,8 +29,6 @@ const Home = props => {
 
     const { data, path, bankMaster } = props
 
-    console.log('bankMaster: ', bankMaster)
-
     const getComponents = (dynamic, path, bankMaster) => {
         return dynamic.map(block => {
             switch (block.__component) {

@@ -2,6 +2,7 @@ import $ from 'jquery'
 import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
 import { getDropdownList, getBankList, getCompanyList, getPincodeList } from '../services/formService'
 import { getApiToHit } from '../api/dropdownApiConfig'
+import { debounce } from 'lodash'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel', 'phone_no',
     'input_with_dropdown', 'input_with_calendar', 'upload_button']
@@ -42,21 +43,43 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                     inp.value = field.value
                     if (inp.input_id === 'bank' || inp.input_id === 'bank_name') {
                         let listType = 'bank'
-                        getBankList(inp.value)
+                        const debouncedSearch = debounce(() => {
+                            getBankList(inp.value)
                             .then(list => {
-                                inp.listType = listType
-                                inp.list = list
-                            })
+                                console.log('list: ', list)
+                                        inp.listType = listType
+                                        inp.list = list
+                                    })
+                        }, 300)
+                        debouncedSearch(inp)
+                       
+                            
+                            // .then(val => console.log('val;; ', val))
+                        // getBankList(inp.value)
+                        //     .then(list => {
+                        //         inp.listType = listType
+                        //         inp.list = list
+                        //     })
                     } 
                     
                     else if (inp.input_id === 'company_name') {
                         let listType = 'companies'
-                        getCompanyList(inp.value)
+
+                        const debouncedSearch = debounce(() => {
+                            getCompanyList(inp.value)
                             .then(list => {
-                                inp.listType = listType
-                                inp.list = list
-                                console.log('inp: ', inp)
-                            })
+                                console.log('list: ', list)
+                                        inp.listType = listType
+                                        inp.list = list
+                                    })
+                        }, 300)
+                        debouncedSearch(inp)
+
+                        // getCompanyList(inp.value)
+                        //     .then(list => {
+                        //         inp.listType = listType
+                        //         inp.list = list
+                        //     })
 
                     } else if(inp.input_id === 'pincode') {
                         let listType = 'pincode'
@@ -64,13 +87,11 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                             .then(list => {
                                 inp.listType = listType
                                 inp.list = list
-                                console.log('inp: ', inp)
                             })
                     }
                     
                     else {
                         let listType = getApiToHit(inp.input_id)
-    
                         getDropdownList(listType, inp.value)
                             .then(list => {
                                 inp.listType = listType
@@ -135,7 +156,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
             // check on blur
 
             if (field.blur) {
-                // console.log(field)
+               
                 if (inp.type === 'email' && inp.input_id === field.currentActiveInput && !isEmailValid(inp.value)) {
                     inp.error = true
                     errors = true

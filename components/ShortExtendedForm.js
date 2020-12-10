@@ -86,6 +86,9 @@ class ShortExtendedForm extends React.Component {
                 //     this.showSlides()
                 // })
                 submitLetsFindForm()
+                setTimeout(() => {
+                    document.getElementsByClassName('input_otp')[0].focus()
+                }, 500)
             }
         })
     }
