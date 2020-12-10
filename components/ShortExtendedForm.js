@@ -1,7 +1,7 @@
 import Router from 'next/router'
 import $ from 'jquery'
 import { generateInputs } from '../Utils/inputGenerator'
-import { setBankMaster } from '../services/formService'
+import { setBankMaster, setCompanyMaster } from '../services/formService'
 import {
     textTypeInputs,
     getCurrentSlideInputs,
@@ -49,6 +49,7 @@ class ShortExtendedForm extends React.Component {
 
     componentDidMount() {
         setBankMaster(this.props.bankMaster)
+        setCompanyMaster(this.props.companyMaster)
         let slideNo = 1
         const { side_form, form_slide } = this.props.data.onboard_short_form
         this.setInputsInState(side_form, 'onboard')

@@ -1,5 +1,5 @@
-import Strapi from '../../providers/strapi'
 import { useEffect } from 'react'
+import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 import ListingBanner from '../../components/Listing/ListingBanner'
 import LongFormBanner from '../../components/LongForm/LongFormBanner'

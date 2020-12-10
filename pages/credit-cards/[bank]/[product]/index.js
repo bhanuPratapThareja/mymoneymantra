@@ -16,11 +16,26 @@ const CreditCards = props => {
         window.scrollTo(0, 0)
     })
 
-    const getComponents = (dynamic, details) => {
+    const getProductDetailsComponents = details => {
+        return details.map(block => {
+            switch (block.__component) {
+                case 'blocks.product-banner':
+                    return <BankProductBanner key={block.id} data={block} />
+                case 'blocks.bank-product-details-cards':
+                    return <OfferBankProductDetails key={block.id} data={block} />
+            }
+        })
+    }
+
+    const getComponents = dynamic => {
         return dynamic.map(block => {
             switch (block.__component) {
+                case 'blocks.product-banner':
+                    return !props.details ? <BankProductBanner key={block.id} data={block} /> : null
+        
                 case 'blocks.bank-product-details-cards':
-                    return <OfferBankProductDetails key={block.id} data={block} details={details} />
+                    
+                 return !props.details ? <OfferBankProductDetails key={block.id} data={block} /> : null
                 case 'blocks.credit-score':
                     return <CreditScore key={block.id} data={block} />
                 case 'blocks.offer':
@@ -33,8 +48,6 @@ const CreditCards = props => {
                     return <Rewards key={block.id} rewards={block} />
                 case 'blocks.blogs':
                     return <Blog key={block.id} data={block} />
-                case 'blocks.product-banner':
-                    return <BankProductBanner key={block.id} data={block} />
                 case 'blocks.learn-more':
                     return <LearnMore key={block.id} data={block} />
             }
@@ -43,6 +56,7 @@ const CreditCards = props => {
 
     return (
         <div className="listings">
+            {props.details? <Layout>{getProductDetailsComponents(props.details[0].details_dynamic)}</Layout> : null}
             {props.data ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
         </div>
     )
@@ -55,7 +69,7 @@ export async function getServerSideProps(ctx) {
 
     const details = await strapi.processReq('GET', `bank-product-mappings?bank.slug=${bank}&product.slug=${product}`)
 
-    console.log('details:: ', details)
+    console.log('ctx:: ', ctx)
 
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)
     const data = pageData[0]

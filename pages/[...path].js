@@ -10,14 +10,22 @@ import TrendingOffers from '../components/TrendingOffers'
 import LearnMore from '../components/LearnMore'
 import Blog from '../components/Blog'
 import ShortExtendedForm from '../components/ShortExtendedForm';
-import { getApiData } from '../api/api'
-import { getMastersData } from '../services/mastersService'
+import { getMastersData, getCompanyMastersData } from '../services/mastersService'
 import { useEffect, useState } from 'react';
+import { getCompanyMaster } from '../services/companiesMaster'
 
 const Home = props => {
 
+    const [companyMaster, setCompanyMaster] = useState([])
+
+    useEffect(() => {
+        const { companyMaster } = getCompanyMaster()
+        setCompanyMaster(companyMaster)
+    }, [])
+
     const { data, path, bankMaster } = props
 
+    console.log('bankMaster: ', bankMaster)
 
     const getComponents = (dynamic, path, bankMaster) => {
         return dynamic.map(block => {
@@ -27,7 +35,7 @@ const Home = props => {
                 case 'blocks.financial-tools':
                     return <FinancialTools key={block.id} tools={block} />
                 case 'blocks.rewards':
-                    return <Rewards key={block.id} rewards={block}  path={path}/>
+                    return <Rewards key={block.id} rewards={block} path={path} />
                 case 'blocks.banks':
                     return <Banks key={block.id} banks={block} />
                 case 'blocks.bank-new':
@@ -43,11 +51,17 @@ const Home = props => {
                 case 'blocks.credit-score':
                     return <CreditScore key={block.id} data={block} />
                 case 'form-components.onboarding-short-form':
-                    return <ShortExtendedForm key={block.id} data={block} path={path} bankMaster={bankMaster} />
+                    return <ShortExtendedForm 
+                                key={block.id} 
+                                data={block} 
+                                path={path} 
+                                bankMaster={bankMaster}
+                                companyMaster={companyMaster}
+                            />
             }
         })
     }
-    
+
 
 
     return (
@@ -61,12 +75,14 @@ export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     let props = {}
     let bankMaster = []
-    try{
+    let companyMaster = []
+    try {
         const masterData = await getMastersData()
         bankMaster = masterData.bankMaster
-    } catch(err) {
-
+    } catch (err) {
+        console.log('maste error: ', err)
     }
+
 
     try {
         const [path] = ctx.params.path

@@ -2,11 +2,9 @@ import Strapi from '../../providers/strapi'
 import { useEffect, useState } from 'react'
 import Router from 'next/router';
 
-
 const OfferDetailCards = props => {
     const strapi = new Strapi()
-    const [offers, setOffers] = useState([])
-    
+    const [offers, setOffers] = useState([])    
 
     useEffect(() => {
         setOffers(props.data.offer_cards)
@@ -24,10 +22,16 @@ const OfferDetailCards = props => {
         }
     }
 
-    const goToVDetailsPage = () => {
-        Router.push(`/credit-cards/details`)
+    const goToDetailsPage = (bank, product, buttonType, buttonText) => {
+        localStorage.setItem('buttonType', buttonType)
+        localStorage.setItem('buttonText', buttonText)
+        Router.push({
+            pathname: `/credit-cards/${bank}/${product}`,
+            params : { buttonType }
+        })
     }
 
+    // query : { buttonType, buttonText }
     return (
         <section className="container long-cards">
             {offers.map((offer, i) => {
@@ -35,7 +39,7 @@ const OfferDetailCards = props => {
                     <div className="long-cards-wrapper" key={offer.id}>
                         <div data-aos={i ? 'fade-up' : ''} className="long-cards-wrapper-card aos-init">
                             {offer.recommend ?
-                                <img className="recommended" src="../../images/icons/stamp.svg" /> : null}
+                                <img className="recommended" src="/aaests/images/icons/stamp.svg" /> : null}
                             <div className="top">
                                 <div className="name">
                                     <img className="mob-logo" src={`${strapi.baseUrl}${offer.bank_logo.url}`} alt={offer.bank_logo.name} />
@@ -60,7 +64,7 @@ const OfferDetailCards = props => {
                                     <h5>Lifetime reward points</h5>
                                 </div>
                                 <div className="options">
-                                    <button id="view-details" onClick={goToVDetailsPage}>{offer.view_details_link}</button>
+                                    <button id="view-details" onClick={() => goToDetailsPage(offer.bank_slug, offer.product_slug,offer.button_type, offer.button_text)}>{offer.view_details_link}</button>
                                     {offer.button_type == "applyNow" ? <button onClick={() => cardButtonClick(offer.button_type)} id="apply-now">{offer.button_text}</button> : null}
                                     {offer.button_type == "eConnect" ? <button onClick={() => cardButtonClick(offer.button_type)} id="apply-now">{offer.button_text}</button> : null}
                                     {offer.button_type == "instantApproval" ? <button onClick={() => cardButtonClick(offer.button_type)} id="apply-now">{offer.button_text}</button> : null}
