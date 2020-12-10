@@ -2,30 +2,32 @@ import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 import Banner from '../components/Banner'
 import CreditScore from '../components/CreditScore'
+import TrendingOffers from '../components/TrendingOffers'
 import Banks from '../components/Banks'
 import FinancialTools from '../components/FinancialTools'
 import Rewards from '../components/Rewards'
 import Offers from '../components/Offers'
-import TrendingOffers from '../components/TrendingOffers'
 import LearnMore from '../components/LearnMore'
 import Blog from '../components/Blog'
 import ShortExtendedForm from '../components/ShortExtendedForm';
 import { getMastersData, getCompanyMastersData } from '../services/mastersService'
 import { useEffect, useState } from 'react';
 import { getCompanyMaster } from '../services/companiesMaster'
+import { getPincodeMaster } from '../services/pincodeMaster'
 
 const Home = props => {
 
     const [companyMaster, setCompanyMaster] = useState([])
+    const [pincodeMaster, setPincodeMaster] = useState([])
 
     useEffect(() => {
         const { companyMaster } = getCompanyMaster()
+        const { pincodeMaster } = getPincodeMaster()
         setCompanyMaster(companyMaster)
+        setPincodeMaster(pincodeMaster)
     }, [])
 
     const { data, path, bankMaster } = props
-
-    console.log('bankMaster: ', bankMaster)
 
     const getComponents = (dynamic, path, bankMaster) => {
         return dynamic.map(block => {
@@ -57,6 +59,7 @@ const Home = props => {
                                 path={path} 
                                 bankMaster={bankMaster}
                                 companyMaster={companyMaster}
+                                pincodeMaster={pincodeMaster}
                             />
             }
         })
@@ -75,7 +78,7 @@ export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     let props = {}
     let bankMaster = []
-    let companyMaster = []
+
     try {
         const masterData = await getMastersData()
         bankMaster = masterData.bankMaster

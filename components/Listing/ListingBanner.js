@@ -17,13 +17,12 @@ if (typeof window != 'undefined') {
     })
 }
 
-const ListingBanner = ({ data }) => {
-    const { heading, category, number_of_offers, product } = data
+const ListingBanner = props => {
+    const { heading, category, number_of_offers, product } = props.data
     const [selectedOption, setSelectedOption] = useState('all')
     const strapi = new Strapi()
 
     useEffect(() => {
-        console.log(selectedOption)
         onBannerCategoryChange(selectedOption)
     })
 
