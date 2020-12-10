@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 import Banner from '../components/Banner'
@@ -10,15 +11,14 @@ import Offers from '../components/Offers'
 import LearnMore from '../components/LearnMore'
 import Blog from '../components/Blog'
 import ShortExtendedForm from '../components/ShortExtendedForm';
-import { getMastersData, getCompanyMastersData } from '../services/mastersService'
-import { useEffect, useState } from 'react';
+import { getMastersData } from '../services/mastersService'
 import { getCompanyMaster } from '../services/companiesMaster'
 import { getPincodeMaster } from '../services/pincodeMaster'
 
 const Home = props => {
 
-    const [companyMaster, setCompanyMaster] = useState([])
-    const [pincodeMaster, setPincodeMaster] = useState([])
+    const [companyMaster, setCompanyMaster] = useState(null)
+    const [pincodeMaster, setPincodeMaster] = useState(null)
 
     useEffect(() => {
         const { companyMaster } = getCompanyMaster()

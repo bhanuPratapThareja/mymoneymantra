@@ -13,11 +13,9 @@ import Blog from '../../../../components/Blog'
 import LearnMore from '../../../../components/LearnMore'
 
 const Details = props => {
-    const [productBannerButton, setProductBannerButton] = useState(null)
 
     useEffect(() => {
         window.scrollTo(0, 0)
-
     })
 
     const getProductDetailsComponents = (details, path) => {

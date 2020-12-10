@@ -18,7 +18,7 @@ export const setPincodeMaster = data => {
 }
 
 export const getBankList = (val) => {
-    const promise =  new Promise((resolve) => {
+    const promise = new Promise((resolve) => {
         if (bankmaster.bankList.length) {
             let filteredBankList = bankmaster.bankList.filter(bank => {
                 return bank.bankName.startsWith(val.toUpperCase())
@@ -36,18 +36,18 @@ export const getBankList = (val) => {
 }
 
 export const getCompanyList = (val) => {
-    const promise =  new Promise((resolve) => {
-        if (companymaster.companyList.length) {
-           
+    const promise = new Promise((resolve) => {
+        if (companymaster && companymaster.companyList.length) {
+
             let filteredCompanyList = companymaster.companyList.filter(company => {
-                return company.companyName.startsWith((val.toUpperCase())) !== -1
+                return company.companyName.indexOf((val.toUpperCase())) !== -1
             })
             if (filteredCompanyList.length) {
-                    resolve({ companyList: filteredCompanyList })
-                } else {
-                    resolve([])
-                }
+                resolve({ companyList: filteredCompanyList })
             } else {
+                resolve([])
+            }
+        } else {
             resolve([])
         }
     })
@@ -55,8 +55,8 @@ export const getCompanyList = (val) => {
 }
 
 export const getPincodeList = (val) => {
-    const promise =  new Promise((resolve) => {
-        if (pincodemaster.pinList.length) {
+    const promise = new Promise((resolve) => {
+        if (pincodemaster && pincodemaster.pinList.length) {
             let filteredPinList = pincodemaster.pinList.filter(pin => {
                 return pin.pincode.startsWith(val.toUpperCase())
             })

@@ -43,43 +43,22 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                     inp.value = field.value
                     if (inp.input_id === 'bank' || inp.input_id === 'bank_name') {
                         let listType = 'bank'
-                        const debouncedSearch = debounce(() => {
-                            getBankList(inp.value)
-                            .then(list => {
-                                console.log('list: ', list)
-                                        inp.listType = listType
-                                        inp.list = list
-                                    })
-                        }, 300)
-                        debouncedSearch(inp)
                        
-                            
-                            // .then(val => console.log('val;; ', val))
-                        // getBankList(inp.value)
-                        //     .then(list => {
-                        //         inp.listType = listType
-                        //         inp.list = list
-                        //     })
+                        getBankList(inp.value)
+                            .then(list => {
+                                inp.listType = listType
+                                inp.list = list
+                            })
                     } 
                     
                     else if (inp.input_id === 'company_name') {
                         let listType = 'companies'
 
-                        const debouncedSearch = debounce(() => {
-                            getCompanyList(inp.value)
+                        getCompanyList(inp.value)
                             .then(list => {
-                                console.log('list: ', list)
-                                        inp.listType = listType
-                                        inp.list = list
-                                    })
-                        }, 300)
-                        debouncedSearch(inp)
-
-                        // getCompanyList(inp.value)
-                        //     .then(list => {
-                        //         inp.listType = listType
-                        //         inp.list = list
-                        //     })
+                                inp.listType = listType
+                                inp.list = list
+                            })
 
                     } else if(inp.input_id === 'pincode') {
                         let listType = 'pincode'
@@ -90,10 +69,14 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                             })
                     }
                     
+
                     else {
+                        console.log('check')
                         let listType = getApiToHit(inp.input_id)
+                        console.log(listType)
                         getDropdownList(listType, inp.value)
                             .then(list => {
+                                console.log(list)
                                 inp.listType = listType
                                 inp.list = list
                             })
