@@ -53,14 +53,14 @@ const Home = props => {
                 case 'blocks.credit-score':
                     return <CreditScore key={block.id} data={block} />
                 case 'form-components.onboarding-short-form':
-                    return <ShortExtendedForm 
-                                key={block.id} 
-                                data={block} 
-                                path={path} 
-                                bankMaster={bankMaster}
-                                companyMaster={companyMaster}
-                                pincodeMaster={pincodeMaster}
-                            />
+                    return <ShortExtendedForm
+                        key={block.id}
+                        data={block}
+                        path={path}
+                        bankMaster={bankMaster}
+                        companyMaster={companyMaster}
+                        pincodeMaster={pincodeMaster}
+                    />
             }
         })
     }

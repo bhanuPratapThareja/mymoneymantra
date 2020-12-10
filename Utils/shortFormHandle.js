@@ -68,10 +68,8 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                                 inp.list = list
                             })
                     }
-                    
-
+                
                     else {
-                        console.log('check')
                         let listType = getApiToHit(inp.input_id)
                         console.log(listType)
                         getDropdownList(listType, inp.value)
@@ -81,7 +79,6 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                                 inp.list = list
                             })
                     }
-    
     
                 } else {
                     inp.list = []

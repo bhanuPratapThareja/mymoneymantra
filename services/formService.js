@@ -37,13 +37,15 @@ export const getBankList = (val) => {
 
 export const getCompanyList = (val) => {
     const promise = new Promise((resolve) => {
-        if (companymaster && companymaster.companyList.length) {
+        console.log('companymaster: ', companymaster)
+        console.log('companyList: ', companymaster.companyList)
+        if (companymaster.companyList && companymaster.companyList.length) {
 
             let filteredCompanyList = companymaster.companyList.filter(company => {
-                return company.companyName.indexOf((val.toUpperCase())) !== -1
+                return company.companyName.startsWith(val.toUpperCase())
             })
             if (filteredCompanyList.length) {
-                resolve({ companyList: filteredCompanyList })
+                resolve({ companyList: [...filteredCompanyList] })
             } else {
                 resolve([])
             }
@@ -56,7 +58,7 @@ export const getCompanyList = (val) => {
 
 export const getPincodeList = (val) => {
     const promise = new Promise((resolve) => {
-        if (pincodemaster && pincodemaster.pinList.length) {
+        if (pincodemaster.pinList && pincodemaster.pinList.length) {
             let filteredPinList = pincodemaster.pinList.filter(pin => {
                 return pin.pincode.startsWith(val.toUpperCase())
             })
