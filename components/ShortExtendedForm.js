@@ -13,10 +13,12 @@ import {
     resetDropdowns,
     loadLetsFindForm,
     submitLetsFindForm,
-    submitOtpForm,
+    goToSlides,
     loadOtpForm
 } from '../Utils/shortFormHandle'
 import Otp from './Otp';
+import { getApiData } from '../api/api';
+import Strapi from '../providers/strapi'
 
 class ShortExtendedForm extends React.Component {
     state = {
@@ -42,9 +44,7 @@ class ShortExtendedForm extends React.Component {
             formInputs.push(item)
         })
         let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading }]
-        this.setState({ ...this.state, slides: [...upDatedSlides] }, () => {
-            // console.log(this.state)
-        })
+        this.setState({ ...this.state, slides: [...upDatedSlides] })
     }
 
     componentDidMount() {
@@ -76,12 +76,24 @@ class ShortExtendedForm extends React.Component {
         })
     }
 
-    onClickLetsGo = () => {
+    onClickLetsGo = async () => {
+        const strapi = new Strapi()
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
-        this.setState({ ...this.state, slides: newSlides }, () => {
+        this.setState({ ...this.state, slides: newSlides }, async () => {
             if (!errorsPresent) {
+                let mobileNo = ''
+                this.state.slides[0].inputs.forEach(inp => {
+                    if (inp.input_id === 'phone') {
+                        mobileNo = inp.value
+                    }
+                })
+                const { url, body } = getApiData('otp')
+                body.request.payload.mobileNo = mobileNo
+                strapi.apiReq('POST', url, body)
+                this.setState({ mobileNo })
                 submitLetsFindForm()
+
                 setTimeout(() => {
                     document.getElementsByClassName('input_otp')[0].focus()
                 }, 500)
@@ -104,7 +116,8 @@ class ShortExtendedForm extends React.Component {
         }
     }
 
-    onSubmitOtp = () => {
+    onSubmitOtp = async () => {
+        const strapi = new Strapi()
         const inps = document.getElementsByClassName('input_otp');
         let otp = '';
         for (let inp of inps) {
@@ -115,10 +128,21 @@ class ShortExtendedForm extends React.Component {
             return
         }
 
-        this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
-            submitOtpForm()
-            this.showSlides()
-        })
+        console.log('otp: ', otp)
+
+        const { url, body } = getApiData('otpverify')
+        body.request.payload.mobileNo = this.state.mobileNo
+        body.request.payload.otp = otp
+console.log(body)
+        try {
+            await strapi.apiReq('POST', url, body)
+            this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
+                goToSlides()
+                this.showSlides()
+            })
+        } catch (err) {
+            console.log('otp verify error: ', err)
+        }
 
     }
 
@@ -132,7 +156,7 @@ class ShortExtendedForm extends React.Component {
         if (this.state.slideIndex == slides.length) {
             $("#button-text").text("Submit and view offers").css("color", "#89C142");
             $("#next").addClass("submit-short-form");
-           
+
         } else {
             $("#button-text").text("Next").css("color", "#221F1F");
             $("#next").removeClass("submit-short-form");

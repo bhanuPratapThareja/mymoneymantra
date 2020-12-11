@@ -11,6 +11,18 @@ const api = {
             prodUrl: 'api/customer/v1/profile/',
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '111' } } }
         },
+        otp: {
+            devUrl: 'api/notification/v1/sms/',
+            uatUrl: 'api/customer/v1/profile/',
+            prodUrl: 'api/customer/v1/profile/',
+            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { mobileNo: '' } } }
+        },
+        otpverify: {
+            devUrl: 'api/notification/v1/sms/',
+            uatUrl: 'api/customer/v1/profile/',
+            prodUrl: 'api/customer/v1/profile/',
+            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { mobileNo: '' } } }
+        },
         offers: {
             devUrl: 'api/customer/v1/profile/',
             uatUrl: 'api/customer/v1/profile/',

@@ -50,7 +50,7 @@ const Otp = props => {
 
             <style jsx>{`
             .input_otp {
-                height: 40px;
+                height: 24px;
                 width: 40px;
                 margin: auto 10px;
                 text-align: center;

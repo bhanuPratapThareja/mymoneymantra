@@ -311,7 +311,7 @@ $(document).ready(function () {
   //   ]
   // });
 
-  // $('#dob').datepicker();
+  $('#datepickerr').datepicker();
 
 });
 

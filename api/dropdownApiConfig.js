@@ -34,7 +34,7 @@ export const properties = listType => {
             break
 
         case 'companies':
-            properties = { listName: 'companyList', id: 'caseCompanyId', name: 'companyName' }
+            properties = { listName: 'companyMaster', id: 'caseCompanyId', name: 'companyName' }
             break
 
         case 'pincode':

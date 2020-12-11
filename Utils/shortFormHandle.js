@@ -41,6 +41,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                         return
                     }
                     inp.value = field.value
+
                     if (inp.input_id === 'bank' || inp.input_id === 'bank_name') {
                         let listType = 'bank'
                        
@@ -51,33 +52,37 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                             })
                     } 
                     
-                    else if (inp.input_id === 'company_name') {
-                        let listType = 'companies'
+                    // else if (inp.input_id === 'company_name') {
+                    //     let listType = 'companies'
 
-                        getCompanyList(inp.value)
-                            .then(list => {
-                                inp.listType = listType
-                                inp.list = list
-                            })
+                    //     getCompanyList(inp.value)
+                    //         .then(list => {
+                    //             inp.listType = listType
+                    //             inp.list = list
+                    //         })
 
-                    } else if(inp.input_id === 'pincode') {
-                        let listType = 'pincode'
-                        getPincodeList(inp.value)
-                            .then(list => {
-                                inp.listType = listType
-                                inp.list = list
-                            })
-                    }
+                    // } 
+                    
+                    // else if(inp.input_id === 'pincode') {
+                    //     let listType = 'pincode'
+                    //     getPincodeList(inp.value)
+                    //         .then(list => {
+                    //             inp.listType = listType
+                    //             inp.list = list
+                    //         })
+                    // }
                 
                     else {
                         let listType = getApiToHit(inp.input_id)
-                        console.log(listType)
+                        console.log('listType: ', listType)
                         getDropdownList(listType, inp.value)
                             .then(list => {
-                                console.log(list)
+                                console.log('list: ', list)
                                 inp.listType = listType
                                 inp.list = list
+                                console.log(inp)
                             })
+
                     }
     
                 } else {
@@ -272,7 +277,7 @@ export const submitLetsFindForm = () => {
     }, 50);
 }
 
-export const submitOtpForm = () => {
+export const goToSlides = () => {
     $(".sms-otp").addClass("moving-out")
     $(".sms-otp").removeClass("moving-in")
     $(".sms-otp").removeClass("moving-out-rev")
