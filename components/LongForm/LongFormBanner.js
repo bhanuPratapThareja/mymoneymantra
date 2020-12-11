@@ -825,7 +825,7 @@ class LongFormBanner extends React.Component {
                                         </div>
                                         <div className="row-input-container">
 
-                                            <div className="custom-wrapper">
+                                            {/* <div className="custom-wrapper"> */}
                                                 <div className="form__group field long-pincode" style={errors.officePincode ? { border: "1px solid red" } : null}>
                                                     <input className="form__field" type="text" id="off-pincode" placeholder="Pincode" name="officePincode"
                                                         value={this.state.officeAddress.officePincode}
@@ -850,7 +850,7 @@ class LongFormBanner extends React.Component {
 
                                                     </div>
                                                 </div> : null}
-                                            </div>
+                                            {/* </div> */}
 
 
 
