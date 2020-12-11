@@ -7,6 +7,7 @@ import { getFormPercentage } from '../../Utils/formPercentage';
 import { validEmailRegex, validMobileRegex, isValidPanNumber, validPincodeRegex } from '../../Utils/validator';
 import Router from 'next/router';
 import ThankYouBanner from '../ThankYou/ThankYouBanner';
+ import $ from "jquery";
 
 // import converter from 'number-to-words';
 class LongFormBanner extends React.Component {
@@ -192,24 +193,24 @@ class LongFormBanner extends React.Component {
             )
         }
 
-        // if (name === "officePincode") {
-        //     const block = { ...this.state[type] }
-        //     block.officePincode = value;
-        //     this.setState({ [type]: block }, () => {
-        //         if (!value) {
-        //             block.officePinList = null
-        //             this.setState({ [type]: { ...block } })
-        //             return;
-        //         }
-        //         getPinCodeData(name, type).then((value) => {
-        //             const block = { ...this.state[type] }
-        //             block.officePinList = value;
-        //             this.setState({ [type]: block }, () => {
-        //             })
-        //         });
-        //     }
-        //     )
-        // }
+        if (name === "officePincode") {
+            const block = { ...this.state[type] }
+            block.officePincode = value;
+            this.setState({ [type]: block }, () => {
+                if (!value) {
+                    block.officePinList = null
+                    this.setState({ [type]: { ...block } })
+                    return;
+                }
+                getPinCodeData(name, value).then((value) => {
+                    const block = { ...this.state[type] }
+                    block.officePinList = value;
+                    this.setState({ [type]: block }, () => {
+                    })
+                });
+            }
+            )
+        }
 
         this.handleInputBlur(e);
 
@@ -308,26 +309,22 @@ class LongFormBanner extends React.Component {
     onSelect = (name, value, type) => {
 
         const block = { ...this.state[type] }
-        // console.log('inside resi city select block', block);
         block.city = name;
         block.cityId = value;
         block.cityList = null
 
         this.setState({ [type]: { ...block } }, () => {
-            // console.log('inside resi city select state', this.state);
         })
 
     }
     onSelectOfficeCity = (name, value, type) => {
 
         const block = { ...this.state[type] }
-        console.log('inside onSelectOfficeCity block', block);
         block.officeCity = name;
         block.officeCityId = value;
         block.officeCityList = null
 
         this.setState({ [type]: { ...block } }, () => {
-            console.log('inside office city select state', this.state);
         })
 
     }
@@ -371,11 +368,14 @@ class LongFormBanner extends React.Component {
             console.log('url in submit', url);
             console.log('body in submit', body);
             let resMessage = res.response.msgInfo.message;
-            let leadId = res.response.payload.leadId;
 
-            this.setState({ leadId: leadId })
-            alert(resMessage);
-            Router.push(`/credit-cards/thank-you`)
+            let leadId = res.response.payload.leadId;
+            console.log('leadId', leadId);
+
+            // this.setState({leadId : leadId})
+
+
+            Router.push({ pathname: `/credit-cards/thank-you`, query: { updatedLeadId: leadId } })
 
         } catch (error) {
 
@@ -459,13 +459,17 @@ class LongFormBanner extends React.Component {
     // }
 
 
-
+    // handleFocus = () => {
+    //     console.log('inside handleFocus')
+    //     const datepicker = $(`#${dob}`).datepicker();
+    //     datepicker.open();
+    // }
     render() {
         const strapi = new Strapi()
         const { bank_name, form_heading, product_type, banner_image } = this.props.data
         const { errors } = this.state;
-        // console.log('inside render this.state',this.state)
         const { leadId } = this.state.leadId;
+        // const datepicker = $('#dob').datepicker();
 
         return (
             <>
@@ -601,17 +605,15 @@ class LongFormBanner extends React.Component {
                                         <h5><b>6.</b> Date of Birth</h5>
                                         <div className="shortforms-container long-name">
                                             <div className="form__group field" style={errors.dob ? { border: "1px solid red" } : null}>
-                                                <input className="form__field datepicker" type="text" placeholder="MM / DD / YYYY"
-                                                    autoComplete="off" required name="datepicker" onChange={e => e.preventDefault()}
-                                                    id="datepicker"
-                                                    value=''
-                                                    onFocus={() => this.handleDatePicker()}
-                                                    onKeyDown={e => e.preventDefault()} onBlur={this.handleInputBlur}
-                                                   
+                                                <input className="form__field datepicker" type="date" id="dob" placeholder="MM / DD / YYYY"
+                                                    autoComplete="off" required name="dob"
+                                                    onChange={e => this.handleInput(e, "dob")}
+                                                    onBlur={this.handleInputBlur}
+                                                  
                                                 />
                                                 {errors.dob.length > 0 &&
                                                     <span className='error'>{errors.dob}</span>}
-                                                <label className="form__label" htmlFor="mdob">Date of Birth</label>
+                                                <label className="form__label" htmlFor="dob">Date of Birth</label>
                                             </div>
                                         </div>
                                     </div>
@@ -693,33 +695,6 @@ class LongFormBanner extends React.Component {
                                         <div className="row-input-container">
 
                                             {/* <div className="custom-wrapper"> */}
-
-                                            <div className="form__group field long-city" style={errors.city ? { border: "1px solid red" } : null}>
-                                                <input className="form__field" type="text" id="city" placeholder="City"
-                                                    required name="city" value={this.state.residenceAddress.city}
-                                                    onChange={e => this.handleInput(e, "residenceAddress")} onBlur={this.handleInputBlur}
-                                                />
-                                                {errors.city.length > 0 &&
-                                                    <span className='error'>{errors.city}</span>}
-                                                <label className="form__label" htmlFor="city">City</label>
-
-                                            </div>
-                                            {this.state.residenceAddress.cityList && this.state.residenceAddress.cityList.length ? <div id="bank-drop" className="dropdown-content">
-                                                <div className="dropdown-content-links">
-                                                    {this.state.residenceAddress.cityList.map(city => {
-                                                        return (
-                                                            <a key={city.cityMasterId} name={city.cityMasterName}
-                                                                value={city.cityMasterId} onClick={e => this.onSelect(city.cityMasterName, city.cityMasterId, "residenceAddress")} >{city.cityMasterName}</a>
-                                                        )
-                                                    }
-                                                    )}
-
-                                                </div>
-                                            </div> : null}
-
-                                            {/* </div>
-
-                                        <div className="custom-wrapper"> */}
                                             <div className="form__group field long-pincode" style={errors.pincode ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="pincode" name="pincode" placeholder="Pincode"
                                                     autoComplete="off" required value={this.state.residenceAddress.pincode}
@@ -745,7 +720,33 @@ class LongFormBanner extends React.Component {
 
                                                 </div>
                                             </div> : null}
-                                            {/* </div> */}
+
+                                            
+
+                                            <div className="form__group field long-city" style={errors.city ? { border: "1px solid red" } : null}>
+                                                <input className="form__field" type="text" id="city" placeholder="City"
+                                                    required name="city" value={this.state.residenceAddress.city}
+                                                    onChange={e => this.handleInput(e, "residenceAddress")} onBlur={this.handleInputBlur}
+                                                />
+                                                {errors.city.length > 0 &&
+                                                    <span className='error'>{errors.city}</span>}
+                                                <label className="form__label" htmlFor="city">City</label>
+
+                                            </div>
+                                            {this.state.residenceAddress.cityList && this.state.residenceAddress.cityList.length ? <div id="bank-drop" className="dropdown-content">
+                                                <div className="dropdown-content-links">
+                                                    {this.state.residenceAddress.cityList.map(city => {
+                                                        return (
+                                                            <a key={city.cityMasterId} name={city.cityMasterName}
+                                                                value={city.cityMasterId} onClick={e => this.onSelect(city.cityMasterName, city.cityMasterId, "residenceAddress")} >{city.cityMasterName}</a>
+                                                        )
+                                                    }
+                                                    )}
+
+                                                </div>
+                                            </div> : null}
+
+                                         
                                         </div>
 
                                     </div>
@@ -827,12 +828,40 @@ class LongFormBanner extends React.Component {
                                             <div className="custom-wrapper">
                                                 <div className="form__group field long-pincode" style={errors.officePincode ? { border: "1px solid red" } : null}>
                                                     <input className="form__field" type="text" id="off-pincode" placeholder="Pincode" name="officePincode"
-                                                        autoComplete="off" required onChange={e => this.handleInput(e, "officePincode")} onBlur={this.handleInputBlur} />
+                                                        value={this.state.officeAddress.officePincode}
+                                                        autoComplete="off" required onChange={e => this.handleInput(e, "officeAddress")} onBlur={this.handleInputBlur} />
                                                     {errors.officePincode.length > 0 &&
                                                         <span className='error'>{errors.officePincode}</span>}
                                                     <label className="form__label" htmlFor="off-pincode">Pincode</label>
                                                 </div>
+                                                {this.state.officeAddress.officePinList ? <div id="bank-drop" className="dropdown-content">
+                                                    <div className="dropdown-content-links">
+                                                        {this.state.officeAddress.officePinList.map(pin => {
+
+                                                            return (
+                                                                // <a key={city.pincode} className="form__label" onClick={e => this.onSelectPin(pin.cityId, pin.pincode, "residenceAddress")}
+                                                                // >{pin.pincode}</a>
+
+                                                                <a key={pin.pincode} onClick={e => this.onSelectOfficePin(pin.cityMasterName, pin.pincode, "officeAddress")}
+                                                                >{pin.pincode}</a>
+                                                            )
+                                                        }
+                                                        )}
+
+                                                    </div>
+                                                </div> : null}
                                             </div>
+
+
+
+
+
+
+
+
+
+
+
 
                                             {/* <div className="custom-wrapper"> */}
                                             <div className="form__group field long-city" style={errors.officeCity ? { border: "1px solid red" } : null}>
