@@ -26,8 +26,8 @@ const OfferDetailCards = props => {
         Router.push({
             pathname: `/credit-cards/${bank}/${product}`,
             query: { buttonType, buttonText }
-        }, 
-        `/credit-cards/${bank}/${product}`, { shallow: true })
+        },
+            `/credit-cards/${bank}/${product}`, { shallow: true })
     }
 
     return (
@@ -54,8 +54,8 @@ const OfferDetailCards = props => {
                                 <div className="fee">
                                     <h5>Annual fee:</h5>
                                     <p><b>₹ {offer.interest_rate}</b> (First Year)</p>
-                                    {offer.annual_fee_sye ?<p><b>₹ {offer.annual_fee_sye}</b> (Second year onwards)</p>:null}
-                                    
+                                    {offer.annual_fee_sye ? <p><b>₹ {offer.annual_fee_sye}</b> (Second year onwards)</p> : null}
+
                                 </div>
                             </div>
                             <div className="bottom">
