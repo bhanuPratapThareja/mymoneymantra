@@ -5983,9 +5983,9 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 }
 
 .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .dropdown-content {
-  width: 100%;
-  top: 72px;
-  left: 0;
+  /* width: 100%; */
+  /* top: 72px; */
+  /* left: 0; */
   -ms-transform: scale(1);
   transform: scale(1);
   padding: 12px;
