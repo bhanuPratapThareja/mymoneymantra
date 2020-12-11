@@ -133,7 +133,7 @@ class ShortExtendedForm extends React.Component {
             return
         }
 
-        if (otp == '0000') {
+        if (otp == '1266') {
             this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
                 goToSlides()
                 this.showSlides()
