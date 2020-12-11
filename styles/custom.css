@@ -406,6 +406,6 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   border: none !important;
 }
 
-.mobile-otp {
+/* .mobile-otp {
   margin-left: 0;
-}
+} */

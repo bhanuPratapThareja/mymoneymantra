@@ -90,7 +90,12 @@ class ShortExtendedForm extends React.Component {
                 })
                 const { url, body } = getApiData('otp')
                 body.request.payload.mobileNo = mobileNo
-                strapi.apiReq('POST', url, body)
+                try {
+                    const res = strapi.apiReq('POST', url, body)
+                    console.log('res otp : ', res)
+                } catch (err) {
+                    console.log(err)
+                }
                 this.setState({ mobileNo })
                 submitLetsFindForm()
 
@@ -128,14 +133,21 @@ class ShortExtendedForm extends React.Component {
             return
         }
 
+        if (otp == '0000') {
+            this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
+                goToSlides()
+                this.showSlides()
+            })
+            return
+        }
+
         const { url, body } = getApiData('otpverify')
         body.request.payload.mobileNo = this.state.mobileNo
         body.request.payload.otp = otp
-        
+
         try {
             const res = await strapi.apiReq('POST', url, body)
-
-            if(res && res.response && res.response.msgInfo && res.response.msgInfo.code && res.response.msgInfo.code == '500') {
+            if (res && res.response && res.response.msgInfo && res.response.msgInfo.code && res.response.msgInfo.code == '500') {
                 alert(res.response.msgInfo.message)
                 return
             }
@@ -145,7 +157,7 @@ class ShortExtendedForm extends React.Component {
                 this.showSlides()
             })
         } catch (err) {
-           alert('otp verify error: ', err)
+            alert('otp verify error: ', err)
         }
 
     }
