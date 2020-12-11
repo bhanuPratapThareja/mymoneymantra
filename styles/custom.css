@@ -415,7 +415,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   width: 45%;
   position: absolute;
   left: 365px;
-  margin-top: 70px;
+  /* margin-top: 70px; */
 }
 .long-pincode+.dropdown-content{
   left: 100px !important;

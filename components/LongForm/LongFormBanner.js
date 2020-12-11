@@ -102,6 +102,8 @@ class LongFormBanner extends React.Component {
     }
 
     handleInput = (e, type) => {
+        console.log(e)
+        console.log(type)
         const { name, value } = e.target;
 
         this.setState({ [name]: value }, () => {
