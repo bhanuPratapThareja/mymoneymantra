@@ -45,7 +45,7 @@ const api = {
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         pincode: {
-            devUrl: 'api/master/v1/',
+            devUrl: 'api/master/v2/',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }

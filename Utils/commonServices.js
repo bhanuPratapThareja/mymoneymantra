@@ -19,15 +19,16 @@ async function getCityData(name,value) {
 }
 
 async function getPinCodeData(name, value) {
-    console.log('inside getPinCodeData name', name);
-    console.log('inside getPinCodeData value', value);
+    // console.log('inside getPinCodeData name', name);
+    // console.log('inside getPinCodeData value', value);
     const strapi = new Strapi()
     const { url, body } = getApiData('pincode');
     body.request.payload.name = value;
-    console.log('body.request.payload.name pincode',body.request.payload.name);
+    // console.log('body.request.payload.name pincode',body.request.payload.name);
     try {
         const res = await strapi.apiReq('POST', url, body)
         const { pinList } = res.response.payload;
+        console.log('inside common service pinList',pinList)
         return pinList;
        
 
