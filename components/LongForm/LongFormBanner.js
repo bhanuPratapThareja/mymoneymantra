@@ -123,7 +123,7 @@ class LongFormBanner extends React.Component {
                 getCityData(name, value).then((value) => {
                     const block = { ...this.state[type] }
                     block.cityList = value;
-
+                    console.log('inside getCityData block',block);
                     this.setState({ [type]: block }, () => {
                     })
                 });
@@ -186,6 +186,7 @@ class LongFormBanner extends React.Component {
                 getPinCodeData(name, value).then((value) => {
                     const block = { ...this.state[type] }
                     block.pinList = value;
+                    console.log('inside getPinCodeData block',block)
                     this.setState({ [type]: block }, () => {
                     })
                 });
@@ -330,11 +331,13 @@ class LongFormBanner extends React.Component {
     }
 
     onSelectPin = (name, value, type) => {
-
+        console.log('onSelectPin name',name);
+console.log('onSelectPin value',value);
         const block = { ...this.state[type] }
-        block.city = null;
+        block.city = name;
         block.pincode = value;
         block.pinList = null
+        console.log('onSelectPin block',block);
         this.setState({ [type]: { ...block } }, () => {
 
         })
@@ -343,7 +346,7 @@ class LongFormBanner extends React.Component {
     onSelectOfficePin = (name, value, type) => {
 
         const block = { ...this.state[type] }
-        block.officeCity = null;
+        block.officeCity = name;
         block.officePincode = value;
         block.officePinList = null
         this.setState({ [type]: { ...block } }, () => {
@@ -709,24 +712,24 @@ class LongFormBanner extends React.Component {
                                                 <div className="dropdown-content-links">
                                                     {this.state.residenceAddress.pinList.map(pin => {
                                                         return (
-                                                            // <a key={city.pincode} className="form__label" onClick={e => this.onSelectPin(pin.cityId, pin.pincode, "residenceAddress")}
+                                                            
+                                                            // <a key={city.pincode} onClick={e => this.onSelectPin(pin.cityMasterName, pin.pincode, "residenceAddress")}
                                                             // >{pin.pincode}</a>
-
-                                                            <a key={city.pincode} onClick={e => this.onSelectPin(pin.cityMasterName, pin.pincode, "residenceAddress")}
+                                                            <a key={city.pincode} onClick={e => this.onSelectPin(pin.cityName, pin.pincode, "residenceAddress")}
                                                             >{pin.pincode}</a>
                                                         )
                                                     }
                                                     )}
 
                                                 </div>
-                                            </div> : null}
-
-                                            
+                                            </div> : null}                                           
 
                                             <div className="form__group field long-city" style={errors.city ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="city" placeholder="City"
                                                     required name="city" value={this.state.residenceAddress.city}
-                                                    onChange={e => this.handleInput(e, "residenceAddress")} onBlur={this.handleInputBlur}
+                                                    // onChange={e => this.handleInput(e, "residenceAddress")}
+                                                    // onBlur={this.handleInputBlur}
+                                                    readOnly
                                                 />
                                                 {errors.city.length > 0 &&
                                                     <span className='error'>{errors.city}</span>}
@@ -738,14 +741,16 @@ class LongFormBanner extends React.Component {
                                                     {this.state.residenceAddress.cityList.map(city => {
                                                         return (
                                                             <a key={city.cityMasterId} name={city.cityMasterName}
-                                                                value={city.cityMasterId} onClick={e => this.onSelect(city.cityMasterName, city.cityMasterId, "residenceAddress")} >{city.cityMasterName}</a>
+                                                                value={city.cityMasterId} 
+                                                                //onClick={e => this.onSelect(city.cityMasterName, city.cityMasterId, "residenceAddress")} 
+                                                                >
+                                                                    {city.cityMasterName}</a>
                                                         )
                                                     }
                                                     )}
 
                                                 </div>
                                             </div> : null}
-
                                          
                                         </div>
 
@@ -842,7 +847,7 @@ class LongFormBanner extends React.Component {
                                                                 // <a key={city.pincode} className="form__label" onClick={e => this.onSelectPin(pin.cityId, pin.pincode, "residenceAddress")}
                                                                 // >{pin.pincode}</a>
 
-                                                                <a key={pin.pincode} onClick={e => this.onSelectOfficePin(pin.cityMasterName, pin.pincode, "officeAddress")}
+                                                                <a key={pin.pincode} onClick={e => this.onSelectOfficePin(pin.cityName, pin.pincode, "officeAddress")}
                                                                 >{pin.pincode}</a>
                                                             )
                                                         }
@@ -853,21 +858,13 @@ class LongFormBanner extends React.Component {
                                             </div>
 
 
-
-
-
-
-
-
-
-
-
-
                                             {/* <div className="custom-wrapper"> */}
                                             <div className="form__group field long-city" style={errors.officeCity ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="off-city" placeholder="City" name="officeCity"
-                                                    required onChange={e => this.handleInput(e, "officeAddress")} value={this.state.officeAddress.officeCity}
-                                                    autoComplete="off" onBlur={this.handleInputBlur}
+                                                    required    value={this.state.officeAddress.officeCity} readOnly                                                 
+                                                    autoComplete="off"
+                                                    //  onBlur={this.handleInputBlur}
+                                                    //  onChange={e => this.handleInput(e, "officeAddress")} 
                                                 />
                                                 {errors.officeCity.length > 0 &&
                                                     <span className='error'>{errors.officeCity}</span>}
@@ -879,7 +876,11 @@ class LongFormBanner extends React.Component {
                                                         return (
 
                                                             <a key={cityOfc.cityMasterId} name={cityOfc.cityMasterName}
-                                                                value={cityOfc.cityMasterId} onClick={e => this.onSelectOfficeCity(cityOfc.cityMasterName, cityOfc.cityMasterId, "officeAddress")} >{cityOfc.cityMasterName}</a>
+                                                                value={cityOfc.cityMasterId}
+                                                                // onClick={e => this.onSelectOfficeCity(cityOfc.cityMasterName, cityOfc.cityMasterId, "officeAddress")} 
+                                                                >
+                                                            {cityOfc.cityMasterName}
+                                                            </a>
                                                         )
                                                     }
                                                     )}
