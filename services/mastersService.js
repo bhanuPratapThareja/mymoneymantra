@@ -13,12 +13,12 @@ export const getMastersData = async (type, value='111') => {
 }
 
 
-export const getCompanyMastersData = async (type, value) => {
+export const getCompanyMastersData = async (type, value='tata') => {
     const strapi = new Strapi()
     const { url, body } = getApiData('companies')
     body.request.payload.name = value
-    // const res = await strapi.apiReq('POST', url, body)
-    const res = getCompanyMaster()
+    const res = await strapi.apiReq('POST', url, body)
+    // const res = getCompanyMaster()
     if(res && res.response) return res.response.payload
     else return null
 }
@@ -27,8 +27,8 @@ export const getPincodeMastersData = async (type, value) => {
     const strapi = new Strapi()
     const { url, body } = getApiData('pincode')
     body.request.payload.name = value
-    // const res = await strapi.apiReq('POST', url, body)
-    const res = getPincodeMaster()
+    const res = await strapi.apiReq('POST', url, body)
+    // const res = getPincodeMaster()
     if(res && res.response) return res.response.payload
     else return null
 }

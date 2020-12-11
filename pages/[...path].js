@@ -11,25 +11,25 @@ import Offers from '../components/Offers'
 import LearnMore from '../components/LearnMore'
 import Blog from '../components/Blog'
 import ShortExtendedForm from '../components/ShortExtendedForm';
-import { getMastersData } from '../services/mastersService'
+import { getMastersData, getCompanyMastersData } from '../services/mastersService'
 import { getCompanyMaster } from '../services/companiesMaster'
 import { getPincodeMaster } from '../services/pincodeMaster'
 
 const Home = props => {
 
-    const [companyMaster, setCompanyMaster] = useState(null)
-    const [pincodeMaster, setPincodeMaster] = useState(null)
+    // const [companyMaster, setCompanyMaster] = useState(null)
+    // const [pincodeMaster, setPincodeMaster] = useState(null)
 
-    useEffect(() => {
-        const { companyMaster } = getCompanyMaster()
-        const { pincodeMaster } = getPincodeMaster()
-        setCompanyMaster(companyMaster)
-        setPincodeMaster(pincodeMaster)
-    }, [])
+    // useEffect(() => {
+    //     const { companyMaster } = getCompanyMaster()
+    //     const { pincodeMaster } = getPincodeMaster()
+    //     setCompanyMaster(companyMaster)
+    //     setPincodeMaster(pincodeMaster)
+    // }, [])
 
-    const { data, path, bankMaster } = props
+    const { data, path, bankMaster, companyMasterData } = props
 
-    const getComponents = (dynamic, path, bankMaster) => {
+    const getComponents = (dynamic, path, bankMaster, companyMasterData) => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':
@@ -58,18 +58,18 @@ const Home = props => {
                         data={block}
                         path={path}
                         bankMaster={bankMaster}
-                        companyMaster={companyMaster}
-                        pincodeMaster={pincodeMaster}
+                        companyMaster={companyMasterData}
+                      
                     />
             }
         })
     }
-
+    // pincodeMaster={pincodeMaster}
 
 
     return (
         <div className="credit-card-flow">
-            {props ? <Layout>{getComponents(data.dynamic, path, bankMaster)}</Layout> : null}
+            {props ? <Layout>{getComponents(data.dynamic, path, bankMaster, companyMasterData)}</Layout> : null}
         </div>
     )
 }
@@ -78,12 +78,21 @@ export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     let props = {}
     let bankMaster = []
+    let companyMasterData = []
 
     try {
         const masterData = await getMastersData()
         bankMaster = masterData.bankMaster
     } catch (err) {
     }
+
+    try {
+        const companyData = await getCompanyMastersData()
+        companyMasterData = companyData.companyMaster
+    } catch (err) {
+    }
+
+
 
 
     try {
@@ -94,7 +103,7 @@ export async function getServerSideProps(ctx) {
     } catch (err) {
     }
 
-    return { props: { ...props, bankMaster } }
+    return { props: { ...props, bankMaster, companyMasterData } }
 }
 
 export default Home

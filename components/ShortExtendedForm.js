@@ -50,7 +50,7 @@ class ShortExtendedForm extends React.Component {
     componentDidMount() {
         setBankMaster(this.props.bankMaster)
         setCompanyMaster(this.props.companyMaster)
-        setPincodeMaster(this.props.pincodeMaster)
+        // setPincodeMaster(this.props.pincodeMaster)
         let slideNo = 1
         const { side_form, form_slide } = this.props.data.onboard_short_form
         this.setInputsInState(side_form, 'onboard')
@@ -128,20 +128,24 @@ class ShortExtendedForm extends React.Component {
             return
         }
 
-        console.log('otp: ', otp)
-
         const { url, body } = getApiData('otpverify')
         body.request.payload.mobileNo = this.state.mobileNo
         body.request.payload.otp = otp
-console.log(body)
+        
         try {
-            await strapi.apiReq('POST', url, body)
+            const res = await strapi.apiReq('POST', url, body)
+
+            if(res && res.response && res.response.msgInfo && res.response.msgInfo.code && res.response.msgInfo.code == '500') {
+                alert(res.response.msgInfo.message)
+                return
+            }
+
             this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
                 goToSlides()
                 this.showSlides()
             })
         } catch (err) {
-            console.log('otp verify error: ', err)
+           alert('otp verify error: ', err)
         }
 
     }

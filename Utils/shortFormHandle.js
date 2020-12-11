@@ -52,16 +52,16 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                             })
                     } 
                     
-                    // else if (inp.input_id === 'company_name') {
-                    //     let listType = 'companies'
+                    else if (inp.input_id === 'company_name') {
+                        let listType = 'companies'
 
-                    //     getCompanyList(inp.value)
-                    //         .then(list => {
-                    //             inp.listType = listType
-                    //             inp.list = list
-                    //         })
+                        getCompanyList(inp.value)
+                            .then(list => {
+                                inp.listType = listType
+                                inp.list = list
+                            })
 
-                    // } 
+                    } 
                     
                     // else if(inp.input_id === 'pincode') {
                     //     let listType = 'pincode'
@@ -74,13 +74,10 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                 
                     else {
                         let listType = getApiToHit(inp.input_id)
-                        console.log('listType: ', listType)
                         getDropdownList(listType, inp.value)
                             .then(list => {
-                                console.log('list: ', list)
                                 inp.listType = listType
                                 inp.list = list
-                                console.log(inp)
                             })
 
                     }
