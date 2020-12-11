@@ -149,7 +149,7 @@ const ListingFilter = () => {
 
                             {/* <!--Promotions--> */}
                             <div className="content-one">
-                                <h5>By Category</h5>
+                                <h5>Promotions</h5>
                                 <div className="shortforms-container">
                                     <input className="lets-checkbox" type="radio" id="instant" name="Category" required />
                                     <input className="lets-checkbox" type="radio" id="welcome" name="Category" required />
