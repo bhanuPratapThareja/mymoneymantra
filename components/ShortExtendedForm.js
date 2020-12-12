@@ -1,7 +1,9 @@
 import Router from 'next/router'
 import $ from 'jquery'
+import Otp from './Otp'
 import { generateInputs } from '../Utils/inputGenerator'
-import { setBankMaster, setCompanyMaster, setPincodeMaster } from '../services/formService'
+import { setBankMaster } from '../services/formService'
+import { getOtp, submitOtp } from '../services/formService'
 import {
     textTypeInputs,
     getCurrentSlideInputs,
@@ -12,13 +14,10 @@ import {
     updateSelectionFromDropdown,
     resetDropdowns,
     loadLetsFindForm,
-    submitLetsFindForm,
+    LetsFindFormToOtpForm,
     goToSlides,
     loadOtpForm
 } from '../Utils/shortFormHandle'
-import Otp from './Otp';
-import { getApiData } from '../api/api';
-import Strapi from '../providers/strapi'
 
 class ShortExtendedForm extends React.Component {
     state = {
@@ -49,8 +48,6 @@ class ShortExtendedForm extends React.Component {
 
     componentDidMount() {
         setBankMaster(this.props.bankMaster)
-        setCompanyMaster(this.props.companyMaster)
-        // setPincodeMaster(this.props.pincodeMaster)
         let slideNo = 1
         const { side_form, form_slide } = this.props.data.onboard_short_form
         this.setInputsInState(side_form, 'onboard')
@@ -64,8 +61,6 @@ class ShortExtendedForm extends React.Component {
             }, 500)
         })
 
-        document.addEventListener('keyup', this.inputFunction);
-
         this.showSlides(this.state.slideIndex)
         $(".shortforms-container-buttons #previous").click(() => {
             this.onGoToPrevious()
@@ -76,35 +71,6 @@ class ShortExtendedForm extends React.Component {
         })
     }
 
-    onClickLetsGo = async () => {
-        const strapi = new Strapi()
-        const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
-        this.setState({ ...this.state, slides: newSlides }, async () => {
-            if (!errorsPresent) {
-                let mobileNo = ''
-                this.state.slides[0].inputs.forEach(inp => {
-                    if (inp.input_id === 'phone') {
-                        mobileNo = inp.value
-                    }
-                })
-                const { url, body } = getApiData('otp')
-                body.request.payload.mobileNo = mobileNo
-                try {
-                    const res = strapi.apiReq('POST', url, body)
-                    console.log('res otp : ', res)
-                } catch (err) {
-                    console.log(err)
-                }
-                this.setState({ mobileNo })
-                submitLetsFindForm()
-
-                setTimeout(() => {
-                    document.getElementsByClassName('input_otp')[0].focus()
-                }, 500)
-            }
-        })
-    }
 
     onGoToLetFindForm = () => {
         this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
@@ -112,54 +78,36 @@ class ShortExtendedForm extends React.Component {
         })
     }
 
-    inputFunction = () => {
-        const [i0, i1, i2, i3] = document.querySelectorAll('.input_otp');
-        if (i0.value && i1.value && i2.value && i3.value) {
-            // this.setState({ disableOtpSubmitButton: false })
-        } else {
-            // this.setState({ disableOtpSubmitButton: true })
-        }
+
+    onClickLetsGo = async () => {
+        const { newSlides, inputs } = getCurrentSlideInputs(this.state)
+        const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
+        this.setState({ ...this.state, slides: newSlides }, async () => {
+            if (!errorsPresent) {
+                try {
+                    this.setState({ letsGoButtonDisabled: true })
+                    const mobileNo = await getOtp(this.state.slides[0])
+                    this.setState({ mobileNo }, () => {
+                        LetsFindFormToOtpForm()
+                    })
+                } catch (err) {
+                    this.setState({ letsGoButtonDisabled: false })
+                    alert(err.message)
+                 }
+            }
+        })
     }
 
     onSubmitOtp = async () => {
-        const strapi = new Strapi()
-        const inps = document.getElementsByClassName('input_otp');
-        let otp = '';
-        for (let inp of inps) {
-            otp += inp.value
-        }
-
-        if (otp.length !== 4) {
-            return
-        }
-
-        if (otp == '1266') {
-            this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
-                goToSlides()
-                this.showSlides()
-            })
-            return
-        }
-
-        const { url, body } = getApiData('otpverify')
-        body.request.payload.mobileNo = this.state.mobileNo
-        body.request.payload.otp = otp
-
         try {
-            const res = await strapi.apiReq('POST', url, body)
-            if (res && res.response && res.response.msgInfo && res.response.msgInfo.code && res.response.msgInfo.code == '500') {
-                alert(res.response.msgInfo.message)
-                return
-            }
-
+            await submitOtp(this.state.mobileNo)
             this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
                 goToSlides()
                 this.showSlides()
             })
         } catch (err) {
-            alert('otp verify error: ', err)
+            alert(err.message)
         }
-
     }
 
     showSlides = (n) => {

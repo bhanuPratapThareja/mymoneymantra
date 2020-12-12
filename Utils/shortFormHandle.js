@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
-import { getDropdownList, getBankList, getCompanyList, getPincodeList } from '../services/formService'
+import { getDropdownList, getBankList } from '../services/formService'
 import { getApiToHit } from '../api/dropdownApiConfig'
 import { debounce } from 'lodash'
 
@@ -52,25 +52,6 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                             })
                     } 
                     
-                    else if (inp.input_id === 'company_name') {
-                        let listType = 'companies'
-
-                        getCompanyList(inp.value)
-                            .then(list => {
-                                inp.listType = listType
-                                inp.list = list
-                            })
-
-                    } 
-                    
-                    // else if(inp.input_id === 'pincode') {
-                    //     let listType = 'pincode'
-                    //     getPincodeList(inp.value)
-                    //         .then(list => {
-                    //             inp.listType = listType
-                    //             inp.list = list
-                    //         })
-                    // }
                 
                     else {
                         let listType = getApiToHit(inp.input_id)
@@ -265,13 +246,16 @@ export const resetDropdowns = inputs => {
     })
 }
 
-export const submitLetsFindForm = () => {
+export const LetsFindFormToOtpForm = () => {
     $(".lets-find").addClass("moving-out")
     $(".lets-find").removeClass("moving-out-rev")
     setTimeout(() => {
         $(".sms-otp").addClass("moving-in")
         $(".sms-otp").removeClass("moving-in-rev")
-    }, 50);
+    }, 50)
+    setTimeout(() => {
+        document.getElementsByClassName('input_otp')[0].focus()
+    }, 500)
 }
 
 export const goToSlides = () => {
