@@ -44,25 +44,25 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
 
                     if (inp.input_id === 'bank' || inp.input_id === 'bank_name') {
                         let listType = 'bank'
-                       
+
                         getBankList(inp.value)
                             .then(list => {
                                 inp.listType = listType
                                 inp.list = list
                             })
-                    } 
-                    
-                
-                    else {
+                    } else {
                         let listType = getApiToHit(inp.input_id)
-                        getDropdownList(listType, inp.value)
-                            .then(list => {
-                                inp.listType = listType
-                                inp.list = list
-                            })
+                        const debouncedSearch = debounce(() => {
+                            getDropdownList(listType, inp.value)
+                                .then(list => {
+                                    console.log('list is::: ', list)
+                                    inp.listType = listType
+                                    inp.list = list
+                                })
+                        }, 1000)
+                        debouncedSearch(listType, inp.value)
 
                     }
-    
                 } else {
                     inp.list = []
                 }
@@ -79,7 +79,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                     inp.value = field.value
                 }
             })
-    
+
         } else if (field.type === 'radio') {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
@@ -87,10 +87,10 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
 
                     // special case
 
-                    if(inp.input_id === 'cc_holder') {
+                    if (inp.input_id === 'cc_holder') {
                         inputs.forEach(secondary => {
-                            if(secondary.input_id === 'bank') {
-                                if(inp.value === 'no'){
+                            if (secondary.input_id === 'bank') {
+                                if (inp.value === 'no') {
                                     secondary.value = ''
                                     secondary.list = []
                                     secondary.selectedId = '*'
@@ -118,7 +118,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                 }
             })
         }
-        resolve ({ newstate: { letsGoButtonDisabled } })
+        resolve({ newstate: { letsGoButtonDisabled } })
     })
 }
 
@@ -141,7 +141,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
             // check on blur
 
             if (field.blur) {
-               
+
                 if (inp.type === 'email' && inp.input_id === field.currentActiveInput && !isEmailValid(inp.value)) {
                     inp.error = true
                     errors = true
@@ -169,7 +169,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                 } else if (inp.type === 'input_with_dropdown' && inp.input_id === field.currentActiveInput && !inp.selectedId) {
                     inp.error = true
                     errors = true
-                    if(!inp.value){
+                    if (!inp.value) {
                         inp.errorMsg = errorMsgs.mandatory
                     } else {
                         inp.errorMsg = errorMsgs.dropdown
@@ -246,7 +246,7 @@ export const resetDropdowns = inputs => {
     })
 }
 
-export const LetsFindFormToOtpForm = () => {
+export const letsFindFormToOtpForm = () => {
     $(".lets-find").addClass("moving-out")
     $(".lets-find").removeClass("moving-out-rev")
     setTimeout(() => {
@@ -302,10 +302,6 @@ export const showSlides = (n, slideIndex) => {
         $("#button-text").text("Next").css("color", "#221F1F");
         $("#next").removeClass("submit-short-form");
     }
-
-    // var width = (slideIndex * (100 / slides.length)) + "%";
-    // $("#pages-count").text(slideIndex + " of " + slides.length);
-    // $(".progress-blue").width(width)
 
     if (n < 1) {
         if (slideIndex) {

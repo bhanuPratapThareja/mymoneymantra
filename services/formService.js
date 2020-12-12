@@ -1,6 +1,7 @@
-import { getApiData } from '../api/api';
-import Strapi from '../providers/strapi'
-const strapi = new Strapi()
+import { getApiData } from '../api/api'
+import axios from 'axios'
+const CancelToken = axios.CancelToken
+let cancel
 
 let bankmaster = []
 
@@ -26,14 +27,6 @@ export const getBankList = (val) => {
     return promise
 }
 
-export const getDropdownList = async (type, value) => {
-    const { url, body } = getApiData(type)
-    body.request.payload.name = value
-    const res = await strapi.apiReq('POST', url, body)
-    if (res && res.response) return res.response.payload
-    else return []
-}
-
 export const getOtp = async slide => {
     let mobileNo = ''
     slide.inputs.forEach(inp => {
@@ -44,7 +37,7 @@ export const getOtp = async slide => {
     const { url, body } = getApiData('otp')
     body.request.payload.mobileNo = mobileNo
     try {
-        await strapi.apiReq('POST', url, body)
+        await axios.post(url, body)
         return mobileNo
     } catch (err) {
         throw new Error('Unable to fetch otp. Please try again.')
@@ -52,7 +45,7 @@ export const getOtp = async slide => {
 }
 
 export const submitOtp = async mobileNo => {
-    const inps = document.getElementsByClassName('input_otp');
+    const inps = document.getElementsByClassName('input_otp')
     let otp = '';
     for (let inp of inps) {
         otp += inp.value
@@ -64,11 +57,27 @@ export const submitOtp = async mobileNo => {
     body.request.payload.mobileNo = mobileNo
     body.request.payload.otp = otp
     try {
-        const res = await strapi.apiReq('POST', url, body)
+        const res = await axios.post(url, body)
         if (res && res.response && res.response.msgInfo && res.response.msgInfo.code && res.response.msgInfo.code == '500') {
             throw new Error(res.response.msgInfo.message)
         }
     } catch (err) {
         throw new Error(err.message)
     }
+}
+
+export const getDropdownList = async (listType, value) => {
+    const { url, body } = getApiData(listType)
+    body.request.payload.name = value
+    if (cancel != undefined) cancel()
+    try {
+        const res = await axios.post(url, body, {
+            cancelToken: new CancelToken(function executor(c) {
+                cancel = c
+            })
+        })
+        if (res && res.response) {
+            return (res.response.payload)
+        }
+    } catch (err) {}
 }

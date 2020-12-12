@@ -2,8 +2,6 @@ import Router from 'next/router'
 import OnBoardForm from './ShortForm/OnBoardForm/OnBoardForm'
 import OtpSlide from './ShortForm/OtpForm/OtpSlide'
 import SFSlides from './ShortForm/SFSlides/SFSlides'
-import SFButtons from './ShortForm/SFButtons/SFButtons'
-import { generateInputs } from '../Utils/inputGenerator'
 import { setBankMaster } from '../services/formService'
 import { getOtp, submitOtp } from '../services/formService'
 import {
@@ -16,7 +14,7 @@ import {
     updateSelectionFromDropdown,
     resetDropdowns,
     loadLetsFindForm,
-    LetsFindFormToOtpForm,
+    letsFindFormToOtpForm,
     goToSlides,
     showSlides,
     loadOtpForm
@@ -27,7 +25,7 @@ class ShortExtendedForm extends React.Component {
         slideIndex: 0,
         currentSlide: 'onboard',
         slides: [],
-        letsGoButtonDisabled: false,
+        letsGoButtonDisabled: true,
         errorMsgs: {
             mandatory: 'Required Field',
             email: 'Email is not Valid',
@@ -77,10 +75,10 @@ class ShortExtendedForm extends React.Component {
             if (!errorsPresent) {
                 try {
                     this.setState({ letsGoButtonDisabled: true })
-                    const mobileNo = ''
-                    // const mobileNo = await getOtp(this.state.slides[0])
+                    // const mobileNo = ''
+                    const mobileNo = await getOtp(this.state.slides[0])
                     this.setState({ mobileNo, letsGoButtonDisabled: false }, () => {
-                        LetsFindFormToOtpForm()
+                        letsFindFormToOtpForm()
                     })
                 } catch (err) {
                     this.setState({ letsGoButtonDisabled: false })
@@ -92,7 +90,7 @@ class ShortExtendedForm extends React.Component {
 
     onSubmitOtp = async () => {
         try {
-            // await submitOtp(this.state.mobileNo)
+            await submitOtp(this.state.mobileNo)
             this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
                 goToSlides()
             })

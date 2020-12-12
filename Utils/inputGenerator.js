@@ -130,8 +130,9 @@ export const generateInputs = (component, updateField,
     if (type === 'input_with_dropdown') {
         if (!value) value = ''
         const { input_type, selectedId } = component
-        const fieldId = `${input_id}_${type}`
         const { listName, id, name } = properties(listType)
+        const fieldId = `${input_id}_${type}`
+        // console.log(listName, id, name)
         const dropDownClasses = ['form__group', 'field', selectedId === '*' ? 'dropdown_disabled' : 'dropdown_enabled']
         const dropDownStyles = selectedId !== '*' ? borderStyles : null
         return (
