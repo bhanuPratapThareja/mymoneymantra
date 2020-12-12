@@ -1,32 +1,15 @@
-import { useState, useEffect } from 'react'
-import Strapi from '../providers/strapi'
+import Router from 'next/router'
 
 const Rewards = props => {
-   const { heading, sub_text, button } = props.rewards
-   function goToShortFormPage() {
-      window.scrollTo({
-          top: 1000,
-          behavior: 'smooth'
-      });
-  }
+   const { heading, sub_text, button } = props.data
 
-  function rewardsCta(){
-     if(props.path==='credit-cards'){
-      goToShortFormPage()
-     }
-     else{
-      alert("Coming Soon")
-     }
-  }
-
-   function goToShortForm(){
-      if(props.path == "credit-cards"){
-      window.scrollTo({
-            top: 1000,
-            // behavior: 'smooth'
-      
-      })
-   }
+   function goToShortForm() {
+      const path = Router.query.path[0]
+      if (path == "credit-cards") {
+         window.scrollTo({
+            top: 1000
+         })
+      }
    }
 
    return (
@@ -37,9 +20,7 @@ const Rewards = props => {
                <p>{sub_text}</p>
             </div>
             <div className="reward-button">
-              
-           <button onClick={goToShortForm}>{button}</button>
-               
+               <button onClick={goToShortForm}>{button}</button>
             </div>
          </div>
       </section>
@@ -47,5 +28,5 @@ const Rewards = props => {
 
 }
 
-export default Rewards;
+export default Rewards
 

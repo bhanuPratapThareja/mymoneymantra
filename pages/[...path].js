@@ -9,15 +9,11 @@ import Rewards from '../components/Rewards'
 import Offers from '../components/Offers'
 import LearnMore from '../components/LearnMore'
 import Blog from '../components/Blog'
-import ShortExtendedForm from '../components/ShortExtendedForm';
-import { getMastersData } from '../services/mastersService'
+import ShortExtendedForm from '../components/ShortExtendedForm'
 
 const Home = props => {
 
-
-    const { data, path, bankMaster } = props
-
-    const getComponents = (dynamic, path, bankMaster) => {
+    const getComponents = (dynamic, path) => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':
@@ -25,9 +21,7 @@ const Home = props => {
                 case 'blocks.financial-tools':
                     return <FinancialTools key={block.id} tools={block} />
                 case 'blocks.rewards':
-                    return <Rewards key={block.id} rewards={block} path={path} />
-                case 'blocks.banks':
-                    return <Banks key={block.id} banks={block} />
+                    return <Rewards key={block.id} data={block} />
                 case 'blocks.bank-new':
                     return <Banks key={block.id} banks={block} />
                 case 'blocks.offer':
@@ -41,46 +35,24 @@ const Home = props => {
                 case 'blocks.credit-score':
                     return <CreditScore key={block.id} data={block} />
                 case 'form-components.onboarding-short-form':
-                    return <ShortExtendedForm
-                        key={block.id}
-                        data={block}
-                        path={path}
-                        bankMaster={bankMaster}
-                    />
+                    return <ShortExtendedForm key={block.id} data={block} />
             }
         })
     }
-    // pincodeMaster={pincodeMaster}
-
 
     return (
         <div className="credit-card-flow">
-            {props ? <Layout>{getComponents(data.dynamic, path, bankMaster)}</Layout> : null}
+            {props ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
         </div>
     )
 }
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    let props = {}
-    let bankMaster = []
-
-    try {
-        const masterData = await getMastersData()
-        bankMaster = masterData.bankMaster
-    } catch (err) {
-    }
-
-
-    try {
-        const [path] = ctx.params.path
-        const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
-        const data = pageData[0]
-        props = { data, path }
-    } catch (err) {
-    }
-
-    return { props: { ...props, bankMaster } }
+    const [path] = ctx.params.path
+    const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
+    const data = pageData[0]
+    return { props: { data, path } }
 }
 
 export default Home

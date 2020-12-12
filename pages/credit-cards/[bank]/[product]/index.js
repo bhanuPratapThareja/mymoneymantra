@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import Router from 'next/router'
 import Strapi from '../../../../providers/strapi'
 import Layout from '../../../../components/Layout'
 import OfferBankProductDetails from '../../../../components/Details/OfferBankProductDetails'
@@ -54,7 +53,6 @@ export async function getServerSideProps(ctx) {
     const path = 'details'
     const { bank, product } = ctx.params
     const details = await strapi.processReq('GET', `bank-product-mappings?bank.slug=${bank}&product.slug=${product}`)
-
     return { props: { details, path } }
 }
 
