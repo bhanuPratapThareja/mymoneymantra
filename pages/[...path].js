@@ -12,8 +12,8 @@ import Blog from '../components/Blog'
 import ShortExtendedForm from '../components/ShortExtendedForm'
 
 const Home = props => {
-
-    const getComponents = (dynamic, path) => {
+    
+    const getComponents = dynamic => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':
