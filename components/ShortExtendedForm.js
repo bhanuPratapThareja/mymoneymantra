@@ -7,6 +7,7 @@ import {
     textTypeInputs,
     getCurrentSlideInputs,
     handleChangeInputs,
+    getUserMobileNumber,
     updateInputsValidity,
     incrementSlideId,
     decrementSlideId,
@@ -72,12 +73,12 @@ class ShortExtendedForm extends React.Component {
         this.setState({ ...this.state, slides: newSlides }, async () => {
             if (!errorsPresent) {
                 try {
-                    this.setState({ letsGoButtonDisabled: true })
+                    const mobileNo = getUserMobileNumber(this.state.slides[0])
+                    this.setState({ letsGoButtonDisabled: true, mobileNo })
                     // const mobileNo = ''
-                    const mobileNo = await getOtp(this.state.slides[0])
-                    this.setState({ mobileNo, letsGoButtonDisabled: false }, () => {
-                        letsFindFormToOtpForm()
-                    })
+                    letsFindFormToOtpForm()
+                    await getOtp(mobileNo)
+                    this.setState({ letsGoButtonDisabled: false })
                 } catch (err) {
                     this.setState({ letsGoButtonDisabled: false })
                     alert(err.message)

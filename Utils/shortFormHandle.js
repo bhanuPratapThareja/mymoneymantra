@@ -205,6 +205,16 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
     return errors
 }
 
+export const getUserMobileNumber = slide => {
+    let mobileNo = ''
+    slide.inputs.forEach(inp => {
+        if (inp.input_id === 'phone') {
+            mobileNo = inp.value
+        }
+    })
+    return mobileNo
+}
+
 export const incrementSlideId = slideId => {
     let [slide, id] = slideId.split('-')
     slideId = `${slide}-${++id}`

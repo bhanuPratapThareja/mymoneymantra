@@ -3,21 +3,11 @@ import axios from 'axios'
 const CancelToken = axios.CancelToken
 let cancel
 
-export const getOtp = async slide => {
-    let mobileNo = ''
-    slide.inputs.forEach(inp => {
-        if (inp.input_id === 'phone') {
-            mobileNo = inp.value
-        }
-    })
+export const getOtp = mobileNo => {
     const { url, body } = getApiData('otp')
     body.request.payload.mobileNo = mobileNo
-    try {
-        await axios.post(url, body)
-        return mobileNo
-    } catch (err) {
-        throw new Error('Unable to fetch otp. Please try again.')
-    }
+    axios.post(url, body)
+        .catch(() => { })
 }
 
 export const submitOtp = async mobileNo => {
@@ -34,9 +24,9 @@ export const submitOtp = async mobileNo => {
     body.request.payload.otp = otp
     try {
         const res = await axios.post(url, body)
-        if(res.data.response.msgInfo.code == 200){
+        if (res.data.response.msgInfo.code == 200) {
             return true
-        } else if(res.data.response.msgInfo.code == 500) {
+        } else if (res.data.response.msgInfo.code == 500) {
             throw new Error(res.data.response.msgInfo.message)
         } else {
             throw new Error('Something went wrong. Please try again.')
@@ -57,7 +47,7 @@ export const getDropdownList = async (listType, value) => {
             })
         })
         if (res && res.response) {
-            return (res.response.payload)
+            return (res.data.response.payload)
         }
-    } catch (err) {}
+    } catch (err) { }
 }
