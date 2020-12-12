@@ -2,7 +2,6 @@ import Router from 'next/router'
 import OnBoardForm from './ShortForm/OnBoardForm/OnBoardForm'
 import OtpSlide from './ShortForm/OtpForm/OtpSlide'
 import SFSlides from './ShortForm/SFSlides/SFSlides'
-import { setBankMaster } from '../services/formService'
 import { getOtp, submitOtp } from '../services/formService'
 import {
     textTypeInputs,
@@ -47,7 +46,6 @@ class ShortExtendedForm extends React.Component {
     }
 
     componentDidMount() {
-        setBankMaster(this.props.bankMaster)
         let slideNo = 1
         const { side_form, form_slide } = this.props.data.onboard_short_form
         this.setInputsInState(side_form, 'onboard')

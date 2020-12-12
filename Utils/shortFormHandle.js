@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
-import { getDropdownList, getBankList } from '../services/formService'
+import { getDropdownList } from '../services/formService'
 import { getApiToHit } from '../api/dropdownApiConfig'
 import { debounce } from 'lodash'
 
@@ -40,29 +40,20 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                         inp.list = []
                         return
                     }
+
                     inp.value = field.value
-
-                    if (inp.input_id === 'bank' || inp.input_id === 'bank_name') {
-                        let listType = 'bank'
-
-                        getBankList(inp.value)
+                    let listType = getApiToHit(inp.input_id)
+                    const debouncedSearch = debounce(() => {
+                        getDropdownList(listType, inp.value)
                             .then(list => {
+                                console.log('list is::: ', list)
                                 inp.listType = listType
                                 inp.list = list
                             })
-                    } else {
-                        let listType = getApiToHit(inp.input_id)
-                        const debouncedSearch = debounce(() => {
-                            getDropdownList(listType, inp.value)
-                                .then(list => {
-                                    console.log('list is::: ', list)
-                                    inp.listType = listType
-                                    inp.list = list
-                                })
-                        }, 1000)
-                        debouncedSearch(listType, inp.value)
+                    }, 1000)
+                    debouncedSearch(listType, inp.value)
 
-                    }
+
                 } else {
                     inp.list = []
                 }
@@ -305,8 +296,8 @@ export const showSlides = (n, slideIndex) => {
 
     if (n < 1) {
         if (slideIndex) {
-            slides[slideIndex].style.display = "block"
-            slides[slideIndex].classList.add("opacity-in")
+            slides[slideIndex - 1].style.display = "block"
+            slides[slideIndex - 1].classList.add("opacity-in")
         }
         $("#button-text").text("Next")
         $("#next").removeClass("submit-short-form");

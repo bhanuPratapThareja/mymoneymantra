@@ -9,7 +9,7 @@ const api = {
             devUrl: 'api/master/v1/',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
-            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '111' } } }
+            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         otp: {
             devUrl: 'api/notification/v1/sms/',
@@ -30,7 +30,10 @@ const api = {
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { mobileNo: "9999000090", customerId: "9999000090" } } }
         },
         banks: {
-
+            devUrl: 'api/master/v1/',
+            uatUrl: 'api/master/v1/',
+            prodUrl: 'api/master/v1/',
+            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         companies: {
             devUrl: 'api/master/v1/',

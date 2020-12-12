@@ -3,30 +3,6 @@ import axios from 'axios'
 const CancelToken = axios.CancelToken
 let cancel
 
-let bankmaster = []
-
-export const setBankMaster = data => {
-    bankmaster = { bankList: data }
-}
-
-export const getBankList = (val) => {
-    const promise = new Promise((resolve) => {
-        if (bankmaster.bankList.length) {
-            let filteredBankList = bankmaster.bankList.filter(bank => {
-                return bank.bankName.startsWith(val.toUpperCase())
-            })
-            if (filteredBankList.length) {
-                resolve({ bankList: filteredBankList })
-            } else {
-                resolve([])
-            }
-        } else {
-            resolve([])
-        }
-    })
-    return promise
-}
-
 export const getOtp = async slide => {
     let mobileNo = ''
     slide.inputs.forEach(inp => {
@@ -58,8 +34,12 @@ export const submitOtp = async mobileNo => {
     body.request.payload.otp = otp
     try {
         const res = await axios.post(url, body)
-        if (res && res.response && res.response.msgInfo && res.response.msgInfo.code && res.response.msgInfo.code == '500') {
-            throw new Error(res.response.msgInfo.message)
+        if(res.data.response.msgInfo.code == 200){
+            return true
+        } else if(res.data.response.msgInfo.code == 500) {
+            throw new Error(res.data.response.msgInfo.message)
+        } else {
+            throw new Error('Something went wrong. Please try again.')
         }
     } catch (err) {
         throw new Error(err.message)

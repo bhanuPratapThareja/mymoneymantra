@@ -52,7 +52,7 @@ export async function getServerSideProps(ctx) {
     const [path] = ctx.params.path
     const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
     const data = pageData[0]
-    return { props: { data, path } }
+    return { props: { data } }
 }
 
 export default Home

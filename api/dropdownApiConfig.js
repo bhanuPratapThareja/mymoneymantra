@@ -4,7 +4,7 @@ export const getApiToHit = apiEndPoint => {
     switch (apiEndPoint) {
         case 'bank':
         case 'bank_name':
-            return 'bank'
+            return 'masters'
 
         case 'city':
             return 'cities'

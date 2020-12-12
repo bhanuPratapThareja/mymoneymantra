@@ -13,13 +13,13 @@ const SFSlides = props => {
                 <div className="progress-blue" style={{ width: progressWidth }}></div>
             </div>
 
-
             <h5 className="pages"><span id="pages-count">{slideNumber} of {totalSlides}</span></h5>
 
             {sfSlides && sfSlides.length ? <form className="short-forms-wrapper" onClick={props.handleClickOnSlideBackground}>
                 {sfSlides.map(slide => {
+                    const slideStyles = props.currentSlide == slide.slideId ? { display: 'block' } : { display: 'none' }
                     return (
-                        <div className="sf-forms opacity-in" id={slide.slideId} style={slide.slideId === props.currentSlide ? { display: 'block' } : { display: 'none' }} key={slide.slideId}>
+                        <div className="sf-forms opacity-in" id={slide.slideId} style={slideStyles} key={slide.slideId}>
                             <div className="shortforms-container">
                                 <div className="form__group-wrapper grid-span">
                                     <h2>{slide.heading}</h2>

@@ -31,7 +31,7 @@ const Details = props => {
                 case 'blocks.trending-offers':
                     return <TrendingOffers key={block.id} data={block} />
                 case 'blocks.rewards':
-                    return <Rewards key={block.id} rewards={block} path={path} />
+                    return <Rewards key={block.id} data={block} path={path} />
                 case 'blocks.financial-tools':
                     return <FinancialTools key={block.id} tools={block} />
                 case 'blocks.blogs':
