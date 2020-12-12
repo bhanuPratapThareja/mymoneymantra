@@ -1,6 +1,8 @@
 import Router from 'next/router'
-import $ from 'jquery'
-import Otp from './Otp'
+import OnBoardForm from './ShortForm/OnBoardForm/OnBoardForm'
+import OtpSlide from './ShortForm/OtpForm/OtpSlide'
+import SFSlides from './ShortForm/SFSlides/SFSlides'
+import SFButtons from './ShortForm/SFButtons/SFButtons'
 import { generateInputs } from '../Utils/inputGenerator'
 import { setBankMaster } from '../services/formService'
 import { getOtp, submitOtp } from '../services/formService'
@@ -16,6 +18,7 @@ import {
     loadLetsFindForm,
     LetsFindFormToOtpForm,
     goToSlides,
+    showSlides,
     loadOtpForm
 } from '../Utils/shortFormHandle'
 
@@ -24,8 +27,7 @@ class ShortExtendedForm extends React.Component {
         slideIndex: 0,
         currentSlide: 'onboard',
         slides: [],
-        letsGoButtonDisabled: true,
-        disableOtpSubmitButton: false,
+        letsGoButtonDisabled: false,
         errorMsgs: {
             mandatory: 'Required Field',
             email: 'Email is not Valid',
@@ -60,24 +62,13 @@ class ShortExtendedForm extends React.Component {
                 slideNo++
             }, 500)
         })
-
-        this.showSlides(this.state.slideIndex)
-        $(".shortforms-container-buttons #previous").click(() => {
-            this.onGoToPrevious()
-        })
-
-        $(".shortforms-container-buttons #next").click(() => {
-            this.onSubmitSlide()
-        })
     }
-
 
     onGoToLetFindForm = () => {
         this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
             loadLetsFindForm()
         })
     }
-
 
     onClickLetsGo = async () => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
@@ -86,57 +77,27 @@ class ShortExtendedForm extends React.Component {
             if (!errorsPresent) {
                 try {
                     this.setState({ letsGoButtonDisabled: true })
-                    const mobileNo = await getOtp(this.state.slides[0])
-                    this.setState({ mobileNo }, () => {
+                    const mobileNo = ''
+                    // const mobileNo = await getOtp(this.state.slides[0])
+                    this.setState({ mobileNo, letsGoButtonDisabled: false }, () => {
                         LetsFindFormToOtpForm()
                     })
                 } catch (err) {
                     this.setState({ letsGoButtonDisabled: false })
                     alert(err.message)
-                 }
+                }
             }
         })
     }
 
     onSubmitOtp = async () => {
         try {
-            await submitOtp(this.state.mobileNo)
+            // await submitOtp(this.state.mobileNo)
             this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
                 goToSlides()
-                this.showSlides()
             })
         } catch (err) {
             alert(err.message)
-        }
-    }
-
-    showSlides = (n) => {
-        var slides = document.getElementsByClassName("sf-forms")
-        if (this.state.slideIndex > slides.length) {
-            this.onSubmitShortForm()
-            return
-        }
-
-        if (this.state.slideIndex == slides.length) {
-            $("#button-text").text("Submit and view offers").css("color", "#89C142");
-            $("#next").addClass("submit-short-form");
-
-        } else {
-            $("#button-text").text("Next").css("color", "#221F1F");
-            $("#next").removeClass("submit-short-form");
-        }
-
-        var width = (this.state.slideIndex * (100 / slides.length)) + "%";
-        $("#pages-count").text(this.state.slideIndex + " of " + slides.length);
-        $(".progress-blue").width(width)
-
-        if (n < 1) {
-            if (this.state.slidesIndex) {
-                slides[this.state.slideIndex].style.display = "block"
-                slides[this.state.slideIndex].classList.add("opacity-in")
-            }
-            $("#button-text").text("Next")
-            $("#next").removeClass("submit-short-form");
         }
     }
 
@@ -146,7 +107,6 @@ class ShortExtendedForm extends React.Component {
 
     onGoToPrevious = () => {
         if (this.state.slideIndex === 1) {
-            // this.onGoToLetFindForm()
             loadOtpForm()
             return
         }
@@ -161,14 +121,17 @@ class ShortExtendedForm extends React.Component {
                 if (!errorsPresent) {
                     const newSlideId = incrementSlideId(this.state.currentSlide)
                     this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId }, () => {
-                        this.showSlides(n)
+                        const submitForm = showSlides(n, this.state.slideIndex)
+                        if (submitForm) {
+                            this.onSubmitShortForm()
+                        }
                     })
                 }
             })
         } else {
             const newSlideId = decrementSlideId(this.state.currentSlide)
             this.setState({ slideIndex: this.state.slideIndex - 1, currentSlide: newSlideId }, () => {
-                this.showSlides(n)
+                showSlides(n, this.state.slideIndex)
             })
         }
 
@@ -181,9 +144,7 @@ class ShortExtendedForm extends React.Component {
     handleInputDropdownChange = (name, type, item) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateSelectionFromDropdown(inputs, name, item)
-        this.setState({ ...this.state, slides: newSlides }, () => {
-            // console.log(this.state.slides)
-        })
+        this.setState({ ...this.state, slides: newSlides })
     }
 
     handleChange = async field => {
@@ -193,7 +154,6 @@ class ShortExtendedForm extends React.Component {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
             }
-            // console.log(this.state.slides)
         })
 
     }
@@ -211,9 +171,6 @@ class ShortExtendedForm extends React.Component {
     }
 
     render() {
-        const { heading, description, button_text } = this.props.data.onboard_short_form
-        const sfSlides = this.state.slides.slice(1)
-
         return (
             <section data-aos="fade-up" className="container lets-find-container aos-init">
 
@@ -223,125 +180,37 @@ class ShortExtendedForm extends React.Component {
                 </div>
 
                 <div className="all-form-wrapper">
-                    <div className="lets-find">
-                        <div className="lets-find-content">
-                            <h2>{heading}</h2>
-                            <img className="green-underline" src="/assets/images/credit-card-flow/green-underline.png" />
-                            <div dangerouslySetInnerHTML={{ __html: description }}></div>
-                        </div>
-
-                        <div className="lets-find-form">
-
-                            {this.state.slides.length ? <form>
-                                {this.state.slides[0].inputs.map(component => {
-                                    return <React.Fragment key={component.id}>
-                                        {generateInputs(component, this.handleChange, this.checkInputValidity)}
-                                    </React.Fragment>
-                                })}
-                            </form> : null}
-
-                            <div className='lets-go-button'>
-                                <button
-                                    onClick={this.onClickLetsGo}
-                                    disabled={this.state.letsGoButtonDisabled}
-                                >{button_text}</button>
-                            </div>
-                        </div>
-                    </div>
-
-
+                    <OnBoardForm
+                        data={this.props.data.onboard_short_form}
+                        slides={this.state.slides}
+                        handleChange={this.handleChange}
+                        checkInputValidity={this.checkInputValidity}
+                        onClickLetsGo={this.onClickLetsGo}
+                        letsGoButtonDisabled={this.state.letsGoButtonDisabled}
+                    />
 
                     <div className="lets-find-forms-container sms-otp" id="sms-otp">
                         <div className="lets-find-stepper-wrapper" >
-
-                            <form className="short-forms-wrapper">
-                                <div className="mobile-otp">
-                                    <div className="lets-find-content otp-card_custom">
-                                        <h2>Verify your mobile<br />number</h2>
-                                        <img className="green-underline" src="/assets/images/credit-card-flow/green-underline.png" />
-                                        <div className="otp-wrapper login-options">
-                                            <div className="form__group field">
-                                                <Otp submitting={false} />
-                                                <label className="form__label" htmlFor="phone">One time password</label>
-                                            </div>
-                                            <span>Haven’t received the OTP yet?</span>
-                                            <button><h6>Resend</h6></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <div className="shortforms-container-buttons">
-                                <button className="to-main" id="previous" onClick={this.onGoToLetFindForm}>
-                                    <svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M23.893 15.493a1.332 1.332 0 00-.28-.44l-6.666-6.666a1.34 1.34 0 00-1.894 1.893l4.4 4.387H9.333a1.334 1.334 0 000 2.666h10.12l-4.4 4.387a1.335 1.335 0 000 1.893 1.336 1.336 0 001.894 0l6.666-6.666c.122-.127.217-.277.28-.44a1.333 1.333 0 000-1.014z" fill="#fff"></path>
-                                    </svg>
-                                </button>
-                                <div>
-                                    <h4 id="sms-button-text" style={{ color: 'rgb(34, 31, 31)' }}>Next</h4>
-                                    <button type="button" className="next-otp-button" onClick={this.onSubmitOtp} disabled={this.state.disableOtpSubmitButton}>
-                                        <svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M23.893 15.493a1.332 1.332 0 00-.28-.44l-6.666-6.666a1.34 1.34 0 00-1.894 1.893l4.4 4.387H9.333a1.334 1.334 0 000 2.666h10.12l-4.4 4.387a1.335 1.335 0 000 1.893 1.336 1.336 0 001.894 0l6.666-6.666c.122-.127.217-.277.28-.44a1.333 1.333 0 000-1.014z" fill="#fff"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-
+                            <OtpSlide
+                                onGoToLetFindForm={this.onGoToLetFindForm}
+                                onSubmitOtp={this.onSubmitOtp}
+                                disableOtpSubmitButton={this.state.disableOtpSubmitButton}
+                            />
                         </div>
                     </div>
 
-
-
                     <div className="lets-find-forms-container" id="lets-form-slides">
-                        <div className="lets-find-stepper-wrapper">
-                            <div className="progress-grey">
-                                <div className="progress-blue" style={{ width: '12.5%' }}></div>
-                            </div>
-
-
-                            <h5 className="pages"><span id="pages-count">1 of 8</span></h5>
-
-                            {sfSlides && sfSlides.length ? <form className="short-forms-wrapper" onClick={this.handleClickOnSlideBackground}>
-                                {sfSlides.map(slide => {
-                                    return (
-                                        <div className="sf-forms opacity-in" id={slide.slideId} style={slide.slideId === this.state.currentSlide ? { display: 'block' } : { display: 'none' }} key={slide.slideId}>
-                                            <div className="shortforms-container">
-                                                <div className="form__group-wrapper grid-span">
-                                                    <h2>{slide.heading}</h2>
-                                                    {slide.inputs.map(component => {
-                                                        return (
-                                                            <React.Fragment key={component.id}>
-                                                                {generateInputs(component, this.handleChange,
-                                                                    this.checkInputValidity, this.handleInputDropdownChange
-                                                                )}
-                                                            </React.Fragment>
-                                                        )
-                                                    })}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                            </form> : null}
-
-
-                            {/* <!--next and prev buttons--> */}
-                            <div className="shortforms-container-buttons">
-                                <button className="to-main" id="previous">
-                                    <svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M23.893 15.493a1.332 1.332 0 00-.28-.44l-6.666-6.666a1.34 1.34 0 00-1.894 1.893l4.4 4.387H9.333a1.334 1.334 0 000 2.666h10.12l-4.4 4.387a1.335 1.335 0 000 1.893 1.336 1.336 0 001.894 0l6.666-6.666c.122-.127.217-.277.28-.44a1.333 1.333 0 000-1.014z" fill="#fff"></path>
-                                    </svg>
-                                </button>
-                                <div>
-                                    <h4 id="button-text" style={{ color: 'rgb(34, 31, 31)' }}>Next</h4>
-                                    <button type="button" id="next">
-                                        <svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M23.893 15.493a1.332 1.332 0 00-.28-.44l-6.666-6.666a1.34 1.34 0 00-1.894 1.893l4.4 4.387H9.333a1.334 1.334 0 000 2.666h10.12l-4.4 4.387a1.335 1.335 0 000 1.893 1.336 1.336 0 001.894 0l6.666-6.666c.122-.127.217-.277.28-.44a1.333 1.333 0 000-1.014z" fill="#fff"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <SFSlides
+                            slides={this.state.slides.slice(1)}
+                            slideIndex={this.state.slideIndex}
+                            currentSlide={this.state.currentSlide}
+                            handleChange={this.handleChange}
+                            checkInputValidity={this.checkInputValidity}
+                            handleInputDropdownChange={this.handleInputDropdownChange}
+                            handleClickOnSlideBackground={this.handleClickOnSlideBackground}
+                            onGoToPrevious={this.onGoToPrevious}
+                            onSubmitSlide={this.onSubmitSlide}
+                        />
                     </div>
                 </div>
             </section>

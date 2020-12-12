@@ -1,4 +1,4 @@
-import { allowedOtpKeys } from '../Utils/allowedOtpKeys';
+import { allowedOtpKeys } from '../../Utils/allowedOtpKeys';
 import { useEffect, useRef } from 'react';
 
 const Otp = props => {

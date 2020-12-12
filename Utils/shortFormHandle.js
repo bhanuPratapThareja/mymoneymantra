@@ -287,3 +287,32 @@ export const loadLetsFindForm = () => {
         $(".lets-find").addClass("moving-out-rev")
     }, 150);
 }
+
+export const showSlides = (n, slideIndex) => {
+    var slides = document.getElementsByClassName("sf-forms")
+    if (slideIndex > slides.length) {
+        return true
+    }
+
+    if (slideIndex == slides.length) {
+        $("#button-text").text("Submit and view offers").css("color", "#89C142");
+        $("#next").addClass("submit-short-form");
+
+    } else {
+        $("#button-text").text("Next").css("color", "#221F1F");
+        $("#next").removeClass("submit-short-form");
+    }
+
+    // var width = (slideIndex * (100 / slides.length)) + "%";
+    // $("#pages-count").text(slideIndex + " of " + slides.length);
+    // $(".progress-blue").width(width)
+
+    if (n < 1) {
+        if (slideIndex) {
+            slides[slideIndex].style.display = "block"
+            slides[slideIndex].classList.add("opacity-in")
+        }
+        $("#button-text").text("Next")
+        $("#next").removeClass("submit-short-form");
+    }
+}
