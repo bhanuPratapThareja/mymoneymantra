@@ -21,11 +21,13 @@ import {
 } from '../Utils/shortFormHandle'
 
 class ShortExtendedForm extends React.Component {
+    otpInterval = null;
     state = {
         slideIndex: 0,
         currentSlide: 'onboard',
         slides: [],
-        letsGoButtonDisabled: true,
+        defaultOtpTime: 10,
+        otpTimeLeft: 10,
         errorMsgs: {
             mandatory: 'Required Field',
             email: 'Email is not Valid',
@@ -63,9 +65,26 @@ class ShortExtendedForm extends React.Component {
 
     onGoToLetFindForm = () => {
         this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
+            if(this.otpInterval) {
+                clearInterval(this.otpInterval)
+            }
             loadLetsFindForm()
         })
     }
+    
+    decrementOtpTime = () => {
+        this.setState({ otpTimeLeft: this.state.defaultOtpTime }, () => {
+            this.otpInterval = setInterval(() => {
+                this.setState({ otpTimeLeft: --this.state.otpTimeLeft })
+                if (this.state.otpTimeLeft == 0) {
+                    if(this.otpInterval) {
+                        clearInterval(this.otpInterval)
+                    }
+                }
+            }, 1000)
+        })
+    }
+
 
     onClickLetsGo = async () => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
@@ -77,6 +96,7 @@ class ShortExtendedForm extends React.Component {
                     this.setState({ letsGoButtonDisabled: true, mobileNo })
                     // const mobileNo = ''
                     letsFindFormToOtpForm()
+                    this.decrementOtpTime()
                     await getOtp(mobileNo)
                     this.setState({ letsGoButtonDisabled: false })
                 } catch (err) {
@@ -191,6 +211,8 @@ class ShortExtendedForm extends React.Component {
                             <OtpSlide
                                 onGoToLetFindForm={this.onGoToLetFindForm}
                                 onSubmitOtp={this.onSubmitOtp}
+                                decrementOtpTime={this.decrementOtpTime}
+                                otpTimeLeft={this.state.otpTimeLeft}
                                 disableOtpSubmitButton={this.state.disableOtpSubmitButton}
                             />
                         </div>

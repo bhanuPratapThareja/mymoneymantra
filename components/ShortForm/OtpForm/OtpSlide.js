@@ -1,7 +1,14 @@
+import { useState, useEffect } from 'react';
 import Otp from '../../Otp/Otp';
 import SFButtons from '../SFButtons/SFButtons'
 
 const OtpSlide = props => {
+    const { otpTimeLeft } = props
+
+    const resendOtp = () => {
+        props.decrementOtpTime()
+    }
+
     return (
         <>
             <form className="short-forms-wrapper">
@@ -15,7 +22,8 @@ const OtpSlide = props => {
                                 <label className="form__label" htmlFor="phone">One time password</label>
                             </div>
                             <span>Haven’t received the OTP yet?</span>
-                            <button><h6>Resend</h6></button>
+                            {/* <span onClick={() => resendOtp()}>Resend </span>{otpTimeLeft > 0 ? <span>in 0:{otpTimeLeft} sec</span> : null} */}
+                            <span>Resend </span>
                         </div>
                     </div>
                 </div>
