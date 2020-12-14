@@ -12,7 +12,6 @@ export const generateInputs = (component, updateField,
         if (type === 'checkbox') {
             field = { name, checked, type }
         } else {
-            console.log('here3')
             field = { name, value, type }
             if (type === 'input_with_dropdown') {
                 setTimeout(() => {
