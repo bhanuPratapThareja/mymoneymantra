@@ -1,54 +1,54 @@
 import { env } from './../env/env';
 
 const api = {
-    devBaseUrl: 'https://mmmwebapp.herokuapp.com/',
+    devBaseUrl: 'http://203.122.46.189:8060/masters/',
     uatBaseUrl: 'http://203.122.46.189:8060/masters/',
     prodBaseUrl: 'http://203.122.46.189:8060/masters/',
     routes: {
-        masters: {
-            devUrl: 'api/master/v1/',
+        authenticate: {
+            devUrl: 'api/jwt/v1/authenticate',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
-            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
+            body: { appId:"leadgenerateapi", token:"mmm@2O!9", role:"mobileAppLogin" }
+        },
+        masters: {
+            devUrl: 'api/master/v1/masters',
+            uatUrl: 'api/customer/v1/profile/',
+            prodUrl: 'api/customer/v1/profile/',
+            body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { } } }
         },
         otp: {
-            devUrl: 'api/notification/v1/sms/',
+            devUrl: 'api/notification/v1/sms/otp',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
-            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { mobileNo: '' } } }
+            body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { mobileNo: '' } } }
         },
         otpverify: {
-            devUrl: 'api/notification/v1/sms/',
+            devUrl: 'api/notification/v1/sms/otpverify',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
-            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { mobileNo: '' } } }
+            body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { mobileNo: '' } } }
         },
         offers: {
             devUrl: 'api/customer/v1/profile/',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
-            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { mobileNo: "9999000090", customerId: "9999000090" } } }
+            body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { mobileNo: "9999000090", customerId: "9999000090" } } }
         },
-        banks: {
-            devUrl: 'api/master/v1/',
+        company: {
+            devUrl: 'api/master/v1/company',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
-            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
-        },
-        companies: {
-            devUrl: 'api/master/v1/',
-            uatUrl: 'api/master/v1/',
-            prodUrl: 'api/master/v1/',
-            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
+            body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         cities: {
             devUrl: 'api/master/v1/',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
-            body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
+            body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         pincode: {
-            devUrl: 'api/master/v2/',
+            devUrl: 'api/master/v2/pincode',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
@@ -171,7 +171,7 @@ const api = {
 const getUrl = route => {
     const baseUrl = api[`${env}BaseUrl`]
     const pathUrl = `${env}Url`
-    return `${baseUrl}${api['routes'][route][pathUrl]}${route}`
+    return `${baseUrl}${api['routes'][route][pathUrl]}`
 }
 
 const getBody = route => {

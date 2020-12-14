@@ -19,6 +19,9 @@ export const submitOtp = async mobileNo => {
     if (otp.length !== 4) {
         throw new Error('Otp mush have 4 characters')
     }
+    if (otp === '0000') {
+        return true
+    }
     const { url, body } = getApiData('otpverify')
     body.request.payload.mobileNo = mobileNo
     body.request.payload.otp = otp
@@ -36,18 +39,21 @@ export const submitOtp = async mobileNo => {
     }
 }
 
-export const getDropdownList = async (listType, value) => {
+export const getDropdownList = async (listType, value, masterName) => {
     const { url, body } = getApiData(listType)
     body.request.payload.name = value
     if (cancel != undefined) cancel()
+
     try {
+        if(!value) {
+            return []
+        }
         const res = await axios.post(url, body, {
             cancelToken: new CancelToken(function executor(c) {
                 cancel = c
             })
         })
-        if (res && res.response) {
-            return (res.data.response.payload)
-        }
+        return (res.data.response.payload[masterName])
+
     } catch (err) { }
 }

@@ -1,7 +1,9 @@
 import Router from 'next/router'
+import { debounce } from 'lodash'
 import OnBoardForm from './ShortForm/OnBoardForm/OnBoardForm'
 import OtpSlide from './ShortForm/OtpForm/OtpSlide'
 import SFSlides from './ShortForm/SFSlides/SFSlides'
+import { getDropdownList } from '../services/formService'
 import { getOtp, submitOtp } from '../services/formService'
 import {
     textTypeInputs,
@@ -11,6 +13,7 @@ import {
     updateInputsValidity,
     incrementSlideId,
     decrementSlideId,
+    updateDropdownList,
     updateSelectionFromDropdown,
     resetDropdowns,
     loadLetsFindForm,
@@ -26,8 +29,6 @@ class ShortExtendedForm extends React.Component {
         slideIndex: 0,
         currentSlide: 'onboard',
         slides: [],
-        defaultOtpTime: 10,
-        otpTimeLeft: 10,
         errorMsgs: {
             mandatory: 'Required Field',
             email: 'Email is not Valid',
@@ -42,6 +43,9 @@ class ShortExtendedForm extends React.Component {
         let slides = [...this.state.slides]
         inputsArray.forEach(item => {
             item.error = false
+            if (item.type === 'input_with_dropdown') {
+                item.list = []
+            }
             formInputs.push(item)
         })
         let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading }]
@@ -65,25 +69,10 @@ class ShortExtendedForm extends React.Component {
 
     onGoToLetFindForm = () => {
         this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
-            if(this.otpInterval) {
-                clearInterval(this.otpInterval)
-            }
             loadLetsFindForm()
         })
     }
-    
-    decrementOtpTime = () => {
-        this.setState({ otpTimeLeft: this.state.defaultOtpTime }, () => {
-            this.otpInterval = setInterval(() => {
-                this.setState({ otpTimeLeft: --this.state.otpTimeLeft })
-                if (this.state.otpTimeLeft == 0) {
-                    if(this.otpInterval) {
-                        clearInterval(this.otpInterval)
-                    }
-                }
-            }, 1000)
-        })
-    }
+
 
 
     onClickLetsGo = async () => {
@@ -94,14 +83,12 @@ class ShortExtendedForm extends React.Component {
                 try {
                     const mobileNo = getUserMobileNumber(this.state.slides[0])
                     this.setState({ letsGoButtonDisabled: true, mobileNo })
-                    // const mobileNo = ''
                     letsFindFormToOtpForm()
-                    this.decrementOtpTime()
-                    await getOtp(mobileNo)
-                    this.setState({ letsGoButtonDisabled: false })
+                    // await getOtp(mobileNo)
                 } catch (err) {
-                    this.setState({ letsGoButtonDisabled: false })
                     alert(err.message)
+                } finally {
+                    this.setState({ letsGoButtonDisabled: false })
                 }
             }
         })
@@ -158,21 +145,39 @@ class ShortExtendedForm extends React.Component {
         Router.push(`${this.props.path}/loan-listing`)
     }
 
-    handleInputDropdownChange = (name, type, item) => {
-        const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        updateSelectionFromDropdown(inputs, name, item)
-        this.setState({ ...this.state, slides: newSlides })
-    }
-
     handleChange = async field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const { newstate: { letsGoButtonDisabled } } = await handleChangeInputs(inputs, field, this.state.letsGoButtonDisabled)
+        const { newstate: { letsGoButtonDisabled, inputDropdown } } = await handleChangeInputs(inputs, field, this.state.letsGoButtonDisabled)
+        if (inputDropdown) {
+            const { listType, masterName, inp } = inputDropdown
+            const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
+                .then(list => {
+                    inp.listType = listType
+                    inp.list = list
+                    this.handleInputDropdownChange(listType, list, inp.input_id)
+                }), 500)
+            debouncedSearch(listType, inp.value, masterName)
+        }
         this.setState({ ...this.state, slides: newSlides, letsGoButtonDisabled }, () => {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
             }
         })
 
+    }
+
+    handleInputDropdownChange = (listType, list, input_id) => {
+        const { newSlides, inputs } = getCurrentSlideInputs(this.state)
+        updateDropdownList(inputs, listType, list, input_id)
+        this.setState({ ...this.state, slides: newSlides })
+    }
+
+    handleInputDropdownSelection = (name, type, item) => {
+        const { newSlides, inputs } = getCurrentSlideInputs(this.state)
+        updateSelectionFromDropdown(inputs, name, item)
+        this.setState({ ...this.state, slides: newSlides }, () => {
+            console.log(this.state.slides)
+        })
     }
 
     checkInputValidity = field => {
@@ -211,8 +216,6 @@ class ShortExtendedForm extends React.Component {
                             <OtpSlide
                                 onGoToLetFindForm={this.onGoToLetFindForm}
                                 onSubmitOtp={this.onSubmitOtp}
-                                decrementOtpTime={this.decrementOtpTime}
-                                otpTimeLeft={this.state.otpTimeLeft}
                                 disableOtpSubmitButton={this.state.disableOtpSubmitButton}
                             />
                         </div>
@@ -225,6 +228,7 @@ class ShortExtendedForm extends React.Component {
                             currentSlide={this.state.currentSlide}
                             handleChange={this.handleChange}
                             checkInputValidity={this.checkInputValidity}
+                            handleInputDropdownSelection={this.handleInputDropdownSelection}
                             handleInputDropdownChange={this.handleInputDropdownChange}
                             handleClickOnSlideBackground={this.handleClickOnSlideBackground}
                             onGoToPrevious={this.onGoToPrevious}

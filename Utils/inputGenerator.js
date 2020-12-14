@@ -2,7 +2,7 @@ import { properties } from '../api/dropdownApiConfig'
 import { getDevice } from './getDevice'
 
 export const generateInputs = (component, updateField,
-    checkInputValidity, handleInputDropdownChange) => {
+    checkInputValidity, handleInputDropdownChange, handleInputDropdownSelection) => {
 
     const handleChange = (e, type) => {
         const { name, value, checked } = e.target
@@ -28,7 +28,7 @@ export const generateInputs = (component, updateField,
 
     const onSelect = (input_id, type, name, id, selectedItem) => {
         const item = { name, id, selectedItem }
-        handleInputDropdownChange(input_id, type, item)
+        handleInputDropdownSelection(input_id, type, item)
     }
 
     const onChangeDate = (name, type) => {
@@ -130,10 +130,13 @@ export const generateInputs = (component, updateField,
     if (type === 'input_with_dropdown') {
         if (!value) value = ''
         const { input_type, selectedId } = component
-        const { listName, id, name } = properties(listType)
+        const { listName, listItemId, listItemName } = properties(listType)
         const fieldId = `${input_id}_${type}`
-        // console.log(listName, id, name)
-        const dropDownClasses = ['form__group', 'field', selectedId === '*' ? 'dropdown_disabled' : 'dropdown_enabled']
+        const listStyles = list && list.length ? { display: 'block' } : { display: 'none' }
+        const dropDownClasses = [
+            'form__group', 
+            'field', 
+            selectedId === '*' || input_id === 'city' ? 'dropdown_disabled' : 'dropdown_enabled']
         const dropDownStyles = selectedId !== '*' ? borderStyles : null
         return (
             <div className={dropDownClasses.join(' ')} id={fieldId} key={id} style={dropDownStyles}>
@@ -155,15 +158,16 @@ export const generateInputs = (component, updateField,
                     <p>{errorMsg}</p>
                 </div> : null}
 
-                {list && list[listName] && list[listName].length ? <div className="dropdown-content" style={{ display: 'block' }}>
+                <div className="dropdown-content" style={listStyles}>
                     <div className="dropdown-content-links">
-                        {list[listName].map((item, i) => {
+                        {list && list.map((item, i) => {
+                            // console.log('iem: ', item)
                             return (
-                                <a key={i} onClick={() => onSelect(input_id, type, item[name], item[id], item)}>{item[name]}</a>
+                                <a key={i} onClick={() => onSelect(input_id, type, item[listItemName], item[listItemId], item)}>{item[listItemName]}</a>
                             )
                         })}
                     </div>
-                </div> : null}
+                </div>
             </div>
         )
     }

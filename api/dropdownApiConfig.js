@@ -4,16 +4,16 @@ export const getApiToHit = apiEndPoint => {
     switch (apiEndPoint) {
         case 'bank':
         case 'bank_name':
-            return 'masters'
+            return { listType: 'masters', masterName: 'bankMaster' }
 
         case 'city':
-            return 'cities'
+            return { listType: 'cities', masterName: 'bankMaster' }
 
         case 'company_name':
-            return 'companies'
+            return { listType: 'company', masterName: 'companyMaster' }
 
         case 'pincode':
-            return 'pincode'
+            return { listType: 'pincode', masterName: 'pinList' }
 
     }
 }
@@ -26,19 +26,20 @@ export const properties = listType => {
     switch (listType) {
         case 'bank':
         case 'bank_name':
-            properties = { listName: 'bankList', id: 'bankId', name: 'bankName' }
+        case 'masters':
+            properties = { listName: 'masters', listItemId: 'bankId', listItemName: 'bankName' }
             break
 
         case 'cities':
-            properties = { listName: 'cityList', id: 'cityMasterId', name: 'cityMasterName' }
+            properties = { listName: 'cityList', listItemId: 'cityMasterId', listItemName: 'cityMasterName' }
             break
 
-        case 'companies':
-            properties = { listName: 'companyList', id: 'caseCompanyId', name: 'companyName' }
+        case 'company':
+            properties = { listName: 'companyList', listItemId: 'caseCompanyId', listItemName: 'companyName' }
             break
 
         case 'pincode':
-            properties = { listName: 'pinList', id: 'pincode', name: 'pincode' }
+            properties = { listName: 'pinList', listItemId: 'pincode', listItemName: 'pincode' }
     }
 
     return properties

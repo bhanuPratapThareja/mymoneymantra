@@ -1,8 +1,6 @@
 import $ from 'jquery'
 import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
-import { getDropdownList } from '../services/formService'
 import { getApiToHit } from '../api/dropdownApiConfig'
-import { debounce } from 'lodash'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel', 'phone_no',
     'input_with_dropdown', 'input_with_calendar', 'upload_button']
@@ -15,6 +13,7 @@ export const getCurrentSlideInputs = state => {
 }
 
 export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
+    let inputDropdown = null
     return new Promise((resolve) => {
         if (field.type === 'checkbox') {
             inputs.forEach(inp => {
@@ -32,28 +31,19 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
         } else if (field.type === 'input_with_dropdown') {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
+                    let { listType, masterName } = getApiToHit(inp.input_id)
                     inp.selectedId = null
                     if (!field.value) {
                         inp.value = field.value
                         inp.selectedItem = null
                         inp.selectedId = null
                         inp.list = []
+                        inputDropdown = { listType, masterName, inp }
                         return
                     }
-
                     inp.value = field.value
-                    let listType = getApiToHit(inp.input_id)
-                    const debouncedSearch = debounce(() => {
-                        getDropdownList(listType, inp.value)
-                            .then(list => {
-                                console.log('list is::: ', list)
-                                inp.listType = listType
-                                inp.list = list
-                            })
-                    }, 1000)
-                    debouncedSearch(listType, inp.value)
-
-
+                    inputDropdown = { listType, masterName, inp }
+                    
                 } else {
                     inp.list = []
                 }
@@ -109,7 +99,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                 }
             })
         }
-        resolve({ newstate: { letsGoButtonDisabled } })
+        resolve({ newstate: { letsGoButtonDisabled, inputDropdown } })
     })
 }
 
@@ -158,13 +148,11 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.errorMsg = errorMsgs.pancard
                     }
                 } else if (inp.type === 'input_with_dropdown' && inp.input_id === field.currentActiveInput && !inp.selectedId) {
-                    inp.error = true
-                    errors = true
-                    if (!inp.value) {
-                        inp.errorMsg = errorMsgs.mandatory
-                    } else {
-                        inp.errorMsg = errorMsgs.dropdown
-                    }
+                    // inp.error = true
+                    // errors = true
+                    // if (!inp.value) {
+                    //     inp.errorMsg = errorMsgs.mandatory
+                    // }
                 }
             }
         })
@@ -227,7 +215,17 @@ export const decrementSlideId = slideId => {
     return slideId
 }
 
+export const updateDropdownList = (inputs, listType, list, input_id) => {
+    inputs.forEach(inp => {
+        if (inp.input_id === input_id) {
+            inp.listType = listType
+            inp.list = list
+        }
+    })
+}
+
 export const updateSelectionFromDropdown = (inputs, name, item) => {
+    console.log(inputs)
     inputs.forEach(inp => {
         if (inp.input_id === name) {
             inp.list = []
@@ -236,10 +234,15 @@ export const updateSelectionFromDropdown = (inputs, name, item) => {
             inp.selectedItem = item.selectedItem
             inp.error = false
         }
+        
+        if(inp.input_id === 'city') {
+            inp.value = item.selectedItem.cityName
+            inp.selectedId = item.selectedItem.cityId
+        }
     })
 }
 
-export const resetDropdowns = inputs => {
+export const resetDropdowns = (inputs, e) => {
     inputs.forEach(inp => {
         if (inp.type === 'input_with_dropdown') {
             inp.list = []
