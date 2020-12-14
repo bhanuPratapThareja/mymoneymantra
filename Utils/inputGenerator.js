@@ -78,7 +78,7 @@ export const generateInputs = (component, updateField,
                     autoComplete='off'
                     required={mandatory}
                     onBlur={e => validate(e, type)}
-                   
+
                     onChange={e => handleChange(e, type)}
                 />
                 <label className="form__label">{label}</label>
