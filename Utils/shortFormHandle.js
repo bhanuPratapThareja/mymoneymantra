@@ -225,7 +225,6 @@ export const updateDropdownList = (inputs, listType, list, input_id) => {
 }
 
 export const updateSelectionFromDropdown = (inputs, name, item) => {
-    console.log(inputs)
     inputs.forEach(inp => {
         if (inp.input_id === name) {
             inp.list = []

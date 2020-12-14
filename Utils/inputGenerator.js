@@ -161,7 +161,6 @@ export const generateInputs = (component, updateField,
                 <div className="dropdown-content" style={listStyles}>
                     <div className="dropdown-content-links">
                         {list && list.map((item, i) => {
-                            // console.log('iem: ', item)
                             return (
                                 <a key={i} onClick={() => onSelect(input_id, type, item[listItemName], item[listItemId], item)}>{item[listItemName]}</a>
                             )
