@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import { getFormattedCurrency } from './formattedCurrency'
 import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
 import { getApiToHit } from '../api/dropdownApiConfig'
 
@@ -93,6 +94,8 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
                     inp.value = field.value
+                    console.log('inp.input_id:m', inp.input_id)
+                    console.log('inp.val: ', inp.value)
                     if (inp.input_id === 'pan_card' && inp.value) {
                         inp.value = inp.value.toUpperCase()
                     }

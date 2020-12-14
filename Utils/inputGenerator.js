@@ -1,5 +1,7 @@
+import MaskedInput from 'react-maskedinput'
 import { properties } from '../api/dropdownApiConfig'
 import { getDevice } from './getDevice'
+import { allowedOtpKeys } from './allowedOtpKeys'
 
 export const generateInputs = (component, updateField,
     checkInputValidity, handleInputDropdownChange, handleInputDropdownSelection) => {
@@ -10,6 +12,7 @@ export const generateInputs = (component, updateField,
         if (type === 'checkbox') {
             field = { name, checked, type }
         } else {
+            console.log('here3')
             field = { name, value, type }
             if (type === 'input_with_dropdown') {
                 setTimeout(() => {
@@ -55,7 +58,7 @@ export const generateInputs = (component, updateField,
 
     let { type, input_id, placeholder, mandatory, label, value, id,
         checkbox, radio, question, error, errorMsg, list, listType,
-        upload_text } = component
+        upload_text, monetary_input } = component
 
     const borderInputInvalid = { border: '2px solid var(--error-color)' }
     const borderInputValid = null
@@ -64,16 +67,18 @@ export const generateInputs = (component, updateField,
     if (type === 'text' || type === 'email' || type === 'number' || type === 'tel') {
         if (!value) value = ''
         const fieldId = `${input_id}_${type}`
+        const inputType = type === 'number' ? getDevice() === 'desktop' ? 'number' : 'tel' : type
         return (
             <div className="form__group field" type={type} id={fieldId} key={id} style={borderStyles}>
                 <input className="form__field"
                     name={input_id}
-                    type={type}
+                    type={inputType}
                     value={value}
                     placeholder={placeholder}
                     autoComplete='off'
                     required={mandatory}
                     onBlur={e => validate(e, type)}
+                   
                     onChange={e => handleChange(e, type)}
                 />
                 <label className="form__label">{label}</label>
@@ -134,8 +139,8 @@ export const generateInputs = (component, updateField,
         const fieldId = `${input_id}_${type}`
         const listStyles = list && list.length ? { display: 'block' } : { display: 'none' }
         const dropDownClasses = [
-            'form__group', 
-            'field', 
+            'form__group',
+            'field',
             selectedId === '*' || input_id === 'city' ? 'dropdown_disabled' : 'dropdown_enabled']
         const dropDownStyles = selectedId !== '*' ? borderStyles : null
         return (
@@ -147,7 +152,7 @@ export const generateInputs = (component, updateField,
                     value={value}
                     placeholder={placeholder}
                     autoComplete='off'
-                    disabled={selectedId === '*'}
+                    disabled={selectedId === '*' || input_id === 'city'}
                     required={mandatory}
                     onBlur={e => validate(e, type)}
                     onChange={e => handleChange(e, type)}
