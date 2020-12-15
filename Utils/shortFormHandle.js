@@ -44,7 +44,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                     }
                     inp.value = field.value
                     inputDropdown = { listType, masterName, inp }
-                    
+
                 } else {
                     inp.list = []
                 }
@@ -94,8 +94,6 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
                     inp.value = field.value
-                    console.log('inp.input_id:m', inp.input_id)
-                    console.log('inp.val: ', inp.value)
                     if (inp.input_id === 'pan_card' && inp.value) {
                         inp.value = inp.value.toUpperCase()
                     }
@@ -236,10 +234,11 @@ export const updateSelectionFromDropdown = (inputs, name, item) => {
             inp.selectedItem = item.selectedItem
             inp.error = false
         }
-        
-        if(inp.input_id === 'city') {
+
+        if (inp.input_id === 'city') {
             inp.value = item.selectedItem.cityName
             inp.selectedId = item.selectedItem.cityId
+            inp.selectedItem = item.selectedItem
         }
     })
 }
@@ -250,6 +249,34 @@ export const resetDropdowns = (inputs, e) => {
             inp.list = []
         }
     })
+}
+
+export const getSfData = slides => {
+    let data = {}
+    slides.forEach(slide => {
+        slide.inputs.forEach(input => {
+            switch (input.type) {
+                case 'input_with_dropdown':
+                    data[input.input_id] = input.selectedItem
+                    break
+
+                case 'checkbox':
+                    input.checkbox.checkbox_input.forEach(box => {
+                        data[box.input_id] = box.value
+                    })
+                    break
+
+                default:
+                    data[input.input_id] = input.value
+            }
+        })
+    })
+    return data
+}
+
+export const submitShortForm = slides => {
+    const data = getSfData(slides)
+    console.log(data)
 }
 
 export const letsFindFormToOtpForm = () => {

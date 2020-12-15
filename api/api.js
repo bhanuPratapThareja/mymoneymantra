@@ -61,36 +61,36 @@ const api = {
             body: {
                 "request": {
                     "header": {
-                        "correlationId": "25478965874",
+                        "correlationId": "",
                         "appId": "MMMWEBAPP"
                     },
                     "payload": {
                         "personal": {
-                            "title": "1000000001",
-                            "firstName": "Kumar",
-                            "lastName": "Anilll",
+                            "title": "",
+                            "firstName": "",
+                            "lastName": "",
                             "middleName": "",
-                            "dob": "20-05-1985",
+                            "dob": "",
                             "gender": "2",
                             "maritalStatus": "",
-                            "nationality": "1",
+                            "nationality": "",
                             "dependents": "",
-                            "pan": "BQGPM4200M",
-                            "mothersName": "Anu"
+                            "pan": "",
+                            "mothersName": ""
                         },
                         "contact": {
                             "mobile": [
                                 {
                                     "addressTypeMasterId": "",
-                                    "mobile": "9882788064",
-                                    "isDefault": "N"
+                                    "mobile": "",
+                                    "isDefault": ""
                                 }
                             ],
                             "email": [
                                 {
                                     "addressTypeMasterId": "",
-                                    "email": "testmail@gmail.com",
-                                    "isDefault": "N"
+                                    "email": "",
+                                    "isDefault": ""
                                 }
                             ],
                             "keyContact": [
@@ -103,31 +103,31 @@ const api = {
                             ]
                         },
                         "work": {
-                            "applicantType": "1000000004",
+                            "applicantType": "",
                             "otherCompany": "",
-                            "nature": "2",
-                            "companyId": "1000000001",
+                            "nature": "",
+                            "companyId": "",
                             "typeOfCompaY": "1",
-                            "netMonthlyIncome": "50000",
-                            "grossMonthlyIncome": "45000",
+                            "netMonthlyIncome": "",
+                            "grossMonthlyIncome": "",
                             "modeOfSalary": "",
                             "yearsCurrentJob": "",
                             "totalWorkExp": "",
                             "annualTurnover": "",
                             "annualIncome": "",
                             "monthlyRental": "",
-                            "designation": "VICE PRESIDENT",
-                            "qualification": "1000000002",
+                            "designation": "",
+                            "qualification": "",
                             "profession": ""
                         },
                         "requestedLoanamount": "",
                         "requestedTenor": "",
                         "purposeOfLoan": "",
-                        "bankId": "10038",
+                        "bankId": "",
                         "leadId": "",
-                        "productId": "6",
+                        "productId": "",
                         "cardAge": "",
-                        "cardType": "Shoprite",
+                        "cardType": "",
                         "exisEmi": "",
                         "exisLoanAmount": "",
                         "loanStartYear": "",
@@ -135,10 +135,10 @@ const api = {
                         "offerId": "123",
                         "address": [
                             {
-                                "addressTypeMasterId": "1000000001",
-                                "addressline1": "fdfdffd",
-                                "addressline2": "dfdfdfd",
-                                "addressline3": "dfdsdsdfdf",
+                                "addressTypeMasterId": "",
+                                "addressline1": "",
+                                "addressline2": "",
+                                "addressline3": "",
                                 "city": "",
                                 "state": "",
                                 "pincode": "",
