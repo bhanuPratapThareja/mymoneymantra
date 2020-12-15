@@ -20,7 +20,8 @@ import {
     letsFindFormToOtpForm,
     goToSlides,
     showSlides,
-    loadOtpForm
+    loadOtpForm,
+    submitShortForm
 } from '../Utils/shortFormHandle'
 
 class ShortExtendedForm extends React.Component {
@@ -28,6 +29,7 @@ class ShortExtendedForm extends React.Component {
     state = {
         slideIndex: 0,
         currentSlide: 'onboard',
+        letsGoButtonDisabled: true,
         slides: [],
         errorMsgs: {
             mandatory: 'Required Field',
@@ -65,10 +67,6 @@ class ShortExtendedForm extends React.Component {
                 slideNo++
             }, 500)
         })
-
-        setTimeout(() => {
-            console.log(this.state.slides)
-        }, 2000);
     }
 
     onGoToLetFindForm = () => {
@@ -76,8 +74,6 @@ class ShortExtendedForm extends React.Component {
             loadLetsFindForm()
         })
     }
-
-
 
     onClickLetsGo = async () => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
@@ -128,12 +124,11 @@ class ShortExtendedForm extends React.Component {
             this.setState({ ...this.state, slides: newSlides }, () => {
                 if (!errorsPresent) {
                     const newSlideId = incrementSlideId(this.state.currentSlide)
-                    this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId }, () => {
-                        const submitForm = showSlides(n, this.state.slideIndex)
-                        if (submitForm) {
-                            this.onSubmitShortForm()
-                        }
-                    })
+                    if(!(this.state.slideIndex == this.state.slides.length - 1)){
+                        this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId }, () => {
+                            showSlides(n, this.state.slideIndex)
+                         })
+                    }
                 }
             })
         } else {
@@ -143,10 +138,6 @@ class ShortExtendedForm extends React.Component {
             })
         }
 
-    }
-
-    onSubmitShortForm = () => {
-        Router.push(`${this.props.path}/loan-listing`)
     }
 
     handleChange = async field => {
@@ -194,6 +185,14 @@ class ShortExtendedForm extends React.Component {
         this.setState({ slides: newSlides })
     }
 
+    onSubmitShortForm = () => {
+        submitShortForm([...this.state.slides])
+        if(this.state.slideIndex == this.state.slides.length - 1) {
+            const path = Router.query.path[0]
+            Router.push(`${path}/loan-listing`)
+        }
+    }
+
     render() {
         return (
             <section data-aos="fade-up" className="container lets-find-container aos-init">
@@ -235,6 +234,7 @@ class ShortExtendedForm extends React.Component {
                             handleClickOnSlideBackground={this.handleClickOnSlideBackground}
                             onGoToPrevious={this.onGoToPrevious}
                             onSubmitSlide={this.onSubmitSlide}
+                            onSubmitShortForm={this.onSubmitShortForm}
                         />
                     </div>
                 </div>

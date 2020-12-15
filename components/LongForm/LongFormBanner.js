@@ -1,13 +1,11 @@
-
 import Strapi from "../../providers/strapi"
 import { getApiData } from '../../api/api';
 import { getCityData, getPinCodeData } from '../../Utils/commonServices';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { getFormPercentage } from '../../Utils/formPercentage';
-import { validEmailRegex, validMobileRegex, isValidPanNumber, validPincodeRegex } from '../../Utils/validator';
+import { validEmailRegex, validMobileRegex, isValidPanNumber } from '../../Utils/validator';
 import Router from 'next/router';
-import ThankYouBanner from '../ThankYou/ThankYouBanner';
- import $ from "jquery";
+import $ from "jquery";
 
 // import converter from 'number-to-words';
 class LongFormBanner extends React.Component {
