@@ -1,7 +1,8 @@
+import axios from 'axios'
 import $ from 'jquery'
-import { getFormattedCurrency } from './formattedCurrency'
 import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
 import { getApiToHit } from '../api/dropdownApiConfig'
+import { generateLeadSF } from '../services/formService'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel', 'phone_no',
     'input_with_dropdown', 'input_with_calendar', 'upload_button']
@@ -32,7 +33,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
         } else if (field.type === 'input_with_dropdown') {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
-                    let { listType, masterName } = getApiToHit(inp.input_id)
+                    let { listType, masterName } = getApiToHit(inp.search_for)
                     inp.selectedId = null
                     if (!field.value) {
                         inp.value = field.value
@@ -277,6 +278,7 @@ export const getSfData = slides => {
 export const submitShortForm = slides => {
     const data = getSfData(slides)
     console.log(data)
+    generateLeadSF(data)
 }
 
 export const letsFindFormToOtpForm = () => {

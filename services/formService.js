@@ -45,7 +45,7 @@ export const getDropdownList = async (listType, value, masterName) => {
     if (cancel != undefined) cancel()
 
     try {
-        if(!value) {
+        if (!value) {
             return []
         }
         const res = await axios.post(url, body, {
@@ -56,4 +56,34 @@ export const getDropdownList = async (listType, value, masterName) => {
         return (res.data.response.payload[masterName])
 
     } catch (err) { }
+}
+
+export const generateLeadSF = async data => {
+    const { url, body } = getApiData('generate')
+    const { full_name, dob, pan_card, phone, email_address, employment_type,
+        company_name, net_monthly_income, cc_holder_bank, addressLine1, addressLine2, pincode
+    } = data
+
+    body.request.payload.personal.firstName = full_name
+    body.request.payload.personal.dob = dob
+    body.request.payload.personal.pan = pan_card
+
+    body.request.payload.contact.mobile.mobile = phone
+    body.request.payload.contact.email.email = email_address
+
+    body.request.payload.work.nature = employment_type
+    body.request.payload.work.companyId = company_name ? company_name.caseCompanyId : null
+    body.request.payload.work.netMonthlyIncome = net_monthly_income
+
+    body.request.payload.bankId = cc_holder_bank ? cc_holder_bank.bankId : null
+
+    body.request.payload.address.addressline1 = addressLine1
+    body.request.payload.address.addressline2 = addressLine2
+    body.request.payload.address.city = pincode ? pincode.pincode : null
+    body.request.payload.address.state = pincode ? pincode.cityId : null
+    body.request.payload.address.pincode = pincode ? pincode.stateId : null
+
+    console.log('body: ', body)
+    axios.post(url, body)
+        .catch(() => { })
 }

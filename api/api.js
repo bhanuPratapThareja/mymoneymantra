@@ -1,7 +1,7 @@
 import { env } from './../env/env';
 
 const api = {
-    devBaseUrl: 'http://203.122.46.189:8060/masters/',
+    devBaseUrl: 'http://203.122.46.189:8060/',
     uatBaseUrl: 'http://203.122.46.189:8060/masters/',
     prodBaseUrl: 'http://203.122.46.189:8060/masters/',
     routes: {
@@ -12,19 +12,19 @@ const api = {
             body: { appId:"leadgenerateapi", token:"mmm@2O!9", role:"mobileAppLogin" }
         },
         masters: {
-            devUrl: 'api/master/v1/masters',
+            devUrl: 'masters/api/master/v1/masters',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { } } }
         },
         otp: {
-            devUrl: 'api/notification/v1/sms/otp',
+            devUrl: 'masters/api/notification/v1/sms/otp',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { mobileNo: '' } } }
         },
         otpverify: {
-            devUrl: 'api/notification/v1/sms/otpverify',
+            devUrl: 'masters/api/notification/v1/sms/otpverify',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { mobileNo: '' } } }
@@ -36,25 +36,25 @@ const api = {
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { mobileNo: "9999000090", customerId: "9999000090" } } }
         },
         company: {
-            devUrl: 'api/master/v1/company',
+            devUrl: 'masters/api/master/v1/company',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         cities: {
-            devUrl: 'api/master/v1/',
+            devUrl: 'masters/api/master/v1/',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         pincode: {
-            devUrl: 'api/master/v2/pincode',
+            devUrl: 'masters/api/master/v2/pincode',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         generate: {
-            devUrl: 'api/lead/v1/',
+            devUrl: 'lead/api/lead/v1/generate',
             uatUrl: 'api/lead/v1/',
             prodUrl: 'api/master/v1/', 
 
@@ -66,31 +66,31 @@ const api = {
                     },
                     "payload": {
                         "personal": {
-                            "title": "",
-                            "firstName": "",
-                            "lastName": "",
+                            "title": "1000000001",
+                            "firstName": "Kumar",
+                            "lastName": "Anilll",
                             "middleName": "",
-                            "dob": "",
+                            "dob": "20-05-1985",
                             "gender": "2",
                             "maritalStatus": "",
-                            "nationality": "",
+                            "nationality": "1",
                             "dependents": "",
-                            "pan": "",
-                            "mothersName": ""
+                            "pan": "BQGPM4200M",
+                            "mothersName": "Anu"
                         },
                         "contact": {
                             "mobile": [
                                 {
                                     "addressTypeMasterId": "",
-                                    "mobile": "",
-                                    "isDefault": ""
+                                    "mobile": "9882788064",
+                                    "isDefault": "N"
                                 }
                             ],
                             "email": [
                                 {
                                     "addressTypeMasterId": "",
-                                    "email": "",
-                                    "isDefault": ""
+                                    "email": "testmail@gmail.com",
+                                    "isDefault": "N"
                                 }
                             ],
                             "keyContact": [
@@ -103,31 +103,31 @@ const api = {
                             ]
                         },
                         "work": {
-                            "applicantType": "",
+                            "applicantType": "1000000004",
                             "otherCompany": "",
-                            "nature": "",
-                            "companyId": "",
+                            "nature": "2",
+                            "companyId": "1000000001",
                             "typeOfCompaY": "1",
-                            "netMonthlyIncome": "",
-                            "grossMonthlyIncome": "",
+                            "netMonthlyIncome": "50000",
+                            "grossMonthlyIncome": "45000",
                             "modeOfSalary": "",
                             "yearsCurrentJob": "",
                             "totalWorkExp": "",
                             "annualTurnover": "",
                             "annualIncome": "",
                             "monthlyRental": "",
-                            "designation": "",
-                            "qualification": "",
+                            "designation": "VICE PRESIDENT",
+                            "qualification": "1000000002",
                             "profession": ""
                         },
                         "requestedLoanamount": "",
                         "requestedTenor": "",
                         "purposeOfLoan": "",
-                        "bankId": "",
+                        "bankId": "10038",
                         "leadId": "",
-                        "productId": "",
+                        "productId": "6",
                         "cardAge": "",
-                        "cardType": "",
+                        "cardType": "Shoprite",
                         "exisEmi": "",
                         "exisLoanAmount": "",
                         "loanStartYear": "",
@@ -135,10 +135,10 @@ const api = {
                         "offerId": "123",
                         "address": [
                             {
-                                "addressTypeMasterId": "",
-                                "addressline1": "",
-                                "addressline2": "",
-                                "addressline3": "",
+                                "addressTypeMasterId": "1000000001",
+                                "addressline1": "fdfdffd",
+                                "addressline2": "dfdfdfd",
+                                "addressline3": "dfdsdsdfdf",
                                 "city": "",
                                 "state": "",
                                 "pincode": "",
