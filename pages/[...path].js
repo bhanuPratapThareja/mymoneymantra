@@ -1,6 +1,7 @@
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 import Banner from '../components/Banner'
+import UspCards from '../components/UspCards'
 import CreditScore from '../components/CreditScore'
 import TrendingOffers from '../components/TrendingOffers'
 import Banks from '../components/Banks'
@@ -20,6 +21,8 @@ const Home = props => {
             switch (block.__component) {
                 case 'blocks.product-banner':
                     return <Banner key={block.id} data={block} />
+                case 'blocks.usp-cards':
+                    return <UspCards key={block.id} data={block} />
                 case 'blocks.financial-tools':
                     return <FinancialTools key={block.id} tools={block} />
                 case 'blocks.rewards':

@@ -16,11 +16,11 @@ const LoanListing = props => {
         window.scrollTo(0, 0)
     })
 
-    const getComponents = dynamic => {
+    const getComponents = (dynamic, filters) => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.listing-banner':
-                    return <ListingBanner key={block.id} data={block} />
+                    return <ListingBanner key={block.id} data={block} filters={filters} />
                 case 'blocks.offer-details-card':
                     return <OfferDetailCards key={block.id} data={block} />
                 case 'blocks.learn-more':
@@ -38,24 +38,27 @@ const LoanListing = props => {
                 case 'blocks.blogs':
                     return <Blog key={block.id} data={block} />
                 case 'blocks.offer-card':
-                    return <OfferDetailCards key={block.id} data={block} basePath={basePath} />
+                    return <OfferDetailCards key={block.id} data={block} />
             }
         })
     }
 
     return (
         <div className="listings">
-            {props.data ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
+            {props.data ? <Layout>{getComponents(props.data.dynamic, props.filters)}</Layout> : null}
         </div>
     )
 }
 
 export async function getServerSideProps(ctx) {
+    console.log('loan listing ctx: ', ctx)
     const strapi = new Strapi()
     const path = 'loan-listing'
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)
+    const listingFilter = await strapi.processReq('GET', 'filters')
+    const filters = listingFilter.length ? listingFilter[0] : null
     const data = pageData[0]
-    return { props: { data, path } }
+    return { props: { data, filters } }
 }
 
 export default LoanListing

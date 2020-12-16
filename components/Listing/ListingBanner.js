@@ -68,18 +68,18 @@ const ListingBanner = props => {
                         <div className="cards">
                             <h3><span id="count">{number_of_offers}</span> {product.toLowerCase()}</h3>
                         </div>
-                        <div className="filter">
+                        {props.filters ? <div className="filter">
                             <button
                                 className="filter-option"
                                 id="listing-filter">
                                 Filters
                                 <img src="/assets/images/icons/down-chevron.svg" />
                             </button>
-                        </div>
+                        </div> : null}
                     </div>
                 </div>
             </section>
-            <ListingFilter />
+            {props.filters ? <ListingFilter filters={props.filters} /> : null}
             <hr className="divider" />
         </>
     )
