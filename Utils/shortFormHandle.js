@@ -115,6 +115,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                 if (inp.mandatory && !inp.value) {
                     inp.error = true
                     inp.errorMsg = errorMsgs.mandatory
+                    inp.verified = false
                 } else {
                     inp.error = false
                     inp.errorMsg = ''
@@ -124,38 +125,77 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
             // check on blur
 
             if (field.blur) {
+                if (inp.type === 'email' && inp.input_id === field.currentActiveInput) {
+                    if (!isEmailValid(inp.value)) {
+                        errors = true
+                        inp.error = true
+                        inp.verified = false
+                        if (!inp.value) {
+                            inp.errorMsg = errorMsgs.mandatory
+                        } else {
+                            inp.errorMsg = errorMsgs.email
+                        }
+                    } else {
+                        inp.error = false
+                        inp.errorMsg = ''
+                        inp.verified = true
+                    }
+                } else if (inp.type === 'phone_no' && inp.input_id === field.currentActiveInput) {
+                    if(!isNumberValid(inp.value)){
+                        errors = true
+                        inp.error = true
+                        inp.verified = false
+                        if (!inp.value) {
+                            inp.errorMsg = errorMsgs.mandatory
+                        } else {
+                            inp.errorMsg = errorMsgs.mobile
+                        }
+                    } else {
+                        inp.error = false
+                        inp.errorMsg = ''
+                        inp.verified = true
+                    }
+                    
+                } else if ((inp.type === 'text' && inp.input_id === 'pan_card') && inp.input_id === field.currentActiveInput) {
+                    if(!isPanValid(inp.value)){
+                        errors = true
+                        inp.error = true
+                        inp.verified = false
+                        if (!inp.value) {
+                            inp.errorMsg = errorMsgs.mandatory
+                        } else {
+                            inp.errorMsg = errorMsgs.pancard
+                        }
+                    } else {
+                        inp.error = false
+                        inp.errorMsg = ''
+                        inp.verified = true
+                    }
+                    
+                } else if (inp.type === 'input_with_dropdown' && inp.input_id === field.currentActiveInput) {
+                    if (!inp.selectedId) {
+                        errors = true
+                        inp.error = true
+                        inp.errorMsg = errorMsgs.dropdown
+                        inp.verified = false
+                    } else {
+                        inp.error = false
+                        inp.errorMsg = ''
+                        inp.verified = true
+                    }
+                } else if (textTypeInputs.includes(inp.type) && inp.input_id === field.currentActiveInput && inp.mandatory) {
+                    if (!inp.value) {
+                        errors = true
+                        inp.error = true
+                        inp.errorMsg = errorMsgs.mandatory
+                        inp.verified = false
+                    } else {
+                        inp.error = false
+                        inp.errorMsg = ''
+                        inp.verified = true
+                    }
 
-                if (inp.type === 'email' && inp.input_id === field.currentActiveInput && !isEmailValid(inp.value)) {
-                    inp.error = true
-                    errors = true
-                    if (!inp.value) {
-                        inp.errorMsg = errorMsgs.mandatory
-                    } else {
-                        inp.errorMsg = errorMsgs.email
-                    }
-                } else if (inp.type === 'phone_no' && inp.input_id === field.currentActiveInput && !isNumberValid(inp.value)) {
-                    inp.error = true
-                    errors = true
-                    if (!inp.value) {
-                        inp.errorMsg = errorMsgs.mandatory
-                    } else {
-                        inp.errorMsg = errorMsgs.mobile
-                    }
-                } else if ((inp.type === 'text' && inp.input_id === 'pan_card') && inp.input_id === field.currentActiveInput && !isPanValid(inp.value)) {
-                    inp.error = true
-                    errors = true
-                    if (!inp.value) {
-                        inp.errorMsg = errorMsgs.mandatory
-                    } else {
-                        inp.errorMsg = errorMsgs.pancard
-                    }
-                } else if (inp.type === 'input_with_dropdown' && inp.input_id === field.currentActiveInput && !inp.selectedId) {
-                    // inp.error = true
-                    // errors = true
-                    // if (!inp.value) {
-                    //     inp.errorMsg = errorMsgs.mandatory
-                    // }
-                }
+                } 
             }
         })
 
@@ -187,6 +227,10 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                 inp.error = true
                 inp.errorMsg = errorMsgs.dropdown
                 errors = true
+            } else {
+                inp.error = false
+                inp.errorMsg = ''
+                inp.verified = true
             }
 
         })

@@ -6076,6 +6076,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   background-size: auto;
   background-repeat: no-repeat;
   background-position: 97% 80%;
+  margin-bottom: 24px;
 }
 
 .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__field {

@@ -45,6 +45,7 @@ class ShortExtendedForm extends React.Component {
         let slides = [...this.state.slides]
         inputsArray.forEach(item => {
             item.error = false
+            item.verified = false
             if (item.type === 'input_with_dropdown') {
                 item.list = []
             }
@@ -68,9 +69,9 @@ class ShortExtendedForm extends React.Component {
             }, 500)
         })
 
-        setTimeout(() => {
-            console.log(this.state.slides)
-        }, 2000);
+        // setTimeout(() => {
+        //     console.log(this.state.slides)
+        // }, 2000);
     }
 
     onGoToLetFindForm = () => {
@@ -180,7 +181,9 @@ class ShortExtendedForm extends React.Component {
     checkInputValidity = field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateInputsValidity(inputs, field, this.state.errorMsgs)
-        this.setState({ ...this.state, slides: newSlides })
+        this.setState({ ...this.state, slides: newSlides }, () => {
+            console.log(this.state.slides)
+        })
     }
 
     handleClickOnSlideBackground = () => {

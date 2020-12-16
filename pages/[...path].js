@@ -16,7 +16,7 @@ import { updateOffers } from '../Utils/updateOffers'
 const Home = props => {
 
     const getComponents = (dynamic) => {
-        console.log('data check: ', dynamic)
+        // console.log('data check: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':

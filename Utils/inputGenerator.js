@@ -56,23 +56,38 @@ export const generateInputs = (component, updateField,
 
 
     let { type, input_id, placeholder, mandatory, label, value, id,
-        checkbox, radio, question, error, errorMsg, list, listType,
+        checkbox, radio, question, error, errorMsg, verified, list, listType,
         upload_text, monetary_input } = component
 
     const borderInputInvalid = { border: '2px solid var(--error-color)' }
     const borderInputValid = null
     const borderStyles = error ? borderInputInvalid : borderInputValid
-    // let classNames = ['form__field']
-    // if(error) {
-    //     classNames.push('error-input')
-    // }
+
+    let fieldClasses = ['form__group', 'field']
+    if(error) {
+        fieldClasses.push('error-input')
+    } else {
+        const index = fieldClasses.indexOf('error-input')
+        if(index != -1) {
+            fieldClasses.splice(index)
+        }
+    }
+
+    if(verified) {
+        fieldClasses.push('verified-input')
+    } else {
+        const index = fieldClasses.indexOf('verified-input')
+        if(index != -1) {
+            fieldClasses.splice(index)
+        }
+    }
 
     if (type === 'text' || type === 'email' || type === 'number' || type === 'tel') {
         if (!value) value = ''
         const fieldId = `${input_id}_${type}`
         const inputType = type === 'number' ? getDevice() === 'desktop' ? 'number' : 'tel' : type
         return (
-            <div className="form__group field" type={type} id={fieldId} key={id} style={borderStyles}>
+            <div className={fieldClasses.join(' ')} type={type} id={fieldId} key={id}>
                 <input className="form__field"
                     name={input_id}
                     type={inputType}
@@ -95,7 +110,7 @@ export const generateInputs = (component, updateField,
         if (!value) value = ''
         const fieldId = `${input_id}_${type}`
         return (
-            <div className="form__group field" key={id} id={fieldId} style={borderStyles}>
+            <div className={fieldClasses.join(' ')} key={id} id={fieldId}>
                 <input className="form__field"
                     name={input_id}
                     type={getDevice() === 'desktop' ? 'number' : 'tel'}
@@ -120,7 +135,7 @@ export const generateInputs = (component, updateField,
         let uploadText = value ? value.length === 1 ? value[0].name : value.length + ' files' : upload_text
         return (
             <>
-                <div className="form__group field file-type" id={fieldId}>
+                <div className="form__group field" id={fieldId} style={borderStyles}>
                     <input id={inputFileId} type="file" accept="application/pdf, image/*" multiple onChange={() => onUploadAttachment(input_id, type, inputFileId, true)} />
                     {!value ? <img src="/assets/images/icons/Upload.svg" onClick={() => document.getElementById(inputFileId).click()} style={{ background: 'red' }} /> : null}
                     {value ? <img src="/assets/images/icons/Attach.svg" onClick={() => document.getElementById(inputFileId).click()} style={{ background: 'red' }} /> : null}
@@ -140,13 +155,10 @@ export const generateInputs = (component, updateField,
         const { listName, listItemId, listItemName } = properties(listType)
         const fieldId = `${input_id}_${type}`
         const listStyles = list && list.length ? { display: 'block' } : { display: 'none' }
-        const dropDownClasses = [
-            'form__group',
-            'field',
-            selectedId === '*' || input_id === 'city' ? 'dropdown_disabled' : 'dropdown_enabled']
-        const dropDownStyles = selectedId !== '*' ? borderStyles : null
+        const dropDownClass =  selectedId === '*' || input_id === 'city' ? 'dropdown_disabled' : 'dropdown_enabled'
+        fieldClasses.push(dropDownClass)
         return (
-            <div className={dropDownClasses.join(' ')} id={fieldId} key={id} style={dropDownStyles}>
+            <div className={fieldClasses.join(' ')} id={fieldId} key={id}>
                 <input className="form__field"
                     name={input_id}
                     id={input_id}
@@ -184,7 +196,7 @@ export const generateInputs = (component, updateField,
         const fieldId = `${input_id}_${type}`
         return (
             <div className="cstm-cal" id={fieldId}>
-                <div className="form__group field" key={id} style={borderStyles}>
+                <div className={fieldClasses.join(' ')} key={id}>
                     <label className="form__label">{label}</label>
                     <input
                         className="form__field phone-grid-span"
