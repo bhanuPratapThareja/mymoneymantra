@@ -33,10 +33,10 @@ class ShortExtendedForm extends React.Component {
         slides: [],
         errorMsgs: {
             mandatory: 'Required Field',
-            email: 'Email is not Valid',
+            email: 'Email is not valid',
             mobile: 'Invalid Mobile No',
             pancard: 'Please enter a valid PAN number',
-            dropdown: 'Invalid selection'
+            dropdown: 'Invalid Selection'
         }
     }
 
