@@ -2990,7 +2990,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 
 .credit-card-flow .lets-find-form form .form__group.error-input {
   border: 1px solid #DC3737;
-  /* background: url("../../build/images/icons/error.png"); */
+  background: url("/assets/images/icons/error.png");
   background-size: auto;
   background-repeat: no-repeat;
   background-position: 97% 80%;
@@ -3471,7 +3471,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 
 .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container .form__group.error-input {
   border: 1px solid #DC3737;
-  /* background: url("../../build/images/icons/error.png"); */
+  background: url("/assets/images/icons/error.png");
   background-size: auto;
   background-repeat: no-repeat;
   background-position: 97% 80%;
@@ -6072,7 +6072,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 
 .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.error-input {
   border: 1px solid #DC3737;
-  /* background: url("../../build/images/icons/error.png"); */
+  background: url("/assets/images/icons/error.png");
   background-size: auto;
   background-repeat: no-repeat;
   background-position: 97% 80%;
@@ -6697,7 +6697,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 
 .b2c-flow .lets-find-stepper-wrapper .lets-find-content .login-options .form__group.error-input {
   border: 1px solid #DC3737;
-  /* background: url("../../build/images/icons/error.png"); */
+  background: url("/assets/images/icons/error.png");
   background-size: auto;
   background-repeat: no-repeat;
   background-position: 97% 80%;

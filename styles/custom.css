@@ -3,6 +3,10 @@
   --next-btn: #221F1F;
 }
 
+.popular-cards-slider-card {
+  cursor: pointer;
+}
+
 .input-error {
   color: var(--error-color);
   line-height: 1.5rem;

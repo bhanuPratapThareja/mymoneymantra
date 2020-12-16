@@ -10,10 +10,12 @@ import Offers from '../components/Offers'
 import LearnMore from '../components/LearnMore'
 import Blog from '../components/Blog'
 import ShortExtendedForm from '../components/ShortExtendedForm'
+import { updateOffers } from '../Utils/updateOffers'
 
 const Home = props => {
-    
-    const getComponents = dynamic => {
+
+    const getComponents = (dynamic) => {
+        console.log('data check: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':
@@ -24,7 +26,7 @@ const Home = props => {
                     return <Rewards key={block.id} data={block} />
                 case 'blocks.bank-new':
                     return <Banks key={block.id} banks={block} />
-                case 'blocks.offer':
+                case 'blocks.popular-offers':
                     return <Offers key={block.id} data={block} />
                 case 'blocks.trending-offers':
                     return <TrendingOffers key={block.id} data={block} />
@@ -39,7 +41,6 @@ const Home = props => {
             }
         })
     }
-
     return (
         <div className="credit-card-flow">
             {props ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
@@ -52,6 +53,7 @@ export async function getServerSideProps(ctx) {
     const [path] = ctx.params.path
     const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
     const data = pageData[0]
+    await updateOffers(data)
     return { props: { data } }
 }
 

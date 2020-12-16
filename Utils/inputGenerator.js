@@ -62,6 +62,10 @@ export const generateInputs = (component, updateField,
     const borderInputInvalid = { border: '2px solid var(--error-color)' }
     const borderInputValid = null
     const borderStyles = error ? borderInputInvalid : borderInputValid
+    // let classNames = ['form__field']
+    // if(error) {
+    //     classNames.push('error-input')
+    // }
 
     if (type === 'text' || type === 'email' || type === 'number' || type === 'tel') {
         if (!value) value = ''
@@ -77,7 +81,6 @@ export const generateInputs = (component, updateField,
                     autoComplete='off'
                     required={mandatory}
                     onBlur={e => validate(e, type)}
-
                     onChange={e => handleChange(e, type)}
                 />
                 <label className="form__label">{label}</label>

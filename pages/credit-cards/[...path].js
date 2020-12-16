@@ -22,7 +22,6 @@ const CreditCards = props => {
     })
 
     const getComponents = dynamic => {
-        
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.listing-banner':
@@ -69,6 +68,7 @@ const CreditCards = props => {
 }
 
 export async function getServerSideProps(ctx) {
+   
     const strapi = new Strapi()
     const [path] = ctx.params.path
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)

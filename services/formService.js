@@ -68,8 +68,8 @@ export const generateLeadSF = async data => {
     body.request.payload.personal.dob = dob
     body.request.payload.personal.pan = pan_card
 
-    body.request.payload.contact.mobile.mobile = phone
-    body.request.payload.contact.email.email = email_address
+    body.request.payload.contact.mobile[0].mobile= phone
+    body.request.payload.contact.email[0].email = email_address
 
     body.request.payload.work.nature = employment_type
     body.request.payload.work.companyId = company_name ? company_name.caseCompanyId : null
@@ -77,11 +77,11 @@ export const generateLeadSF = async data => {
 
     body.request.payload.bankId = cc_holder_bank ? cc_holder_bank.bankId : null
 
-    body.request.payload.address.addressline1 = addressLine1
-    body.request.payload.address.addressline2 = addressLine2
-    body.request.payload.address.city = pincode ? pincode.pincode : null
-    body.request.payload.address.state = pincode ? pincode.cityId : null
-    body.request.payload.address.pincode = pincode ? pincode.stateId : null
+    body.request.payload.address[0].addressline1 = addressLine1
+    body.request.payload.address[0].addressline2 = addressLine2
+    body.request.payload.address[0].city = pincode ? pincode.pincode : null
+    body.request.payload.address[0].state = pincode ? pincode.cityId : null
+    body.request.payload.address[0].pincode = pincode ? pincode.stateId : null
 
     console.log('body: ', body)
     axios.post(url, body)

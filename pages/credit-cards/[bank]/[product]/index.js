@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import Router from 'next/router'
+import { useRouter } from 'next/router'
 import Strapi from '../../../../providers/strapi'
 import Layout from '../../../../components/Layout'
 import OfferBankProductDetails from '../../../../components/Details/OfferBankProductDetails'
@@ -12,7 +14,7 @@ import Blog from '../../../../components/Blog'
 import LearnMore from '../../../../components/LearnMore'
 
 const Details = props => {
-
+    
     useEffect(() => {
         window.scrollTo(0, 0)
     })
@@ -41,18 +43,23 @@ const Details = props => {
             }
         })
     }
+    
+    if(!props.details.length) {
+        Router.push('/404',{ query: { path: props.path }})
+    }
+
     return (
         <div className="listings">
-            {props.details ? <Layout>{getProductDetailsComponents(props.details[0].details_dynamic, props.path)}</Layout> : null}
+            {props.details.length ? <Layout>{getProductDetailsComponents(props.details[0].details_dynamic, props.path)}</Layout> : null}
         </div>
     )
 }
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const path = 'details'
+    const path = 'credit-cards'
     const { bank, product } = ctx.params
-    const details = await strapi.processReq('GET', `bank-product-mappings?bank.slug=${bank}&product.slug=${product}`)
+    const details = await strapi.processReq('GET', `bank-product-mappings?product.slug=${product}`)
     return { props: { details, path } }
 }
 
