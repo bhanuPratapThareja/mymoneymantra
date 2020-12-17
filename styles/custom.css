@@ -29,7 +29,8 @@
 .input-error p {
   color: var(--error-color);
   font-weight: 900 !important;
-  font-size: 0.8rem !important;
+  font-size: 12px!important;
+  padding: 4px auto !important;
 }
 
 .banner-sticky {

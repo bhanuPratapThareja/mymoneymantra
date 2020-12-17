@@ -11,12 +11,12 @@ import Offers from '../components/Offers'
 import LearnMore from '../components/LearnMore'
 import Blog from '../components/Blog'
 import ShortExtendedForm from '../components/ShortExtendedForm'
-import { updateOffers } from '../Utils/updateOffers'
+import { updatePopularOffers, updateTrendingOffers } from '../Utils/mainSSHelper'
 
 const Home = props => {
 
     const getComponents = (dynamic) => {
-        // console.log('data check: ', dynamic)
+        console.log('data check: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':
@@ -56,7 +56,8 @@ export async function getServerSideProps(ctx) {
     const [path] = ctx.params.path
     const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
     const data = pageData[0]
-    await updateOffers(data)
+    await updatePopularOffers(data)
+    await updateTrendingOffers(data)
     return { props: { data } }
 }
 

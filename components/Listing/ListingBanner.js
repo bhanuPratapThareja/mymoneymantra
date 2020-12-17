@@ -19,8 +19,13 @@ const ListingBanner = props => {
     const strapi = new Strapi()
 
     useEffect(() => {
+        // if(Router.router.query.categories) {
+        //     const categories = Router.router.query.categories
+        //     onBannerCategoryChange(categories)
+        //     return
+        // } 
         onBannerCategoryChange(selectedOption)
-    })
+    }, [selectedOption])
 
     const onBannerCategoryChange = category => {
         const els = document.getElementsByClassName('banner_label')
@@ -31,6 +36,7 @@ const ListingBanner = props => {
                 els[i].classList.remove('listing-banner_selected')
             }
         }
+        props.filterOfferCards(category)
     }
 
     return (
@@ -61,7 +67,7 @@ const ListingBanner = props => {
                     </div>
                     <div className="bottom">
                         <div className="cards">
-                            <h3><span id="count">{number_of_offers}</span>{product.toLowerCase()}</h3>
+                            <h3><span id="count">{props.numberOfCards}</span> {product.toLowerCase()}</h3>
                         </div>
                         {props.filters ? <div className="filter">
                             <button

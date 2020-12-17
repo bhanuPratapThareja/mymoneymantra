@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
 import ListingBanner from '../../../components/Listing/ListingBanner'
@@ -10,19 +10,42 @@ import FinancialTools from '../../../components/FinancialTools';
 import Blog from '../../../components/Blog';
 import Rewards from '../../../components/Rewards';
 import OfferDetailCards from '../../../components/Listing/OfferDetailCards'
+import { getOfferCards } from '../../../Utils/loanListingHelper'
 
 const LoanListing = props => {
+    const [allOfferCards, setAllOfferCards] = useState([])
+    const [offerCards, setOfferCards] = useState([])
+
     useEffect(() => {
         window.scrollTo(0, 0)
-    })
+        const cards = getOfferCards(props.data)
+        setOfferCards(cards)
+        setAllOfferCards(cards)
+    }, [])
+
+    const filterOfferCards = category => {
+        const unFilteredCards = [...allOfferCards]
+        if(category === 'all') {
+            setOfferCards(unFilteredCards)
+            return 
+        }
+        let filteredOfferCards = unFilteredCards.filter(card => card.bank_slug === category)
+        setOfferCards(filteredOfferCards)
+    }
 
     const getComponents = (dynamic, filters) => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.listing-banner':
-                    return <ListingBanner key={block.id} data={block} filters={filters} />
+                    return <ListingBanner 
+                                key={block.id} 
+                                data={block} 
+                                filters={filters} 
+                                numberOfCards={offerCards.length} 
+                                filterOfferCards={filterOfferCards}
+                            />
                 case 'blocks.offer-details-card':
-                    return <OfferDetailCards key={block.id} data={block} />
+                    return <OfferDetailCards key={block.id} data={block} offerCards={offerCards} />
                 case 'blocks.learn-more':
                     return <LearnMore key={block.id} data={block} />
                 case 'blocks.credit-score':
@@ -51,7 +74,6 @@ const LoanListing = props => {
 }
 
 export async function getServerSideProps(ctx) {
-    console.log('loan listing ctx: ', ctx)
     const strapi = new Strapi()
     const path = 'loan-listing'
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)

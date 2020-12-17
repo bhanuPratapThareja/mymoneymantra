@@ -5,20 +5,12 @@ const strapi = new Strapi()
 const Offers = props => {
 
    const redirectToDetailsPage = (bank, product) => {
-      console.log('bank: ', bank)
-      console.log('product: ', product)
       const path = Router.query.path[0]
       if (!bank || !product) {
          Router.push('/404')
          return
       }
       Router.push(`/${path}/${bank}/${product}`)
-   }
-
-   const getBankName = async id => {
-      const bank = await strapi.processReq('GET', `banks?id=${id}`)
-      console.log('bank: ', bank)
-      return 'bank name here'
    }
 
    if(!props.data.cards.length){
