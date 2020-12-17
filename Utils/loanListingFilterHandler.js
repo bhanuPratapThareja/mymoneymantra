@@ -9,7 +9,6 @@ export const closeFilter = (filters, filterFunction) => {
 }
 
 export const filterOfferCardsInFilterComponent = (unFilteredCards, filters) => {
-    
     const filteredByBanks = filterByBanks(unFilteredCards, filters)
     const filteredByCategories = filterByCategories(filteredByBanks, filters)
     const filteredByAnnualFees = filterByAnnualFees(filteredByCategories, filters)
@@ -26,7 +25,6 @@ const filterByPromotions = (filteredByAnnualFees, filters) => {
             return card
         }
     })
-    console.log(filteredByPromotions)
     return [...filteredByPromotions]
 }
 
@@ -43,7 +41,6 @@ const filterByAnnualFees = (filteredByCategories, filters) => {
             return card
         }
     })
-    console.log(filteredByAnnualFees)
     return [...filteredByAnnualFees]
 }
 

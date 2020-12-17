@@ -1,4 +1,3 @@
-import Router from 'next/router'
 import { useEffect, useState } from 'react'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
@@ -12,7 +11,6 @@ import Blog from '../../../components/Blog';
 import Rewards from '../../../components/Rewards';
 import OfferDetailCards from '../../../components/Listing/OfferDetailCards'
 import { getOfferCards } from '../../../Utils/loanListingCards'
-import { isEmpty } from 'lodash'
 import { filterOfferCardsInFilterComponent } from '../../../Utils/loanListingFilterHandler'
 
 const LoanListing = props => {
