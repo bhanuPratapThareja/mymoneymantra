@@ -71,13 +71,22 @@ export const generateInputs = (component, updateField,
         if(index != -1) {
             fieldClasses.splice(index)
         }
+        const filledInputIndex = fieldClasses.indexOf('filled-input')
+        if(filledInputIndex != -1) {
+            fieldClasses.splice(index)
+        }
     }
 
     if(verified) {
         fieldClasses.push('verified-input')
+        fieldClasses.push('filled-input')
     } else {
         const index = fieldClasses.indexOf('verified-input')
         if(index != -1) {
+            fieldClasses.splice(index)
+        }
+        const filledInputIndex = fieldClasses.indexOf('filled-input')
+        if(filledInputIndex != -1) {
             fieldClasses.splice(index)
         }
     }
@@ -155,7 +164,7 @@ export const generateInputs = (component, updateField,
         const { listName, listItemId, listItemName } = properties(listType)
         const fieldId = `${input_id}_${type}`
         const listStyles = list && list.length ? { display: 'block' } : { display: 'none' }
-        const dropDownClass =  selectedId === '*' || input_id === 'city' ? 'dropdown_disabled' : 'dropdown_enabled'
+        const dropDownClass =  selectedId === '*' || input_id === 'city' ? 'disabled_input' : 'dropdown_enabled'
         fieldClasses.push(dropDownClass)
         return (
             <div className={fieldClasses.join(' ')} id={fieldId} key={id}>

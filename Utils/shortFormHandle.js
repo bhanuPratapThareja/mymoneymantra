@@ -72,7 +72,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
 
                     if (inp.input_id === 'cc_holder') {
                         inputs.forEach(secondary => {
-                            if (secondary.input_id === 'bank') {
+                            if (secondary.input_id === 'cc_holder_bank') {
                                 if (inp.value === 'no') {
                                     secondary.value = ''
                                     secondary.list = []
