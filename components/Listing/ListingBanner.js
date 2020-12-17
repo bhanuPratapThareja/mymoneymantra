@@ -2,17 +2,13 @@ import { useEffect, useState } from 'react'
 import ListingFilter from './ListingFilter'
 import Strapi from '../../providers/strapi'
 import $ from 'jquery'
+import Router from 'next/router';
 
 if (typeof window != 'undefined') {
     $(document).ready(function () {
         $(".filter-option").click(function () {
             $("#" + this.id + "-show").slideToggle("300");
             $('body', "html").css("overflow", "hidden")
-        })
-
-        $(".filter-cross").click(function () {
-            $(".filter-cross").closest(".mm-modal").slideToggle(300);
-            $('body', "html").css("overflow", "scroll")
         })
     })
 }
@@ -35,7 +31,6 @@ const ListingBanner = props => {
                 els[i].classList.remove('listing-banner_selected')
             }
         }
-
     }
 
     return (
@@ -66,7 +61,7 @@ const ListingBanner = props => {
                     </div>
                     <div className="bottom">
                         <div className="cards">
-                            <h3><span id="count">{number_of_offers}</span> {product.toLowerCase()}</h3>
+                            <h3><span id="count">{number_of_offers}</span>{product.toLowerCase()}</h3>
                         </div>
                         {props.filters ? <div className="filter">
                             <button

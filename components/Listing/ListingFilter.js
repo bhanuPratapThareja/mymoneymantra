@@ -1,4 +1,4 @@
-import { onCloseFilter } from '../../Utils/loanListingFilterHandler'
+import { closeFilter } from '../../Utils/loanListingFilterHandler'
 
 class ListingFilter extends React.Component {
 
@@ -31,12 +31,16 @@ class ListingFilter extends React.Component {
             const min = el[0].innerHTML
             const max = el[1].innerHTML
             const annualFees = { min, max }
-            this.setState({ annualFees })
+            this.setState({ annualFees }, () => {
+                this.onCloseFilter()
+            })
+            return
         }
-        setTimeout(() => {
-            console.log(this.state)
-        }, 500);
-        // onCloseFilter()
+        this.onCloseFilter()
+    }
+
+    onCloseFilter = () => {
+        closeFilter({...this.state})
     }
 
     render() {
@@ -47,7 +51,7 @@ class ListingFilter extends React.Component {
                 <div className="mm-modal-wrapper">
                     <div className="head">
                         <h3>Filters</h3>
-                        <img src="/assets/images/icons/cross.svg" className="filter-cross" onClick={onCloseFilter} />
+                        <img src="/assets/images/icons/cross.svg" className="filter-cross" onClick={closeFilter} />
                     </div>
                     <div className="content">
 
