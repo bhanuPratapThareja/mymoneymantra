@@ -6,7 +6,7 @@ class ListingFilter extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.filters)
+        // console.log(this.props.filters)
     }
 
     handleCheckbox = (e, type) => {

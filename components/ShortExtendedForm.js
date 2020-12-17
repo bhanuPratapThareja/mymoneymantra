@@ -182,7 +182,7 @@ class ShortExtendedForm extends React.Component {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateInputsValidity(inputs, field, this.state.errorMsgs)
         this.setState({ ...this.state, slides: newSlides }, () => {
-            console.log(this.state.slides)
+            // console.log(this.state.slides)
         })
     }
 
@@ -220,7 +220,7 @@ class ShortExtendedForm extends React.Component {
                     />
 
                     <div className="lets-find-forms-container sms-otp" id="sms-otp">
-                        <div className="lets-find-stepper-wrapper" >
+                        <div className="lets-find-stepper-wrapper">
                             <OtpSlide
                                 onGoToLetFindForm={this.onGoToLetFindForm}
                                 onSubmitOtp={this.onSubmitOtp}

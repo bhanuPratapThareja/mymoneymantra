@@ -8,11 +8,11 @@
 }
 
 .filter-cross {
-  cursor: pointer !important;
+  cursor: pointer;
 }
 
 .verified-input {
-  background: url("/assets/images/icons/verified.svg") !important;
+  background: url("/assets/images/icons/verified.svg");
   background-size: auto;
   background-repeat: no-repeat;
   background-position: 97% 80%;
@@ -26,17 +26,10 @@
   opacity: 0.3;
 }
 
-.input-error {
+.input-error p {
   color: var(--error-color);
-  /* line-height: 1.5rem;
-  float: right;
-  position: relative;
-  top: 14px;
-  text-transform: capitalize;
-  font-weight: 600;
-  font-size: 5px;
-  text-transform: none; */
-  /* margin: 0 0 15px; */
+  font-weight: 900 !important;
+  font-size: 0.8rem !important;
 }
 
 .banner-sticky {
