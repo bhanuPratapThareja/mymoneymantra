@@ -45,6 +45,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                     }
                     inp.value = field.value
                     inputDropdown = { listType, masterName, inp }
+                    console.log('inputDropdown: ', inputDropdown)
 
                 } else {
                     inp.list = []

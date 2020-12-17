@@ -35,6 +35,12 @@ const api = {
             prodUrl: 'api/customer/v1/profile/',
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { mobileNo: "9999000090", customerId: "9999000090" } } }
         },
+        bank: {
+            devUrl: 'masters/api/master/v1/bank			',
+            uatUrl: 'api/master/v1/',
+            prodUrl: 'api/master/v1/',
+            body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { name: '' } } }
+        },
         company: {
             devUrl: 'masters/api/master/v1/company',
             uatUrl: 'api/master/v1/',
