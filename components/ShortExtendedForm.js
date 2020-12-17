@@ -33,10 +33,10 @@ class ShortExtendedForm extends React.Component {
         slides: [],
         errorMsgs: {
             mandatory: 'Required Field',
-            email: 'Email is not Valid',
+            email: 'Email is not valid',
             mobile: 'Invalid Mobile No',
             pancard: 'Please enter a valid PAN number',
-            dropdown: 'Invalid selection'
+            dropdown: 'Invalid Selection'
         }
     }
 
@@ -45,6 +45,7 @@ class ShortExtendedForm extends React.Component {
         let slides = [...this.state.slides]
         inputsArray.forEach(item => {
             item.error = false
+            item.verified = false
             if (item.type === 'input_with_dropdown') {
                 item.list = []
             }
@@ -68,9 +69,9 @@ class ShortExtendedForm extends React.Component {
             }, 500)
         })
 
-        setTimeout(() => {
-            console.log(this.state.slides)
-        }, 2000);
+        // setTimeout(() => {
+        //     console.log(this.state.slides)
+        // }, 2000);
     }
 
     onGoToLetFindForm = () => {
@@ -180,7 +181,9 @@ class ShortExtendedForm extends React.Component {
     checkInputValidity = field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateInputsValidity(inputs, field, this.state.errorMsgs)
-        this.setState({ ...this.state, slides: newSlides })
+        this.setState({ ...this.state, slides: newSlides }, () => {
+            // console.log(this.state.slides)
+        })
     }
 
     handleClickOnSlideBackground = () => {
@@ -217,7 +220,7 @@ class ShortExtendedForm extends React.Component {
                     />
 
                     <div className="lets-find-forms-container sms-otp" id="sms-otp">
-                        <div className="lets-find-stepper-wrapper" >
+                        <div className="lets-find-stepper-wrapper">
                             <OtpSlide
                                 onGoToLetFindForm={this.onGoToLetFindForm}
                                 onSubmitOtp={this.onSubmitOtp}

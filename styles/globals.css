@@ -3266,7 +3266,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   width: 100%;
   height: 100%;
   border-radius: 6px;
-  background: #ffffff url("../public/assets/images/credit-card-flow/short-form-bg.png") no-repeat left bottom;
+  background: #ffffff url("../public/assets/images/credit-card-flow/short-form-bg.png") no-repeat left bottom / 50%;
   display: none;
   -ms-flex: none;
   flex: none;
@@ -5567,7 +5567,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
 }
 
 .c-detail-page .combined-wrapper .banner .banner-wrapper {
-  padding-top: 128px;
+  /* padding-top: 128px; */
   padding-bottom: 64px;
   max-width: 395px;
   margin-left: 0;
@@ -5728,7 +5728,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   margin: 0 auto;
   padding-left: 24px;
   padding-right: 24px;
-  padding-top: 128px;
+  /* padding-top: 128px; */
   margin-bottom: 128px;
   z-index: 9999;
 }
@@ -6076,6 +6076,7 @@ h1, h2, h3, h4, h5, h6, b, span, strong, a {
   background-size: auto;
   background-repeat: no-repeat;
   background-position: 97% 80%;
+  margin-bottom: 24px;
 }
 
 .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__field {

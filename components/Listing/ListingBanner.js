@@ -2,17 +2,13 @@ import { useEffect, useState } from 'react'
 import ListingFilter from './ListingFilter'
 import Strapi from '../../providers/strapi'
 import $ from 'jquery'
+import Router from 'next/router';
 
 if (typeof window != 'undefined') {
     $(document).ready(function () {
         $(".filter-option").click(function () {
             $("#" + this.id + "-show").slideToggle("300");
             $('body', "html").css("overflow", "hidden")
-        })
-
-        $(".filter-cross").click(function () {
-            $(".filter-cross").closest(".mm-modal").slideToggle(300);
-            $('body', "html").css("overflow", "scroll")
         })
     })
 }
@@ -23,8 +19,13 @@ const ListingBanner = props => {
     const strapi = new Strapi()
 
     useEffect(() => {
+        // if(Router.router.query.categories) {
+        //     const categories = Router.router.query.categories
+        //     onBannerCategoryChange(categories)
+        //     return
+        // } 
         onBannerCategoryChange(selectedOption)
-    })
+    }, [selectedOption])
 
     const onBannerCategoryChange = category => {
         const els = document.getElementsByClassName('banner_label')
@@ -35,7 +36,7 @@ const ListingBanner = props => {
                 els[i].classList.remove('listing-banner_selected')
             }
         }
-
+        props.filterOfferCards(category)
     }
 
     return (
@@ -66,20 +67,20 @@ const ListingBanner = props => {
                     </div>
                     <div className="bottom">
                         <div className="cards">
-                            <h3><span id="count">{number_of_offers}</span> {product.toLowerCase()}</h3>
+                            <h3><span id="count">{props.numberOfCards}</span> {product.toLowerCase()}</h3>
                         </div>
-                        <div className="filter">
+                        {props.filters ? <div className="filter">
                             <button
                                 className="filter-option"
                                 id="listing-filter">
                                 Filters
                                 <img src="/assets/images/icons/down-chevron.svg" />
                             </button>
-                        </div>
+                        </div> : null}
                     </div>
                 </div>
             </section>
-            <ListingFilter />
+            {props.filters ? <ListingFilter filters={props.filters} /> : null}
             <hr className="divider" />
         </>
     )

@@ -45,6 +45,7 @@ class Strapi {
             })
             const json = await res.json()
             return json
+           
         } catch (err) {
             return null
         }

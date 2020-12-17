@@ -7,7 +7,7 @@ const OfferDetailCards = props => {
     const [offers, setOffers] = useState([])
 
     useEffect(() => {
-        setOffers(props.data.offer_cards)
+        setOffers(props.offerCards)
     })
 
     const cardButtonClick = (bank, product, type) => {

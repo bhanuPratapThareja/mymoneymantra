@@ -23,7 +23,7 @@ $(document).ready(function () {
   $('input').blur(function () {
     $('input').closest(".form__group").removeClass("active-input");
     if ($(this).val().length != 0) {
-      $(this).closest(".form__group").addClass('filled-input');
+      // $(this).closest(".form__group").addClass('filled-input');
       $(this).closest(".file-type").addClass("file-type-back")
     } else {
       $(this).closest(".file-type").removeClass("file-type-back");
@@ -31,7 +31,7 @@ $(document).ready(function () {
     }
   })
     .focus(function () {
-      $(this).closest(".form__group").removeClass('filled-input');
+      // $(this).closest(".form__group").removeClass('filled-input');
       $(this).closest(".form__group").addClass("active-input");
     });
 
