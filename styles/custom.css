@@ -74,7 +74,11 @@
   position: relative;
 }
 
-.banner-wrapper .normal-banner h1:first-child strong:first-child, .score-content h2 strong:nth-child(2), .banks-holder .banks h2 strong:nth-child(2), .cstm-bnr-txt h1:nth-child(2) strong:first-child, .c-detail-page .banner-wrapper h1:first-child strong {
+.banner-wrapper .normal-banner h1:first-child strong:first-child, 
+.score-content h2 strong:nth-child(2), 
+.banks-holder .banks h2 strong:nth-child(2), 
+.cstm-bnr-txt h1:nth-child(2) strong:first-child, 
+.c-detail-page .banner-wrapper h1:first-child strong {
   color: #89C142;
 }
 
@@ -357,6 +361,49 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   left: 0;
   font-size: 14px;
 }
+
+/*-- Dec Changes Fateh --*/
+.long-form .long-form-wrapper,
+.c-detail-page .combined-wrapper .banner .banner-wrapper {
+  padding-top: 80px;
+}
+
+.cstm-cal {
+  max-width: 49%;
+  margin-top: 32px;
+}
+
+.cstm-cal {
+  max-width: 49%;
+  margin-top: 32px;
+}
+
+/* .credit-card-flow .lets-find-container .shortforms-container .form__group.field.dropdown_enabled */
+div#pan_card_text,
+div#bank_name_input_with_dropdown,
+div#net_monthly_income_number,
+div#pincode_input_with_dropdown { 
+  display: inline-block;
+  max-width: 49%;
+  margin-top: 32px;
+  margin-right: 14px;
+}
+
+/* div#pancard_attachment_upload_button,
+div#net_monthly_income_attachment_upload_button,
+div#bank_statement_attachment_upload_button, */
+div#city_input_with_dropdown,
+.credit-card-flow .lets-find-container .shortforms-container .form__group.field.file-type {
+  max-width: 49%;
+  vertical-align: top;
+  margin-top: 32px;
+  display: inline-block;
+}
+
+div#company_name_input_with_dropdown {
+  margin-top: 32px;
+}
+
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
