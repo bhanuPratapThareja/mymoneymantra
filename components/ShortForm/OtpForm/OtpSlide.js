@@ -1,7 +1,12 @@
+import { useEffect } from 'react'
 import Otp from '../../Otp/Otp';
 import SFButtons from '../SFButtons/SFButtons'
 
 const OtpSlide = props => {
+
+    useEffect(() => {
+        console.log('otp form')
+    }, [])
 
     return (
         <>

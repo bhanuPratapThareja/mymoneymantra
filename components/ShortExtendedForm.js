@@ -31,6 +31,7 @@ class ShortExtendedForm extends React.Component {
         currentSlide: 'onboard',
         letsGoButtonDisabled: true,
         slides: [],
+        showOtpForm: false,
         errorMsgs: {
             mandatory: 'Required Field',
             email: 'Email is not valid',
@@ -77,6 +78,9 @@ class ShortExtendedForm extends React.Component {
     onGoToLetFindForm = () => {
         this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
             loadLetsFindForm()
+            setTimeout(() => {
+                this.setState({ showOtpForm: false })
+            }, 1000);
         })
     }
 
@@ -87,7 +91,7 @@ class ShortExtendedForm extends React.Component {
             if (!errorsPresent) {
                 try {
                     const mobileNo = getUserMobileNumber(this.state.slides[0])
-                    this.setState({ letsGoButtonDisabled: true, mobileNo })
+                    this.setState({ letsGoButtonDisabled: true, mobileNo, showOtpForm: true })
                     letsFindFormToOtpForm()
                     // await getOtp(mobileNo)
                 } catch (err) {
@@ -221,11 +225,11 @@ class ShortExtendedForm extends React.Component {
 
                     <div className="lets-find-forms-container sms-otp" id="sms-otp">
                         <div className="lets-find-stepper-wrapper">
-                            <OtpSlide
+                            {this.state.showOtpForm ? <OtpSlide
                                 onGoToLetFindForm={this.onGoToLetFindForm}
                                 onSubmitOtp={this.onSubmitOtp}
                                 disableOtpSubmitButton={this.state.disableOtpSubmitButton}
-                            />
+                            /> : null}
                         </div>
                     </div>
 

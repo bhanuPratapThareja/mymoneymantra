@@ -130,7 +130,7 @@ const api = {
                         "requestedTenor": "",
                         "purposeOfLoan": "",
                         "bankId": "10038",
-                        "leadId": "",
+                        "leadId": "1000000001",
                         "productId": "6",
                         "cardAge": "",
                         "cardType": "Shoprite",
