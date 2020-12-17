@@ -12,7 +12,7 @@
 }
 
 .verified-input {
-  background: url("/assets/images/icons/verified.svg");
+  background: url("../public/assets/images/icons/verified.svg");
   background-size: auto;
   background-repeat: no-repeat;
   background-position: 97% 80%;
@@ -28,9 +28,9 @@
 
 .input-error p {
   color: var(--error-color);
-  font-weight: 900 !important;
-  font-size: 12px!important;
-  padding: 4px auto !important;
+  /* font-weight: 900 !important; */
+  font-size: 12px;
+  padding: 4px auto;
 }
 
 .banner-sticky {
@@ -191,11 +191,11 @@
 }
 
 .form__group .input-error {
-  top: 9px;
+  bottom: -24px;
   float: none;
   display: block;
   text-align: right;
-  position: relative;
+  position: absolute;
   right: 0;
 }
 
@@ -404,6 +404,9 @@ div#company_name_input_with_dropdown {
   margin-top: 32px;
 }
 
+.credit-card-flow .lets-find-form form .form__group.error-input {
+  margin-bottom: 24px;
+}
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
