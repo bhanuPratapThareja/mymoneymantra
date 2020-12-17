@@ -1,3 +1,4 @@
+import Router from 'next/router'
 import { useEffect, useState } from 'react'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
@@ -10,7 +11,9 @@ import FinancialTools from '../../../components/FinancialTools';
 import Blog from '../../../components/Blog';
 import Rewards from '../../../components/Rewards';
 import OfferDetailCards from '../../../components/Listing/OfferDetailCards'
-import { getOfferCards } from '../../../Utils/loanListingHelper'
+import { getOfferCards } from '../../../Utils/loanListingCards'
+import { isEmpty } from 'lodash'
+import { filterOfferCardsInFilterComponent } from '../../../Utils/loanListingFilterHandler'
 
 const LoanListing = props => {
     const [allOfferCards, setAllOfferCards] = useState([])
@@ -25,11 +28,17 @@ const LoanListing = props => {
 
     const filterOfferCards = category => {
         const unFilteredCards = [...allOfferCards]
-        if(category === 'all') {
+        if (category === 'all') {
             setOfferCards(unFilteredCards)
-            return 
+            return
         }
-        let filteredOfferCards = unFilteredCards.filter(card => card.bank_slug === category)
+        let filteredOfferCards = unFilteredCards.filter(card => card.cateogry === category)
+        setOfferCards(filteredOfferCards)
+    }
+
+    const filterCardsFilterComponent = filters => {
+        const unFilteredCards = [...allOfferCards]
+        let filteredOfferCards = filterOfferCardsInFilterComponent(unFilteredCards, filters)
         setOfferCards(filteredOfferCards)
     }
 
@@ -37,13 +46,14 @@ const LoanListing = props => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.listing-banner':
-                    return <ListingBanner 
-                                key={block.id} 
-                                data={block} 
-                                filters={filters} 
-                                numberOfCards={offerCards.length} 
-                                filterOfferCards={filterOfferCards}
-                            />
+                    return <ListingBanner
+                        key={block.id}
+                        data={block}
+                        filters={filters}
+                        numberOfCards={offerCards.length}
+                        filterOfferCards={filterOfferCards}
+                        filterCardsFilterComponent={filterCardsFilterComponent}
+                    />
                 case 'blocks.offer-details-card':
                     return <OfferDetailCards key={block.id} data={block} offerCards={offerCards} />
                 case 'blocks.learn-more':

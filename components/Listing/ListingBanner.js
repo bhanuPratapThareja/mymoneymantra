@@ -19,11 +19,6 @@ const ListingBanner = props => {
     const strapi = new Strapi()
 
     useEffect(() => {
-        // if(Router.router.query.categories) {
-        //     const categories = Router.router.query.categories
-        //     onBannerCategoryChange(categories)
-        //     return
-        // } 
         onBannerCategoryChange(selectedOption)
     }, [selectedOption])
 
@@ -80,7 +75,10 @@ const ListingBanner = props => {
                     </div>
                 </div>
             </section>
-            {props.filters ? <ListingFilter filters={props.filters} /> : null}
+            {props.filters ? <ListingFilter
+                filters={props.filters}
+                filterCardsFilterComponent={props.filterCardsFilterComponent}
+            /> : null}
             <hr className="divider" />
         </>
     )

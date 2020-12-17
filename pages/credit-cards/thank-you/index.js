@@ -30,7 +30,7 @@ const ThankYou = props => {
                 case 'blocks.financial-tools':
                     return <FinancialTools key={block.id} tools={block} />
                 case 'blocks.rewards':
-                    return <Rewards key={block.id} rewards={block} />           
+                    return <Rewards key={block.id} data={block} />           
                 case 'blocks.blogs':
                     return <Blog key={block.id} data={block} />
                 case 'blocks.thank-you-banner':
