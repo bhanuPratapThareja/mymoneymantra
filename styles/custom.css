@@ -474,6 +474,15 @@ div#address_proof_upload_button {
   .banks-slider {
     overflow-x: hidden;
   }
+
+  .listings .banner-wrapper .top h2:nth-child(2) strong {
+    color: #fff;
+  }
+  
+  .listings .banner-wrapper .top h2 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
 }
 
 .credit-card-flow.c-detail-page button {
