@@ -58,6 +58,26 @@ export const getDropdownList = async (listType, value, masterName) => {
     } catch (err) { }
 }
 
+export const documentUpload = async document => {
+    // console.log(document)
+    const { base64, type, name } = document
+    const { url, body } = getApiData('documentUpload')
+    body.request.payload.docList[0].documentId = name
+    body.request.payload.docList[0].documentExtension = type
+    body.request.payload.docList[0].docBytes = base64
+    axios.post(url, body)
+}
+
+export const getBase64 = file => {
+    return new Promise((resolve) => {
+        const reader = new FileReader()
+        reader.onloadend = function () {
+            resolve(reader.result)
+        }
+        reader.readAsDataURL(file)
+    })
+}
+
 export const generateLeadSF = async data => {
     const { url, body } = getApiData('generate')
     const { full_name, dob, pan_card, phone, email_address, employment_type,
@@ -68,7 +88,7 @@ export const generateLeadSF = async data => {
     body.request.payload.personal.dob = dob
     body.request.payload.personal.pan = pan_card
 
-    body.request.payload.contact.mobile[0].mobile= phone
+    body.request.payload.contact.mobile[0].mobile = phone
     body.request.payload.contact.email[0].email = email_address
 
     body.request.payload.work.nature = employment_type

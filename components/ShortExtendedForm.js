@@ -83,9 +83,9 @@ class ShortExtendedForm extends React.Component {
             }, 500)
         })
 
-        // setTimeout(() => {
-        //     console.log(this.state.slides)
-        // }, 2000);
+        setTimeout(() => {
+            console.log(this.state.slides)
+        }, 2000);
     }
 
     onGoToLetFindForm = () => {
@@ -216,7 +216,7 @@ class ShortExtendedForm extends React.Component {
     }
 
     onSubmitShortForm = () => {
-        submitShortForm([...this.state.slides])
+        submitShortForm([...this.state.slides], this.state.currentSlide)
         if(this.state.slideIndex == this.state.slides.length - 1) {
             const path = Router.query.path[0]
             Router.push(`${path}/loan-listing`)

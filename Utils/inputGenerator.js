@@ -45,12 +45,15 @@ export const generateInputs = (component, updateField,
     const onUploadAttachment = async (name, type, inputFileId, attach) => {
         const files = await document.getElementById(inputFileId).files
         let value = null
+        let attachment = false
         if (attach && files.length) {
             value = files
+            attachment = true
         } else {
             document.getElementById(inputFileId).value = ''
+            attachment = false
         }
-        const field = { name, value, type }
+        const field = { name, value, type, attachment }
         updateField(field)
     }
 

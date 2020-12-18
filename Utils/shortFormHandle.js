@@ -2,7 +2,7 @@ import axios from 'axios'
 import $ from 'jquery'
 import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
 import { getApiToHit } from '../api/dropdownApiConfig'
-import { generateLeadSF } from '../services/formService'
+import { getBase64, documentUpload, generateLeadSF } from '../services/formService'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel', 'phone_no',
     'input_with_dropdown', 'input_with_calendar', 'upload_button']
@@ -77,6 +77,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                     }
 
                     inp.value = field.value
+                    inp.attachment = field.attachment
                 }
             })
 
@@ -336,9 +337,30 @@ export const getSfData = slides => {
     return data
 }
 
-export const submitShortForm = slides => {
+export const submitDocument = async document => {
+    const base64 = await getBase64(document)
+    const { type , name } = document
+    documentUpload(base64, type, name)
+}
+
+export const submitShortForm = (slides, currentSlide) => {
+
+    slides.forEach(slide => {
+        if(slide.slideId === currentSlide) {
+            slide.inputs.forEach(input => {
+                if(input.attachment) {
+                    for (let i = 0; i < input.value.length; i++) {
+                        const file = input.value[i]
+                        submitDocument(file)
+                    }
+                }
+            })
+        }
+    })
+
     const data = getSfData(slides)
-    generateLeadSF(data)
+    // console.log(data)
+    // generateLeadSF(data)
 }
 
 export const letsFindFormToOtpForm = () => {

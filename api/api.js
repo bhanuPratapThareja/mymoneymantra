@@ -59,6 +59,28 @@ const api = {
             prodUrl: 'api/master/v1/',
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
+        documentUpload: {
+            devUrl: 'utility/api/utility/v1/uploadDocument			',
+            uatUrl: 'api/master/v1/',
+            prodUrl: 'api/master/v1/',
+            body: {
+                request: {
+                    header: {
+                        correlationId: '',
+                        appId: '',
+                        msgVersion: '1.0'
+                  },
+                  payload: {
+                    channelName: 'MOBILEAPP',
+                    caseId: '1001013258',
+                    documentTypeId: '1000000034',
+                    insertFlag: 'Y',
+                    docList: [ {  documentId: '1000000374', documentExtension: 'jpeg', docBytes: '' }]
+                  }
+                }
+              }								
+                                                  
+        },
         generate: {
             devUrl: 'lead/api/lead/v1/generate',
             uatUrl: 'api/lead/v1/',
