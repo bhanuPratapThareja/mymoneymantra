@@ -59,7 +59,6 @@ export const getDropdownList = async (listType, value, masterName) => {
 }
 
 export const documentUpload = async document => {
-    // console.log(document)
     const { base64, type, name } = document
     const { url, body } = getApiData('documentUpload')
     body.request.payload.docList[0].documentId = name

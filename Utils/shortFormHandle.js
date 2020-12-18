@@ -358,8 +358,7 @@ export const submitShortForm = (slides, currentSlide) => {
     })
 
     const data = getSfData(slides)
-    // console.log(data)
-    // generateLeadSF(data)
+    generateLeadSF(data)
 }
 
 export const letsFindFormToOtpForm = () => {
