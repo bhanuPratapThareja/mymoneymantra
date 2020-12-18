@@ -54,12 +54,28 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
                     inp.value = field.value
-                    console.log('uploading: ', inp.value)
                 }
             })
         } else if (field.type === 'upload_button') {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
+                    if (field.value && field.value.length > inp.number_of_uploads) {
+                        alert(`Number of attachments allowed: ${inp.number_of_uploads}`)
+                        return
+                    }
+
+                    if (field.value && field.value.length) {
+                        for (let i = 0; i < field.value.length; i++) {
+                            const file = field.value[i]
+                            const size = file.size / 1024 / 1024
+                            if (size > 2) {
+                                alert('Maximum upload size: 2MB')
+                                return
+
+                            }
+                        }
+                    }
+
                     inp.value = field.value
                 }
             })
@@ -142,7 +158,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.verified = true
                     }
                 } else if (inp.type === 'phone_no' && inp.input_id === field.currentActiveInput) {
-                    if(!isNumberValid(inp.value)){
+                    if (!isNumberValid(inp.value)) {
                         errors = true
                         inp.error = true
                         inp.verified = false
@@ -156,9 +172,9 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.errorMsg = ''
                         inp.verified = true
                     }
-                    
+
                 } else if ((inp.type === 'text' && inp.input_id === 'pan_card') && inp.input_id === field.currentActiveInput) {
-                    if(!isPanValid(inp.value)){
+                    if (!isPanValid(inp.value)) {
                         errors = true
                         inp.error = true
                         inp.verified = false
@@ -172,7 +188,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.errorMsg = ''
                         inp.verified = true
                     }
-                    
+
                 } else if (inp.type === 'input_with_dropdown' && inp.input_id === field.currentActiveInput) {
                     if (!inp.selectedId) {
                         errors = true
@@ -196,7 +212,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.verified = true
                     }
 
-                } 
+                }
             }
         })
 
@@ -322,7 +338,6 @@ export const getSfData = slides => {
 
 export const submitShortForm = slides => {
     const data = getSfData(slides)
-    console.log(data)
     generateLeadSF(data)
 }
 
