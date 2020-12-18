@@ -62,7 +62,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                     if (field.value && inp.number_of_uploads && field.value.length > inp.number_of_uploads) {
                         field.value = null
                         alert(`Number of attachments allowed: ${inp.number_of_uploads}`)
-                        return
+                   
                     } else if (field.value && field.value.length && inp.max_upload_size_in_mb) {
                         for (let i = 0; i < field.value.length; i++) {
                             const file = field.value[i]
@@ -70,13 +70,13 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                             if (size > inp.max_upload_size_in_mb) {
                                 field.value = null
                                 alert(`Maximum upload size: ${inp.max_upload_size_in_mb} Mb`)
-                                return
+                                
                             }
                         }
-                    } else {
+                    } 
                         inp.value = field.value
                         inp.attachment = field.attachment
-                    } 
+                    
                 }
             })
 
