@@ -1,5 +1,5 @@
 import Strapi from '../providers/strapi'
-
+import Router from 'next/router'
 const TrendingOffers = props => {
     const strapi = new Strapi()
 

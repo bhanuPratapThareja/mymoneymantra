@@ -79,7 +79,7 @@ const api = {
             }
         },
         documentUpload: {
-            devUrl: 'utility/api/utility/v1/uploadDocument',
+            devUrl: 'utility/api/utility/document/v1/savedocument',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
             body: {
