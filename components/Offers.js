@@ -1,6 +1,5 @@
 import Router from 'next/router'
 import Strapi from '../providers/strapi'
-import processReq from '../api/api';
 import { getApiData } from '../api/api';
 import axios from 'axios';
 const strapi = new Strapi()
@@ -8,22 +7,20 @@ import viewOffer from '../services/offerService';
 
 
 const Offers = props => {
-console.log('inside offers props',props);
    const redirectToDetailsPage = (bank, product) => {
-      console.log('bank: ', bank)
-      console.log('product: ', product)
-      viewOffer();
+      viewOffer()
       const path = Router.query.path[0]
-      if (!bank || !product) {
-         Router.push('/404')
-         return
-      }
+      // if (!bank || !product) {
+      //    Router.push('/404')
+      //    return
+      // }
       Router.push(`/${path}/${bank}/${product}`)
    }
-   const getBankName = async id => {
-      const bank = await strapi.processReq('GET', `banks?id=${id}`)
-      console.log('bank: ', bank)
-      return 'bank name here'
+
+   const viewOffer = async() =>{
+      const strapi = new Strapi()
+      const { url, body } = getApiData('offers')
+      await strapi.apiReq('POST', url, body)
    }
 
    if(!props.data.cards.length){

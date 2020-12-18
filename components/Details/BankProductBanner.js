@@ -1,6 +1,5 @@
 import Strapi from '../../providers/strapi'
-import Router from 'next/router';
-import { useEffect } from 'react';
+import Router from 'next/router'
 
 const BankProductBanner = props => {
     const strapi = new Strapi()
@@ -12,10 +11,6 @@ const BankProductBanner = props => {
         buttonText = listing_offer_button.buttonText
     }
 
-    useEffect(()  => {
-        console.log(Router.query)
-    })
-
     const cardButtonClick = type => {
         const basePath = '/credit-cards'
         const { bank, product, bank_name } = Router.query
@@ -25,8 +20,6 @@ const BankProductBanner = props => {
         } else {
             pathName = `${basePath}/thank-you`
         }
-        console.log(buttonType, buttonText)
-        console.log('bank_name: ', bank_name)
         const query = { bank_name, buttonType, buttonText }
         routerRedirect(pathName, query)
     }

@@ -59,7 +59,6 @@ export const getDropdownList = async (listType, value, masterName) => {
 }
 
 export const documentUpload = async document => {
-    // console.log(document)
     const { base64, type, name } = document
     const { url, body } = getApiData('documentUpload')
     body.request.payload.docList[0].documentId = name
@@ -79,31 +78,36 @@ export const getBase64 = file => {
 }
 
 export const generateLeadSF = async data => {
-    const { url, body } = getApiData('generate')
-    const { full_name, dob, pan_card, phone, email_address, employment_type,
-        company_name, net_monthly_income, cc_holder_bank, addressLine1, addressLine2, pincode
-    } = data
-
-    body.request.payload.personal.firstName = full_name
-    body.request.payload.personal.dob = dob
-    body.request.payload.personal.pan = pan_card
-
-    body.request.payload.contact.mobile[0].mobile = phone
-    body.request.payload.contact.email[0].email = email_address
-
-    body.request.payload.work.nature = employment_type
-    body.request.payload.work.companyId = company_name ? company_name.caseCompanyId : null
-    body.request.payload.work.netMonthlyIncome = net_monthly_income
-
-    body.request.payload.bankId = cc_holder_bank ? cc_holder_bank.bankId : null
-
-    body.request.payload.address[0].addressline1 = addressLine1
-    body.request.payload.address[0].addressline2 = addressLine2
-    body.request.payload.address[0].city = pincode ? pincode.pincode : null
-    body.request.payload.address[0].state = pincode ? pincode.cityId : null
-    body.request.payload.address[0].pincode = pincode ? pincode.stateId : null
-
-    console.log('body: ', body)
-    axios.post(url, body)
-        .catch(() => { })
+    const promise = new Promise((resolve, reject) => {
+        const { url, body } = getApiData('generate')
+        const { full_name, dob, pan_card, phone, email_address, employment_type,
+            company_name, net_monthly_income, cc_holder_bank, addressLine1, addressLine2, pincode
+        } = data
+    
+        body.request.payload.personal.firstName = full_name
+        body.request.payload.personal.dob = dob
+        body.request.payload.personal.pan = pan_card
+    
+        body.request.payload.contact.mobile[0].mobile = phone
+        body.request.payload.contact.email[0].email = email_address
+    
+        body.request.payload.work.nature = employment_type
+        body.request.payload.work.companyId = company_name ? company_name.caseCompanyId : null
+        body.request.payload.work.netMonthlyIncome = net_monthly_income
+    
+        body.request.payload.bankId = cc_holder_bank ? cc_holder_bank.bankId : null
+    
+        body.request.payload.address[0].addressline1 = addressLine1
+        body.request.payload.address[0].addressline2 = addressLine2
+        body.request.payload.address[0].city = pincode ? pincode.pincode : null
+        body.request.payload.address[0].state = pincode ? pincode.cityId : null
+        body.request.payload.address[0].pincode = pincode ? pincode.stateId : null
+    
+        console.log('body: ', body)
+    
+        axios.post(url, body)
+            .then(res => resolve(res))
+            .catch(err => reject(err))
+    })
+    return promise
 }

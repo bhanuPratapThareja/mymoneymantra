@@ -59,25 +59,24 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
         } else if (field.type === 'upload_button') {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
-                    if (field.value && field.value.length > inp.number_of_uploads) {
+                    if (field.value && inp.number_of_uploads && field.value.length > inp.number_of_uploads) {
+                        field.value = null
                         alert(`Number of attachments allowed: ${inp.number_of_uploads}`)
-                        return
-                    }
-
-                    if (field.value && field.value.length) {
+                   
+                    } else if (field.value && field.value.length && inp.max_upload_size_in_mb) {
                         for (let i = 0; i < field.value.length; i++) {
                             const file = field.value[i]
                             const size = file.size / 1024 / 1024
-                            if (size > 2) {
-                                alert('Maximum upload size: 2MB')
-                                return
-
+                            if (size > inp.max_upload_size_in_mb) {
+                                field.value = null
+                                alert(`Maximum upload size: ${inp.max_upload_size_in_mb} Mb`)
+                                
                             }
                         }
-                    }
-
-                    inp.value = field.value
-                    inp.attachment = field.attachment
+                    } 
+                        inp.value = field.value
+                        inp.attachment = field.attachment
+                    
                 }
             })
 
@@ -359,8 +358,7 @@ export const submitShortForm = (slides, currentSlide) => {
     })
 
     const data = getSfData(slides)
-    // console.log(data)
-    // generateLeadSF(data)
+    generateLeadSF(data)
 }
 
 export const letsFindFormToOtpForm = () => {
