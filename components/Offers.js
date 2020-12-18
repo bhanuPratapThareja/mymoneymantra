@@ -2,7 +2,10 @@ import Router from 'next/router'
 import Strapi from '../providers/strapi'
 import processReq from '../api/api';
 import { getApiData } from '../api/api';
+import axios from 'axios';
 const strapi = new Strapi()
+import viewOffer from '../services/offerService';
+
 
 const Offers = props => {
 console.log('inside offers props',props);
@@ -17,22 +20,6 @@ console.log('inside offers props',props);
       }
       Router.push(`/${path}/${bank}/${product}`)
    }
-
-   const viewOffer = async() =>{
-      const { url, body } = getApiData('offers');
-
-      const strapi = new Strapi()
-      try {
-          const res = await strapi.apiReq('POST', url, body)
-          console.log('url in offers', url);
-          console.log('body in offers', body);
-         //  let resMessage = res.response.msgInfo.message;
-
-      } catch (error) {
-
-      }
-   }
-
    const getBankName = async id => {
       const bank = await strapi.processReq('GET', `banks?id=${id}`)
       console.log('bank: ', bank)
