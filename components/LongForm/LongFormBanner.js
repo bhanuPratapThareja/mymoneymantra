@@ -6,9 +6,11 @@ import { getFormPercentage } from '../../Utils/formPercentage';
 import { validEmailRegex, validMobileRegex, isValidPanNumber } from '../../Utils/validator';
 import Router from 'next/router';
 import $ from "jquery";
-
+import { useRouter } from 'next/router';
+import { withRouter } from 'next/router'
 // import converter from 'number-to-words';
 class LongFormBanner extends React.Component {
+
     state = {
         gender: "",
         maritalStatus: "",
@@ -385,7 +387,11 @@ console.log('onSelectPin value',value);
         }
 
     }
-
+// componentDidMount(){
+//     console.log('inisde did mount long form');
+//     const { id } = this.props.router
+//     console.log('inside long form router id  ',id)
+// }
 
 
     onFileChange = event => {
@@ -468,10 +474,14 @@ console.log('onSelectPin value',value);
     //     datepicker.open();
     // }
     render() {
+        const { bankName } = this.props.data;
+        console.log('bankName ====',this.props.data)
         const strapi = new Strapi()
         const { bank_name, form_heading, product_type, banner_image } = this.props.data
         const { errors } = this.state;
         const { leadId } = this.state.leadId;
+        
+      
         // const datepicker = $('#dob').datepicker();
 
         return (
@@ -1032,7 +1042,7 @@ console.log('onSelectPin value',value);
                                         <div className="checkbox">
                                             <input type="checkbox" id="checkbox-3" name="" value="" readOnly />
                                             <label htmlFor="checkbox-3"><span>
-                                                From time to time, Citibank brings great products, offers & value addition to its customers. I authorize Citibank & its affiliates and/or partners to communicate these products and offers to me.
+                                                From time to time, {bank_name ? bank_name : "Citibank"} brings great products, offers & value addition to its customers. I authorize {bank_name ? bank_name : "Citibank"} & its affiliates and/or partners to communicate these products and offers to me.
                                     </span></label>
                                         </div>
                                     </div>
@@ -1041,7 +1051,7 @@ console.log('onSelectPin value',value);
 
                                 {/* <!--director proof--> */}
                                 <div className="long-forms-wrapper">
-                                    <h5><b>17.</b> Are you a director/senior officer of Citibank and/or their Relative AND / OR director of other banks and/or their Relative?</h5>
+                                    <h5><b>17.</b> Are you a director/senior officer of {bank_name ? bank_name : "Citibank"} and/or their Relative AND / OR director of other banks and/or their Relative?</h5>
                                     <div className="shortforms-container long-proof" value={this.state.director} name="director" onChange={e => this.handleRadio(e.target.value, 'director')}>
                                         <input className="lets-checkbox" type="radio" id="director-yes" name="director" value="director-yes" />
                                         <input className="lets-checkbox" type="radio" id="director-no" name="director" value="director-no" />

@@ -9,13 +9,13 @@ const api = {
             devUrl: 'api/jwt/v1/authenticate',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
-            body: { appId:"leadgenerateapi", token:"mmm@2O!9", role:"mobileAppLogin" }
+            body: { appId: "leadgenerateapi", token: "mmm@2O!9", role: "mobileAppLogin" }
         },
         masters: {
             devUrl: 'masters/api/master/v1/masters',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
-            body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { } } }
+            body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: {} } }
         },
         otp: {
             devUrl: 'notification/api/notification/v1/sms/otp',
@@ -59,8 +59,27 @@ const api = {
             prodUrl: 'api/master/v1/',
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
+        leadProductDecision : {
+            devUrl: '/lead/api/lead/v1/product/decision',
+            uatUrl: 'api/master/v1/',
+            prodUrl: 'api/master/v1/',
+            body : {
+                "request": {
+                    "header": {
+                        "correlationId": "25478965874",
+                        "appId": "MMMWEBAPP"
+                    },
+                    "payload": {
+                        "leadId": "PR12344343",
+                        "bankId": "10051",
+                        "productId": "17",
+                        "productTypeId": "fggfg"
+                    }
+                }
+            }
+        },
         documentUpload: {
-            devUrl: 'utility/api/utility/v1/uploadDocument',
+            devUrl: 'utility/api/utility/document/v1/savedocument',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
             body: {
@@ -81,10 +100,11 @@ const api = {
               }								
                                                   
         },
+        
         generate: {
             devUrl: 'lead/api/lead/v1/generate',
             uatUrl: 'api/lead/v1/',
-            prodUrl: 'api/master/v1/', 
+            prodUrl: 'api/master/v1/',
 
             body: {
                 "request": {
@@ -188,6 +208,22 @@ const api = {
                     }
                 }
 
+            }
+
+        },
+
+        offers: {
+            devUrl: 'customer/api/customer/v1/view/offers',
+            uatUrl: 'api/master/v1/',
+            prodUrl: 'api/master/v1/',
+            body: {
+                request: {
+                    header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: {
+                        "mobileNo": "9999000090",
+                        "customerId": "9999000090",
+                        "offerId": "9999000090"
+                    }
+                }
             }
 
         }
