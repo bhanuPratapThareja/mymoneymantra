@@ -74,7 +74,6 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                             }
                         }
                     } else {
-                        console.log(field.value)
                         inp.value = field.value
                         inp.attachment = field.attachment
                     } 
