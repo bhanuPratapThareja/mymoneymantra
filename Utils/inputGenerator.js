@@ -51,6 +51,7 @@ export const generateInputs = (component, updateField,
             attachment = true
         } else {
             document.getElementById(inputFileId).value = ''
+            value = null
             attachment = false
         }
         const field = { name, value, type, attachment }
