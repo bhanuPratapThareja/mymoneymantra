@@ -1,4 +1,4 @@
-const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsZWFkZ2VuZXJhdGVhcGkiLCJleHAiOjE2MDgyOTUxMzQsImlhdCI6MTYwODIwODczNH0.CMDAIhXn-egpJlyyCMDHaztkhQE1PzPNItbgRsHN7_b9a0kDk2kCmE41CefDm4k3pIag7UTn-NZfga_ZLk5GwQ'
+const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsZWFkZ2VuZXJhdGVhcGkiLCJleHAiOjE2MDgzODMzMDksImlhdCI6MTYwODI5NjkwOX0.MfHsO-vT-7yJq6LGW_epVHjW_7aYqCVsYWrWLZ4CoCr61YKnm9FTc2yR6eEps6PReDKNBUkjXJ1_H-zADPnHTQ'
 
 export const setAuthToken = token => {
     localStorage.setItem('token', token)
