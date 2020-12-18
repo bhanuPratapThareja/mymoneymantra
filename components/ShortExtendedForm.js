@@ -91,13 +91,11 @@ class ShortExtendedForm extends React.Component {
             if (!errorsPresent) {
                 try {
                     const mobileNo = getUserMobileNumber(this.state.slides[0])
-                    this.setState({ letsGoButtonDisabled: true, mobileNo, showOtpForm: true })
+                    this.setState({ mobileNo, showOtpForm: true })
+                    // getOtp(mobileNo)
                     letsFindFormToOtpForm()
-                    // await getOtp(mobileNo)
                 } catch (err) {
                     alert(err.message)
-                } finally {
-                    this.setState({ letsGoButtonDisabled: false })
                 }
             }
         })
@@ -108,6 +106,9 @@ class ShortExtendedForm extends React.Component {
             await submitOtp(this.state.mobileNo)
             this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
                 goToSlides()
+                setTimeout(() => {
+                    this.setState({ showOtpForm: false })
+                }, 1000)
             })
         } catch (err) {
             alert(err.message)
@@ -120,7 +121,9 @@ class ShortExtendedForm extends React.Component {
 
     onGoToPrevious = () => {
         if (this.state.slideIndex === 1) {
-            loadOtpForm()
+            this.setState({ showOtpForm: true }, () => {
+                loadOtpForm()
+            })
             return
         }
         this.plusSlides(-1)
