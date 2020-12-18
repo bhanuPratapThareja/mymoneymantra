@@ -5,6 +5,9 @@ const ThankYouBanner = props => {
     const router = useRouter();
     const strapi = new Strapi()
     const { thank_you_icon, thankyou_text, sub_text, sub_text_1, button } = props.data
+    function comingSoon(){
+        alert("Coming Soon")
+      }
 
     return (
         <div className="thankyou-page">
@@ -25,7 +28,7 @@ const ThankYouBanner = props => {
                             <h6>{sub_text_1}</h6>
                             {router.query.updatedLeadId ? <h2>{router.query.updatedLeadId}</h2> : ""}
                             <div className="track-button">
-                                <button>{button}</button>
+                                <button onClick={comingSoon}>{button}</button>
                             </div>
                         </div>
                     </div>
