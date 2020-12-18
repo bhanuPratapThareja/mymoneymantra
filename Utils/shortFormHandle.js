@@ -2,7 +2,7 @@ import axios from 'axios'
 import $ from 'jquery'
 import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
 import { getApiToHit } from '../api/dropdownApiConfig'
-import { generateLeadSF } from '../services/formService'
+import { getBase64, documentUpload, generateLeadSF } from '../services/formService'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel', 'phone_no',
     'input_with_dropdown', 'input_with_calendar', 'upload_button']
@@ -59,7 +59,25 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
         } else if (field.type === 'upload_button') {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
+                    if (field.value && field.value.length > inp.number_of_uploads) {
+                        alert(`Number of attachments allowed: ${inp.number_of_uploads}`)
+                        return
+                    }
+
+                    if (field.value && field.value.length) {
+                        for (let i = 0; i < field.value.length; i++) {
+                            const file = field.value[i]
+                            const size = file.size / 1024 / 1024
+                            if (size > 2) {
+                                alert('Maximum upload size: 2MB')
+                                return
+
+                            }
+                        }
+                    }
+
                     inp.value = field.value
+                    inp.attachment = field.attachment
                 }
             })
 
@@ -141,7 +159,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.verified = true
                     }
                 } else if (inp.type === 'phone_no' && inp.input_id === field.currentActiveInput) {
-                    if(!isNumberValid(inp.value)){
+                    if (!isNumberValid(inp.value)) {
                         errors = true
                         inp.error = true
                         inp.verified = false
@@ -155,9 +173,9 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.errorMsg = ''
                         inp.verified = true
                     }
-                    
+
                 } else if ((inp.type === 'text' && inp.input_id === 'pan_card') && inp.input_id === field.currentActiveInput) {
-                    if(!isPanValid(inp.value)){
+                    if (!isPanValid(inp.value)) {
                         errors = true
                         inp.error = true
                         inp.verified = false
@@ -171,7 +189,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.errorMsg = ''
                         inp.verified = true
                     }
-                    
+
                 } else if (inp.type === 'input_with_dropdown' && inp.input_id === field.currentActiveInput) {
                     if (!inp.selectedId) {
                         errors = true
@@ -195,7 +213,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.verified = true
                     }
 
-                } 
+                }
             }
         })
 
@@ -319,10 +337,30 @@ export const getSfData = slides => {
     return data
 }
 
-export const submitShortForm = slides => {
+export const submitDocument = async document => {
+    const base64 = await getBase64(document)
+    const { type , name } = document
+    documentUpload(base64, type, name)
+}
+
+export const submitShortForm = (slides, currentSlide) => {
+
+    slides.forEach(slide => {
+        if(slide.slideId === currentSlide) {
+            slide.inputs.forEach(input => {
+                if(input.attachment) {
+                    for (let i = 0; i < input.value.length; i++) {
+                        const file = input.value[i]
+                        submitDocument(file)
+                    }
+                }
+            })
+        }
+    })
+
     const data = getSfData(slides)
-    console.log(data)
-    generateLeadSF(data)
+    // console.log(data)
+    // generateLeadSF(data)
 }
 
 export const letsFindFormToOtpForm = () => {

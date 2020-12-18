@@ -1,6 +1,5 @@
 import Strapi from '../../providers/strapi'
-import {useRouter} from 'next/router';
-
+import { useRouter } from 'next/router';
 
 const ThankYouBanner = props => {
     const router = useRouter();
@@ -16,11 +15,15 @@ const ThankYouBanner = props => {
                         <div className="top" style={{ textAlign: 'center' }}>
                             <img src={`${strapi.baseUrl}${thank_you_icon.url}`} alt={thank_you_icon.name} />
                             <h2 style={{ marginBottom: '10px' }}>{thankyou_text}</h2>
-                            <div dangerouslySetInnerHTML={{ __html: sub_text }}></div>
+                            {router.query.bank_name ? <>
+                                <p>{'for applying for a'}</p>
+                                <p>{`Credit Card with ${router.query.bank_name}`}</p>
+                            </>
+                                : null}
                         </div>
                         <div className="bottom">
                             <h6>{sub_text_1}</h6>
-                            {router.query.updatedLeadId ? <h2>{router.query.updatedLeadId}</h2> :"" }
+                            {router.query.updatedLeadId ? <h2>{router.query.updatedLeadId}</h2> : ""}
                             <div className="track-button">
                                 <button>{button}</button>
                             </div>

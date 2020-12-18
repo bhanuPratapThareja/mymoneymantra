@@ -12,24 +12,35 @@ const OfferDetailCards = props => {
         setOffers(props.offerCards)
     })
 
-    const cardButtonClick = (bank, product, type) => {
-        if (type == "eConnect") {
-            Router.push(`/credit-cards/long-form/${bank}/${product}`)
+    const cardButtonClick = offer => {
+        const basePath = '/credit-cards'
+        const { bank_slug: bank, product_slug: product, 
+            type, button_type: buttonType, button_type: 
+            buttonText, bank_name } = offer
+
+        let pathName = ''
+        if (type == "eConnect" || type == 'instantApproval') {
+            pathName = `${basePath}/long-form/${bank}/${product}`
+        } else {
+            pathName = `${basePath}/thank-you`
         }
-        if (type == "applyNow") {
-            Router.push(`/credit-cards/thank-you`)
-        }
-        if (type == "instantApproval") {
-            Router.push(`/credit-cards/long-form/${bank}/${product}`)
-        }
+        const query = { buttonType, buttonText, bank_name }
+        routerRedirect(pathName, query)
     }
 
-    const goToDetailsPage = (bank, product, buttonType, buttonText) => {
-        Router.push({
-            pathname: `/credit-cards/${bank}/${product}`,
-            query: { buttonType, buttonText }
-        },
-            `/credit-cards/${bank}/${product}`, { shallow: true })
+    const goToDetailsPage = offer => {
+        const { bank_slug: bank, product_slug: product,
+            button_type: buttonType, button_type: buttonText,
+            bank_name } = offer
+
+        const basePath = '/credit-cards'
+        const pathName = `${basePath}/${bank}/${product}`
+        const query = { buttonType, buttonText, bank_name }
+        routerRedirect(pathName, query)
+    }
+
+    const routerRedirect = (pathname, query) => {
+        Router.push({ pathname, query }, pathname, { shallow: true })
     }
 
     return (
@@ -65,10 +76,8 @@ const OfferDetailCards = props => {
                                     <h5>{offer.usp_highlights}</h5>
                                 </div>
                                 <div className="options">
-                                    <button id="view-details" onClick={() => goToDetailsPage(offer.bank_slug, offer.product_slug, offer.button_type, offer.button_text)}>{offer.view_details_link}</button>
-                                    {offer.button_type == "applyNow" ? <button onClick={() => cardButtonClick(offer.bank_slug, offer.product_slug, offer.button_type)} id="apply-now">{offer.button_text}</button> : null}
-                                    {offer.button_type == "eConnect" ? <button onClick={() => cardButtonClick(offer.bank_slug, offer.product_slug, offer.button_type)} id="apply-now">{offer.button_text}</button> : null}
-                                    {offer.button_type == "instantApproval" ? <button onClick={() => cardButtonClick(offer.bank_slug, offer.product_slug, offer.button_type)} id="apply-now">{offer.button_text}</button> : null}
+                                    <button id="view-details" onClick={() => goToDetailsPage(offer)}>{offer.view_details_link}</button>
+                                    <button onClick={() => cardButtonClick(offer)} id="apply-now">{offer.button_text}</button>
                                 </div>
                             </div>
                         </div>

@@ -31,6 +31,9 @@ class ShortExtendedForm extends React.Component {
         currentSlide: 'onboard',
         letsGoButtonDisabled: true,
         slides: [],
+        showOtpForm: false,
+        defaultOtpTime: 10,
+        otpTimeLeft: 0,
         errorMsgs: {
             mandatory: 'Required Field',
             email: 'Email is not valid',
@@ -38,6 +41,17 @@ class ShortExtendedForm extends React.Component {
             pancard: 'Please enter a valid PAN number',
             dropdown: 'Invalid Selection'
         }
+    }
+
+    decrementOtpTime = () => {
+        // this.setState({ otpTimeLeft: this.state.defaultOtpTime }, () => {
+        //     this.otpInterval = setInterval(() => {
+        //         this.setState({ otpTimeLeft: --this.state.otpTimeLeft })
+        //         if (this.state.otpTimeLeft == 0 && this.otpInterval) {
+        //             clearInterval(this.otpInterval)
+        //         }
+        //     }, 1000)
+        // })
     }
 
     setInputsInState = (inputsArray, slideId, heading) => {
@@ -69,14 +83,20 @@ class ShortExtendedForm extends React.Component {
             }, 500)
         })
 
-        // setTimeout(() => {
-        //     console.log(this.state.slides)
-        // }, 2000);
+        setTimeout(() => {
+            console.log(this.state.slides)
+        }, 2000);
     }
 
     onGoToLetFindForm = () => {
         this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
             loadLetsFindForm()
+            if(this.otpInterval) {
+                clearInterval(this.otpInterval)
+            }
+            setTimeout(() => {
+                this.setState({ showOtpForm: false })
+            }, 1000);
         })
     }
 
@@ -87,13 +107,14 @@ class ShortExtendedForm extends React.Component {
             if (!errorsPresent) {
                 try {
                     const mobileNo = getUserMobileNumber(this.state.slides[0])
-                    this.setState({ letsGoButtonDisabled: true, mobileNo })
+                    this.setState({ mobileNo, showOtpForm: true })
+                    getOtp(mobileNo)
                     letsFindFormToOtpForm()
-                    // await getOtp(mobileNo)
+                    setTimeout(() => {
+                        this.decrementOtpTime()
+                    }, 2000)
                 } catch (err) {
                     alert(err.message)
-                } finally {
-                    this.setState({ letsGoButtonDisabled: false })
                 }
             }
         })
@@ -116,7 +137,9 @@ class ShortExtendedForm extends React.Component {
 
     onGoToPrevious = () => {
         if (this.state.slideIndex === 1) {
-            loadOtpForm()
+            this.setState({ showOtpForm: true }, () => {
+                loadOtpForm()
+            })
             return
         }
         this.plusSlides(-1)
@@ -193,7 +216,7 @@ class ShortExtendedForm extends React.Component {
     }
 
     onSubmitShortForm = () => {
-        submitShortForm([...this.state.slides])
+        submitShortForm([...this.state.slides], this.state.currentSlide)
         if(this.state.slideIndex == this.state.slides.length - 1) {
             const path = Router.query.path[0]
             Router.push(`${path}/loan-listing`)
@@ -224,6 +247,9 @@ class ShortExtendedForm extends React.Component {
                             <OtpSlide
                                 onGoToLetFindForm={this.onGoToLetFindForm}
                                 onSubmitOtp={this.onSubmitOtp}
+                                decrementOtpTime={this.decrementOtpTime}
+                                otpTimeLeft={this.state.otpTimeLeft}
+                                mobileNo={this.state.mobileNo}
                                 disableOtpSubmitButton={this.state.disableOtpSubmitButton}
                             />
                         </div>

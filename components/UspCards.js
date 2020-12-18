@@ -18,8 +18,10 @@ const UspCards = props => {
     }
 
     return (
-        <div className="banner-features">
-            {renderUspCards(props.data.usp_card)}
+        <div className="container banner-features-container">
+            <div className="banner-features">
+                {renderUspCards(props.data.usp_card)}
+            </div>
         </div>
     )
 }

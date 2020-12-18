@@ -18,13 +18,13 @@ const api = {
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: {} } }
         },
         otp: {
-            devUrl: 'masters/api/notification/v1/sms/otp',
+            devUrl: 'notification/api/notification/v1/sms/otp',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { mobileNo: '' } } }
         },
         otpverify: {
-            devUrl: 'masters/api/notification/v1/sms/otpverify',
+            devUrl: 'notification/api/notification/v1/sms/otpverify',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { mobileNo: '' } } }
@@ -34,6 +34,12 @@ const api = {
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { mobileNo: "9999000090", customerId: "9999000090" } } }
+        },
+        bank: {
+            devUrl: 'masters/api/master/v1/bank			',
+            uatUrl: 'api/master/v1/',
+            prodUrl: 'api/master/v1/',
+            body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         company: {
             devUrl: 'masters/api/master/v1/company',
@@ -53,37 +59,48 @@ const api = {
             prodUrl: 'api/master/v1/',
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
-        leadProductDecision: {
-            devUrl: 'lead/api/lead/v1/product/decision',
+        leadProductDecision : {
+            devUrl: '/lead/api/lead/v1/product/decision',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
-            body: {
-                request: {
-                    header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: {
-                        "leadId": "PR01019780",
-                        "bankId": "10079",
-                        "productId": "23",
-                        "productTypeId": ""
+            body : {
+                "request": {
+                    "header": {
+                        "correlationId": "25478965874",
+                        "appId": "MMMWEBAPP"
+                    },
+                    "payload": {
+                        "leadId": "PR12344343",
+                        "bankId": "10051",
+                        "productId": "17",
+                        "productTypeId": "fggfg"
                     }
                 }
             }
         },
-        experian: {
-            devUrl: 'lead/api/v1/',
+        documentUpload: {
+            devUrl: 'utility/api/utility/v1/uploadDocument',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
             body: {
                 request: {
-                    header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: {
-                        "fullName": "Pawan",
-                        "email": "pk@gmail.com",
-                        "number": "9987654321",
-                    }
+                    header: {
+                        correlationId: '',
+                        appId: '',
+                        msgVersion: '1.0'
+                  },
+                  payload: {
+                    channelName: 'MOBILEAPP',
+                    caseId: '1001013258',
+                    documentTypeId: '1000000034',
+                    insertFlag: 'Y',
+                    docList: [ {  documentId: '1000000374', documentExtension: 'jpeg', docBytes: '' }]
+                  }
                 }
-            }
+              }								
+                                                  
         },
-
-
+        
         generate: {
             devUrl: 'lead/api/lead/v1/generate',
             uatUrl: 'api/lead/v1/',
@@ -155,7 +172,7 @@ const api = {
                         "requestedTenor": "",
                         "purposeOfLoan": "",
                         "bankId": "10038",
-                        "leadId": "",
+                        "leadId": "1000000001",
                         "productId": "6",
                         "cardAge": "",
                         "cardType": "Shoprite",

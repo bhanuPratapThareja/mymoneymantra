@@ -1,6 +1,6 @@
 import Strapi from '../../providers/strapi'
 import Router from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const BankProductBanner = props => {
     const strapi = new Strapi()
@@ -12,20 +12,28 @@ const BankProductBanner = props => {
         buttonText = listing_offer_button.buttonText
     }
 
+    useEffect(()  => {
+        console.log(Router.query)
+    })
+
     const cardButtonClick = type => {
-        const { bank, product } = Router.query
-        if (type == "eConnect") {
-            Router.push(`/credit-cards/long-form/${bank}/${product}`)
+        const basePath = '/credit-cards'
+        const { bank, product, bank_name } = Router.query
+        let pathName = ''
+        if (type == "eConnect" || type == 'instantApproval') {
+            pathName = `${basePath}/long-form/${bank}/${product}`
+        } else {
+            pathName = `${basePath}/thank-you`
         }
-        if (type == "applyNow") {
-            Router.push(`/credit-cards/thank-you`)
-        }
-        if (type == "instantApproval") {
-            Router.push(`/credit-cards/long-form/${bank}/${product}`)
-        }
+        console.log(buttonType, buttonText)
+        console.log('bank_name: ', bank_name)
+        const query = { bank_name, buttonType, buttonText }
+        routerRedirect(pathName, query)
     }
 
-    // const { buttonType, buttonText } = productBannerButton
+    const routerRedirect = (pathname, query) => {
+        Router.push({ pathname, query }, pathname, { shallow: true })
+    }
 
     return (
         <div className="credit-card-flow c-detail-page">
@@ -34,11 +42,7 @@ const BankProductBanner = props => {
                     <div className="banner-wrapper">
                         <div dangerouslySetInnerHTML={{ __html: heading }}></div>
                         <p>{sub_text}</p>
-
-                        {buttonType == "applyNow" ? <button onClick={() => cardButtonClick(buttonType)} id="apply-now">{buttonText}</button> : null}
-                        {buttonType == "eConnect" ? <button onClick={() => cardButtonClick(buttonType)} id="apply-now">{buttonText}</button> : null}
-                        {buttonType == "instantApproval" ? <button onClick={() => cardButtonClick(buttonType)} id="apply-now">{buttonText}</button> : null}
-
+                        <button onClick={() => cardButtonClick(buttonType)} id="apply-now">{buttonText}</button>
                     </div>
                     <div>
                         {image ? <img className="banner-card" src={`${strapi.baseUrl}${image.url}`} alt={image.name} /> : null}

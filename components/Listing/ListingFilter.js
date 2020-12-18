@@ -3,7 +3,7 @@ import { closeFilter } from '../../Utils/loanListingFilterHandler'
 class ListingFilter extends React.Component {
 
     state = {
-        showCheckboxes: 2,
+        showCheckboxes: 4,
         filters: {}
     }
 
@@ -36,7 +36,7 @@ class ListingFilter extends React.Component {
     }
 
     handleRadio = (value, type) => {
-        const filters = { ...this.state.filters, [type]: value }
+        const filters = { ...this.state.filters, [type]: [value] }
         this.setState({ ...this.state, filters })
     }
 
@@ -45,16 +45,14 @@ class ListingFilter extends React.Component {
         if (el.length) {
             let min = el[0].innerHTML
             let max = el[1].innerHTML
-
             min = min.split('')
-            let newMin = min.filter(val => Number(val) || val == 0)
-            newMin = newMin.join('')
-
+            min = min.filter(val => Number(val) || val == 0)
+            min = min.join('')
             max = max.split('')
-            let newMax = max.filter(val => Number(val) || val == 0)
-            newMax = newMax.join('')
+            max = max.filter(val => Number(val) || val == 0)
+            max = max.join('')
            
-            const annualFees = [ `min=${newMin}`, `max=${newMax}` ]
+            const annualFees = [min , max]
             const filters = { ...this.state.filters, annualFees }
             this.setState({ ...this.state, filters }, () => {
                 this.onCloseFilter()
@@ -66,7 +64,7 @@ class ListingFilter extends React.Component {
     }
 
     onCloseFilter = () => {
-        closeFilter({ ...this.state.filters })
+        closeFilter({ ...this.state.filters }, this.props.filterCardsFilterComponent)
     }
 
     onClivkViewAll = type => {
@@ -158,7 +156,7 @@ class ListingFilter extends React.Component {
                                                 <h5>{radio.name}</h5>
                                                 <div className="shortforms-container">
                                                     {radio.filter_radio_options.map(radio_button => {
-                                                        const labelStyles = this.state.filters[radio.type] === radio_button.tag ? { border: '1px solid green' } : null
+                                                        const labelStyles = this.state.filters[radio.type] ? this.state.filters[radio.type][0] === radio_button.tag ? { border: '1px solid green' } : null : null
                                                         return (
                                                             <React.Fragment key={radio_button.id}>
                                                                 <label htmlFor={radio_button.tag} style={labelStyles} onClick={() => this.handleRadio(radio_button.tag, radio.type)}>{radio_button.name}</label>

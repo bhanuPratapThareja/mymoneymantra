@@ -10,8 +10,10 @@ import FinancialTools from '../../../components/FinancialTools';
 import Blog from '../../../components/Blog';
 import Rewards from '../../../components/Rewards';
 import OfferDetailCards from '../../../components/Listing/OfferDetailCards'
-import { getOfferCards,loanListingProductDecision } from '../../../Utils/loanListingHelper';
+import { getOfferCards,loanListingProductDecision } from '../../../Utils/loanListingCards';
 
+// import { getOfferCards } from '../../../Utils/loanListingCards'
+import { filterOfferCardsInFilterComponent } from '../../../Utils/loanListingFilterHandler'
 
 const LoanListing = props => {
     const [allOfferCards, setAllOfferCards] = useState([])
@@ -26,11 +28,17 @@ const LoanListing = props => {
 
     const filterOfferCards = category => {
         const unFilteredCards = [...allOfferCards]
-        if(category === 'all') {
+        if (category === 'all') {
             setOfferCards(unFilteredCards)
-            return 
+            return
         }
-        let filteredOfferCards = unFilteredCards.filter(card => card.bank_slug === category)
+        let filteredOfferCards = unFilteredCards.filter(card => card.cateogry === category)
+        setOfferCards(filteredOfferCards)
+    }
+
+    const filterCardsFilterComponent = filters => {
+        const unFilteredCards = [...allOfferCards]
+        let filteredOfferCards = filterOfferCardsInFilterComponent(unFilteredCards, filters)
         setOfferCards(filteredOfferCards)
     }
 
@@ -38,13 +46,14 @@ const LoanListing = props => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.listing-banner':
-                    return <ListingBanner 
-                                key={block.id} 
-                                data={block} 
-                                filters={filters} 
-                                numberOfCards={offerCards.length} 
-                                filterOfferCards={filterOfferCards}
-                            />
+                    return <ListingBanner
+                        key={block.id}
+                        data={block}
+                        filters={filters}
+                        numberOfCards={offerCards.length}
+                        filterOfferCards={filterOfferCards}
+                        filterCardsFilterComponent={filterCardsFilterComponent}
+                    />
                 case 'blocks.offer-details-card':
                     return <OfferDetailCards key={block.id} data={block} offerCards={offerCards} />
                 case 'blocks.learn-more':
@@ -79,11 +88,9 @@ export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const path = 'loan-listing'
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)
-    console.log('inside ..path loadListing pageData[0] ++++++++++++++++++',pageData[0]);
     const listingFilter = await strapi.processReq('GET', 'filters')
     const filters = listingFilter.length ? listingFilter[0] : null
     const data = pageData[0]
-    // console.log('data in index',data);
     await loanListingProductDecision(data);
     return { props: { data, filters } }
 }
