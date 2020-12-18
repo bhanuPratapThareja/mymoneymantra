@@ -43,6 +43,19 @@ class ShortExtendedForm extends React.Component {
         }
     }
 
+    decrementOtpTime = () => {
+        this.setState({ otpTimeLeft: this.state.defaultOtpTime }, () => {
+            this.otpInterval = setInterval(() => {
+                this.setState({ otpTimeLeft: --this.state.otpTimeLeft })
+                if (this.state.otpTimeLeft == 0) {
+                    if(this.otpInterval) {
+                        clearInterval(this.otpInterval)
+                    }
+                }
+            }, 1000)
+        })
+    }
+
     setInputsInState = (inputsArray, slideId, heading) => {
         let formInputs = []
         let slides = [...this.state.slides]
