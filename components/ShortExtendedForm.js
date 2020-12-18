@@ -244,6 +244,8 @@ class ShortExtendedForm extends React.Component {
                             {this.state.showOtpForm ? <OtpSlide
                                 onGoToLetFindForm={this.onGoToLetFindForm}
                                 onSubmitOtp={this.onSubmitOtp}
+                                decrementOtpTime={this.decrementOtpTime}
+                                otpTimeLeft={this.state.otpTimeLeft}
                                 disableOtpSubmitButton={this.state.disableOtpSubmitButton}
                             /> : null}
                         </div>
