@@ -18,13 +18,13 @@ const api = {
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { } } }
         },
         otp: {
-            devUrl: 'masters/api/notification/v1/sms/otp',
+            devUrl: 'notification/api/notification/v1/sms/otp',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { mobileNo: '' } } }
         },
         otpverify: {
-            devUrl: 'masters/api/notification/v1/sms/otpverify',
+            devUrl: 'notification/api/notification/v1/sms/otpverify',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { mobileNo: '' } } }

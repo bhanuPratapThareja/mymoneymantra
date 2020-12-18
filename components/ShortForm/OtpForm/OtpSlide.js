@@ -1,8 +1,10 @@
 import Otp from '../../Otp/Otp';
 import SFButtons from '../SFButtons/SFButtons'
+import { getOtp } from '../../../services/formService'
 
 const OtpSlide = props => {
 
+    const resendClass = props.otpTimeLeft ? 'resend_disabled' : 'resend_enabled'
 
     return (
         <>
@@ -17,7 +19,11 @@ const OtpSlide = props => {
                                 <label className="form__label" htmlFor="phone">One time password</label>
                             </div>
                             <span>Haven’t received the OTP yet?</span>
-                            <span>Resend </span>
+                            <span 
+                                className="resend_otp"
+                                onClick={() => getOtp(props.mobileNo)}
+                                disabled={props.otpTimeLeft}>Resend 
+                            </span>{props.otpTimeLeft ? <span>{props.otpTimeLeft}</span> : null}
                         </div>
                     </div>
                 </div>
@@ -26,7 +32,6 @@ const OtpSlide = props => {
             <SFButtons
                 onClickPrevious={props.onGoToLetFindForm}
                 onClickNext={props.onSubmitOtp}
-                disableOtpSubmitButton={props.disableOtpSubmitButton}
             />
         </>
     )

@@ -33,6 +33,10 @@
   padding: 4px auto;
 }
 
+.resend_otp {
+  cursor: pointer;
+}
+
 .banner-sticky {
   position: fixed;
   top: 100px;
