@@ -60,7 +60,7 @@ const api = {
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         documentUpload: {
-            devUrl: 'utility/api/utility/v1/uploadDocument			',
+            devUrl: 'utility/api/utility/v1/uploadDocument',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
             body: {
