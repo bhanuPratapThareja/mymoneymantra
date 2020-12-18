@@ -32,6 +32,8 @@ class ShortExtendedForm extends React.Component {
         letsGoButtonDisabled: true,
         slides: [],
         showOtpForm: false,
+        defaultOtpTime: 10,
+        otpTimeLeft: 10,
         errorMsgs: {
             mandatory: 'Required Field',
             email: 'Email is not valid',
