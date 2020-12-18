@@ -1,11 +1,13 @@
 import $ from 'jquery'
 
 export const closeFilter = (filters, filterFunction) => {
-        $(".filter-cross").closest(".mm-modal").slideToggle(300);
-        $('body', "html").css("overflow", "scroll")
-    setTimeout(() => {
-        filterFunction(filters)
-    }, 1000)
+    $(".filter-cross").closest(".mm-modal").slideToggle(300);
+    $('body', "html").css("overflow", "scroll")
+    if (filterFunction) {
+        setTimeout(() => {
+            filterFunction(filters)
+        }, 1000)
+    }
 }
 
 export const filterOfferCardsInFilterComponent = (unFilteredCards, filters) => {
@@ -18,10 +20,10 @@ export const filterOfferCardsInFilterComponent = (unFilteredCards, filters) => {
 
 const filterByPromotions = (filteredByAnnualFees, filters) => {
     const filteredByPromotions = filteredByAnnualFees.filter(card => {
-        if(!filters.promotions || !filters.promotions.length){
+        if (!filters.promotions || !filters.promotions.length) {
             return card
         }
-        if(filters.promotions.includes(card.promotions)){
+        if (filters.promotions.includes(card.promotions)) {
             return card
         }
     })
@@ -30,14 +32,14 @@ const filterByPromotions = (filteredByAnnualFees, filters) => {
 
 
 const filterByAnnualFees = (filteredByCategories, filters) => {
-    const filteredByAnnualFees= filteredByCategories.filter(card => {
-        if(!filters.annualFees || !filters.annualFees.length){
+    const filteredByAnnualFees = filteredByCategories.filter(card => {
+        if (!filters.annualFees || !filters.annualFees.length) {
             return card
         }
         const annualFee = Number(card.annual_fee_sye)
         const minValue = Number(filters.annualFees[0])
         const maxValue = Number(filters.annualFees[1])
-        if(annualFee >= minValue && annualFee <= maxValue){
+        if (annualFee >= minValue && annualFee <= maxValue) {
             return card
         }
     })
@@ -45,11 +47,11 @@ const filterByAnnualFees = (filteredByCategories, filters) => {
 }
 
 const filterByCategories = (filteredByBanks, filters) => {
-    const filteredBycategories= filteredByBanks.filter(card => {
-        if(!filters.categories || !filters.categories.length){
+    const filteredBycategories = filteredByBanks.filter(card => {
+        if (!filters.categories || !filters.categories.length) {
             return card
         }
-        if(filters.categories.includes(card.cateogry)){
+        if (filters.categories.includes(card.cateogry)) {
             return card
         }
     })
@@ -59,10 +61,10 @@ const filterByCategories = (filteredByBanks, filters) => {
 
 const filterByBanks = (unFilteredCards, filters) => {
     const filteredByBanks = unFilteredCards.filter(card => {
-        if(!filters.banks || !filters.banks.length){
+        if (!filters.banks || !filters.banks.length) {
             return card
         }
-        if(filters.banks.includes(card.bank_slug)){
+        if (filters.banks.includes(card.bank_slug)) {
             return card
         }
     })
