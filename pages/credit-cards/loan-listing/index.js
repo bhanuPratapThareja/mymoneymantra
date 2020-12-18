@@ -10,7 +10,9 @@ import FinancialTools from '../../../components/FinancialTools';
 import Blog from '../../../components/Blog';
 import Rewards from '../../../components/Rewards';
 import OfferDetailCards from '../../../components/Listing/OfferDetailCards'
-import { getOfferCards } from '../../../Utils/loanListingCards'
+import { getOfferCards,loanListingProductDecision } from '../../../Utils/loanListingCards';
+
+// import { getOfferCards } from '../../../Utils/loanListingCards'
 import { filterOfferCardsInFilterComponent } from '../../../Utils/loanListingFilterHandler'
 
 const LoanListing = props => {
@@ -82,12 +84,14 @@ const LoanListing = props => {
 }
 
 export async function getServerSideProps(ctx) {
+ 
     const strapi = new Strapi()
     const path = 'loan-listing'
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)
     const listingFilter = await strapi.processReq('GET', 'filters')
     const filters = listingFilter.length ? listingFilter[0] : null
     const data = pageData[0]
+    await loanListingProductDecision(data);
     return { props: { data, filters } }
 }
 
