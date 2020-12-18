@@ -47,10 +47,8 @@ class ShortExtendedForm extends React.Component {
         this.setState({ otpTimeLeft: this.state.defaultOtpTime }, () => {
             this.otpInterval = setInterval(() => {
                 this.setState({ otpTimeLeft: --this.state.otpTimeLeft })
-                if (this.state.otpTimeLeft == 0) {
-                    if(this.otpInterval) {
-                        clearInterval(this.otpInterval)
-                    }
+                if (this.state.otpTimeLeft == 0 && this.otpInterval) {
+                    clearInterval(this.otpInterval)
                 }
             }, 1000)
         })
