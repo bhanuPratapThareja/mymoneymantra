@@ -10,7 +10,8 @@ import FinancialTools from '../../../components/FinancialTools';
 import Blog from '../../../components/Blog';
 import Rewards from '../../../components/Rewards';
 import OfferDetailCards from '../../../components/Listing/OfferDetailCards'
-import { getOfferCards } from '../../../Utils/loanListingHelper'
+import { getOfferCards,loanListingProductDecision } from '../../../Utils/loanListingHelper';
+
 
 const LoanListing = props => {
     const [allOfferCards, setAllOfferCards] = useState([])
@@ -74,12 +75,16 @@ const LoanListing = props => {
 }
 
 export async function getServerSideProps(ctx) {
+ 
     const strapi = new Strapi()
     const path = 'loan-listing'
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)
+    console.log('inside ..path loadListing pageData[0] ++++++++++++++++++',pageData[0]);
     const listingFilter = await strapi.processReq('GET', 'filters')
     const filters = listingFilter.length ? listingFilter[0] : null
     const data = pageData[0]
+    // console.log('data in index',data);
+    await loanListingProductDecision(data);
     return { props: { data, filters } }
 }
 

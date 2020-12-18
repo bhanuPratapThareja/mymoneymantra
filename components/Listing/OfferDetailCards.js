@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react'
 import Router from 'next/router';
 
 const OfferDetailCards = props => {
+    console.log('inside offerDetailCards props',props);
     const strapi = new Strapi()
     const [offers, setOffers] = useState([])
 
+    
     useEffect(() => {
         setOffers(props.offerCards)
     })
