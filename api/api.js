@@ -9,7 +9,7 @@ const api = {
             devUrl: 'api/jwt/v1/authenticate',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
-            body: { appId: "leadgenerateapi", token: "mmm@2O!9", role: "mobileAppLogin" }
+            body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { clientId: "leadgenerateapi", clientSecret: "mmm@2O!9" } } }
         },
         masters: {
             devUrl: 'masters/api/master/v1/masters',
@@ -59,11 +59,11 @@ const api = {
             prodUrl: 'api/master/v1/',
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
-        leadProductDecision : {
+        leadProductDecision: {
             devUrl: '/lead/api/lead/v1/product/decision',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
-            body : {
+            body: {
                 "request": {
                     "header": {
                         "correlationId": "25478965874",
@@ -88,19 +88,19 @@ const api = {
                         correlationId: '',
                         appId: '',
                         msgVersion: '1.0'
-                  },
-                  payload: {
-                    channelName: 'MOBILEAPP',
-                    caseId: '1001013258',
-                    documentTypeId: '1000000034',
-                    insertFlag: 'Y',
-                    docList: [ {  documentId: '1000000374', documentExtension: 'jpeg', docBytes: '' }]
-                  }
+                    },
+                    payload: {
+                        channelName: 'MOBILEAPP',
+                        caseId: '1001013258',
+                        documentTypeId: '1000000034',
+                        insertFlag: 'Y',
+                        docList: [{ documentId: '1000000374', documentExtension: 'jpeg', docBytes: '' }]
+                    }
                 }
-              }								
-                                                  
+            }
+
         },
-        
+
         generate: {
             devUrl: 'lead/api/lead/v1/generate',
             uatUrl: 'api/lead/v1/',

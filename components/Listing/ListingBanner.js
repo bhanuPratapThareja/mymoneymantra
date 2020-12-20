@@ -14,7 +14,7 @@ if (typeof window != 'undefined') {
 }
 
 const ListingBanner = props => {
-    const { heading, category, number_of_offers, product } = props.data
+    const { heading, category, product } = props.data
     const [selectedOption, setSelectedOption] = useState('all')
     const strapi = new Strapi()
 

@@ -20,10 +20,10 @@ export const filterOfferCardsInFilterComponent = (unFilteredCards, filters) => {
 
 const filterByPromotions = (filteredByAnnualFees, filters) => {
     const filteredByPromotions = filteredByAnnualFees.filter(card => {
-        if (!filters.promotions || !filters.promotions.length) {
+        if (!filters.promotion || !filters.promotion.length) {
             return card
         }
-        if (filters.promotions.includes(card.promotions)) {
+        if (filters.promotion.includes(card.promotion)) {
             return card
         }
     })
@@ -36,7 +36,7 @@ const filterByAnnualFees = (filteredByCategories, filters) => {
         if (!filters.annualFees || !filters.annualFees.length) {
             return card
         }
-        const annualFee = Number(card.annual_fee_sye)
+        const annualFee = Number(card.annual_fee_fy)
         const minValue = Number(filters.annualFees[0])
         const maxValue = Number(filters.annualFees[1])
         if (annualFee >= minValue && annualFee <= maxValue) {
@@ -51,7 +51,7 @@ const filterByCategories = (filteredByBanks, filters) => {
         if (!filters.categories || !filters.categories.length) {
             return card
         }
-        if (filters.categories.includes(card.cateogry)) {
+        if (filters.categories.includes(card.category)) {
             return card
         }
     })
@@ -64,7 +64,7 @@ const filterByBanks = (unFilteredCards, filters) => {
         if (!filters.banks || !filters.banks.length) {
             return card
         }
-        if (filters.banks.includes(card.bank_slug)) {
+        if (filters.banks.includes(card.bank.slug)) {
             return card
         }
     })

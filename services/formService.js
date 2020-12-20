@@ -102,9 +102,7 @@ export const generateLeadSF = async data => {
         body.request.payload.address[0].city = pincode ? pincode.pincode : null
         body.request.payload.address[0].state = pincode ? pincode.cityId : null
         body.request.payload.address[0].pincode = pincode ? pincode.stateId : null
-    
-        console.log('body: ', body)
-    
+        
         axios.post(url, body)
             .then(res => resolve(res))
             .catch(err => reject(err))
