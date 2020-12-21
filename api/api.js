@@ -1,4 +1,4 @@
-import { env } from './../env/env';
+import { env } from './../env/env'
 
 const api = {
     devBaseUrl: 'http://203.122.46.189:8060/',
@@ -9,7 +9,7 @@ const api = {
             devUrl: 'api/jwt/v1/authenticate',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
-            body: {request: { "header": {correlationId: "25478965874",appId: "MMMWEBAPP" },payload: { clientId:"leadgenerateapi",clientSecret:"mmm@2O!9" } } }          
+            body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { clientId: "leadgenerateapi", clientSecret: "mmm@2O!9" } } }
         },
         masters: {
             devUrl: 'masters/api/master/v1/masters',
@@ -59,11 +59,11 @@ const api = {
             prodUrl: 'api/master/v1/',
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
-        leadProductDecision : {
+        leadProductDecision: {
             devUrl: '/lead/api/lead/v1/product/decision',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
-            body : {
+            body: {
                 "request": {
                     "header": {
                         "correlationId": "25478965874",
@@ -88,24 +88,22 @@ const api = {
                         correlationId: '',
                         appId: '',
                         msgVersion: '1.0'
-                  },
-                  payload: {
-                    channelName: 'MOBILEAPP',
-                    caseId: '1001013258',
-                    documentTypeId: '1000000034',
-                    insertFlag: 'Y',
-                    docList: [ {  documentId: '1000000374', documentExtension: 'jpeg', docBytes: '' }]
-                  }
+                    },
+                    payload: {
+                        channelName: 'MOBILEAPP',
+                        caseId: '1001013258',
+                        documentTypeId: '1000000034',
+                        insertFlag: 'Y',
+                        docList: [{ documentId: '1000000374', documentExtension: 'jpeg', docBytes: '' }]
+                    }
                 }
-              }								
-                                                  
+            }
+
         },
-        
         generate: {
             devUrl: 'lead/api/lead/v1/generate',
             uatUrl: 'api/lead/v1/',
             prodUrl: 'api/master/v1/',
-
             body: {
                 "request": {
                     "header": {
@@ -114,31 +112,31 @@ const api = {
                     },
                     "payload": {
                         "personal": {
-                            "title": "1000000001",
-                            "firstName": "Kumar",
-                            "lastName": "Anilll",
+                            "title": "",
+                            "firstName": "",
+                            "lastName": "",
                             "middleName": "",
-                            "dob": "20-05-1985",
-                            "gender": "2",
+                            "dob": "",
+                            "gender": "",
                             "maritalStatus": "",
-                            "nationality": "1",
+                            "nationality": "",
                             "dependents": "",
-                            "pan": "BQGPM4200M",
-                            "mothersName": "Anu"
+                            "pan": "",
+                            "mothersName": ""
                         },
                         "contact": {
                             "mobile": [
                                 {
                                     "addressTypeMasterId": "",
-                                    "mobile": "9882788064",
-                                    "isDefault": "N"
+                                    "mobile": "",
+                                    "isDefault": ""
                                 }
                             ],
                             "email": [
                                 {
                                     "addressTypeMasterId": "",
-                                    "email": "testmail@gmail.com",
-                                    "isDefault": "N"
+                                    "email": "",
+                                    "isDefault": ""
                                 }
                             ],
                             "keyContact": [
@@ -151,42 +149,42 @@ const api = {
                             ]
                         },
                         "work": {
-                            "applicantType": "1000000004",
+                            "applicantType": "",
                             "otherCompany": "",
-                            "nature": "2",
-                            "companyId": "1000000001",
-                            "typeOfCompaY": "1",
-                            "netMonthlyIncome": "50000",
-                            "grossMonthlyIncome": "45000",
+                            "nature": "",
+                            "companyId": "",
+                            "typeOfCompaY": "",
+                            "netMonthlyIncome": "",
+                            "grossMonthlyIncome": "",
                             "modeOfSalary": "",
                             "yearsCurrentJob": "",
                             "totalWorkExp": "",
                             "annualTurnover": "",
                             "annualIncome": "",
                             "monthlyRental": "",
-                            "designation": "VICE PRESIDENT",
-                            "qualification": "1000000002",
+                            "designation": "",
+                            "qualification": "",
                             "profession": ""
                         },
                         "requestedLoanamount": "",
                         "requestedTenor": "",
                         "purposeOfLoan": "",
-                        "bankId": "10038",
-                        "leadId": "1000000001",
-                        "productId": "6",
+                        "bankId": "",
+                        "leadId": "",
+                        "productId": "",
                         "cardAge": "",
-                        "cardType": "Shoprite",
+                        "cardType": "",
                         "exisEmi": "",
                         "exisLoanAmount": "",
                         "loanStartYear": "",
                         "totalExisTenor": "",
-                        "offerId": "123",
+                        "offerId": "",
                         "address": [
                             {
-                                "addressTypeMasterId": "1000000001",
-                                "addressline1": "fdfdffd",
-                                "addressline2": "dfdfdfd",
-                                "addressline3": "dfdsdsdfdf",
+                                "addressTypeMasterId": "",
+                                "addressline1": "",
+                                "addressline2": "",
+                                "addressline3": "",
                                 "city": "",
                                 "state": "",
                                 "pincode": "",
@@ -209,9 +207,7 @@ const api = {
                 }
 
             }
-
         },
-
         offers: {
             devUrl: 'customer/api/customer/v1/view/offers',
             uatUrl: 'api/master/v1/',

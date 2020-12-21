@@ -2,12 +2,23 @@ import Strapi from '../providers/strapi'
 const strapi = new Strapi()
 
 export const getOfferCards = data => {
-    let cards = []
-    data.dynamic.forEach(block => {
-        if(block.__component === 'blocks.offer-details-card') {
-            cards = block.offer_cards
-        }
+    return new Promise((resolve) => {
+        data.dynamic.forEach((block) => {
+            if (block.__component === 'blocks.loan-listing-offer-cards') {
+                let pendingCards = [...block.cards]
+                block.cards.forEach(async card => {
+                    const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
+                    const buttonData = await strapi.processReq('GET', `listing_offer_card_buttons?id=${card.listing_offer_card_button}`)
+                    // console.log('bankData data: ', bankData)
+                    card.bank = bankData[0]
+                    // card.listing_offer_card_button = buttonData[0]
+                    pendingCards.shift()
+                    if(!pendingCards.length) {
+                        resolve (block.cards)
+                    }
+                })
+            }     
+        })
     })
-    return cards
 }
 

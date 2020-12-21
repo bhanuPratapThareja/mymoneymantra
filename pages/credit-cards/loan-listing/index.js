@@ -10,9 +10,7 @@ import FinancialTools from '../../../components/FinancialTools';
 import Blog from '../../../components/Blog';
 import Rewards from '../../../components/Rewards';
 import OfferDetailCards from '../../../components/Listing/OfferDetailCards'
-import { getOfferCards,loanListingProductDecision } from '../../../Utils/loanListingCards';
-
-// import { getOfferCards } from '../../../Utils/loanListingCards'
+import { getOfferCards, loanListingProductDecision } from '../../../Utils/loanListingCards';
 import { filterOfferCardsInFilterComponent } from '../../../Utils/loanListingFilterHandler'
 
 const LoanListing = props => {
@@ -21,7 +19,7 @@ const LoanListing = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        const cards = getOfferCards(props.data)
+        const cards = props.loanListingOfferCards
         setOfferCards(cards)
         setAllOfferCards(cards)
     }, [])
@@ -32,7 +30,7 @@ const LoanListing = props => {
             setOfferCards(unFilteredCards)
             return
         }
-        let filteredOfferCards = unFilteredCards.filter(card => card.cateogry === category)
+        let filteredOfferCards = unFilteredCards.filter(card => card.category === category)
         setOfferCards(filteredOfferCards)
     }
 
@@ -54,7 +52,7 @@ const LoanListing = props => {
                         filterOfferCards={filterOfferCards}
                         filterCardsFilterComponent={filterCardsFilterComponent}
                     />
-                case 'blocks.offer-details-card':
+                case 'blocks.loan-listing-offer-cards':
                     return <OfferDetailCards key={block.id} data={block} offerCards={offerCards} />
                 case 'blocks.learn-more':
                     return <LearnMore key={block.id} data={block} />
@@ -84,15 +82,15 @@ const LoanListing = props => {
 }
 
 export async function getServerSideProps(ctx) {
- 
     const strapi = new Strapi()
     const path = 'loan-listing'
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)
     const listingFilter = await strapi.processReq('GET', 'filters')
     const filters = listingFilter.length ? listingFilter[0] : null
     const data = pageData[0]
-    await loanListingProductDecision(data);
-    return { props: { data, filters } }
+    const loanListingOfferCards = await getOfferCards(data)
+    // await loanListingProductDecision(data)
+    return { props: { data, filters, loanListingOfferCards } }
 }
 
 export default LoanListing

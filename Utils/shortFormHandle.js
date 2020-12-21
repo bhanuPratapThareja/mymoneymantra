@@ -59,21 +59,21 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
         } else if (field.type === 'upload_button') {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
-                    if (field.value && inp.number_of_uploads && field.value.length > inp.number_of_uploads) {
-                        field.value = null
-                        alert(`Number of attachments allowed: ${inp.number_of_uploads}`)
+                    // if (field.value && inp.number_of_uploads && field.value.length > inp.number_of_uploads) {
+                    //     field.value = null
+                    //     alert(`Number of attachments allowed: ${inp.number_of_uploads}`)
                    
-                    } else if (field.value && field.value.length && inp.max_upload_size_in_mb) {
-                        for (let i = 0; i < field.value.length; i++) {
-                            const file = field.value[i]
-                            const size = file.size / 1024 / 1024
-                            if (size > inp.max_upload_size_in_mb) {
-                                field.value = null
-                                alert(`Maximum upload size: ${inp.max_upload_size_in_mb} Mb`)
-                                
-                            }
-                        }
-                    } 
+                    // } else if (field.value && field.value.length && inp.max_upload_size_in_mb) {
+                    //     for (let i = 0; i < field.value.length; i++) {
+                    //         const file = field.value[i]
+                    //         const size = file.size / 1024 / 1024
+                    //         if (size > inp.max_upload_size_in_mb) {
+                    //             field.value = null
+                    //             alert(`Maximum upload size: ${inp.max_upload_size_in_mb} Mb`)
+                    //             break
+                    //         }
+                    //     }
+                    // } 
                         inp.value = field.value
                         inp.attachment = field.attachment
                     
