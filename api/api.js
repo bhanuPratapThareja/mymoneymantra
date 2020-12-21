@@ -9,7 +9,7 @@ const api = {
             devUrl: 'api/jwt/v1/authenticate',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
-            body: { appId: "leadgenerateapi", token: "mmm@2O!9", role: "mobileAppLogin" }
+            body: {request: { "header": {correlationId: "25478965874",appId: "MMMWEBAPP" },payload: { clientId:"leadgenerateapi",clientSecret:"mmm@2O!9" } } }          
         },
         masters: {
             devUrl: 'masters/api/master/v1/masters',

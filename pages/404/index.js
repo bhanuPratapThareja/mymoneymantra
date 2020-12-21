@@ -4,8 +4,6 @@ import { useRouter } from 'next/router'
 
 const fourOFour = props => {
     const router = useRouter()
-    console.log(Router)
-    console.log(props)
     return (
         <div>
             404

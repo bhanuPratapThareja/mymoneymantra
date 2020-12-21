@@ -84,7 +84,6 @@ class ShortExtendedForm extends React.Component {
         })
 
         // setTimeout(() => {
-        //     console.log(this.state.slides)
         // }, 2000);
     }
 
@@ -186,6 +185,7 @@ class ShortExtendedForm extends React.Component {
                 this.checkInputValidity(field)
             }
         })
+        
 
     }
 
