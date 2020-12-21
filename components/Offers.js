@@ -1,7 +1,10 @@
 import Router from 'next/router'
 import Strapi from '../providers/strapi'
 import { getApiData } from '../api/api';
+import axios from 'axios';
 const strapi = new Strapi()
+import viewOffer from '../services/offerService';
+
 
 const Offers = props => {
    const redirectToDetailsPage = (bank, product) => {
