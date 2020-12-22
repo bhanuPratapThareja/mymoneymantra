@@ -514,8 +514,10 @@ div#address_proof_upload_button {
 
 .credit-card-flow section.banner {
   overflow: visible;
+  z-index: 999 !important;
 }
 
 .credit-card-flow .banner-card {
   margin-top: 100px !important;
+  z-index: 999 !important;
 }
