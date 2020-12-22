@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 import Banner from '../../components/CreditCards/ProductBanner'
@@ -16,15 +16,10 @@ import OfferDetailCards from '../../components/Listing/OfferDetailCards'
 import { updatePopularOffers, updateTrendingOffers } from '../../Utils/offersHandle.js'
 
 const CreditCards = props => {
-    const [usp_cards, set_usp_cards] = useState(null)
 
     useEffect(() => {
         window.scrollTo(0, 0)
     })
-
-    const gotUspCards = uspCards => {
-        console.log('uspCards:: ', uspCards)
-    }
 
     const getComponents = dynamic => {
         // console.log('dyno: ', dynamic)
@@ -34,9 +29,6 @@ const CreditCards = props => {
                     return <Banner key={block.id} data={block} />
                 case 'blocks.ups-cards-component':
                     return <UspCards key={block.id} data={block} />
-                    // gotUspCards(block)
-                    // break
-
                 case 'form-components.onboarding-short-form':
                     return <ShortExtendedForm key={block.id} data={block} />
                 case 'blocks.popular-offers':
