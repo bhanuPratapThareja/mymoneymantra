@@ -2,16 +2,15 @@ import { useEffect, useState } from 'react'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
 import ListingBanner from '../../../components/Listing/ListingBanner'
-import LearnMore from '../../../components/LearnMore'
-import Offers from '../../../components/Offers'
-import Banks from '../../../components/Banks';
-import CreditScore from '../../../components/CreditScore';
-import FinancialTools from '../../../components/FinancialTools';
-import Blog from '../../../components/Blog';
-import Rewards from '../../../components/Rewards';
 import OfferDetailCards from '../../../components/Listing/OfferDetailCards'
-import { getOfferCards, loanListingProductDecision } from '../../../Utils/loanListingCards';
+import Offers from '../../../components/Offers'
+import CreditScore from '../../../components/CreditScore'
+import FinancialTools from '../../../components/FinancialTools'
+import Rewards from '../../../components/Rewards'
+import LearnMore from '../../../components/LearnMore'
+import { getOfferCards, loanListingProductDecision } from '../../../Utils/loanListingCards'
 import { filterOfferCardsInFilterComponent } from '../../../Utils/loanListingFilterHandler'
+import { getProductDecision } from '../../../services/offersService'
 
 const LoanListing = props => {
     const [allOfferCards, setAllOfferCards] = useState([])
@@ -19,10 +18,15 @@ const LoanListing = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        const cards = props.loanListingOfferCards
-        setOfferCards(cards)
-        setAllOfferCards(cards)
+        let cards = props.loanListingOfferCards
+        getCardsWithButtonText(cards)
     }, [])
+
+    const getCardsWithButtonText = async cards => {
+        const newCards = await getProductDecision(cards)
+        setOfferCards(newCards)
+        setAllOfferCards(newCards)
+    }
 
     const filterOfferCards = category => {
         const unFilteredCards = [...allOfferCards]
@@ -43,7 +47,7 @@ const LoanListing = props => {
     const getComponents = (dynamic, filters) => {
         return dynamic.map(block => {
             switch (block.__component) {
-                case 'blocks.listing-banner':
+                case 'blocks.listing-banner-component':
                     return <ListingBanner
                         key={block.id}
                         data={block}
@@ -54,22 +58,22 @@ const LoanListing = props => {
                     />
                 case 'blocks.loan-listing-offer-cards':
                     return <OfferDetailCards key={block.id} data={block} offerCards={offerCards} />
-                case 'blocks.learn-more':
-                    return <LearnMore key={block.id} data={block} />
-                case 'blocks.credit-score':
-                    return <CreditScore key={block.id} data={block} />
-                case 'blocks.offer':
-                    return <Offers key={block.id} data={block} />
-                case 'blocks.bank-new':
-                    return <Banks key={block.id} banks={block} />
-                case 'blocks.financial-tools':
-                    return <FinancialTools key={block.id} tools={block} />
-                case 'blocks.rewards':
-                    return <Rewards key={block.id} data={block} />
-                case 'blocks.blogs':
-                    return <Blog key={block.id} data={block} />
-                case 'blocks.offer-card':
-                    return <OfferDetailCards key={block.id} data={block} />
+                // case 'blocks.learn-more':
+                //     return <LearnMore key={block.id} data={block} />
+                // case 'blocks.credit-score':
+                //     return <CreditScore key={block.id} data={block} />
+                // case 'blocks.offer':
+                //     return <Offers key={block.id} data={block} />
+                // case 'blocks.bank-new':
+                //     return <Banks key={block.id} banks={block} />
+                // case 'blocks.financial-tools':
+                //     return <FinancialTools key={block.id} tools={block} />
+                // case 'blocks.rewards':
+                //     return <Rewards key={block.id} data={block} />
+                // case 'blocks.blogs':
+                //     return <Blog key={block.id} data={block} />
+                // case 'blocks.offer-card':
+                //     return <OfferDetailCards key={block.id} data={block} />
             }
         })
     }
@@ -89,7 +93,6 @@ export async function getServerSideProps(ctx) {
     const filters = listingFilter.length ? listingFilter[0] : null
     const data = pageData[0]
     const loanListingOfferCards = await getOfferCards(data)
-    // await loanListingProductDecision(data)
     return { props: { data, filters, loanListingOfferCards } }
 }
 

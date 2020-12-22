@@ -3,10 +3,7 @@ import $ from 'jquery'
 
 const LearnMore = props => {
 
-   console.log(props.data)
-
    const { section_heading, learn_more } = props.data
-
 
    useEffect(() => {
 

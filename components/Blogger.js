@@ -4,10 +4,7 @@ const strapi = new Strapi()
 const Blogger = props => {
     const { section_heading, bloggers } = props.data
 
-    console.log(props.data)
-
     const onOpenBlog = url => {
-        console.log('url: ', url)
     }
 
     return (

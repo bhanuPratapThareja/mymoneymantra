@@ -22,7 +22,6 @@ const CreditCards = props => {
     })
 
     const getComponents = dynamic => {
-        // console.log('dyno: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner-component':

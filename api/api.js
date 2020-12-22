@@ -60,13 +60,13 @@ const api = {
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         leadProductDecision: {
-            devUrl: '/lead/api/lead/v1/product/decision',
+            devUrl: 'lead/api/lead/v1/product/decision',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
             body: {
                 "request": {
                     "header": {
-                        "correlationId": "25478965874",
+                        "correlationId": "",
                         "appId": "MMMWEBAPP"
                     },
                     "payload": {

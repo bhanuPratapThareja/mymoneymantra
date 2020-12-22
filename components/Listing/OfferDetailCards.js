@@ -1,8 +1,9 @@
-import Strapi from '../../providers/strapi'
 import { useEffect, useState } from 'react'
-import Router from 'next/router';
+import { useRouter } from 'next/router'
+import Strapi from '../../providers/strapi'
 
 const OfferDetailCards = props => {
+    const router = useRouter()
     const strapi = new Strapi()
     const [offers, setOffers] = useState([])
 
@@ -10,24 +11,24 @@ const OfferDetailCards = props => {
         setOffers(props.offerCards)
     })
 
-    // const cardButtonClick = offer => {
-    //     const basePath = '/credit-cards'
-    //     const { bank_slug: bank, product_slug: product, 
-    //         type, button_type: buttonType, button_type: 
-    //         buttonText, bank_name } = offer
+    const cardButtonClick = offer => {
+        //     const basePath = '/credit-cards'
+        //     const { bank_slug: bank, product_slug: product, 
+        //         type, button_type: buttonType, button_type: 
+        //         buttonText, bank_name } = offer
 
-    //     let pathName = ''
-    //     if (type == "eConnect" || type == 'instantApproval') {
-    //         pathName = `${basePath}/long-form/${bank}/${product}`
-    //     } else {
-    //         pathName = `${basePath}/thank-you`
-    //     }
-    //     const query = { buttonType, buttonText, bank_name }
-    //     routerRedirect(pathName, query)
-    // }
+        //     let pathName = ''
+        //     if (type == "eConnect" || type == 'instantApproval') {
+        //         pathName = `${basePath}/long-form/${bank}/${product}`
+        //     } else {
+        //         pathName = `${basePath}/thank-you`
+        //     }
+        //     const query = { buttonType, buttonText, bank_name }
+        //     routerRedirect(pathName, query)
+    }
 
     const goToDetailsPage = offer => {
-        const { bank : { bank_name: bankName, slug: bankSlug }, slug: productSlug } = offer
+        const { bank: { bank_name: bankName, slug: bankSlug }, slug: productSlug } = offer
         const basePath = '/credit-cards'
         const pathName = `${basePath}/${bankSlug}/${productSlug}`
         const query = { bankName }
@@ -35,10 +36,10 @@ const OfferDetailCards = props => {
     }
 
     const routerRedirect = (pathname, query) => {
-        Router.push({ pathname, query }, pathname, { shallow: true })
+        router.push({ pathname, query }, pathname, { shallow: true })
     }
 
-    if(!offers) {
+    if (!offers) {
         return null
     }
 
@@ -76,7 +77,7 @@ const OfferDetailCards = props => {
                                 </div>
                                 <div className="options">
                                     <button id="view-details" onClick={() => goToDetailsPage(offer)}>View Details</button>
-                                    {/* <button onClick={() => cardButtonClick(offer)} id="apply-now">{offer.button_text}</button> */}
+                                    <button onClick={() => cardButtonClick(offer)} id="apply-now">{offer.productDecision}</button>
                                 </div>
                             </div>
                         </div>
