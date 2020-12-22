@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Strapi from '../../providers/strapi'
+import DecisionButton from '../DecisionButton/DescisionButton'
 
 const OfferDetailCards = props => {
     const router = useRouter()
@@ -76,8 +77,20 @@ const OfferDetailCards = props => {
                                     <h5>{offer.usp_highlights}</h5>
                                 </div>
                                 <div className="options">
-                                    <button id="view-details" onClick={() => goToDetailsPage(offer)}>View Details</button>
-                                    <button onClick={() => cardButtonClick(offer)} id="apply-now">{offer.productDecision}</button>
+                                    {/* <button id="view-details" onClick={() => goToDetailsPage(offer)}>View Details</button> */}
+                                    <DecisionButton
+                                        id='view-details'
+                                        basePath='/credit-cards'
+                                        buttonText='View Details'
+                                        offer={offer}
+                                    />
+                                    {/* <button onClick={() => cardButtonClick(offer)} id="apply-now">{offer.productDecision}</button> */}
+                                    <DecisionButton
+                                        id='apply-now'
+                                        basePath='/credit-cards'
+                                        buttonText={offer.productDecision}
+                                        offer={offer}
+                                    />
                                 </div>
                             </div>
                         </div>

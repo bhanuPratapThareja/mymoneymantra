@@ -8,9 +8,9 @@ import CreditScore from '../../../components/CreditScore'
 import FinancialTools from '../../../components/FinancialTools'
 import Rewards from '../../../components/Rewards'
 import LearnMore from '../../../components/LearnMore'
-import { getOfferCards, loanListingProductDecision } from '../../../Utils/loanListingCards'
-import { filterOfferCardsInFilterComponent } from '../../../Utils/loanListingFilterHandler'
+import { getOfferCards } from '../../../Utils/loanListingCards'
 import { getProductDecision } from '../../../services/offersService'
+import { filterOfferCardsInFilterComponent } from '../../../Utils/loanListingFilterHandler'
 
 const LoanListing = props => {
     const [allOfferCards, setAllOfferCards] = useState([])
