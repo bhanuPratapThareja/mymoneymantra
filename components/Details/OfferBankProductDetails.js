@@ -26,7 +26,6 @@ const OfferBankProductDetails = props => {
                         {leftPositionedOffers.map(offer => {
                             return (
                                 <React.Fragment key={offer.id}>
-                                   
                                     <div dangerouslySetInnerHTML={{ __html: offer.content }}></div>
                                 </React.Fragment>
                             )
@@ -36,7 +35,6 @@ const OfferBankProductDetails = props => {
                         {rightPositionedOffers.map(offer => {
                             return (
                                 <React.Fragment key={offer.id}>
-                                   
                                     <div dangerouslySetInnerHTML={{ __html: offer.content }}></div>
                                 </React.Fragment>
                             )

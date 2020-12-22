@@ -6,15 +6,15 @@ export const updatePopularOffers = data => {
         data.dynamic.forEach((block) => {
             if (block.__component === 'blocks.popular-offers') {
                 let pendingCards = [...block.cards]
-                pendingCards.forEach(async card => {
+                block.cards.forEach(async card => {
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
                     card.bank = bankData[0]
                     pendingCards.shift()
-                    if(!pendingCards.length) {
-                        resolve (true)
+                    if (!pendingCards.length) {
+                        resolve(block.cards)
                     }
                 })
-            }     
+            }
         })
     })
 }
@@ -28,11 +28,11 @@ export const updateTrendingOffers = data => {
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
                     card.bank = bankData[0]
                     pendingCards.shift()
-                    if(!pendingCards.length) {
-                        resolve (true)
+                    if (!pendingCards.length) {
+                        resolve(true)
                     }
                 })
-            }     
+            }
         })
     })
 }

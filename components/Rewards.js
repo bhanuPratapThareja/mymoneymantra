@@ -1,11 +1,11 @@
 import Router from 'next/router'
 
 const Rewards = props => {
-   const { heading, sub_text, button } = props.data
+   const { rewards_heading, rewards_sub_text, rewards_button, rewards_button_url } = props.data.reward
 
-   function goToShortForm() {
-      const path = Router.query.path[0]
-      if (path == "credit-cards") {
+   function onClickRewardsButton(url) {
+      const path = Router.router.pathname
+      if (path == '/credit-cards') {
          window.scrollTo({
             top: 1000
          })
@@ -16,11 +16,11 @@ const Rewards = props => {
       <section data-aos="fade-up" className="container reward-cover aos-init">
          <div className="reward">
             <div className="reward-content">
-               <h3>{heading}</h3>
-               <p>{sub_text}</p>
+               <div dangerouslySetInnerHTML={{ __html: rewards_heading }}></div>
+               <div dangerouslySetInnerHTML={{ __html: rewards_sub_text }}></div>
             </div>
             <div className="reward-button">
-               <button onClick={goToShortForm}>{button}</button>
+               <button onClick={() => onClickRewardsButton(rewards_button_url)}> {rewards_button} </button>
             </div>
          </div>
       </section>
