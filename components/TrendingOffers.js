@@ -18,7 +18,7 @@ const TrendingOffers = props => {
 
 
    return (
-      <section data-aos="fade-up" className="container popular-card-container">
+      <section data-aos="fade-up" className="container popular-card-container aos-init">
          <div className="popular-cards">
             <h2>Trending Offers</h2>
             <div className="popular-cards-slider" id="trending-offers-sec">

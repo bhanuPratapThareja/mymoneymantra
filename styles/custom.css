@@ -511,3 +511,11 @@ div#address_proof_upload_button {
   left: 100px !important;
   width: 29% !important;
 }
+
+.credit-card-flow section.banner {
+  overflow: visible;
+}
+
+.credit-card-flow .banner-card {
+  margin-top: 100px !important;
+}
