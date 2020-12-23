@@ -1,5 +1,8 @@
 import Router from 'next/router'
 import Strapi from '../providers/strapi'
+import axios from 'axios';
+const strapi = new Strapi()
+import { viewOffer,customerOfferData } from '../services/offersService';
 import { getApiData } from '../api/api'
 
 
@@ -14,12 +17,7 @@ const Offers = props => {
       // }
       Router.push(`/${path}/${bank}/${product}`)
    }
-
-   const viewOffer = async() =>{
-      const strapi = new Strapi()
-      const { url, body } = getApiData('offers')
-      await strapi.apiReq('POST', url, body)
-   }
+   customerOfferData();
 
    if(!props.data.cards.length){
       return null

@@ -83,20 +83,20 @@ export const generateLeadSF = async data => {
         const { full_name, dob, pan_card, phone, email_address, employment_type,
             company_name, net_monthly_income, cc_holder_bank, addressLine1, addressLine2, pincode
         } = data
-    
+
         body.request.payload.personal.firstName = full_name
         body.request.payload.personal.dob = dob
         body.request.payload.personal.pan = pan_card
-    
+
         body.request.payload.contact.mobile[0].mobile = phone
         body.request.payload.contact.email[0].email = email_address
-    
+
         body.request.payload.work.nature = employment_type
         body.request.payload.work.companyId = company_name ? company_name.caseCompanyId : null
         body.request.payload.work.netMonthlyIncome = net_monthly_income
-    
+
         body.request.payload.bankId = cc_holder_bank ? cc_holder_bank.bankId : null
-    
+
         body.request.payload.address[0].addressline1 = addressLine1
         body.request.payload.address[0].addressline2 = addressLine2
         body.request.payload.address[0].city = pincode ? pincode.pincode : null
@@ -109,3 +109,39 @@ export const generateLeadSF = async data => {
     })
     return promise
 }
+
+export const getPinCodeData = async (name, value) => {
+    const { url, body } = getApiData('pincode');
+    body.request.payload.name = value;
+    try {
+        const res = await axios.post(url, body)
+        const { pinList } = res.data.response.payload;
+        return pinList;
+    } catch (error) { }
+}
+
+export const getCityData = async(name, value) => {
+    const { url, body } = getApiData('cities');
+    body.request.payload.name = value;
+    try {
+        const res = await axios.post(url, body)
+        const { cityList } = res.data.response.payload;
+        return cityList;
+    } catch (error) {
+    }
+}
+
+export const updateLongForm = async data => {
+        const { url, body } = getApiData('generate')
+     
+        try {
+            const res = await axios.post(url, body)
+            const { resMsg } = res.response.payload;
+            return resMsg;
+        } catch (error) { }
+            
+  
+    return promise
+}
+
+

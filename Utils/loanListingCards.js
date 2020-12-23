@@ -1,4 +1,3 @@
-import { getApiData } from '../api/api';
 import Strapi from '../providers/strapi'
 const strapi = new Strapi()
 

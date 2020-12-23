@@ -14,7 +14,7 @@ const HomePageBanner = props => {
                 </div>
                 <div className="homepage-banner-wrapper-right">
                     <div className="homepage-banner-wrapper-right-content">
-                        <img src={`${strapi.baseUrl}${product_banner_image.url}`} alt={product_banner_image.name} />
+                        <img className="banner-card" src={`${strapi.baseUrl}${product_banner_image.url}`} alt={product_banner_image.name} />
                     </div>
                 </div>
             </div>

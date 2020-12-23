@@ -1,14 +1,12 @@
-import Strapi from "../../providers/strapi"
-import { getApiData } from '../../api/api';
-import { getCityData, getPinCodeData } from '../../Utils/commonServices';
+import Strapi from "../../providers/strapi";
+import { getCityData, getPinCodeData } from '../../services/formService';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { getFormPercentage } from '../../Utils/formPercentage';
 import { validEmailRegex, validMobileRegex, isValidPanNumber } from '../../Utils/validator';
-import Router from 'next/router';
 import $ from "jquery";
-import { useRouter } from 'next/router';
-import { withRouter } from 'next/router'
-// import converter from 'number-to-words';
+import { updateLongForm } from '../../services/formService';
+import { getBase64, documentUpload } from '../../services/formService';
+
 class LongFormBanner extends React.Component {
 
     state = {
@@ -125,7 +123,6 @@ class LongFormBanner extends React.Component {
                 getCityData(name, value).then((value) => {
                     const block = { ...this.state[type] }
                     block.cityList = value;
-                    console.log('inside getCityData block',block);
                     this.setState({ [type]: block }, () => {
                     })
                 });
@@ -133,7 +130,6 @@ class LongFormBanner extends React.Component {
         }
 
         // if (name === "city") {
-        //     console.log('inside type city value',value);
         //     const block = { ...this.state[type] }
         //     block.city = value;
         //     this.setState({ [type]: block }, () => {
@@ -188,7 +184,6 @@ class LongFormBanner extends React.Component {
                 getPinCodeData(name, value).then((value) => {
                     const block = { ...this.state[type] }
                     block.pinList = value;
-                    console.log('inside getPinCodeData block',block)
                     this.setState({ [type]: block }, () => {
                     })
                 });
@@ -333,13 +328,10 @@ class LongFormBanner extends React.Component {
     }
 
     onSelectPin = (name, value, type) => {
-        console.log('onSelectPin name',name);
-console.log('onSelectPin value',value);
         const block = { ...this.state[type] }
         block.city = name;
         block.pincode = value;
         block.pinList = null
-        console.log('onSelectPin block',block);
         this.setState({ [type]: { ...block } }, () => {
 
         })
@@ -360,50 +352,21 @@ console.log('onSelectPin value',value);
 
     handleLongForm = async (e) => {
         e.preventDefault();
-        const { url, body } = getApiData('generate');
-
-        // let reqBody = body.request.payload;
-        // reqBody.pan = this.state.pan;
-        // reqBody.phoneNo = this.state.phoneNo;
-        // reqBody.email = this.state.email;
-
-        const strapi = new Strapi()
-        try {
-            const res = await strapi.apiReq('POST', url, body)
-            console.log('url in submit', url);
-            console.log('body in submit', body);
-            let resMessage = res.response.msgInfo.message;
-
-            let leadId = res.response.payload.leadId;
-            console.log('leadId', leadId);
-
-            // this.setState({leadId : leadId})
-
-
-            Router.push({ pathname: `/credit-cards/thank-you`, query: { updatedLeadId: leadId } })
-
-        } catch (error) {
-
-        }
-
+        const data = this.state;
+        updateLongForm(data);
     }
-// componentDidMount(){
-//     console.log('inisde did mount long form');
-//     const { id } = this.props.router
-//     console.log('inside long form router id  ',id)
-// }
-
 
     onFileChange = event => {
-        this.setState({ selectedPan: event.target.files[0] }, () => {
-
+        let document = event.target.files[0];
+        this.setState({ selectedPan: document }, () => {
+            const base64 = getBase64(document)
+            const { type, name } = document
+            documentUpload(base64, type, name)
         });
 
     };
     fileData = () => {
-
         if (this.state.selectedPan) {
-
             return (
                 <div>
                     <p>File Name: {this.state.selectedPan.name}</p>
@@ -417,8 +380,11 @@ console.log('onSelectPin value',value);
     }
 
     onSalarySlipChange = event => {
-        this.setState({ selectedSalarySlip: event.target.files[0] }, () => {
-
+         let document = event.target.files[0];
+        this.setState({ selectedSalarySlip: document }, () => {
+            const base64 = getBase64(document)
+            const { type, name } = document
+            documentUpload(base64, type, name)
         });
 
     };
@@ -427,11 +393,17 @@ console.log('onSelectPin value',value);
     }
 
     onAddressProofChange = event => {
-        this.setState({ selectedAddressProof: event.target.files[0] }, () => {
-
+        let document = event.target.files[0];
+        this.setState({ selectedAddressProof: document }, () => {
+            const base64 = getBase64(document)
+            const { type, name } = document
+            documentUpload(base64, type, name)
         });
-
     };
+
+
+
+
     removeAddressProof = () => {
         this.setState({ selectedAddressProof: null })
     }
@@ -440,50 +412,12 @@ console.log('onSelectPin value',value);
         $('#datepicker').open()
     }
 
-    // function handleFileSelect(evt) {
-    //     var files = evt.target.files; // FileList object
-
-    //     // files is a FileList of File objects. List some properties.
-    //     var output = [];
-    //     for (var i = 0, f; f = files[i]; i++) {
-    //       output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-    //                   f.size, ' bytes, last modified: ',
-    //                   f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-    //                   '</li>');
-    //     }
-    //     document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
-    //   }
-
-    //   document.getElementById('files').addEventListener('change', handleFileSelect, false);
-
-    // handleCheckbox = (event) =>{
-
-    //      let selectedTnc = [...this.state.tnc, event.target.id]
-    //      if (this.state.tnc.includes(event.target.id)) {
-    //         selectedTnc = selectedTnc.filter(tncVal => tncVal !== event.target.id);
-
-    //       }
-    //       this.setState({tnc: selectedTnc}, ()=>{
-    //       });
-    // }
-
-
-    // handleFocus = () => {
-    //     console.log('inside handleFocus')
-    //     const datepicker = $(`#${dob}`).datepicker();
-    //     datepicker.open();
-    // }
     render() {
         const { bankName } = this.props.data;
-        console.log('bankName ====',this.props.data)
         const strapi = new Strapi()
         const { bank_name, form_heading, product_type, banner_image } = this.props.data
         const { errors } = this.state;
         const { leadId } = this.state.leadId;
-        
-      
-        // const datepicker = $('#dob').datepicker();
-
         return (
             <>
                 <div className="long-form">
@@ -622,7 +556,7 @@ console.log('onSelectPin value',value);
                                                     autoComplete="off" required name="dob"
                                                     onChange={e => this.handleInput(e, "dob")}
                                                     onBlur={this.handleInputBlur}
-                                                  
+
                                                 />
                                                 {errors.dob.length > 0 &&
                                                     <span className='error'>{errors.dob}</span>}
@@ -722,7 +656,7 @@ console.log('onSelectPin value',value);
                                                 <div className="dropdown-content-links">
                                                     {this.state.residenceAddress.pinList.map(pin => {
                                                         return (
-                                                            
+
                                                             // <a key={city.pincode} onClick={e => this.onSelectPin(pin.cityMasterName, pin.pincode, "residenceAddress")}
                                                             // >{pin.pincode}</a>
                                                             <a key={city.pincode} onClick={e => this.onSelectPin(pin.cityName, pin.pincode, "residenceAddress")}
@@ -732,7 +666,7 @@ console.log('onSelectPin value',value);
                                                     )}
 
                                                 </div>
-                                            </div> : null}                                           
+                                            </div> : null}
 
                                             <div className="form__group field long-city" style={errors.city ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="city" placeholder="City"
@@ -751,17 +685,17 @@ console.log('onSelectPin value',value);
                                                     {this.state.residenceAddress.cityList.map(city => {
                                                         return (
                                                             <a key={city.cityMasterId} name={city.cityMasterName}
-                                                                value={city.cityMasterId} 
-                                                                //onClick={e => this.onSelect(city.cityMasterName, city.cityMasterId, "residenceAddress")} 
-                                                                >
-                                                                    {city.cityMasterName}</a>
+                                                                value={city.cityMasterId}
+                                                            //onClick={e => this.onSelect(city.cityMasterName, city.cityMasterId, "residenceAddress")} 
+                                                            >
+                                                                {city.cityMasterName}</a>
                                                         )
                                                     }
                                                     )}
 
                                                 </div>
                                             </div> : null}
-                                         
+
                                         </div>
 
                                     </div>
@@ -841,40 +775,40 @@ console.log('onSelectPin value',value);
                                         <div className="row-input-container">
 
                                             {/* <div className="custom-wrapper"> */}
-                                                <div className="form__group field long-pincode" style={errors.officePincode ? { border: "1px solid red" } : null}>
-                                                    <input className="form__field" type="text" id="off-pincode" placeholder="Pincode" name="officePincode"
-                                                        value={this.state.officeAddress.officePincode}
-                                                        autoComplete="off" required onChange={e => this.handleInput(e, "officeAddress")} onBlur={this.handleInputBlur} />
-                                                    {errors.officePincode.length > 0 &&
-                                                        <span className='error'>{errors.officePincode}</span>}
-                                                    <label className="form__label" htmlFor="off-pincode">Pincode</label>
+                                            <div className="form__group field long-pincode" style={errors.officePincode ? { border: "1px solid red" } : null}>
+                                                <input className="form__field" type="text" id="off-pincode" placeholder="Pincode" name="officePincode"
+                                                    value={this.state.officeAddress.officePincode}
+                                                    autoComplete="off" required onChange={e => this.handleInput(e, "officeAddress")} onBlur={this.handleInputBlur} />
+                                                {errors.officePincode.length > 0 &&
+                                                    <span className='error'>{errors.officePincode}</span>}
+                                                <label className="form__label" htmlFor="off-pincode">Pincode</label>
+                                            </div>
+                                            {this.state.officeAddress.officePinList ? <div id="bank-drop" className="dropdown-content">
+                                                <div className="dropdown-content-links">
+                                                    {this.state.officeAddress.officePinList.map(pin => {
+
+                                                        return (
+                                                            // <a key={city.pincode} className="form__label" onClick={e => this.onSelectPin(pin.cityId, pin.pincode, "residenceAddress")}
+                                                            // >{pin.pincode}</a>
+
+                                                            <a key={pin.pincode} onClick={e => this.onSelectOfficePin(pin.cityName, pin.pincode, "officeAddress")}
+                                                            >{pin.pincode}</a>
+                                                        )
+                                                    }
+                                                    )}
+
                                                 </div>
-                                                {this.state.officeAddress.officePinList ? <div id="bank-drop" className="dropdown-content">
-                                                    <div className="dropdown-content-links">
-                                                        {this.state.officeAddress.officePinList.map(pin => {
-
-                                                            return (
-                                                                // <a key={city.pincode} className="form__label" onClick={e => this.onSelectPin(pin.cityId, pin.pincode, "residenceAddress")}
-                                                                // >{pin.pincode}</a>
-
-                                                                <a key={pin.pincode} onClick={e => this.onSelectOfficePin(pin.cityName, pin.pincode, "officeAddress")}
-                                                                >{pin.pincode}</a>
-                                                            )
-                                                        }
-                                                        )}
-
-                                                    </div>
-                                                </div> : null}
+                                            </div> : null}
                                             {/* </div> */}
 
 
                                             {/* <div className="custom-wrapper"> */}
                                             <div className="form__group field long-city" style={errors.officeCity ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="off-city" placeholder="City" name="officeCity"
-                                                    required    value={this.state.officeAddress.officeCity} readOnly                                                 
+                                                    required value={this.state.officeAddress.officeCity} readOnly
                                                     autoComplete="off"
-                                                    //  onBlur={this.handleInputBlur}
-                                                    //  onChange={e => this.handleInput(e, "officeAddress")} 
+                                                //  onBlur={this.handleInputBlur}
+                                                //  onChange={e => this.handleInput(e, "officeAddress")} 
                                                 />
                                                 {errors.officeCity.length > 0 &&
                                                     <span className='error'>{errors.officeCity}</span>}
@@ -887,9 +821,9 @@ console.log('onSelectPin value',value);
 
                                                             <a key={cityOfc.cityMasterId} name={cityOfc.cityMasterName}
                                                                 value={cityOfc.cityMasterId}
-                                                                // onClick={e => this.onSelectOfficeCity(cityOfc.cityMasterName, cityOfc.cityMasterId, "officeAddress")} 
-                                                                >
-                                                            {cityOfc.cityMasterName}
+                                                            // onClick={e => this.onSelectOfficeCity(cityOfc.cityMasterName, cityOfc.cityMasterId, "officeAddress")} 
+                                                            >
+                                                                {cityOfc.cityMasterName}
                                                             </a>
                                                         )
                                                     }
