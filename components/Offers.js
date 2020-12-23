@@ -3,7 +3,7 @@ import Strapi from '../providers/strapi'
 import { getApiData } from '../api/api';
 import axios from 'axios';
 const strapi = new Strapi()
-import {viewOffer} from '../services/offersService';
+import { viewOffer,customerOfferData } from '../services/offersService';
 
 
 const Offers = props => {
@@ -16,7 +16,7 @@ const Offers = props => {
       // }
       Router.push(`/${path}/${bank}/${product}`)
    }
-
+   customerOfferData();
 
    if(!props.data.cards.length){
       return null

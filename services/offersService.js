@@ -4,8 +4,8 @@ import { getApiData } from '../api/api';
  export const viewOffer = async() =>{
     const { url, body } = getApiData('customerOfferView');
     try {
-        const res =  axios.post(url, body)
-       //  let resMessage = res.response.msgInfo.message;
+        const res =  await axios.post(url, body)
+        console.log('viewOffer res11',res);
     } catch (error) {
 
     }
@@ -33,4 +33,15 @@ import { getApiData } from '../api/api';
    }
    
 }
+
+export const customerOfferData = async() =>{
+    const { url, body } = getApiData('customerOffer');
+    try {
+        const res =  await axios.post(url, body)
+         console.log('customerOffer res',res.data.response.payload);
+         
+    } catch (error) {
+
+    }
+ }
 
