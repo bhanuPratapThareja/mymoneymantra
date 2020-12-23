@@ -58,7 +58,7 @@ const PersonalLoan = props => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
 
-    const path = 'personal-loan'
+    const path = 'personal-loans'
     const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
     const data = pageData[0]
 
