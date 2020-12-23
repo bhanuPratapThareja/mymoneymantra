@@ -1,12 +1,18 @@
 import { useEffect, useState } from 'react'
 import Image from '../ImageComponent/ImageComponent'
 import DecisionButton from '../DecisionButton/DescisionButton'
+import { useRouter } from 'next/router'
 
 const OfferDetailCards = props => {
+    const router = useRouter()
     const [offers, setOffers] = useState([])
+    const [basePath, setBasePath] = useState('')
 
     useEffect(() => {
         setOffers(props.offerCards)
+        let { pathname } = router
+        pathname = pathname.split('/')
+        setBasePath(pathname[1])
     })
 
     if (!offers) {
@@ -45,7 +51,7 @@ const OfferDetailCards = props => {
 
                                 {offer.intrest_rate ? <div className="fee">
                                     <h5>Interest Rate:</h5>
-                                    <p dangerouslySetInnerHTML={{__html: offer.intrest_rate}}></p>
+                                    <p dangerouslySetInnerHTML={{ __html: offer.intrest_rate }}></p>
                                 </div> : null}
                             </div>
                             <div className="bottom">
@@ -55,13 +61,13 @@ const OfferDetailCards = props => {
                                 <div className="options">
                                     <DecisionButton
                                         id='view-details'
-                                        basePath='/credit-cards'
+                                        basePath={`/${basePath}`}
                                         buttonText='View Details'
                                         offer={offer}
                                     />
                                     <DecisionButton
                                         id='apply-now'
-                                        basePath='/credit-cards'
+                                        basePath={`/${basePath}`}
                                         buttonText={offer.productDecision}
                                         offer={offer}
                                     />
