@@ -182,6 +182,7 @@ class ShortExtendedForm extends React.Component {
                 this.checkInputValidity(field)
             }
         })
+        
 
     }
 

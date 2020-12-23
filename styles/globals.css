@@ -117,15 +117,26 @@
 
 /* @font-face {
   font-family: 'Avenir-Black';
-  src: url(/assets/fonts/Avenir-Black-03.ttf); }
+  src: url("../assets/fonts/Avenir-Black-03.ttf") format('truetype');
+  
+}
+
 @font-face {
   font-family: 'Avenir-Heavy';
-  src: url(/assets/fonts/Avenir-Heavy-05.ttf); }
+  src: url("../assets/fonts/Avenir-Heavy-05.ttf"); 
+}
+
 @font-face {
   font-family: 'Avenir-Medium';
-  src: url(/assets/fonts/Avenir-Medium-09.ttf); }
+  src: url("../assets/fonts/Avenir-Medium-09.ttf"); 
+}
+
 @font-face {
   font-family: 'Avenir-Roman';
+  src: url("../assets/fonts/Avenir-Roman-12.ttf"); 
+}
+
+
   src: url(/assets/fonts/Avenir-Roman-12.ttf); } */
 h1 {
   font-size: 2.5rem;
@@ -7602,13 +7613,15 @@ label {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  overflow-x: hidden;
-  overflow-y: hidden; }
+  /* overflow-x: hidden;
+  overflow-y: hidden; */
+ }
   .homepage-flow .homepage-banner-wrapper {
     -ms-flex-pack: justify;
-        justify-content: space-between;
-    padding: 50px 65px;
-    margin: 128px auto 0; }
+    justify-content: space-between;
+    margin: 128px auto 0; 
+  }
+  
     @media (min-width: 769px) and (max-width: 1023px) {
       .homepage-flow .homepage-banner-wrapper {
         display: -ms-flexbox;
@@ -7646,7 +7659,7 @@ label {
           .homepage-flow .homepage-banner-wrapper-left p {
             display: none; } }
     .homepage-flow .homepage-banner-wrapper-right-content {
-      max-width: 552px;
+      /* max-width: 552px; */
       width: 100%; }
       @media (min-width: 769px) and (max-width: 1023px) {
         .homepage-flow .homepage-banner-wrapper-right-content {
@@ -7677,8 +7690,8 @@ label {
     @media (max-width: 768px) {
       .homepage-flow .banner-content-wrapper p {
         padding-top: 24px; } }
-.homepage-flow .testimonial {
-  margin-top: 199.92px !important; }
+/* .homepage-flow .testimonial {
+  margin-top: 199.92px !important; } */
   @media (max-width: 768px) {
     .homepage-flow .testimonial {
       padding-top: 0 !important;

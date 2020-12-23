@@ -14,15 +14,15 @@ const Offers = props => {
       //   router.push(`/${path}/${bank}/${product}`)
    }
 
-   if (!props.data.product_cards.length) {
-      return null
-   }
+   // if (!props.data.product_cards.length) {
+   //    return null
+   // }
 
    const { section_heading, product_cards } = props.data
 
    return (
       <section data-aos="fade-up" className="container popular-card-container">
-         <div className="popular-cards">
+         {/* <div className="popular-cards">
             <h2>{section_heading}</h2>
             <div className="popular-cards-slider" id="popular-cards-sec">
                {product_cards.map(offer => {
@@ -56,7 +56,7 @@ const Offers = props => {
                })}
 
             </div>
-         </div>
+         </div> */}
       </section>
    )
 }
