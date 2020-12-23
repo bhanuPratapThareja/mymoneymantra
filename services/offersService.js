@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getApiData } from '../api/api';
 
  export const viewOffer = async() =>{
-    const { url, body } = getApiData('offers');
+    const { url, body } = getApiData('customerOfferView');
     try {
         const res =  axios.post(url, body)
        //  let resMessage = res.response.msgInfo.message;
