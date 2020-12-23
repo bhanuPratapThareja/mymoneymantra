@@ -1,5 +1,4 @@
-import Strapi from '../providers/strapi'
-const strapi = new Strapi()
+import Image from '../ImageComponent/ImageComponent'
 
 const Blogger = props => {
     const { section_heading, bloggers } = props.data
@@ -19,7 +18,7 @@ const Blogger = props => {
                         return (
                             <div className={blogClasses.join(' ')} id={`blog-card-${i + 1}`} key={id}>
                                 <div className={`image_${i + 1}`}>
-                                    <img src={`${strapi.baseUrl}${image.url}`} alt={image.name} />
+                                    <Image image={image} />
                                 </div>
                                 <div className="content">
                                     <div dangerouslySetInnerHTML={{ __html: header }}></div>

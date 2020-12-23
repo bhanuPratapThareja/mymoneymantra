@@ -1,7 +1,8 @@
-import Strapi from '../providers/strapi'
+// import Strapi from '../providers/strapi'
+import Image from '../ImageComponent/ImageComponent'
 
 const AppDownload = props => {
-    const strapi = new Strapi()
+    // const strapi = new Strapi()
     const { app_download_heading, app_download_content, app_download_image, app_download_app_store_image,
         app_download_app_store_url, app_download_play_store_image, app_play_store_url, open_in_new_window } = props.data.app_download
 
@@ -20,20 +21,19 @@ const AppDownload = props => {
                             <div dangerouslySetInnerHTML={{ __html: app_download_content }}></div>
                         </div>
                         <div className="download-buttons">
-                            <img
-                                src={`${strapi.baseUrl}${app_download_play_store_image.url}`}
-                                alt={app_download_play_store_image.name}
-                                onClick={() => onOpenStore(app_play_store_url)}
+                            <Image 
+                                image={app_download_play_store_image} 
+                                onImageClick={() => onOpenStore(app_play_store_url)} 
                             />
-                            <img
+                            {/* <img
                                 src={`${strapi.baseUrl}${app_download_app_store_image.url}`}
                                 alt={app_download_app_store_image.name}
                                 onClick={() => onOpenStore(app_download_app_store_url)}
-                            />
+                            /> */}
                         </div>
                     </div>
                     <div className="app-download-wrapper-right">
-                        <img src={`${strapi.baseUrl}${app_download_image.url}`} alt={app_download_image.name} />
+                        <Image image={app_download_image} />
                     </div>
                 </div>
             </div>

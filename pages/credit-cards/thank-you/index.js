@@ -1,14 +1,12 @@
 import { useEffect } from 'react'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
-import LearnMore from '../../../components/LearnMore'
-import Offers from '../../../components/Offers'
-import Banks from '../../../components/Banks';
-import CreditScore from '../../../components/CreditScore';
-import FinancialTools from '../../../components/FinancialTools';
-import Blog from '../../../components/Blog';
-import Rewards from '../../../components/Rewards';
-import ThankYouBanner from '../../../components/ThankYou/ThankYouBanner';
+import LearnMore from '../../../components/common/LearnMore'
+import Offers from '../../../components/common/Offers'
+import CreditScore from '../../../components/common/CreditScore';
+import FinancialTools from '../../../components/common/FinancialTools';
+import Rewards from '../../../components/common/Rewards';
+import ThankYouBanner from '../../../components/Common/ThankYouBanner';
 
 
 const ThankYou = props => {

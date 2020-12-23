@@ -1,7 +1,6 @@
-import Strapi from '../providers/strapi'
+import Image from '../ImageComponent/ImageComponent'
 
 const Testimonials = props => {
-    const strapi = new Strapi()
     return (
         <section data-aos="fade-up" className="testimonial aos-init">
             <div className="container testimonial-wrapper">
@@ -9,7 +8,7 @@ const Testimonials = props => {
                     const { id, image, stats, sub_text } = testimonial
                     return (
                         <div className="testimonial-wrapper-block" key={id}>
-                            <img src={`${strapi.baseUrl}${image.url}`} alt={image.name} />
+                            <Image image={image} />
                             <div dangerouslySetInnerHTML={{ __html: stats }}></div>
                             <div dangerouslySetInnerHTML={{ __html: sub_text }}></div>
                         </div>

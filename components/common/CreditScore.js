@@ -1,7 +1,6 @@
-import Strapi from '../providers/strapi'
+import Image from '../ImageComponent/ImageComponent'
 
 const CreditScore = props => {
-    const strapi = new Strapi()
     const { credit_score_heading, credit_score_button, credit_score_image, credit_score_feature, credit_score_button_url } = props.data.credit_score
     function comingSoon(){
        alert("Coming Soon")
@@ -25,7 +24,7 @@ const CreditScore = props => {
                     <button onClick={comingSoon}>{credit_score_button}</button>
                 </div>
                 <div className="score-chart">
-                    <img src={`${strapi.baseUrl}${credit_score_image.url}`} alt={credit_score_image.name} />
+                    <Image image={credit_score_image} />
                 </div>
             </div>
         </section>

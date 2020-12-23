@@ -1,6 +1,6 @@
 import Strapi from '../../providers/strapi'
 
-const Image = ({ className, image }) => {
+const Image = ({ className, image, onImageClick }) => {
     const strapi = new Strapi()
 
     if (!image) {
@@ -11,6 +11,7 @@ const Image = ({ className, image }) => {
         className={className}
         src={`${strapi.baseUrl}${image.url}`}
         alt={image.name}
+        onClick={onImageClick}
     />
 }
 

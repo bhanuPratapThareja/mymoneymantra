@@ -1,21 +1,22 @@
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 import HomePageBanner from '../components/HomePage/HomePageBanner'
-import Testimonials from '../components/Testimonials'
+import Testimonials from '../components/common/Testimonials'
 import BuySection from '../components/BuySection'
 import ProductType from '../components/ProductType'
-import AboutUs from '../components/AboutUs'
-import UspCards from '../components/UspCards'
-import CreditScore from '../components/CreditScore'
-import BankSlider from '../components/BankSlider'
-import AppDownload from '../components/AppDownload'
-import Rewards from '../components/Rewards'
-import FinancialTools from '../components/FinancialTools'
-import Blogger from '../components/Blogger'
+import AboutUs from '../components/common/AboutUs'
+import UspCards from '../components/common/UspCards'
+import CreditScore from '../components/common/CreditScore'
+import BankSlider from '../components/common/BankSlider'
+import AppDownload from '../components/common/AppDownload'
+import Rewards from '../components/common/Rewards'
+import FinancialTools from '../components/common/FinancialTools'
+import Blogger from '../components/common/Blogger'
 
 const Home = props => {
 
     const getComponents = (dynamic) => {
+        console.log(dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner-component':

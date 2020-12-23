@@ -43,14 +43,26 @@ export const getOfferWithBank = offer => {
 export const updatePopularOffers = data => {
     return new Promise((resolve) => {
         data.dynamic.forEach((block) => {
-            if (block.__component === 'blocks.popular-offers') {
-                let pendingCards = [...block.cards]
-                block.cards.forEach(async card => {
+            // if (block.__component === 'blocks.popular-offers') {
+            //     let pendingCards = [...block.cards]
+            //     block.cards.forEach(async card => {
+            //         const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
+            //         card.bank = bankData[0]
+            //         pendingCards.shift()
+            //         if (!pendingCards.length) {
+            //             resolve(block.cards)
+            //         }
+            //     })
+            // }
+            if (block.__component === 'blocks.pl-offers-component') {
+                let pendingCards = [...block.product_cards]
+                block.product_cards.forEach(async card => {
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
                     card.bank = bankData[0]
+                    console.log(card.bank)
                     pendingCards.shift()
                     if (!pendingCards.length) {
-                        resolve(block.cards)
+                        resolve(block.product_cards)
                     }
                 })
             }
@@ -69,6 +81,18 @@ export const updateTrendingOffers = data => {
                     pendingCards.shift()
                     if (!pendingCards.length) {
                         resolve(block.cards)
+                    }
+                })
+            }
+            if (block.__component === 'blocks.trending-personal-loans') {
+                let pendingCards = [...block.product_cards]
+                block.product_cards.forEach(async card => {
+                    const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
+                    card.bank = bankData[0]
+                    console.log(card.bank)
+                    pendingCards.shift()
+                    if (!pendingCards.length) {
+                        resolve(block.product_cards)
                     }
                 })
             }

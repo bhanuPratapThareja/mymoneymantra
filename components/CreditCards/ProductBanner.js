@@ -1,7 +1,6 @@
-import Strapi from '../../providers/strapi'
+import Image from '../ImageComponent/ImageComponent'
 
 const Banner = props => {
-    const strapi = new Strapi()
     const { product_banner_heading, product_banner_sub_text,
         product_banner_image, product_banner_button_text, product_banner_button_url } = props.data.product_banner
 
@@ -19,10 +18,7 @@ const Banner = props => {
                         <button onClick={goToShortFormPage}>{product_banner_button_text}</button>
                         : null}
                 </div>
-                <img
-                    className="banner-card"
-                    src={`${strapi.baseUrl}${product_banner_image.url}`} alt={product_banner_image.name}
-                />
+                <Image className="banner-card" image={product_banner_image} />
             </div>
         </section>
     )
