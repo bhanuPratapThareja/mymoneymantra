@@ -117,16 +117,26 @@
 
 @font-face {
   font-family: 'Avenir-Black';
-  src: url(/assets/fonts/Avenir-Black-03.ttf); }
+  src: url("../assets/fonts/Avenir-Black-03.ttf") format('truetype');
+  
+}
+
 @font-face {
   font-family: 'Avenir-Heavy';
-  src: url(/assets/fonts/Avenir-Heavy-05.ttf); }
+  src: url("../assets/fonts/Avenir-Heavy-05.ttf"); 
+}
+
 @font-face {
   font-family: 'Avenir-Medium';
-  src: url(/assets/fonts/Avenir-Medium-09.ttf); }
+  src: url("../assets/fonts/Avenir-Medium-09.ttf"); 
+}
+
 @font-face {
   font-family: 'Avenir-Roman';
-  src: url(/assets/fonts/Avenir-Roman-12.ttf); }
+  src: url("../assets/fonts/Avenir-Roman-12.ttf"); 
+}
+
+
 h1 {
   font-size: 2.5rem;
   font-family: "Avenir-Black";
