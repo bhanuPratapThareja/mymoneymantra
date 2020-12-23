@@ -1,16 +1,16 @@
 const FinancialTools = props => {
-   const { tools } = props.tools
+   const { section_heading, quick_financial_tools } = props.data
    return (
       <section data-aos="fade-up" className="container aos-init">
          <div className="financial">
-            <h2>Financial tools</h2>
+            <h2>{section_heading}</h2>
             <div className="financial-wrapper">
-               {tools.map(tool => {
+               {quick_financial_tools.map(tool => {
                   return (
                      <div className="financial-wrapper-card" key={tool.id}>
                         <div className="financial-wrapper-card-content">
-                           <h3>{tool.heading}</h3>
-                           <h5>{tool.sub_text}</h5>
+                           <div dangerouslySetInnerHTML={{ __html: tool.heading }}></div>
+                           <div dangerouslySetInnerHTML={{ __html: tool.sub_text }}></div>
                         </div>
                      </div>
                   )

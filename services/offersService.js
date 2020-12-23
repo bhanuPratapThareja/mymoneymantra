@@ -5,7 +5,6 @@ import { getApiData } from '../api/api';
     const { url, body } = getApiData('customerOfferView');
     try {
         const res =  await axios.post(url, body)
-        console.log('viewOffer res11',res);
     } catch (error) {
 
     }
@@ -38,7 +37,7 @@ export const customerOfferData = async() =>{
     const { url, body } = getApiData('customerOffer');
     try {
         const res =  await axios.post(url, body)
-         console.log('customerOffer res',res.data.response.payload);
+        //  console.log('customerOffer res',res.data.response.payload);
          
     } catch (error) {
 

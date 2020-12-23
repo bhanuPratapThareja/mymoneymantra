@@ -22,10 +22,6 @@ const Layout = props => {
             <script src='/assets/js/vendors/aos.js'></script>
             <script src='/assets/js/vendors/noUI.js'></script>
             <script src='/assets/js/vendors/slick.js'></script>
-            {/* <script src='/assets/js/main.js'></script> */}
-            <script>
-
-            </script>
         </>
     )
 }

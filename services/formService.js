@@ -115,7 +115,6 @@ export const getPinCodeData = async (name, value) => {
     body.request.payload.name = value;
     try {
         const res = await axios.post(url, body)
-        console.log('res=========11',res)
         const { pinList } = res.data.response.payload;
         return pinList;
     } catch (error) { }

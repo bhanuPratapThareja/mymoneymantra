@@ -6,21 +6,21 @@ const UspCards = props => {
     function renderUspCards(uspCards) {
         return uspCards.map(card => {
             return <div className="banner-features-block" key={card.id}>
-                <img src={`${strapi.baseUrl}${card.image.url}`} alt={card.image.name} />
-                <h3>{card.heading}</h3>
-                <p>{card.sub_text}</p>
+                <img src={`${strapi.baseUrl}${card.usp_cards_image.url}`} alt={card.usp_cards_image.name} />
+                <div dangerouslySetInnerHTML={{ __html: card.usp_cards_heading }}></div>
+                <div dangerouslySetInnerHTML={{ __html: card.usp_cards_sub_text }}></div>
             </div>
         })
     }
 
-    if (!props.data.usp_card) {
+    if (!props.data.usp_cards) {
         return null
     }
 
     return (
-        <div className="container banner-features-container">
+        <div  data-aos="fade-up" className="container banner-features-container aos-init">
             <div className="banner-features">
-                {renderUspCards(props.data.usp_card)}
+                {renderUspCards(props.data.usp_cards)}
             </div>
         </div>
     )

@@ -288,6 +288,51 @@ $(document).ready(function () {
 
   $('.banks-slider').slick("refresh");
 
+  $('.bank-slider').slick({
+    infinite: false,
+    slidesToShow: 4,
+    dots: false,
+    slidesToScroll: 1,
+    cssEase: 'linear',
+    pauseOnHover: true,
+    focusOnSelect: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 5,
+          infinite: false,
+          variableWidth: true,
+          dots: false,
+          arrows: false
+        }
+      },
+
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          slidesToShow: 3,
+          variableWidth: true,
+          infinite: false,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          arrows: false,
+          slidesToShow: 3,
+          infinite: false,
+          variableWidth: true,
+          cellPadding: '12px'
+        }
+      }
+    ]
+  });
+
+  $('.bank-slider').slick("refresh");
+
+
 
 
   // $('#slider_blogs').slick({
