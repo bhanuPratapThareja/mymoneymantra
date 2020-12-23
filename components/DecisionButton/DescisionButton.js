@@ -12,29 +12,28 @@ const DecisionButton = props => {
         switch (buttonText) {
             case 'Apply Now':
                 pathName = `${basePath}/thank-you`
-                query = { bankName, buttonText }
                 break
 
             case 'E Connect':
             case 'Instant Approval':
                 pathName = `${basePath}/long-form/${bankSlug}/${productSlug}`
-                query = { bankName, buttonText }
+                query = { bankName }
                 break
 
             // view details
             default:
                 pathName = `${basePath}/${bankSlug}/${productSlug}`
+                query = { bankName }
         }
 
         routerRedirect(pathName, query)
     }
 
     const routerRedirect = (pathname, query) => {
-        console.log('pathname: ', pathname)
-        console.log('query: ', query)
+        // console.log('pathname: ', pathname)
+        // console.log('query: ', query)
         router.push({ pathname, query }, pathname, { shallow: true })
     }
-
 
     return (
         <button id={id} onClick={onButtonClick}>{buttonText}</button>

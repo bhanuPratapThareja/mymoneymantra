@@ -1,7 +1,12 @@
 import axios from 'axios'
+import Strapi from '../providers/strapi'
 import { getApiData } from '../api/api'
+const strapi = new Strapi()
 
-export const getProductDecision = async cards => {
+const defaultDecision = 'E Connect'
+
+export const getProductDecision = cards => {
+    console.log('cardscards:  ', cards)
     const promise = new Promise((resolve) => {
         const pendingCards = [...cards]
         const { url, body } = getApiData('leadProductDecision')
@@ -13,8 +18,8 @@ export const getProductDecision = async cards => {
             try {
                 const res = await axios.post(url, body)
                 productDecision = res.data.response.payload.productDecision
-            } catch { 
-                productDecision = 'E Connect'
+            } catch {
+                productDecision = defaultDecision
             }
             card.productDecision = productDecision
             pendingCards.shift()
@@ -24,4 +29,49 @@ export const getProductDecision = async cards => {
         })
     })
     return promise
+}
+
+export const getOfferWithBank = offer => {
+    const promise = new Promise(async (resolve) => {
+        const bankData = await strapi.processReq('GET', `banks?id=${offer.bank}`)
+        offer.bank = bankData[0]
+        resolve(offer)
+    })
+    return promise
+}
+
+export const updatePopularOffers = data => {
+    return new Promise((resolve) => {
+        data.dynamic.forEach((block) => {
+            if (block.__component === 'blocks.popular-offers') {
+                let pendingCards = [...block.cards]
+                block.cards.forEach(async card => {
+                    const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
+                    card.bank = bankData[0]
+                    pendingCards.shift()
+                    if (!pendingCards.length) {
+                        resolve(block.cards)
+                    }
+                })
+            }
+        })
+    })
+}
+
+export const updateTrendingOffers = data => {
+    return new Promise((resolve) => {
+        data.dynamic.forEach((block) => {
+            if (block.__component === 'blocks.trending-offers') {
+                let pendingCards = [...block.cards]
+                pendingCards.forEach(async card => {
+                    const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
+                    card.bank = bankData[0]
+                    pendingCards.shift()
+                    if (!pendingCards.length) {
+                        resolve(block.cards)
+                    }
+                })
+            }
+        })
+    })
 }
