@@ -31,19 +31,26 @@ const OfferDetailCards = props => {
                                 </div>
                                 <div className="content">
                                     <ul>
-                                        {offer.loan_listing_card_features.map(feature => <li key={feature.id}>{feature.loan_listing_card_feature}</li>)}
+                                        {offer.listing_cards_features.map(feature => <li key={feature.id}>
+                                            <span dangerouslySetInnerHTML={{ __html: feature.listing_cards_feature_text }}></span>
+                                        </li>)}
                                     </ul>
                                 </div>
-                                <div className="fee">
+                                {offer.annual_fee_fy ? <div className="fee">
                                     <h5>Annual fee:</h5>
                                     <p><b>₹ {offer.annual_fee_fy}</b> (First Year)</p>
-                                    <p><b>₹ {offer.annual_fee_sy}</b> (Second year onwards)</p>
+                                    {offer.annual_fee_sy ? <p><b>₹ {offer.annual_fee_sy}</b> (Second year onwards)</p> : null}
 
-                                </div>
+                                </div> : null}
+
+                                {offer.intrest_rate ? <div className="fee">
+                                    <h5>Interest Rate:</h5>
+                                    <p dangerouslySetInnerHTML={{__html: offer.intrest_rate}}></p>
+                                </div> : null}
                             </div>
                             <div className="bottom">
                                 <div className="lifetime">
-                                    <h5>{offer.usp_highlights}</h5>
+                                    <h5><span dangerouslySetInnerHTML={{ __html: offer.usp_highlights }}></span></h5>
                                 </div>
                                 <div className="options">
                                     <DecisionButton

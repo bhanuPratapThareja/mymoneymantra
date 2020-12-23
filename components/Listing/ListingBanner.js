@@ -40,10 +40,10 @@ const ListingBanner = props => {
                 <div className="banner-wrapper cstm-bnr-txt">
                     <div className="top">
                         <div dangerouslySetInnerHTML={{ __html: listing_banner_heading }}></div>
-                        <div className="category">
+                        {category_component && category_component.length ? <div className="category">
                             <h5>Browse by category:</h5>
                             <div className="category-wrapper">
-                                <div className="checkbox-container" name="category" value={selectedOption} onChange={e => setSelectedOption(e.target.value)}>
+                               <div className="checkbox-container" name="category" value={selectedOption} onChange={e => setSelectedOption(e.target.value)}>
                                     {category_component.map(category => {
                                         const {listing_banner_category_label, listing_banner_category_image} = category
                                         return (
@@ -58,7 +58,7 @@ const ListingBanner = props => {
                                     })}
                                 </div>
                             </div>
-                        </div>
+                        </div> : null}
                     </div>
                     <div className="bottom">
                         <div className="cards">

@@ -6,7 +6,6 @@ const strapi = new Strapi()
 const defaultDecision = 'E Connect'
 
 export const getProductDecision = cards => {
-    console.log('cardscards:  ', cards)
     const promise = new Promise((resolve) => {
         const pendingCards = [...cards]
         const { url, body } = getApiData('leadProductDecision')

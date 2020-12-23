@@ -1,24 +1,27 @@
 import { useEffect, useState } from 'react'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
-import ListingBanner from '../../../components/Listing/ListingBanner'
-import OfferDetailCards from '../../../components/Listing/OfferDetailCards'
-import Offers from '../../../components/common/Offers'
+
+import ListingBanner from '../../../components/Listing/ListingBanner';
+import PersonalLoanListingsBanner from '../../../components/PersonalLoan/Listings/ListingsBanner'
+import OfferDetailCards from '../../../components/Listing/OfferDetailCards';
 import CreditScore from '../../../components/common/CreditScore'
-import FinancialTools from '../../../components/common/FinancialTools'
+import BankSlider from '../../../components/common/BankSlider'
 import Rewards from '../../../components/common/Rewards'
+import FinancialTools from '../../../components/common/FinancialTools'
+import Blogger from '../../../components/common/Blogger'
 import LearnMore from '../../../components/common/LearnMore'
 import { updateOfferCards } from '../../../Utils/loanListingCards'
 import { getProductDecision } from '../../../services/offersService'
 import { filterOfferCardsInFilterComponent } from '../../../Utils/loanListingFilterHandler'
 
-const LoanListing = props => {
+const PersonalLoanListing = props => {
     const [allOfferCards, setAllOfferCards] = useState([])
     const [offerCards, setOfferCards] = useState([])
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        let cards = props.loanListingOfferCards
+        let cards = props.listingOfferCards
         getCardsWithButtonText(cards)
     }, [])
 
@@ -45,33 +48,37 @@ const LoanListing = props => {
     }
 
     const getComponents = (dynamic, filters) => {
+        console.log('listing: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
-                // case 'blocks.listing-banner-component':
-                //     return <ListingBanner
-                //         key={block.id}
-                //         data={block}
-                //         filters={filters}
-                //         numberOfCards={offerCards.length}
-                //         filterOfferCards={filterOfferCards}
-                //         filterCardsFilterComponent={filterCardsFilterComponent}
-                //     />
+                case 'blocks.listing-banner-component':
+                    return <ListingBanner
+                        key={block.id}
+                        data={block}
+                        filters={filters}
+                        numberOfCards={offerCards.length}
+                        filterOfferCards={filterOfferCards}
+                        filterCardsFilterComponent={filterCardsFilterComponent}
+                    />
+                case 'blocks.listing-offers-component':
+                case 'blocks.listing-cards-features-component':
+                    return <OfferDetailCards key={block.id} data={block} offerCards={offerCards} />
+                case 'blocks.credit-score-component':
+                    return <CreditScore key={block.id} data={block} />
+                case 'blocks.bank-slider-component':
+                    return <BankSlider key={block.id} data={block} />
+                case 'blocks.rewards-component':
+                    return <Rewards key={block.id} data={block} />
+                case 'blocks.quick-financial-tools-component':
+                    return <FinancialTools key={block.id} data={block} />
+                case 'blocks.blogger':
+                    return <Blogger key={block.id} data={block} />
+                case 'blocks.learn-more-component':
+                    return <LearnMore key={block.id} data={block} />
                 // case 'blocks.loan-listing-offer-cards':
                 //     return <OfferDetailCards key={block.id} data={block} offerCards={offerCards} />
-                // case 'blocks.learn-more':
-                //     return <LearnMore key={block.id} data={block} />
-                // case 'blocks.credit-score':
-                //     return <CreditScore key={block.id} data={block} />
                 // case 'blocks.offer':
                 //     return <Offers key={block.id} data={block} />
-                // case 'blocks.bank-new':
-                //     return <Banks key={block.id} banks={block} />
-                // case 'blocks.financial-tools':
-                //     return <FinancialTools key={block.id} tools={block} />
-                // case 'blocks.rewards':
-                //     return <Rewards key={block.id} data={block} />
-                // case 'blocks.blogs':
-                //     return <Blog key={block.id} data={block} />
                 // case 'blocks.offer-card':
                 //     return <OfferDetailCards key={block.id} data={block} />
             }
@@ -87,14 +94,14 @@ const LoanListing = props => {
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const path = 'loan-listing'
-    const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)
+    const path = 'listings'
+    const pageData = await strapi.processReq('GET', `pages?slug=personal-loan-${path}`)
     const listingFilter = await strapi.processReq('GET', 'filters')
     const filters = listingFilter.length ? listingFilter[0] : null
     const data = pageData[0]
-    console.log(data)
-    const loanListingOfferCards = await updateOfferCards(data)
-    return { props: { data, filters, loanListingOfferCards } }
+    // console.log('listing data: ', data)
+    const listingOfferCards = await updateOfferCards(data)
+    return { props: { data, filters, listingOfferCards } }
 }
 
-export default LoanListing
+export default PersonalLoanListing
