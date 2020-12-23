@@ -9,9 +9,7 @@ export const getOfferCards = data => {
                 block.cards.forEach(async card => {
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
                     const buttonData = await strapi.processReq('GET', `listing_offer_card_buttons?id=${card.listing_offer_card_button}`)
-                    // console.log('bankData data: ', bankData)
                     card.bank = bankData[0]
-                    // card.listing_offer_card_button = buttonData[0]
                     pendingCards.shift()
                     if(!pendingCards.length) {
                         resolve (block.cards)
@@ -21,4 +19,3 @@ export const getOfferCards = data => {
         })
     })
 }
-

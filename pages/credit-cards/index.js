@@ -13,7 +13,7 @@ import FinancialTools from '../../components/FinancialTools'
 import Blogger from '../../components/Blogger'
 import LearnMore from '../../components/LearnMore'
 import OfferDetailCards from '../../components/Listing/OfferDetailCards'
-import { updatePopularOffers, updateTrendingOffers } from '../../Utils/offersHandle.js'
+import { updatePopularOffers, updateTrendingOffers } from '../../services/offersService'
 
 const CreditCards = props => {
 
@@ -22,7 +22,6 @@ const CreditCards = props => {
     })
 
     const getComponents = dynamic => {
-        // console.log('dyno: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner-component':
@@ -32,6 +31,7 @@ const CreditCards = props => {
                 case 'form-components.onboarding-short-form':
                     return <ShortExtendedForm key={block.id} data={block} />
                 case 'blocks.popular-offers':
+                    console.log('pop offers: ', block)
                     return <Offers key={block.id} data={block} />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
@@ -70,6 +70,7 @@ export async function getServerSideProps(ctx) {
 
     await updatePopularOffers(data)
     await updateTrendingOffers(data)
+
     return { props: { data, path } }
 }
 

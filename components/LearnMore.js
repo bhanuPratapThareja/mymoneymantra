@@ -5,7 +5,6 @@ const LearnMore = props => {
 
    const { section_heading, learn_more } = props.data
 
-
    useEffect(() => {
 
       $(".learn-more-wrapper-content .question").click(function () {

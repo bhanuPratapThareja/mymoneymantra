@@ -1,31 +1,19 @@
-import Strapi from '../../providers/strapi'
-import Router from 'next/router'
+import { useEffect, useState } from 'react'
+import { getProductDecision } from '../../services/offersService'
+import Image from '../ImageComponent/ImageComponent'
 
 const BankProductBanner = props => {
-    const strapi = new Strapi()
-    const { heading, image, sub_text, listing_offer_button } = props.data
-    let buttonType;
-    let buttonText;
-    if(listing_offer_button) {
-        buttonType = listing_offer_button.buttonType
-        buttonText = listing_offer_button.buttonText
-    }
+    const [buttonText, setButtonText] = useState('')
+    const { heading, image, sub_text } = props.data
 
-    const cardButtonClick = type => {
-        const basePath = '/credit-cards'
-        const { bank, product, bank_name } = Router.query
-        let pathName = ''
-        if (type == "eConnect" || type == 'instantApproval') {
-            pathName = `${basePath}/long-form/${bank}/${product}`
-        } else {
-            pathName = `${basePath}/thank-you`
-        }
-        const query = { bank_name, buttonType, buttonText }
-        routerRedirect(pathName, query)
-    }
+    useEffect(() => {
+        const cards = props.offer
+        getCardsWithButtonText(cards)
+    }, [])
 
-    const routerRedirect = (pathname, query) => {
-        Router.push({ pathname, query }, pathname, { shallow: true })
+    const getCardsWithButtonText = async cards => {
+        const offers = await getProductDecision([cards])
+        console.log('new cards: ', offers[0])
     }
 
     return (
@@ -35,10 +23,10 @@ const BankProductBanner = props => {
                     <div className="banner-wrapper">
                         <div dangerouslySetInnerHTML={{ __html: heading }}></div>
                         <p>{sub_text}</p>
-                        <button onClick={() => cardButtonClick(buttonType)} id="apply-now">{buttonText}</button>
+                        {/* <button onClick={() => cardButtonClick(buttonType)} id="apply-now">{buttonText}</button> */}
                     </div>
                     <div>
-                        {image ? <img className="banner-card" src={`${strapi.baseUrl}${image.url}`} alt={image.name} /> : null}
+                        <Image className="banner-card" image={image} />
                     </div>
                 </section>
             </div>

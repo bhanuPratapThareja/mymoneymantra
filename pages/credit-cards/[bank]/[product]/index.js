@@ -12,45 +12,32 @@ import FinancialTools from '../../../../components/FinancialTools'
 import Rewards from '../../../../components/Rewards'
 import Blog from '../../../../components/Blog'
 import LearnMore from '../../../../components/LearnMore'
+import { getOfferWithBank } from '../../../../services/offersService'
 
 const Details = props => {
-    
+
     useEffect(() => {
         window.scrollTo(0, 0)
     })
 
-    const getProductDetailsComponents = (details, path) => {
+    const getProductDetailsComponents = (details, offer) => {
         return details.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner':
-                    return <BankProductBanner key={block.id} data={block} />
+                    return <BankProductBanner key={block.id} data={block} offer={offer} />
                 case 'blocks.bank-product-details-cards':
                     return <OfferBankProductDetails key={block.id} data={block} />
-                case 'blocks.credit-score':
-                    return <CreditScore key={block.id} data={block} />
-                case 'blocks.bank-new':
-                    return <Banks key={block.id} banks={block} />
-                case 'blocks.trending-offers':
-                    return <TrendingOffers key={block.id} data={block} />
-                case 'blocks.rewards':
-                    return <Rewards key={block.id} data={block} path={path} />
-                case 'blocks.financial-tools':
-                    return <FinancialTools key={block.id} tools={block} />
-                case 'blocks.blogs':
-                    return <Blog key={block.id} data={block} />
-                case 'blocks.learn-more':
-                    return <LearnMore key={block.id} data={block} />
             }
         })
     }
-    
-    if(!props.details.length) {
-        Router.push('/404',{ query: { path: props.path }})
+
+    if (!props.details.length) {
+        Router.push('/404', { query: { path: props.path } })
     }
 
     return (
         <div className="listings">
-            {props.details.length ? <Layout>{getProductDetailsComponents(props.details[0].details_dynamic, props.path)}</Layout> : null}
+            {props.details.length ? <Layout>{getProductDetailsComponents(props.details[0].details_dynamic, props.offer, props.bank)}</Layout> : null}
         </div>
     )
 }
@@ -58,9 +45,11 @@ const Details = props => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const path = 'credit-cards'
-    const { bank, product } = ctx.params
+    const { product } = ctx.params
     const details = await strapi.processReq('GET', `bank-product-mappings?card.slug=${product}`)
-    return { props: { details, path } }
+    const offer = await getOfferWithBank(details[0].card)
+
+    return { props: { details, path, offer } }
 }
 
 export default Details
