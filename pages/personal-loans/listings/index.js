@@ -3,7 +3,6 @@ import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
 
 import ListingBanner from '../../../components/Listing/ListingBanner';
-import PersonalLoanListingsBanner from '../../../components/PersonalLoan/Listings/ListingsBanner'
 import OfferDetailCards from '../../../components/Listing/OfferDetailCards';
 import CreditScore from '../../../components/common/CreditScore'
 import BankSlider from '../../../components/common/BankSlider'
@@ -11,9 +10,11 @@ import Rewards from '../../../components/common/Rewards'
 import FinancialTools from '../../../components/common/FinancialTools'
 import Blogger from '../../../components/common/Blogger'
 import LearnMore from '../../../components/common/LearnMore'
+
 import { updateOfferCards } from '../../../Utils/loanListingCards'
 import { getProductDecision } from '../../../services/offersService'
 import { filterOfferCardsInFilterComponent } from '../../../Utils/loanListingFilterHandler'
+import { getBasePath, getFirstPath } from '../../../Utils/getPaths'
 
 const PersonalLoanListing = props => {
     const [allOfferCards, setAllOfferCards] = useState([])
@@ -74,12 +75,6 @@ const PersonalLoanListing = props => {
                     return <Blogger key={block.id} data={block} />
                 case 'blocks.learn-more-component':
                     return <LearnMore key={block.id} data={block} />
-                // case 'blocks.loan-listing-offer-cards':
-                //     return <OfferDetailCards key={block.id} data={block} offerCards={offerCards} />
-                // case 'blocks.offer':
-                //     return <Offers key={block.id} data={block} />
-                // case 'blocks.offer-card':
-                //     return <OfferDetailCards key={block.id} data={block} />
             }
         })
     }
@@ -93,12 +88,12 @@ const PersonalLoanListing = props => {
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const path = 'listings'
-    const pageData = await strapi.processReq('GET', `pages?slug=personal-loans-${path}`)
-    const listingFilter = await strapi.processReq('GET', 'filters')
+    const basePath = getBasePath(ctx.resolvedUrl)
+    const firstPath = getFirstPath(ctx.resolvedUrl)
+    const pageData = await strapi.processReq('GET', `pages?slug=${basePath}-${firstPath}`)
+    const listingFilter = await strapi.processReq('GET', `filters?slug=${basePath}-filters`)
     const filters = listingFilter.length ? listingFilter[0] : null
     const data = pageData[0]
-    // console.log('listing data: ', data)
     const listingOfferCards = await updateOfferCards(data)
     return { props: { data, filters, listingOfferCards } }
 }

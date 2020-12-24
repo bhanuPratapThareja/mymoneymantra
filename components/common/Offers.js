@@ -7,25 +7,23 @@ console.log('inside offers props.data',props.data);
    const router = useRouter()
 
    const redirectToDetailsPage = (bank, product) => {
-      viewOffer();
-      //   const path = router.query.path[0]
-      //   if (!bank || !product) {
-      //      Router.push('/404')
-      //      return
-      //   }
-      //   router.push(`/${path}/${bank}/${product}`)
+        const path = router.query.path[0]
+        if (!bank || !product) {
+           Router.push('/404')
+           return
+        }
+        router.push(`/${path}/${bank}/${product}`)
    }
 
-   // if (!props.data.product_cards.length) {
-   //    return null
-   // }
-   customerOfferData();
+   if (!props.data.product_cards.length) {
+      return null
+   }
 
    const { section_heading, product_cards } = props.data
 
    return (
       <section data-aos="fade-up" className="container popular-card-container">
-          <div className="popular-cards">
+         <div className="popular-cards">
             <h2>{section_heading}</h2>
             <div className="popular-cards-slider" id="popular-cards-sec">
                {product_cards.map(offer => {
@@ -59,7 +57,11 @@ console.log('inside offers props.data',props.data);
                })}
 
             </div>
+<<<<<<< HEAD
           </div> 
+=======
+         </div>
+>>>>>>> e2d52f3aeff73b2a715e2273875458261b2e7567
       </section>
    )
 }

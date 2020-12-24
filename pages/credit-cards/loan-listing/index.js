@@ -89,7 +89,7 @@ export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const path = 'loan-listing'
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)
-    const listingFilter = await strapi.processReq('GET', 'filters')
+    const listingFilter = await strapi.processReq('GET', 'credit-cards-filters')
     const filters = listingFilter.length ? listingFilter[0] : null
     const data = pageData[0]
     const loanListingOfferCards = await updateOfferCards(data)

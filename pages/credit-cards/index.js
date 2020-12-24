@@ -4,7 +4,7 @@ import Layout from '../../components/Layout'
 import Banner from '../../components/CreditCards/ProductBanner'
 import UspCards from '../../components/common/UspCards'
 import ShortExtendedForm from '../../components/ShortExtendedForm'
-import Offers from '../../components/common/Offers'
+import Offers from '../../components/Offers'
 import CreditScore from '../../components/common/CreditScore'
 import TrendingOffers from '../../components/TrendingOffers'
 import BankSlider from '../../components/common/BankSlider'
@@ -12,8 +12,8 @@ import Rewards from '../../components/common/Rewards'
 import FinancialTools from '../../components/common/FinancialTools'
 import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
-import OfferDetailCards from '../../components/Listing/OfferDetailCards'
 import { updatePopularOffers, updateTrendingOffers } from '../../services/offersService'
+import { getBasePath } from '../../Utils/getPaths'
 
 const CreditCards = props => {
 
@@ -22,6 +22,7 @@ const CreditCards = props => {
     })
 
     const getComponents = dynamic => {
+        console.log(dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner-component':
@@ -36,8 +37,6 @@ const CreditCards = props => {
                     return <CreditScore key={block.id} data={block} />
                 case 'blocks.trending-offers':
                     return <TrendingOffers key={block.id} data={block} />
-                case 'blocks.offer-details-card':
-                    return <OfferDetailCards key={block.id} data={block} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.rewards-component':
@@ -62,15 +61,14 @@ const CreditCards = props => {
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-
-    const path = 'credit-cards'
-    const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
+    const basePath = getBasePath(ctx.resolvedUrl)
+    const pageData = await strapi.processReq('GET', `pages?slug=${basePath}`)
     const data = pageData[0]
 
     await updatePopularOffers(data)
     await updateTrendingOffers(data)
 
-    return { props: { data, path } }
+    return { props: { data } }
 }
 
 export default CreditCards
