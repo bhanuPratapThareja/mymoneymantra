@@ -37,7 +37,7 @@ console.log('inside offers props.data',props.data);
                            </div>
                            <div className="content">
                               <ul>
-                                 {cards_feature.map(feature => <li key={feature.id}><span dangerouslySetInnerHTML={{ __html: feature.cards_features_text }}></span></li>)}
+                                 {cards_feature.map(feature => <li style={{listStyle: 'none'}} key={feature.id}><span dangerouslySetInnerHTML={{ __html: feature.cards_features_text }}></span></li>)}
                               </ul>
                            </div>
 
