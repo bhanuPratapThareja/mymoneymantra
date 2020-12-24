@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-import '../styles/custom.css'
+// import '../styles/custom.css'
 import axios from 'axios'
 import { setAuthToken, getAuthToken } from '../api/headers'
 import { generateCorrelationId } from '../Utils/correlationId'
