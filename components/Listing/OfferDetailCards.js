@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Image from '../ImageComponent/ImageComponent'
 import DecisionButton from '../DecisionButton/DescisionButton'
 import { useRouter } from 'next/router'
+import { getBasePath } from '../../Utils/getPaths';
 
 const OfferDetailCards = props => {
     const router = useRouter()
@@ -10,9 +11,7 @@ const OfferDetailCards = props => {
 
     useEffect(() => {
         setOffers(props.offerCards)
-        let { pathname } = router
-        pathname = pathname.split('/')
-        setBasePath(pathname[1])
+        setBasePath(getBasePath(router.pathname))
     })
 
     if (!offers) {

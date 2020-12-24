@@ -11,8 +11,9 @@ import FinancialTools from '../../components/common/FinancialTools'
 import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import { updatePopularOffers, updateTrendingOffers } from '../../services/offersService'
+import { getBasePath } from '../../Utils/getPaths'
 
-const PersonalLoan = props => {
+const PersonalLoans = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -57,9 +58,8 @@ const PersonalLoan = props => {
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-
-    const path = 'personal-loans'
-    const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
+    const basePath = getBasePath(ctx.resolvedUrl)
+    const pageData = await strapi.processReq('GET', `pages?slug=${basePath}`)
     const data = pageData[0]
 
     await updatePopularOffers(data)
@@ -68,4 +68,4 @@ export async function getServerSideProps(ctx) {
     return { props: { data } }
 }
 
-export default PersonalLoan
+export default PersonalLoans
