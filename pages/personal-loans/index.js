@@ -32,8 +32,8 @@ const PersonalLoans = props => {
                     return <Offers key={block.id} data={block} />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
-                    case 'blocks.trending-offers':
-                    case 'blocks.trending-personal-loans':
+                case 'blocks.trending-offers':
+                case 'blocks.trending-personal-loans':
                     return <Offers key={block.id} data={block} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
