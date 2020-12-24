@@ -5,6 +5,7 @@ import { getFormPercentage } from '../../Utils/formPercentage';
 import { validEmailRegex, validMobileRegex, isValidPanNumber } from '../../Utils/validator';
 import $ from "jquery";
 import { updateLongForm } from '../../services/formService';
+import { getBase64, documentUpload } from '../../services/formService';
 
 class LongFormBanner extends React.Component {
 
@@ -356,8 +357,11 @@ class LongFormBanner extends React.Component {
     }
 
     onFileChange = event => {
-        this.setState({ selectedPan: event.target.files[0] }, () => {
-
+        let document = event.target.files[0];
+        this.setState({ selectedPan: document }, () => {
+            const base64 = getBase64(document)
+            const { type, name } = document
+            documentUpload(base64, type, name)
         });
 
     };
@@ -376,8 +380,11 @@ class LongFormBanner extends React.Component {
     }
 
     onSalarySlipChange = event => {
-        this.setState({ selectedSalarySlip: event.target.files[0] }, () => {
-
+         let document = event.target.files[0];
+        this.setState({ selectedSalarySlip: document }, () => {
+            const base64 = getBase64(document)
+            const { type, name } = document
+            documentUpload(base64, type, name)
         });
 
     };
@@ -386,11 +393,17 @@ class LongFormBanner extends React.Component {
     }
 
     onAddressProofChange = event => {
-        this.setState({ selectedAddressProof: event.target.files[0] }, () => {
-
+        let document = event.target.files[0];
+        this.setState({ selectedAddressProof: document }, () => {
+            const base64 = getBase64(document)
+            const { type, name } = document
+            documentUpload(base64, type, name)
         });
-
     };
+
+
+
+
     removeAddressProof = () => {
         this.setState({ selectedAddressProof: null })
     }
@@ -543,7 +556,7 @@ class LongFormBanner extends React.Component {
                                                     autoComplete="off" required name="dob"
                                                     onChange={e => this.handleInput(e, "dob")}
                                                     onBlur={this.handleInputBlur}
-                                                  
+
                                                 />
                                                 {errors.dob.length > 0 &&
                                                     <span className='error'>{errors.dob}</span>}
@@ -643,7 +656,7 @@ class LongFormBanner extends React.Component {
                                                 <div className="dropdown-content-links">
                                                     {this.state.residenceAddress.pinList.map(pin => {
                                                         return (
-                                                            
+
                                                             // <a key={city.pincode} onClick={e => this.onSelectPin(pin.cityMasterName, pin.pincode, "residenceAddress")}
                                                             // >{pin.pincode}</a>
                                                             <a key={city.pincode} onClick={e => this.onSelectPin(pin.cityName, pin.pincode, "residenceAddress")}
@@ -653,7 +666,7 @@ class LongFormBanner extends React.Component {
                                                     )}
 
                                                 </div>
-                                            </div> : null}                                           
+                                            </div> : null}
 
                                             <div className="form__group field long-city" style={errors.city ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="city" placeholder="City"
@@ -672,17 +685,17 @@ class LongFormBanner extends React.Component {
                                                     {this.state.residenceAddress.cityList.map(city => {
                                                         return (
                                                             <a key={city.cityMasterId} name={city.cityMasterName}
-                                                                value={city.cityMasterId} 
-                                                                //onClick={e => this.onSelect(city.cityMasterName, city.cityMasterId, "residenceAddress")} 
-                                                                >
-                                                                    {city.cityMasterName}</a>
+                                                                value={city.cityMasterId}
+                                                            //onClick={e => this.onSelect(city.cityMasterName, city.cityMasterId, "residenceAddress")} 
+                                                            >
+                                                                {city.cityMasterName}</a>
                                                         )
                                                     }
                                                     )}
 
                                                 </div>
                                             </div> : null}
-                                         
+
                                         </div>
 
                                     </div>
@@ -762,40 +775,40 @@ class LongFormBanner extends React.Component {
                                         <div className="row-input-container">
 
                                             {/* <div className="custom-wrapper"> */}
-                                                <div className="form__group field long-pincode" style={errors.officePincode ? { border: "1px solid red" } : null}>
-                                                    <input className="form__field" type="text" id="off-pincode" placeholder="Pincode" name="officePincode"
-                                                        value={this.state.officeAddress.officePincode}
-                                                        autoComplete="off" required onChange={e => this.handleInput(e, "officeAddress")} onBlur={this.handleInputBlur} />
-                                                    {errors.officePincode.length > 0 &&
-                                                        <span className='error'>{errors.officePincode}</span>}
-                                                    <label className="form__label" htmlFor="off-pincode">Pincode</label>
+                                            <div className="form__group field long-pincode" style={errors.officePincode ? { border: "1px solid red" } : null}>
+                                                <input className="form__field" type="text" id="off-pincode" placeholder="Pincode" name="officePincode"
+                                                    value={this.state.officeAddress.officePincode}
+                                                    autoComplete="off" required onChange={e => this.handleInput(e, "officeAddress")} onBlur={this.handleInputBlur} />
+                                                {errors.officePincode.length > 0 &&
+                                                    <span className='error'>{errors.officePincode}</span>}
+                                                <label className="form__label" htmlFor="off-pincode">Pincode</label>
+                                            </div>
+                                            {this.state.officeAddress.officePinList ? <div id="bank-drop" className="dropdown-content">
+                                                <div className="dropdown-content-links">
+                                                    {this.state.officeAddress.officePinList.map(pin => {
+
+                                                        return (
+                                                            // <a key={city.pincode} className="form__label" onClick={e => this.onSelectPin(pin.cityId, pin.pincode, "residenceAddress")}
+                                                            // >{pin.pincode}</a>
+
+                                                            <a key={pin.pincode} onClick={e => this.onSelectOfficePin(pin.cityName, pin.pincode, "officeAddress")}
+                                                            >{pin.pincode}</a>
+                                                        )
+                                                    }
+                                                    )}
+
                                                 </div>
-                                                {this.state.officeAddress.officePinList ? <div id="bank-drop" className="dropdown-content">
-                                                    <div className="dropdown-content-links">
-                                                        {this.state.officeAddress.officePinList.map(pin => {
-
-                                                            return (
-                                                                // <a key={city.pincode} className="form__label" onClick={e => this.onSelectPin(pin.cityId, pin.pincode, "residenceAddress")}
-                                                                // >{pin.pincode}</a>
-
-                                                                <a key={pin.pincode} onClick={e => this.onSelectOfficePin(pin.cityName, pin.pincode, "officeAddress")}
-                                                                >{pin.pincode}</a>
-                                                            )
-                                                        }
-                                                        )}
-
-                                                    </div>
-                                                </div> : null}
+                                            </div> : null}
                                             {/* </div> */}
 
 
                                             {/* <div className="custom-wrapper"> */}
                                             <div className="form__group field long-city" style={errors.officeCity ? { border: "1px solid red" } : null}>
                                                 <input className="form__field" type="text" id="off-city" placeholder="City" name="officeCity"
-                                                    required    value={this.state.officeAddress.officeCity} readOnly                                                 
+                                                    required value={this.state.officeAddress.officeCity} readOnly
                                                     autoComplete="off"
-                                                    //  onBlur={this.handleInputBlur}
-                                                    //  onChange={e => this.handleInput(e, "officeAddress")} 
+                                                //  onBlur={this.handleInputBlur}
+                                                //  onChange={e => this.handleInput(e, "officeAddress")} 
                                                 />
                                                 {errors.officeCity.length > 0 &&
                                                     <span className='error'>{errors.officeCity}</span>}
@@ -808,9 +821,9 @@ class LongFormBanner extends React.Component {
 
                                                             <a key={cityOfc.cityMasterId} name={cityOfc.cityMasterName}
                                                                 value={cityOfc.cityMasterId}
-                                                                // onClick={e => this.onSelectOfficeCity(cityOfc.cityMasterName, cityOfc.cityMasterId, "officeAddress")} 
-                                                                >
-                                                            {cityOfc.cityMasterName}
+                                                            // onClick={e => this.onSelectOfficeCity(cityOfc.cityMasterName, cityOfc.cityMasterId, "officeAddress")} 
+                                                            >
+                                                                {cityOfc.cityMasterName}
                                                             </a>
                                                         )
                                                     }

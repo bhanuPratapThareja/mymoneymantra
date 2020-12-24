@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import { useEffect, useState, useRef } from 'react'
+import Link from 'next/link'
 import Strapi from '../providers/strapi'
+import { useEffect, useState, useRef } from 'react'
 import { isScrolledIntoView } from '../Utils/elementInView'
-import $ from 'jquery'
 
 const Header = () => {
    const strapi = new Strapi()
@@ -77,7 +77,7 @@ const Header = () => {
       return headerData.menu.links.map(link => {
          switch (link.type) {
             case 'anchor':
-               return <a key={link.id} href={link.url} >{link.label}</a>
+               return <a key={link.id} href={link.url}>{link.label}</a>
             case 'dropdown':
                return (
                   <div className="dropdown" id="loans" key={link.id}>
@@ -104,13 +104,15 @@ const Header = () => {
          </Head>
 
          {headerData ? <header className="header" ref={headerRef}>
-            <a href="index.html">
-               <img
-                  className="header-logo"
-                  src="/assets/images/icons/logo.png"
-                  alt={headerData.logo.name}
-               />
-            </a>
+            <Link href="/">
+               <a>
+                  <img
+                     className="header-logo"
+                     src="/assets/images/icons/logo.png"
+                     alt={headerData.logo.name}
+                  />
+               </a>
+            </Link>
 
             <div className="header-links">{renderMenu()}</div>
 

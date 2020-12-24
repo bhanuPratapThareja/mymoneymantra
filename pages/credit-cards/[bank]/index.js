@@ -1,13 +1,12 @@
 import { useEffect } from 'react'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
-import LearnMore from '../../../components/LearnMore'
-import Offers from '../../../components/Offers'
+import LearnMore from '../../../components/common/LearnMore'
+import Offers from '../../../components/common/Offers'
 import Banks from '../../../components/Banks'
-import CreditScore from '../../../components/CreditScore';
-import FinancialTools from '../../../components/FinancialTools';
-import Blog from '../../../components/Blog';
-import Rewards from '../../../components/Rewards';
+import CreditScore from '../../../components/common/CreditScore';
+import FinancialTools from '../../../components/common/FinancialTools';
+import Rewards from '../../../components/common/Rewards';
 import OfferBankProductDetails from '../../../components/Details/OfferBankProductDetails';
 import BankProductBanner from '../../../components/Details/BankProductBanner';
 
@@ -31,8 +30,6 @@ const CreditCards = props => {
                     return <FinancialTools key={block.id} tools={block} />
                 case 'blocks.rewards':
                     return <Rewards key={block.id} rewards={block} />
-                case 'blocks.blogs':
-                    return <Blog key={block.id} data={block} />
                 case 'blocks.product-banner':
                     return <BankProductBanner key={block.id} data={block} />
                 case 'blocks.bank-product-details-cards':

@@ -3,9 +3,7 @@ import $ from 'jquery'
 
 const LearnMore = props => {
 
-   const sectionHeading = props.data.section_heading
-   const sectionData = props.data.section
-
+   const { section_heading, learn_more } = props.data
 
    useEffect(() => {
 
@@ -30,10 +28,10 @@ const LearnMore = props => {
    return (
       <section data-aos="fade-up" className="container aos-init">
          <div className="learn-more">
-            <h2>{sectionHeading}</h2>
+            <div dangerouslySetInnerHTML={{ __html: section_heading }}></div>
             <div className="learn-more-wrapper">
 
-               {sectionData.map((secData, index) => {
+               {learn_more.learn_more_section_component.map((secData, index) => {
                   return (
                      <div className="learn-more-wrapper-content" key={secData.id}>
                         <div className="question" id={`ques-${index}`}>

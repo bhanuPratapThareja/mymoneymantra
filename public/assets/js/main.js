@@ -60,7 +60,6 @@ $(document).ready(function () {
   //   $('.dropdown-content-links a').click(function(){
   //     var drop_val= $(this).text() 
   //     $(this).find(".form__group-wrapper").closest("input").val(drop_val);
-  //     console.log("hello")
   //   });
   // });
 
@@ -90,8 +89,6 @@ $(document).ready(function () {
   function number() {
     var x = document.getElementById("m-income").value;
     // numberToWords(x)
-    console.log(numberToWords(x))
-
   }
 
   function capitalizeFirstLetter(string) {
@@ -111,10 +108,8 @@ $(document).ready(function () {
     function addgap(newselValue) {
       if (newselValue != '') {
         $(".monthly-earn").addClass("extra-gap")
-        console.log("yes")
       } else {
         $(".monthly-earn").removeClass("extra-gap")
-        console.log("no")
       }
     }
   }
@@ -287,6 +282,51 @@ $(document).ready(function () {
   });
 
   $('.banks-slider').slick("refresh");
+
+  $('.bank-slider').slick({
+    infinite: false,
+    slidesToShow: 4,
+    dots: false,
+    slidesToScroll: 1,
+    cssEase: 'linear',
+    pauseOnHover: true,
+    focusOnSelect: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 5,
+          infinite: false,
+          variableWidth: true,
+          dots: false,
+          arrows: false
+        }
+      },
+
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          slidesToShow: 3,
+          variableWidth: true,
+          infinite: false,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          arrows: false,
+          slidesToShow: 3,
+          infinite: false,
+          variableWidth: true,
+          cellPadding: '12px'
+        }
+      }
+    ]
+  });
+
+  $('.bank-slider').slick("refresh");
+
 
 
 

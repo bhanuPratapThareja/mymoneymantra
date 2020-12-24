@@ -60,13 +60,13 @@ const api = {
             body: { request: { header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         leadProductDecision: {
-            devUrl: '/lead/api/lead/v1/product/decision',
+            devUrl: 'lead/api/lead/v1/product/decision',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
             body: {
                 "request": {
                     "header": {
-                        "correlationId": "25478965874",
+                        "correlationId": "",
                         "appId": "MMMWEBAPP"
                     },
                     "payload": {
@@ -208,7 +208,7 @@ const api = {
 
             }
         },
-        offers: {
+        customerOfferView: {
             devUrl: 'customer/api/customer/v1/view/offers',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
@@ -221,7 +221,19 @@ const api = {
                     }
                 }
             }
-
+        },
+        customerOffer : {
+            devUrl: 'customer/api/customer/v1/profile/offers',
+            uatUrl: 'api/master/v1/',
+            prodUrl: 'api/master/v1/',
+            body: {
+                request: {
+                    header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: {
+                        "mobileNo": "9999000090",
+                        "customerId": "9999000090"
+                    }
+                }
+            }
         }
 
 

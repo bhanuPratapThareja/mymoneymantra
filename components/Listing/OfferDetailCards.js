@@ -1,44 +1,20 @@
-import Strapi from '../../providers/strapi'
 import { useEffect, useState } from 'react'
-import Router from 'next/router';
+import Image from '../ImageComponent/ImageComponent'
+import DecisionButton from '../DecisionButton/DescisionButton'
+import { useRouter } from 'next/router'
+import { getBasePath } from '../../Utils/getPaths';
 
 const OfferDetailCards = props => {
-    const strapi = new Strapi()
+    const router = useRouter()
     const [offers, setOffers] = useState([])
+    const [basePath, setBasePath] = useState('')
 
     useEffect(() => {
         setOffers(props.offerCards)
+        setBasePath(getBasePath(router.pathname))
     })
 
-    // const cardButtonClick = offer => {
-    //     const basePath = '/credit-cards'
-    //     const { bank_slug: bank, product_slug: product, 
-    //         type, button_type: buttonType, button_type: 
-    //         buttonText, bank_name } = offer
-
-    //     let pathName = ''
-    //     if (type == "eConnect" || type == 'instantApproval') {
-    //         pathName = `${basePath}/long-form/${bank}/${product}`
-    //     } else {
-    //         pathName = `${basePath}/thank-you`
-    //     }
-    //     const query = { buttonType, buttonText, bank_name }
-    //     routerRedirect(pathName, query)
-    // }
-
-    const goToDetailsPage = offer => {
-        const { bank : { bank_name: bankName, slug: bankSlug }, slug: productSlug } = offer
-        const basePath = '/credit-cards'
-        const pathName = `${basePath}/${bankSlug}/${productSlug}`
-        const query = { bankName }
-        routerRedirect(pathName, query)
-    }
-
-    const routerRedirect = (pathname, query) => {
-        Router.push({ pathname, query }, pathname, { shallow: true })
-    }
-
-    if(!offers) {
+    if (!offers) {
         return null
     }
 
@@ -52,31 +28,48 @@ const OfferDetailCards = props => {
                                 <img className="recommended" src="/assets/images/icons/stamp.svg" /> : null}
                             <div className="top">
                                 <div className="name">
-                                    <img className="mob-logo" src={`${strapi.baseUrl}${offer.bank.bank_logo.url}`} alt={offer.bank.bank_logo.name} />
+                                    <Image className="mob-logo" image={offer.bank.bank_logo} />
                                     <h3><span>{offer.bank.bank_name}</span><br />{offer.product_name}</h3>
                                     <div>
-                                        <img src={`${strapi.baseUrl}${offer.product_image.url}`} alt={offer.product_image.name} />
+                                        <Image image={offer.product_image} />
                                     </div>
                                 </div>
                                 <div className="content">
                                     <ul>
-                                        {offer.loan_listing_card_features.map(feature => <li key={feature.id}>{feature.loan_listing_card_feature}</li>)}
+                                        {offer.listing_cards_features.map(feature => <li key={feature.id}>
+                                            <span dangerouslySetInnerHTML={{ __html: feature.listing_cards_feature_text }}></span>
+                                        </li>)}
                                     </ul>
                                 </div>
-                                <div className="fee">
+                                {offer.annual_fee_fy ? <div className="fee">
                                     <h5>Annual fee:</h5>
                                     <p><b>₹ {offer.annual_fee_fy}</b> (First Year)</p>
-                                    <p><b>₹ {offer.annual_fee_sy}</b> (Second year onwards)</p>
+                                    {offer.annual_fee_sy ? <p><b>₹ {offer.annual_fee_sy}</b> (Second year onwards)</p> : null}
 
-                                </div>
+                                </div> : null}
+
+                                {offer.intrest_rate ? <div className="fee">
+                                    <h5>Interest Rate:</h5>
+                                    <p dangerouslySetInnerHTML={{ __html: offer.intrest_rate }}></p>
+                                </div> : null}
                             </div>
                             <div className="bottom">
                                 <div className="lifetime">
-                                    <h5>{offer.usp_highlights}</h5>
+                                    <h5><span dangerouslySetInnerHTML={{ __html: offer.usp_highlights }}></span></h5>
                                 </div>
                                 <div className="options">
-                                    <button id="view-details" onClick={() => goToDetailsPage(offer)}>View Details</button>
-                                    {/* <button onClick={() => cardButtonClick(offer)} id="apply-now">{offer.button_text}</button> */}
+                                    <DecisionButton
+                                        id='view-details'
+                                        basePath={`/${basePath}`}
+                                        buttonText='View Details'
+                                        offer={offer}
+                                    />
+                                    <DecisionButton
+                                        id='apply-now'
+                                        basePath={`/${basePath}`}
+                                        buttonText={offer.productDecision}
+                                        offer={offer}
+                                    />
                                 </div>
                             </div>
                         </div>

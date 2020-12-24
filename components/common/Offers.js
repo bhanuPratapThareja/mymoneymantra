@@ -1,59 +1,67 @@
 import { useRouter } from 'next/router'
-import Strapi from '../providers/strapi'
-import { viewOffer, customerOfferData } from '../services/offersService'
+import Image from '../ImageComponent/ImageComponent';
+import { viewOffer,customerOfferData } from '../../services/offersService';
 
 const Offers = props => {
-   const strapi = new Strapi()
+console.log('inside offers props.data',props.data);
    const router = useRouter()
-   const redirectToDetailsPage = (bank, product) => {
-      // console.log(router)
-      // const path = Router.query.path[0]
-      // if (!bank || !product) {
-      //    Router.push('/404')
-      //    return
-      // }
-      // router.push(`${router.pathname}/${bank}/${product}`)
-   }
-   customerOfferData();
 
-   if (!props.data.cards.length) {
+   const redirectToDetailsPage = (bank, product) => {
+        const path = router.query.path[0]
+        if (!bank || !product) {
+           Router.push('/404')
+           return
+        }
+        router.push(`/${path}/${bank}/${product}`)
+   }
+
+   if (!props.data.product_cards.length) {
       return null
    }
+
+   const { section_heading, product_cards } = props.data
 
    return (
       <section data-aos="fade-up" className="container popular-card-container">
          <div className="popular-cards">
-            <h2>Popular Credit Cards</h2>
+            <h2>{section_heading}</h2>
             <div className="popular-cards-slider" id="popular-cards-sec">
-               {props.data.cards.map(offer => {
-                  const { id, bank, product_name, card_features, annual_fee, usp_highlights, slug } = offer
+               {product_cards.map(offer => {
+                  const { id, bank, product_name, cards_feature, annual_fee, intrest_rate, usp_highlights, slug } = offer
                   return (
                      <div className="popular-cards-slider-card" key={id} onClick={() => redirectToDetailsPage(bank.slug, slug)}>
                         <div className="popular-cards-slider-card-top">
                            <div className="head">
                               <h3><b className="card_name">{bank.bank_name}</b><br />{product_name}</h3>
-                              <img src={`${strapi.baseUrl}${bank.bank_logo.url}`} />
+                              <Image image={bank.bank_logo} />
                            </div>
                            <div className="content">
                               <ul>
-                                 {card_features.map(feature => <li key={feature.id}>{feature.card_feature}</li>)}
+                                 {cards_feature.map(feature => <li key={feature.id} dangerouslySetInnerHTML={{ __html: feature.cards_features_text }}></li>)}
                               </ul>
                            </div>
+
                            {annual_fee ? <div className="fee">
                               <h5><b>₹{annual_fee.fy_annual_fee}</b> Annual fee</h5>
                            </div> : null}
+
+                           {intrest_rate ? <div className="fee">
+                              <div dangerouslySetInnerHTML={{ __html: intrest_rate }}></div>
+                           </div> : null}
                         </div>
                         <div className="popular-cards-slider-card-bottom">
-                           <div>
-                              <h5>{usp_highlights}</h5>
-                           </div>
+                           <div dangerouslySetInnerHTML={{ __html: usp_highlights }}></div>
                         </div>
                      </div>
                   )
                })}
 
             </div>
+<<<<<<< HEAD
+          </div> 
+=======
          </div>
+>>>>>>> e2d52f3aeff73b2a715e2273875458261b2e7567
       </section>
    )
 }

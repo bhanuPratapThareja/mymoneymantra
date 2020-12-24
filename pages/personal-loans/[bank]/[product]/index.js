@@ -5,12 +5,6 @@ import Strapi from '../../../../providers/strapi'
 import Layout from '../../../../components/Layout'
 import OfferBankProductDetails from '../../../../components/Details/OfferBankProductDetails'
 import BankProductBanner from '../../../../components/Details/BankProductBanner'
-import CreditScore from '../../../../components/common/CreditScore'
-import TrendingOffers from '../../../../components/TrendingOffers'
-import Banks from '../../../../components/Banks'
-import FinancialTools from '../../../../components/common/FinancialTools'
-import Rewards from '../../../../components/common/Rewards'
-import LearnMore from '../../../../components/common/LearnMore'
 import { getOfferWithBank } from '../../../../services/offersService'
 
 const Details = props => {
@@ -43,11 +37,10 @@ const Details = props => {
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const path = 'credit-cards'
+    const path = 'personal-loans'
     const { product } = ctx.params
     const details = await strapi.processReq('GET', `bank-product-mappings?card.slug=${product}`)
     const offer = await getOfferWithBank(details[0].card)
-
     return { props: { details, path, offer } }
 }
 
