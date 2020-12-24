@@ -6,7 +6,7 @@ import Offers from '../../../components/common/Offers'
 import CreditScore from '../../../components/common/CreditScore';
 import FinancialTools from '../../../components/common/FinancialTools';
 import Rewards from '../../../components/common/Rewards';
-import ThankYouBanner from '../../../components/Common/ThankYouBanner';
+import ThankYouBanner from '../../../components/common/ThankYouBanner';
 
 
 const ThankYou = props => {
