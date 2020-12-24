@@ -4,8 +4,8 @@ import Image from '../ImageComponent/ImageComponent'
 const AppDownload = props => {
     // const strapi = new Strapi()
     const { app_download_heading, app_download_content, app_download_image, app_download_app_store_image,
-        app_download_app_store_url, app_download_play_store_image, app_play_store_url, open_in_new_window } = props.data.app_download
-
+        app_download_app_store_url, app_download_play_store_image, app_play_store_url, open_in_new_window ,app_download_store_url} = props.data.app_download
+    
     const onOpenStore = url => {
         const isOpenInNewWindow = open_in_new_window ? '_blank' : '_self'
         window.open(url, `${isOpenInNewWindow}`)
@@ -21,15 +21,21 @@ const AppDownload = props => {
                             <div dangerouslySetInnerHTML={{ __html: app_download_content }}></div>
                         </div>
                         <div className="download-buttons">
-                            <Image 
-                                image={app_download_play_store_image} 
-                                onImageClick={() => onOpenStore(app_play_store_url)} 
+                            <Image
+                                image={app_download_play_store_image}
+                                onImageClick={() => onOpenStore(app_play_store_url)}
                             />
                             {/* <img
                                 src={`${strapi.baseUrl}${app_download_app_store_image.url}`}
                                 alt={app_download_app_store_image.name}
                                 onClick={() => onOpenStore(app_download_app_store_url)}
                             /> */}
+
+                            <Image
+                                image={app_download_app_store_image}
+                                onImageClick={() => onOpenStore(app_download_store_url)}
+                            />
+
                         </div>
                     </div>
                     <div className="app-download-wrapper-right">
