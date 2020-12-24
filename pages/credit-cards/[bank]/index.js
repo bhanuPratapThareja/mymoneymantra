@@ -3,7 +3,6 @@ import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
 import LearnMore from '../../../components/common/LearnMore'
 import Offers from '../../../components/common/Offers'
-import Banks from '../../../components/Banks'
 import CreditScore from '../../../components/common/CreditScore';
 import FinancialTools from '../../../components/common/FinancialTools';
 import Rewards from '../../../components/common/Rewards';
@@ -24,8 +23,7 @@ const CreditCards = props => {
                     return <CreditScore key={block.id} data={block} />
                 case 'blocks.offer':
                     return <Offers key={block.id} data={block} />
-                case 'blocks.bank-new':
-                    return <Banks key={block.id} banks={block} />
+             
                 case 'blocks.financial-tools':
                     return <FinancialTools key={block.id} tools={block} />
                 case 'blocks.rewards':

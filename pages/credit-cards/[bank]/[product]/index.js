@@ -1,16 +1,10 @@
 import { useEffect } from 'react'
 import Router from 'next/router'
-import { useRouter } from 'next/router'
 import Strapi from '../../../../providers/strapi'
 import Layout from '../../../../components/Layout'
 import OfferBankProductDetails from '../../../../components/Details/OfferBankProductDetails'
 import BankProductBanner from '../../../../components/Details/BankProductBanner'
 import CreditScore from '../../../../components/common/CreditScore'
-import TrendingOffers from '../../../../components/TrendingOffers'
-import Banks from '../../../../components/Banks'
-import FinancialTools from '../../../../components/common/FinancialTools'
-import Rewards from '../../../../components/common/Rewards'
-import LearnMore from '../../../../components/common/LearnMore'
 import { getOfferWithBank } from '../../../../services/offersService'
 
 const Details = props => {
