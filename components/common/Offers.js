@@ -57,11 +57,7 @@ console.log('inside offers props.data',props.data);
                })}
 
             </div>
-<<<<<<< HEAD
-          </div> 
-=======
          </div>
->>>>>>> e2d52f3aeff73b2a715e2273875458261b2e7567
       </section>
    )
 }
