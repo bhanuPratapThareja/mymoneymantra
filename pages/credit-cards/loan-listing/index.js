@@ -92,7 +92,6 @@ export async function getServerSideProps(ctx) {
     const listingFilter = await strapi.processReq('GET', 'credit-cards-filters')
     const filters = listingFilter.length ? listingFilter[0] : null
     const data = pageData[0]
-    console.log(data)
     const loanListingOfferCards = await updateOfferCards(data)
     return { props: { data, filters, loanListingOfferCards } }
 }

@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
-import Image from '../ImageComponent/ImageComponent'
+import Image from '../ImageComponent/ImageComponent';
+import { viewOffer,customerOfferData } from '../../services/offersService';
 
 const Offers = props => {
-   console.log(props)
+console.log('inside offers props.data',props.data);
    const router = useRouter()
 
    const redirectToDetailsPage = (bank, product) => {

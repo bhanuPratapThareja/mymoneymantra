@@ -16,7 +16,6 @@ import Blogger from '../components/common/Blogger'
 const Home = props => {
 
     const getComponents = (dynamic) => {
-        console.log(dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner-component':

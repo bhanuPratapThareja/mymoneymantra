@@ -13,7 +13,7 @@ const BankProductBanner = props => {
 
     const getCardsWithButtonText = async cards => {
         const offers = await getProductDecision([cards])
-        console.log('new cards: ', offers[0])
+        // console.log('new cards: ', offers[0])
     }
 
     return (

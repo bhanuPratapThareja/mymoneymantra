@@ -20,7 +20,6 @@ const PersonalLoans = props => {
     })
 
     const getComponents = dynamic => {
-        console.log('personal dynamic: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner-component':

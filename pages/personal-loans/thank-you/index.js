@@ -15,7 +15,6 @@ const ThankYou = props => {
     })
 
     const getComponents = dynamic => {
-        console.log('thanks: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.than-you-banner-component':
