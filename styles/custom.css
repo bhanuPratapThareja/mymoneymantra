@@ -485,7 +485,7 @@ div#address_proof_upload_button {
   position: relative;
 }
 
-/* .otp-wrapper.login-options {
+.otp-wrapper.login-options {
   position: absolute;
   font-family: "Avenir-Roman";
   top: 150px;
@@ -516,7 +516,7 @@ div#address_proof_upload_button {
 
 .otp-wrapper.login-options .form__group.field {
   margin: 0 0 15px;
-} */
+}
 
 .credit-card-flow .homepage-banner-wrapper h2,
 .homepage-flow .buy-section-wrapper h2,
@@ -563,13 +563,50 @@ div#address_proof_upload_button {
   margin-top: 277.92px !important;
 }
 
-.homepage-flow .testimonial-wrapper-block h3 strong {
+.homepage-flow .testimonial-wrapper-block h3 strong, 
+.score-content h2 strong{
   color: #89C142; 
 }
 
 .homepage-flow .buy-section-wrapper h2 {
   text-align: center;
 }
+
+.credit-card-flow .banner-features-block h2 {
+  color: #ffffff;
+  margin-top: 16px;
+  font-size: 1.25rem;
+  font-family: "Avenir-Heavy";
+  line-height: 2rem;
+}
+
+.homepage-flow .banner-features {
+  margin-top: 99px;
+}
+
+.homepage-flow .score-container {
+  margin-top: 128px !important;
+}
+
+.personal-loan-flow .pl-image {
+  position: absolute;
+  right: 0;
+  top: 204px;
+}
+
+.personal-loan-listing .banner-wrapper .top div h2 {
+  text-align: center;
+  max-width: 640px;
+}
+
+.personal-loan-listing .banner-wrapper .top div h2 strong {
+  color: #89C142;
+}
+
+.personal-loan-listing .banner-wrapper .top {
+  padding-top: 0;
+}
+
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
