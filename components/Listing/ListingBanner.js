@@ -35,7 +35,7 @@ const ListingBanner = props => {
 
     return (
         <>
-            <section className="container banner">
+            <section className="container banner personal-loan-listing">
                 <div className="mobile-background"></div>
                 <div className="banner-wrapper cstm-bnr-txt">
                     <div className="top">

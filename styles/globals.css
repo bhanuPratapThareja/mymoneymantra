@@ -115,7 +115,7 @@
 .blog-wrapper {
   display: grid; }
 
-/* @font-face {
+@font-face {
   font-family: 'Avenir-Black';
   src: url("../assets/fonts/Avenir-Black-03.ttf") format('truetype');
   
@@ -136,8 +136,6 @@
   src: url("../assets/fonts/Avenir-Roman-12.ttf"); 
 }
 
-
-  src: url(/assets/fonts/Avenir-Roman-12.ttf); } */
 h1 {
   font-size: 2.5rem;
   font-family: "Avenir-Black";
