@@ -4,7 +4,7 @@ const HomePageBanner = props => {
 
     const strapi = new Strapi()
     const { product_banner_heading, product_banner_sub_text, product_banner_image } = props.data.product_banner
-
+    console.log('inside home page  props.data',props.data.product_banner)
     return (
         <section className="homepage-banner">
             <div className="container homepage-banner-wrapper">

@@ -1,11 +1,13 @@
 import { useRouter } from 'next/router'
-import Image from '../ImageComponent/ImageComponent'
+import Image from '../ImageComponent/ImageComponent';
+import { viewOffer,customerOfferData } from '../../services/offersService';
 
 const Offers = props => {
-   console.log(props)
+console.log('inside offers props.data',props.data);
    const router = useRouter()
 
    const redirectToDetailsPage = (bank, product) => {
+      viewOffer();
       //   const path = router.query.path[0]
       //   if (!bank || !product) {
       //      Router.push('/404')
@@ -17,12 +19,13 @@ const Offers = props => {
    // if (!props.data.product_cards.length) {
    //    return null
    // }
+   customerOfferData();
 
    const { section_heading, product_cards } = props.data
 
    return (
       <section data-aos="fade-up" className="container popular-card-container">
-         {/* <div className="popular-cards">
+          <div className="popular-cards">
             <h2>{section_heading}</h2>
             <div className="popular-cards-slider" id="popular-cards-sec">
                {product_cards.map(offer => {
@@ -56,7 +59,7 @@ const Offers = props => {
                })}
 
             </div>
-         </div> */}
+          </div> 
       </section>
    )
 }

@@ -48,7 +48,6 @@ const PersonalLoanListing = props => {
     }
 
     const getComponents = (dynamic, filters) => {
-        console.log('listing: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.listing-banner-component':

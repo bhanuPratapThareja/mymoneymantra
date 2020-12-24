@@ -40,9 +40,7 @@ export async function getServerSideProps(ctx) {
     const path = 'personal-loans'
     const { product } = ctx.params
     const details = await strapi.processReq('GET', `bank-product-mappings?card.slug=${product}`)
-    console.log('details: ',  details)
     const offer = await getOfferWithBank(details[0].card)
-    console.log('offer: ',  offer)
     return { props: { details, path, offer } }
 }
 
