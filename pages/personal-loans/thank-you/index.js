@@ -45,7 +45,7 @@ const ThankYou = props => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const path = 'thank-you'
-    const pageData = await strapi.processReq('GET', `pages?slug=personal-loan-${path}`)
+    const pageData = await strapi.processReq('GET', `pages?slug=personal-loans-${path}`)
     const data = pageData[0]
     return { props: { data } }
 }
