@@ -16,9 +16,11 @@ const UspCards = props => {
     }
 
     return (
-        <div  data-aos="fade-up" className="container banner-features-container aos-init">
-            <div className="banner-features">
-                {renderUspCards(props.data.usp_cards)}
+        <div className="combined-wrapper">
+            <div data-aos="fade-up" className="container banner-features-container aos-init">
+                <div className="banner-features">
+                    {renderUspCards(props.data.usp_cards)}
+                </div>
             </div>
         </div>
     )

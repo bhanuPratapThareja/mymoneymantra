@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Strapi from '../providers/strapi'
+import Strapi from '../../providers/strapi'
 import Link from 'next/link'
 
 const ProductType = props => {

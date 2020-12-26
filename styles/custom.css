@@ -541,13 +541,13 @@ div#address_proof_upload_button {
   padding: 60px 0 0;
 }
 
-.homepage-flow .banner-card {
+/* .homepage-flow .banner-card {
   -ms-transform: rotate(0deg) !important;
   transform: rotate(0deg) !important;
   animation: none;
   top: 0;
   position: relative;
-}
+} */
 
 .homepage-flow .homepage-banner-wrapper-right-content {
   position: absolute;

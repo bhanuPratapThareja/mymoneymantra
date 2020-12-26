@@ -25,8 +25,8 @@ const Blogger = props => {
                                     <Image image={image} />
                                 </div>
                                 <div className="content">
-                                    <div dangerouslySetInnerHTML={{ __html: header }}></div>
-                                    <div dangerouslySetInnerHTML={{ __html: short_text }}></div>
+                                    <span dangerouslySetInnerHTML={{ __html: header }}></span>
+                                    <span dangerouslySetInnerHTML={{ __html: short_text }}></span>
 
                                     <div className="details">
                                         <span>{createdDate} </span><span>{read_text}</span>

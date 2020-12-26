@@ -87,7 +87,7 @@ class ShortExtendedForm extends React.Component {
     onGoToLetFindForm = () => {
         this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
             loadLetsFindForm()
-            if(this.otpInterval) {
+            if (this.otpInterval) {
                 clearInterval(this.otpInterval)
             }
             setTimeout(() => {
@@ -148,10 +148,10 @@ class ShortExtendedForm extends React.Component {
             this.setState({ ...this.state, slides: newSlides }, () => {
                 if (!errorsPresent) {
                     const newSlideId = incrementSlideId(this.state.currentSlide)
-                    if(!(this.state.slideIndex == this.state.slides.length - 1)){
+                    if (!(this.state.slideIndex == this.state.slides.length - 1)) {
                         this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId }, () => {
                             showSlides(n, this.state.slideIndex)
-                         })
+                        })
                     }
                 }
             })
@@ -182,7 +182,7 @@ class ShortExtendedForm extends React.Component {
                 this.checkInputValidity(field)
             }
         })
-        
+
 
     }
 
@@ -212,7 +212,7 @@ class ShortExtendedForm extends React.Component {
 
     onSubmitShortForm = () => {
         submitShortForm([...this.state.slides], this.state.currentSlide)
-        if(this.state.slideIndex == this.state.slides.length - 1) {
+        if (this.state.slideIndex == this.state.slides.length - 1) {
             const path = Router.query.path[0]
             Router.push(`${path}/loan-listing`)
         }
@@ -220,53 +220,55 @@ class ShortExtendedForm extends React.Component {
 
     render() {
         return (
-            <section data-aos="fade-up" className="container lets-find-container aos-init">
+            <div className="combined-wrapper">
+                <section data-aos="fade-up" className="container lets-find-container aos-init">
 
-                <div className="mobile-background"></div>
-                <div className="mobile-content">
-                    <h1>Credit cards for<br />all your needs.</h1>
-                </div>
+                    <div className="mobile-background"></div>
+                    <div className="mobile-content">
+                        <h1>Credit cards for<br />all your needs.</h1>
+                    </div>
 
-                <div className="all-form-wrapper">
-                    <OnBoardForm
-                        data={this.props.data.onboard_short_form}
-                        slides={this.state.slides}
-                        handleChange={this.handleChange}
-                        checkInputValidity={this.checkInputValidity}
-                        onClickLetsGo={this.onClickLetsGo}
-                        letsGoButtonDisabled={this.state.letsGoButtonDisabled}
-                    />
+                    <div className="all-form-wrapper">
+                        <OnBoardForm
+                            data={this.props.data.onboard_short_form}
+                            slides={this.state.slides}
+                            handleChange={this.handleChange}
+                            checkInputValidity={this.checkInputValidity}
+                            onClickLetsGo={this.onClickLetsGo}
+                            letsGoButtonDisabled={this.state.letsGoButtonDisabled}
+                        />
 
-                    <div className="lets-find-forms-container sms-otp" id="sms-otp">
-                        <div className="lets-find-stepper-wrapper">
-                            <OtpSlide
-                                onGoToLetFindForm={this.onGoToLetFindForm}
-                                onSubmitOtp={this.onSubmitOtp}
-                                decrementOtpTime={this.decrementOtpTime}
-                                otpTimeLeft={this.state.otpTimeLeft}
-                                mobileNo={this.state.mobileNo}
-                                disableOtpSubmitButton={this.state.disableOtpSubmitButton}
+                        <div className="lets-find-forms-container sms-otp" id="sms-otp">
+                            <div className="lets-find-stepper-wrapper">
+                                <OtpSlide
+                                    onGoToLetFindForm={this.onGoToLetFindForm}
+                                    onSubmitOtp={this.onSubmitOtp}
+                                    decrementOtpTime={this.decrementOtpTime}
+                                    otpTimeLeft={this.state.otpTimeLeft}
+                                    mobileNo={this.state.mobileNo}
+                                    disableOtpSubmitButton={this.state.disableOtpSubmitButton}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="lets-find-forms-container" id="lets-form-slides">
+                            <SFSlides
+                                slides={this.state.slides.slice(1)}
+                                slideIndex={this.state.slideIndex}
+                                currentSlide={this.state.currentSlide}
+                                handleChange={this.handleChange}
+                                checkInputValidity={this.checkInputValidity}
+                                handleInputDropdownSelection={this.handleInputDropdownSelection}
+                                handleInputDropdownChange={this.handleInputDropdownChange}
+                                handleClickOnSlideBackground={this.handleClickOnSlideBackground}
+                                onGoToPrevious={this.onGoToPrevious}
+                                onSubmitSlide={this.onSubmitSlide}
+                                onSubmitShortForm={this.onSubmitShortForm}
                             />
                         </div>
                     </div>
-
-                    <div className="lets-find-forms-container" id="lets-form-slides">
-                        <SFSlides
-                            slides={this.state.slides.slice(1)}
-                            slideIndex={this.state.slideIndex}
-                            currentSlide={this.state.currentSlide}
-                            handleChange={this.handleChange}
-                            checkInputValidity={this.checkInputValidity}
-                            handleInputDropdownSelection={this.handleInputDropdownSelection}
-                            handleInputDropdownChange={this.handleInputDropdownChange}
-                            handleClickOnSlideBackground={this.handleClickOnSlideBackground}
-                            onGoToPrevious={this.onGoToPrevious}
-                            onSubmitSlide={this.onSubmitSlide}
-                            onSubmitShortForm={this.onSubmitShortForm}
-                        />
-                    </div>
-                </div>
-            </section>
+                </section>
+            </div>
         )
     }
 
