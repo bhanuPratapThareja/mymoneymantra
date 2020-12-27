@@ -104,6 +104,9 @@ const Header = () => {
          </Head>
 
          {headerData ? <header className="header" ref={headerRef}>
+            <a className="header-menu-icon" id="menu-icon">
+               <img src="/assets/images/icons/menu.svg" alt="menu" />
+            </a>
             <Link href="/">
                <a>
                   <img

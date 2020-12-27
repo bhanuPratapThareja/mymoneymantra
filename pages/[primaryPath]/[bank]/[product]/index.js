@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import Router from 'next/router'
-import { useRouter } from 'next/router'
 import Strapi from '../../../../providers/strapi'
 import Layout from '../../../../components/Layout'
 import OfferBankProductDetails from '../../../../components/Details/OfferBankProductDetails'
 import BankProductBanner from '../../../../components/Details/BankProductBanner'
 import { getOfferWithBank } from '../../../../services/offersService'
+import { getPrimaryPath } from '../../../../Utils/getPaths';
 
 const Details = props => {
 
@@ -29,7 +29,7 @@ const Details = props => {
     }
 
     return (
-        <div className="listings">
+        <div className="credit-card-flow c-detail-page personal-detail-flow">
             {props.details.length ? <Layout>{getProductDetailsComponents(props.details[0].details_dynamic, props.offer, props.bank)}</Layout> : null}
         </div>
     )
@@ -37,7 +37,6 @@ const Details = props => {
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const path = 'personal-loans'
     const { product } = ctx.params
     const details = await strapi.processReq('GET', `bank-product-mappings?card.slug=${product}`)
     const offer = await getOfferWithBank(details[0].card)

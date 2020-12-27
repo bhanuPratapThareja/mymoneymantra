@@ -1,9 +1,9 @@
-export const getBasePath = resolvedUrl => {
+export const getPrimaryPath = resolvedUrl => {
     const pathSplit = resolvedUrl.split('/')
     return pathSplit[1]
 }
 
-export const getFirstPath = resolvedUrl => {
+export const getSecondaryPath = resolvedUrl => {
     const pathSplit = resolvedUrl.split('/')
     return pathSplit[2]
 }

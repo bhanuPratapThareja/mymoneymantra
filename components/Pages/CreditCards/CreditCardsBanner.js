@@ -1,11 +1,12 @@
-import UspCards from '../common/UspCards'
-import Image from '../ImageComponent/ImageComponent'
+import Image from '../../ImageComponent/ImageComponent'
+import { manageRichText } from '../../../Utils/richText'
 
-const Banner = props => {
-    console.log(props.data.product_banner)
+const CreditCardsBanner = props => {
     const { product_banner_heading, product_banner_sub_text,
         product_banner_image, product_banner_button_text,
-        product_banner_button_url, usp_cards} = props.data.product_banner
+        product_banner_button_url } = props.data.product_banner
+
+    const heading = manageRichText(product_banner_heading)
 
     function goToShortFormPage() {
         window.scrollTo({ top: 1000 })
@@ -15,13 +16,11 @@ const Banner = props => {
         <div className="combined-wrapper">
             <section className="banner">
                 <div className="banner-wrapper">
-                    {/* <div className="normal-banner"> */}
-                    <span dangerouslySetInnerHTML={{ __html: product_banner_heading }}></span>
+                    <span dangerouslySetInnerHTML={{ __html: heading }}></span>
                     <span dangerouslySetInnerHTML={{ __html: product_banner_sub_text }}></span>
                     {product_banner_button_text ?
                         <button onClick={goToShortFormPage}>{product_banner_button_text}</button>
                         : null}
-                    {/* </div> */}
                     <Image className="banner-card" image={product_banner_image} />
                 </div>
             </section>
@@ -29,4 +28,4 @@ const Banner = props => {
     )
 }
 
-export default Banner
+export default CreditCardsBanner

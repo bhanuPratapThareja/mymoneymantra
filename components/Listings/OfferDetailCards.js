@@ -2,16 +2,14 @@ import { useEffect, useState } from 'react'
 import Image from '../ImageComponent/ImageComponent'
 import DecisionButton from '../DecisionButton/DescisionButton'
 import { useRouter } from 'next/router'
-import { getBasePath } from '../../Utils/getPaths';
+import { getPrimaryPath } from '../../Utils/getPaths';
 
 const OfferDetailCards = props => {
     const router = useRouter()
     const [offers, setOffers] = useState([])
-    const [basePath, setBasePath] = useState('')
 
     useEffect(() => {
         setOffers(props.offerCards)
-        setBasePath(getBasePath(router.pathname))
     })
 
     if (!offers) {
@@ -37,7 +35,7 @@ const OfferDetailCards = props => {
                                 <div className="content">
                                     <ul>
                                         {offer.listing_cards_features.map(feature => <li key={feature.id}>
-                                            <span dangerouslySetInnerHTML={{ __html: feature.listing_cards_feature_text }}></span>
+                                            <span dangerouslySetInnerHTML={{ __html: feature.listing_card_feature }}></span>
                                         </li>)}
                                     </ul>
                                 </div>
@@ -60,13 +58,13 @@ const OfferDetailCards = props => {
                                 <div className="options">
                                     <DecisionButton
                                         id='view-details'
-                                        basePath={`/${basePath}`}
+                                        primaryPath={`/${props.primaryPath}`}
                                         buttonText='View Details'
                                         offer={offer}
                                     />
                                     <DecisionButton
                                         id='apply-now'
-                                        basePath={`/${basePath}`}
+                                        primaryPath={`/${props.primaryPath}`}
                                         buttonText={offer.productDecision}
                                         offer={offer}
                                     />

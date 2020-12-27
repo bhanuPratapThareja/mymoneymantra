@@ -2,19 +2,20 @@ import { useEffect, useState } from 'react'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
 
-import ListingBanner from '../../../components/Listing/ListingBanner';
-import OfferDetailCards from '../../../components/Listing/OfferDetailCards';
+import ListingsBanner from '../../../components/Listings/ListingsBanner';
+import OfferDetailCards from '../../../components/Listings/OfferDetailCards';
 import CreditScore from '../../../components/common/CreditScore'
+import Offers from '../../../components/common/Offers'
 import BankSlider from '../../../components/common/BankSlider'
 import Rewards from '../../../components/common/Rewards'
 import FinancialTools from '../../../components/common/FinancialTools'
 import Blogger from '../../../components/common/Blogger'
 import LearnMore from '../../../components/common/LearnMore'
 
-import { updateOfferCards } from '../../../Utils/loanListingCards'
-import { getProductDecision } from '../../../services/offersService'
+import { updateTrendingOffers, updateListingOffers, getProductDecision } from '../../../services/offersService'
 import { filterOfferCardsInFilterComponent } from '../../../Utils/loanListingFilterHandler'
-import { getBasePath, getFirstPath } from '../../../Utils/getPaths'
+import { getPrimaryPath, getSecondaryPath } from '../../../Utils/getPaths'
+import { getClassesForPage } from '../../../Utils/classesForPage';
 
 const PersonalLoanListing = props => {
     const [allOfferCards, setAllOfferCards] = useState([])
@@ -48,11 +49,12 @@ const PersonalLoanListing = props => {
         setOfferCards(filteredOfferCards)
     }
 
-    const getComponents = (dynamic, filters) => {
+    const getComponents = (dynamic, filters, primaryPath) => {
+        console.log(dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
-                case 'blocks.listing-banner-component':
-                    return <ListingBanner
+                case 'banners.listings-banner-component':
+                    return <ListingsBanner
                         key={block.id}
                         data={block}
                         filters={filters}
@@ -60,11 +62,14 @@ const PersonalLoanListing = props => {
                         filterOfferCards={filterOfferCards}
                         filterCardsFilterComponent={filterCardsFilterComponent}
                     />
-                case 'blocks.listing-offers-component':
-                case 'blocks.listing-cards-features-component':
-                    return <OfferDetailCards key={block.id} data={block} offerCards={offerCards} />
+                case 'offers.listing-offers-credit-cards-compnent':
+                case 'offers.listing-offers-personal-loan-compnent':
+                    return <OfferDetailCards key={block.id} data={block} offerCards={offerCards} primaryPath={primaryPath} />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
+                case 'offers.trending-offer-cards':
+                case 'offers.trending-offers-personal-loans':
+                    return <Offers key={block.id} data={block} primaryPath={primaryPath} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.rewards-component':
@@ -80,22 +85,28 @@ const PersonalLoanListing = props => {
     }
 
     return (
-        <div className="listings">
-            {props.data ? <Layout>{getComponents(props.data.dynamic, props.filters)}</Layout> : null}
+        <div className={props.pageClasses}>
+            {props.data ? <Layout>
+                {getComponents(props.data.dynamic, props.filters, props.primaryPath)}
+            </Layout> : null}
         </div>
     )
 }
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const basePath = getBasePath(ctx.resolvedUrl)
-    const firstPath = getFirstPath(ctx.resolvedUrl)
-    const pageData = await strapi.processReq('GET', `pages?slug=${basePath}-${firstPath}`)
-    const listingFilter = await strapi.processReq('GET', `filters?slug=${basePath}-filters`)
-    const filters = listingFilter.length ? listingFilter[0] : null
+    const primaryPath = getPrimaryPath(ctx.resolvedUrl)
+    const secondaryPath = getSecondaryPath(ctx.resolvedUrl)
+    const pageClasses = getClassesForPage(primaryPath, secondaryPath)
+
+    const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
+    const listingFilter = await strapi.processReq('GET', `filters?slug=${primaryPath}-filters`)
+    const filters = listingFilter && listingFilter.length ? listingFilter[0] : null
+
     const data = pageData[0]
-    const listingOfferCards = await updateOfferCards(data)
-    return { props: { data, filters, listingOfferCards } }
+    await updateTrendingOffers(data)
+    const listingOfferCards = await updateListingOffers(data)
+    return { props: { data, filters, listingOfferCards, pageClasses, primaryPath } }
 }
 
 export default PersonalLoanListing

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 
 const DecisionButton = props => {
     const router = useRouter()
-    const { id, basePath, buttonText, offer } = props
+    const { id, primaryPath, buttonText, offer } = props
 
     const onButtonClick = () => {
         const { bank: { bank_name: bankName, slug: bankSlug }, slug: productSlug } = offer
@@ -11,18 +11,18 @@ const DecisionButton = props => {
 
         switch (buttonText) {
             case 'Apply Now':
-                pathName = `${basePath}/thank-you`
+                pathName = `${primaryPath}/thank-you`
                 break
 
             case 'E Connect':
             case 'Instant Approval':
-                pathName = `${basePath}/long-form/${bankSlug}/${productSlug}`
+                pathName = `${primaryPath}/long-form/${bankSlug}/${productSlug}`
                 query = { bankName }
                 break
 
             // view details
             default:
-                pathName = `${basePath}/${bankSlug}/${productSlug}`
+                pathName = `${primaryPath}/${bankSlug}/${productSlug}`
                 query = { bankName }
         }
 
@@ -30,8 +30,6 @@ const DecisionButton = props => {
     }
 
     const routerRedirect = (pathname, query) => {
-        // console.log('pathname: ', pathname)
-        // console.log('query: ', query)
         router.push({ pathname, query }, pathname, { shallow: true })
     }
 

@@ -249,7 +249,7 @@ export const generateInputs = (component, updateField,
                                     value={box.checked}
                                     onChange={e => handleChange(e, type)}
                                 />
-                                <label><span dangerouslySetInnerHTML={{ __html: box.label }}></span></label>
+                                <label htmlFor={box.input_id}><span dangerouslySetInnerHTML={{ __html: box.label }}></span></label>
                             </div>
                         )
                     })}

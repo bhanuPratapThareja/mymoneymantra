@@ -1,7 +1,6 @@
 import $ from 'jquery'
 
 export const closeFilter = (filters, filterFunction) => {
-    console.log('filters: ', filters)
     $(".filter-cross").closest(".mm-modal").slideToggle(300);
     $('body', "html").css("overflow", "scroll")
     if (filterFunction) {

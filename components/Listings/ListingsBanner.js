@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import ListingFilter from './ListingFilter'
+import ListingFilter from './ListingsFilter'
 import Strapi from '../../providers/strapi'
 import $ from 'jquery'
+import { manageRichText } from '../../Utils/richText';
 
 if (typeof window != 'undefined') {
     $(document).ready(function () {
@@ -16,6 +17,7 @@ const ListingBanner = props => {
     const strapi = new Strapi()
     const { listing_banner_heading, category_component, listing_banner_products } = props.data.listing_banner
     const [selectedOption, setSelectedOption] = useState('all')
+    const heading = manageRichText(listing_banner_heading)
 
     useEffect(() => {
         onBannerCategoryChange(selectedOption)
@@ -35,11 +37,11 @@ const ListingBanner = props => {
 
     return (
         <>
-            <section className="container banner personal-loan-listing">
+            <section className="container banner">
                 <div className="mobile-background"></div>
                 <div className="banner-wrapper cstm-bnr-txt">
                     <div className="top">
-                        <div dangerouslySetInnerHTML={{ __html: listing_banner_heading }}></div>
+                        <div dangerouslySetInnerHTML={{ __html: heading }}></div>
                         {category_component && category_component.length ? <div className="category">
                             <h5>Browse by category:</h5>
                             <div className="category-wrapper">
@@ -48,7 +50,7 @@ const ListingBanner = props => {
                                         const {listing_banner_category_label, listing_banner_category_image} = category
                                         return (
                                             <React.Fragment key={category.id}>
-                                                <input className="lets-checkbox" value={listing_banner_category_label.toLowerCase()} type="radio" id={listing_banner_category_label.toLowerCase()} name="category" required />
+                                                <input readOnly className="lets-checkbox" checked={selectedOption === listing_banner_category_label.toLowerCase()} value={listing_banner_category_label.toLowerCase()} type="radio" id={listing_banner_category_label.toLowerCase()} name="category" required />
                                                 <label htmlFor={listing_banner_category_label.toLowerCase()} className="banner_label">
                                                     <img src={`${strapi.baseUrl}${listing_banner_category_image.url}`} alt={listing_banner_category_image.name} width="40" height="40" />
                                                     <h4 className="listing-banner_category-label">{listing_banner_category_label}</h4>

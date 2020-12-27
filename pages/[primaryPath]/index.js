@@ -1,7 +1,10 @@
 import { useEffect } from 'react'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
-import PersonalLoanBanner from '../../components/PersonalLoan/PersonalLoanBanner'
+
+import CreditCardsBanner from '../../components/Pages/CreditCards/CreditCardsBanner'
+import PersonalLoansBanner from '../../components/Pages/PersonalLoans/PersonalLoansBanner'
+
 import UspCards from '../../components/common/UspCards'
 import Offers from '../../components/common/Offers'
 import CreditScore from '../../components/common/CreditScore'
@@ -11,24 +14,36 @@ import FinancialTools from '../../components/common/FinancialTools'
 import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import { updatePopularOffers, updateTrendingOffers } from '../../services/offersService'
-import { getBasePath } from '../../Utils/getPaths'
+import { getPrimaryPath } from '../../Utils/getPaths'
+import { getClassesForPage } from '../../Utils/classesForPage'
+import ShortExtendedForm from '../../components/ShortExtendedForm';
 
-const PersonalLoans = props => {
+const PrimaryPage = props => {
+
+    // console.log('props.pageClasses: ', props.pageClasses)
 
     useEffect(() => {
         window.scrollTo(0, 0)
     })
 
-    const getComponents = dynamic => {
+
+    const getComponents = (dynamic, primaryPath) => {
+        console.log(dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
-                case 'blocks.product-banner-component':
-                    return <PersonalLoanBanner key={block.id} data={block} />
+                case 'banners.credit-cards-banner-component':
+                    return <CreditCardsBanner key={block.id} data={block} />
+                case 'banners.personal-loans-banner-component':
+                    return <PersonalLoansBanner key={block.id} data={block} />
                 case 'blocks.ups-cards-component':
                     return <UspCards key={block.id} data={block} />
-                case 'blocks.popular-offers-component':
-                case 'blocks.pl-offers-component':
-                    return <Offers key={block.id} data={block} />
+                case 'form-components.onboarding-short-form':
+                    return <ShortExtendedForm key={block.id} data={block} />
+                case 'offers.popular-offers-credit-cards-component':
+                case 'offers.popular-offers-personal-loans-component':
+                case 'offers.trending-offer-cards':
+                case 'offers.trending-offers-personal-loans':
+                    return <Offers key={block.id} data={block} primaryPath={primaryPath} />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'blocks.trending-offers':
@@ -49,22 +64,23 @@ const PersonalLoans = props => {
     }
 
     return (
-        <div className="credit-card-flow personal-loan-flow">
-            {props.data ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
+        <div className={props.pageClasses}>
+            {props.data ? <Layout>{getComponents(props.data.dynamic, props.primaryPath)}</Layout> : null}
         </div>
     )
 }
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const basePath = getBasePath(ctx.resolvedUrl)
-    const pageData = await strapi.processReq('GET', `pages?slug=${basePath}`)
-    const data = pageData[0]
+    const primaryPath = getPrimaryPath(ctx.resolvedUrl)
+    const pageClasses = getClassesForPage(primaryPath)
 
+    const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)
+    const data = pageData[0]
     await updatePopularOffers(data)
     await updateTrendingOffers(data)
 
-    return { props: { data } }
+    return { props: { data, pageClasses, primaryPath } }
 }
 
-export default PersonalLoans
+export default PrimaryPage
