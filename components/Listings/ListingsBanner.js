@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import ListingFilter from './ListingsFilter'
 import Strapi from '../../providers/strapi'
 import $ from 'jquery'
-import { manageRichText } from '../../Utils/richText';
 
 if (typeof window != 'undefined') {
     $(document).ready(function () {
@@ -17,7 +16,6 @@ const ListingBanner = props => {
     const strapi = new Strapi()
     const { listing_banner_heading, category_component, listing_banner_products } = props.data.listing_banner
     const [selectedOption, setSelectedOption] = useState('all')
-    const heading = manageRichText(listing_banner_heading)
 
     useEffect(() => {
         onBannerCategoryChange(selectedOption)
@@ -41,7 +39,7 @@ const ListingBanner = props => {
                 <div className="mobile-background"></div>
                 <div className="banner-wrapper cstm-bnr-txt">
                     <div className="top">
-                        <div dangerouslySetInnerHTML={{ __html: heading }}></div>
+                        <div dangerouslySetInnerHTML={{ __html: listing_banner_heading }}></div>
                         {category_component && category_component.length ? <div className="category">
                             <h5>Browse by category:</h5>
                             <div className="category-wrapper">
