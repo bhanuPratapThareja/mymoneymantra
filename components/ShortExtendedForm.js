@@ -35,11 +35,7 @@ class ShortExtendedForm extends React.Component {
         defaultOtpTime: 10,
         otpTimeLeft: 0,
         errorMsgs: {
-            mandatory: 'Required Field',
-            email: 'Email is not valid',
-            mobile: 'Invalid Mobile No',
-            pancard: 'Please enter a valid PAN number',
-            dropdown: 'Invalid Selection'
+            mandatory: 'Required Field'
         }
     }
 
@@ -212,7 +208,7 @@ class ShortExtendedForm extends React.Component {
 
     handleClickOnSlideBackground = () => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        resetDropdowns(inputs)
+        resetDropdowns(inputs, this.state.errorMsgs)
         this.setState({ slides: newSlides })
     }
 

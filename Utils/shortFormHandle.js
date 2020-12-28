@@ -1,4 +1,3 @@
-import axios from 'axios'
 import $ from 'jquery'
 import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
 import { getApiToHit } from '../api/dropdownApiConfig'
@@ -143,14 +142,15 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
 
             if (field.blur) {
                 if (inp.type === 'email' && inp.input_id === field.currentActiveInput) {
-                    if (!isEmailValid(inp.value)) {
+                    console.log(inp)
+                    if (!isEmailValid(inp)) {
                         errors = true
                         inp.error = true
                         inp.verified = false
                         if (!inp.value) {
                             inp.errorMsg = errorMsgs.mandatory
                         } else {
-                            inp.errorMsg = errorMsgs.email
+                            inp.errorMsg = inp.validation_error
                         }
                     } else {
                         inp.error = false
@@ -158,14 +158,14 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.verified = true
                     }
                 } else if (inp.type === 'phone_no' && inp.input_id === field.currentActiveInput) {
-                    if (!isNumberValid(inp.value)) {
+                    if (!isNumberValid(inp)) {
                         errors = true
                         inp.error = true
                         inp.verified = false
                         if (!inp.value) {
                             inp.errorMsg = errorMsgs.mandatory
                         } else {
-                            inp.errorMsg = errorMsgs.mobile
+                            inp.errorMsg = inp.validation_error
                         }
                     } else {
                         inp.error = false
@@ -174,14 +174,14 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                     }
 
                 } else if ((inp.type === 'text' && inp.input_id === 'pan_card') && inp.input_id === field.currentActiveInput) {
-                    if (!isPanValid(inp.value)) {
+                    if (!isPanValid(inp)) {
                         errors = true
                         inp.error = true
                         inp.verified = false
                         if (!inp.value) {
                             inp.errorMsg = errorMsgs.mandatory
                         } else {
-                            inp.errorMsg = errorMsgs.pancard
+                            inp.errorMsg = inp.validation_error
                         }
                     } else {
                         inp.error = false
@@ -193,7 +193,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                     if (!inp.selectedId) {
                         errors = true
                         inp.error = true
-                        inp.errorMsg = errorMsgs.dropdown
+                        inp.errorMsg = errorMsgs.mandatory
                         inp.verified = false
                     } else {
                         inp.error = false
@@ -225,24 +225,24 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                 inp.error = true
                 errors = true
             }
-            else if (inp.type === 'email' && !isEmailValid(inp.value)) {
-                inp.errorMsg = errorMsgs.email
+            else if (inp.type === 'email' && !isEmailValid(inp)) {
+                inp.errorMsg = inp.validation_error
                 inp.error = true
                 errors = true
             }
-            else if (inp.type === 'phone_no' && !isNumberValid(inp.value)) {
-                inp.errorMsg = errorMsgs.mobile
+            else if (inp.type === 'phone_no' && !isNumberValid(inp)) {
+                inp.errorMsg = inp.validation_error
                 inp.error = true
                 errors = true
             }
-            else if ((inp.type === 'text' && inp.input_id === 'pan_card') && !isPanValid(inp.value)) {
-                inp.errorMsg = errorMsgs.pancard
+            else if ((inp.type === 'text' && inp.input_id === 'pan_card') && !isPanValid(inp)) {
+                inp.errorMsg = inp.validation_error
                 inp.error = true
                 errors = true
             }
             else if (inp.type === 'input_with_dropdown' && !inp.selectedId) {
                 inp.error = true
-                inp.errorMsg = errorMsgs.dropdown
+                inp.errorMsg = inp.validation_error
                 errors = true
             } else {
                 inp.error = false
@@ -301,14 +301,19 @@ export const updateSelectionFromDropdown = (inputs, name, item) => {
             inp.value = item.selectedItem.cityName
             inp.selectedId = item.selectedItem.cityId
             inp.selectedItem = item.selectedItem
+            inp.error = false
         }
     })
 }
 
-export const resetDropdowns = (inputs, e) => {
+export const resetDropdowns = (inputs, errorMsgs) => {
     inputs.forEach(inp => {
         if (inp.type === 'input_with_dropdown') {
             inp.list = []
+            if(inp.value && !inp.selectedId) {
+                inp.error = true
+                inp.errorMsg = errorMsgs.mandatory
+            }
         }
     })
 }

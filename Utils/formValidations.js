@@ -1,18 +1,15 @@
-import { validMobileRegex, isValidPanNumber, validPincodeRegex } from './validator'
+import { validMobileRegex, isValidPanNumber } from './validator'
 
-export const isEmailValid = (e) => {
-    var filter = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
-    return String(e).search (filter) != -1;
+export const isEmailValid = inp => {
+    return RegExp(inp.pattern).test(inp.value)
 }
 
-export const isNumberValid = value => {
-    return validMobileRegex.test(value)
+export const isNumberValid = inp => {
+    return RegExp(inp.pattern).test(inp.value)
 }
 
-export const isPanValid = value => {
-    return isValidPanNumber.test(value)
+export const isPanValid = inp => {
+    return RegExp(inp.pattern).test(inp.value)
 }
 
-export const isPincodeValid = value => {
-    return validPincodeRegex(value)
-}
+// ^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$
