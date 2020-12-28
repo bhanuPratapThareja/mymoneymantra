@@ -14,9 +14,9 @@ import Blogger from '../../../components/common/Blogger'
 import LearnMore from '../../../components/common/LearnMore'
 
 import { updateTrendingOffers, updateListingOffers, getProductDecision } from '../../../services/offersService'
-import { filterOfferCardsInFilterComponent } from '../../../Utils/loanListingFilterHandler'
-import { getPrimaryPath, getSecondaryPath } from '../../../Utils/getPaths'
-import { getClassesForPage } from '../../../Utils/classesForPage';
+import { filterOfferCardsInFilterComponent } from '../../../utils/loanListingFilterHandler'
+import { getPrimaryPath, getSecondaryPath } from '../../../utils/getPaths'
+import { getClassesForPage } from '../../../utils/classesForPage';
 
 const PersonalLoanListing = props => {
     const router = useRouter()

@@ -22,7 +22,7 @@ import {
     showSlides,
     loadOtpForm,
     submitShortForm
-} from '../Utils/shortFormHandle'
+} from '../utils/shortFormHandle'
 
 class ShortExtendedForm extends React.Component {
     otpInterval = null;

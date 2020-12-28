@@ -14,8 +14,8 @@ import Blogger from '../../../../components/common/Blogger'
 import LearnMore from '../../../../components/common/LearnMore'
 
 import { updateTrendingOffers } from '../../../../services/offersService'
-import { getClassesForPage } from '../../../../Utils/classesForPage'
-import { getDetailsSearchParams } from '../../../../Utils/getPaths'
+import { getClassesForPage } from '../../../../utils/classesForPage'
+import { getDetailsSearchParams } from '../../../../utils/getPaths'
 
 const Details = props => {
 

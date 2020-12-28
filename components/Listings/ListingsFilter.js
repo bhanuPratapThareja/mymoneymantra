@@ -1,5 +1,5 @@
-import { closeFilter } from '../../Utils/loanListingFilterHandler'
-import { initializeMoneyRange, initializeYearRange, getSliderFilterValues } from '../../Utils/noUiSliderHandler'
+import { closeFilter } from '../../utils/loanListingFilterHandler'
+import { initializeMoneyRange, initializeYearRange, getSliderFilterValues } from '../../utils/noUiSliderHandler'
 
 class ListingFilter extends React.Component {
 

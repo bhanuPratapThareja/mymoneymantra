@@ -1,5 +1,5 @@
 import SFButtons from '../SFButtons/SFButtons'
-import { generateInputs } from '../../../Utils/inputGenerator'
+import { generateInputs } from '../../../utils/inputGenerator'
 
 const SFSlides = props => {
     const totalSlides = props.slides.length

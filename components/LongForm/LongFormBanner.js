@@ -1,8 +1,8 @@
 import Strapi from "../../providers/strapi";
 import { getCityData, getPinCodeData } from '../../services/formService';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { getFormPercentage } from '../../Utils/formPercentage';
-import { validEmailRegex, validMobileRegex, isValidPanNumber } from '../../Utils/validator';
+import { getFormPercentage } from '../../utils/formPercentage';
+import { validEmailRegex, validMobileRegex, isValidPanNumber } from '../../utils/validator';
 import $ from "jquery";
 import { updateLongForm } from '../../services/formService';
 import { getBase64, documentUpload } from '../../services/formService';

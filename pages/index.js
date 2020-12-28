@@ -13,7 +13,7 @@ import Rewards from '../components/common/Rewards'
 import FinancialTools from '../components/common/FinancialTools'
 import Blogger from '../components/common/Blogger'
 
-import { getClassesForPage } from '../Utils/classesForPage'
+import { getClassesForPage } from '../utils/classesForPage'
 
 const Home = props => {
 

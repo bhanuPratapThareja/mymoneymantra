@@ -1,4 +1,4 @@
-import { generateInputs } from '../../../Utils/inputGenerator'
+import { generateInputs } from '../../../utils/inputGenerator'
 
 const OnBoardForm = props => {
     return (

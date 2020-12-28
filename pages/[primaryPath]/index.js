@@ -15,8 +15,8 @@ import FinancialTools from '../../components/common/FinancialTools'
 import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import { updatePopularOffers, updateTrendingOffers } from '../../services/offersService'
-import { getPrimaryPath } from '../../Utils/getPaths'
-import { getClassesForPage } from '../../Utils/classesForPage'
+import { getPrimaryPath } from '../../utils/getPaths'
+import { getClassesForPage } from '../../utils/classesForPage'
 import ShortExtendedForm from '../../components/ShortExtendedForm'
 
 const PrimaryPage = props => {

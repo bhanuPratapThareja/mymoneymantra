@@ -12,8 +12,8 @@ import Blogger from '../../../components/common/Blogger'
 import LearnMore from '../../../components/common/LearnMore'
 
 import { updateTrendingOffers } from '../../../services/offersService'
-import { getPrimaryPath, getSecondaryPath } from '../../../Utils/getPaths'
-import { getClassesForPage } from '../../../Utils/classesForPage'
+import { getPrimaryPath, getSecondaryPath } from '../../../utils/getPaths'
+import { getClassesForPage } from '../../../utils/classesForPage'
 
 const ThankYou = props => {
     useEffect(() => {

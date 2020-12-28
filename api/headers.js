@@ -1,4 +1,4 @@
-import { getCookie } from '../Utils/cookie';
+import { getCookie } from '../utils/cookie';
 
 export const getAuthToken = () => {
     return getCookie('accessToken')

@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Strapi from '../providers/strapi'
 import { useEffect, useState, useRef } from 'react'
-import { isScrolledIntoView } from '../Utils/elementInView'
+import { isScrolledIntoView } from '../utils/elementInView'
 
 const Header = () => {
    const strapi = new Strapi()

@@ -2,7 +2,7 @@ import '../styles/globals.css'
 // import '../styles/custom.css'
 import axios from 'axios'
 import { setAuthToken, getAuthToken } from '../api/headers'
-import { generateCorrelationId } from '../Utils/correlationId'
+import { generateCorrelationId } from '../utils/correlationId'
 import { getApiData } from '../api/api';
 
 axios.interceptors.request.use(async config => {
