@@ -270,9 +270,9 @@ export const generateInputs = (component, updateField,
                             const radioId = `${input_id}_${type}`
                             return (
                                 <div key={button.id} id={radioId}>
-                                    <label htmlFor={button.value} style={labelStyles}>{button.label}</label>
+                                    <label style={labelStyles} htmlFor={input_id}>{button.label}</label>
                                     <input
-                                        className="lets-checkbox"
+                                        
                                         type="radio"
                                         name={input_id}
                                         id={button.value}

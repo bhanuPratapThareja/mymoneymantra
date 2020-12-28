@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
 
@@ -18,11 +19,16 @@ import { getPrimaryPath, getSecondaryPath } from '../../../Utils/getPaths'
 import { getClassesForPage } from '../../../Utils/classesForPage';
 
 const PersonalLoanListing = props => {
+    const router = useRouter()
     const [allOfferCards, setAllOfferCards] = useState([])
     const [offerCards, setOfferCards] = useState([])
 
     useEffect(() => {
         window.scrollTo(0, 0)
+        if (!props.data) {
+            router.push('/page-not-found')
+            return
+        }
         let cards = props.listingOfferCards
         getCardsWithButtonText(cards)
     }, [])
@@ -50,7 +56,6 @@ const PersonalLoanListing = props => {
     }
 
     const getComponents = (dynamic, filters, primaryPath) => {
-        console.log(dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.listings-banner-component':
@@ -102,10 +107,14 @@ export async function getServerSideProps(ctx) {
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const listingFilter = await strapi.processReq('GET', `filters?slug=${primaryPath}-filters`)
     const filters = listingFilter && listingFilter.length ? listingFilter[0] : null
-
     const data = pageData[0]
-    await updateTrendingOffers(data)
-    const listingOfferCards = await updateListingOffers(data)
+    let listingOfferCards = []
+
+    if(data){
+        await updateTrendingOffers(data)
+        listingOfferCards = await updateListingOffers(data)
+    }
+
     return { props: { data, filters, listingOfferCards, pageClasses, primaryPath } }
 }
 

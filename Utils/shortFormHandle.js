@@ -62,7 +62,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                     // if (field.value && inp.number_of_uploads && field.value.length > inp.number_of_uploads) {
                     //     field.value = null
                     //     alert(`Number of attachments allowed: ${inp.number_of_uploads}`)
-                   
+
                     // } else if (field.value && field.value.length && inp.max_upload_size_in_mb) {
                     //     for (let i = 0; i < field.value.length; i++) {
                     //         const file = field.value[i]
@@ -74,9 +74,9 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                     //         }
                     //     }
                     // } 
-                        inp.value = field.value
-                        inp.attachment = field.attachment
-                    
+                    inp.value = field.value
+                    inp.attachment = field.attachment
+
                 }
             })
 
@@ -338,16 +338,16 @@ export const getSfData = slides => {
 
 export const submitDocument = async document => {
     const base64 = await getBase64(document)
-    const { type , name } = document
+    const { type, name } = document
     documentUpload(base64, type, name)
 }
 
 export const submitShortForm = (slides, currentSlide) => {
 
     slides.forEach(slide => {
-        if(slide.slideId === currentSlide) {
+        if (slide.slideId === currentSlide) {
             slide.inputs.forEach(input => {
-                if(input.attachment) {
+                if (input.attachment) {
                     for (let i = 0; i < input.value.length; i++) {
                         const file = input.value[i]
                         submitDocument(file)
@@ -409,9 +409,15 @@ export const showSlides = (n, slideIndex) => {
         return true
     }
 
-    if (slideIndex == slides.length) {
+    if (slideIndex === slides.length) {
+        console.log('slideIndex: ', slideIndex)
+        console.log('slides.length: ', slides.length)
+        console.log('check')
         $("#button-text").text("Submit and view offers").css("color", "#89C142");
         $("#next").addClass("submit-short-form");
+        const buttonLabel = document.getElementById('button-text')
+        console.log('buttonLabel: ', buttonLabel)
+        buttonLabel.innerText = 'Submit and view offers'
 
     } else {
         $("#button-text").text("Next").css("color", "#221F1F");

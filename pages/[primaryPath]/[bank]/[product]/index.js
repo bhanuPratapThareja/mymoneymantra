@@ -2,10 +2,20 @@ import { useEffect } from 'react'
 import Router from 'next/router'
 import Strapi from '../../../../providers/strapi'
 import Layout from '../../../../components/Layout'
-import OfferBankProductDetails from '../../../../components/Details/OfferBankProductDetails'
-import BankProductBanner from '../../../../components/Details/BankProductBanner'
-import { getOfferWithBank } from '../../../../services/offersService'
-import { getPrimaryPath } from '../../../../Utils/getPaths';
+
+import DetailsBanner from '../../../../components/common/DetailsBanner'
+import ProductDetails from '../../../../components/common/ProductDetails'
+import CreditScore from '../../../../components/common/CreditScore'
+import Offers from '../../../../components/common/Offers'
+import BankSlider from '../../../../components/common/BankSlider'
+import Rewards from '../../../../components/common/Rewards'
+import FinancialTools from '../../../../components/common/FinancialTools'
+import Blogger from '../../../../components/common/Blogger'
+import LearnMore from '../../../../components/common/LearnMore'
+
+import { updateTrendingOffers } from '../../../../services/offersService'
+import { getClassesForPage } from '../../../../Utils/classesForPage'
+import { getDetailsSearchParams } from '../../../../Utils/getPaths'
 
 const Details = props => {
 
@@ -13,34 +23,74 @@ const Details = props => {
         window.scrollTo(0, 0)
     })
 
-    const getProductDetailsComponents = (details, offer) => {
-        return details.map(block => {
+    const getProductDetailsComponents = (dynamic, primaryPath, bankData, creditCardProductData, personalLoanProductData) => {
+        console.log('dynamic: ', dynamic)
+        return dynamic.map(block => {
             switch (block.__component) {
-                case 'blocks.product-banner':
-                    return <BankProductBanner key={block.id} data={block} offer={offer} />
-                case 'blocks.bank-product-details-cards':
-                    return <OfferBankProductDetails key={block.id} data={block} />
+                case 'banners.credit-cards-detail-banner-component':
+                case 'banners.personal-loans-details-banner-component':
+                    return <DetailsBanner
+                        key={block.id}
+                        data={block}
+                        bank={bankData}
+                        product={creditCardProductData || personalLoanProductData}
+                    />
+                case 'blocks.credit-cards-details-component':
+                case 'blocks.details-component':
+                    return <ProductDetails
+                        key={block.id}
+                        data={block}
+                        bank={bankData}
+                        product={creditCardProductData || personalLoanProductData}
+                        primaryPath={primaryPath}
+                    />
+                case 'blocks.credit-score-component':
+                    return <CreditScore key={block.id} data={block} />
+                case 'offers.trending-offer-cards':
+                case 'offers.trending-offers-personal-loans':
+                    return <Offers key={block.id} data={block} primaryPath={primaryPath} />
+                case 'blocks.bank-slider-component':
+                    return <BankSlider key={block.id} data={block} />
+                case 'blocks.rewards-component':
+                    return <Rewards key={block.id} data={block} />
+                case 'blocks.quick-financial-tools-component':
+                    return <FinancialTools key={block.id} data={block} />
+                case 'blocks.blogger':
+                    return <Blogger key={block.id} data={block} />
+                case 'blocks.learn-more-component':
+                    return <LearnMore key={block.id} data={block} />
             }
         })
     }
 
-    if (!props.details.length) {
-        Router.push('/404', { query: { path: props.path } })
+    if (!props.details || !props.details.dynamic) {
+        Router.push('/page-not-found')
     }
 
+    const { details, primaryPath, bankData, creditCardProductData, personalLoanProductData } = props
+
     return (
-        <div className="credit-card-flow c-detail-page personal-detail-flow">
-            {props.details.length ? <Layout>{getProductDetailsComponents(props.details[0].details_dynamic, props.offer, props.bank)}</Layout> : null}
+        <div className={props.pageClasses}>
+            {details.dynamic ? <Layout>{getProductDetailsComponents(details.dynamic, primaryPath, bankData, creditCardProductData, personalLoanProductData)}</Layout> : null}
         </div>
     )
 }
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const { product } = ctx.params
-    const details = await strapi.processReq('GET', `bank-product-mappings?card.slug=${product}`)
-    const offer = await getOfferWithBank(details[0].card)
-    return { props: { details, path, offer } }
+    const { primaryPath, bank, product } = ctx.params
+    const pageClasses = getClassesForPage(primaryPath, 'details')
+    const search = getDetailsSearchParams(primaryPath, bank, product)
+
+    const detailsData = await strapi.processReq('GET', search)
+    const details = detailsData[0]
+    const bankData = details.bank
+    const creditCardProductData = details.credit_card_product ? details.credit_card_product : null
+    const personalLoanProductData = details.personal_loan_product ? details.personal_loan_product : null
+
+    await updateTrendingOffers(details)
+
+    return { props: { details, primaryPath, pageClasses, bankData, creditCardProductData, personalLoanProductData } }
 }
 
 export default Details

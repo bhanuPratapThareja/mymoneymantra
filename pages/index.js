@@ -13,6 +13,8 @@ import Rewards from '../components/common/Rewards'
 import FinancialTools from '../components/common/FinancialTools'
 import Blogger from '../components/common/Blogger'
 
+import { getClassesForPage } from '../Utils/classesForPage'
+
 const Home = props => {
 
     const getComponents = (dynamic) => {
@@ -46,7 +48,7 @@ const Home = props => {
         })
     }
     return (
-        <div className="credit-card-flow homepage-flow">
+        <div className={props.pageClasses}>
             {props ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
         </div>
     )
@@ -54,10 +56,13 @@ const Home = props => {
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const path = 'home-page'
-    const pageData = await strapi.processReq('GET', `pages?slug=${path}`)
+    const primaryPath = 'home-page'
+    const pageClasses = getClassesForPage(primaryPath)
+
+    const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)
     const data = pageData[0]
-    return { props: { data } }
+
+    return { props: { data, pageClasses } }
 }
 
 export default Home

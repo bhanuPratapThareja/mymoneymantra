@@ -19,34 +19,34 @@ $(document).ready(function() {
     tooltips: true,
   });
   
-  noUiSlider.create(rangeSlider, {
-    start: [2000, 3000],
-    step: 1,
-    range: {
-      'min': [500],
-      'max': [5000]
-    },
-    tooltips: true,
-    format: moneyFormat,
-    connect: true
-  });
+  // noUiSlider.create(rangeSlider, {
+  //   start: [2000, 3000],
+  //   step: 1,
+  //   range: {
+  //     'min': [500],
+  //     'max': [5000]
+  //   },
+  //   tooltips: true,
+  //   format: moneyFormat,
+  //   connect: true
+  // });
 
-  noUiSlider.create(tenure, {
-    start: [3, 8],
-    step: 1,
-    range: {
-      'min': [1],
-      'max': [10]
-    },
-    tooltips: true,
-    format: {
-      from: Number,
-      to: function(value) {
-          return (parseInt(value)+" yrs.");
-      }
-  },
-    connect: true
-  });
+  // noUiSlider.create(tenure, {
+  //   start: [3, 8],
+  //   step: 1,
+  //   range: {
+  //     'min': [1],
+  //     'max': [10]
+  //   },
+  //   tooltips: true,
+  //   format: {
+  //     from: Number,
+  //     to: function(value) {
+  //         return (parseInt(value)+" yrs.");
+  //     }
+  // },
+  //   connect: true
+  // });
 
   noUiSlider.create(invest, {
     start: [2000, 3000],

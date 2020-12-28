@@ -2,15 +2,15 @@ import Router from 'next/router'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-const fourOFour = props => {
+const PageNotFound = props => {
     const router = useRouter()
     return (
         <div>
-            404
+            PageNotFound
             {/* <Link><a href="#">Go back</a></Link> */}
         </div>
 
     )
 }
 
-export default fourOFour
+export default PageNotFound

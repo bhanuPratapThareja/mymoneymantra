@@ -1,4 +1,5 @@
 import { closeFilter } from '../../Utils/loanListingFilterHandler'
+import { initializeMoneyRange, initializeYearRange, getSliderFilterValues } from '../../Utils/noUiSliderHandler'
 
 class ListingFilter extends React.Component {
 
@@ -12,21 +13,26 @@ class ListingFilter extends React.Component {
             filter_fee_annual, filter_emi,
             filter_tenure, filter_roi, filter_max_loan_amount } = this.props.filters
 
-        if (this.props.filters.checkboxes.length) {
-            this.props.filters.checkboxes.forEach(boxes => {
+        if (checkboxes.length) {
+            checkboxes.forEach(boxes => {
                 boxes.showCheckboxes = this.state.showCheckboxes
                 boxes.totalCheckboxes = boxes.values.length
                 boxes.veiwAll = boxes.values.length > this.state.showCheckboxes
             })
-            this.setState({ checkboxes: this.props.filters.checkboxes })
+            this.setState({ checkboxes })
         }
-        // if (filter_radio_name.length) {
-        //     this.setState({ filter_radio_name })
-        // }
-        // this.setState({ filter_fee_annual, filter_emi, filter_tenure, filter_roi, filter_max_loan_amount })
-        // setTimeout(() => {
-        //     console.log(this.state)
-        // }, 500);
+
+        if (filter_radio_name.length) {
+            this.setState({ filter_radio_name })
+        }
+
+        this.setState({ filter_fee_annual, filter_emi, filter_tenure, filter_roi, filter_max_loan_amount }, () => {
+            initializeMoneyRange(filter_fee_annual, 'annual-fees-range')
+            initializeMoneyRange(filter_emi, 'emi-range')
+            initializeMoneyRange(filter_roi, 'roi-range')
+            initializeMoneyRange(filter_max_loan_amount, 'max-loan-amount-range')
+            initializeYearRange(filter_tenure, 'tenure-range')
+        })
     }
 
     handleCheckbox = (e, type) => {
@@ -48,27 +54,17 @@ class ListingFilter extends React.Component {
     }
 
     onApplyFilter = () => {
-        const el = document.getElementsByClassName('noUi-tooltip')
-        if (el.length  && this.state.filter_fee_annual) {
-            let min = el[0].innerHTML
-            let max = el[1].innerHTML
-            min = min.split('')
-            min = min.filter(val => Number(val) || val == 0)
-            min = min.join('')
-            max = max.split('')
-            max = max.filter(val => Number(val) || val == 0)
-            max = max.join('')
+        const { filter_fee_annual, filter_emi, filter_roi, filter_max_loan_amount, filter_tenure } = this.state
+        const annualFees = getSliderFilterValues(filter_fee_annual, 'annual-fees-range')
+        const emi = getSliderFilterValues(filter_emi, 'emi-range')
+        const roi = getSliderFilterValues(filter_roi, 'roi-range')
+        const maxLoanAmount = getSliderFilterValues(filter_max_loan_amount, 'max-loan-amount-range')
+        const tenure = getSliderFilterValues(filter_tenure, 'tenure-range')
 
-            const annualFees = [min, max]
-            const filters = { ...this.state.filters, annualFees }
-            this.setState({ ...this.state, filters }, () => {
-                this.onCloseFilter()
-            })
-            return
-        }
-
-        this.onCloseFilter()
-        // console.log(this.state.filters)
+        const filters = { ...this.state.filters, annualFees, emi, roi, maxLoanAmount, tenure }
+        this.setState({ ...this.state, filters }, () => {
+            this.onCloseFilter()
+        })
     }
 
     onCloseFilter = () => {
@@ -102,8 +98,8 @@ class ListingFilter extends React.Component {
                     <div className="content">
 
                         <form>
-                            {this.state.checkboxes && this.state.checkboxes.length ? <>
-                                {this.state.checkboxes.map(checkboxes => {
+                            {checkboxes && checkboxes.length ? <>
+                                {checkboxes.map(checkboxes => {
                                     return (
                                         <div className="content-one" key={checkboxes.id}>
                                             <h5>{checkboxes.name}</h5>
@@ -144,7 +140,7 @@ class ListingFilter extends React.Component {
                                     <div className="container">
                                         <div className="row">
                                             <div className="col-sm-12">
-                                                <div id="slider-range"></div>
+                                                <div id="annual-fees-range"></div>
                                             </div>
                                             <div className="row">
                                                 <div className="col-sm-12">
@@ -152,8 +148,8 @@ class ListingFilter extends React.Component {
                                                     <input type="hidden" name="max-value" value="" readOnly />
                                                 </div>
                                             </div>
-                                            <span className="min-max left">₹{filter_fee_annual.min_annual_fee}</span>
-                                            <span className="min-max right">₹{filter_fee_annual.max_annual_fee}+</span>
+                                            <span className="min-max left">₹{filter_fee_annual.min}</span>
+                                            <span className="min-max right">₹{filter_fee_annual.max}+</span>
                                         </div>
                                     </div>
                                 </div>
@@ -165,7 +161,7 @@ class ListingFilter extends React.Component {
                                     <div className="container">
                                         <div className="row">
                                             <div className="col-sm-12">
-                                                <div id="slider-range"></div>
+                                                <div id="emi-range"></div>
                                             </div>
                                         </div>
                                         <div className="row">
@@ -174,8 +170,8 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" readOnly />
                                             </div>
                                         </div>
-                                        <span className="min-max left">₹500</span>
-                                        <span className="min-max right">₹5,000+</span>
+                                        <span className="min-max left">₹{filter_emi.min}</span>
+                                        <span className="min-max right">₹{filter_emi.max}+</span>
                                     </div>
                                 </div>
                             </div> : null}
@@ -207,7 +203,7 @@ class ListingFilter extends React.Component {
                                     <div className="container">
                                         <div className="row">
                                             <div className="col-sm-12">
-                                                <div id="return-range"></div>
+                                                <div id="roi-range"></div>
                                             </div>
                                         </div>
                                         <div className="row">
@@ -216,8 +212,8 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" />
                                             </div>
                                         </div>
-                                        <span className="min-max left">₹500</span>
-                                        <span className="min-max right">₹5,000+</span>
+                                        <span className="min-max left">₹{filter_roi.min}</span>
+                                        <span className="min-max right">₹{filter_roi.max}+</span>
                                     </div>
                                 </div>
                             </div> : null}
@@ -228,7 +224,7 @@ class ListingFilter extends React.Component {
                                     <div className="container">
                                         <div className="row">
                                             <div className="col-sm-12">
-                                                <div id="loan-range"></div>
+                                                <div id="max-loan-amount-range"></div>
                                             </div>
                                         </div>
                                         <div className="row">

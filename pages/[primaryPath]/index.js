@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 
@@ -16,16 +17,16 @@ import LearnMore from '../../components/common/LearnMore'
 import { updatePopularOffers, updateTrendingOffers } from '../../services/offersService'
 import { getPrimaryPath } from '../../Utils/getPaths'
 import { getClassesForPage } from '../../Utils/classesForPage'
-import ShortExtendedForm from '../../components/ShortExtendedForm';
+import ShortExtendedForm from '../../components/ShortExtendedForm'
 
 const PrimaryPage = props => {
-
-    // console.log('props.pageClasses: ', props.pageClasses)
-
+    const router = useRouter()
     useEffect(() => {
         window.scrollTo(0, 0)
+        if (!props.data) {
+            router.push('/page-not-found')
+        }
     })
-
 
     const getComponents = (dynamic, primaryPath) => {
         console.log(dynamic)
@@ -76,9 +77,12 @@ export async function getServerSideProps(ctx) {
     const pageClasses = getClassesForPage(primaryPath)
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)
-    const data = pageData[0]
-    await updatePopularOffers(data)
-    await updateTrendingOffers(data)
+    const data = pageData && pageData.length ? pageData[0] : null
+
+    if (data) {
+        await updatePopularOffers(data)
+        await updateTrendingOffers(data)
+    }
 
     return { props: { data, pageClasses, primaryPath } }
 }

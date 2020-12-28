@@ -10,6 +10,7 @@ import Rewards from '../../../components/common/Rewards'
 import FinancialTools from '../../../components/common/FinancialTools'
 import Blogger from '../../../components/common/Blogger'
 import LearnMore from '../../../components/common/LearnMore'
+
 import { updateTrendingOffers } from '../../../services/offersService'
 import { getPrimaryPath, getSecondaryPath } from '../../../Utils/getPaths'
 import { getClassesForPage } from '../../../Utils/classesForPage'

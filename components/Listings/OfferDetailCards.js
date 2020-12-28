@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import Image from '../ImageComponent/ImageComponent'
 import DecisionButton from '../DecisionButton/DescisionButton'
-import { useRouter } from 'next/router'
-import { getPrimaryPath } from '../../Utils/getPaths';
 
 const OfferDetailCards = props => {
-    const router = useRouter()
+    console.log(props.offerCards)
     const [offers, setOffers] = useState([])
+    const [productType, setProductType] = useState('')
 
     useEffect(() => {
         setOffers(props.offerCards)
+        const productType = props.primaryPath === 'personal-loans' ? 'Personal Loan' : ''
     })
 
     if (!offers) {
@@ -26,13 +26,25 @@ const OfferDetailCards = props => {
                                 <img className="recommended" src="/assets/images/icons/stamp.svg" /> : null}
                             <div className="top">
                                 <div className="name">
-                                    <Image className="mob-logo" image={offer.bank.bank_logo} />
-                                    <h3><span>{offer.bank.bank_name}</span><br />{offer.product_name}</h3>
-                                    <div>
+                                    {props.primaryPath === 'credit-cards' ?
+                                        <Image className="mob-logo" image={offer.bank.bank_logo}
+                                        /> : null}
+
+                                    <h3><span>{offer.bank.bank_name}</span></h3>
+                                    {props.primaryPath === 'credit-cards' ? <h3>{offer.product_name}</h3> : null}
+                                    {props.primaryPath === 'personal-loans' ? <h3>{'Personal Loan'}</h3> : null}
+
+                                    {props.primaryPath === 'credit-cards' ? <div>
                                         <Image image={offer.product_image} />
-                                    </div>
+                                    </div> : null}
+
+                                    {props.primaryPath === 'personal-loans' ? <div>
+                                        <Image image={offer.bank.bank_logo} />
+                                    </div> : null}
+
                                 </div>
                                 <div className="content">
+                                    <h5>Features:</h5>
                                     <ul>
                                         {offer.listing_cards_features.map(feature => <li key={feature.id}>
                                             <span dangerouslySetInnerHTML={{ __html: feature.listing_card_feature }}></span>
@@ -43,7 +55,6 @@ const OfferDetailCards = props => {
                                     <h5>Annual fee:</h5>
                                     <p><b>₹ {offer.annual_fee_fy}</b> (First Year)</p>
                                     {offer.annual_fee_sy ? <p><b>₹ {offer.annual_fee_sy}</b> (Second year onwards)</p> : null}
-
                                 </div> : null}
 
                                 {offer.intrest_rate ? <div className="fee">

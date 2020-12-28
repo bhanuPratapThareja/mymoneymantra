@@ -82,6 +82,10 @@ class ShortExtendedForm extends React.Component {
                 slideNo++
             }, 500)
         })
+
+        setTimeout(() => {
+            console.log(this.state)
+        }, 1000);
     }
 
     onGoToLetFindForm = () => {
@@ -148,10 +152,12 @@ class ShortExtendedForm extends React.Component {
             this.setState({ ...this.state, slides: newSlides }, () => {
                 if (!errorsPresent) {
                     const newSlideId = incrementSlideId(this.state.currentSlide)
-                    if (!(this.state.slideIndex == this.state.slides.length - 1)) {
+                    if (this.state.slideIndex < this.state.slides.length - 1) {
                         this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId }, () => {
                             showSlides(n, this.state.slideIndex)
                         })
+                    } else {
+                        console.log('submit form')
                     }
                 }
             })
@@ -212,15 +218,20 @@ class ShortExtendedForm extends React.Component {
 
     onSubmitShortForm = () => {
         submitShortForm([...this.state.slides], this.state.currentSlide)
-        if (this.state.slideIndex == this.state.slides.length - 1) {
-            const path = Router.query.path[0]
-            Router.push(`${path}/loan-listing`)
+        console.log(this.state.slideIndex)
+        console.log(this.state.slides.length)
+        if (this.state.slideIndex > this.state.slides.length - 1) {
+            console.log('here')
+            console.log(Router)
+            // const path = Router.query.path[0]
+            // this.router.push(`${path}/loan-listing`)
+            // console.log(router)
         }
     }
 
     render() {
         return (
-            <div className="combined-wrapper">
+            // <div className="combined-wrapper">
                 <section data-aos="fade-up" className="container lets-find-container aos-init">
 
                     <div className="mobile-background"></div>
@@ -268,7 +279,7 @@ class ShortExtendedForm extends React.Component {
                         </div>
                     </div>
                 </section>
-            </div>
+            // </div>
         )
     }
 
