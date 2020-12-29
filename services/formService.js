@@ -35,7 +35,11 @@ export const submitOtp = async mobileNo => {
             throw new Error('Something went wrong. Please try again.')
         }
     } catch (err) {
-        throw new Error(err.message)
+        if (err.response.status == 400) {
+            throw new Error('Please enter valid OTP!')
+        } else {
+            throw new Error(err.message)
+        }
     }
 }
 
@@ -84,7 +88,7 @@ export const generateLeadSF = async data => {
             company_name, net_monthly_income, cc_holder_bank, addressLine1, addressLine2, pincode
         } = data
 
-        body.request.payload.personal.firstName = full_name
+        body.request.payload.personal.fullName = full_name
         body.request.payload.personal.dob = dob
         body.request.payload.personal.pan = pan_card
 
@@ -102,7 +106,7 @@ export const generateLeadSF = async data => {
         body.request.payload.address[0].city = pincode ? pincode.pincode : null
         body.request.payload.address[0].state = pincode ? pincode.cityId : null
         body.request.payload.address[0].pincode = pincode ? pincode.stateId : null
-        
+
         axios.post(url, body)
             .then(res => resolve(res))
             .catch(err => reject(err))
@@ -120,7 +124,7 @@ export const getPinCodeData = async (name, value) => {
     } catch (error) { }
 }
 
-export const getCityData = async(name, value) => {
+export const getCityData = async (name, value) => {
     const { url, body } = getApiData('cities');
     body.request.payload.name = value;
     try {
@@ -132,15 +136,15 @@ export const getCityData = async(name, value) => {
 }
 
 export const updateLongForm = async data => {
-        const { url, body } = getApiData('generate')
-     
-        try {
-            const res = await axios.post(url, body)
-            const { resMsg } = res.response.payload;
-            return resMsg;
-        } catch (error) { }
-            
-  
+    const { url, body } = getApiData('generate')
+
+    try {
+        const res = await axios.post(url, body)
+        const { resMsg } = res.response.payload;
+        return resMsg;
+    } catch (error) { }
+
+
     return promise
 }
 

@@ -78,9 +78,9 @@ class ShortExtendedForm extends React.Component {
             }, 500)
         })
 
-        setTimeout(() => {
-            console.log(this.state)
-        }, 1000);
+        // setTimeout(() => {
+        //     console.log(this.state)
+        // }, 1000);
     }
 
     onGoToLetFindForm = () => {
@@ -99,6 +99,7 @@ class ShortExtendedForm extends React.Component {
             if (!errorsPresent) {
                 try {
                     const mobileNo = getUserMobileNumber(this.state.slides[0])
+                    this.setState({ mobileNo })
                     getOtp(mobileNo)
                     letsFindFormToOtpForm()
                     setTimeout(() => {
@@ -115,12 +116,22 @@ class ShortExtendedForm extends React.Component {
         try {
             await submitOtp(this.state.mobileNo)
             this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
-                goToSlides()
+                this.onSubmitLetGoSlide()
             })
         } catch (err) {
             alert(err.message)
         }
     }
+
+    onSubmitLetGoSlide = async () => {
+        try {
+            const res = await submitShortForm([...this.state.slides], this.state.currentSlide, this.props.primaryPath)
+            goToSlides()
+        } catch (err) {
+           alert(err)
+        }
+    }
+
 
     onSubmitSlide = () => {
         this.plusSlides(1)
@@ -206,7 +217,7 @@ class ShortExtendedForm extends React.Component {
     }
 
     onSubmitShortForm = () => {
-        submitShortForm([...this.state.slides], this.state.currentSlide)
+        submitShortForm([...this.state.slides], this.state.currentSlide, this.props.primaryPath)
         console.log(this.state.slideIndex)
         console.log(this.state.slides.length)
         if (this.state.slideIndex > this.state.slides.length - 1) {

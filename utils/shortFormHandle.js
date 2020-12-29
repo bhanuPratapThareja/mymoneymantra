@@ -347,23 +347,33 @@ export const submitDocument = async document => {
     documentUpload(base64, type, name)
 }
 
-export const submitShortForm = (slides, currentSlide) => {
-
-    slides.forEach(slide => {
-        if (slide.slideId === currentSlide) {
-            slide.inputs.forEach(input => {
-                if (input.attachment) {
-                    for (let i = 0; i < input.value.length; i++) {
-                        const file = input.value[i]
-                        submitDocument(file)
+export const submitShortForm = (slides, currentSlide, primaryPath) => {
+    return new Promise((resolve, reject) => {
+        slides.forEach(slide => {
+            if (slide.slideId === currentSlide) {
+                slide.inputs.forEach(input => {
+                    if (input.attachment) {
+                        for (let i = 0; i < input.value.length; i++) {
+                            const file = input.value[i]
+                            submitDocument(file)
+                        }
                     }
-                }
+                })
+            }
+        })
+    
+        const data = getSfData(slides)
+        const previouslySavedData = JSON.parse(localStorage.getItem(formData))
+        const formData = { ...previouslySavedData, [primaryPath] : data }
+        localStorage.setItem('formData', JSON.stringify(formData))
+        generateLeadSF(data)
+            .then(() => {
+                resolve(true)
             })
-        }
+            .catch(() => {
+                reject('Error while Submitting. Please try again.')
+            })
     })
-
-    const data = getSfData(slides)
-    generateLeadSF(data)
 }
 
 export const letsFindFormToOtpForm = () => {

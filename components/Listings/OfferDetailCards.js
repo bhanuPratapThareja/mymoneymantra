@@ -1,16 +1,49 @@
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import DecisionButton from '../DecisionButton/DescisionButton'
 
 const OfferDetailCards = props => {
-    console.log(props.offerCards)
+    const router = useRouter()
     const [offers, setOffers] = useState([])
-    const [productType, setProductType] = useState('')
 
     useEffect(() => {
         setOffers(props.offerCards)
         const productType = props.primaryPath === 'personal-loans' ? 'Personal Loan' : ''
     })
+
+    const onOfferClick = (primaryPath, buttonText, offer) => {
+        onButtonClick(primaryPath, buttonText, offer)
+    }
+
+    const onButtonClick = (primaryPath, buttonText, offer) => {
+        const { bank: { bank_name: bankName, slug: bankSlug }, slug: productSlug } = offer
+        let pathName = ''
+        let query = {}
+
+        switch (buttonText) {
+            case 'Apply Now':
+                pathName = `/${primaryPath}/thank-you`
+                break
+
+            case 'E Connect':
+            case 'Instant Approval':
+                pathName = `/${primaryPath}/long-form/${bankSlug}/${productSlug}`
+                query = { bankName }
+                break
+
+            // view details
+            default:
+                pathName = `/${primaryPath}/${bankSlug}/${productSlug}`
+                query = { bankName }
+        }
+
+        routerRedirect(pathName, query)
+    }
+
+    const routerRedirect = (pathname, query) => {
+        router.push({ pathname, query }, pathname, { shallow: true })
+    }
 
     if (!offers) {
         return null
@@ -20,7 +53,7 @@ const OfferDetailCards = props => {
         <section className="container long-cards">
             {offers.map((offer, i) => {
                 return (
-                    <div className="long-cards-wrapper" key={offer.id}>
+                    <div className="long-cards-wrapper" key={offer.id} onClick={() => onOfferClick(props.primaryPath, offer.productDecision, offer)}>
                         <div data-aos={i ? 'fade-up' : ''} className="long-cards-wrapper-card aos-init">
                             {offer.recommended ?
                                 <img className="recommended" src="/assets/images/icons/stamp.svg" /> : null}
@@ -69,15 +102,17 @@ const OfferDetailCards = props => {
                                 <div className="options">
                                     <DecisionButton
                                         id='view-details'
-                                        primaryPath={`/${props.primaryPath}`}
+                                        primaryPath={props.primaryPath}
                                         buttonText='View Details'
                                         offer={offer}
+                                        onButtonClick={onButtonClick}
                                     />
                                     <DecisionButton
                                         id='apply-now'
-                                        primaryPath={`/${props.primaryPath}`}
+                                        primaryPath={props.primaryPath}
                                         buttonText={offer.productDecision}
                                         offer={offer}
+                                        onButtonClick={onButtonClick}
                                     />
                                 </div>
                             </div>

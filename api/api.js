@@ -113,8 +113,7 @@ const api = {
                     "payload": {
                         "personal": {
                             "title": "",
-                            "firstName": "",
-                            "lastName": "",
+                            "fullName": "",
                             "middleName": "",
                             "dob": "",
                             "gender": "",

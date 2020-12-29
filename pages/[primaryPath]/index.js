@@ -42,7 +42,7 @@ const PrimaryPage = props => {
                 case 'blocks.ups-cards-component':
                     return <UspCards key={block.id} data={block} />
                 case 'form-components.onboarding-short-form':
-                    return <ShortExtendedForm key={block.id} data={block} />
+                    return <ShortExtendedForm key={block.id} data={block} primaryPath={primaryPath} />
 
                 case 'offers.popular-offers-credit-cards-component':
                 case 'offers.popular-offers-personal-loans-component':
