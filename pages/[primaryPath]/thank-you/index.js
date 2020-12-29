@@ -29,6 +29,7 @@ const ThankYou = props => {
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offer-cards':
                 case 'offers.trending-offers-personal-loans':
+                case 'blocks.trending-home-loan-component':
                     return <Offers key={block.id} data={block} primaryPath={primaryPath} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
@@ -59,6 +60,7 @@ export async function getServerSideProps(ctx) {
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const data = pageData[0]
+    console.log('data: ', data)
     await updateTrendingOffers(data)
 
     return { props: { data, pageClasses, primaryPath } }

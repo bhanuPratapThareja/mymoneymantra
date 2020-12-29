@@ -19,6 +19,7 @@ const ListingBanner = props => {
 
     useEffect(() => {
         onBannerCategoryChange(selectedOption)
+        console.log('props: ', props)
     }, [selectedOption])
 
     const onBannerCategoryChange = category => {
