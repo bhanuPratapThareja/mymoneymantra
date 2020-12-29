@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import DecisionButton from '../DecisionButton/DescisionButton'
+import { getDevice } from '../../Utils/getDevice'
 
 const OfferDetailCards = props => {
     const router = useRouter()
@@ -13,7 +14,9 @@ const OfferDetailCards = props => {
     })
 
     const onOfferClick = (primaryPath, buttonText, offer) => {
-        onButtonClick(primaryPath, buttonText, offer)
+        if(getDevice() !== 'desktop') {
+            onButtonClick(primaryPath, buttonText, offer)
+        }
     }
 
     const onButtonClick = (primaryPath, buttonText, offer) => {
