@@ -100,9 +100,9 @@
   margin: 0 0 0 1px;
 }
 
-.banks-holder {
+/* .banks-holder {
   margin-top: 128px !important;
-}
+} */
 
 .category-wrapper .checkbox-container .banner_label img {
   opacity: 0.5;
@@ -571,9 +571,9 @@ div#address_proof_upload_button {
   margin-top: 99px;
 }
 
-.homepage-flow .score-container {
+/* .homepage-flow .score-container {
   margin-top: 128px !important;
-}
+} */
 
 .personal-loan-flow .pl-image {
   position: absolute;
@@ -658,13 +658,23 @@ div#address_proof_upload_button {
   color: #fff;
 }
 
-.popular-cards-slider .popular-cards-slider-card-top .head img {
+/* .popular-cards-slider .popular-cards-slider-card-top .head img {
   max-width: 100px;
   max-height: 32px;
   width: auto;
   height: auto;
-}
+} */
 
+.financial-wrapper-card-content h3 {
+  color: #221F1F;
+  margin: 0 0 8px;
+} 
+
+.financial-wrapper-card .financial-wrapper-card-content p {
+  color: rgba(34, 31, 31, 0.6);
+  font-family: "Avenir-Heavy";
+  line-height: 1.5rem;
+}
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
@@ -724,9 +734,32 @@ div#address_proof_upload_button {
     color: #fff;
   }
   
-  .listings .banner-wrapper .top h2 {
+  .listings .banner-wrapper .top h2,
+  .credit-card-flow .banner h2,
+  .credit-card-flow .homepage-banner-wrapper h2, 
+  .homepage-flow .buy-section-wrapper h2, 
+  .homepage-flow .aboutUs-left h2 {
     font-size: 1.25rem;
     line-height: 1.75rem;
   }
+
+  .credit-card-flow .banner h2:first-child {
+    display: block;
+  }
+
+  .homepage-flow .testimonial .bottom-block {
+    margin-top: 32px !important;
+  }
+
+  .homepage-flow .product-wrapper-left a img:first-child,
+  .homepage-flow .product-wrapper-right a img:first-child {
+    max-width: 40px;
+    max-height: 40px;
+  }
+
+  /* .homepage-flow .aboutUs-left .aboutUs-underline {
+    display: none;
+  } */
+
 }
 
