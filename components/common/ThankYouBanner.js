@@ -12,9 +12,8 @@ const ThankYouBanner = props => {
         thank_you_content, thank_you_button } = props.data.thank_you_banner
 
     useEffect(() => {
-        
         const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-        const leadId = leadIdData[primaryPath]
+        const leadId = leadIdData && leadIdData[primaryPath] ? leadIdData[primaryPath] : ''
         setLeadId(leadId)
 
         let productType = ''
