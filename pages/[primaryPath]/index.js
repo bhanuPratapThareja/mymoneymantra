@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { useRouter } from 'next/router'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 
@@ -21,20 +20,19 @@ import { getClassesForPage } from '../../utils/classesForPage'
 import ShortExtendedForm from '../../components/common/ShortExtendedForm'
 
 const PrimaryPage = props => {
-    const router = useRouter()
     useEffect(() => {
         window.scrollTo(0, 0)
-        // if (!props.data) {
-        //     router.push('/page-not-found')
-        // }
     })
 
-    const getComponents = (dynamic, primaryPath) => {
-        // console.log(dynamic)
+    const goToShortFormPage = () => {
+        window.scrollTo({ top: 1000 })
+    }
+
+    const getComponents = dynamic => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.credit-cards-banner-component':
-                    return <CreditCardsBanner key={block.id} data={block} />
+                    return <CreditCardsBanner key={block.id} data={block} goToShortFormPage={goToShortFormPage} />
                 case 'banners.personal-loans-banner-component':
                     return <PersonalLoansBanner key={block.id} data={block} />
                 case 'banners.home-loans-banner-component':
@@ -42,7 +40,7 @@ const PrimaryPage = props => {
                 case 'blocks.ups-cards-component':
                     return <UspCards key={block.id} data={block} />
                 case 'form-components.onboarding-short-form':
-                    return <ShortExtendedForm key={block.id} data={block} primaryPath={primaryPath} />
+                    return <ShortExtendedForm key={block.id} data={block} />
 
                 case 'offers.popular-offers-credit-cards-component':
                 case 'offers.popular-offers-personal-loans-component':
@@ -50,7 +48,7 @@ const PrimaryPage = props => {
                 case 'offers.trending-offers-personal-loans':
                 case 'blocks.popular-home-loan-cards':
                 case 'blocks.trending-home-loan-component':
-                    return <Offers key={block.id} data={block} primaryPath={primaryPath} />
+                    return <Offers key={block.id} data={block} goToShortFormPage={goToShortFormPage} />
 
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
@@ -73,7 +71,7 @@ const PrimaryPage = props => {
 
     return (
         <div className={props.pageClasses}>
-            {props.data ? <Layout>{getComponents(props.data.dynamic, props.primaryPath)}</Layout> : null}
+            {props.data ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
         </div>
     )
 }
@@ -92,7 +90,7 @@ export async function getServerSideProps(ctx) {
         await updateTrendingOffers(data)
     }
 
-    return { props: { data, pageClasses, primaryPath } }
+    return { props: { data, pageClasses } }
 }
 
 export default PrimaryPage

@@ -27,8 +27,6 @@ const ThankYouBanner = props => {
         setProductType(productType)
     }, [])
 
-    
-
     return (
         <div className="thankyou-page">
             <div className="mobile-background"></div>

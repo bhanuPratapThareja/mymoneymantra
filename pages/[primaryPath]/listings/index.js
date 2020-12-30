@@ -4,7 +4,7 @@ import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
 
 import ListingsBanner from '../../../components/Listings/ListingsBanner'
-import OfferDetailCards from '../../../components/Listings/ListingCards'
+import ListingCards from '../../../components/Listings/ListingCards'
 import CreditScore from '../../../components/common/CreditScore'
 import Offers from '../../../components/common/Offers'
 import BankSlider from '../../../components/common/BankSlider'
@@ -20,21 +20,18 @@ import { getClassesForPage } from '../../../utils/classesForPage';
 
 const Listings = props => {
     const router = useRouter()
+    const primaryPath = router.query.primaryPath
     const [allOfferCards, setAllOfferCards] = useState([])
     const [offerCards, setOfferCards] = useState([])
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        // if (!props.data) {
-        //     router.push('/page-not-found')
-        //     return
-        // }
         let cards = props.listingOfferCards
         getCardsWithButtonText(cards)
     }, [])
 
     const getCardsWithButtonText = async cards => {
-        const newCards = await getProductDecision(cards, props.primaryPath)
+        const newCards = await getProductDecision(cards, primaryPath)
         setOfferCards(newCards)
         setAllOfferCards(newCards)
     }
@@ -55,7 +52,7 @@ const Listings = props => {
         setOfferCards(filteredOfferCards)
     }
 
-    const getComponents = (dynamic, filters, primaryPath) => {
+    const getComponents = (dynamic, filters) => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.listings-banner-component':
@@ -70,12 +67,12 @@ const Listings = props => {
                 case 'offers.listing-offers-credit-cards-compnent':
                 case 'offers.listing-offers-personal-loan-compnent':
                 case 'blocks.loan-listing-offer-details-component':
-                    return <OfferDetailCards key={block.id} data={block} offerCards={offerCards} primaryPath={primaryPath} />
+                    return <ListingCards key={block.id} data={block} offerCards={offerCards} />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offer-cards':
                 case 'offers.trending-offers-personal-loans':
-                    return <Offers key={block.id} data={block} primaryPath={primaryPath} />
+                    return <Offers key={block.id} data={block} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.rewards-component':
@@ -93,7 +90,7 @@ const Listings = props => {
     return (
         <div className={props.pageClasses}>
             {props.data ? <Layout>
-                {getComponents(props.data.dynamic, props.filters, props.primaryPath)}
+                {getComponents(props.data.dynamic, props.filters)}
             </Layout> : null}
         </div>
     )
@@ -101,8 +98,9 @@ const Listings = props => {
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const primaryPath = getPrimaryPath(ctx.resolvedUrl)
-    const secondaryPath = getSecondaryPath(ctx.resolvedUrl)
+    const { query } = ctx
+    const primaryPath = query.primaryPath ? query.primaryPath : getPrimaryPath(ctx.resolvedUrl)
+    const secondaryPath = 'listings'
     const pageClasses = getClassesForPage(primaryPath, secondaryPath)
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
@@ -116,7 +114,7 @@ export async function getServerSideProps(ctx) {
         listingOfferCards = await updateListingOffers(data)
     }
 
-    return { props: { data, filters, listingOfferCards, pageClasses, primaryPath } }
+    return { props: { data, filters, listingOfferCards, pageClasses } }
 }
 
 export default Listings

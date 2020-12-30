@@ -6,20 +6,20 @@ import { getDevice } from '../../utils/getDevice'
 
 const ListingCards = props => {
     const router = useRouter()
+    const primaryPath = router.query.primaryPath
     const [offers, setOffers] = useState([])
 
     useEffect(() => {
         setOffers(props.offerCards)
-        const productType = props.primaryPath === 'personal-loans' ? 'Personal Loan' : ''
     })
 
-    const onOfferClick = (primaryPath, buttonText, offer) => {
+    const onOfferClick = (buttonText, offer) => {
         if (getDevice() !== 'desktop') {
             onButtonClick(primaryPath, buttonText, offer)
         }
     }
 
-    const onButtonClick = (primaryPath, buttonText, offer) => {
+    const onButtonClick = (buttonText, offer) => {
         const { bank: { bank_name: bankName, slug: bankSlug }, slug: productSlug } = offer
         let pathname = ''
         const query = { bankName }
@@ -28,19 +28,18 @@ const ListingCards = props => {
             case 'Apply Now':
             case 'Instant Approval':
                 pathname = `/${primaryPath}/thank-you`
-                // pathname = `/${primaryPath}/thank-you/${bankSlug}/${productSlug}`
                 break
 
-            // case 'Apply Now':
             case 'E Connect':
                 pathname = `/${primaryPath}/long-form/${bankSlug}/${productSlug}`
                 break
+
             // view details
             default:
                 pathname = `/${primaryPath}/${bankSlug}/${productSlug}`
                 router.push({ pathname, query }, pathname, { shallow: true })
         }
-
+        
         routerRedirect(pathname, query)
     }
 
@@ -56,13 +55,13 @@ const ListingCards = props => {
         <section className="container long-cards">
             {offers.map((offer, i) => {
                 return (
-                    <div className="long-cards-wrapper" key={offer.id} onClick={() => onOfferClick(props.primaryPath, offer.productDecision, offer)}>
+                    <div className="long-cards-wrapper" key={offer.id} onClick={() => onOfferClick(offer.productDecision, offer)}>
                         <div data-aos={i ? 'fade-up' : ''} className="long-cards-wrapper-card aos-init">
                             {offer.recommended ?
                                 <img className="recommended" src="/assets/images/icons/stamp.svg" /> : null}
                             <div className="top">
                                 <div className="name">
-                                    {props.primaryPath === 'credit-cards' ?
+                                    {primaryPath === 'credit-cards' ?
                                         <Image className="mob-logo" image={offer.bank.bank_logo}
                                         /> : null}
 
@@ -70,11 +69,11 @@ const ListingCards = props => {
                                     <h3>{offer.product_name}</h3>
                                     <h3>{offer.product_card_name}</h3>
 
-                                    {props.primaryPath === 'credit-cards' ? <div>
+                                    {primaryPath === 'credit-cards' ? <div>
                                         <Image image={offer.product_image} />
                                     </div> : null}
 
-                                    {props.primaryPath !== 'credit-cards' ? <div>
+                                    {primaryPath !== 'credit-cards' ? <div>
                                         <Image image={offer.bank.bank_logo} />
                                     </div> : null}
 
@@ -105,14 +104,12 @@ const ListingCards = props => {
                                 <div className="options">
                                     <DecisionButton
                                         id='view-details'
-                                        primaryPath={props.primaryPath}
                                         buttonText='View Details'
                                         offer={offer}
                                         onButtonClick={onButtonClick}
                                     />
                                     <DecisionButton
                                         id='apply-now'
-                                        primaryPath={props.primaryPath}
                                         buttonText={offer.productDecision}
                                         offer={offer}
                                         onButtonClick={onButtonClick}

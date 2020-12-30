@@ -665,6 +665,10 @@ div#address_proof_upload_button {
   height: auto;
 }
 
+.popular-cards-slider-card {
+  cursor: pointer;
+}
+
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {

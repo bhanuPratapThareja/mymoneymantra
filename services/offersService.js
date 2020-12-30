@@ -18,7 +18,6 @@ export const customerOfferData = async () => {
     const { url, body } = getApiData('customerOffer');
     try {
         const res = await axios.post(url, body)
-        //  console.log('customerOffer res',res.data.response.payload);
 
     } catch (error) {
 
@@ -46,8 +45,6 @@ export const getProductDecision = (cards, primaryPath) => {
 
             const leadIdData = JSON.parse(localStorage.getItem('leadId'))
             const leadId = leadIdData[primaryPath]
-
-            console.log(primaryPath, leadId, productTypeId)
 
             body.request.payload.productId = card.product_id
             body.request.payload.bankId = card.bank.bank_id
@@ -218,13 +215,11 @@ export const updateListingOffers = data => {
         data.dynamic.forEach((block) => {
             if (block.__component === 'offers.listing-offers-credit-cards-compnent') {
                 let pendingCards = [...block.credit_card_products]
-                console.log('pendingCards1:: ', pendingCards)
                 if (!pendingCards.length) {
                     resolve([])
                 }
                 block.credit_card_products.forEach(async card => {
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
-                    console.log('pendingCards2:: ', pendingCards)
                     card.bank = bankData[0]
                     pendingCards.shift()
                     if (!pendingCards.length) {
@@ -234,7 +229,6 @@ export const updateListingOffers = data => {
             }
             if (block.__component === 'offers.listing-offers-personal-loan-compnent') {
                 let pendingCards = [...block.personal_loan_products]
-                console.log('pendingCards3:: ', pendingCards)
                 if (!pendingCards.length) {
                     resolve([])
                 }

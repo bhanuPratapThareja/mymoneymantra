@@ -20,17 +20,17 @@ const ThankYouProduct = props => {
         window.scrollTo(0, 0)
     })
 
-    const getComponents = (dynamic, primaryPath) => {
+    const getComponents = dynamic => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.credit-cards-thank-you':
-                    return <ThankYouBanner key={block.id} data={block} primaryPath={primaryPath} />
+                    return <ThankYouBanner key={block.id} data={block} />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offer-cards':
                 case 'offers.trending-offers-personal-loans':
                 case 'blocks.trending-home-loan-component':
-                    return <Offers key={block.id} data={block} primaryPath={primaryPath} />
+                    return <Offers key={block.id} data={block} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.rewards-component':
@@ -47,13 +47,12 @@ const ThankYouProduct = props => {
 
     return (
         <div className={props.pageClasses}>
-            {props.data ? <Layout>{getComponents(props.data.dynamic, props.primaryPath)}</Layout> : null}
+            {props.data ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
         </div>
     )
 }
 
 export async function getServerSideProps(ctx) {
-    console.log('thank you ctx: ', ctx)
     const strapi = new Strapi()
     const { query } = ctx
     const primaryPath = query.primaryPath ? query.primaryPath : getPrimaryPath(ctx.resolvedUrl)
@@ -64,7 +63,7 @@ export async function getServerSideProps(ctx) {
     const data = pageData[0]
     await updateTrendingOffers(data)
 
-    return { props: { data, pageClasses, primaryPath } }
+    return { props: { data, pageClasses } }
 }
 
 export default ThankYouProduct

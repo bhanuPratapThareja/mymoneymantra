@@ -1,4 +1,4 @@
-import Router from 'next/router'
+import Router, { withRouter} from 'next/router'
 import { debounce } from 'lodash'
 import OnBoardForm from '../ShortForm/OnBoardForm/OnBoardForm'
 import OtpSlide from '../ShortForm/OtpForm/OtpSlide'
@@ -65,6 +65,8 @@ class ShortExtendedForm extends React.Component {
     }
 
     componentDidMount() {
+        const primaryPath = this.props.router.query.primaryPath
+        this.setState({ primaryPath })
         let slideNo = 1
         const { side_form, form_slide } = this.props.data.onboard_short_form
         this.setInputsInState(side_form, 'onboard')
@@ -124,11 +126,10 @@ class ShortExtendedForm extends React.Component {
     }
 
     onSubmitLetGoSlide = async () => {
-        console.log('lets go baby')
         try {
-            const res = await submitShortForm([...this.state.slides], this.state.currentSlide, this.props.primaryPath)
+            const res = await submitShortForm([...this.state.slides], this.state.currentSlide, this.state.primaryPath)
             const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-            const primaryPath = this.props.primaryPath
+            const primaryPath = this.state.primaryPath
             const leadId = { ...leadIdData, [primaryPath]: res.data.response.payload.leadId }
             localStorage.setItem('leadId', JSON.stringify(leadId))
             goToSlides()
@@ -224,9 +225,10 @@ class ShortExtendedForm extends React.Component {
     }
 
     onSubmitShortForm = submit => {
-        submitShortForm([...this.state.slides], this.state.currentSlide, this.props.primaryPath)
+        const primaryPath = this.state.primaryPath
+        submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
         if (submit) {
-            Router.push(`/${this.props.primaryPath}/listings`)
+           this.props.router.push(`/${primaryPath}/listings`)
         }
     }
 
@@ -284,4 +286,4 @@ class ShortExtendedForm extends React.Component {
 
 }
 
-export default ShortExtendedForm
+export default withRouter(ShortExtendedForm)

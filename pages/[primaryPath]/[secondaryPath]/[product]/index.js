@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import Router from 'next/router'
 import Strapi from '../../../../providers/strapi'
 import Layout from '../../../../components/Layout'
 
@@ -33,7 +32,6 @@ const Details = props => {
                         data={block}
                         bank={bankData}
                         product={creditCardProductData || personalLoanProductData}
-                        primaryPath={primaryPath}
                     />
                 case 'blocks.credit-cards-details-component':
                 case 'blocks.details-component':
@@ -42,13 +40,12 @@ const Details = props => {
                         data={block}
                         bank={bankData}
                         product={creditCardProductData || personalLoanProductData}
-                        primaryPath={primaryPath}
                     />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offer-cards':
                 case 'offers.trending-offers-personal-loans':
-                    return <Offers key={block.id} data={block} primaryPath={primaryPath} />
+                    return <Offers key={block.id} data={block} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.rewards-component':
@@ -63,10 +60,6 @@ const Details = props => {
         })
     }
 
-    if (!props.details || !props.details.dynamic) {
-        Router.push('/page-not-found')
-    }
-
     const { details, primaryPath, bankData, creditCardProductData, personalLoanProductData } = props
 
     return (
@@ -77,7 +70,6 @@ const Details = props => {
 }
 
 export async function getServerSideProps(ctx) {
-    console.log('details ctx: ', ctx)
     const strapi = new Strapi()
     const { primaryPath, bank, product } = ctx.params
     const pageClasses = getClassesForPage(primaryPath, 'details')

@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Image from '../../components/ImageComponent/ImageComponent'
 
 const ProductDetails = props => {
+    const router = useRouter()
+    const primaryPath = router.query.primaryPath
     const [leftPositionedOffers, setlLeftPositionedOffers] = useState([])
     const [rightPositionedOffers, setlRightPositionedOffers] = useState([])
 
@@ -19,7 +22,7 @@ const ProductDetails = props => {
         setlRightPositionedOffers(rightOffers)
     }, [])
 
-    const { bank, primaryPath } = props
+    const { bank } = props
 
     return (
         <div className="c-detail-page">

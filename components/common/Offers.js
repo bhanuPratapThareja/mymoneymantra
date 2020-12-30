@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
-import { viewOffer, customerOfferData } from '../../services/offersService'
+import { viewOffer, customerOfferData, getProductDecisionForDetailsBanner } from '../../services/offersService'
 
 const Offers = props => {
    const router = useRouter()
+   const primaryPath = router.query.primaryPath
    const [cards, setCards] = useState([])
 
    useEffect(() => {
@@ -13,8 +14,15 @@ const Offers = props => {
    }, [])
 
 
-   const redirectToDetailsPage = (bank, product) => {
-      router.push(`/${props.primaryPath}/${bank}/${product}`)
+   const redirectToDetailsPage = async offer => {
+      const { bank, slug: productSlug } = offer
+      const { slug: bankSlug } = bank
+      const productDetails = await getProductDecisionForDetailsBanner(offer, bank, primaryPath)
+      if(productDetails.productDecision === 'Apply Now') {
+         props.goToShortFormPage()
+         return
+      }
+      router.push(`/${primaryPath}/${bankSlug}/${productSlug}`)
    }
 
    if (!cards.length) {
@@ -29,9 +37,9 @@ const Offers = props => {
             <h2>{section_heading}</h2>
             <div className="popular-cards-slider" id="popular-cards-sec">
                {cards.map(offer => {
-                  const { id, bank, product_name, cards_features, annual_fee_fy, intrest_rate, usp_highlights, slug } = offer
+                  const { id, bank, product_name, cards_features, annual_fee_fy, intrest_rate, usp_highlights } = offer
                   return (
-                     <div className="popular-cards-slider-card" key={id} onClick={() => redirectToDetailsPage(bank.slug, slug)}>
+                     <div className="popular-cards-slider-card" key={id} onClick={() => redirectToDetailsPage(offer)}>
                         <div className="popular-cards-slider-card-top">
                            <div className="head">
                               <h3><b className="card_name">{bank.bank_name}</b><br />{product_name}</h3>

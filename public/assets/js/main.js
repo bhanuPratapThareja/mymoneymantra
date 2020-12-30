@@ -191,11 +191,12 @@ $(document).ready(function () {
 
   // function initTendingOffers() {
 
-  $('#popular-cards-sec, #trending-offers-sec').not('.slick-initialized').slick({
+  $('#popular-cards-sec, #trending-offers-sec').slick({
     centerMode: true,
     slidesToShow: 3,
     cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
     speed: 1000,
+    autoplay: true,
     variableWidth: true,
     responsive: [
       {
@@ -204,6 +205,7 @@ $(document).ready(function () {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
+          autoplay: true,
           dots: false,
           variableWidth: true,
           arrows: false
@@ -214,6 +216,7 @@ $(document).ready(function () {
         settings: {
           arrows: false,
           centerMode: false,
+          autoplay: true,
           centerPadding: '0px',
           slidesToShow: 1,
           variableWidth: true,
@@ -225,6 +228,7 @@ $(document).ready(function () {
         settings: {
           arrows: false,
           centerMode: false,
+          autoplay: true,
           centerPadding: '0px',
           slidesToShow: 1,
           variableWidth: true,

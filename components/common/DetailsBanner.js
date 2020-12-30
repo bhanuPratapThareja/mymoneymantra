@@ -6,6 +6,7 @@ import { getProductDecisionForDetailsBanner } from '../../services/offersService
 
 const DetailsBanner = props => {
     const router = useRouter()
+    const primaryPath = router.query.primaryPath
     const [productDetails, setPoductDetails] = useState(null)
 
     useEffect(() => {
@@ -13,7 +14,7 @@ const DetailsBanner = props => {
     }, [])
 
     const getDetailsWithButtonText = async product => {
-        const productDetails = await getProductDecisionForDetailsBanner(product, props.bank, props.primaryPath)
+        const productDetails = await getProductDecisionForDetailsBanner(product, props.bank, primaryPath)
         setPoductDetails(productDetails)
     }
 
@@ -21,7 +22,7 @@ const DetailsBanner = props => {
     const { product_card_name, product_image } = props.product
     const details = props.data.credit_cards_details_banner || props.data.personal_loans_details_banner
 
-    const onButtonClick = (primaryPath, buttonText, bank, offer) => {
+    const onButtonClick = (buttonText, bank, offer) => {
         const { slug: productSlug } = offer
         const { bank_name: bankName, slug: bankSlug } =  bank
 
@@ -59,7 +60,7 @@ const DetailsBanner = props => {
                 <div className="banner-wrapper">
                     <h1><b>{bank_name}</b><br />{product_card_name}</h1>
                     <div dangerouslySetInnerHTML={{ __html: details.content }}></div>
-                    {productDetails ? <button onClick={() => onButtonClick(props.primaryPath, productDetails.productDecision, props.bank, productDetails)}>{productDetails.productDecision}</button> : null}
+                    {productDetails ? <button onClick={() => onButtonClick(productDetails.productDecision, props.bank, productDetails)}>{productDetails.productDecision}</button> : null}
                 </div>
                 <div>
                     <Image className="banner-card" image={product_image} />
