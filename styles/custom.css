@@ -3,13 +3,6 @@
   --next-btn: #221F1F;
 }
 
-.popular-cards-slider-card {
-  cursor: pointer;
-}
-
-.filter-cross {
-  cursor: pointer;
-}
 
 .credit-card-flow .lets-find-form form .form__group.verified-input {
   margin-bottom: 0;
@@ -290,7 +283,7 @@
 }
 
 input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0px 1000px white inset!important;
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
 }
 
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
@@ -630,6 +623,48 @@ div#address_proof_upload_button {
 .credit-card-flow .lets-find-container .lets-find-forms-container .sf-forms .shortforms-container > div {
   position: relative;
 }
+
+.personal-detail-flow .annual-fee-wrapper .left .logo {
+  margin-bottom: 40px;
+  max-height: 106px;
+}
+
+.personal-detail-flow .annual-fee-wrapper .left .logo img {
+  max-height: 106px;
+}
+
+.c-detail-page .annual-fee-wrapper .left div:nth-child(2) > h3 {
+  margin-top: 0;
+}
+
+.c-detail-page .annual-fee-wrapper div > h3 {
+  margin-bottom: 16px;
+}
+
+.long-cards-wrapper-card .top .content ul li span,
+.popular-cards-slider .popular-cards-slider-card-top .content ul li span {
+  font-size: 0.875rem;
+}
+
+.long-cards-wrapper-card .bottom .lifetime h5 p,
+.popular-cards-slider .popular-cards-slider-card-top .fee p,
+.popular-cards-slider .popular-cards-slider-card-bottom p,
+.popular-cards-slider .popular-cards-slider-card-bottom div {
+  font-family: "Avenir-Heavy";
+}
+
+.popular-cards-slider .popular-cards-slider-card-bottom div,
+.popular-cards-slider .popular-cards-slider-card-bottom p {
+  color: #fff;
+}
+
+.popular-cards-slider .popular-cards-slider-card-top .head img {
+  max-width: 100px;
+  max-height: 32px;
+  width: auto;
+  height: auto;
+}
+
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {

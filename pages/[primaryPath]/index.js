@@ -5,6 +5,7 @@ import Layout from '../../components/Layout'
 
 import CreditCardsBanner from '../../components/Pages/CreditCards/CreditCardsBanner'
 import PersonalLoansBanner from '../../components/Pages/PersonalLoans/PersonalLoansBanner'
+import HomeLoansBanner from '../../components/Pages/HomeLoans/HomeLoansBanner'
 
 import UspCards from '../../components/common/UspCards'
 import Offers from '../../components/common/Offers'
@@ -17,34 +18,40 @@ import LearnMore from '../../components/common/LearnMore'
 import { updatePopularOffers, updateTrendingOffers } from '../../services/offersService'
 import { getPrimaryPath } from '../../utils/getPaths'
 import { getClassesForPage } from '../../utils/classesForPage'
-import ShortExtendedForm from '../../components/ShortExtendedForm'
+import ShortExtendedForm from '../../components/common/ShortExtendedForm'
 
 const PrimaryPage = props => {
     const router = useRouter()
     useEffect(() => {
         window.scrollTo(0, 0)
-        if (!props.data) {
-            router.push('/page-not-found')
-        }
+        // if (!props.data) {
+        //     router.push('/page-not-found')
+        // }
     })
 
     const getComponents = (dynamic, primaryPath) => {
-        console.log(dynamic)
+        // console.log(dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.credit-cards-banner-component':
                     return <CreditCardsBanner key={block.id} data={block} />
                 case 'banners.personal-loans-banner-component':
                     return <PersonalLoansBanner key={block.id} data={block} />
+                case 'banners.home-loans-banner-component':
+                    return <HomeLoansBanner key={block.id} data={block} />
                 case 'blocks.ups-cards-component':
                     return <UspCards key={block.id} data={block} />
                 case 'form-components.onboarding-short-form':
                     return <ShortExtendedForm key={block.id} data={block} />
+
                 case 'offers.popular-offers-credit-cards-component':
                 case 'offers.popular-offers-personal-loans-component':
                 case 'offers.trending-offer-cards':
                 case 'offers.trending-offers-personal-loans':
+                case 'blocks.popular-home-loan-cards':
+                case 'blocks.trending-home-loan-component':
                     return <Offers key={block.id} data={block} primaryPath={primaryPath} />
+
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'blocks.trending-offers':
@@ -78,11 +85,14 @@ export async function getServerSideProps(ctx) {
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)
     const data = pageData && pageData.length ? pageData[0] : null
+    console.log(data)
 
     if (data) {
         await updatePopularOffers(data)
         await updateTrendingOffers(data)
     }
+
+
 
     return { props: { data, pageClasses, primaryPath } }
 }

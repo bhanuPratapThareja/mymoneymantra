@@ -31,14 +31,14 @@ const OfferDetailCards = props => {
                                         /> : null}
 
                                     <h3><span>{offer.bank.bank_name}</span></h3>
-                                    {props.primaryPath === 'credit-cards' ? <h3>{offer.product_name}</h3> : null}
-                                    {props.primaryPath === 'personal-loans' ? <h3>{'Personal Loan'}</h3> : null}
+                                    <h3>{offer.product_name}</h3>
+                                    <h3>{offer.product_card_name}</h3>
 
                                     {props.primaryPath === 'credit-cards' ? <div>
                                         <Image image={offer.product_image} />
                                     </div> : null}
 
-                                    {props.primaryPath === 'personal-loans' ? <div>
+                                    {props.primaryPath !== 'credit-cards' ? <div>
                                         <Image image={offer.bank.bank_logo} />
                                     </div> : null}
 

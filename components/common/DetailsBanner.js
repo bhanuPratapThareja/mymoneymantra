@@ -16,14 +16,14 @@ const DetailsBanner = props => {
     }
 
     const { bank_name } = props.bank
-    const { product_name, product_image } = props.product
+    const { product_card_name, product_image } = props.product
     const details = props.data.credit_cards_details_banner || props.data.personal_loans_details_banner
 
     return (
         <div className="combined-wrapper">
             <section className="banner container">
                 <div className="banner-wrapper">
-                    <h1><b>{bank_name}</b><br />{product_name}</h1>
+                    <h1><b>{bank_name}</b><br />{product_card_name}</h1>
                     <div dangerouslySetInnerHTML={{ __html: details.content }}></div>
                     {productDetails ? <button>{productDetails.productDecision}</button> : null}
                 </div>

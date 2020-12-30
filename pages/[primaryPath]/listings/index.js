@@ -25,11 +25,12 @@ const PersonalLoanListing = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        if (!props.data) {
-            router.push('/page-not-found')
-            return
-        }
+        // if (!props.data) {
+        //     router.push('/page-not-found')
+        //     return
+        // }
         let cards = props.listingOfferCards
+        console.log('cards: ', cards)
         getCardsWithButtonText(cards)
     }, [])
 
@@ -69,6 +70,7 @@ const PersonalLoanListing = props => {
                     />
                 case 'offers.listing-offers-credit-cards-compnent':
                 case 'offers.listing-offers-personal-loan-compnent':
+                case 'blocks.loan-listing-offer-details-component':
                     return <OfferDetailCards key={block.id} data={block} offerCards={offerCards} primaryPath={primaryPath} />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
@@ -104,10 +106,14 @@ export async function getServerSideProps(ctx) {
     const secondaryPath = getSecondaryPath(ctx.resolvedUrl)
     const pageClasses = getClassesForPage(primaryPath, secondaryPath)
 
+    console.log(primaryPath, secondaryPath)
+
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const listingFilter = await strapi.processReq('GET', `filters?slug=${primaryPath}-filters`)
     const filters = listingFilter && listingFilter.length ? listingFilter[0] : null
     const data = pageData[0]
+
+    console.log(data)
     let listingOfferCards = []
 
     if(data){
