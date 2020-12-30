@@ -80,7 +80,8 @@ const PrimaryPage = props => {
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const primaryPath = getPrimaryPath(ctx.resolvedUrl)
+    const { query } = ctx
+    const primaryPath = query.primaryPath ? query.primaryPath : getPrimaryPath(ctx.resolvedUrl)
     const pageClasses = getClassesForPage(primaryPath)
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)

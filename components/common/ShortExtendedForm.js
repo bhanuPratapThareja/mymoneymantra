@@ -78,9 +78,9 @@ class ShortExtendedForm extends React.Component {
             }, 500)
         })
 
-        setTimeout(() => {
-            console.log(this.state)
-        }, 1000);
+        // setTimeout(() => {
+        //     console.log(this.state)
+        // }, 1000);
     }
 
     onGoToLetFindForm = () => {

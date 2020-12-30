@@ -22,6 +22,7 @@ const classes = {
 }
 
 export const getClassesForPage = (primary, secondary) => {
+    console.log('primary, secondary:: ', primary, secondary)
     let pageClasses = ''
     if (!secondary) {
         pageClasses = classes[primary]

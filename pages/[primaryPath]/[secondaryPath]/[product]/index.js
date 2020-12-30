@@ -77,6 +77,7 @@ const Details = props => {
 }
 
 export async function getServerSideProps(ctx) {
+    console.log('details ctx: ', ctx)
     const strapi = new Strapi()
     const { primaryPath, bank, product } = ctx.params
     const pageClasses = getClassesForPage(primaryPath, 'details')

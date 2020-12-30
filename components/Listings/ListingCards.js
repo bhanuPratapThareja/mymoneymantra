@@ -27,13 +27,13 @@ const ListingCards = props => {
         switch (buttonText) {
             case 'Apply Now':
             case 'Instant Approval':
-                pathname = `/${primaryPath}/thank-you/${bankSlug}/${productSlug}`
+                pathname = `/${primaryPath}/thank-you`
+                // pathname = `/${primaryPath}/thank-you/${bankSlug}/${productSlug}`
                 break
 
             // case 'Apply Now':
             case 'E Connect':
                 pathname = `/${primaryPath}/long-form/${bankSlug}/${productSlug}`
-
                 break
             // view details
             default:

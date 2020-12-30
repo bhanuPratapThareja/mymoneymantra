@@ -3,12 +3,19 @@ import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
 
 import ThankYouBanner from '../../../components/common/ThankYouBanner'
+import CreditScore from '../../../components/common/CreditScore'
+import Offers from '../../../components/common/Offers'
+import BankSlider from '../../../components/common/BankSlider'
+import Rewards from '../../../components/common/Rewards'
+import FinancialTools from '../../../components/common/FinancialTools'
+import Blogger from '../../../components/common/Blogger'
+import LearnMore from '../../../components/common/LearnMore'
 
 import { updateTrendingOffers } from '../../../services/offersService'
 import { getPrimaryPath, getSecondaryPath } from '../../../utils/getPaths'
 import { getClassesForPage } from '../../../utils/classesForPage'
 
-const ThankYou = props => {
+const ThankYouProduct = props => {
     useEffect(() => {
         window.scrollTo(0, 0)
     })
@@ -18,6 +25,22 @@ const ThankYou = props => {
             switch (block.__component) {
                 case 'banners.credit-cards-thank-you':
                     return <ThankYouBanner key={block.id} data={block} primaryPath={primaryPath} />
+                case 'blocks.credit-score-component':
+                    return <CreditScore key={block.id} data={block} />
+                case 'offers.trending-offer-cards':
+                case 'offers.trending-offers-personal-loans':
+                case 'blocks.trending-home-loan-component':
+                    return <Offers key={block.id} data={block} primaryPath={primaryPath} />
+                case 'blocks.bank-slider-component':
+                    return <BankSlider key={block.id} data={block} />
+                case 'blocks.rewards-component':
+                    return <Rewards key={block.id} data={block} />
+                case 'blocks.quick-financial-tools-component':
+                    return <FinancialTools key={block.id} data={block} />
+                case 'blocks.blogger':
+                    return <Blogger key={block.id} data={block} />
+                case 'blocks.learn-more-component':
+                    return <LearnMore key={block.id} data={block} />
             }
         })
     }
@@ -30,9 +53,11 @@ const ThankYou = props => {
 }
 
 export async function getServerSideProps(ctx) {
+    console.log('thank you ctx: ', ctx)
     const strapi = new Strapi()
-    const primaryPath = getPrimaryPath(ctx.resolvedUrl)
-    const secondaryPath = getSecondaryPath(ctx.resolvedUrl)
+    const { query } = ctx
+    const primaryPath = query.primaryPath ? query.primaryPath : getPrimaryPath(ctx.resolvedUrl)
+    const secondaryPath = 'thank-you'
     const pageClasses = getClassesForPage(primaryPath, secondaryPath)
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
@@ -42,4 +67,4 @@ export async function getServerSideProps(ctx) {
     return { props: { data, pageClasses, primaryPath } }
 }
 
-export default ThankYou
+export default ThankYouProduct

@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
 import Strapi from '../../providers/strapi'
 import Link from 'next/link'
+import { useRouter } from 'next/router';
+
 
 const ProductType = props => {
     const strapi = new Strapi()
+    const router = useRouter()
     const [leftPositionedProductTypes, setlLeftPositionedProductTypes] = useState([])
     const [rightPositionedProductTypes, setlRightPositionedProductTypes] = useState([])
 

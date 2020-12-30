@@ -4,30 +4,31 @@ import Image from '../ImageComponent/ImageComponent'
 
 const ThankYouBanner = props => {
     const router = useRouter()
+    const { bankName, primaryPath } = router.query
     const [leadId, setLeadId] = useState('')
-    const [bankName, setBankName] = useState('')
     const [productType, setProductType] = useState('')
 
     const { thank_you_icon, thank_you_text, thank_you_sub_text,
         thank_you_content, thank_you_button } = props.data.thank_you_banner
 
     useEffect(() => {
+        
         const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-        const leadId = leadIdData[props.primaryPath]
+        const leadId = leadIdData[primaryPath]
         setLeadId(leadId)
-        setBankName(router.query.bank)
 
         let productType = ''
-        if(props.primaryPath === 'credit-cards'){
+        if(primaryPath === 'credit-cards'){
             productType = 'credit card'
-        } else if(props.primaryPath === 'personal-loans'){
+        } else if(primaryPath === 'personal-loans'){
             productType = 'personal loan'
-        } else if(props.primaryPath === 'home-loans') {
+        } else if(primaryPath === 'home-loans') {
             productType = 'home loan'
         }
         setProductType(productType)
-
     }, [])
+
+    
 
     return (
         <div className="thankyou-page">

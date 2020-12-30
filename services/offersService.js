@@ -85,7 +85,7 @@ export const getProductDecisionForDetailsBanner = (product, bank, primaryPath) =
         }
 
         const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-        const leadId = leadIdData[primaryPath]
+        const leadId = leadIdData && leadIdData[primaryPath] ? leadIdData[primaryPath] : ''
 
         body.request.payload.productId = product.product_id
         body.request.payload.bankId = bank.bank_id
