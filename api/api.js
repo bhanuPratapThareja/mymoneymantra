@@ -112,7 +112,7 @@ const api = {
                     },
                     "payload": {
                         "personal": {
-                            "title": "",
+                            "title": "1000000001",
                             "fullName": "",
                             "middleName": "",
                             "dob": "",
@@ -128,30 +128,25 @@ const api = {
                                 {
                                     "addressTypeMasterId": "",
                                     "mobile": "",
-                                    "isDefault": ""
+                                    "isDefault": "Y"
                                 }
                             ],
                             "email": [
                                 {
                                     "addressTypeMasterId": "",
                                     "email": "",
-                                    "isDefault": ""
+                                    "isDefault": "N"
                                 }
                             ],
                             "keyContact": [
-                                {
-                                    "caseContactMasterId": "",
-                                    "caseContactName": "",
-                                    "caseContactEmail": "",
-                                    "caseContactMobileNo": ""
-                                }
+                                
                             ]
                         },
                         "work": {
                             "applicantType": "",
                             "otherCompany": "",
                             "nature": "",
-                            "companyId": "",
+                            "companyId": "1000000001",
                             "typeOfCompaY": "",
                             "netMonthlyIncome": "",
                             "grossMonthlyIncome": "",
@@ -170,7 +165,7 @@ const api = {
                         "purposeOfLoan": "",
                         "bankId": "",
                         "leadId": "",
-                        "productId": "",
+                        "productId": "6",
                         "cardAge": "",
                         "cardType": "",
                         "exisEmi": "",

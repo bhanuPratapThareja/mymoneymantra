@@ -24,7 +24,6 @@ const Details = props => {
     })
 
     const getProductDetailsComponents = (dynamic, primaryPath, bankData, creditCardProductData, personalLoanProductData) => {
-        console.log('dynamic: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.credit-cards-detail-banner-component':
@@ -34,6 +33,7 @@ const Details = props => {
                         data={block}
                         bank={bankData}
                         product={creditCardProductData || personalLoanProductData}
+                        primaryPath={primaryPath}
                     />
                 case 'blocks.credit-cards-details-component':
                 case 'blocks.details-component':

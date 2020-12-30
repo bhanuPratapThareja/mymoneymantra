@@ -85,14 +85,11 @@ export async function getServerSideProps(ctx) {
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)
     const data = pageData && pageData.length ? pageData[0] : null
-    console.log(data)
 
     if (data) {
         await updatePopularOffers(data)
         await updateTrendingOffers(data)
     }
-
-
 
     return { props: { data, pageClasses, primaryPath } }
 }

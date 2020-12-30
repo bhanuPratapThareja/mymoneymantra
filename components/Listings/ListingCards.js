@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import DecisionButton from '../DecisionButton/DescisionButton'
-import { getDevice } from '../../Utils/getDevice'
+import { getDevice } from '../../utils/getDevice'
 
-const OfferDetailCards = props => {
+const ListingCards = props => {
     const router = useRouter()
     const [offers, setOffers] = useState([])
 
@@ -14,34 +14,34 @@ const OfferDetailCards = props => {
     })
 
     const onOfferClick = (primaryPath, buttonText, offer) => {
-        if(getDevice() !== 'desktop') {
+        if (getDevice() !== 'desktop') {
             onButtonClick(primaryPath, buttonText, offer)
         }
     }
 
     const onButtonClick = (primaryPath, buttonText, offer) => {
         const { bank: { bank_name: bankName, slug: bankSlug }, slug: productSlug } = offer
-        let pathName = ''
-        let query = {}
+        let pathname = ''
+        const query = { bankName }
 
         switch (buttonText) {
             case 'Apply Now':
-                pathName = `/${primaryPath}/thank-you`
-                break
-
-            case 'E Connect':
             case 'Instant Approval':
-                pathName = `/${primaryPath}/long-form/${bankSlug}/${productSlug}`
-                query = { bankName }
+                pathname = `/${primaryPath}/thank-you/${bankSlug}/${productSlug}`
                 break
 
+            // case 'Apply Now':
+            case 'E Connect':
+                pathname = `/${primaryPath}/long-form/${bankSlug}/${productSlug}`
+
+                break
             // view details
             default:
-                pathName = `/${primaryPath}/${bankSlug}/${productSlug}`
-                query = { bankName }
+                pathname = `/${primaryPath}/${bankSlug}/${productSlug}`
+                router.push({ pathname, query }, pathname, { shallow: true })
         }
 
-        routerRedirect(pathName, query)
+        routerRedirect(pathname, query)
     }
 
     const routerRedirect = (pathname, query) => {
@@ -128,4 +128,4 @@ const OfferDetailCards = props => {
 
 }
 
-export default OfferDetailCards
+export default ListingCards

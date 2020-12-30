@@ -22,7 +22,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                     inp.checkbox.checkbox_input.forEach(box => {
                         if (box.input_id === field.name) {
                             box.value = field.checked
-                            if (box.input_id === 'tnc') {
+                            if (box.end_point_name === 'tnc') {
                                 letsGoButtonDisabled = !field.checked
                             }
                         }
@@ -86,9 +86,9 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
 
                     // special case
 
-                    if (inp.input_id === 'cc_holder') {
+                    if (inp.end_point_name === 'cc_holder') {
                         inputs.forEach(secondary => {
-                            if (secondary.input_id === 'cc_holder_bank') {
+                            if (secondary.end_point_name === 'bankId') {
                                 if (inp.value === 'no') {
                                     secondary.value = ''
                                     secondary.list = []
@@ -111,7 +111,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
                     inp.value = field.value
-                    if (inp.input_id === 'pan_card' && inp.value) {
+                    if (inp.end_point_name === 'pan_card' && inp.value) {
                         inp.value = inp.value.toUpperCase()
                     }
                 }
@@ -142,7 +142,6 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
 
             if (field.blur) {
                 if (inp.type === 'email' && inp.input_id === field.currentActiveInput) {
-                    console.log(inp)
                     if (!isEmailValid(inp)) {
                         errors = true
                         inp.error = true
@@ -259,7 +258,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
 export const getUserMobileNumber = slide => {
     let mobileNo = ''
     slide.inputs.forEach(inp => {
-        if (inp.input_id === 'phone') {
+        if (inp.end_point_name === 'mobile') {
             mobileNo = inp.value
         }
     })
@@ -297,7 +296,7 @@ export const updateSelectionFromDropdown = (inputs, name, item) => {
             inp.error = false
         }
 
-        if (inp.input_id === 'city') {
+        if (inp.end_point_name === 'city') {
             inp.value = item.selectedItem.cityName
             inp.selectedId = item.selectedItem.cityId
             inp.selectedItem = item.selectedItem
@@ -324,20 +323,21 @@ export const getSfData = slides => {
         slide.inputs.forEach(input => {
             switch (input.type) {
                 case 'input_with_dropdown':
-                    data[input.input_id] = input.selectedItem
+                    data[input.end_point_name] = input.selectedItem
                     break
 
                 case 'checkbox':
                     input.checkbox.checkbox_input.forEach(box => {
-                        data[box.input_id] = box.value
+                        data[box.end_point_name] = box.value
                     })
                     break
 
                 default:
-                    data[input.input_id] = input.value
+                    data[input.end_point_name] = input.value
             }
         })
     })
+    console.log('data: ', data)
     return data
 }
 
@@ -363,12 +363,12 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
         })
     
         const data = getSfData(slides)
-        const previouslySavedData = JSON.parse(localStorage.getItem(formData))
+        const previouslySavedData = JSON.parse(localStorage.getItem('formData'))
         const formData = { ...previouslySavedData, [primaryPath] : data }
         localStorage.setItem('formData', JSON.stringify(formData))
         generateLeadSF(data)
-            .then(() => {
-                resolve(true)
+            .then(res => {
+                resolve(res)
             })
             .catch(() => {
                 reject('Error while Submitting. Please try again.')
@@ -425,14 +425,8 @@ export const showSlides = (n, slideIndex) => {
     }
 
     if (slideIndex === slides.length) {
-        console.log('slideIndex: ', slideIndex)
-        console.log('slides.length: ', slides.length)
-        console.log('check')
         $("#button-text").text("Submit and view offers").css("color", "#89C142");
         $("#next").addClass("submit-short-form");
-        const buttonLabel = document.getElementById('button-text')
-        console.log('buttonLabel: ', buttonLabel)
-        buttonLabel.innerText = 'Submit and view offers'
 
     } else {
         $("#button-text").text("Next").css("color", "#221F1F");

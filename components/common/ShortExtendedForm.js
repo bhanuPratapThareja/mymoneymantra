@@ -78,9 +78,9 @@ class ShortExtendedForm extends React.Component {
             }, 500)
         })
 
-        // setTimeout(() => {
-        //     console.log(this.state)
-        // }, 1000);
+        setTimeout(() => {
+            console.log(this.state)
+        }, 1000);
     }
 
     onGoToLetFindForm = () => {
@@ -124,11 +124,16 @@ class ShortExtendedForm extends React.Component {
     }
 
     onSubmitLetGoSlide = async () => {
+        console.log('lets go baby')
         try {
             const res = await submitShortForm([...this.state.slides], this.state.currentSlide, this.props.primaryPath)
+            const leadIdData = JSON.parse(localStorage.getItem('leadId'))
+            const primaryPath = this.props.primaryPath
+            const leadId = { ...leadIdData, [primaryPath]: res.data.response.payload.leadId }
+            localStorage.setItem('leadId', JSON.stringify(leadId))
             goToSlides()
         } catch (err) {
-           alert(err)
+            alert(err)
         }
     }
 
@@ -157,7 +162,7 @@ class ShortExtendedForm extends React.Component {
                             showSlides(n, this.state.slideIndex)
                         })
                     } else {
-                        console.log('submit form')
+                        this.onSubmitShortForm('submit')
                     }
                 }
             })
@@ -201,7 +206,9 @@ class ShortExtendedForm extends React.Component {
     handleInputDropdownSelection = (name, type, item) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateSelectionFromDropdown(inputs, name, item)
-        this.setState({ ...this.state, slides: newSlides })
+        this.setState({ ...this.state, slides: newSlides }, () => {
+            console.log(this.state.slides)
+        })
     }
 
     checkInputValidity = field => {
@@ -216,16 +223,10 @@ class ShortExtendedForm extends React.Component {
         this.setState({ slides: newSlides })
     }
 
-    onSubmitShortForm = () => {
+    onSubmitShortForm = submit => {
         submitShortForm([...this.state.slides], this.state.currentSlide, this.props.primaryPath)
-        console.log(this.state.slideIndex)
-        console.log(this.state.slides.length)
-        if (this.state.slideIndex > this.state.slides.length - 1) {
-            console.log('here')
-            console.log(Router)
-            // const path = Router.query.path[0]
-            // this.router.push(`${path}/loan-listing`)
-            // console.log(router)
+        if (submit) {
+            Router.push(`/${this.props.primaryPath}/listings`)
         }
     }
 

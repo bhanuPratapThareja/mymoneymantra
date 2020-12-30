@@ -1,14 +1,33 @@
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 
 const ThankYouBanner = props => {
     const router = useRouter()
+    const [leadId, setLeadId] = useState('')
+    const [bankName, setBankName] = useState('')
+    const [productType, setProductType] = useState('')
+
     const { thank_you_icon, thank_you_text, thank_you_sub_text,
         thank_you_content, thank_you_button } = props.data.thank_you_banner
 
-    function comingSoon() {
-        alert("Coming Soon")
-    }
+    useEffect(() => {
+        const leadIdData = JSON.parse(localStorage.getItem('leadId'))
+        const leadId = leadIdData[props.primaryPath]
+        setLeadId(leadId)
+        setBankName(router.query.bank)
+
+        let productType = ''
+        if(props.primaryPath === 'credit-cards'){
+            productType = 'credit card'
+        } else if(props.primaryPath === 'personal-loans'){
+            productType = 'personal loan'
+        } else if(props.primaryPath === 'home-loans') {
+            productType = 'home loan'
+        }
+        setProductType(productType)
+
+    }, [])
 
     return (
         <div className="thankyou-page">
@@ -20,19 +39,20 @@ const ThankYouBanner = props => {
                             <Image image={thank_you_icon} />
                             <div style={{ marginBottom: '10px' }} dangerouslySetInnerHTML={{ __html: thank_you_text }}></div>
 
-                            {router.query.bank_name ? <>
-                                <p>{'for applying for a'}</p>
-                                <p>{` with ${router.query.bank_name}`}</p>
+                            {leadId && bankName ? <>
+                                <p>{`for applying for a ${productType}`}</p>
+                                <p>{` with ${router.query.bankName} bank.`}</p>
                             </>
                                 : null}
                         </div>
-                        <div className="bottom">
+
+                        {leadId && bankName ? <div className="bottom">
                             <div dangerouslySetInnerHTML={{ __html: thank_you_sub_text }}></div>
-                            {router.query.updatedLeadId ? <h2>{router.query.updatedLeadId}</h2> : ""}
+                            <h2 style={{color: 'darkgrey'}}>{leadId}</h2>
                             <div className="track-button">
-                                <button onClick={comingSoon}>{thank_you_button}</button>
+                                <button >{thank_you_button}</button>
                             </div>
-                        </div>
+                        </div> : null}
                     </div>
                 </section>
             </div>

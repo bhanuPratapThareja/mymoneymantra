@@ -60,6 +60,7 @@ export async function getServerSideProps(ctx) {
     const pageClasses = getClassesForPage(primaryPath)
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)
+    console.log(pageData)
     const data = pageData[0]
 
     return { props: { data, pageClasses } }

@@ -69,6 +69,9 @@ export const documentUpload = async document => {
     body.request.payload.docList[0].documentExtension = type
     body.request.payload.docList[0].docBytes = base64
     axios.post(url, body)
+        .catch(err => {
+            console.log('upload err: ', err)
+        })
 }
 
 export const getBase64 = file => {
@@ -84,28 +87,32 @@ export const getBase64 = file => {
 export const generateLeadSF = async data => {
     const promise = new Promise((resolve, reject) => {
         const { url, body } = getApiData('generate')
-        const { full_name, dob, pan_card, phone, email_address, employment_type,
-            company_name, net_monthly_income, cc_holder_bank, addressLine1, addressLine2, pincode
+        const { fullName, dob, pan, mobile, email, nature,
+            companyId, netMonthlyIncome, bankId, addressLine1, addressLine2, pincode
         } = data
 
-        body.request.payload.personal.fullName = full_name
+        body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = dob
-        body.request.payload.personal.pan = pan_card
+        body.request.payload.personal.pan = pan
 
-        body.request.payload.contact.mobile[0].mobile = phone
-        body.request.payload.contact.email[0].email = email_address
+        body.request.payload.contact.mobile[0].mobile = mobile
+        body.request.payload.contact.email[0].email = email
 
-        body.request.payload.work.nature = employment_type
-        body.request.payload.work.companyId = company_name ? company_name.caseCompanyId : null
-        body.request.payload.work.netMonthlyIncome = net_monthly_income
+        body.request.payload.work.nature = nature
+        body.request.payload.work.companyId = companyId ? companyId.caseCompanyId : '1000000001'
+        body.request.payload.work.netMonthlyIncome = netMonthlyIncome
 
-        body.request.payload.bankId = cc_holder_bank ? cc_holder_bank.bankId : null
+        body.request.payload.bankId = bankId ? bankId.bankId : ''
 
-        body.request.payload.address[0].addressline1 = addressLine1
-        body.request.payload.address[0].addressline2 = addressLine2
-        body.request.payload.address[0].city = pincode ? pincode.pincode : null
-        body.request.payload.address[0].state = pincode ? pincode.cityId : null
-        body.request.payload.address[0].pincode = pincode ? pincode.stateId : null
+        if(!addressLine1 && !addressLine2 && !pincode) {
+            body.request.payload.address = []
+        } else {
+            body.request.payload.address[0].addressline1 = addressLine1
+            body.request.payload.address[0].addressline2 = addressLine2
+            body.request.payload.address[0].city = pincode ? pincode.cityId : ''
+            body.request.payload.address[0].state = pincode ? pincode.stateId : ''
+            body.request.payload.address[0].pincode = pincode ? pincode.pincode : ''
+        }
 
         axios.post(url, body)
             .then(res => resolve(res))

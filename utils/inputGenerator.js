@@ -164,11 +164,11 @@ export const generateInputs = (component, updateField,
 
     if (type === 'input_with_dropdown') {
         if (!value) value = ''
-        const { input_type, selectedId } = component
+        const { input_type, selectedId, end_point_name } = component
         const { listName, listItemId, listItemName } = properties(listType)
         const fieldId = `${input_id}_${type}`
         const listStyles = list && list.length ? { display: 'block' } : { display: 'none' }
-        const dropDownClass =  selectedId === '*' || input_id === 'city' ? 'disabled_input' : 'dropdown_enabled'
+        const dropDownClass =  selectedId === '*' || end_point_name === 'city' ? 'disabled_input' : 'dropdown_enabled'
         fieldClasses.push(dropDownClass)
         return (
             <div className={fieldClasses.join(' ')} id={fieldId} key={id}>
@@ -179,7 +179,7 @@ export const generateInputs = (component, updateField,
                     value={value}
                     placeholder={placeholder}
                     autoComplete='off'
-                    disabled={selectedId === '*' || input_id === 'city'}
+                    disabled={selectedId === '*' || end_point_name === 'city'}
                     required={mandatory}
                     onBlur={e => validate(e, type)}
                     onChange={e => handleChange(e, type)}
@@ -258,6 +258,7 @@ export const generateInputs = (component, updateField,
         )
     }
 
+
     if (type === 'radio') {
         const { radio_buttons } = radio
         const radioParentId = `${input_id}_radio_container`
@@ -272,7 +273,6 @@ export const generateInputs = (component, updateField,
                                 <div key={button.id} id={radioId}>
                                     <label style={labelStyles} htmlFor={input_id}>{button.label}</label>
                                     <input
-                                        
                                         type="radio"
                                         name={input_id}
                                         id={button.value}

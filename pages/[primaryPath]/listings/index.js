@@ -3,8 +3,8 @@ import { useRouter } from 'next/router'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
 
-import ListingsBanner from '../../../components/Listings/ListingsBanner';
-import OfferDetailCards from '../../../components/Listings/OfferDetailCards';
+import ListingsBanner from '../../../components/Listings/ListingsBanner'
+import OfferDetailCards from '../../../components/Listings/ListingCards'
 import CreditScore from '../../../components/common/CreditScore'
 import Offers from '../../../components/common/Offers'
 import BankSlider from '../../../components/common/BankSlider'
@@ -18,7 +18,7 @@ import { filterOfferCardsInFilterComponent } from '../../../utils/loanListingFil
 import { getPrimaryPath, getSecondaryPath } from '../../../utils/getPaths'
 import { getClassesForPage } from '../../../utils/classesForPage';
 
-const PersonalLoanListing = props => {
+const Listings = props => {
     const router = useRouter()
     const [allOfferCards, setAllOfferCards] = useState([])
     const [offerCards, setOfferCards] = useState([])
@@ -30,12 +30,11 @@ const PersonalLoanListing = props => {
         //     return
         // }
         let cards = props.listingOfferCards
-        console.log('cards: ', cards)
         getCardsWithButtonText(cards)
     }, [])
 
     const getCardsWithButtonText = async cards => {
-        const newCards = await getProductDecision(cards)
+        const newCards = await getProductDecision(cards, props.primaryPath)
         setOfferCards(newCards)
         setAllOfferCards(newCards)
     }
@@ -106,14 +105,10 @@ export async function getServerSideProps(ctx) {
     const secondaryPath = getSecondaryPath(ctx.resolvedUrl)
     const pageClasses = getClassesForPage(primaryPath, secondaryPath)
 
-    console.log(primaryPath, secondaryPath)
-
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const listingFilter = await strapi.processReq('GET', `filters?slug=${primaryPath}-filters`)
     const filters = listingFilter && listingFilter.length ? listingFilter[0] : null
     const data = pageData[0]
-
-    console.log(data)
     let listingOfferCards = []
 
     if(data){
@@ -124,4 +119,4 @@ export async function getServerSideProps(ctx) {
     return { props: { data, filters, listingOfferCards, pageClasses, primaryPath } }
 }
 
-export default PersonalLoanListing
+export default Listings
