@@ -4,14 +4,8 @@
 }
 
 
-.verified-input {
-  background: url("../public/assets/images/icons/verified.svg");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 97% 80%;
-  position: relative;
-  margin-botton: 0;
-  border: 1px solid rgba(34, 31, 31, 0.6);
+.credit-card-flow .lets-find-form form .form__group.verified-input {
+  margin-bottom: 0;
 }
 
 .disabled-input {
@@ -289,7 +283,7 @@
 }
 
 input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0px 1000px white inset!important;
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
 }
 
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
@@ -447,10 +441,10 @@ div#address_proof_upload_button {
   z-index: 999 !important;
 }
 
-.credit-card-flow .banner-card {
+/* .credit-card-flow .banner-card {
   margin-top: 100px !important;
   z-index: 999 !important;
-}
+} */
 
 .credit-card-flow {
   overflow-x: hidden;
@@ -552,9 +546,9 @@ div#address_proof_upload_button {
   max-width: 640px;
 }
 
-.homepage-flow .testimonial {
+/* .homepage-flow .testimonial {
   margin-top: 277.92px !important;
-}
+} */
 
 .homepage-flow .testimonial-wrapper-block h3 strong, 
 .score-content h2 strong{
@@ -598,6 +592,77 @@ div#address_proof_upload_button {
 
 .personal-loan-listing .banner-wrapper .top {
   padding-top: 0;
+}
+
+.homepage-flow .product-wrapper .product-block .flow-arrow {
+  /* position: absolute;
+  right: 48px; */
+  opacity: 0.5;
+}
+
+.homepage-flow .product-wrapper .product-block:hover .flow-arrow {
+  opacity: 1;
+}
+
+/*-- Customized css for radio btn short form --*/
+
+.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms > .shortforms-container {
+  margin-top: 0;
+}
+
+.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container input[type="radio"] {
+  width: 100%;
+  height: 64px;
+  position: absolute;
+  top: 0;
+  cursor: pointer;
+  z-index: 100;
+  opacity: 0;
+}
+
+.credit-card-flow .lets-find-container .lets-find-forms-container .sf-forms .shortforms-container > div {
+  position: relative;
+}
+
+.personal-detail-flow .annual-fee-wrapper .left .logo {
+  margin-bottom: 40px;
+  max-height: 106px;
+}
+
+.personal-detail-flow .annual-fee-wrapper .left .logo img {
+  max-height: 106px;
+}
+
+.c-detail-page .annual-fee-wrapper .left div:nth-child(2) > h3 {
+  margin-top: 0;
+}
+
+.c-detail-page .annual-fee-wrapper div > h3 {
+  margin-bottom: 16px;
+}
+
+.long-cards-wrapper-card .top .content ul li span,
+.popular-cards-slider .popular-cards-slider-card-top .content ul li span {
+  font-size: 0.875rem;
+}
+
+.long-cards-wrapper-card .bottom .lifetime h5 p,
+.popular-cards-slider .popular-cards-slider-card-top .fee p,
+.popular-cards-slider .popular-cards-slider-card-bottom p,
+.popular-cards-slider .popular-cards-slider-card-bottom div {
+  font-family: "Avenir-Heavy";
+}
+
+.popular-cards-slider .popular-cards-slider-card-bottom div,
+.popular-cards-slider .popular-cards-slider-card-bottom p {
+  color: #fff;
+}
+
+.popular-cards-slider .popular-cards-slider-card-top .head img {
+  max-width: 100px;
+  max-height: 32px;
+  width: auto;
+  height: auto;
 }
 
 

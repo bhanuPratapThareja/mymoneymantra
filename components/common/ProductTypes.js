@@ -33,7 +33,7 @@ const ProductType = props => {
                                 <a className="product-block">
                                     <img src={`${strapi.baseUrl}${home_product_type_image.url}`} alt={home_product_type_image.name} />
                                     <h3>{home_product_type_heading_label}</h3>
-                                    <img src="/assets/images/icons/arrow-right-32.svg" alt="" />
+                                    <img className="flow-arrow" src="/assets/images/icons/arrow-right-32.svg" alt="" />
                                 </a>
                             </Link>
                         )
@@ -49,7 +49,7 @@ const ProductType = props => {
                                 <a className="product-block">
                                     <img src={`${strapi.baseUrl}${home_product_type_image.url}`} alt={home_product_type_image.name} />
                                     <h3>{home_product_type_heading_label}</h3>
-                                    <img src="/assets/images/icons/arrow-right-32.svg" alt="" />
+                                    <img className="flow-arrow" src="/assets/images/icons/arrow-right-32.svg" alt="" />
                                 </a>
                             </Link>
                         )
