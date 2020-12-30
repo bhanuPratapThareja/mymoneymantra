@@ -330,26 +330,26 @@ $(document).ready(function () {
 
 
 
-  // $('#slider_blogs').slick({
-  //   dots: false,
-  //   arrows: false,
-  //   infinite: true,
-  //   autoplay: false,
-  //   slidesToShow: 2,
-  //   slidesToScroll: 1,
-  //   pauseOnHover: true,
-  //   responsive: [
-  //     {
-  //       breakpoint: 1186,
-  //       settings: {
-  //         slidesToShow: 1,
-  //         slidesToScroll: 1,
-  //         variableWidth: true,
-  //         infinite: false,
-  //       }
-  //     }
-  //   ]
-  // });
+  $('#slider_blogs').slick({
+    dots: false,
+    arrows: false,
+    infinite: true,
+    autoplay: false,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    pauseOnHover: true,
+    responsive: [
+      {
+        breakpoint: 1186,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          variableWidth: true,
+          infinite: false,
+        }
+      }
+    ]
+  });
 
   $('#datepickerr').datepicker();
 
