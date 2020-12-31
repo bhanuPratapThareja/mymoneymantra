@@ -1,4 +1,4 @@
-import Router, { withRouter} from 'next/router'
+import { withRouter} from 'next/router'
 import { debounce } from 'lodash'
 import OnBoardForm from '../ShortForm/OnBoardForm/OnBoardForm'
 import OtpSlide from '../ShortForm/OtpForm/OtpSlide'

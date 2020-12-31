@@ -32,6 +32,10 @@ const ListingBanner = props => {
         }
         props.filterOfferCards(category)
     }
+   
+    const getCalulatedProductType = () => {
+        return props.numberOfCards == 1 ? listing_banner_products.slice(0, -1) : listing_banner_products
+    }
 
     return (
         <>
@@ -43,9 +47,9 @@ const ListingBanner = props => {
                         {category_component && category_component.length ? <div className="category">
                             <h5>Browse by category:</h5>
                             <div className="category-wrapper">
-                               <div className="checkbox-container" name="category" value={selectedOption} onChange={e => setSelectedOption(e.target.value)}>
+                                <div className="checkbox-container" name="category" value={selectedOption} onChange={e => setSelectedOption(e.target.value)}>
                                     {category_component.map(category => {
-                                        const {listing_banner_category_label, listing_banner_category_image} = category
+                                        const { listing_banner_category_label, listing_banner_category_image } = category
                                         return (
                                             <React.Fragment key={category.id}>
                                                 <input readOnly className="lets-checkbox" checked={selectedOption === listing_banner_category_label.toLowerCase()} value={listing_banner_category_label.toLowerCase()} type="radio" id={listing_banner_category_label.toLowerCase()} name="category" required />
@@ -62,7 +66,7 @@ const ListingBanner = props => {
                     </div>
                     <div className="bottom">
                         <div className="cards">
-                            <h3><span id="count">{props.numberOfCards}</span> {listing_banner_products.toLowerCase()}</h3>
+                            <h3><span id="count">{props.numberOfCards}</span> {getCalulatedProductType()}</h3>
                         </div>
                         {props.filters ? <div className="filter">
                             <button
