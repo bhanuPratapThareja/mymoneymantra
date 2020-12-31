@@ -19,7 +19,6 @@ const DetailsBanner = props => {
     }
 
     const { bank_name } = props.bank
-    console.log(props.product)
     const { product_name, product_image, product_card_name } = props.product
     const details = props.data.credit_cards_details_banner || props.data.personal_loans_details_banner
 

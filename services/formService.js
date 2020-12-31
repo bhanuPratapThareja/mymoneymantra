@@ -69,9 +69,7 @@ export const documentUpload = async document => {
     body.request.payload.docList[0].documentExtension = type
     body.request.payload.docList[0].docBytes = base64
     axios.post(url, body)
-        .catch(err => {
-            console.log('upload err: ', err)
-        })
+        .catch(() => {})
 }
 
 export const getBase64 = file => {

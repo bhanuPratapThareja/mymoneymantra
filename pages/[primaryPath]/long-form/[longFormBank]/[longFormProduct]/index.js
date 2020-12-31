@@ -8,11 +8,9 @@ import { getPrimaryPath, getSecondaryPath } from '../../../../../utils/getPaths'
 const LongFormProduct = props => {
     useEffect(() => {
         window.scrollTo(0, 0)
-        console.log(props)
     })
 
     const getComponents = dynamic => {
-        // console.log('dynamic: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.long-form-banner':
@@ -36,7 +34,6 @@ export async function getServerSideProps(ctx) {
 
     const data = await strapi.processReq('GET', `pages?slug=${primaryPath}-long-form`)
     const bank = await strapi.processReq('GET', `bank?slug=${longFormBank}`)
-    console.log('bank: ', bank)
 
     return { props: { data } }
 }

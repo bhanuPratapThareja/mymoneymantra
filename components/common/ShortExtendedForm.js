@@ -79,10 +79,6 @@ class ShortExtendedForm extends React.Component {
                 slideNo++
             }, 500)
         })
-
-        // setTimeout(() => {
-        //     console.log(this.state)
-        // }, 1000);
     }
 
     onGoToLetFindForm = () => {
@@ -207,9 +203,7 @@ class ShortExtendedForm extends React.Component {
     handleInputDropdownSelection = (name, type, item) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateSelectionFromDropdown(inputs, name, item)
-        this.setState({ ...this.state, slides: newSlides }, () => {
-            console.log(this.state.slides)
-        })
+        this.setState({ ...this.state, slides: newSlides })
     }
 
     checkInputValidity = field => {

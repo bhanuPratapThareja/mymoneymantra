@@ -337,7 +337,6 @@ export const getSfData = slides => {
             }
         })
     })
-    console.log('data: ', data)
     return data
 }
 
