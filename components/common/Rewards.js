@@ -1,11 +1,11 @@
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 
 const Rewards = props => {
+   const router = useRouter()
    const { rewards_heading, rewards_sub_text, rewards_button, rewards_button_url } = props.data.reward
 
    function onClickRewardsButton(url) {
-      const path = Router.router.pathname
-      if (path == '/credit-cards') {
+      if (router.route.split('/').length <= 2) {
          window.scrollTo({
             top: 1000
          })

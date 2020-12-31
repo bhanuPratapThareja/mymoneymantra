@@ -63,7 +63,7 @@ const PrimaryPage = props => {
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.rewards-component':
-                    return <Rewards key={block.id} data={block} />
+                    return <Rewards key={block.id} data={block} goToShortFormPage={goToShortFormPage} />
                 case 'blocks.quick-financial-tools-component':
                     return <FinancialTools key={block.id} data={block} />
                 case 'blocks.blogger':
