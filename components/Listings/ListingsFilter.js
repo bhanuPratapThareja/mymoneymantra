@@ -79,9 +79,7 @@ class ListingFilter extends React.Component {
                 checkboxes.showCheckboxes = checkboxes.values.length
             }
         })
-        this.setState({ checkboxes: updatedCheckboxes }, () => {
-            console.log(this.state.checkboxes)
-        })
+        this.setState({ checkboxes: updatedCheckboxes })
     }
 
     render() {

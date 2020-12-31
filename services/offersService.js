@@ -14,41 +14,17 @@ export const viewOffer = async () => {
     }
 }
 
-export const loanListingProductDecision = async (data) => {
-    let cardData = [];
-    data.dynamic.forEach(card => {
-        if (card.__component == 'blocks.offer-details-card') {
-            let BankId = card.offer_cards.map(({ bankId }) => bankId)
-            let ProductId = card.offer_cards.map(({ productId }) => productId)
-            cardData = BankId;
-
-        }
-    })
-    const { url, body } = getApiData('leadProductDecision');
-
-    try {
-        const res = await axios.post(url, body)
-        let resMessage = res.response.payload.productDecision;
-        return resMessage;
-
-    } catch (error) {
-
-    }
-
-}
-
 export const customerOfferData = async () => {
     const { url, body } = getApiData('customerOffer');
     try {
         const res = await axios.post(url, body)
-        //  console.log('customerOffer res',res.data.response.payload);
 
     } catch (error) {
 
     }
 }
 
-export const getProductDecision = cards => {
+export const getProductDecision = (cards, primaryPath) => {
     const promise = new Promise((resolve) => {
         const pendingCards = [...cards]
         if (!pendingCards.length) {
@@ -57,8 +33,24 @@ export const getProductDecision = cards => {
         const { url, body } = getApiData('leadProductDecision')
 
         pendingCards.forEach(async card => {
+            let productTypeId = ''
+
+            if (primaryPath === 'credit-cards') {
+                productTypeId = '6'
+            } else if (primaryPath === 'personal-loans') {
+                productTypeId = '17'
+            } else if (primaryPath === 'home-loans') {
+                productTypeId = '3'
+            }
+
+            const leadIdData = JSON.parse(localStorage.getItem('leadId'))
+            const leadId = leadIdData[primaryPath]
+
             body.request.payload.productId = card.product_id
             body.request.payload.bankId = card.bank.bank_id
+            body.request.payload.leadId = leadId
+            body.request.payload.productTypeId = productTypeId
+
             let productDecision = ''
             try {
                 const res = await axios.post(url, body)
@@ -72,6 +64,41 @@ export const getProductDecision = cards => {
                 resolve(cards)
             }
         })
+    })
+    return promise
+}
+
+export const getProductDecisionForDetailsBanner = (product, bank, primaryPath) => {
+    const promise = new Promise(async (resolve) => {
+        const { url, body } = getApiData('leadProductDecision')
+        let productTypeId = ''
+
+        if (primaryPath === 'credit-cards') {
+            productTypeId = '6'
+        } else if (primaryPath === 'personal-loans') {
+            productTypeId = '17'
+        } else if (primaryPath === 'home-loans') {
+            productTypeId = '3'
+        }
+
+        const leadIdData = JSON.parse(localStorage.getItem('leadId'))
+        const leadId = leadIdData && leadIdData[primaryPath] ? leadIdData[primaryPath] : ''
+
+        body.request.payload.productId = product.product_id
+        body.request.payload.bankId = bank.bank_id
+        body.request.payload.leadId = leadId
+        body.request.payload.productTypeId = productTypeId
+
+        let productDecision = ''
+        try {
+            const res = await axios.post(url, body)
+            productDecision = res.data.response.payload.productDecision
+        } catch {
+            productDecision = defaultDecision
+        }
+        product.productDecision = productDecision
+        resolve(product)
+
     })
     return promise
 }

@@ -9,7 +9,6 @@ export const getSecondaryPath = resolvedUrl => {
 }
 
 export const getDetailsSearchParams = (primaryPath, bank, product) => {
-    console.log('primaryPath: ', primaryPath)
     let productSearch = ''
     if (primaryPath === 'credit-cards') {
         productSearch = `credit_card_product.slug=${product}`

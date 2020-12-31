@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import Router from 'next/router'
 import Strapi from '../../../../providers/strapi'
 import Layout from '../../../../components/Layout'
 
@@ -23,8 +22,7 @@ const Details = props => {
         window.scrollTo(0, 0)
     })
 
-    const getProductDetailsComponents = (dynamic, primaryPath, bankData, creditCardProductData, personalLoanProductData) => {
-        console.log('dynamic: ', dynamic)
+    const getProductDetailsComponents = (dynamic, bankData, creditCardProductData, personalLoanProductData) => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.credit-cards-detail-banner-component':
@@ -42,13 +40,12 @@ const Details = props => {
                         data={block}
                         bank={bankData}
                         product={creditCardProductData || personalLoanProductData}
-                        primaryPath={primaryPath}
                     />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offer-cards':
                 case 'offers.trending-offers-personal-loans':
-                    return <Offers key={block.id} data={block} primaryPath={primaryPath} />
+                    return <Offers key={block.id} data={block} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.rewards-component':
@@ -63,15 +60,11 @@ const Details = props => {
         })
     }
 
-    if (!props.details || !props.details.dynamic) {
-        Router.push('/page-not-found')
-    }
-
-    const { details, primaryPath, bankData, creditCardProductData, personalLoanProductData } = props
+    const { details, bankData, creditCardProductData, personalLoanProductData } = props
 
     return (
         <div className={props.pageClasses}>
-            {details.dynamic ? <Layout>{getProductDetailsComponents(details.dynamic, primaryPath, bankData, creditCardProductData, personalLoanProductData)}</Layout> : null}
+            {details.dynamic ? <Layout>{getProductDetailsComponents(details.dynamic, bankData, creditCardProductData, personalLoanProductData)}</Layout> : null}
         </div>
     )
 }
@@ -90,7 +83,7 @@ export async function getServerSideProps(ctx) {
 
     await updateTrendingOffers(details)
 
-    return { props: { details, primaryPath, pageClasses, bankData, creditCardProductData, personalLoanProductData } }
+    return { props: { details, pageClasses, bankData, creditCardProductData, personalLoanProductData } }
 }
 
 export default Details

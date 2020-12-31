@@ -3,7 +3,6 @@
   --next-btn: #221F1F;
 }
 
-
 .credit-card-flow .lets-find-form form .form__group.verified-input {
   margin-bottom: 0;
 }
@@ -65,11 +64,7 @@
   position: relative;
 }
 
-.banner-wrapper .normal-banner h1:first-child strong:first-child, 
-.score-content h2 strong:nth-child(2), 
-.banks-holder .banks h2 strong:nth-child(2), 
-.cstm-bnr-txt h1:nth-child(2) strong:first-child, 
-.c-detail-page .banner-wrapper h1:first-child strong {
+.banner-wrapper .normal-banner h1:first-child strong:first-child, .score-content h2 strong:nth-child(2), .banks-holder .banks h2 strong:nth-child(2), .cstm-bnr-txt h1:nth-child(2) strong:first-child, .c-detail-page .banner-wrapper h1:first-child strong {
   color: #89C142;
 }
 
@@ -354,8 +349,8 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 }
 
 /*-- Dec Changes Fateh --*/
-.long-form .long-form-wrapper,
-.c-detail-page .combined-wrapper .banner .banner-wrapper {
+
+.long-form .long-form-wrapper, .c-detail-page .combined-wrapper .banner .banner-wrapper {
   padding-top: 80px;
 }
 
@@ -370,11 +365,8 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 }
 
 /* .credit-card-flow .lets-find-container .shortforms-container .form__group.field.dropdown_enabled */
-div#pan_card_text,
-div#bank_name_input_with_dropdown,
-div#net_monthly_income_number,
-div#pincode_input_with_dropdown,
-div#salary_bank_name_input_with_dropdown { 
+
+div#pan_card_text, div#bank_name_input_with_dropdown, div#net_monthly_income_number, div#pincode_input_with_dropdown, div#salary_bank_name_input_with_dropdown {
   display: inline-block;
   max-width: 49%;
   margin-top: 32px;
@@ -384,11 +376,11 @@ div#salary_bank_name_input_with_dropdown {
 /* div#pancard_attachment_upload_button,
 div#net_monthly_income_attachment_upload_button,
 div#bank_statement_attachment_upload_button, */
-div#city_input_with_dropdown,
-.credit-card-flow .lets-find-container .shortforms-container .form__group.field.file-type {
+
+div#city_input_with_dropdown, .credit-card-flow .lets-find-container .shortforms-container .form__group.field.file-type {
   max-width: 49%;
   vertical-align: top;
-  margin-top: 32px;
+  /* margin-top: 32px; */
   display: inline-block;
 }
 
@@ -409,6 +401,7 @@ div#address_proof_upload_button {
 }
 
 /*-- Latest code bhanu/fateh --*/
+
 .credit-card-flow.c-detail-page button {
   min-width: 50% !important;
   white-space: nowrap !important;
@@ -451,7 +444,7 @@ div#address_proof_upload_button {
 }
 
 .blog-wrapper .content h2 {
-  color: #221F1F; 
+  color: #221F1F;
   font-size: 1.25rem;
   text-align: left;
   font-family: "Avenir-Heavy";
@@ -466,7 +459,6 @@ div#address_proof_upload_button {
   font-family: "Avenir-Roman";
   line-height: 1.5rem;
 }
-
 
 .credit-card-flow .lets-find-content.otp-card_custom {
   position: relative;
@@ -505,18 +497,14 @@ div#address_proof_upload_button {
   margin: 0 0 15px;
 }
 
-.credit-card-flow .homepage-banner-wrapper h2,
-.homepage-flow .buy-section-wrapper h2,
-.homepage-flow .aboutUs-left h2 {
+.credit-card-flow .homepage-banner-wrapper h2, .homepage-flow .buy-section-wrapper h2, .homepage-flow .aboutUs-left h2 {
   color: #ffffff;
   font-size: 2.5rem;
   font-family: "Avenir-Black";
   line-height: 3rem;
 }
 
-.credit-card-flow .homepage-banner-wrapper h2 strong,
-.homepage-flow .buy-section-wrapper h2 strong,
-.homepage-flow .aboutUs-left h2 strong {
+.credit-card-flow .homepage-banner-wrapper h2 strong, .homepage-flow .buy-section-wrapper h2 strong, .homepage-flow .aboutUs-left h2 strong {
   color: #89C142;
 }
 
@@ -550,9 +538,8 @@ div#address_proof_upload_button {
   margin-top: 277.92px !important;
 } */
 
-.homepage-flow .testimonial-wrapper-block h3 strong, 
-.score-content h2 strong{
-  color: #89C142; 
+.homepage-flow .testimonial-wrapper-block h3 strong, .score-content h2 strong {
+  color: #89C142;
 }
 
 .homepage-flow .buy-section-wrapper h2 {
@@ -586,7 +573,8 @@ div#address_proof_upload_button {
   max-width: 640px;
 }
 
-.personal-loan-listing .banner-wrapper .top div h2 strong {
+.personal-loan-listing .banner-wrapper .top div h2 strong,
+.listings .banner-wrapper.cstm-bnr-txt h2 strong {
   color: #89C142;
 }
 
@@ -606,7 +594,7 @@ div#address_proof_upload_button {
 
 /*-- Customized css for radio btn short form --*/
 
-.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms > .shortforms-container {
+.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms>.shortforms-container {
   margin-top: 0;
 }
 
@@ -620,7 +608,7 @@ div#address_proof_upload_button {
   opacity: 0;
 }
 
-.credit-card-flow .lets-find-container .lets-find-forms-container .sf-forms .shortforms-container > div {
+.credit-card-flow .lets-find-container .lets-find-forms-container .sf-forms .shortforms-container>div {
   position: relative;
 }
 
@@ -633,28 +621,23 @@ div#address_proof_upload_button {
   max-height: 106px;
 }
 
-.c-detail-page .annual-fee-wrapper .left div:nth-child(2) > h3 {
+.c-detail-page .annual-fee-wrapper .left div:nth-child(2)>h3 {
   margin-top: 0;
 }
 
-.c-detail-page .annual-fee-wrapper div > h3 {
+.c-detail-page .annual-fee-wrapper div>h3 {
   margin-bottom: 16px;
 }
 
-.long-cards-wrapper-card .top .content ul li span,
-.popular-cards-slider .popular-cards-slider-card-top .content ul li span {
+.long-cards-wrapper-card .top .content ul li span, .popular-cards-slider .popular-cards-slider-card-top .content ul li span {
   font-size: 0.875rem;
 }
 
-.long-cards-wrapper-card .bottom .lifetime h5 p,
-.popular-cards-slider .popular-cards-slider-card-top .fee p,
-.popular-cards-slider .popular-cards-slider-card-bottom p,
-.popular-cards-slider .popular-cards-slider-card-bottom div {
+.long-cards-wrapper-card .bottom .lifetime h5 p, .popular-cards-slider .popular-cards-slider-card-top .fee p, .popular-cards-slider .popular-cards-slider-card-bottom p, .popular-cards-slider .popular-cards-slider-card-bottom div {
   font-family: "Avenir-Heavy";
 }
 
-.popular-cards-slider .popular-cards-slider-card-bottom div,
-.popular-cards-slider .popular-cards-slider-card-bottom p {
+.popular-cards-slider .popular-cards-slider-card-bottom div, .popular-cards-slider .popular-cards-slider-card-bottom p {
   color: #fff;
 }
 
@@ -674,6 +657,67 @@ div#address_proof_upload_button {
   color: rgba(34, 31, 31, 0.6);
   font-family: "Avenir-Heavy";
   line-height: 1.5rem;
+}
+
+.popular-cards-slider-card {
+  cursor: pointer;
+}
+
+div#cc_holder_bank_input_with_dropdown {
+  margin-top: 16px;
+}
+
+div#pan_card_cc_text,
+div#net_monthly_income_cc_number,
+div#salary_bank_name_cc_input_with_dropdown,
+div#pincode_cc_input_with_dropdown {
+  margin: 0 16px 0 0;
+  display: inline-block;
+  max-width: 48.8%;
+  vertical-align: top;
+}
+
+div#city_cc_input_with_dropdown {
+  display: inline-block;
+  max-width: 48.8%;
+  vertical-align: top;
+}
+
+.credit-card-flow form .form__group.error-input {
+  margin-bottom: 24px !important;
+}
+
+.sf-forms .shortforms-container label {
+  z-index: -1;
+}
+
+.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms h2 {
+  margin-bottom: 32px;
+}
+
+.listings .banner-wrapper .top {
+  padding: 0;
+}
+
+.long-cards-wrapper-card .recommended {
+  z-index: 12;
+}
+
+.listings .banner-wrapper .top .category {
+  margin: -49px 0 0;
+}
+
+.thankyou-banner .top > div > p,
+.thankyou-banner .bottom h2 {
+  color: #222 !important;
+  font-size: 24px;
+  line-height: 30px;
+  margin: 20px 0 0;
+  font-family: "Avenir-Black";
+}
+
+.thankyou-page .container .thankyou-banner .bottom .track-button {
+  margin-top: 16px;
 }
 
 @media(max-width: 1199px) {
@@ -729,7 +773,6 @@ div#address_proof_upload_button {
   .banks-slider {
     overflow-x: hidden;
   }
-
   .listings .banner-wrapper .top h2:nth-child(2) strong {
     color: #fff;
   }
@@ -761,6 +804,96 @@ div#address_proof_upload_button {
     display: none;
   } */
 
+  .credit-card-flow .lets-find-content.otp-card_custom {
+    max-width: 100%;
+  }
+
+  .otp-wrapper.login-options {
+    min-width: 100%;
+    position: relative;
+    top: 40px;
+  }
+
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms h2 {
+    margin-bottom: 12px;
+  }
+
+
+  div#cc_holder_bank_input_with_dropdown {
+    margin-top: 8px;
+  }
+
+  .credit-card-flow .lets-find-container .lets-find-forms-container .sf-forms .shortforms-container>div#employment_type_cc_radio {
+    display: flex;
+  }
+
+  .cstm-cal {
+    max-width: 100%;
+    margin-top: 16px;
+  }
+
+  div#pan_card_cc_text, div#net_monthly_income_cc_number, div#salary_bank_name_cc_input_with_dropdown {
+    margin: 0 0 16px;
+    max-width: 100%;
+  }
+
+  div#city_input_with_dropdown, .credit-card-flow .lets-find-container .shortforms-container .form__group.field.file-type {
+    max-width: 100%;
+  }  
+
+  div#pincode_cc_input_with_dropdown {
+    margin: 0 8px 0 0;
+    max-width: 48%;
+  }
+
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .form__group {
+    margin: 0 0 8px;  
+  } 
+
+  .listings .banner-wrapper.cstm-bnr-txt h2 strong {
+    color: #fff;
+  }
+
+  .listings .banner-wrapper.cstm-bnr-txt h2 {
+    text-align: center;
+    margin: 22px 0 3px;
+  }
+
+
+
 
 }
 
+
+@media(max-width: 767px) {
+  .credit-card-flow {
+    position: relative;
+  }
+  .lets-find-container {
+    position: absolute !important;
+    top: 0 !important;
+  }
+  .banner-features-container {
+    margin-top: 750px;
+  }
+
+  .details-button-div {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    width: 150% !important;
+    text-align: center !important;
+    padding-top: 0px;
+    background: linear-gradient(90deg, #0D2333 0%, #040A0F 100%) !important;
+  }
+  
+  .details-button-div > button  {
+    margin: 10px !important;
+    display: block !important;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+    height: 56px;
+    width: 83%;
+  }
+}

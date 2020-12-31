@@ -1,4 +1,4 @@
-import Router from 'next/router'
+import { withRouter} from 'next/router'
 import { debounce } from 'lodash'
 import OnBoardForm from '../ShortForm/OnBoardForm/OnBoardForm'
 import OtpSlide from '../ShortForm/OtpForm/OtpSlide'
@@ -65,6 +65,8 @@ class ShortExtendedForm extends React.Component {
     }
 
     componentDidMount() {
+        const primaryPath = this.props.router.query.primaryPath
+        this.setState({ primaryPath })
         let slideNo = 1
         const { side_form, form_slide } = this.props.data.onboard_short_form
         this.setInputsInState(side_form, 'onboard')
@@ -77,10 +79,6 @@ class ShortExtendedForm extends React.Component {
                 slideNo++
             }, 500)
         })
-
-        setTimeout(() => {
-            console.log(this.state)
-        }, 1000);
     }
 
     onGoToLetFindForm = () => {
@@ -99,6 +97,7 @@ class ShortExtendedForm extends React.Component {
             if (!errorsPresent) {
                 try {
                     const mobileNo = getUserMobileNumber(this.state.slides[0])
+                    this.setState({ mobileNo })
                     getOtp(mobileNo)
                     letsFindFormToOtpForm()
                     setTimeout(() => {
@@ -115,12 +114,26 @@ class ShortExtendedForm extends React.Component {
         try {
             await submitOtp(this.state.mobileNo)
             this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
-                goToSlides()
+                this.onSubmitLetGoSlide()
             })
         } catch (err) {
             alert(err.message)
         }
     }
+
+    onSubmitLetGoSlide = async () => {
+        try {
+            const res = await submitShortForm([...this.state.slides], this.state.currentSlide, this.state.primaryPath)
+            const leadIdData = JSON.parse(localStorage.getItem('leadId'))
+            const primaryPath = this.state.primaryPath
+            const leadId = { ...leadIdData, [primaryPath]: res.data.response.payload.leadId }
+            localStorage.setItem('leadId', JSON.stringify(leadId))
+            goToSlides()
+        } catch (err) {
+            alert(err)
+        }
+    }
+
 
     onSubmitSlide = () => {
         this.plusSlides(1)
@@ -146,7 +159,7 @@ class ShortExtendedForm extends React.Component {
                             showSlides(n, this.state.slideIndex)
                         })
                     } else {
-                        console.log('submit form')
+                        this.onSubmitShortForm('submit')
                     }
                 }
             })
@@ -205,16 +218,11 @@ class ShortExtendedForm extends React.Component {
         this.setState({ slides: newSlides })
     }
 
-    onSubmitShortForm = () => {
-        submitShortForm([...this.state.slides], this.state.currentSlide)
-        console.log(this.state.slideIndex)
-        console.log(this.state.slides.length)
-        if (this.state.slideIndex > this.state.slides.length - 1) {
-            console.log('here')
-            console.log(Router)
-            // const path = Router.query.path[0]
-            // this.router.push(`${path}/loan-listing`)
-            // console.log(router)
+    onSubmitShortForm = submit => {
+        const primaryPath = this.state.primaryPath
+        submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
+        if (submit) {
+           this.props.router.push(`/${primaryPath}/listings`)
         }
     }
 
@@ -272,4 +280,4 @@ class ShortExtendedForm extends React.Component {
 
 }
 
-export default ShortExtendedForm
+export default withRouter(ShortExtendedForm)

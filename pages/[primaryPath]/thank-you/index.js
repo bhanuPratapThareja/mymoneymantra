@@ -15,12 +15,12 @@ import { updateTrendingOffers } from '../../../services/offersService'
 import { getPrimaryPath, getSecondaryPath } from '../../../utils/getPaths'
 import { getClassesForPage } from '../../../utils/classesForPage'
 
-const ThankYou = props => {
+const ThankYouProduct = props => {
     useEffect(() => {
         window.scrollTo(0, 0)
     })
 
-    const getComponents = (dynamic, primaryPath) => {
+    const getComponents = dynamic => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.credit-cards-thank-you':
@@ -30,7 +30,7 @@ const ThankYou = props => {
                 case 'offers.trending-offer-cards':
                 case 'offers.trending-offers-personal-loans':
                 case 'blocks.trending-home-loan-component':
-                    return <Offers key={block.id} data={block} primaryPath={primaryPath} />
+                    return <Offers key={block.id} data={block} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.rewards-component':
@@ -47,23 +47,23 @@ const ThankYou = props => {
 
     return (
         <div className={props.pageClasses}>
-            {props.data ? <Layout>{getComponents(props.data.dynamic, props.primaryPath)}</Layout> : null}
+            {props.data ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
         </div>
     )
 }
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const primaryPath = getPrimaryPath(ctx.resolvedUrl)
-    const secondaryPath = getSecondaryPath(ctx.resolvedUrl)
+    const { query } = ctx
+    const primaryPath = query.primaryPath ? query.primaryPath : getPrimaryPath(ctx.resolvedUrl)
+    const secondaryPath = 'thank-you'
     const pageClasses = getClassesForPage(primaryPath, secondaryPath)
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const data = pageData[0]
-    console.log('data: ', data)
     await updateTrendingOffers(data)
 
-    return { props: { data, pageClasses, primaryPath } }
+    return { props: { data, pageClasses } }
 }
 
-export default ThankYou
+export default ThankYouProduct
