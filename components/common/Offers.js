@@ -47,7 +47,7 @@ const Offers = props => {
                            </div>
                            <div className="content">
                               <ul>
-                                 {cards_features.map(feature => <li style={{ listStyle: 'none' }} key={feature.id}><span dangerouslySetInnerHTML={{ __html: feature.card_feature }}></span></li>)}
+                                 {cards_features.map(feature => <li key={feature.id}><span dangerouslySetInnerHTML={{ __html: feature.card_feature }}></span></li>)}
                               </ul>
                            </div>
 

@@ -56,6 +56,7 @@ const DetailsBanner = props => {
 
     return (
         <div className="combined-wrapper">
+            <div className="mobile-background"></div>
             <section className="banner container">
                 <div className="banner-wrapper">
                     <h1><b>{bank_name}</b><br />{product_name || product_card_name}</h1>
