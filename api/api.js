@@ -72,7 +72,7 @@ const api = {
                     "payload": {
                         "leadId": "PR12344343",
                         "bankId": "10051",
-                        "productId": "17",
+                        "productId": "6",
                         "productTypeId": "fggfg"
                     }
                 }
@@ -126,14 +126,14 @@ const api = {
                         "contact": {
                             "mobile": [
                                 {
-                                    "addressTypeMasterId": "",
+                                    "addressTypeMasterId": "1000000001",
                                     "mobile": "",
                                     "isDefault": "Y"
                                 }
                             ],
                             "email": [
                                 {
-                                    "addressTypeMasterId": "",
+                                    "addressTypeMasterId": "1000000001",
                                     "email": "",
                                     "isDefault": "N"
                                 }
@@ -175,7 +175,7 @@ const api = {
                         "offerId": "",
                         "address": [
                             {
-                                "addressTypeMasterId": "",
+                                "addressTypeMasterId": "1000000001",
                                 "addressline1": "",
                                 "addressline2": "",
                                 "addressline3": "",

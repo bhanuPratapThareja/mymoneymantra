@@ -88,7 +88,7 @@ export const generateLeadSF = async (data, primaryPath) => {
         const { fullName, dob, pan, mobile, email, nature,
             companyId, netMonthlyIncome, bankId, addressLine1, addressLine2, pincode
         } = data
-
+        
         body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = dob
         body.request.payload.personal.pan = pan
@@ -113,6 +113,7 @@ export const generateLeadSF = async (data, primaryPath) => {
         if (!addressLine1 && !addressLine2 && !pincode) {
             body.request.payload.address[0] = {}
         } else {
+            body.request.payload.address[0].addressTypeMasterId = "1000000001"
             body.request.payload.address[0].addressline1 = addressLine1
             body.request.payload.address[0].addressline2 = addressLine2
             body.request.payload.address[0].city = pincode ? pincode.cityId : ''
