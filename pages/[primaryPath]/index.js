@@ -12,12 +12,13 @@ import CreditScore from '../../components/common/CreditScore'
 import BankSlider from '../../components/common/BankSlider'
 import Rewards from '../../components/common/Rewards'
 import FinancialTools from '../../components/common/FinancialTools'
+import ShortExtendedForm from '../../components/common/ShortExtendedForm'
 import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import { updatePopularOffers, updateTrendingOffers } from '../../services/offersService'
 import { getPrimaryPath } from '../../utils/getPaths'
 import { getClassesForPage } from '../../utils/classesForPage'
-import ShortExtendedForm from '../../components/common/ShortExtendedForm'
+import { getDevice } from '../../utils/getDevice'
 
 const PrimaryPage = props => {
     useEffect(() => {
@@ -25,7 +26,11 @@ const PrimaryPage = props => {
     })
 
     const goToShortFormPage = () => {
-        window.scrollTo({ top: 1000 })
+        if(getDevice() === 'desktop') {
+            window.scrollTo({ top: 1000 })
+            return
+        }
+        window.scrollTo({ top: 0 })
     }
 
     const getComponents = dynamic => {
