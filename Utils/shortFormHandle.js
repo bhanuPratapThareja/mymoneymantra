@@ -365,11 +365,12 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
         const previouslySavedData = JSON.parse(localStorage.getItem('formData'))
         const formData = { ...previouslySavedData, [primaryPath] : data }
         localStorage.setItem('formData', JSON.stringify(formData))
-        generateLeadSF(data)
+        generateLeadSF(data, primaryPath)
             .then(res => {
                 resolve(res)
             })
-            .catch(() => {
+            .catch((err) => {
+                console.log(err)
                 reject('Error while Submitting. Please try again.')
             })
     })

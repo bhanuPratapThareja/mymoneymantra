@@ -69,7 +69,7 @@ export const documentUpload = async document => {
     body.request.payload.docList[0].documentExtension = type
     body.request.payload.docList[0].docBytes = base64
     axios.post(url, body)
-        .catch(() => {})
+        .catch(() => { })
 }
 
 export const getBase64 = file => {
@@ -82,7 +82,7 @@ export const getBase64 = file => {
     })
 }
 
-export const generateLeadSF = async data => {
+export const generateLeadSF = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
         const { url, body } = getApiData('generate')
         const { fullName, dob, pan, mobile, email, nature,
@@ -101,9 +101,17 @@ export const generateLeadSF = async data => {
         body.request.payload.work.netMonthlyIncome = netMonthlyIncome
 
         body.request.payload.bankId = bankId ? bankId.bankId : ''
+        // let leadId = ''
+        // if (getLeadId) {
+            // console.log(getLeadId)
+            const leadIdData = JSON.parse(localStorage.getItem('leadId'))
+            const leadId = leadIdData && leadIdData[primaryPath] ? leadIdData[primaryPath] : ''
+        // }
 
-        if(!addressLine1 && !addressLine2 && !pincode) {
-            body.request.payload.address = []
+        body.request.payload.leadId = leadId ? leadId : ''
+
+        if (!addressLine1 && !addressLine2 && !pincode) {
+            body.request.payload.address[0] = {}
         } else {
             body.request.payload.address[0].addressline1 = addressLine1
             body.request.payload.address[0].addressline2 = addressLine2
@@ -112,9 +120,16 @@ export const generateLeadSF = async data => {
             body.request.payload.address[0].pincode = pincode ? pincode.pincode : ''
         }
 
+        // console.log('body: ', body)
+
         axios.post(url, body)
-            .then(res => resolve(res))
-            .catch(err => reject(err))
+            .then(res => {
+                resolve(res)
+            })
+            .catch(err => {
+                console.log('err gl: ', err)
+                reject(err)
+            })
     })
     return promise
 }
