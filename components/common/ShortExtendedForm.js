@@ -122,10 +122,10 @@ class ShortExtendedForm extends React.Component {
     }
 
     onSubmitLetGoSlide = async () => {
+        const primaryPath = this.state.primaryPath
         try {
-            const res = await submitShortForm([...this.state.slides], this.state.currentSlide, this.state.primaryPath)
+            const res = await submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
             const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-            const primaryPath = this.state.primaryPath
             const leadId = { ...leadIdData, [primaryPath]: res.data.response.payload.leadId }
             localStorage.setItem('leadId', JSON.stringify(leadId))
             goToSlides()
@@ -219,9 +219,11 @@ class ShortExtendedForm extends React.Component {
     }
 
     onSubmitShortForm = submit => {
+        console.log(submit)
         const primaryPath = this.state.primaryPath
         submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
         if (submit) {
+            console.log(submit)
            this.props.router.push(`/${primaryPath}/listings`)
         }
     }
