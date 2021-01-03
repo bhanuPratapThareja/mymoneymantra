@@ -128,7 +128,7 @@ export const generateLeadSF = async (data, primaryPath) => {
                 resolve(res)
             })
             .catch(err => {
-                console.log('err gl: ', err)
+                // console.log('err gl: ', err)
                 reject(err)
             })
     })

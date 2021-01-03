@@ -4,7 +4,6 @@ import $ from 'jquery'
 const LearnMore = props => {
 
    const { section_heading, learn_more } = props.data
-
    useEffect(() => {
 
       $(".learn-more-wrapper-content .question").click(function () {
@@ -26,9 +25,9 @@ const LearnMore = props => {
    }, [])
 
    return (
-      <section data-aos="fade-up" className="container aos-init">
+      <section data-aos="fade-up" className="container aos-init">         
          <div className="learn-more">
-            <div dangerouslySetInnerHTML={{ __html: section_heading }}></div>
+            <h2>{section_heading}</h2>
             <div className="learn-more-wrapper">
 
                {learn_more.learn_more_section_component.map((secData, index) => {
