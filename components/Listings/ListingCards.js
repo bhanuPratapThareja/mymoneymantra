@@ -14,8 +14,9 @@ const ListingCards = props => {
     })
 
     const onOfferClick = (buttonText, offer) => {
+        console.log(getDevice())
         if (getDevice() !== 'desktop') {
-            onButtonClick(primaryPath, buttonText, offer)
+            onButtonClick(buttonText, offer)
         }
     }
 

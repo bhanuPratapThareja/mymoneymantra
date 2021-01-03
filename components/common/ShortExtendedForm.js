@@ -5,6 +5,7 @@ import OtpSlide from '../ShortForm/OtpForm/OtpSlide'
 import SFSlides from '../ShortForm/SFSlides/SFSlides'
 import { getDropdownList } from '../../services/formService'
 import { getOtp, submitOtp } from '../../services/formService'
+import { getDevice } from '../../utils/getDevice'
 import {
     textTypeInputs,
     getCurrentSlideInputs,
@@ -22,7 +23,7 @@ import {
     showSlides,
     loadOtpForm,
     submitShortForm
-} from '../../utils/shortFormHandle'
+} from '../../utils/formHandle'
 
 class ShortExtendedForm extends React.Component {
     otpInterval = null;
@@ -50,6 +51,18 @@ class ShortExtendedForm extends React.Component {
     }
 
     setInputsInState = (inputsArray, slideId, heading) => {
+        if(getDevice() !== 'desktop') {
+            const letsFindContaiiner = document.getElementsByClassName('lets-find-container')[0]
+            const  uspCardsContainer = document.getElementsByClassName('banner-features-container')[0]
+            if(letsFindContaiiner) {
+                letsFindContaiiner.classList.add('lets-find-container-top')
+                if(uspCardsContainer) {
+                    uspCardsContainer.classList.add('banner-features-container-switch')
+                }
+            }
+        }
+
+
         let formInputs = []
         let slides = [...this.state.slides]
         inputsArray.forEach(item => {

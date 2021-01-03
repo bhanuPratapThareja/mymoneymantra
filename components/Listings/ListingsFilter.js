@@ -14,11 +14,20 @@ class ListingFilter extends React.Component {
             filter_tenure, filter_roi, filter_max_loan_amount } = this.props.filters
 
         if (checkboxes.length) {
-            checkboxes.forEach(boxes => {
-                boxes.showCheckboxes = this.state.showCheckboxes
-                boxes.totalCheckboxes = boxes.values.length
-                boxes.veiwAll = boxes.values.length > this.state.showCheckboxes
+            checkboxes.forEach((block, i) => {
+                if (block.type === 'banks') {
+                    const values = block.values.filter(value => {
+                        return this.props.banksList.includes(value.tag)
+                    })
+                    
+                    checkboxes[i].values = values
+                }
+                block.showCheckboxes = this.state.showCheckboxes
+                block.totalCheckboxes = block.values.length
+                block.veiwAll = block.values.length > this.state.showCheckboxes
+
             })
+
             this.setState({ checkboxes })
         }
 
@@ -33,6 +42,10 @@ class ListingFilter extends React.Component {
             initializeMoneyRange(filter_max_loan_amount, 'max-loan-amount-range')
             initializeYearRange(filter_tenure, 'tenure-range')
         })
+
+        // setTimeout(() => {
+        //     console.log(this.state)
+        // }, 1000);
     }
 
     handleCheckbox = (e, type) => {

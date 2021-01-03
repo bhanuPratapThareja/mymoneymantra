@@ -16,7 +16,6 @@ import ShortExtendedForm from '../../components/common/ShortExtendedForm'
 import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import { updatePopularOffers, updateTrendingOffers } from '../../services/offersService'
-import { getPrimaryPath } from '../../utils/getPaths'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { getDevice } from '../../utils/getDevice'
 
@@ -84,7 +83,7 @@ const PrimaryPage = props => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const { query } = ctx
-    const primaryPath = query.primaryPath ? query.primaryPath : getPrimaryPath(ctx.resolvedUrl)
+    const primaryPath = query.primaryPath
     const pageClasses = getClassesForPage(primaryPath)
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)

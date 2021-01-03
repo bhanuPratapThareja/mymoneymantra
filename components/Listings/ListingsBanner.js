@@ -18,6 +18,7 @@ const ListingBanner = props => {
     const [selectedOption, setSelectedOption] = useState('all')
 
     useEffect(() => {
+        console.log('chechingLLL ', props.banksList)
         onBannerCategoryChange(selectedOption)
     }, [selectedOption])
 
@@ -80,6 +81,7 @@ const ListingBanner = props => {
                 </div>
             </section>
             {props.filters ? <ListingFilter
+                banksList={props.banksList}
                 filters={props.filters}
                 filterCardsFilterComponent={props.filterCardsFilterComponent}
             /> : null}

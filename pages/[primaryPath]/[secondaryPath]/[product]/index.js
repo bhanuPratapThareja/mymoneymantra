@@ -14,7 +14,7 @@ import LearnMore from '../../../../components/common/LearnMore'
 
 import { updateTrendingOffers } from '../../../../services/offersService'
 import { getClassesForPage } from '../../../../utils/classesForPage'
-import { getDetailsSearchParams } from '../../../../utils/getPaths'
+import { getDetailsSearchParams } from '../../../../utils/searchParams'
 
 const Details = props => {
 
@@ -71,7 +71,9 @@ const Details = props => {
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const { primaryPath, bank, product } = ctx.params
+    const { query } = ctx
+    const {primaryPath, secondaryPath: bank, product} = query
+
     const pageClasses = getClassesForPage(primaryPath, 'details')
     const search = getDetailsSearchParams(primaryPath, bank, product)
 

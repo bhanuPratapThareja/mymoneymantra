@@ -95,9 +95,6 @@
   margin: 0 0 0 1px;
 }
 
-/* .banks-holder {
-  margin-top: 128px !important;
-} */
 
 .category-wrapper .checkbox-container .banner_label img {
   opacity: 0.5;
@@ -554,13 +551,6 @@ div#address_proof_upload_button {
   line-height: 2rem;
 }
 
-.homepage-flow .banner-features {
-  margin-top: 99px;
-}
-
-/* .homepage-flow .score-container {
-  margin-top: 128px !important;
-} */
 
 .personal-loan-flow .pl-image {
   position: absolute;
@@ -859,24 +849,19 @@ div#city_cc_input_with_dropdown {
     margin: 22px 0 3px;
   }
 
-
-
-
 }
 
 
 @media(max-width: 767px) {
-  .credit-card-flow {
-    position: relative;
-  }
-  .lets-find-container {
+  .lets-find-container-top {
     position: absolute !important;
     top: 0 !important;
   }
-  .banner-features-container {
+
+  .banner-features-container-switch {
     margin-top: 750px;
   }
-
+  
   .details-button-div {
     position: fixed;
     bottom: 0;

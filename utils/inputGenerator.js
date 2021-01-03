@@ -33,12 +33,19 @@ export const generateInputs = (component, updateField,
         handleInputDropdownSelection(input_id, type, item)
     }
 
+    const openDatePicker = () => {
+        const datepicker = $(`#${'dob'}`).datepicker()
+        datepicker.open()
+    }
+
     const onChangeDate = (name, type) => {
         setTimeout(() => {
-            const datepicker = $(`#${input_id}`).datepicker()
+            const datepicker = $(`#${'dob'}`).datepicker()
             const value = datepicker.val()
             const field = { name, value, type }
-            updateField(field)
+            if (value) {
+                updateField(field)
+            }
         }, 250);
     }
 
@@ -61,41 +68,49 @@ export const generateInputs = (component, updateField,
 
     let { type, input_id, placeholder, mandatory, label, value, id,
         checkbox, radio, question, error, errorMsg, verified, list, listType,
-        upload_text, monetary_input } = component
+        upload_text, monetary_input, heading } = component
 
     const borderInputInvalid = { border: '2px solid var(--error-color)' }
     const borderInputValid = null
     const borderStyles = error ? borderInputInvalid : borderInputValid
 
     let fieldClasses = ['form__group', 'field']
-    if(error) {
+    if (error) {
         fieldClasses.push('error-input')
     } else {
         const index = fieldClasses.indexOf('error-input')
-        if(index != -1) {
+        if (index != -1) {
             fieldClasses.splice(index)
         }
         const filledInputIndex = fieldClasses.indexOf('filled-input')
-        if(filledInputIndex != -1) {
+        if (filledInputIndex != -1) {
             fieldClasses.splice(index)
         }
     }
 
-    if(verified) {
+    if (verified) {
         fieldClasses.push('verified-input')
         fieldClasses.push('filled-input')
     } else {
         const index = fieldClasses.indexOf('verified-input')
-        if(index != -1) {
+        if (index != -1) {
             fieldClasses.splice(index)
         }
         const filledInputIndex = fieldClasses.indexOf('filled-input')
-        if(filledInputIndex != -1) {
+        if (filledInputIndex != -1) {
             fieldClasses.splice(index)
         }
     }
 
-    if (type === 'text' || type === 'email' || type === 'number' || type === 'tel') {
+    if (type === 'section_headiing') {
+        return (
+            <div>
+                <h3>{heading}</h3>
+            </div>
+        )
+    }
+
+    if (type === 'text' || type === 'email' || type === 'number' || type === 'tel' || type === 'pan_card') {
         if (!value) value = ''
         const fieldId = `${input_id}_${type}`
         const inputType = type === 'number' ? getDevice() === 'desktop' ? 'number' : 'tel' : type
@@ -168,7 +183,7 @@ export const generateInputs = (component, updateField,
         const { listName, listItemId, listItemName } = properties(listType)
         const fieldId = `${input_id}_${type}`
         const listStyles = list && list.length ? { display: 'block' } : { display: 'none' }
-        const dropDownClass =  selectedId === '*' || end_point_name === 'city' ? 'disabled_input' : 'dropdown_enabled'
+        const dropDownClass = selectedId === '*' || end_point_name === 'city' || end_point_name === 'officeCity' ? 'disabled_input' : 'dropdown_enabled'
         fieldClasses.push(dropDownClass)
         return (
             <div className={fieldClasses.join(' ')} id={fieldId} key={id}>
@@ -179,7 +194,7 @@ export const generateInputs = (component, updateField,
                     value={value}
                     placeholder={placeholder}
                     autoComplete='off'
-                    disabled={selectedId === '*' || end_point_name === 'city'}
+                    disabled={selectedId === '*' || end_point_name === 'city' || end_point_name === 'officeCity'}
                     required={mandatory}
                     onBlur={e => validate(e, type)}
                     onChange={e => handleChange(e, type)}
@@ -205,7 +220,7 @@ export const generateInputs = (component, updateField,
 
     if (type === 'input_with_calendar') {
         if (!value) value = ''
-        const datepicker = $(`#${input_id}`).datepicker()
+
         const fieldId = `${input_id}_${type}`
         return (
             <div className="cstm-cal" id={fieldId}>
@@ -213,14 +228,14 @@ export const generateInputs = (component, updateField,
                     <label className="form__label">{label}</label>
                     <input
                         className="form__field phone-grid-span"
-                        id={input_id}
+                        id={'dob'}
                         placeholder={placeholder}
                         name={input_id}
                         type='text'
                         value={value}
                         autoComplete='off'
                         required={mandatory}
-                        onFocus={() => datepicker.open()}
+                        onFocus={() => openDatePicker()}
                         onBlur={() => onChangeDate(input_id, type)}
                         onChange={e => e.preventDefault()}
                         onKeyDown={e => e.preventDefault()}
@@ -237,7 +252,8 @@ export const generateInputs = (component, updateField,
         const { checkbox_input, checkboxes_for } = checkbox
         const fieldId = `${checkboxes_for}_${type}_container`
         return (
-            <div className="agree" id={fieldId}>
+            // <div className="agree" id={fieldId}>
+            <div id={fieldId}>
                 <div className="checkbox-container" key={id}>
                     {checkbox_input.map(box => {
                         const boxId = `${box.input_id}_${type}`
@@ -257,7 +273,6 @@ export const generateInputs = (component, updateField,
             </div>
         )
     }
-
 
     if (type === 'radio') {
         const { radio_buttons } = radio
