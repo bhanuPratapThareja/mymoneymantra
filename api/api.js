@@ -125,14 +125,14 @@ const api = {
                         "contact": {
                             "mobile": [
                                 {
-                                    "addressTypeMasterId": "1000000001",
+                                    "addressTypeMasterId": "1",
                                     "mobile": "",
                                     "isDefault": "Y"
                                 }
                             ],
                             "email": [
                                 {
-                                    "addressTypeMasterId": "1000000001",
+                                    "addressTypeMasterId": "1",
                                     "email": "",
                                     "isDefault": "Y"
                                 }
