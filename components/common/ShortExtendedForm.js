@@ -232,11 +232,11 @@ class ShortExtendedForm extends React.Component {
     }
 
     onSubmitShortForm = submit => {
-        console.log(submit)
+        // console.log(submit)
         const primaryPath = this.state.primaryPath
         submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
         if (submit) {
-            console.log(submit)
+            // console.log(submit)
            this.props.router.push(`/${primaryPath}/listings`)
         }
     }
