@@ -10,7 +10,6 @@ AOS.init({
 $(document).ready(function () {
 
   if ($(window).width() < 768) {
-    alert("mobile-view");
     $(".homepage-flow .header").addClass("mobile-header");
     
   }
