@@ -13,13 +13,12 @@ const LongFormProduct = props => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.long-form-banner':
-                    return null
                     return <LongFormBanner key={block.id} data={block} />
+                    
                 case 'form-components.long-form-component':
                     return <LongForm 
                         key={block.id} 
                         data={block}
-
                     />
             }
         })

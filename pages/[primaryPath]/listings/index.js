@@ -27,7 +27,6 @@ const Listings = props => {
     useEffect(() => {
         window.scrollTo(0, 0)
         let cards = props.listingOfferCards
-        console.log(cards)
         getCardsWithButtonText(cards)
     }, [])
 

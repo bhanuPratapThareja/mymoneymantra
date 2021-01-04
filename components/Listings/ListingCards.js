@@ -10,7 +10,6 @@ const ListingCards = props => {
     const [offers, setOffers] = useState([])
 
     useEffect(() => {
-        console.log('checking:: ', props.offerCards)
         setOffers(props.offerCards)
     })
 
@@ -25,13 +24,15 @@ const ListingCards = props => {
         let pathname = ''
         const query = { bankName }
 
+        console.log(offer.productDecision)
+
         switch (buttonText) {
             case 'Apply Now':
             case 'Instant Approval':
                 pathname = `/${primaryPath}/thank-you`
                 break
 
-            case 'E Connect':
+            case 'EConnect':
                 pathname = `/${primaryPath}/long-form/${bankSlug}/${productSlug}`
                 break
 

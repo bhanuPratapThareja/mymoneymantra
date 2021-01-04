@@ -18,7 +18,6 @@ const ListingBanner = props => {
     const [selectedOption, setSelectedOption] = useState('all')
 
     useEffect(() => {
-        console.log('chechingLLL ', props.banksList)
         onBannerCategoryChange(selectedOption)
     }, [selectedOption])
 
