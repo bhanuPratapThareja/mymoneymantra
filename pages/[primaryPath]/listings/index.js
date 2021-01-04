@@ -76,6 +76,7 @@ const Listings = props => {
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offer-cards':
+                    case 'offers.trending-offers-home-loans-component':     
                 case 'offers.trending-offers-personal-loans':
                     return <Offers key={block.id} data={block} />
                 case 'blocks.bank-slider-component':

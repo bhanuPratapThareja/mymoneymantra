@@ -48,10 +48,11 @@ const PrimaryPage = props => {
 
                 case 'offers.popular-offers-credit-cards-component':
                 case 'offers.popular-offers-personal-loans-component':
+                    case 'offers.popular-offers-home-loans-component':    
                 case 'offers.trending-offer-cards':
                 case 'offers.trending-offers-personal-loans':
                 case 'blocks.popular-home-loan-cards':
-                case 'blocks.trending-home-loan-component':
+                case 'offers.trending-offers-home-loans-component':
                     return <Offers key={block.id} data={block} goToShortFormPage={goToShortFormPage} />
 
                 case 'blocks.credit-score-component':
