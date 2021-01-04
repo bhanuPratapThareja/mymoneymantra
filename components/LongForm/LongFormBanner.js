@@ -9,6 +9,10 @@ import { getBase64, documentUpload } from '../../services/formService';
 
 class LongFormBanner extends React.Component {
 
+    componentDidMount() {
+        console.log(this.props)
+    }
+
     state = {
         gender: "",
         maritalStatus: "",

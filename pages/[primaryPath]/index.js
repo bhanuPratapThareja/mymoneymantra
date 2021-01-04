@@ -22,6 +22,7 @@ import { getDevice } from '../../utils/getDevice'
 const PrimaryPage = props => {
     useEffect(() => {
         window.scrollTo(0, 0)
+        localStorage.clear()
     })
 
     const goToShortFormPage = () => {

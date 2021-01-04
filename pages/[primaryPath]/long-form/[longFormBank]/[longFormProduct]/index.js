@@ -14,7 +14,10 @@ const LongFormProduct = props => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.long-form-banner':
-                    return <LongFormBanner key={block.id} data={block} />
+                    return <LongFormBanner 
+                        key={block.id} 
+                        data={block} 
+                    />
                     
                 case 'form-components.long-form-component':
                     return <LongForm 
@@ -42,12 +45,13 @@ export async function getServerSideProps(ctx) {
 
     const productSearch = getLongFormSearchParams(primaryPath, longFormProduct)
 
-    const productData = await strapi.processReq('GET', `credit-card-product?slug=${longFormProduct}`)
+    const productData = await strapi.processReq('GET', productSearch)
 
+    console.log('productData: ', productData)
     
     const data = pageData[0]
     
-    return { props: { data } }
+    return { props: { data, bankData } }
 }
 
 export default LongFormProduct

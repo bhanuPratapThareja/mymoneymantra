@@ -14,7 +14,7 @@ export const getDetailsSearchParams = (primaryPath, bank, product) => {
 export const getLongFormSearchParams = (primaryPath, product) => {
     let productSearch = ''
     if (primaryPath === 'credit-cards') {
-        productSearch = `credit_card_product?slug=${product}`
+        productSearch = `credit_card_product?slug=${'product'}`
     } else if (primaryPath === 'personal-loans') {
         productSearch = `personal_loan_product?slug=${product}`
     } else if (primaryPath === 'home-loans') {

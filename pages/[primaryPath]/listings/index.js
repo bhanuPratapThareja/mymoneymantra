@@ -116,8 +116,6 @@ export async function getServerSideProps(ctx) {
     let listingOfferCards = []
     let banksList = []
 
-    console.log('data: ', data)
-
     if (data) {
         await updateTrendingOffers(data)
         listingOfferCards = await updateListingOffers(data)

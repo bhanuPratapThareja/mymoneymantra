@@ -23,7 +23,6 @@ const Details = props => {
     })
 
     const getProductDetailsComponents = (dynamic, bankData, creditCardProductData, personalLoanProductData, homeLoanProductData) => {
-        console.log('dynamic: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.credit-cards-detail-banner-component':
@@ -37,6 +36,7 @@ const Details = props => {
                     />
                 case 'blocks.credit-cards-details-component':
                 case 'blocks.details-component':
+                case 'blocks.home-loans-details':
                     return <ProductDetails
                         key={block.id}
                         data={block}
@@ -75,7 +75,7 @@ const Details = props => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const { query } = ctx
-    const {primaryPath, secondaryPath: bank, product} = query
+    const { primaryPath, secondaryPath: bank, product } = query
 
     const pageClasses = getClassesForPage(primaryPath, 'details')
     const search = getDetailsSearchParams(primaryPath, bank, product)
@@ -83,7 +83,7 @@ export async function getServerSideProps(ctx) {
     const detailsData = await strapi.processReq('GET', search)
     const details = detailsData[0]
     const bankData = details.bank
-    
+
     const creditCardProductData = details.credit_card_product ? details.credit_card_product : null
     const personalLoanProductData = details.personal_loan_product ? details.personal_loan_product : null
     const homeLoanProductData = details.home_loan_product ? details.home_loan_product : null
