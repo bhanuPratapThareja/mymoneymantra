@@ -80,14 +80,9 @@ export async function getServerSideProps(ctx) {
     const search = getDetailsSearchParams(primaryPath, bank, product)
 
     const detailsData = await strapi.processReq('GET', search)
-
-    console.log('detailsData: ', detailsData)
     const details = detailsData[0]
-
-    console.log('details: ', details)
-
-
     const bankData = details.bank
+    
     const creditCardProductData = details.credit_card_product ? details.credit_card_product : null
     const personalLoanProductData = details.personal_loan_product ? details.personal_loan_product : null
     const homeLoanProductData = details.home_loan_product ? details.home_loan_product : null
