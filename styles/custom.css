@@ -35,7 +35,7 @@
 }
 
 .listing-banner_selected {
-  background-color: #89C142 !important;
+  background-color: #89C142;
   opacity: 1;
 }
 
@@ -883,7 +883,7 @@ div#city_cc_input_with_dropdown {
     top: 0 !important;
   }
   .banner-features-container {
-    margin-top: 750px;
+    margin-top: 780px;
   }
 
   .details-button-div {
