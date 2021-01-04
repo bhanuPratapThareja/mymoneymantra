@@ -3,6 +3,7 @@ import Strapi from '../../../../../providers/strapi'
 import Layout from '../../../../../components/Layout'
 import LongFormBanner from '../../../../../components/LongForm/LongFormBanner'
 import LongForm from '../../../../../components/common/LongForm'
+import { getLongFormSearchParams } from '../../../../../utils/searchParams'
 
 const LongFormProduct = props => {
     useEffect(() => {
@@ -37,6 +38,13 @@ export async function getServerSideProps(ctx) {
     const { primaryPath, longFormBank, longFormProduct } = query
     
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-long-form`)
+    const bankData = await strapi.processReq('GET', `banks?slug=${longFormBank}`)
+
+    const productSearch = getLongFormSearchParams(primaryPath, longFormProduct)
+
+    const productData = await strapi.processReq('GET', `credit-card-product?slug=${longFormProduct}`)
+
+    
     const data = pageData[0]
     
     return { props: { data } }

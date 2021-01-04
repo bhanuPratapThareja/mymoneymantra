@@ -20,7 +20,7 @@ const DetailsBanner = props => {
 
     const { bank_name } = props.bank
     const { product_name, product_image, product_card_name } = props.product
-    const details = props.data.credit_cards_details_banner || props.data.personal_loans_details_banner
+    const details = props.data.credit_cards_details_banner || props.data.personal_loans_details_banner ||  props.data.home_loans_details_banner
 
     const onButtonClick = (buttonText, bank, offer) => {
         const { slug: productSlug } = offer
