@@ -247,9 +247,8 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
             } else {
                 inp.error = false
                 inp.errorMsg = ''
-                if (inp.mandatory) {
-                    inp.verified = true
-                }
+                inp.verified = true
+
             }
 
         })
@@ -302,7 +301,7 @@ export const updateSelectionFromDropdown = (inputs, name, item) => {
             inp.error = false
         }
 
-        if (inp.end_point_name === update_field_with_input_id) {
+        if (inp.end_point_name === update_field_with_input_id && inp.end_point_name === 'city') {
             inp.value = item.selectedItem.cityName
             inp.selectedId = item.selectedItem.cityId
             inp.selectedItem = item.selectedItem

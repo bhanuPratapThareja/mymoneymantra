@@ -26,7 +26,7 @@ const PrimaryPage = props => {
     })
 
     const goToShortFormPage = () => {
-        if(getDevice() === 'desktop') {
+        if (getDevice() === 'desktop') {
             window.scrollTo({ top: 1000 })
             return
         }
@@ -49,7 +49,7 @@ const PrimaryPage = props => {
 
                 case 'offers.popular-offers-credit-cards-component':
                 case 'offers.popular-offers-personal-loans-component':
-                    case 'offers.popular-offers-home-loans-component':    
+                case 'offers.popular-offers-home-loans-component':
                 case 'offers.trending-offer-cards':
                 case 'offers.trending-offers-personal-loans':
                 case 'blocks.popular-home-loan-cards':

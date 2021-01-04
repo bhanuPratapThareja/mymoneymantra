@@ -34,7 +34,6 @@ export const submitOtp = async mobileNo => {
     try {
         const res = await axios.post(url, body)
         if (res.data.response.msgInfo.code == 200) {
-            otpId = ''
             return true
         } else if (res.data.response.msgInfo.code == 500) {
             throw new Error(res.data.response.msgInfo.message)

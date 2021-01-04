@@ -33,6 +33,9 @@ class LongForm extends React.Component {
             sfData = formData[primaryPath]
         }
 
+        console.log(long_form_fields)
+        console.log(sfData)
+
         long_form_fields.forEach(item => {
             item.error = false
             item.verified = false
@@ -42,10 +45,42 @@ class LongForm extends React.Component {
             blocksIds.push(item.block_id)
 
             if (sfData) {
-                for (let key in sfData) {
-                    if (key === item.end_point_name) {
+
+                loop: for (let key in sfData) {
+                    if (!sfData[key]) {
+                        continue loop
+                    }
+
+                    if (key === item.end_point_name && key === 'city') {
+                        item.value = sfData[key].cityName
+                        item.selectedId = sfData[key].cityId
+                        item.selectedItem = sfData[key]
+                        item.verified = true
+                        item.error = false
+                        continue loop
+                    }
+
+                    if (key === item.end_point_name && key === 'pincode') {
+                        item.value = sfData[key].pincode
+                        item.selectedId = sfData[key].pincode
+                        item.selectedItem = sfData[key]
+                        item.verified = true
+                        item.error = false
+                        continue loop
+                    }
+
+                    if (typeof sfData[key] === 'object' && key === item.end_point_name) {
+                        // item.value = sfData[key].pincode
+                        // item.selectedItem = sfData[key]
+                        // item.verified = true
+                        // item.error = false
+                        continue loop
+                    }
+
+                    if (typeof sfData[key] === 'string' && key === item.end_point_name) {
                         item.value = sfData[key]
                         item.verified = true
+                        item.error = false
                     }
                 }
             }
@@ -119,7 +154,7 @@ class LongForm extends React.Component {
     getPositionNumber = blockId => {
         const { blocksIds } = this.state
         if (blocksIds.includes(blockId)) {
-            return blocksIds.indexOf(blockId) + 1
+            return blocksIds.indexOf(blockId)
         }
         return null
     }
