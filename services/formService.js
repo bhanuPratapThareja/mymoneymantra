@@ -2,12 +2,19 @@ import { getApiData } from '../api/api'
 import axios from 'axios'
 const CancelToken = axios.CancelToken
 let cancel
+let otpId = ''
 
 export const getOtp = mobileNo => {
-    const { url, body } = getApiData('otp')
-    body.request.payload.mobileNo = mobileNo
-    axios.post(url, body)
-        .catch(() => { })
+    // return new Promise((resolve, reject) => {
+        const { url, body } = getApiData('otp')
+        body.request.payload.mobileNo = mobileNo
+        axios.post(url, body)
+            .then(res => {
+                console.log(res.data.response)
+                otpId = res.data.response.payload.otpId
+            })
+            .catch(() => { })
+    // })
 }
 
 export const submitOtp = async mobileNo => {
@@ -25,6 +32,8 @@ export const submitOtp = async mobileNo => {
     const { url, body } = getApiData('otpverify')
     body.request.payload.mobileNo = mobileNo
     body.request.payload.otp = otp
+    body.request.payload.otpId = otpId
+
     try {
         const res = await axios.post(url, body)
         if (res.data.response.msgInfo.code == 200) {

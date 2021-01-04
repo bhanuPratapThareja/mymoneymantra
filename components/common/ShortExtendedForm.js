@@ -1,4 +1,4 @@
-import { withRouter} from 'next/router'
+import { withRouter } from 'next/router'
 import { debounce } from 'lodash'
 import OnBoardForm from '../ShortForm/OnBoardForm/OnBoardForm'
 import OtpSlide from '../ShortForm/OtpForm/OtpSlide'
@@ -51,12 +51,12 @@ class ShortExtendedForm extends React.Component {
     }
 
     setInputsInState = (inputsArray, slideId, heading) => {
-        if(getDevice() !== 'desktop') {
+        if (getDevice() !== 'desktop') {
             const letsFindContaiiner = document.getElementsByClassName('lets-find-container')[0]
-            const  uspCardsContainer = document.getElementsByClassName('banner-features-container')[0]
-            if(letsFindContaiiner) {
+            const uspCardsContainer = document.getElementsByClassName('banner-features-container')[0]
+            if (letsFindContaiiner) {
                 letsFindContaiiner.classList.add('lets-find-container-top')
-                if(uspCardsContainer) {
+                if (uspCardsContainer) {
                     uspCardsContainer.classList.add('banner-features-container-switch')
                 }
             }
@@ -112,6 +112,8 @@ class ShortExtendedForm extends React.Component {
                     const mobileNo = getUserMobileNumber(this.state.slides[0])
                     this.setState({ mobileNo })
                     getOtp(mobileNo)
+                    // const { otpId } = await getOtp(mobileNo)
+                    // this.setState({ otpId })
                     letsFindFormToOtpForm()
                     setTimeout(() => {
                         this.decrementOtpTime()
@@ -237,7 +239,7 @@ class ShortExtendedForm extends React.Component {
         submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
         if (submit) {
             // console.log(submit)
-           this.props.router.push(`/${primaryPath}/listings`)
+            this.props.router.push(`/${primaryPath}/listings`)
         }
     }
 

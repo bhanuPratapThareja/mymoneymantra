@@ -1,6 +1,8 @@
-import { getApiData } from '../api/api';
 import axios from 'axios'
 import Strapi from '../providers/strapi'
+import { getApiData } from '../api/api'
+import { getLeadId } from '../utils/localAccess'
+
 const strapi = new Strapi()
 
 const defaultDecision = 'E Connect'
@@ -44,9 +46,7 @@ export const getProductDecision = (cards, primaryPath) => {
                 productTypeId = '3'
             }
 
-            const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-            const leadId = leadIdData && leadIdData[primaryPath] ? leadIdData[primaryPath] : ''
-
+            const leadId = getLeadId(primaryPath)
             body.request.payload.productId = card.product_id
             body.request.payload.bankId = card.bank.bank_id
             body.request.payload.leadId = leadId

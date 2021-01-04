@@ -25,7 +25,7 @@ class ListingFilter extends React.Component {
                     const values = block.values.filter(value => {
                         return this.props.banksList.includes(value.tag)
                     })
-                    console.log(values)
+                    // console.log(values)
                     
                     checkboxes[i].values = values
                 }

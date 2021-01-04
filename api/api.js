@@ -24,7 +24,7 @@ const api = {
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { mobileNo: '' } } }
         },
         otpverify: {
-            devUrl: 'notification/api/notification/v1/sms/otpverify',
+            devUrl: 'notification/api/notification/v1/sms/otp/verify',
             uatUrl: 'api/customer/v1/profile/',
             prodUrl: 'api/customer/v1/profile/',
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { mobileNo: '' } } }
