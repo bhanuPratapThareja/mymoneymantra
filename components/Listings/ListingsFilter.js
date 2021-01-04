@@ -13,12 +13,19 @@ class ListingFilter extends React.Component {
             filter_fee_annual, filter_emi,
             filter_tenure, filter_roi, filter_max_loan_amount } = this.props.filters
 
-        if (checkboxes.length) {
+            // if(this.props.banksList.lenth){
+            //     this.props.banksList.forEach(bank => {
+
+            //     })
+            // }
+
+            if (checkboxes.length) {
             checkboxes.forEach((block, i) => {
                 if (block.type === 'banks') {
                     const values = block.values.filter(value => {
                         return this.props.banksList.includes(value.tag)
                     })
+                    console.log(values)
                     
                     checkboxes[i].values = values
                 }

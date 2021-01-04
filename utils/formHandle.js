@@ -2,6 +2,7 @@ import $ from 'jquery'
 import { getApiToHit } from '../api/dropdownApiConfig'
 import { isInputValid } from './formValidations'
 import { getBase64, documentUpload, generateLeadSF } from '../services/formService'
+import { getFormattedName, getFormattedDate } from './formatDataForApi'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel', 'phone_no',
     'input_with_dropdown', 'input_with_calendar', 'upload_button']
@@ -111,7 +112,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
                     inp.value = field.value
-                    if (inp.end_point_name === 'pan_card' && inp.value) {
+                    if (inp.type === 'pan_card' && inp.value) {
                         inp.value = inp.value.toUpperCase()
                     }
                 }
@@ -338,12 +339,13 @@ export const getSfData = slides => {
                     break
 
                 default:
-                    if (input.end_point_name === 'fullName') {
-                        const fullName = input.value
-                        const firstName = fullName.substr(0, fullName.indexOf(' '))
-                        const lastName = fullName.substr(fullName.indexOf(' ') + 1)
-                        data[input.firstName] = firstName
-                        data[input.lastName] = lastName
+                    if (input.end_point_name === 'fullName' && input.value) {
+                        const { fullName, firstName, lastName } = getFormattedName(input.value)
+                        data[input.end_point_name] = fullName
+                        data['firstName'] = firstName
+                        data['lastName'] = lastName
+                    } else if (input.end_point_name === 'dob' && input.value) {
+                        data[input.end_point_name] = getFormattedDate(input.value)
                     } else {
                         data[input.end_point_name] = input.value
                     }
@@ -375,6 +377,7 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
         })
 
         const data = getSfData(slides)
+        console.log('data: ', data)
         const previouslySavedData = JSON.parse(localStorage.getItem('formData'))
         const formData = { ...previouslySavedData, [primaryPath]: data }
         localStorage.setItem('formData', JSON.stringify(formData))

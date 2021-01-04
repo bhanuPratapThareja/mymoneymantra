@@ -91,10 +91,9 @@ const api = {
                     },
                     payload: {
                         channelName: 'MOBILEAPP',
-                        caseId: '1001013258',
-                        documentTypeId: '1000000034',
+                        caseId: '1001013258',        
                         insertFlag: 'Y',
-                        docList: [{ documentId: '1000000374', documentExtension: 'jpeg', docBytes: '' }]
+                        docList: [{ documentId: '1000000374',  documentTypeId: '1000000034', documentExtension: '', docBytes: '' }]
                     }
                 }
             }
@@ -135,7 +134,7 @@ const api = {
                                 {
                                     "addressTypeMasterId": "",
                                     "email": "",
-                                    "isDefault": "N"
+                                    "isDefault": "Y"
                                 }
                             ],
                             "keyContact": [

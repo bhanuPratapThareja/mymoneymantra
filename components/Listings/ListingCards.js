@@ -24,8 +24,6 @@ const ListingCards = props => {
         let pathname = ''
         const query = { bankName }
 
-        console.log(offer.productDecision)
-
         switch (buttonText) {
             case 'Apply Now':
             case 'Instant Approval':
