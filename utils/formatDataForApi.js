@@ -1,5 +1,4 @@
 export const getFormattedName = value => {
-    console.log('val:: ', value)
     const fullName = value.trim()
     const fullNameSplit = splitAtFirstSpace(fullName)
     const firstName = fullNameSplit[0]

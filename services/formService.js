@@ -5,16 +5,13 @@ let cancel
 let otpId = ''
 
 export const getOtp = mobileNo => {
-    // return new Promise((resolve, reject) => {
-        const { url, body } = getApiData('otp')
-        body.request.payload.mobileNo = mobileNo
-        axios.post(url, body)
-            .then(res => {
-                console.log(res.data.response)
-                otpId = res.data.response.payload.otpId
-            })
-            .catch(() => { })
-    // })
+    const { url, body } = getApiData('otp')
+    body.request.payload.mobileNo = mobileNo
+    axios.post(url, body)
+        .then(res => {
+            otpId = res.data.response.payload.otpId
+        })
+        .catch(() => { })
 }
 
 export const submitOtp = async mobileNo => {
@@ -37,6 +34,7 @@ export const submitOtp = async mobileNo => {
     try {
         const res = await axios.post(url, body)
         if (res.data.response.msgInfo.code == 200) {
+            otpId = ''
             return true
         } else if (res.data.response.msgInfo.code == 500) {
             throw new Error(res.data.response.msgInfo.message)
@@ -97,7 +95,7 @@ export const generateLeadSF = async (data, primaryPath) => {
         const { fullName, dob, pan_card, mobile, email, applicantType,
             companyId, netMonthlyIncome, bankId, addressLine1, addressLine2, pincode
         } = data
-        
+
         body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = dob
         body.request.payload.personal.pan = pan_card
@@ -110,10 +108,10 @@ export const generateLeadSF = async (data, primaryPath) => {
         body.request.payload.work.netMonthlyIncome = netMonthlyIncome
 
         // body.request.payload.bankId = bankId ? bankId.bankId : ''
-       
+
         const leadIdData = JSON.parse(localStorage.getItem('leadId'))
         const leadId = leadIdData && leadIdData[primaryPath] ? leadIdData[primaryPath] : ''
-     
+
 
         body.request.payload.leadId = leadId ? leadId : ''
 
@@ -127,8 +125,6 @@ export const generateLeadSF = async (data, primaryPath) => {
             body.request.payload.address[0].state = pincode ? pincode.stateId : ''
             body.request.payload.address[0].pincode = pincode ? pincode.pincode : ''
         }
-
-        console.log('body: ', body)
 
         axios.post(url, body)
             .then(res => {
