@@ -7,7 +7,6 @@ const AboutUs = props => {
             <div className="container product-wrapper">
                 <div className="product-wrapper-left aboutUs-left">
                     <div dangerouslySetInnerHTML={{ __html: why_choose_heading }}></div>
-                    <Image className="aboutUs-underline" image={why_choose_money} />
                 </div>
                 <div className="product-wrapper-right aboutUs-right">
                     <div dangerouslySetInnerHTML={{ __html: why_choose_sub_text }}></div>
