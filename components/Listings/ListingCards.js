@@ -10,11 +10,11 @@ const ListingCards = props => {
     const [offers, setOffers] = useState([])
 
     useEffect(() => {
+        console.log('checking:: ', props.offerCards)
         setOffers(props.offerCards)
     })
 
     const onOfferClick = (buttonText, offer) => {
-        console.log(getDevice())
         if (getDevice() !== 'desktop') {
             onButtonClick(buttonText, offer)
         }

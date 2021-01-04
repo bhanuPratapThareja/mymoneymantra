@@ -27,6 +27,7 @@ const Listings = props => {
     useEffect(() => {
         window.scrollTo(0, 0)
         let cards = props.listingOfferCards
+        console.log(cards)
         getCardsWithButtonText(cards)
     }, [])
 
@@ -67,7 +68,7 @@ const Listings = props => {
                     />
                 case 'offers.listing-offers-credit-cards-compnent':
                 case 'offers.listing-offers-personal-loan-compnent':
-                case 'blocks.loan-listing-offer-details-component':
+                case 'offers.listing-offers-home-loans-component':
                     return <ListingCards
                         key={block.id}
                         data={block}
@@ -114,6 +115,8 @@ export async function getServerSideProps(ctx) {
     const data = pageData[0]
     let listingOfferCards = []
     let banksList = []
+
+    console.log('data: ', data)
 
     if (data) {
         await updateTrendingOffers(data)

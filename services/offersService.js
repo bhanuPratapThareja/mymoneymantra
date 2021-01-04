@@ -143,17 +143,17 @@ export const updatePopularOffers = data => {
                     }
                 })
             }
-            if (block.__component === 'blocks.popular-home-loan-cards') {
-                let pendingCards = [...block.loan_cards]
+            if (block.__component === 'offers.popular-offers-home-loans-component') {
+                let pendingCards = [...block.home_loan_products]
                 if (!pendingCards.length) {
                     resolve([])
                 }
-                block.loan_cards.forEach(async card => {
+                block.home_loan_products.forEach(async card => {
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
                     card.bank = bankData[0]
                     pendingCards.shift()
                     if (!pendingCards.length) {
-                        resolve(block.loan_cards)
+                        resolve(block.home_loan_products)
                     }
                 })
             }
@@ -192,17 +192,17 @@ export const updateTrendingOffers = data => {
                     }
                 })
             }
-            if (block.__component === 'blocks.trending-home-loan-component') {
-                let pendingCards = [...block.loan_cards]
+            if (block.__component === 'offers.trending-offers-home-loans-component') {
+                let pendingCards = [...block.home_loan_products]
                 if (!pendingCards.length) {
                     resolve([])
                 }
-                block.loan_cards.forEach(async card => {
+                block.home_loan_products.forEach(async card => {
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
                     card.bank = bankData[0]
                     pendingCards.shift()
                     if (!pendingCards.length) {
-                        resolve(block.loan_cards)
+                        resolve(block.home_loan_products)
                     }
                 })
             }
@@ -241,17 +241,17 @@ export const updateListingOffers = data => {
                     }
                 })
             }
-            if (block.__component === 'blocks.loan-listing-offer-details-component') {
-                let pendingCards = [...block.personal_loan_cards]
+            if (block.__component === 'offers.listing-offers-home-loans-component') {
+                let pendingCards = [...block.home_loan_products]
                 if (!pendingCards.length) {
                     resolve([])
                 }
-                block.personal_loan_cards.forEach(async card => {
+                block.home_loan_products.forEach(async card => {
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
                     card.bank = bankData[0]
                     pendingCards.shift()
                     if (!pendingCards.length) {
-                        resolve(block.personal_loan_cards)
+                        resolve(block.home_loan_products)
                     }
                 })
             }
