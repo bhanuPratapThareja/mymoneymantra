@@ -95,9 +95,6 @@
   margin: 0 0 0 1px;
 }
 
-/* .banks-holder {
-  margin-top: 128px !important;
-} */
 
 .category-wrapper .checkbox-container .banner_label img {
   opacity: 0.5;
@@ -364,20 +361,20 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   margin-top: 32px;
 }
 
-/* .credit-card-flow .lets-find-container .shortforms-container .form__group.field.dropdown_enabled */
 
-div#pan_card_text, div#bank_name_input_with_dropdown, div#net_monthly_income_number, div#pincode_input_with_dropdown, div#salary_bank_name_input_with_dropdown {
+div#pan_card_text,
+div#bank_name_input_with_dropdown, 
+div#net_monthly_income_number, 
+div#pincode_input_with_dropdown, 
+div#salary_bank_name_input_with_dropdown {
   display: inline-block;
   max-width: 49%;
   margin-top: 32px;
   margin-right: 14px;
 }
 
-/* div#pancard_attachment_upload_button,
-div#net_monthly_income_attachment_upload_button,
-div#bank_statement_attachment_upload_button, */
-
-div#city_input_with_dropdown, .credit-card-flow .lets-find-container .shortforms-container .form__group.field.file-type {
+div#city_input_with_dropdown, 
+.credit-card-flow .lets-find-container .shortforms-container .form__group.field.file-type {
   max-width: 49%;
   vertical-align: top;
   /* margin-top: 32px; */
@@ -497,7 +494,8 @@ div#address_proof_upload_button {
   margin: 0 0 15px;
 }
 
-.credit-card-flow .homepage-banner-wrapper h2, .homepage-flow .buy-section-wrapper h2, .homepage-flow .aboutUs-left h2 {
+.credit-card-flow .homepage-banner-wrapper h2, 
+.homepage-flow .buy-section-wrapper h2, .homepage-flow .aboutUs-left h2 {
   color: #ffffff;
   font-size: 2.5rem;
   font-family: "Avenir-Black";
@@ -554,13 +552,6 @@ div#address_proof_upload_button {
   line-height: 2rem;
 }
 
-.homepage-flow .banner-features {
-  margin-top: 99px;
-}
-
-/* .homepage-flow .score-container {
-  margin-top: 128px !important;
-} */
 
 .personal-loan-flow .pl-image {
   position: absolute;
@@ -598,7 +589,8 @@ div#address_proof_upload_button {
   margin-top: 0;
 }
 
-.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container input[type="radio"] {
+.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container input[type="radio"],
+.long-forms-wrapper .shortforms-container input[type="radio"] {
   width: 100%;
   height: 64px;
   position: absolute;
@@ -608,7 +600,8 @@ div#address_proof_upload_button {
   opacity: 0;
 }
 
-.credit-card-flow .lets-find-container .lets-find-forms-container .sf-forms .shortforms-container>div {
+.credit-card-flow .lets-find-container .lets-find-forms-container .sf-forms .shortforms-container>div,
+.long-forms-wrapper .shortforms-container > div {
   position: relative;
 }
 
@@ -668,6 +661,9 @@ div#cc_holder_bank_input_with_dropdown {
 }
 
 div#pan_card_cc_text,
+div#pan_cc_pan_card,
+
+
 div#net_monthly_income_cc_number,
 div#salary_bank_name_cc_input_with_dropdown,
 div#pincode_cc_input_with_dropdown {
@@ -868,24 +864,18 @@ div#city_cc_input_with_dropdown {
     margin: 22px 0 3px;
   }
 
-
-
-
 }
 
 
 @media(max-width: 767px) {
-  .credit-card-flow {
-    position: relative;
-  }
-  .lets-find-container {
+  .lets-find-container-top {
     position: absolute !important;
     top: 0 !important;
   }
   .banner-features-container {
     margin-top: 780px;
   }
-
+  
   .details-button-div {
     position: fixed;
     bottom: 0;

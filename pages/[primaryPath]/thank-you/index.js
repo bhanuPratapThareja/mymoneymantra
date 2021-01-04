@@ -12,7 +12,6 @@ import Blogger from '../../../components/common/Blogger'
 import LearnMore from '../../../components/common/LearnMore'
 
 import { updateTrendingOffers } from '../../../services/offersService'
-import { getPrimaryPath, getSecondaryPath } from '../../../utils/getPaths'
 import { getClassesForPage } from '../../../utils/classesForPage'
 
 const ThankYouProduct = props => {
@@ -55,7 +54,7 @@ const ThankYouProduct = props => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const { query } = ctx
-    const primaryPath = query.primaryPath ? query.primaryPath : getPrimaryPath(ctx.resolvedUrl)
+    const primaryPath = query.primaryPath
     const secondaryPath = 'thank-you'
     const pageClasses = getClassesForPage(primaryPath, secondaryPath)
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { uniq } from 'lodash'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
 
@@ -15,8 +16,7 @@ import LearnMore from '../../../components/common/LearnMore'
 
 import { updateTrendingOffers, updateListingOffers, getProductDecision } from '../../../services/offersService'
 import { filterOfferCardsInFilterComponent } from '../../../utils/loanListingFilterHandler'
-import { getPrimaryPath, getSecondaryPath } from '../../../utils/getPaths'
-import { getClassesForPage } from '../../../utils/classesForPage';
+import { getClassesForPage } from '../../../utils/classesForPage'
 
 const Listings = props => {
     const router = useRouter()
@@ -63,11 +63,16 @@ const Listings = props => {
                         numberOfCards={offerCards.length}
                         filterOfferCards={filterOfferCards}
                         filterCardsFilterComponent={filterCardsFilterComponent}
+                        banksList={uniq(props.banksList)}
                     />
                 case 'offers.listing-offers-credit-cards-compnent':
                 case 'offers.listing-offers-personal-loan-compnent':
-                case 'blocks.loan-listing-offer-details-component':
-                    return <ListingCards key={block.id} data={block} offerCards={offerCards} />
+                case 'offers.listing-offers-home-loans-component':
+                    return <ListingCards
+                        key={block.id}
+                        data={block}
+                        offerCards={offerCards}
+                    />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offer-cards':
@@ -99,7 +104,7 @@ const Listings = props => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const { query } = ctx
-    const primaryPath = query.primaryPath ? query.primaryPath : getPrimaryPath(ctx.resolvedUrl)
+    const primaryPath = query.primaryPath
     const secondaryPath = 'listings'
     const pageClasses = getClassesForPage(primaryPath, secondaryPath)
 
@@ -108,13 +113,19 @@ export async function getServerSideProps(ctx) {
     const filters = listingFilter && listingFilter.length ? listingFilter[0] : null
     const data = pageData[0]
     let listingOfferCards = []
+    let banksList = []
 
-    if(data){
+    if (data) {
         await updateTrendingOffers(data)
         listingOfferCards = await updateListingOffers(data)
+        if (listingOfferCards.length) {
+            listingOfferCards.forEach(card => {
+                banksList.push(card.bank.slug)
+            })
+        }
     }
 
-    return { props: { data, filters, listingOfferCards, pageClasses } }
+    return { props: { data, filters, listingOfferCards, banksList, pageClasses } }
 }
 
 export default Listings

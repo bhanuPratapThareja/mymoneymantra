@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 import Strapi from '../../../../../providers/strapi'
 import Layout from '../../../../../components/Layout'
 import LongFormBanner from '../../../../../components/LongForm/LongFormBanner'
-import { getPrimaryPath, getSecondaryPath } from '../../../../../utils/getPaths';
-
+import LongForm from '../../../../../components/common/LongForm'
+import { getLongFormSearchParams } from '../../../../../utils/searchParams'
 
 const LongFormProduct = props => {
     useEffect(() => {
@@ -14,28 +14,44 @@ const LongFormProduct = props => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.long-form-banner':
-                    return <LongFormBanner key={block.id} data={block} />
+                    return <LongFormBanner 
+                        key={block.id} 
+                        data={block} 
+                    />
+                    
+                case 'form-components.long-form-component':
+                    return <LongForm 
+                        key={block.id} 
+                        data={block}
+                    />
             }
         })
     }
 
     return (
-        <div className="listings">
-            {props.data ? <Layout>{getComponents(props.data[0].dynamic)}</Layout> : null}
+        <div className="long-form">
+            {props.data ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
         </div>
     )
 }
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const primaryPath = getPrimaryPath(ctx.resolvedUrl)
-    const secondaryPath = getSecondaryPath(ctx.resolvedUrl)
-    const { longFormBank, longFormProduct } = ctx.params
+    const { query } = ctx
+    const { primaryPath, longFormBank, longFormProduct } = query
+    
+    const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-long-form`)
+    const bankData = await strapi.processReq('GET', `banks?slug=${longFormBank}`)
 
-    const data = await strapi.processReq('GET', `pages?slug=${primaryPath}-long-form`)
-    const bank = await strapi.processReq('GET', `bank?slug=${longFormBank}`)
+    const productSearch = getLongFormSearchParams(primaryPath, longFormProduct)
 
-    return { props: { data } }
+    const productData = await strapi.processReq('GET', productSearch)
+
+    console.log('productData: ', productData)
+    
+    const data = pageData[0]
+    
+    return { props: { data, bankData } }
 }
 
 export default LongFormProduct

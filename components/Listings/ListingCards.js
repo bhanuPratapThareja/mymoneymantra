@@ -15,7 +15,7 @@ const ListingCards = props => {
 
     const onOfferClick = (buttonText, offer) => {
         if (getDevice() !== 'desktop') {
-            onButtonClick(primaryPath, buttonText, offer)
+            onButtonClick(buttonText, offer)
         }
     }
 
@@ -30,7 +30,7 @@ const ListingCards = props => {
                 pathname = `/${primaryPath}/thank-you`
                 break
 
-            case 'E Connect':
+            case 'EConnect':
                 pathname = `/${primaryPath}/long-form/${bankSlug}/${productSlug}`
                 break
 

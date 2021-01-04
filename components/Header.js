@@ -28,26 +28,27 @@ const Header = () => {
             longFormBanner = document.getElementById('longFormBanner')
             longForm = document.getElementById('longForm')
          } else {
-            const longFormOffset = longForm.offsetTop
-            const longFormHeight = longForm.clientHeight
-            const longFormBottomPos = longFormOffset + longFormHeight
-            const windowOffsetForBannerStop = longFormBottomPos - longFormBanner.clientHeight
+            if (longForm && longFormBanner) {
+               const longFormOffset = longForm.offsetTop
+               const longFormHeight = longForm.clientHeight
+               const longFormBottomPos = longFormOffset + longFormHeight
+               const windowOffsetForBannerStop = longFormBottomPos - longFormBanner.clientHeight
 
-            if (window.pageYOffset >= longFormOffset && window.pageYOffset < windowOffsetForBannerStop) {
-               longFormBanner.classList.add("banner-sticky")
-               longFormBanner.classList.remove("banner-sticky_bottom")
+               if (window.pageYOffset >= longFormOffset && window.pageYOffset < windowOffsetForBannerStop) {
+                  longFormBanner.classList.add("banner-sticky")
+                  longFormBanner.classList.remove("banner-sticky_bottom")
+               }
+
+               if (window.pageYOffset >= windowOffsetForBannerStop - 70) {
+                  longFormBanner.classList.remove("banner-sticky")
+                  longFormBanner.classList.add("banner-sticky_bottom")
+               }
+
+               if (window.pageYOffset < longFormOffset) {
+                  longFormBanner.classList.remove("banner-sticky")
+                  longFormBanner.classList.remove("banner-sticky_bottom")
+               }
             }
-
-            if (window.pageYOffset >= windowOffsetForBannerStop - 70) {
-               longFormBanner.classList.remove("banner-sticky")
-               longFormBanner.classList.add("banner-sticky_bottom")
-            }
-
-            if (window.pageYOffset < longFormOffset) {
-               longFormBanner.classList.remove("banner-sticky")
-               longFormBanner.classList.remove("banner-sticky_bottom")
-            }
-
          }
       }
 

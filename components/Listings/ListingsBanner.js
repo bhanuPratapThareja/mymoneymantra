@@ -80,6 +80,7 @@ const ListingBanner = props => {
                 </div>
             </section>
             {props.filters ? <ListingFilter
+                banksList={props.banksList}
                 filters={props.filters}
                 filterCardsFilterComponent={props.filterCardsFilterComponent}
             /> : null}

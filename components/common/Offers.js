@@ -9,7 +9,7 @@ const Offers = props => {
    const [cards, setCards] = useState([])
 
    useEffect(() => {
-      const cards = props.data.credit_card_products || props.data.personal_loan_products || props.data.loan_cards || []
+      const cards = props.data.credit_card_products || props.data.personal_loan_products || props.data.home_loan_products || []
       setCards(cards)
    }, [])
 

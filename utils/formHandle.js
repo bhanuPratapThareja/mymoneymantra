@@ -1,7 +1,8 @@
 import $ from 'jquery'
-import { isEmailValid, isNumberValid, isPanValid } from './formValidations'
 import { getApiToHit } from '../api/dropdownApiConfig'
+import { isInputValid } from './formValidations'
 import { getBase64, documentUpload, generateLeadSF } from '../services/formService'
+import { getFormattedName, getFormattedDate } from './formatDataForApi'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel', 'phone_no',
     'input_with_dropdown', 'input_with_calendar', 'upload_button']
@@ -111,7 +112,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
                     inp.value = field.value
-                    if (inp.end_point_name === 'pan_card' && inp.value) {
+                    if (inp.type === 'pan_card' && inp.value) {
                         inp.value = inp.value.toUpperCase()
                     }
                 }
@@ -142,7 +143,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
 
             if (field.blur) {
                 if (inp.type === 'email' && inp.input_id === field.currentActiveInput) {
-                    if (!isEmailValid(inp)) {
+                    if (!isInputValid(inp)) {
                         errors = true
                         inp.error = true
                         inp.verified = false
@@ -157,7 +158,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.verified = true
                     }
                 } else if (inp.type === 'phone_no' && inp.input_id === field.currentActiveInput) {
-                    if (!isNumberValid(inp)) {
+                    if (!isInputValid(inp)) {
                         errors = true
                         inp.error = true
                         inp.verified = false
@@ -172,8 +173,8 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.verified = true
                     }
 
-                } else if ((inp.type === 'text' && inp.input_id === 'pan_card') && inp.input_id === field.currentActiveInput) {
-                    if (!isPanValid(inp)) {
+                } else if (inp.type === 'pan_card' && inp.input_id === field.currentActiveInput) {
+                    if (!isInputValid(inp)) {
                         errors = true
                         inp.error = true
                         inp.verified = false
@@ -224,17 +225,17 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                 inp.error = true
                 errors = true
             }
-            else if (inp.type === 'email' && !isEmailValid(inp)) {
+            else if (inp.type === 'email' && !isInputValid(inp)) {
                 inp.errorMsg = inp.validation_error
                 inp.error = true
                 errors = true
             }
-            else if (inp.type === 'phone_no' && !isNumberValid(inp)) {
+            else if (inp.type === 'phone_no' && !isInputValid(inp)) {
                 inp.errorMsg = inp.validation_error
                 inp.error = true
                 errors = true
             }
-            else if ((inp.type === 'text' && inp.input_id === 'pan_card') && !isPanValid(inp)) {
+            else if (inp.type === 'pan_card' && !isInputValid(inp)) {
                 inp.errorMsg = inp.validation_error
                 inp.error = true
                 errors = true
@@ -246,7 +247,9 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
             } else {
                 inp.error = false
                 inp.errorMsg = ''
-                inp.verified = true
+                if (inp.mandatory) {
+                    inp.verified = true
+                }
             }
 
         })
@@ -287,8 +290,11 @@ export const updateDropdownList = (inputs, listType, list, input_id) => {
 }
 
 export const updateSelectionFromDropdown = (inputs, name, item) => {
+    let update_field_with_input_id = ''
+
     inputs.forEach(inp => {
         if (inp.input_id === name) {
+            update_field_with_input_id = inp.update_field_with_input_id
             inp.list = []
             inp.value = item.name
             inp.selectedId = item.id
@@ -296,7 +302,7 @@ export const updateSelectionFromDropdown = (inputs, name, item) => {
             inp.error = false
         }
 
-        if (inp.end_point_name === 'city') {
+        if (inp.end_point_name === update_field_with_input_id) {
             inp.value = item.selectedItem.cityName
             inp.selectedId = item.selectedItem.cityId
             inp.selectedItem = item.selectedItem
@@ -309,7 +315,7 @@ export const resetDropdowns = (inputs, errorMsgs) => {
     inputs.forEach(inp => {
         if (inp.type === 'input_with_dropdown') {
             inp.list = []
-            if(inp.value && !inp.selectedId) {
+            if (inp.value && !inp.selectedId) {
                 inp.error = true
                 inp.errorMsg = errorMsgs.mandatory
             }
@@ -333,7 +339,16 @@ export const getSfData = slides => {
                     break
 
                 default:
-                    data[input.end_point_name] = input.value
+                    if (input.end_point_name === 'fullName' && input.value) {
+                        const { fullName, firstName, lastName } = getFormattedName(input.value)
+                        data[input.end_point_name] = fullName
+                        data['firstName'] = firstName
+                        data['lastName'] = lastName
+                    } else if (input.end_point_name === 'dob' && input.value) {
+                        data[input.end_point_name] = getFormattedDate(input.value)
+                    } else {
+                        data[input.end_point_name] = input.value
+                    }
             }
         })
     })
@@ -360,10 +375,11 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
                 })
             }
         })
-    
+
         const data = getSfData(slides)
+        console.log('data: ', data)
         const previouslySavedData = JSON.parse(localStorage.getItem('formData'))
-        const formData = { ...previouslySavedData, [primaryPath] : data }
+        const formData = { ...previouslySavedData, [primaryPath]: data }
         localStorage.setItem('formData', JSON.stringify(formData))
         generateLeadSF(data, primaryPath)
             .then(res => {
