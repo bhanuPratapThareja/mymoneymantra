@@ -139,9 +139,9 @@ class LongForm extends React.Component {
         const newFormInputs = [...this.state.longFormInputs]
         const errorsPresent = updateInputsValidity(newFormInputs, null, this.state.errorMsgs)
         this.setState({ formInputs: newFormInputs }, () => {
-            if (!errorsPresent) {
+            // if (!errorsPresent) {
                 console.log(this.state.longFormInputs)
-            }
+            // }
         })
     }
 

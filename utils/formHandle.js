@@ -59,6 +59,11 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
         } else if (field.type === 'upload_button') {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
+                    console.log(field)
+
+                    inp.value = field.value
+                    inp.attachment = field.attachment
+
                     // if (field.value && inp.number_of_uploads && field.value.length > inp.number_of_uploads) {
                     //     field.value = null
                     //     alert(`Number of attachments allowed: ${inp.number_of_uploads}`)
@@ -74,8 +79,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                     //         }
                     //     }
                     // } 
-                    inp.value = field.value
-                    inp.attachment = field.attachment
+
 
                 }
             })

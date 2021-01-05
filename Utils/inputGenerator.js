@@ -51,18 +51,25 @@ export const generateInputs = (component, updateField,
 
     const onUploadAttachment = async (name, type, inputFileId, attach) => {
         const files = await document.getElementById(inputFileId).files
-        let value = null
-        let attachment = false
-        if (attach && files.length) {
-            value = files
-            attachment = true
-        } else {
-            document.getElementById(inputFileId).value = ''
-            value = null
-            attachment = false
+        if (files) {
+            let value = null
+            let attachment = false
+
+            if (attach && !files.length) {
+                return
+            }
+
+            if (attach) {
+                value = files
+                attachment = true
+            } else {
+                document.getElementById(inputFileId).value = ''
+                value = null
+                attachment = false
+            }
+            const field = { name, value, type, attachment }
+            updateField(field)
         }
-        const field = { name, value, type, attachment }
-        updateField(field)
     }
 
 
@@ -161,9 +168,10 @@ export const generateInputs = (component, updateField,
         const inputFileId = `input_file_${input_id}`
         const fieldId = `${input_id}_${type}`
         let uploadText = value ? value.length === 1 ? value[0].name : value.length + ' files' : upload_text
+        const uploadButtonBorderStyles = upload_text ? { border: '1px solid green !important' } : borderStyles
         return (
             <>
-                <div className="form__group field file-type" id={fieldId} style={borderStyles}>
+                <div className="form__group field file-type" id={fieldId} style={uploadButtonBorderStyles}>
                     <input id={inputFileId} type="file" accept="application/pdf, image/*" multiple onChange={() => onUploadAttachment(input_id, type, inputFileId, true)} />
                     {!value ? <img src="/assets/images/icons/Upload.svg" onClick={() => document.getElementById(inputFileId).click()} style={{ background: 'red' }} /> : null}
                     {value ? <img src="/assets/images/icons/Attach.svg" onClick={() => document.getElementById(inputFileId).click()} style={{ background: 'red' }} /> : null}
