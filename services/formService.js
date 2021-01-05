@@ -95,7 +95,7 @@ export const generateLead = async (data, primaryPath) => {
         const { url, body } = getApiData('generate')
         const { fullName, dob, pan, mobile, email, applicantType,
             companyId, netMonthlyIncome, bankId, addressline1, addressline2, pincode, requestedLoanamount,
-            gender, maritalStatus, nationality
+            gender, maritalStatus, nationality, ffName
         } = data
 
         const leadId = getLeadId(primaryPath)
@@ -106,6 +106,7 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.personal.gender = gender
         body.request.payload.personal.maritalStatus = maritalStatus
         body.request.payload.personal.nationality = nationality
+        body.request.payload.personal.ffName = ffName
 
         body.request.payload.contact.mobile[0].mobile = mobile
         body.request.payload.contact.email[0].email = email
@@ -116,7 +117,7 @@ export const generateLead = async (data, primaryPath) => {
 
         // body.request.payload.bankId = bankId ? bankId.bankId : ''
 
-        body.request.payload.leadId = leadId ? leadId : ''
+        body.request.payload.leadId = leadId
         body.request.payload.productId = localStorage.getItem('productId')
         body.request.payload.requestedLoanamount = requestedLoanamount
 

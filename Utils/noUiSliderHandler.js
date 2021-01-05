@@ -1,19 +1,19 @@
 export const getSliderFilterValues = (slider, rangeId) => {
-    if (!slider) {
+    const parentEl = document.getElementById(rangeId)
+    if (!slider || !parentEl) {
         return null
     }
-    
-    const parentEl = document.getElementById(rangeId)
+
     const el = parentEl.getElementsByClassName('noUi-tooltip')
     if (el.length && slider) {
         let minSelected = el[0].innerHTML
         let maxSelected = el[1].innerHTML
         minSelected = minSelected.split('')
         minSelected = minSelected.filter(val => Number(val) || val == 0)
-        minSelected = minSelected.join('')
+        minSelected = minSelected.join('').trim()
         maxSelected = maxSelected.split('')
         maxSelected = maxSelected.filter(val => Number(val) || val == 0)
-        maxSelected = maxSelected.join('')
+        maxSelected = maxSelected.join('').trim()
 
         const { max } = slider
         return [minSelected, maxSelected, max]
