@@ -34,9 +34,10 @@ export const getProductDecision = (cards, primaryPath) => {
 
         pendingCards.forEach(async card => {
             let productTypeId = ''
-
+            let productId = ""
             if (primaryPath === 'credit-cards') {
                 productTypeId = '6'
+                productId = "6"
             } else if (primaryPath === 'personal-loans') {
                 productTypeId = '17'
             } else if (primaryPath === 'home-loans') {

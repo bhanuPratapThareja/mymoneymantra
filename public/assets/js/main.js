@@ -9,6 +9,11 @@ AOS.init({
 
 $(document).ready(function () {
 
+  if ($(window).width() < 768) {
+    $(".homepage-flow .header").addClass("mobile-header");
+    
+  }
+
   // if ($(window).width() > 786) {
   // $(window).scroll(function () {
   //   var sticky = $('header'),
@@ -114,9 +119,7 @@ $(document).ready(function () {
     }
   }
 
-
-
-
+  
   //file upload
   function fileInfo(id) {
     var fileName = document.getElementById(id).files[0].name;
@@ -140,6 +143,7 @@ $(document).ready(function () {
   }
 
   $(".file-upload-cross").click(function () {
+    alert("upload check")
     $(this).parent(".file-type").find('input').val("");
     $(this).parent(".file-type").find(".file-upload-icon").removeClass("file-upload-hidden");
     $(this).parent(".file-type").find(".file-upload-attach").removeClass("file-upload-visible");
