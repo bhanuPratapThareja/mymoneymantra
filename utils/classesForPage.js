@@ -16,7 +16,7 @@ const classes = {
     'details': {
         'credit-cards': ['credit-card-flow', 'c-detail-page'],
         'personal-loans': ['credit-card-flow', 'c-detail-page', 'personal-detail-flow'],
-        'home-loans': ['credit-card-flow', 'c-detail-page', 'personal-detail-flow', 'home-loan-flow-detail']
+        'home-loans': ['credit-card-flow', 'c-detail-page', 'personal-detail-flow'] //'home-loan-flow-detail'
     }
 
 }

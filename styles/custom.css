@@ -725,6 +725,12 @@ div#city_cc_input_with_dropdown {
   overflow-x: hidden;
 }
 
+.health-flow .popular-cards-slider .popular-cards-slider-card-top .head img {
+  max-width: 11%;
+  height: 34px;
+  width: auto;
+}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
