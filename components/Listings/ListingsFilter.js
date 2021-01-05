@@ -50,9 +50,9 @@ class ListingFilter extends React.Component {
             initializeYearRange(filter_tenure, 'tenure-range')
         })
 
-        // setTimeout(() => {
-        //     console.log(this.state)
-        // }, 1000);
+        setTimeout(() => {
+            console.log(this.state)
+        }, 1000);
     }
 
     handleCheckbox = (e, type) => {
@@ -152,7 +152,7 @@ class ListingFilter extends React.Component {
                                 })}
                             </> : null}
 
-                            {filter_fee_annual ? <div className="content-one">
+                            {filter_fee_annual && filter_fee_annual.enable  ? <div className="content-one">
                                 <h5>{filter_fee_annual.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">

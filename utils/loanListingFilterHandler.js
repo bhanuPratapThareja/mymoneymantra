@@ -5,6 +5,7 @@ export const closeFilter = (filters, filterFunction) => {
     $('body', "html").css("overflow", "scroll")
     if (filterFunction) {
         setTimeout(() => {
+            console.log('filters: ', filters)
             filterFunction(filters)
         }, 1000)
     }

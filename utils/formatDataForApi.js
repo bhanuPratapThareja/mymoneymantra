@@ -7,6 +7,9 @@ export const getFormattedName = value => {
 }
 
 export const getFormattedDate = calDate => {
+    if(!calDate){
+        return ''
+    }
     const dateArr = calDate.split('/')
     const date = dateArr[1]
     const month = dateArr[0]
