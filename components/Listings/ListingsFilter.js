@@ -173,7 +173,7 @@ class ListingFilter extends React.Component {
                                 </div>
                             </div> : null}
 
-                            {filter_emi ? <div className="content-one">
+                            {filter_emi && filter_emi.enable  ? <div className="content-one">
                                 <h5>{filter_emi.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">
@@ -194,7 +194,7 @@ class ListingFilter extends React.Component {
                                 </div>
                             </div> : null}
 
-                            {filter_tenure ? <div className="content-one">
+                            {filter_tenure && filter_tenure.enable ? <div className="content-one">
                                 <h5>{filter_tenure.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">
@@ -209,13 +209,13 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" />
                                             </div>
                                         </div>
-                                        <span className="min-max left">1 yr</span>
-                                        <span className="min-max right">10 yr+</span>
+                                        <span className="min-max left">₹{filter_tenure.min}</span>
+                                        <span className="min-max right">₹{filter_tenure.max}+</span>
                                     </div>
                                 </div>
                             </div> : null}
 
-                            {filter_roi ? <div className="content-one">
+                            {filter_roi && filter_roi.enable ? <div className="content-one">
                                 <h5>Return On Investment</h5>
                                 <div className="range__slider">
                                     <div className="container">
@@ -236,7 +236,7 @@ class ListingFilter extends React.Component {
                                 </div>
                             </div> : null}
 
-                            {filter_max_loan_amount ? <div className="content-one">
+                            {filter_max_loan_amount && filter_max_loan_amount.enable ? <div className="content-one">
                                 <h5>Maximum Loan Amount</h5>
                                 <div className="range__slider">
                                     <div className="container">
