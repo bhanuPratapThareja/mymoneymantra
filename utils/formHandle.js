@@ -378,6 +378,11 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
         })
 
         const data = getSfData(slides)
+        for (let key in data) {
+            if (data[key] === undefined) {
+                data[key] = ''
+            }
+        }
         const previouslySavedData = JSON.parse(localStorage.getItem('formData'))
         const formData = { ...previouslySavedData, [primaryPath]: data }
         localStorage.setItem('formData', JSON.stringify(formData))
