@@ -62,7 +62,6 @@ export const getProductDecisionForDetailsBanner = (product, bank, primaryPath) =
     const promise = new Promise(async (resolve) => {
         const { url, body } = getApiData('leadProductDecision')
         
-console.log('product:::: ', product)
         const leadId = getLeadId(primaryPath)
         body.request.payload.productId = product.productId.toString()
         body.request.payload.productTypeId = product.productTypeId.toString()

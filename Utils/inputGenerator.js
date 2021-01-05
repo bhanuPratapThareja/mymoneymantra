@@ -253,7 +253,7 @@ export const generateInputs = (component, updateField,
         const fieldId = `${checkboxes_for}_${type}_container`
         return (
             // <div className="agree" id={fieldId}>
-            <div id={fieldId}>
+            <div id={fieldId} className="agree">
                 <div className="checkbox-container" key={id}>
                     {checkbox_input.map(box => {
                         const boxId = `${box.input_id}_${type}`
