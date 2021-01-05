@@ -1,8 +1,8 @@
 import $ from 'jquery'
 import { getApiToHit } from '../api/dropdownApiConfig'
 import { isInputValid } from './formValidations'
-import { getBase64, documentUpload, generateLeadSF } from '../services/formService'
-import { getFormattedName, getFormattedDate } from './formatDataForApi'
+import { getBase64, documentUpload, generateLead } from '../services/formService'
+import { getFormattedName } from './formatDataForApi'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel', 'phone_no',
     'input_with_dropdown', 'input_with_calendar', 'upload_button']
@@ -347,8 +347,6 @@ export const getSfData = slides => {
                         data[input.end_point_name] = fullName
                         data['firstName'] = firstName
                         data['lastName'] = lastName
-                    } else if (input.end_point_name === 'dob' && input.value) {
-                        data[input.end_point_name] = getFormattedDate(input.value)
                     } else {
                         data[input.end_point_name] = input.value
                     }
@@ -383,7 +381,7 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
         const previouslySavedData = JSON.parse(localStorage.getItem('formData'))
         const formData = { ...previouslySavedData, [primaryPath]: data }
         localStorage.setItem('formData', JSON.stringify(formData))
-        generateLeadSF(data, primaryPath)
+        generateLead(data, primaryPath)
             .then(res => {
                 resolve(res)
             })

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { getApiData } from '../api/api'
 import { getLeadId } from '../utils/localAccess'
+import { getFormattedDate } from '../utils/formatDataForApi'
 const CancelToken = axios.CancelToken
 let cancel
 let otpId = ''
@@ -89,18 +90,22 @@ export const getBase64 = file => {
     })
 }
 
-export const generateLeadSF = async (data, primaryPath) => {
+export const generateLead = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
         const { url, body } = getApiData('generate')
-        const { fullName, dob, pan_card, mobile, email, applicantType,
-            companyId, netMonthlyIncome, bankId, addressLine1, addressLine2, pincode, requestedLoanamount
+        const { fullName, dob, pan, mobile, email, applicantType,
+            companyId, netMonthlyIncome, bankId, addressline1, addressline2, pincode, requestedLoanamount,
+            gender, maritalStatus, nationality
         } = data
 
         const leadId = getLeadId(primaryPath)
 
         body.request.payload.personal.fullName = fullName
-        body.request.payload.personal.dob = dob
-        body.request.payload.personal.pan = pan_card
+        body.request.payload.personal.dob = getFormattedDate(dob)
+        body.request.payload.personal.pan = pan
+        body.request.payload.personal.gender = gender
+        body.request.payload.personal.maritalStatus = maritalStatus
+        body.request.payload.personal.nationality = nationality
 
         body.request.payload.contact.mobile[0].mobile = mobile
         body.request.payload.contact.email[0].email = email
@@ -116,16 +121,18 @@ export const generateLeadSF = async (data, primaryPath) => {
         body.request.payload.requestedLoanamount = requestedLoanamount
 
         
-        if (!addressLine1 && !addressLine2 && !pincode) {
+        if (!addressline1 && !addressline2 && !pincode) {
             body.request.payload.address[0] = {}
         } else {
             body.request.payload.address[0].addressTypeMasterId = "1000000001"
-            body.request.payload.address[0].addressline1 = addressLine1
-            body.request.payload.address[0].addressline2 = addressLine2
+            body.request.payload.address[0].addressline1 = addressline1
+            body.request.payload.address[0].addressline2 = addressline2
             body.request.payload.address[0].city = pincode ? pincode.cityId : ''
             body.request.payload.address[0].state = pincode ? pincode.stateId : ''
             body.request.payload.address[0].pincode = pincode ? pincode.pincode : ''
         }
+
+        console.log(body.request.payload)
 
         axios.post(url, body)
             .then(res => {

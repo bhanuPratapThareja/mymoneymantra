@@ -5,6 +5,7 @@ import Image from '../ImageComponent/ImageComponent'
 const ThankYouBanner = props => {
     const router = useRouter()
     const { bankName, primaryPath } = router.query
+    console.log('router.query: ', router.query)
     const [leadId, setLeadId] = useState('')
     const [productType, setProductType] = useState('')
 
