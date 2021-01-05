@@ -10,7 +10,7 @@ const PersonalLoansBanner = props => {
             <div className="normal-banner">
                <div dangerouslySetInnerHTML={{ __html: product_banner_heading }}></div>
                <div dangerouslySetInnerHTML={{ __html: product_banner_sub_text }}></div>
-               <button>{product_banner_button_text}</button>
+               <button onClick={props.goToShortForm}>{product_banner_button_text}</button>
             </div>
             <Image className="pl-image" image={product_banner_image} />
          </div>

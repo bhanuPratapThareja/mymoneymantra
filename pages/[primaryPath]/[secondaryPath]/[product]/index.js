@@ -22,7 +22,7 @@ const Details = props => {
         window.scrollTo(0, 0)
     })
 
-    const getProductDetailsComponents = (dynamic, bankData, creditCardProductData, personalLoanProductData, homeLoanProductData) => {
+    const getProductDetailsComponents = (dynamic, bankData, productData) => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.credit-cards-detail-banner-component':
@@ -32,7 +32,7 @@ const Details = props => {
                         key={block.id}
                         data={block}
                         bank={bankData}
-                        product={creditCardProductData || personalLoanProductData || homeLoanProductData}
+                        product={productData}
                     />
                 case 'blocks.credit-cards-details-component':
                 case 'blocks.details-component':
@@ -41,12 +41,12 @@ const Details = props => {
                         key={block.id}
                         data={block}
                         bank={bankData}
-                        product={creditCardProductData || personalLoanProductData || homeLoanProductData}
+                        product={productData}
                     />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offer-cards':
-                    case 'offers.trending-offers-home-loans-component':
+                case 'offers.trending-offers-home-loans-component':
                 case 'offers.trending-offers-personal-loans':
                     return <Offers key={block.id} data={block} />
                 case 'blocks.bank-slider-component':
@@ -63,11 +63,11 @@ const Details = props => {
         })
     }
 
-    const { details, bankData, creditCardProductData, personalLoanProductData, homeLoanProductData } = props
+    const { details, bankData, productData } = props
 
     return (
         <div className={props.pageClasses}>
-            {details.dynamic ? <Layout>{getProductDetailsComponents(details.dynamic, bankData, creditCardProductData, personalLoanProductData, homeLoanProductData)}</Layout> : null}
+            {details.dynamic ? <Layout>{getProductDetailsComponents(details.dynamic, bankData, productData)}</Layout> : null}
         </div>
     )
 }
@@ -87,10 +87,31 @@ export async function getServerSideProps(ctx) {
     const creditCardProductData = details.credit_card_product ? details.credit_card_product : null
     const personalLoanProductData = details.personal_loan_product ? details.personal_loan_product : null
     const homeLoanProductData = details.home_loan_product ? details.home_loan_product : null
+    const productData = creditCardProductData || personalLoanProductData || homeLoanProductData
 
-    await updateTrendingOffers(details)
+    let productDataDetails = null
+    let productDataTypeDetails = null
 
-    return { props: { details, pageClasses, bankData, creditCardProductData, personalLoanProductData, homeLoanProductData } }
+    if (details) {
+        await updateTrendingOffers(details)
+    }
+
+    if (productData) {
+        productDataDetails = await strapi.processReq('GET', `products?id=${productData.product}`)
+        productData.productId =  productDataDetails[0].product_id
+    }
+
+    if(productData.product_type) {
+        productDataTypeDetails = await strapi.processReq('GET', `product-types?id=${productData.product_type}`)
+        productData.productTypeId = productDataTypeDetails[0].product_type_id
+    } else {
+        productData.productTypeId = productDataDetails[0].product_id
+    }
+
+   
+    
+
+    return { props: { details, pageClasses, bankData, productData } }
 }
 
 export default Details

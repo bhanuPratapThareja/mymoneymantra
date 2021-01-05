@@ -1,5 +1,6 @@
-import { getApiData } from '../api/api'
 import axios from 'axios'
+import { getApiData } from '../api/api'
+import { getLeadId } from '../utils/localAccess'
 const CancelToken = axios.CancelToken
 let cancel
 let otpId = ''
@@ -92,8 +93,10 @@ export const generateLeadSF = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
         const { url, body } = getApiData('generate')
         const { fullName, dob, pan_card, mobile, email, applicantType,
-            companyId, netMonthlyIncome, bankId, addressLine1, addressLine2, pincode
+            companyId, netMonthlyIncome, bankId, addressLine1, addressLine2, pincode, requestedLoanamount
         } = data
+
+        const leadId = getLeadId(primaryPath)
 
         body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = dob
@@ -108,12 +111,11 @@ export const generateLeadSF = async (data, primaryPath) => {
 
         // body.request.payload.bankId = bankId ? bankId.bankId : ''
 
-        const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-        const leadId = leadIdData && leadIdData[primaryPath] ? leadIdData[primaryPath] : ''
-
-
         body.request.payload.leadId = leadId ? leadId : ''
+        body.request.payload.productId = localStorage.getItem('productId')
+        body.request.payload.requestedLoanamount = requestedLoanamount
 
+        
         if (!addressLine1 && !addressLine2 && !pincode) {
             body.request.payload.address[0] = {}
         } else {

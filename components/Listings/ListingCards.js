@@ -11,8 +11,6 @@ const ListingCards = props => {
 
     useEffect(() => {
         setOffers(props.offerCards)
-        console.log(offers)
-        console.log(props.offerCards)
     })
 
     const onOfferClick = (buttonText, offer) => {

@@ -164,7 +164,7 @@ const api = {
                         "purposeOfLoan": "",
                         "bankId": "",
                         "leadId": "",
-                        "productId": "6",
+                        "productId": "",
                         "cardAge": "",
                         "cardType": "",
                         "exisEmi": "",
