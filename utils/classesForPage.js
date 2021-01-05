@@ -2,7 +2,7 @@ const classes = {
     'home-page': ['credit-card-flow', 'homepage-flow'],
     'credit-cards': ['credit-card-flow'],
     'personal-loans': ['credit-card-flow', 'personal-loan-flow'],
-    'home-loans': ['credit-card-flow', 'personal-loan-flow', 'home-loan-flow', 'lap-flow', 'gold-loan-flow', 'health-flow'],
+    'home-loans': ['credit-card-flow', 'personal-loan-flow', 'home-loan-flow', 'gold-loan-flow', 'health-flow'], //'lap-flow'
     'listings': {
         'credit-cards': ['listings'],
         'personal-loans': ['listings', 'personal-loan-listing'],
@@ -16,7 +16,7 @@ const classes = {
     'details': {
         'credit-cards': ['credit-card-flow', 'c-detail-page'],
         'personal-loans': ['credit-card-flow', 'c-detail-page', 'personal-detail-flow'],
-        'home-loans': ['credit-card-flow', 'c-detail-page', 'personal-detail-flow', 'home-loan-flow-detail']
+        'home-loans': ['credit-card-flow', 'c-detail-page', 'personal-detail-flow'] //'home-loan-flow-detail'
     }
 
 }
