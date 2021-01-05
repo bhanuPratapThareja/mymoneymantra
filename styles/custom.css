@@ -656,7 +656,8 @@ div#address_proof_upload_button {
   cursor: pointer;
 }
 
-div#cc_holder_bank_input_with_dropdown {
+div#cc_holder_bank_input_with_dropdown,
+div#other_city_property_location_text {
   margin-top: 16px;
 }
 
