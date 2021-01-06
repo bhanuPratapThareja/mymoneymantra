@@ -3,7 +3,8 @@ import Strapi from '../../../../../providers/strapi'
 import Layout from '../../../../../components/Layout'
 import LongFormBanner from '../../../../../components/LongForm/LongFormBanner'
 import LongForm from '../../../../../components/common/LongForm'
-import { getLongFormSearchParams } from '../../../../../utils/searchParams'
+import { getLongFormSearchParams, getDetailsSearchParams } from '../../../../../utils/searchParams'
+import LongFormNew from '../../../../../components/common/LongFormNew'
 
 const LongFormProduct = props => {
     useEffect(() => {
@@ -11,6 +12,7 @@ const LongFormProduct = props => {
     })
 
     const getComponents = (dynamic, bank) => {
+        // console.log('dynamic: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.long-form-banner':
@@ -20,12 +22,15 @@ const LongFormProduct = props => {
                         bank={bank}
                     />
                     
-                case 'form-components.long-form-component':
-                    return <LongForm 
-                        key={block.id} 
-                        data={block}
-                        bank={bank}
-                    />
+                // case 'form-components.long-form-component':
+                //     return <LongForm 
+                //         key={block.id} 
+                //         data={block}
+                //         bank={bank}
+                //     />
+
+                case 'form-components.long-form-component-new':
+                    return <LongFormNew key={block.id} data={block} bank={bank} />
             }
         })
     }
@@ -46,9 +51,14 @@ export async function getServerSideProps(ctx) {
     const bankData = await strapi.processReq('GET', `banks?slug=${longFormBank}`)
 
     const productSearch = getLongFormSearchParams(primaryPath, longFormProduct)
-    const productData = await strapi.processReq('GET', productSearch)
 
+    console.log('productSearch: ', productSearch)
+    const productData = await strapi.processReq('GET', `credit_card_products?product_type=${longFormProduct}`)
     
+    // const productSearch = getDetailsSearchParams(primaryPath, longFormBank, longFormProduct)
+    // const productData = await strapi.processReq('GET', productSearch)
+
+    console.log('productData:: ', productData)
     const data = pageData[0]
     const bank = bankData[0]
     

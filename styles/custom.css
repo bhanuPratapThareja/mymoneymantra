@@ -23,8 +23,12 @@
   cursor: pointer;
 }
 
+.long-form {
+  z-index: 10000;
+}
+
 .banner-sticky {
-  position: fixed;
+  position: fixed !important;
   top: 100px;
   width: 100%;
 }
