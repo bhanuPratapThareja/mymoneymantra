@@ -34,8 +34,8 @@
 }
 
 .banner-sticky_bottom {
-  position: static;
-  margin-top: 3440px;
+  position: absolute !important;
+  /* margin-top: 3440px; */
 }
 
 .listing-banner_selected {
@@ -62,11 +62,13 @@
   top: 120px;
 } */
 
+/* 
 .long-form .long-form-wrapper .banner-sticky+.form-wrapper {
   max-width: 840px;
   left: 26.5%;
   position: relative;
-}
+} */
+
 
 .banner-wrapper .normal-banner h1:first-child strong:first-child, .score-content h2 strong:nth-child(2), .banks-holder .banks h2 strong:nth-child(2), .cstm-bnr-txt h1:nth-child(2) strong:first-child, .c-detail-page .banner-wrapper h1:first-child strong {
   color: #89C142;
@@ -979,4 +981,9 @@ div#cc_holder_credit_cards_radio {
     height: 56px;
     width: 83%;
   }
+}
+
+.long-form_form {
+  width: 70%;
+  margin-left: 30%;
 }

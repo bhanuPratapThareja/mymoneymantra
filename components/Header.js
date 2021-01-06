@@ -23,33 +23,27 @@ const Header = () => {
             }
          })
 
-
          if (!longFormBanner) {
-            longFormBanner = document.getElementById('longFormBanner')
-            longForm = document.getElementById('longForm')
+               longFormBanner = document.getElementById('longFormBanner')
+               longForm = document.getElementById('longForm')
          } else {
             if (longForm && longFormBanner) {
                const longFormOffset = longForm.offsetTop
                const longFormHeight = longForm.clientHeight
-               const longFormBottomPos = longFormOffset + longFormHeight
-               const windowOffsetForBannerStop = longFormBottomPos - longFormBanner.clientHeight
+               const bannerHeight = longFormBanner.clientHeight
 
-               // console.log(window.pageYOffset, longFormOffset)
-
-               if (window.pageYOffset >= longFormOffset && window.pageYOffset < windowOffsetForBannerStop) {
-                  longFormBanner.classList.add("banner-sticky")
-                  longFormBanner.classList.remove("banner-sticky_bottom")
+               if (window.pageYOffset >= longFormOffset && window.pageYOffset < longFormOffset + longFormHeight) {
+                  longFormBanner.style.position = 'fixed'
+                  longFormBanner.style.marginTop = `${0}px`
                }
 
-               if (window.pageYOffset >= windowOffsetForBannerStop - 70) {
-                  longFormBanner.classList.remove("banner-sticky")
-                  longFormBanner.classList.add("banner-sticky_bottom")
+               if (window.pageYOffset >= longFormOffset + longFormHeight - bannerHeight) {
+                  longFormBanner.style.position = 'absolute'
+                  longFormBanner.style.marginTop = `${longFormOffset + longFormHeight - bannerHeight}px`
                }
 
-               if (window.pageYOffset < longFormOffset) {
-                  longFormBanner.classList.remove("banner-sticky")
-                  longFormBanner.classList.remove("banner-sticky_bottom")
-               }
+               if (window.pageYOffset < longFormOffset)
+                  longFormBanner.style.position = 'static'
             }
          }
       }

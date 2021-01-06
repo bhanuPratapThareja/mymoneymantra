@@ -29,7 +29,6 @@ const LongFormProduct = props => {
                         key={block.id}
                         data={block}
                         bank={bank}
-                       
                     />
             }
         })
