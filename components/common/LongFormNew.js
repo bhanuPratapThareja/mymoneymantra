@@ -204,10 +204,10 @@ class LongFormNew extends React.Component {
                             })
 
                         } else if (input.type === 'input_with_dropdown' && input.mandatory) {
-
                             if (input.end_point_name === 'city') {
                                 data[input.end_point_name] = input.selectedItem.cityId
                             } else {
+
                                 data[input.end_point_name] = input.selectedItem[input.end_point_name]
                             }
 
@@ -235,13 +235,13 @@ class LongFormNew extends React.Component {
                 })
             })
 
-            console.log('data: ', data)
+            console.log('in long form data: ', data)
 
             const { primaryPath, bankName } = this.state
 
             generateLead(data, primaryPath)
                 .then((res) => {
-                    console.log('long form submitted: ', res)
+                    console.log('in longform new long form submitted: ', res)
                     const pathname = `/${primaryPath}/thank-you`
                     const query = { bankName }
                     this.props.router.push({ pathname, query }, pathname, { shallow: true })
@@ -267,7 +267,7 @@ class LongFormNew extends React.Component {
 
                             return (
                                 <React.Fragment key={longFormSection.id}>
-                                    <h3>{longFormSection.section_name}</h3>
+                                    <h3>{longFormSection.section_display_name}</h3>
 
                                     {long_form_blocks.map(long_form_block => {
                                         const inputs = long_form_block.blocks

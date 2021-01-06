@@ -120,8 +120,6 @@ const api = {
                             "nationality": "",
                             "dependents": "",
                             "pan": "",
-                            "mothersName": "",
-                            "ffName": ""
                         },
                         "contact": {
                             "mobile": [
@@ -139,7 +137,19 @@ const api = {
                                 }
                             ],
                             "keyContact": [
-                                
+                                {
+                                    "caseContactMasterId": "6",
+                                    "caseContactName": "",
+                                    "caseContactEmail": "",
+                                    "caseContactMobileNo": ""
+                                },
+                                {
+                                    "caseContactMasterId": "5",
+                                    "caseContactName": "",
+                                    "caseContactEmail": "",
+                                    "caseContactMobileNo": ""
+                                },
+
                             ]
                         },
                         "work": {
