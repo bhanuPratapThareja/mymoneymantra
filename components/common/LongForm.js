@@ -12,7 +12,7 @@ import {
     resetDropdowns
 } from '../../utils/formHandle'
 
-class LongFormNew extends React.Component {
+class LongForm extends React.Component {
     state = {
         longFormSections: [],
         submitButtonDisabled: false,
@@ -314,4 +314,4 @@ class LongFormNew extends React.Component {
     }
 }
 
-export default withRouter(LongFormNew)
+export default withRouter(LongForm)
