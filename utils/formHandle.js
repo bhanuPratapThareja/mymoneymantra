@@ -205,6 +205,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.verified = true
                     }
                 } else if (textTypeInputs.includes(inp.type) && inp.input_id === field.currentActiveInput && inp.mandatory) {
+                    console.log('inp:: ', inp)
                     if (!inp.value) {
                         errors = true
                         inp.error = true
@@ -306,7 +307,7 @@ export const updateSelectionFromDropdown = (inputs, name, item) => {
             inp.verified = true
         }
 
-        if (inp.end_point_name === update_field_with_input_id && inp.end_point_name === 'city') {
+        if (inp.end_point_name === update_field_with_input_id) {
             inp.value = item.selectedItem.cityName
             inp.selectedId = item.selectedItem.cityId
             inp.selectedItem = item.selectedItem

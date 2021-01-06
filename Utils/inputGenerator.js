@@ -42,9 +42,10 @@ export const generateInputs = (component, updateField,
         setTimeout(() => {
             const datepicker = $(`#${'dob'}`).datepicker()
             const value = datepicker.val()
-            const field = { name, value, type }
+            const field = { name, value, type,blur: true, currentActiveInput: name }
             if (value) {
                 updateField(field)
+           
             }
         }, 250);
     }
