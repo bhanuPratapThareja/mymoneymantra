@@ -169,9 +169,10 @@ export const generateInputs = (component, updateField,
         const fieldId = `${input_id}_${type}`
         let uploadText = value ? value.length === 1 ? value[0].name : value.length + ' files' : upload_text
         const uploadButtonBorderStyles = upload_text ? { border: '1px solid green !important' } : borderStyles
+        fieldClasses.push(type)
         return (
             <>
-                <div className="form__group field file-type" id={fieldId} style={uploadButtonBorderStyles}>
+                <div className={fieldClasses.join(' ')} id={fieldId} style={uploadButtonBorderStyles}>
                     <input id={inputFileId} type="file" accept="application/pdf, image/*" multiple onChange={() => onUploadAttachment(input_id, type, inputFileId, true)} />
                     {!value ? <img src="/assets/images/icons/Upload.svg" onClick={() => document.getElementById(inputFileId).click()} style={{ background: 'red' }} /> : null}
                     {value ? <img src="/assets/images/icons/Attach.svg" onClick={() => document.getElementById(inputFileId).click()} style={{ background: 'red' }} /> : null}
@@ -288,7 +289,7 @@ export const generateInputs = (component, updateField,
         return (
             <>
                 {radio_buttons ? <>
-                    <div className="shortforms-container" key={id} name={input_id} id={radioParentId} required={mandatory}>
+                    <div className="radio-container" key={id} name={input_id} id={radioParentId} required={mandatory}>
                         {radio_buttons.map(button => {
                             const labelStyles = value === button.value ? { border: '1px solid green' } : null
                             const radioId = `${input_id}_${type}`

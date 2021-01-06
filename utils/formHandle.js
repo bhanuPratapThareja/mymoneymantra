@@ -303,6 +303,7 @@ export const updateSelectionFromDropdown = (inputs, name, item) => {
             inp.selectedId = item.id
             inp.selectedItem = item.selectedItem
             inp.error = false
+            inp.verified = true
         }
 
         if (inp.end_point_name === update_field_with_input_id && inp.end_point_name === 'city') {
@@ -310,6 +311,7 @@ export const updateSelectionFromDropdown = (inputs, name, item) => {
             inp.selectedId = item.selectedItem.cityId
             inp.selectedItem = item.selectedItem
             inp.error = false
+            inp.verified = true
         }
     })
 }
