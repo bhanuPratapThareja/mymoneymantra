@@ -2,9 +2,8 @@ import { useEffect } from 'react'
 import Strapi from '../../../../../providers/strapi'
 import Layout from '../../../../../components/Layout'
 import LongFormBanner from '../../../../../components/LongForm/LongFormBanner'
-import LongForm from '../../../../../components/common/LongForm'
 import { getLongFormSearchParams, getDetailsSearchParams } from '../../../../../utils/searchParams'
-import LongFormNew from '../../../../../components/common/LongFormNew'
+import LongForm from '../../../../../components/common/LongForm'
 
 const LongFormProduct = props => {
     useEffect(() => {
@@ -21,16 +20,9 @@ const LongFormProduct = props => {
                         data={block}
                         bank={bank}
                     />
-                    
-                // case 'form-components.long-form-component':
-                //     return <LongForm 
-                //         key={block.id} 
-                //         data={block}
-                //         bank={bank}
-                //     />
 
                 case 'form-components.long-form-component-new':
-                    return <LongFormNew key={block.id} data={block} bank={bank} />
+                    return <LongForm key={block.id} data={block} bank={bank} />
             }
         })
     }
