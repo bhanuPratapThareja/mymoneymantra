@@ -306,7 +306,7 @@ export const updateSelectionFromDropdown = (inputs, name, item) => {
             inp.verified = true
         }
 
-        if (inp.end_point_name === update_field_with_input_id && inp.end_point_name === 'city') {
+        if (inp.end_point_name === update_field_with_input_id) {
             inp.value = item.selectedItem.cityName
             inp.selectedId = item.selectedItem.cityId
             inp.selectedItem = item.selectedItem
