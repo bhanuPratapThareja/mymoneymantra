@@ -1,5 +1,5 @@
 import { withRouter } from 'next/router'
-import { debounce } from 'lodash'
+import { uniq, debounce } from 'lodash'
 import { generateInputs } from '../../utils/inputGenerator'
 import { getDropdownList } from '../../services/formService'
 import { generateLead } from '../../services/formService'
@@ -18,7 +18,9 @@ class LongForm extends React.Component {
         submitButtonDisabled: false,
         errorMsgs: {
             mandatory: 'Required Field'
-        }
+        },
+        noOfMandatoryInputs: 0,
+        verifiedInputs: []
     }
 
     componentDidMount() {
@@ -27,6 +29,7 @@ class LongForm extends React.Component {
         const longFormSections = this.props.data.long_form_version_2.long_form[0].long_form_sections
         const formData = JSON.parse(localStorage.getItem('formData'))
         let sfData = null
+        let noOfMandatoryInputs = 0
 
         this.setState({ primaryPath, bankName })
 
@@ -43,6 +46,10 @@ class LongForm extends React.Component {
                     item.error = false
                     item.verified = false
 
+                    if (item.mandatory) {
+                        noOfMandatoryInputs++
+                    }
+
                     if (sfData) {
 
                         loop: for (let key in sfData) {
@@ -51,8 +58,6 @@ class LongForm extends React.Component {
                             }
 
                             if (key === item.end_point_name && key === 'city') {
-                                console.log('city: ', item.end_point_name)
-                                item.value = sfData[key].cityName
                                 item.selectedId = sfData[key].cityId
                                 item.selectedItem = sfData[key]
                                 item.verified = true
@@ -61,7 +66,6 @@ class LongForm extends React.Component {
                             }
 
                             if (key === item.end_point_name && key === 'pincode') {
-                                console.log('pincode: ', item.end_point_name)
                                 item.value = sfData[key].pincode
                                 item.selectedId = sfData[key].pincode
                                 item.selectedItem = sfData[key]
@@ -71,7 +75,7 @@ class LongForm extends React.Component {
                             }
 
                             if (typeof sfData[key] === 'object' && key === item.end_point_name) {
-                                // item.value = sfData[key].pincode
+                                // item.value = sfData[key].cityId
                                 // item.selectedItem = sfData[key]
                                 // item.verified = true
                                 // item.error = false
@@ -89,7 +93,9 @@ class LongForm extends React.Component {
             })
         })
 
-        this.setState({ longFormSections })
+        this.setState({ longFormSections, noOfMandatoryInputs }, () => {
+            this.handlePercentage()
+        })
     }
 
     handleChange = field => {
@@ -113,7 +119,6 @@ class LongForm extends React.Component {
             })
         })
         this.setState({ longFormSections: newLongFormSections }, () => {
-            console.log(this.state.longFormSections)
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
             }
@@ -172,8 +177,45 @@ class LongForm extends React.Component {
     updateState = longFormSections => {
         return new Promise((resolve) => {
             this.setState({ longFormSections }, () => {
+                console.log(longFormSections)
+                this.handlePercentage()
                 resolve(true)
             })
+        })
+    }
+
+    handlePercentage = () => {
+        const newLongFormSections = [...this.state.longFormSections]
+        newLongFormSections.forEach(longFormSection => {
+            const long_form_blocks = longFormSection.sections[0].long_form_blocks
+            long_form_blocks.forEach(async long_form_block => {
+                const inputs = long_form_block.blocks
+                inputs.forEach(input => {
+                    if (input.mandatory) {
+                        
+                        this.handleVerifiedInputsArray(input)
+                    }
+                })
+            })
+        })
+    }
+
+    handleVerifiedInputsArray = input => {
+        const verifiedInputsArray = this.state.verifiedInputs
+        if (input.verified) {
+            // console.log(input)
+            verifiedInputsArray.push(input.input_id)
+        } else {
+            if (verifiedInputsArray.includes(input.input_id)) {
+                const index = verifiedInputsArray.indexOf(input.input_id)
+                verifiedInputsArray.splice(index, 1)
+            }
+        }
+        const uniqueVerifiedInputsArray = uniq(verifiedInputsArray)
+        this.setState({ verifiedInputs: uniqueVerifiedInputsArray }, () => {
+            const percentage = this.state.verifiedInputs.length / this.state.noOfMandatoryInputs * 100
+            const event = new CustomEvent('percentageCalulated', { detail: { percentage } })
+            document.dispatchEvent(event)
         })
     }
 
@@ -193,7 +235,6 @@ class LongForm extends React.Component {
 
         this.updateState(newLongFormSections)
             .then(() => {
-                console.log('errors: ', errors)
                 if (!errors) {
                     this.retrieveDataAndSubmit()
                 }
@@ -249,7 +290,7 @@ class LongForm extends React.Component {
             })
         })
 
-        console.log('data: ', data)
+        // console.log('data: ', data)
 
         const { primaryPath, bankName } = this.state
 
@@ -280,7 +321,7 @@ class LongForm extends React.Component {
 
                             return (
                                 <React.Fragment key={longFormSection.id}>
-                                    <h3>{longFormSection.section_name}</h3>
+                                    <h3>{longFormSection.section_display_name}</h3>
 
                                     {long_form_blocks.map(long_form_block => {
                                         const inputs = long_form_block.blocks

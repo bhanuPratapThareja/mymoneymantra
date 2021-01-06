@@ -205,6 +205,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.verified = true
                     }
                 } else if (textTypeInputs.includes(inp.type) && inp.input_id === field.currentActiveInput && inp.mandatory) {
+                    console.log('inp:: ', inp)
                     if (!inp.value) {
                         errors = true
                         inp.error = true
