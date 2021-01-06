@@ -2,6 +2,7 @@ import { withRouter } from 'next/router'
 import { uniq, debounce } from 'lodash'
 import { generateInputs } from '../../utils/inputGenerator'
 import { getDropdownList } from '../../services/formService'
+import { generateLead } from '../../services/formService'
 import {
     textTypeInputs,
     handleChangeInputs,
@@ -23,15 +24,21 @@ class LongForm extends React.Component {
     }
 
     componentDidMount() {
+        const { primaryPath } = this.props.router.query
         const { long_form_fields } = this.props.data.long_form
+        const { bank_name: bankName } = this.props.bank
+
+        this.setState({ primaryPath, bankName })
         let blocksIds = []
-        const primaryPath = this.props.router.query.primaryPath
         const formData = JSON.parse(localStorage.getItem('formData'))
         let sfData = null
 
         if (formData && formData[primaryPath]) {
             sfData = formData[primaryPath]
         }
+
+        // console.log(long_form_fields)
+        // console.log(sfData)
 
         long_form_fields.forEach(item => {
             item.error = false
@@ -42,17 +49,49 @@ class LongForm extends React.Component {
             blocksIds.push(item.block_id)
 
             if (sfData) {
-                for (let key in sfData) {
-                    if (key === item.end_point_name) {
+
+                loop: for (let key in sfData) {
+                    if (!sfData[key]) {
+                        continue loop
+                    }
+
+                    if (key === item.end_point_name && key === 'city') {
+                        item.value = sfData[key].cityName
+                        item.selectedId = sfData[key].cityId
+                        item.selectedItem = sfData[key]
+                        item.verified = true
+                        item.error = false
+                        continue loop
+                    }
+
+                    if (key === item.end_point_name && key === 'pincode') {
+                        item.value = sfData[key].pincode
+                        item.selectedId = sfData[key].pincode
+                        item.selectedItem = sfData[key]
+                        item.verified = true
+                        item.error = false
+                        continue loop
+                    }
+
+                    if (typeof sfData[key] === 'object' && key === item.end_point_name) {
+                        // item.value = sfData[key].pincode
+                        // item.selectedItem = sfData[key]
+                        // item.verified = true
+                        // item.error = false
+                        continue loop
+                    }
+
+                    if (typeof sfData[key] === 'string' && key === item.end_point_name) {
                         item.value = sfData[key]
                         item.verified = true
+                        item.error = false
                     }
                 }
             }
 
         })
         this.setState({ longFormInputs: long_form_fields, blocksIds: uniq(blocksIds) }, () => {
-            console.log(this.state)
+            // console.log(this.state)
         })
     }
 
@@ -104,9 +143,60 @@ class LongForm extends React.Component {
         const newFormInputs = [...this.state.longFormInputs]
         const errorsPresent = updateInputsValidity(newFormInputs, null, this.state.errorMsgs)
         this.setState({ formInputs: newFormInputs }, () => {
-            if (!errorsPresent) {
-                console.log(this.state.longFormInputs)
+            // if (!errorsPresent) {
+            // console.log(this.state.longFormInputs)
+            let data = {}
+            const longFormInputs = JSON.parse(JSON.stringify(this.state.longFormInputs))
+
+            for (let i = 0; i < longFormInputs.length; i++) {
+                const input = longFormInputs[i]
+                if (input.type === 'section_headiing') {
+                    continue
+                }
+
+                if (input.type === 'upload_button') {
+                    continue
+                }
+
+                if (input.type === 'checkbox') {
+                    input.checkbox.checkbox_input.forEach(box => {
+                        data[box.end_point_name] = box.value
+                    })
+                } else {
+                    data[input.end_point_name] = input.value
+                }
+
             }
+
+            let { firstName, lastName } = data
+            if (!lastName) {
+                lastName = ''
+            }
+            const fullName = firstName + ' ' + lastName
+            data.fullName = fullName
+
+
+            for (let key in data) {
+                if (data[key] === undefined) {
+                    data[key] = ''
+                }
+            }
+
+
+            console.log(data)
+            const { primaryPath, bankName } = this.state
+
+            generateLead(data, primaryPath)
+                .then((res) => {
+                    console.log('long form submitted: ', res)
+                    const pathname = `/${primaryPath}/thank-you`
+                    const query = { bankName }
+                    this.props.router.push({ pathname, query }, pathname, { shallow: true })
+                })
+                .catch(err => {
+                    console.log('long form submission error: ', err)
+                })
+
         })
     }
 
@@ -119,7 +209,7 @@ class LongForm extends React.Component {
     getPositionNumber = blockId => {
         const { blocksIds } = this.state
         if (blocksIds.includes(blockId)) {
-            return blocksIds.indexOf(blockId) + 1
+            return blocksIds.indexOf(blockId)
         }
         return null
     }

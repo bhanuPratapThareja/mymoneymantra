@@ -12,7 +12,7 @@ const CreditCardsBanner = props => {
                     <span dangerouslySetInnerHTML={{ __html: product_banner_heading }}></span>
                     <span dangerouslySetInnerHTML={{ __html: product_banner_sub_text }}></span>
                     {product_banner_button_text ?
-                        <button onClick={props.goToShortFormPage}>{product_banner_button_text}</button>
+                        <button onClick={props.goToShortForm}>{product_banner_button_text}</button>
                         : null}
                     <Image className="banner-card" image={product_banner_image} />
                 </div>

@@ -1,5 +1,4 @@
 export const getFormattedName = value => {
-    console.log('val:: ', value)
     const fullName = value.trim()
     const fullNameSplit = splitAtFirstSpace(fullName)
     const firstName = fullNameSplit[0]
@@ -8,6 +7,9 @@ export const getFormattedName = value => {
 }
 
 export const getFormattedDate = calDate => {
+    if(!calDate){
+        return ''
+    }
     const dateArr = calDate.split('/')
     const date = dateArr[1]
     const month = dateArr[0]

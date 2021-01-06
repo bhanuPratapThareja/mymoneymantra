@@ -10,6 +10,9 @@ const Offers = props => {
 
    useEffect(() => {
       const cards = props.data.credit_card_products || props.data.personal_loan_products || props.data.home_loan_products || []
+      setTimeout(() => {
+         localStorage.setItem('productId', cards[0].productId)
+      }, 2000);
       setCards(cards)
    }, [])
 

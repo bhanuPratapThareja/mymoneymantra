@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
+import { getLeadId } from '../../utils/localAccess';
 import Image from '../ImageComponent/ImageComponent'
 
 const ThankYouBanner = props => {
@@ -12,9 +13,8 @@ const ThankYouBanner = props => {
         thank_you_content, thank_you_button } = props.data.thank_you_banner
 
     useEffect(() => {
-        const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-        const leadId = leadIdData && leadIdData[primaryPath] ? leadIdData[primaryPath] : ''
-        setLeadId(leadId)
+
+        setLeadId(getLeadId(primaryPath))
 
         let productType = ''
         if(primaryPath === 'credit-cards'){

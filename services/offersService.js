@@ -1,9 +1,11 @@
-import { getApiData } from '../api/api';
 import axios from 'axios'
 import Strapi from '../providers/strapi'
+import { getApiData } from '../api/api'
+import { getLeadId } from '../utils/localAccess'
+
 const strapi = new Strapi()
 
-const defaultDecision = 'E Connect'
+const defaultDecision = 'EConnect'
 
 export const viewOffer = async () => {
     const { url, body } = getApiData('customerOfferView');
@@ -33,24 +35,11 @@ export const getProductDecision = (cards, primaryPath) => {
         const { url, body } = getApiData('leadProductDecision')
 
         pendingCards.forEach(async card => {
-            let productTypeId = ''
-            let productId = ""
-            if (primaryPath === 'credit-cards') {
-                productTypeId = '6'
-                productId = "6"
-            } else if (primaryPath === 'personal-loans') {
-                productTypeId = '17'
-            } else if (primaryPath === 'home-loans') {
-                productTypeId = '3'
-            }
-
-            const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-            const leadId = leadIdData && leadIdData[primaryPath] ? leadIdData[primaryPath] : ''
-
-            body.request.payload.productId = card.product_id
+            const leadId = getLeadId(primaryPath)
+            body.request.payload.productId = card.productId.toString()
+            body.request.payload.productTypeId = card.productTypeId.toString()
             body.request.payload.bankId = card.bank.bank_id
             body.request.payload.leadId = leadId
-            body.request.payload.productTypeId = productTypeId
 
             let productDecision = ''
             try {
@@ -72,23 +61,12 @@ export const getProductDecision = (cards, primaryPath) => {
 export const getProductDecisionForDetailsBanner = (product, bank, primaryPath) => {
     const promise = new Promise(async (resolve) => {
         const { url, body } = getApiData('leadProductDecision')
-        let productTypeId = ''
-
-        if (primaryPath === 'credit-cards') {
-            productTypeId = '6'
-        } else if (primaryPath === 'personal-loans') {
-            productTypeId = '17'
-        } else if (primaryPath === 'home-loans') {
-            productTypeId = '3'
-        }
-
-        const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-        const leadId = leadIdData && leadIdData[primaryPath] ? leadIdData[primaryPath] : ''
-
-        body.request.payload.productId = product.product_id
+        
+        const leadId = getLeadId(primaryPath)
+        body.request.payload.productId = product.productId.toString()
+        body.request.payload.productTypeId = product.productTypeId.toString()
         body.request.payload.bankId = bank.bank_id
         body.request.payload.leadId = leadId
-        body.request.payload.productTypeId = productTypeId
 
         let productDecision = ''
         try {
@@ -104,15 +82,6 @@ export const getProductDecisionForDetailsBanner = (product, bank, primaryPath) =
     return promise
 }
 
-export const getOfferWithBank = offer => {
-    const promise = new Promise(async (resolve) => {
-        const bankData = await strapi.processReq('GET', `banks?id=${offer.bank}`)
-        offer.bank = bankData[0]
-        resolve(offer)
-    })
-    return promise
-}
-
 export const updatePopularOffers = data => {
     return new Promise((resolve) => {
         data.dynamic.forEach((block) => {
@@ -123,7 +92,13 @@ export const updatePopularOffers = data => {
                 }
                 block.credit_card_products.forEach(async card => {
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
+                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
+                    const productTypeData = await strapi.processReq('GET', `product-types?id=${card.product_type}`)
+
                     card.bank = bankData[0]
+                    card.productId = productData[0].product_id
+                    card.productTypeId = productTypeData[0].product_type_id
+
                     pendingCards.shift()
                     if (!pendingCards.length) {
                         resolve(block.credit_card_products)
@@ -137,7 +112,12 @@ export const updatePopularOffers = data => {
                 }
                 block.personal_loan_products.forEach(async card => {
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
+                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
+
                     card.bank = bankData[0]
+                    card.productId = productData[0].product_id
+                    card.productTypeId = productData[0].product_id
+
                     pendingCards.shift()
                     if (!pendingCards.length) {
                         resolve(block.personal_loan_products)
@@ -151,7 +131,12 @@ export const updatePopularOffers = data => {
                 }
                 block.home_loan_products.forEach(async card => {
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
+                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
+
                     card.bank = bankData[0]
+                    card.productId = productData[0].product_id
+                    card.productTypeId = productData[0].product_id
+                    
                     pendingCards.shift()
                     if (!pendingCards.length) {
                         resolve(block.home_loan_products)
@@ -172,7 +157,13 @@ export const updateTrendingOffers = data => {
                 }
                 block.credit_card_products.forEach(async card => {
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
+                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
+                    const productTypeData = await strapi.processReq('GET', `product-types?id=${card.product_type}`)
+
                     card.bank = bankData[0]
+                    card.productId = productData[0].product_id
+                    card.productTypeId = productTypeData[0].product_type_id
+
                     pendingCards.shift()
                     if (!pendingCards.length) {
                         resolve(block.credit_card_products)
@@ -186,7 +177,13 @@ export const updateTrendingOffers = data => {
                 }
                 block.personal_loan_products.forEach(async card => {
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
+                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
+                    const productTypeData = productData
+
                     card.bank = bankData[0]
+                    card.productId = productData[0].product_id
+                    card.productTypeId = productData[0].product_id
+
                     pendingCards.shift()
                     if (!pendingCards.length) {
                         resolve(block.personal_loan_products)
@@ -200,7 +197,13 @@ export const updateTrendingOffers = data => {
                 }
                 block.home_loan_products.forEach(async card => {
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
+                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
+                    const productTypeData = productData
+
                     card.bank = bankData[0]
+                    card.productId = productData[0].product_id
+                    card.productTypeId = productData[0].product_id
+
                     pendingCards.shift()
                     if (!pendingCards.length) {
                         resolve(block.home_loan_products)
@@ -220,8 +223,15 @@ export const updateListingOffers = data => {
                     resolve([])
                 }
                 block.credit_card_products.forEach(async card => {
+                    // console.log(card)
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
+                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
+                    const productTypeData = await strapi.processReq('GET', `product-types?id=${card.product_type}`)
+
                     card.bank = bankData[0]
+                    card.productId = productData[0].product_id
+                    card.productTypeId = productTypeData[0].product_type_id
+
                     pendingCards.shift()
                     if (!pendingCards.length) {
                         resolve(block.credit_card_products)
@@ -235,7 +245,12 @@ export const updateListingOffers = data => {
                 }
                 block.personal_loan_products.forEach(async card => {
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
+                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
+
                     card.bank = bankData[0]
+                    card.productId = productData[0].product_id
+                    card.productTypeId = productData[0].product_id
+
                     pendingCards.shift()
                     if (!pendingCards.length) {
                         resolve(block.personal_loan_products)
@@ -249,7 +264,12 @@ export const updateListingOffers = data => {
                 }
                 block.home_loan_products.forEach(async card => {
                     const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
+                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
+
                     card.bank = bankData[0]
+                    card.productId = productData[0].product_id
+                    card.productTypeId = productData[0].product_id
+
                     pendingCards.shift()
                     if (!pendingCards.length) {
                         resolve(block.home_loan_products)

@@ -1,8 +1,8 @@
 import $ from 'jquery'
 import { getApiToHit } from '../api/dropdownApiConfig'
 import { isInputValid } from './formValidations'
-import { getBase64, documentUpload, generateLeadSF } from '../services/formService'
-import { getFormattedName, getFormattedDate } from './formatDataForApi'
+import { getBase64, documentUpload, generateLead } from '../services/formService'
+import { getFormattedName } from './formatDataForApi'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel', 'phone_no',
     'input_with_dropdown', 'input_with_calendar', 'upload_button']
@@ -59,6 +59,11 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
         } else if (field.type === 'upload_button') {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
+                    console.log(field)
+
+                    inp.value = field.value
+                    inp.attachment = field.attachment
+
                     // if (field.value && inp.number_of_uploads && field.value.length > inp.number_of_uploads) {
                     //     field.value = null
                     //     alert(`Number of attachments allowed: ${inp.number_of_uploads}`)
@@ -74,8 +79,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                     //         }
                     //     }
                     // } 
-                    inp.value = field.value
-                    inp.attachment = field.attachment
+
 
                 }
             })
@@ -247,9 +251,8 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
             } else {
                 inp.error = false
                 inp.errorMsg = ''
-                if (inp.mandatory) {
-                    inp.verified = true
-                }
+                inp.verified = true
+
             }
 
         })
@@ -300,13 +303,15 @@ export const updateSelectionFromDropdown = (inputs, name, item) => {
             inp.selectedId = item.id
             inp.selectedItem = item.selectedItem
             inp.error = false
+            inp.verified = true
         }
 
-        if (inp.end_point_name === update_field_with_input_id) {
+        if (inp.end_point_name === update_field_with_input_id && inp.end_point_name === 'city') {
             inp.value = item.selectedItem.cityName
             inp.selectedId = item.selectedItem.cityId
             inp.selectedItem = item.selectedItem
             inp.error = false
+            inp.verified = true
         }
     })
 }
@@ -344,8 +349,6 @@ export const getSfData = slides => {
                         data[input.end_point_name] = fullName
                         data['firstName'] = firstName
                         data['lastName'] = lastName
-                    } else if (input.end_point_name === 'dob' && input.value) {
-                        data[input.end_point_name] = getFormattedDate(input.value)
                     } else {
                         data[input.end_point_name] = input.value
                     }
@@ -377,11 +380,15 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
         })
 
         const data = getSfData(slides)
-        console.log('data: ', data)
+        for (let key in data) {
+            if (data[key] === undefined) {
+                data[key] = ''
+            }
+        }
         const previouslySavedData = JSON.parse(localStorage.getItem('formData'))
         const formData = { ...previouslySavedData, [primaryPath]: data }
         localStorage.setItem('formData', JSON.stringify(formData))
-        generateLeadSF(data, primaryPath)
+        generateLead(data, primaryPath)
             .then(res => {
                 resolve(res)
             })

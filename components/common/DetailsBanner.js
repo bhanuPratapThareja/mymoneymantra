@@ -33,11 +33,11 @@ const DetailsBanner = props => {
         switch (buttonText) {
             case 'Apply Now':
             case 'Instant Approval':
-                pathname = `/${primaryPath}/thank-you/${bankSlug}/${productSlug}`
+                pathname = `/${primaryPath}/thank-you`
                 break
 
             // case 'Apply Now':
-            case 'E Connect':
+            case 'EConnect':
                 pathname = `/${primaryPath}/long-form/${bankSlug}/${productSlug}`
 
                 break

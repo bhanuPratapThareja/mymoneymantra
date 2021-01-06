@@ -11,6 +11,11 @@ const HomePageBanner = props => {
                     <span dangerouslySetInnerHTML={{ __html: product_banner_sub_text }}></span>
                 </div>
                 <Image className="banner-card" image={product_banner_image} />
+                <div className="banner-content">
+                    <div className="container banner-content-wrapper">
+                        <span dangerouslySetInnerHTML={{ __html: product_banner_sub_text }}></span>
+                    </div>
+                </div>
             </section>
         </div>
     )

@@ -23,10 +23,11 @@ const PrimaryPage = props => {
     useEffect(() => {
         window.scrollTo(0, 0)
         localStorage.clear()
+        
     })
 
-    const goToShortFormPage = () => {
-        if(getDevice() === 'desktop') {
+    const goToShortForm = () => {
+        if (getDevice() === 'desktop') {
             window.scrollTo({ top: 1000 })
             return
         }
@@ -37,11 +38,11 @@ const PrimaryPage = props => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.credit-cards-banner-component':
-                    return <CreditCardsBanner key={block.id} data={block} goToShortFormPage={goToShortFormPage} />
+                    return <CreditCardsBanner key={block.id} data={block} goToShortForm={goToShortForm} />
                 case 'banners.personal-loans-banner-component':
-                    return <PersonalLoansBanner key={block.id} data={block} />
+                    return <PersonalLoansBanner key={block.id} data={block} goToShortForm={goToShortForm} />
                 case 'banners.home-loans-banner-component':
-                    return <HomeLoansBanner key={block.id} data={block} />
+                    return <HomeLoansBanner key={block.id} data={block} goToShortForm={goToShortForm} />
                 case 'blocks.ups-cards-component':
                     return <UspCards key={block.id} data={block} />
                 case 'form-components.onboarding-short-form':
@@ -49,12 +50,12 @@ const PrimaryPage = props => {
 
                 case 'offers.popular-offers-credit-cards-component':
                 case 'offers.popular-offers-personal-loans-component':
-                    case 'offers.popular-offers-home-loans-component':    
+                case 'offers.popular-offers-home-loans-component':
                 case 'offers.trending-offer-cards':
                 case 'offers.trending-offers-personal-loans':
                 case 'blocks.popular-home-loan-cards':
                 case 'offers.trending-offers-home-loans-component':
-                    return <Offers key={block.id} data={block} goToShortFormPage={goToShortFormPage} />
+                    return <Offers key={block.id} data={block} goToShortForm={goToShortForm} />
 
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
@@ -64,7 +65,7 @@ const PrimaryPage = props => {
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.rewards-component':
-                    return <Rewards key={block.id} data={block} goToShortFormPage={goToShortFormPage} />
+                    return <Rewards key={block.id} data={block} goToShortForm={goToShortForm} />
                 case 'blocks.quick-financial-tools-component':
                     return <FinancialTools key={block.id} data={block} />
                 case 'blocks.blogger':
