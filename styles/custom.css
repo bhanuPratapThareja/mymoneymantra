@@ -23,20 +23,6 @@
   cursor: pointer;
 }
 
-.long-form {
-  z-index: 10000;
-}
-
-.banner-sticky {
-  position: fixed !important;
-  top: 100px;
-  width: 100%;
-}
-
-.banner-sticky_bottom {
-  position: absolute !important;
-  /* margin-top: 3440px; */
-}
 
 .listing-banner_selected {
   background-color: #89C142;
