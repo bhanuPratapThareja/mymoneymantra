@@ -95,7 +95,10 @@ export const generateLead = async (data, primaryPath) => {
         const { url, body } = getApiData('generate')
         const { fullName, dob, pan, mobile, email, applicantType,
             companyId, netMonthlyIncome, bankId, addressline1, addressline2, pincode, requestedLoanamount,
-            gender, maritalStatus, nationality, ffName
+            gender, maritalStatus, nationality, 
+            ffName,fatherLastName,motherFirstName,motherLastName,preferedComm,director,jointAccHolder,
+            officAddressLine1,officAddressLine2,office_nearby_landmark,officePincode,officeCity,
+
         } = data
 
         const leadId = getLeadId(primaryPath)
@@ -106,7 +109,18 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.personal.gender = gender
         body.request.payload.personal.maritalStatus = maritalStatus
         body.request.payload.personal.nationality = nationality
-        body.request.payload.personal.ffName = ffName
+
+
+        body.request.payload.personal.ffName = ffName;
+        body.request.payload.personal.fatherLastName = fatherLastName;
+        body.request.payload.personal.motherFirstName = motherFirstName;
+        body.request.payload.personal.motherLastName = motherLastName;
+
+        body.request.payload.work.preferedComm =  preferedComm;
+        body.request.payload.work.director = director;
+        body.request.payload.work.jointAccHolder = jointAccHolder;
+
+
 
         body.request.payload.contact.mobile[0].mobile = mobile
         body.request.payload.contact.email[0].email = email
@@ -132,6 +146,8 @@ export const generateLead = async (data, primaryPath) => {
             body.request.payload.address[0].state = pincode ? pincode.stateId : ''
             body.request.payload.address[0].pincode = pincode ? pincode.pincode : ''
         }
+
+
 
         console.log(body.request.payload)
 

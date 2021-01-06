@@ -195,6 +195,28 @@ const api = {
                                 "remarks": "",
                                 "otherDeveloperName": "",
                                 "otherProjectName": ""
+                            },
+                            {
+                                "addressTypeMasterId": "1000000002",
+                                "addressline1": "",
+                                "addressline2": "",
+                                "addressline3": "",
+                                "city": "",
+                                "state": "",
+                                "pincode": "",
+                                "occupancyStatus": "",
+                                "livingSince": "",
+                                "stdCode": "",
+                                "landline": "",
+                                "landmark": "",
+                                "livingSinceMM": "",
+                                "isMaillingAddress": "",
+                                "propertyName": "",
+                                "developerName": "",
+                                "projectrName": "",
+                                "remarks": "",
+                                "otherDeveloperName": "",
+                                "otherProjectName": ""
                             }
                         ]
                     }
