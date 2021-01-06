@@ -130,7 +130,7 @@ class LongFormNew extends React.Component {
 
             })
         })
-        this.setState({ longFormSections: newLongFormSections })
+        this.updateState(newLongFormSections)
     }
 
     handleInputDropdownSelection = (name, type, item) => {
@@ -142,7 +142,7 @@ class LongFormNew extends React.Component {
                 updateSelectionFromDropdown(inputs, name, item)
             })
         })
-        this.setState({ longFormSections: newLongFormSections })
+        this.updateState(newLongFormSections)
     }
 
     handleClickOnSlideBackground = () => {
@@ -154,7 +154,7 @@ class LongFormNew extends React.Component {
                 resetDropdowns(inputs, this.state.errorMsgs)
             })
         })
-        this.setState({ longFormSections: newLongFormSections })
+        this.updateState(newLongFormSections)
     }
 
     checkInputValidity = field => {
@@ -166,11 +166,18 @@ class LongFormNew extends React.Component {
                 updateInputsValidity(inputs, field, this.state.errorMsgs)
             })
         })
-        this.setState({ longFormSections: newLongFormSections })
+        this.updateState(newLongFormSections)
+    }
+
+    updateState = longFormSections => {
+        return new Promise((resolve) => {
+            this.setState({ longFormSections }, () => {
+                resolve(true)
+            })
+        })
     }
 
     onSubmitLongForm = () => {
-        let data = {}
         let errors = false
         const newLongFormSections = [...this.state.longFormSections]
         newLongFormSections.forEach(longFormSection => {
@@ -178,78 +185,84 @@ class LongFormNew extends React.Component {
             long_form_blocks.forEach(async long_form_block => {
                 const inputs = long_form_block.blocks
                 const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
-
                 if (errorsPresent) {
                     errors = true
                 }
-
-
             })
         })
 
-        this.setState({ longFormSections: newLongFormSections }, () => {
-            const newLongFormSections = [...this.state.longFormSections]
-            newLongFormSections.forEach(longFormSection => {
-                const long_form_blocks = longFormSection.sections[0].long_form_blocks
-                long_form_blocks.forEach(async long_form_block => {
-                    const inputs = long_form_block.blocks
+        this.updateState(newLongFormSections)
+            .then(() => {
+                console.log('errors: ', errors)
+                if (!errors) {
+                    this.retrieveDataAndSubmit()
+                }
+            })
+    }
 
-                    for (let i = 0; i < inputs.length; i++) {
-                        const input = inputs[i]
+    retrieveDataAndSubmit = () => {
+        let data = {}
+        const newLongFormSections = [...this.state.longFormSections]
+        newLongFormSections.forEach(longFormSection => {
+            const long_form_blocks = longFormSection.sections[0].long_form_blocks
+            long_form_blocks.forEach(async long_form_block => {
+                const inputs = long_form_block.blocks
 
-                        if (input.type === 'checkbox') {
+                for (let i = 0; i < inputs.length; i++) {
+                    const input = inputs[i]
 
-                            input.checkbox.checkbox_input.forEach(box => {
-                                data[box.end_point_name] = box.value
-                            })
+                    if (input.type === 'checkbox') {
 
-                        } else if (input.type === 'input_with_dropdown' && input.mandatory) {
+                        input.checkbox.checkbox_input.forEach(box => {
+                            data[box.end_point_name] = box.value
+                        })
 
-                            if (input.end_point_name === 'city') {
-                                data[input.end_point_name] = input.selectedItem.cityId
-                            } else {
-                                data[input.end_point_name] = input.selectedItem[input.end_point_name]
-                            }
+                    } else if (input.type === 'input_with_dropdown' && input.mandatory) {
 
+                        if (input.end_point_name === 'city') {
+                            data[input.end_point_name] = input.selectedItem.cityId
                         } else {
-
-                            data[input.end_point_name] = input.value
+                            data[input.end_point_name] = input.selectedItem[input.end_point_name]
                         }
 
+                    } else {
+
+                        data[input.end_point_name] = input.value
                     }
 
-                    let { firstName, lastName } = data
-                    if (!lastName) {
-                        lastName = ''
+                }
+
+                let { firstName, lastName } = data
+                if (!lastName) {
+                    lastName = ''
+                }
+                const fullName = firstName + ' ' + lastName
+                data.fullName = fullName
+
+
+                for (let key in data) {
+                    if (data[key] === undefined) {
+                        data[key] = ''
                     }
-                    const fullName = firstName + ' ' + lastName
-                    data.fullName = fullName
+                }
 
-
-                    for (let key in data) {
-                        if (data[key] === undefined) {
-                            data[key] = ''
-                        }
-                    }
-
-                })
             })
-
-            console.log('data: ', data)
-
-            const { primaryPath, bankName } = this.state
-
-            generateLead(data, primaryPath)
-                .then((res) => {
-                    console.log('long form submitted: ', res)
-                    const pathname = `/${primaryPath}/thank-you`
-                    const query = { bankName }
-                    this.props.router.push({ pathname, query }, pathname, { shallow: true })
-                })
-                .catch(err => {
-                    console.log('long form submission error: ', err)
-                })
         })
+
+        console.log('data: ', data)
+
+        const { primaryPath, bankName } = this.state
+
+        generateLead(data, primaryPath)
+            .then((res) => {
+                console.log('long form submitted: ', res)
+                const pathname = `/${primaryPath}/thank-you`
+                const query = { bankName }
+                this.props.router.push({ pathname, query }, pathname, { shallow: true })
+            })
+            .catch(err => {
+                console.log('long form submission error: ', err)
+            })
     }
 
     render() {
