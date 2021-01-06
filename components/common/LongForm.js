@@ -133,7 +133,6 @@ class LongForm extends React.Component {
             long_form_blocks.forEach(async long_form_block => {
                 const inputs = long_form_block.blocks
                 updateDropdownList(inputs, listType, list, input_id)
-
             })
         })
         this.updateState(newLongFormSections)
