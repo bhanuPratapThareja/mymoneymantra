@@ -43,6 +43,7 @@ class LongForm extends React.Component {
             long_form_blocks.forEach(long_form_block => {
                 const inputs = long_form_block.blocks
                 inputs.forEach(item => {
+             
                     item.error = false
                     item.verified = false
 
@@ -132,7 +133,6 @@ class LongForm extends React.Component {
             long_form_blocks.forEach(async long_form_block => {
                 const inputs = long_form_block.blocks
                 updateDropdownList(inputs, listType, list, input_id)
-
             })
         })
         this.updateState(newLongFormSections)
@@ -177,7 +177,6 @@ class LongForm extends React.Component {
     updateState = longFormSections => {
         return new Promise((resolve) => {
             this.setState({ longFormSections }, () => {
-                console.log(longFormSections)
                 this.handlePercentage()
                 resolve(true)
             })
@@ -192,7 +191,7 @@ class LongForm extends React.Component {
                 const inputs = long_form_block.blocks
                 inputs.forEach(input => {
                     if (input.mandatory) {
-                        
+
                         this.handleVerifiedInputsArray(input)
                     }
                 })
@@ -203,7 +202,6 @@ class LongForm extends React.Component {
     handleVerifiedInputsArray = input => {
         const verifiedInputsArray = this.state.verifiedInputs
         if (input.verified) {
-            // console.log(input)
             verifiedInputsArray.push(input.input_id)
         } else {
             if (verifiedInputsArray.includes(input.input_id)) {
@@ -290,10 +288,7 @@ class LongForm extends React.Component {
             })
         })
 
-        // console.log('data: ', data)
-
         const { primaryPath, bankName } = this.state
-
         generateLead(data, primaryPath)
             .then((res) => {
                 console.log('long form submitted: ', res)
@@ -313,9 +308,9 @@ class LongForm extends React.Component {
         }
 
         return (
-            <section className="long-form-wrapper" id="longForm">
-                <div className="form-wrapper">
-                    <form>
+            // <section className="long-form-wrapper">
+                <div className="form-wrapper" id="longForm">
+                    <form >
                         {this.state.longFormSections.map(longFormSection => {
                             const long_form_blocks = longFormSection.sections[0].long_form_blocks
 
@@ -326,10 +321,13 @@ class LongForm extends React.Component {
                                     {long_form_blocks.map(long_form_block => {
                                         const inputs = long_form_block.blocks
                                         ++index
+                                        const blockClasses = ['shortforms-container']
+                                        blockClasses.push(long_form_block.block_class)
                                         return (
                                             <div className="long-forms-wrapper" key={long_form_block.id}>
                                                 <h5><b>{`${index}. `}</b> {long_form_block.block_name}</h5>
-                                                <div className="shortforms-container">
+                                                
+                                                <div className={blockClasses.join(' ')}>
                                                     {inputs.map(component => {
                                                         return (
                                                             <React.Fragment key={component.id}>
@@ -350,7 +348,7 @@ class LongForm extends React.Component {
                         </div>
                     </form>
                 </div>
-            </section>
+            // </section>
         )
     }
 }

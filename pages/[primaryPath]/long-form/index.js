@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
-import LongFormBanner from '../../../components/LongForm/LongFormBanner'
+// import LongFormBanner from '../../../components/common/LongForm/LongFormBanner'
 
 const LongForm = props => {
     useEffect(() => {
@@ -12,7 +12,8 @@ const LongForm = props => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.long-form-banner':
-                    return <LongFormBanner key={block.id} data={block} />
+                    return null
+                    // return <LongFormBanner key={block.id} data={block} />
             }
         })
     }

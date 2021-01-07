@@ -17,12 +17,16 @@ const SFSlides = props => {
 
             {sfSlides && sfSlides.length ? <form className="short-forms-wrapper" onClick={props.handleClickOnSlideBackground}>
                 {sfSlides.map(slide => {
+                    // console.log('slide: ', slide)
                     const slideStyles = props.currentSlide == slide.slideId ? { display: 'block' } : { display: 'none' }
+                    const slideClass = slide.slideClass
+                    const shortFromContainerClasses = ['shortforms-container']
+                    shortFromContainerClasses.push(slideClass)
                     return (
                         <div className="sf-forms opacity-in" id={slide.slideId} style={slideStyles} key={slide.slideId}>
-                            <div className="shortforms-container">
+                            <h2>{slide.heading}</h2>
+                            <div className={shortFromContainerClasses.join(' ')}>
                                 <div className="form__group-wrapper grid-span">
-                                    <h2>{slide.heading}</h2>
                                     {slide.inputs.map(component => {
                                         return (
                                             <React.Fragment key={component.id}>
