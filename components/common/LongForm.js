@@ -308,9 +308,9 @@ class LongForm extends React.Component {
         }
 
         return (
-            <section className="long-form-wrapper">
-                <div className="form-wrapper long-form_form">
-                    <form id="longForm" >
+            // <section className="long-form-wrapper">
+                <div className="form-wrapper" id="longForm">
+                    <form >
                         {this.state.longFormSections.map(longFormSection => {
                             const long_form_blocks = longFormSection.sections[0].long_form_blocks
 
@@ -321,10 +321,13 @@ class LongForm extends React.Component {
                                     {long_form_blocks.map(long_form_block => {
                                         const inputs = long_form_block.blocks
                                         ++index
+                                        const blockClasses = ['shortforms-container']
+                                        blockClasses.push(long_form_block.block_class)
                                         return (
                                             <div className="long-forms-wrapper" key={long_form_block.id}>
                                                 <h5><b>{`${index}. `}</b> {long_form_block.block_name}</h5>
-                                                <div className="shortforms-container">
+                                                
+                                                <div className={blockClasses.join(' ')}>
                                                     {inputs.map(component => {
                                                         return (
                                                             <React.Fragment key={component.id}>
@@ -345,7 +348,7 @@ class LongForm extends React.Component {
                         </div>
                     </form>
                 </div>
-            </section>
+            // </section>
         )
     }
 }

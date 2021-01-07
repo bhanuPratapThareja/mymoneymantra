@@ -23,6 +23,9 @@
   cursor: pointer;
 }
 
+button:disabled {
+  opacity: 0.5;
+}
 
 .listing-banner_selected {
   background-color: #89C142;
@@ -44,16 +47,16 @@
   margin-top: 0;
 }
 
-/* .card-info.banner-sticky {
+.card-info.banner-sticky {
   top: 120px;
-} */
+}
 
-/* 
+
 .long-form .long-form-wrapper .banner-sticky+.form-wrapper {
   max-width: 840px;
   left: 26.5%;
   position: relative;
-} */
+}
 
 
 .banner-wrapper .normal-banner h1:first-child strong:first-child, .score-content h2 strong:nth-child(2), .banks-holder .banks h2 strong:nth-child(2), .cstm-bnr-txt h1:nth-child(2) strong:first-child, .c-detail-page .banner-wrapper h1:first-child strong {
@@ -282,6 +285,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   left: 90%;
   top: 20px;
   cursor: pointer;
+  z-index: 999;
 }
 
 .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms h5 {
@@ -316,9 +320,9 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   height: 24px;
 }
 
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group {
+/* .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group {
   margin-bottom: 0 !important;
-}
+} */
 
 .form__group span.error {
   text-align: center;
@@ -343,15 +347,15 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   padding-top: 80px;
 }
 
-.cstm-cal {
+/* .cstm-cal {
   max-width: 49%;
   margin-top: 32px;
-}
+} */
 
 div#pan_card_text,
 div#bank_name_input_with_dropdown, 
 div#net_monthly_income_number, 
-div#pincode_input_with_dropdown, 
+/* div#pincode_input_with_dropdown,  */
 div#salary_bank_name_input_with_dropdown {
   display: inline-block;
   max-width: 49%;
@@ -643,11 +647,11 @@ div#address_proof_upload_button {
 }
 
 /* div#cc_holder_bank_input_with_dropdown, */
-div#other_city_property_location_text {
+/* div#other_city_property_location_text {
   margin-top: 16px;
-}
+} */
 
-div#pan_card_cc_text,
+/* div#pan_card_cc_text,
 div#pan_cc_pan_card,
 div#net_monthly_income_cc_number,
 div#salary_bank_name_cc_input_with_dropdown,
@@ -656,13 +660,13 @@ div#pincode_cc_input_with_dropdown {
   display: inline-block;
   max-width: 48.8%;
   vertical-align: top;
-}
+} */
 
-div#city_cc_input_with_dropdown {
+/* div#city_cc_input_with_dropdown {
   display: inline-block;
   max-width: 48.8%;
   vertical-align: top;
-}
+} */
 
 .credit-card-flow form .form__group.error-input {
   margin-bottom: 24px !important;
@@ -720,25 +724,79 @@ div#city_cc_input_with_dropdown {
   max-width: 39%;
 }
 
-div#cc_holder_credit_cards_radio {
+/* div#cc_holder_credit_cards_radio {
   display: inline-block;
   min-width: 48.9%;
-}
+} */
 
 .sf-forms .shortforms-container .radio-container > div {
   display: inline-block;
-  min-width: 47.8%;
+  min-width: 48.9%;
   position: relative;
   margin-right: 16px;
   margin-bottom: 16px;
 }
 
-.sf-forms .shortforms-container .radio-container > div:last-child {
+.sf-forms .shortforms-container .radio-container > div:nth-child(even) {
   margin: 0;
 }
 
+.sf-forms .shortforms-container .cstm-cal {
+  max-width: 50%;
+}
+
 /*-- Long Form --*/
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container {
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container.long-gender {
+  display: block;
+}
+
+.long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container > div {
+  display: inline-block;
+  margin: 0 16px 16px 0;
+  min-width: 169px;
+  position: relative;
+}
+
+.long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container > div:last-child {
+  margin-right: 0;
+}
+
+.long-address .long-pincode {
+  width: 38% !important;
+  display: inline-block;
+  margin: 0 12px 0 0;
+}
+
+.long-address .long-city {
+  width: 60% !important; 
+  display: inline-block;
+}
+
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container.long-address {
+  display: block;
+}
+
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container.long-address .form__group {
+  margin-bottom: 16px;
+}
+
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container.long-terms label {
+  border: 0;
+  text-align: left;
+  padding-left: 36px;
+  vertical-align: top;
+  padding-top: 0;
+}
+
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container.long-terms {
+  display: block;
+}
+
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container.long-terms label:before {
+  top: 5px;
+}
+
+/* .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container {
   display: block;
 }
 
@@ -789,7 +847,7 @@ div#cc_holder_credit_cards_radio {
 .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(9) .form__group.field,
 .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(10) .form__group.field {
   max-width: 100% !important;
-}
+} */
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
@@ -890,18 +948,18 @@ div#cc_holder_credit_cards_radio {
   }
 
 
-  div#cc_holder_bank_input_with_dropdown {
+  /* div#cc_holder_bank_input_with_dropdown {
     margin-top: 8px;
-  }
+  } */
 
   .credit-card-flow .lets-find-container .lets-find-forms-container .sf-forms .shortforms-container>div#employment_type_cc_radio {
     display: flex;
   }
 
-  .cstm-cal {
+  /* .cstm-cal {
     max-width: 100%;
     margin-top: 16px;
-  }
+  } */
 
   div#pan_card_cc_text, div#net_monthly_income_cc_number, div#salary_bank_name_cc_input_with_dropdown {
     margin: 0 0 16px;
@@ -936,7 +994,31 @@ div#cc_holder_credit_cards_radio {
     max-height: 30px;
   }
 
+  .sf-forms .shortforms-container .radio-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sf-forms .shortforms-container .radio-container > div:nth-child(even) {
+    margin: 0 0 8px;
+  }
+
+  .sf-forms .shortforms-container .radio-container > div {
+    min-width: 47%;
+  }
+
+  .sf-forms .shortforms-container .radio-container > div {
+    min-width: 47%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 8px 8px 0;
+  }
+
+  .sf-forms .shortforms-container .cstm-cal {
+    max-width: 100%;
+  }
 }
+
 
 
 @media(max-width: 767px) {
@@ -969,7 +1051,6 @@ div#cc_holder_credit_cards_radio {
   }
 }
 
-.long-form_form {
-  width: 70%;
-  margin-left: 30%;
+.MuiLinearProgress-barColorPrimary {
+  background-color: #89C142 !important;
 }

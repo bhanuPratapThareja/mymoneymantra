@@ -50,7 +50,7 @@ class ShortExtendedForm extends React.Component {
         // })
     }
 
-    setInputsInState = (inputsArray, slideId, heading) => {
+    setInputsInState = (inputsArray, slideId, heading, slideClass) => {
         if (getDevice() !== 'desktop') {
             const letsFindContaiiner = document.getElementsByClassName('lets-find-container')[0]
             const uspCardsContainer = document.getElementsByClassName('banner-features-container')[0]
@@ -73,7 +73,7 @@ class ShortExtendedForm extends React.Component {
             }
             formInputs.push(item)
         })
-        let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading }]
+        let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading, slideClass }]
         this.setState({ ...this.state, slides: [...upDatedSlides] })
     }
 
@@ -88,7 +88,8 @@ class ShortExtendedForm extends React.Component {
                 let slideId = `sf-${slideNo}`
                 const fields = slide.onboard_form_slide.fields
                 const heading = slide.onboard_form_slide.heading
-                this.setInputsInState(fields, slideId, heading)
+                const slideClass = slide.onboard_form_slide.slide_class
+                this.setInputsInState(fields, slideId, heading, slideClass)
                 slideNo++
             }, 500)
         })

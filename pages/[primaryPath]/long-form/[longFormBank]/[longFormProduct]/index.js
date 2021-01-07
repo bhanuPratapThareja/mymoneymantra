@@ -11,10 +11,10 @@ const LongFormProduct = props => {
         window.scrollTo(0, 0)
     })
 
-   
+
 
     const getComponents = (dynamic, bank) => {
-        // console.log('dynamic: ', dynamic)
+        console.log('dynamic: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.long-form-banner':
@@ -36,7 +36,12 @@ const LongFormProduct = props => {
 
     return (
         <div className="long-form">
-            {props.data ? <Layout>{getComponents(props.data.dynamic, props.bank)}</Layout> : null}
+            {props.data ? <Layout>
+                <section className="long-form-wrapper">
+                    {getComponents(props.data.dynamic, props.bank)}
+                </section>
+            </Layout> : null}
+
         </div>
     )
 }

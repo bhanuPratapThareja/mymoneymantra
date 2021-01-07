@@ -24,26 +24,32 @@ const Header = () => {
          })
 
          if (!longFormBanner) {
-               longFormBanner = document.getElementById('longFormBanner')
-               longForm = document.getElementById('longForm')
+            longFormBanner = document.getElementById('longFormBanner')
+            longForm = document.getElementById('longForm')
          } else {
             if (longForm && longFormBanner) {
                const longFormOffset = longForm.offsetTop
                const longFormHeight = longForm.clientHeight
+               const bannerOffset = longFormBanner.offsetTop
                const bannerHeight = longFormBanner.clientHeight
 
                if (window.pageYOffset >= longFormOffset && window.pageYOffset < longFormOffset + longFormHeight) {
                   longFormBanner.style.position = 'fixed'
                   longFormBanner.style.marginTop = `${0}px`
+                  longForm.classList.add('banner-sticky')
+                  longFormBanner.classList.add('banner-sticky')
                }
 
                if (window.pageYOffset >= longFormOffset + longFormHeight - bannerHeight) {
                   longFormBanner.style.position = 'absolute'
-                  longFormBanner.style.marginTop = `${longFormOffset + longFormHeight - bannerHeight}px`
+                  longFormBanner.style.marginTop = `${longFormOffset + longFormHeight - bannerHeight - 70}px`
                }
 
-               if (window.pageYOffset < longFormOffset)
+               if (window.pageYOffset < longFormOffset) {
                   longFormBanner.style.position = 'static'
+                  longForm.classList.remove('banner-sticky')
+                  longFormBanner.classList.remove('banner-sticky')
+               }
             }
          }
       }

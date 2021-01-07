@@ -42,10 +42,10 @@ export const generateInputs = (component, updateField,
         setTimeout(() => {
             const datepicker = $(`#${'dob'}`).datepicker()
             const value = datepicker.val()
-            const field = { name, value, type,blur: true, currentActiveInput: name }
+            const field = { name, value, type, blur: true, currentActiveInput: name }
             if (value) {
                 updateField(field)
-           
+
             }
         }, 250);
     }
@@ -76,8 +76,9 @@ export const generateInputs = (component, updateField,
 
     let { type, input_id, placeholder, mandatory, label, value, id,
         checkbox, radio, question, error, errorMsg, verified, list, listType,
-        upload_text, monetary_input, heading } = component
+        upload_text, monetary_input, heading, input_class } = component
 
+    if (!value) value = ''
     const borderInputInvalid = { border: '2px solid var(--error-color)' }
     const borderInputValid = null
     const borderStyles = error ? borderInputInvalid : borderInputValid
@@ -118,8 +119,7 @@ export const generateInputs = (component, updateField,
         )
     }
 
-    if (type === 'text' || type === 'email' || type === 'number' || type === 'tel' || type === 'pan_card') {
-        if (!value) value = ''
+    if (type === 'text' || type === 'email' || type === 'number' || type === 'tel') {
         const fieldId = `${input_id}_${type}`
         const inputType = type === 'number' ? getDevice() === 'desktop' ? 'number' : 'tel' : type
         return (
@@ -143,7 +143,6 @@ export const generateInputs = (component, updateField,
     }
 
     if (type === 'phone_no') {
-        if (!value) value = ''
         const fieldId = `${input_id}_${type}`
         return (
             <div className={fieldClasses.join(' ')} key={id} id={fieldId}>
@@ -165,12 +164,36 @@ export const generateInputs = (component, updateField,
         )
     }
 
+    if (type === 'pan_card') {
+        const fieldId = `${input_id}_${type}`
+        const inputType = 'text'
+        return (
+            <div className={fieldClasses.join(' ')} type={type} id={fieldId} key={id}>
+                <input className="form__field"
+                    name={input_id}
+                    type={inputType}
+                    value={value}
+                    placeholder={placeholder}
+                    autoComplete='off'
+                    required={mandatory}
+                    onBlur={e => validate(e, type)}
+                    onChange={e => handleChange(e, type)}
+                />
+                <label className="form__label">{label}</label>
+                {error ? <div className='input-error'>
+                    <p>{errorMsg}</p>
+                </div> : null}
+            </div>
+        )
+    }
+
     if (type === 'upload_button') {
         const inputFileId = `input_file_${input_id}`
         const fieldId = `${input_id}_${type}`
         let uploadText = value ? value.length === 1 ? value[0].name : value.length + ' files' : upload_text
         const uploadButtonBorderStyles = upload_text ? { border: '1px solid green !important' } : borderStyles
         fieldClasses.push(type)
+        fieldClasses.push('file-type')
         return (
             <>
                 <div className={fieldClasses.join(' ')} id={fieldId} style={uploadButtonBorderStyles}>
@@ -188,13 +211,13 @@ export const generateInputs = (component, updateField,
     }
 
     if (type === 'input_with_dropdown') {
-        if (!value) value = ''
         const { input_type, selectedId, end_point_name } = component
         const { listName, listItemId, listItemName } = properties(listType)
         const fieldId = `${input_id}_${type}`
         const listStyles = list && list.length ? { display: 'block' } : { display: 'none' }
         const dropDownClass = selectedId === '*' || end_point_name === 'city' || end_point_name === 'officeCity' ? 'disabled_input' : 'dropdown_enabled'
         fieldClasses.push(dropDownClass)
+        fieldClasses.push(input_class)
         return (
             <div className={fieldClasses.join(' ')} id={fieldId} key={id}>
                 <input className="form__field"
@@ -229,8 +252,6 @@ export const generateInputs = (component, updateField,
     }
 
     if (type === 'input_with_calendar') {
-        if (!value) value = ''
-
         const fieldId = `${input_id}_${type}`
         return (
             <div className="cstm-cal" id={fieldId}>
