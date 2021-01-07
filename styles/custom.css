@@ -238,7 +238,7 @@
   z-index: 1;
 }
 
-.shortforms-container .form__group.field.file-type {
+.shortforms-container .form__group.field.upload_button {
   margin: 0 0 15px;
   display: inline-block;
   max-width: 50%;
@@ -733,7 +733,6 @@ div#city_cc_input_with_dropdown {
 }
 
 div#cc_holder_credit_cards_radio {
-  display: inline-block;
   min-width: 48.9%;
 }
 
