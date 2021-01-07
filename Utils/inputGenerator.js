@@ -79,7 +79,7 @@ export const generateInputs = (component, updateField,
         upload_text, monetary_input, heading, input_class } = component
 
     if (!value) value = ''
-    const borderInputInvalid = { border: '2px solid var(--error-color)' }
+    const borderInputInvalid = { border: 'none', boxShadow: '0 0 0 2px var(--error-color)' }
     const borderInputValid = null
     const borderStyles = error ? borderInputInvalid : borderInputValid
 
@@ -313,7 +313,7 @@ export const generateInputs = (component, updateField,
                 {radio_buttons ? <>
                     <div className="radio-container" key={id} name={input_id} id={radioParentId} required={mandatory}>
                         {radio_buttons.map(button => {
-                            const labelStyles = value === button.value ? { border: '1px solid green' } : null
+                            const labelStyles = value === button.value ? { border:'none', boxShadow: '0 0 0 2px #89C142', color: '#89C142' } : null
                             const radioId = `${input_id}_${type}`
                             return (
                                 <div key={button.id} id={radioId}>

@@ -7,8 +7,6 @@ const SFSlides = props => {
     const progressWidth = `${slideNumber / totalSlides * 100}%`
     const sfSlides = props.slides
 
-    console.log('sfSlides: ', sfSlides)
-
     return (
         <div className="lets-find-stepper-wrapper">
             <div className="progress-grey">

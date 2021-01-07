@@ -30,7 +30,7 @@ class LongFormBanner extends React.Component {
             <>
                 {/* <div className="long-form">
                     <section className="long-form-wrapper"> */}
-                        <div className="card-info" style={{ height: '303px' }} id="longFormBanner">
+                        <div className="card-info" id="longFormBanner">
                             <h5 className="app-form">{form_heading}</h5>
                             <h3><b>{bank_name}</b><br />{product_type}</h3>
                             <img src={`${strapi.baseUrl}${banner_image.url}`} />

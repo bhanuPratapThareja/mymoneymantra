@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Strapi from '../../../../../providers/strapi'
 import Layout from '../../../../../components/Layout'
-import LongFormBanner from '../../../../../components/LongForm/LongFormBanner'
-import { getLongFormSearchParams, getDetailsSearchParams } from '../../../../../utils/searchParams'
+import LongFormBanner from '../../../../../components/common/LongFormBanner'
 import LongForm from '../../../../../components/common/LongForm'
+import { getLongFormSearchParams } from '../../../../../utils/searchParams'
 
 const LongFormProduct = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
     })
-
-
 
     const getComponents = (dynamic, bank) => {
         console.log('dynamic: ', dynamic)
@@ -36,6 +34,7 @@ const LongFormProduct = props => {
 
     return (
         <div className="long-form">
+             <div class="mobile-background"></div>
             {props.data ? <Layout>
                 <section className="long-form-wrapper">
                     {getComponents(props.data.dynamic, props.bank)}
