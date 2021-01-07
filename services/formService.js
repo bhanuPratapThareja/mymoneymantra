@@ -93,8 +93,6 @@ export const getBase64 = file => {
 export const generateLead = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
         const { url, body } = getApiData('generate')
-        console.log('inside formservice body', body)
-        console.log('above data', data);
         const { fullName, dob, pan, mobile, email, applicantType,
             companyId, netMonthlyIncome, bankId, addressline1, addressline2, pincode, city, nearBy,
             requestedLoanamount, propertyType, other_city_property_location,
@@ -104,7 +102,7 @@ export const generateLead = async (data, primaryPath) => {
             officeAddressLine1, officeAddressLine2, officeNearBy, officePincode, officeCity
         } = data
 
-        console.log('data', data);
+        // console.log('data', data);
 
 
         const leadId = getLeadId(primaryPath)
@@ -126,23 +124,19 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.contact.email[0].email = email
 
         if (fathersFirstName && fathersLastName) {
-            console.log('inside if fathersFirstName', fathersFirstName)
             body.request.payload.contact.keyContact[0].caseContactMasterId = "5";
             body.request.payload.contact.keyContact[0].caseContactName = fathersFirstName + " " + fathersLastName;
         }
         else {
-            console.log('inside else ')
             body.request.payload.contact.keyContact[0].caseContactMasterId = "";
             body.request.payload.contact.keyContact[0].caseContactName = "";
         }
 
         if (mothersFirstName && mothersLastName) {
-            console.log('inside if fathersFirstName', mothersFirstName)
             body.request.payload.contact.keyContact[1].caseContactMasterId = "16";
             body.request.payload.contact.keyContact[1].caseContactName = mothersFirstName + " " + mothersLastName;
         }
         else {
-            console.log('inside else mom body.request.payload.contact.keyContact[1].caseContactName',body.request.payload.contact.keyContact[1].caseContactName)
             body.request.payload.contact.keyContact[1].caseContactMasterId = "";
             body.request.payload.contact.keyContact[1].caseContactName = "";
         }
@@ -203,7 +197,6 @@ export const generateLead = async (data, primaryPath) => {
 
 
 
-        console.log("in form service body.request.payload", body.request.payload)
 
         axios.post(url, body)
             .then(res => {

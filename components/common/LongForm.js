@@ -301,13 +301,13 @@ class LongForm extends React.Component {
         const { primaryPath, bankName } = this.state
         generateLead(data, primaryPath)
             .then((res) => {
-                console.log('long form submitted: ', res)
+                // console.log('long form submitted: ', res)
                 const pathname = `/${primaryPath}/thank-you`
                 const query = { bankName }
                 this.props.router.push({ pathname, query }, pathname, { shallow: true })
             })
             .catch(err => {
-                console.log('long form submission error: ', err)
+                // console.log('long form submission error: ', err)
             })
     }
 

@@ -51,7 +51,7 @@ class LongFormNew extends React.Component {
                             }
 
                             if (key === item.end_point_name && key === 'city') {
-                                console.log('city: ', item.end_point_name)
+                                // console.log('city: ', item.end_point_name)
                                 item.value = sfData[key].cityName
                                 item.selectedId = sfData[key].cityId
                                 item.selectedItem = sfData[key]
@@ -61,7 +61,7 @@ class LongFormNew extends React.Component {
                             }
 
                             if (key === item.end_point_name && key === 'pincode') {
-                                console.log('pincode: ', item.end_point_name)
+                                // console.log('pincode: ', item.end_point_name)
                                 item.value = sfData[key].pincode
                                 item.selectedId = sfData[key].pincode
                                 item.selectedItem = sfData[key]
@@ -113,7 +113,7 @@ class LongFormNew extends React.Component {
             })
         })
         this.setState({ longFormSections: newLongFormSections }, () => {
-            console.log(this.state.longFormSections)
+            // console.log(this.state.longFormSections)
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
             }
@@ -235,7 +235,7 @@ class LongFormNew extends React.Component {
                 })
             })
 
-            console.log('in long form data: ', data)
+            // console.log('in long form data: ', data)
 
             const { primaryPath, bankName } = this.state
 
@@ -247,7 +247,7 @@ class LongFormNew extends React.Component {
                     this.props.router.push({ pathname, query }, pathname, { shallow: true })
                 })
                 .catch(err => {
-                    console.log('long form submission error: ', err)
+                    // console.log('long form submission error: ', err)
                 })
         })
     }

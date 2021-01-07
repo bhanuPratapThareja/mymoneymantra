@@ -8,7 +8,6 @@ import axios from 'axios'
 const ThankYouBanner = props => {
     const router = useRouter()
     const { bankName, primaryPath } = router.query
-    console.log('inside thankyourouter.query', router.query);
     const [leadId, setLeadId] = useState('')
     const [productType, setProductType] = useState('')
 
@@ -34,8 +33,6 @@ const ThankYouBanner = props => {
 
     const sendNotification = async(leadId) => {
         const { url, body } = getApiData('sendNotification')
-        console.log('thankyou page notification body', body)
-        console.log('thankyou page notification leadId', leadId)
         body.request.payload.leadId = leadId;
         body.request.payload.actionName = "Short Form Submit";
         try {
