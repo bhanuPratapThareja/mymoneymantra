@@ -251,7 +251,7 @@ class ShortExtendedForm extends React.Component {
 
                 <div className="mobile-background"></div>
                 <div className="mobile-content">
-                <h1 dangerouslySetInnerHTML={{ __html: onboard_short_form_mobile_view_heading }}></h1>
+                <div className="cstm-heading" dangerouslySetInnerHTML={{ __html: onboard_short_form_mobile_view_heading }}></div>
                 </div>
 
                 <div className="all-form-wrapper">

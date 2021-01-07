@@ -65,9 +65,9 @@ const ListingCards = props => {
                                         <Image className="mob-logo" image={offer.bank.bank_logo}
                                         /> 
 
-                                    <h3><span>{offer.bank.bank_name}</span> <br />
-                                    {offer.product_name} <br />
-                                    {offer.product_card_name} <br />
+                                    <h3><span>{offer.bank.bank_name}</span>
+                                    {offer.product_name || offer.product_card_name}
+                                    {/* {offer.product_card_name} <br /> */}
                                     </h3>
 
                                     {primaryPath === 'credit-cards' ? <div>

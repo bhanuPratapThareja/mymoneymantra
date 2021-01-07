@@ -242,7 +242,7 @@ button:disabled {
   z-index: 1;
 }
 
-.shortforms-container .form__group.field.file-type {
+.shortforms-container .form__group.field.upload_button {
   margin: 0 0 15px;
   display: inline-block;
   max-width: 50%;
@@ -684,9 +684,9 @@ div#pincode_cc_input_with_dropdown {
   vertical-align: top;
 } */
 
-.credit-card-flow form .form__group.error-input {
+/* .credit-card-flow form .form__group.error-input {
   margin-bottom: 24px !important;
-}
+} */
 
 .sf-forms .shortforms-container label {
   z-index: -1;
@@ -812,76 +812,68 @@ div#pincode_cc_input_with_dropdown {
   top: 5px;
 }
 
-/* .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container {
+/*-- css issues solution --*/
+.header-links a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.header-links a:last-child {
+  background: -webkit-gradient(linear, left top, right top, from(#56AB2F), to(#93D642));
+  background: linear-gradient(90deg, #56AB2F 0%, #93D642 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.header-links a:last-child:hover {
+  color: #56AB2F;
+}
+
+.long-cards-wrapper-card .top .name h3 span {
   display: block;
 }
 
-.long-form .long-forms-wrapper .shortforms-container .radio-container > div {
-  display: inline-block;
-  margin: 0 16px 16px 0;
-  min-width: 169px;
-  position: relative;
+.header-links a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: 6px;
 }
 
-.long-form .long-forms-wrapper .shortforms-container .radio-container > div:last-child {
-  margin-right: 0;
-}
-
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group {
-  margin: 0 16px 16px 0;
-  display: inline-block;
-  max-width: 48%;
-}
-
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group:last-child {
-  margin-right: 0;
-}
-
-.long-form .long-form-wrapper .form-wrapper .long-forms-wrapper .shortforms-container .cstm-cal,
-.long-form .long-form-wrapper .form-wrapper .long-forms-wrapper .shortforms-container .cstm-cal .form__group.field {
-  max-width: 100%;
-  width: 100%;
+.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container .form__group.verified-input {
+  margin-bottom: 8px;
 }
 
 
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(7),
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(8),
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(9),
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(10) {
-  display: inline-block;
-  width: 47%;
-}
-
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(7),
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(9) {
-  margin-right: 16px;
-}
-
-
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(7) .form__group.field,
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(8) .form__group.field,
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(9) .form__group.field,
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(10) .form__group.field {
-  max-width: 100% !important;
-} */
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
   }
+
   .banner-sticky {
     position: static;
     top: 0;
     width: 100%;
   }
+  
   .banner-sticky_bottom {
     margin-top: 0;
   }
+  
   .long-form .long-form-wrapper .banner-sticky+.form-wrapper {
     max-width: 100%;
     left: 0;
     position: relative;
   }
+
+  .blog-wrapper-card div > img {
+    display: none;
+  }
+
+  /* .blog-wrapper .card-1 .content, .blog-wrapper .card-2 .content, .blog-wrapper .card-3 .content {
+    min-height: 304px;
+  } */
+    
 }
 
 @media(max-width: 1023px) and (min-width: 769px) {
@@ -970,9 +962,10 @@ div#pincode_cc_input_with_dropdown {
     max-width: 100%;
   }
   
-  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .form__group {
+  /* .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .form__group {
     margin: 0 0 8px;
-  }
+  } */
+
   .listings .banner-wrapper.cstm-bnr-txt h2 strong, .personal-loan-listing .banner-wrapper .top div h2 strong, .ltrong {
     color: #fff;
   }
@@ -1005,7 +998,7 @@ div#pincode_cc_input_with_dropdown {
   .sf-forms .shortforms-container.pan-card-cont .form__group.field,
   .sf-forms .shortforms-container .form__group.field.file-type {
     max-width: 100%;
-    margin-bottom: 8px !important;
+    margin-bottom: 8px;
   }
 
   .sf-forms .shortforms-container.current-address .form__group.field {
@@ -1045,10 +1038,24 @@ div#pincode_cc_input_with_dropdown {
     display: block;
   }
 
-  .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.error-input {
+  .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.error-input,
+  .sf-forms .shortforms-container .form__group.error-input {
     margin-bottom: 24px;
   }
-  
+
+  .long-form .long-form-wrapper, .c-detail-page .combined-wrapper .banner .banner-wrapper {
+    padding-top: 16px;
+  }
+ 
+  .cstm-heading h2 {
+    color: #ffffff;
+    text-align: center;
+    font-weight: inherit;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-family: "Avenir-Black";
+  }
+
 }
 
 @media(max-width: 767px) {
