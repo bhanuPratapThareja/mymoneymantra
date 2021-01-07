@@ -93,9 +93,13 @@ export const getBase64 = file => {
 export const generateLead = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
         const { url, body } = getApiData('generate')
+        console.log('inside formservice body',body)
         const { fullName, dob, pan, mobile, email, applicantType,
-            companyId, netMonthlyIncome, bankId, addressline1, addressline2, pincode, requestedLoanamount,
-            gender, maritalStatus, nationality, ffName
+            companyId, netMonthlyIncome, bankId, addressline1, addressline2, pincode,city,nearBy, requestedLoanamount,
+            gender, maritalStatus, nationality,
+            fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
+            // officAddressLine1,officAddressLine2,office_nearby_landmark,officePincode,officeCity,
+            officeAddressLine1,officeAddressLine2,officeNearBy,officePincode,officeCity
         } = data
 
         const leadId = getLeadId(primaryPath)
@@ -106,10 +110,20 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.personal.gender = gender
         body.request.payload.personal.maritalStatus = maritalStatus
         body.request.payload.personal.nationality = nationality
-        body.request.payload.personal.ffName = ffName
+
+        body.request.payload.work.preferedComm = preferedComm;
+        body.request.payload.work.director = director;
+        body.request.payload.work.jointAccHolder = jointAccHolder;
+
+
 
         body.request.payload.contact.mobile[0].mobile = mobile
         body.request.payload.contact.email[0].email = email
+
+        body.request.payload.contact.keyContact[0].caseContactMasterId = "16";
+        body.request.payload.contact.keyContact[0].caseContactName = fathersFirstName + " "+ fathersLastName;
+        body.request.payload.contact.keyContact[1].caseContactMasterId = "5";
+        body.request.payload.contact.keyContact[1].caseContactName = mothersFirstName + " "+ mothersLastName;
 
         body.request.payload.work.applicantType = applicantType
         body.request.payload.work.companyId = companyId ? companyId.caseCompanyId : '1000000001'
@@ -121,19 +135,40 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.productId = localStorage.getItem('productId')
         body.request.payload.requestedLoanamount = requestedLoanamount
 
-        
-        if (!addressline1 && !addressline2 && !pincode) {
-            body.request.payload.address[0] = {}
-        } else {
-            body.request.payload.address[0].addressTypeMasterId = "1000000001"
-            body.request.payload.address[0].addressline1 = addressline1
-            body.request.payload.address[0].addressline2 = addressline2
-            body.request.payload.address[0].city = pincode ? pincode.cityId : ''
-            body.request.payload.address[0].state = pincode ? pincode.stateId : ''
-            body.request.payload.address[0].pincode = pincode ? pincode.pincode : ''
-        }
 
-        console.log(body.request.payload)
+        body.request.payload.address[0].addressTypeMasterId = "1000000001"
+        body.request.payload.address[0].addressline1 = addressline1
+        body.request.payload.address[0].addressline2 = addressline2
+        body.request.payload.address[0].nearBy = nearBy
+        body.request.payload.address[0].city = city
+        // body.request.payload.address[0].state = pincode ? pincode.stateId : ''
+        body.request.payload.address[0].pincode = pincode ;
+
+
+        body.request.payload.address[1].addressTypeMasterId = "1000000002"
+        body.request.payload.address[1].addressline1 = officeAddressLine1
+        body.request.payload.address[1].addressline2 = officeAddressLine2
+        body.request.payload.address[1].nearBy = officeNearBy
+        body.request.payload.address[1].city = officeCity
+        // body.request.payload.address[1].state = pincode ? pincode.stateId : ''
+        body.request.payload.address[1].pincode = officePincode 
+
+
+
+        // if (!addressline1 && !addressline2 && !pincode) {
+        //     body.request.payload.address[0] = {}
+        // } else {
+        //     body.request.payload.address[0].addressTypeMasterId = "1000000001"
+        //     body.request.payload.address[0].addressline1 = addressline1
+        //     body.request.payload.address[0].addressline2 = addressline2
+        //     body.request.payload.address[0].city = pincode ? pincode.cityId : ''
+        //     body.request.payload.address[0].state = pincode ? pincode.stateId : ''
+        //     body.request.payload.address[0].pincode = pincode ? pincode.pincode : ''
+        // }
+
+
+
+        console.log("in form service body.request.payload",body.request.payload)
 
         axios.post(url, body)
             .then(res => {

@@ -50,7 +50,7 @@ class ShortExtendedForm extends React.Component {
         // })
     }
 
-    setInputsInState = (inputsArray, slideId, heading) => {
+    setInputsInState = (inputsArray, slideId, heading, slideClass) => {
         if (getDevice() !== 'desktop') {
             const letsFindContaiiner = document.getElementsByClassName('lets-find-container')[0]
             const uspCardsContainer = document.getElementsByClassName('banner-features-container')[0]
@@ -73,7 +73,7 @@ class ShortExtendedForm extends React.Component {
             }
             formInputs.push(item)
         })
-        let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading }]
+        let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading, slideClass }]
         this.setState({ ...this.state, slides: [...upDatedSlides] })
     }
 
@@ -88,7 +88,8 @@ class ShortExtendedForm extends React.Component {
                 let slideId = `sf-${slideNo}`
                 const fields = slide.onboard_form_slide.fields
                 const heading = slide.onboard_form_slide.heading
-                this.setInputsInState(fields, slideId, heading)
+                const slideClass = slide.onboard_form_slide.slide_class
+                this.setInputsInState(fields, slideId, heading, slideClass)
                 slideNo++
             }, 500)
         })
@@ -244,12 +245,13 @@ class ShortExtendedForm extends React.Component {
     }
 
     render() {
+        const {onboard_short_form_mobile_view_heading} = this.props.data.onboard_short_form
         return (
             <section data-aos="fade-up" className="container lets-find-container aos-init">
 
                 <div className="mobile-background"></div>
                 <div className="mobile-content">
-                    <h1>Credit cards for<br />all your needs.</h1>
+                <div className="cstm-heading" dangerouslySetInnerHTML={{ __html: onboard_short_form_mobile_view_heading }}></div>
                 </div>
 
                 <div className="all-form-wrapper">
