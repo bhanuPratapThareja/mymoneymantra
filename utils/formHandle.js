@@ -88,6 +88,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
                     inp.value = field.value
+                    inp.verified = true
 
                     // special case
 
