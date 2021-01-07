@@ -29,7 +29,7 @@ const ProductDetails = props => {
             <section className="container annual-fee">
                 <div className="annual-fee-wrapper">
                     <div className="left">
-                        {primaryPath === 'personal-loans' || 'home-loans'? <div className="logo"><Image image={bank.bank_image} /></div> : null}
+                        {primaryPath != "credit-cards"? <div className="logo"><Image image={bank.bank_image} /></div> : null}
                         {leftPositionedOffers.map(offer => {
                             return (
                                 <React.Fragment key={offer.id}>

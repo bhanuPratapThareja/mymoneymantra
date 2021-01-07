@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
-// import LongFormBanner from '../../../components/common/LongForm/LongFormBanner'
+//  import LongFormBanner from '../../../components/common/LongForm/LongFormBanner'
+ import LongFormBanner from '../../../components/common/LongFormBanner';
+ 
 
 const LongForm = props => {
     useEffect(() => {
@@ -13,7 +15,7 @@ const LongForm = props => {
             switch (block.__component) {
                 case 'blocks.long-form-banner':
                     return null
-                    // return <LongFormBanner key={block.id} data={block} />
+                     return <LongFormBanner key={block.id} data={block} />
             }
         })
     }
