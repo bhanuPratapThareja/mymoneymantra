@@ -93,14 +93,19 @@ export const getBase64 = file => {
 export const generateLead = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
         const { url, body } = getApiData('generate')
-        console.log('inside formservice body',body)
+        console.log('inside formservice body', body)
+        console.log('above data', data);
         const { fullName, dob, pan, mobile, email, applicantType,
-            companyId, netMonthlyIncome, bankId, addressline1, addressline2, pincode,city,nearBy, requestedLoanamount,
-            gender, maritalStatus, nationality,
+            companyId, netMonthlyIncome, bankId, addressline1, addressline2, pincode, city, nearBy,
+            requestedLoanamount, propertyType, other_city_property_location,
+            gender, maritalStatus, nationality, salaryBankName, otherCompany,
             fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
             // officAddressLine1,officAddressLine2,office_nearby_landmark,officePincode,officeCity,
-            officeAddressLine1,officeAddressLine2,officeNearBy,officePincode,officeCity
+            officeAddressLine1, officeAddressLine2, officeNearBy, officePincode, officeCity
         } = data
+
+        console.log('data', data);
+
 
         const leadId = getLeadId(primaryPath)
 
@@ -120,57 +125,67 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.contact.mobile[0].mobile = mobile
         body.request.payload.contact.email[0].email = email
 
-        body.request.payload.contact.keyContact[0].caseContactMasterId = "16";
-        body.request.payload.contact.keyContact[0].caseContactName = fathersFirstName + " "+ fathersLastName;
-        body.request.payload.contact.keyContact[1].caseContactMasterId = "5";
-        body.request.payload.contact.keyContact[1].caseContactName = mothersFirstName + " "+ mothersLastName;
+        if (fathersFirstName && fathersLastName) {
+            console.log('inside if fathersFirstName', fathersFirstName)
+            body.request.payload.contact.keyContact[0].caseContactMasterId = "5";
+            body.request.payload.contact.keyContact[0].caseContactName = fathersFirstName + " " + fathersLastName;
+        }
+        else {
+            console.log('inside else ')
+            body.request.payload.contact.keyContact[0].caseContactMasterId = "";
+            body.request.payload.contact.keyContact[0].caseContactName = "";
+        }
+
+        if (mothersFirstName && mothersLastName) {
+            console.log('inside if fathersFirstName', mothersFirstName)
+            body.request.payload.contact.keyContact[1].caseContactMasterId = "16";
+            body.request.payload.contact.keyContact[1].caseContactName = mothersFirstName + " " + mothersLastName;
+        }
+        else {
+            console.log('inside else mom body.request.payload.contact.keyContact[1].caseContactName',body.request.payload.contact.keyContact[1].caseContactName)
+            body.request.payload.contact.keyContact[1].caseContactMasterId = "";
+            body.request.payload.contact.keyContact[1].caseContactName = "";
+        }
+
+
+        // body.request.payload.contact.keyContact[0].caseContactMasterId = "16";
+        // body.request.payload.contact.keyContact[0].caseContactName = fathersFirstName + " "+ fathersLastName;
+
+        // body.request.payload.contact.keyContact[1].caseContactMasterId = "5";
+        // body.request.payload.contact.keyContact[1].caseContactName = mothersFirstName + " "+ mothersLastName;
 
         body.request.payload.work.applicantType = applicantType
-        body.request.payload.work.companyId = '1000000001'
+        body.request.payload.work.companyId = companyId ? companyId.caseCompanyId : '1000000001'
         body.request.payload.work.netMonthlyIncome = netMonthlyIncome
 
-        // body.request.payload.bankId = bankId ? bankId.bankId : ''
+        body.request.payload.bankId = salaryBankName ? salaryBankName.bankName : "";
+        body.request.payload.work.otherCompany = otherCompany ? otherCompany.companyName : ""
+
 
         body.request.payload.leadId = leadId
         body.request.payload.productId = localStorage.getItem('productId')
         body.request.payload.requestedLoanamount = requestedLoanamount
 
-        
+
+
 
         body.request.payload.address[0].addressTypeMasterId = "1000000001"
         body.request.payload.address[0].addressline1 = addressline1
         body.request.payload.address[0].addressline2 = addressline2
         body.request.payload.address[0].nearBy = nearBy
-        body.request.payload.address[0].city= city.cityId
-        body.request.payload.address[0].pincode = city.pincode ;
+        body.request.payload.address[0].city = city.cityId
+        body.request.payload.address[0].pincode = city.pincode;
         body.request.payload.address[0].state = pincode ? pincode.stateId : ''
-     
-        // if(!officeAddressLine1 && ! officeAddressLine2){
-        //     body.request.payload.address[1] = {}
-        //     console.log('iifffffff')
-        // }
-        // else{
-        //     console.log('elseeeeee officeAddressLine1',officeAddressLine1);
-        // // body.request.payload.address[1].addressTypeMasterId = "1000000002"
-        // // body.request.payload.address[1].addressline1 = officeAddressLine1
-        // // body.request.payload.address[1].addressline2 = officeAddressLine2
-        // // body.request.payload.address[1].nearBy = officeNearBy
-        // // body.request.payload.address[1].city = officeCity
-        // // // body.request.payload.address[1].state = pincode ? pincode.stateId : ''
-        // // body.request.payload.address[1].pincode = officePincode 
 
-        // }
-
-
-
-            console.log('elseeeeee officeAddressLine1',officeAddressLine1);
-         body.request.payload.address[1].addressTypeMasterId = "1000000002"
-         body.request.payload.address[1].addressline1 = officeAddressLine1
-       body.request.payload.address[1].addressline2 = officeAddressLine2
-         body.request.payload.address[1].nearBy = officeNearBy
-         body.request.payload.address[1].city = officeCity
-         body.request.payload.address[1].state = pincode ? pincode.stateId : ''
-       body.request.payload.address[1].pincode = officePincode 
+        
+        body.request.payload.address[1].addressTypeMasterId = "1000000002"
+        body.request.payload.address[1].addressline1 = officeAddressLine1
+        body.request.payload.address[1].addressline2 = officeAddressLine2
+        body.request.payload.address[1].nearBy = officeNearBy
+        body.request.payload.address[1].city = city.cityId;
+        body.request.payload.address[1].pincode = officePincode
+        body.request.payload.address[1].state = pincode ? pincode.stateId : ''
+       
 
 
 
@@ -188,7 +203,7 @@ export const generateLead = async (data, primaryPath) => {
 
 
 
-        console.log("in form service body.request.payload",body.request.payload)
+        console.log("in form service body.request.payload", body.request.payload)
 
         axios.post(url, body)
             .then(res => {
