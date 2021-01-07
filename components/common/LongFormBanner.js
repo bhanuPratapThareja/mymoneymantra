@@ -27,26 +27,18 @@ class LongFormBanner extends React.Component {
         const { bank_name, form_heading, product_type, banner_image } = this.props.data
 
         return (
-            <>
-                {/* <div className="long-form">
-                    <section className="long-form-wrapper"> */}
-                        <div className="card-info" id="longFormBanner">
-                            <h5 className="app-form">{form_heading}</h5>
-                            <h3><b>{bank_name}</b><br />{product_type}</h3>
-                            <img src={`${strapi.baseUrl}${banner_image.url}`} />
-                            <h4>Application form</h4>
-                            <div className="form-range">
-                                <h5><b id="long-form-complete">{this.state.percentage}%</b> Complete</h5>
-                                <div className="green-range-wrapper">
-                                    <LinearProgress color="primary" variant="determinate" value={this.state.percentage} />
-                                </div>
-                            </div>
-                        </div>
-
-                    {/* </section>
-                </div> */}
-
-            </>
+            <div className="card-info" id="longFormBanner">
+                <h5 className="app-form">{form_heading}</h5>
+                <h3><b>{bank_name}</b><br />{product_type}</h3>
+                <img src={`${strapi.baseUrl}${banner_image.url}`} />
+                <h4>Application form</h4>
+                <div className="form-range">
+                    <h5><b id="long-form-complete">{this.state.percentage}%</b> Complete</h5>
+                    <div className="green-range-wrapper">
+                        <LinearProgress color="primary" variant="determinate" value={this.state.percentage} />
+                    </div>
+                </div>
+            </div>
         )
     }
 }

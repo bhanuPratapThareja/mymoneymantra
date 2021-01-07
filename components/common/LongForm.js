@@ -59,6 +59,7 @@ class LongForm extends React.Component {
                             }
 
                             if (key === item.end_point_name && key === 'city') {
+                                item.value = sfData[key].cityName
                                 item.selectedId = sfData[key].cityId
                                 item.selectedItem = sfData[key]
                                 item.verified = true
@@ -69,6 +70,15 @@ class LongForm extends React.Component {
                             if (key === item.end_point_name && key === 'pincode') {
                                 item.value = sfData[key].pincode
                                 item.selectedId = sfData[key].pincode
+                                item.selectedItem = sfData[key]
+                                item.verified = true
+                                item.error = false
+                                continue loop
+                            }
+
+                            if (key === item.end_point_name && key === 'otherCompany') {
+                                item.value = sfData[key].companyName
+                                item.selectedId = sfData[key].caseCompanyId
                                 item.selectedItem = sfData[key]
                                 item.verified = true
                                 item.error = false
