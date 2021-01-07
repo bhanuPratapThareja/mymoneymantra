@@ -260,6 +260,21 @@ const api = {
                     }
                 }
             }
+        },
+
+        sendNotification : {
+            devUrl: 'notification/api/notification/v1/sms-email/send',
+            uatUrl: 'api/master/v1/',
+            prodUrl: 'api/master/v1/',
+            body: {
+                request: {
+                    header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: {
+                        "actionName":"Short Form Submit",
+                        "leadId":"PR01019897"
+                    }
+                }
+            }
+
         }
 
 

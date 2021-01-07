@@ -126,7 +126,8 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.contact.keyContact[1].caseContactName = mothersFirstName + " "+ mothersLastName;
 
         body.request.payload.work.applicantType = applicantType
-        body.request.payload.work.companyId = companyId ? companyId.caseCompanyId : '1000000001'
+        body.request.payload.work.companyId = '1000000001'
+        // body.request.payload.work.otherCompany = companyId ? companyId.caseCompanyId : ''
         body.request.payload.work.netMonthlyIncome = netMonthlyIncome
 
         // body.request.payload.bankId = bankId ? bankId.bankId : ''
@@ -140,20 +141,37 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.address[0].addressline1 = addressline1
         body.request.payload.address[0].addressline2 = addressline2
         body.request.payload.address[0].nearBy = nearBy
-        body.request.payload.address[0].city = city
+        body.request.payload.address[0].city= city.cityName
+        body.request.payload.address[0].pincode = city.pincode ;
+        
         // body.request.payload.address[0].state = pincode ? pincode.stateId : ''
-        body.request.payload.address[0].pincode = pincode ;
+     
+        // if(!officeAddressLine1 && ! officeAddressLine2){
+        //     body.request.payload.address[1] = {}
+        //     console.log('iifffffff')
+        // }
+        // else{
+        //     console.log('elseeeeee officeAddressLine1',officeAddressLine1);
+        // // body.request.payload.address[1].addressTypeMasterId = "1000000002"
+        // // body.request.payload.address[1].addressline1 = officeAddressLine1
+        // // body.request.payload.address[1].addressline2 = officeAddressLine2
+        // // body.request.payload.address[1].nearBy = officeNearBy
+        // // body.request.payload.address[1].city = officeCity
+        // // // body.request.payload.address[1].state = pincode ? pincode.stateId : ''
+        // // body.request.payload.address[1].pincode = officePincode 
+
+        // }
 
 
-        body.request.payload.address[1].addressTypeMasterId = "1000000002"
-        body.request.payload.address[1].addressline1 = officeAddressLine1
-        body.request.payload.address[1].addressline2 = officeAddressLine2
-        body.request.payload.address[1].nearBy = officeNearBy
-        body.request.payload.address[1].city = officeCity
-        // body.request.payload.address[1].state = pincode ? pincode.stateId : ''
-        body.request.payload.address[1].pincode = officePincode 
 
-
+            console.log('elseeeeee officeAddressLine1',officeAddressLine1);
+         body.request.payload.address[1].addressTypeMasterId = "1000000002"
+         body.request.payload.address[1].addressline1 = officeAddressLine1
+       body.request.payload.address[1].addressline2 = officeAddressLine2
+         body.request.payload.address[1].nearBy = officeNearBy
+         body.request.payload.address[1].city = officeCity
+        // // // body.request.payload.address[1].state = pincode ? pincode.stateId : ''
+       body.request.payload.address[1].pincode = officePincode 
 
         // if (!addressline1 && !addressline2 && !pincode) {
         //     body.request.payload.address[0] = {}
@@ -215,5 +233,8 @@ export const updateLongForm = async data => {
 
     return promise
 }
+
+
+
 
 
