@@ -127,7 +127,6 @@ export const generateLead = async (data, primaryPath) => {
 
         body.request.payload.work.applicantType = applicantType
         body.request.payload.work.companyId = '1000000001'
-        // body.request.payload.work.otherCompany = companyId ? companyId.caseCompanyId : ''
         body.request.payload.work.netMonthlyIncome = netMonthlyIncome
 
         // body.request.payload.bankId = bankId ? bankId.bankId : ''
@@ -136,15 +135,15 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.productId = localStorage.getItem('productId')
         body.request.payload.requestedLoanamount = requestedLoanamount
 
+        
 
         body.request.payload.address[0].addressTypeMasterId = "1000000001"
         body.request.payload.address[0].addressline1 = addressline1
         body.request.payload.address[0].addressline2 = addressline2
         body.request.payload.address[0].nearBy = nearBy
-        body.request.payload.address[0].city= city.cityName
+        body.request.payload.address[0].city= city.cityId
         body.request.payload.address[0].pincode = city.pincode ;
-        
-        // body.request.payload.address[0].state = pincode ? pincode.stateId : ''
+        body.request.payload.address[0].state = pincode ? pincode.stateId : ''
      
         // if(!officeAddressLine1 && ! officeAddressLine2){
         //     body.request.payload.address[1] = {}
@@ -170,8 +169,11 @@ export const generateLead = async (data, primaryPath) => {
        body.request.payload.address[1].addressline2 = officeAddressLine2
          body.request.payload.address[1].nearBy = officeNearBy
          body.request.payload.address[1].city = officeCity
-        // // // body.request.payload.address[1].state = pincode ? pincode.stateId : ''
+         body.request.payload.address[1].state = pincode ? pincode.stateId : ''
        body.request.payload.address[1].pincode = officePincode 
+
+
+
 
         // if (!addressline1 && !addressline2 && !pincode) {
         //     body.request.payload.address[0] = {}
