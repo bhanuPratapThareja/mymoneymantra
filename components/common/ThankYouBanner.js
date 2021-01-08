@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import { getLeadId } from '../../utils/localAccess';
 import Image from '../ImageComponent/ImageComponent'
-import { getApiData } from '../../api/api'
-import axios from 'axios'
+
+
 
 const ThankYouBanner = props => {
     const router = useRouter()
@@ -22,6 +22,7 @@ const ThankYouBanner = props => {
             leadId = getLeadId(primaryPath)
         }
 
+        setLeadId(getLeadId(primaryPath))
         setLeadId(leadId)
 
         let productType = ''

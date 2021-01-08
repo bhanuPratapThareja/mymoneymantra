@@ -95,7 +95,8 @@ export const getBase64 = file => {
 
 export const generateLead = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
-        const { url, body } = getApiData('generate')
+        let { url, body  } = getApiData('generate')
+        body =  JSON.parse(JSON.stringify(body))
         const { fullName, dob, pan, mobile, email, applicantType,
             companyId, netMonthlyIncome, bankId, addressline1, addressline2, pincode, city, nearBy,
             requestedLoanamount, propertyType, other_city_property_location,
@@ -105,7 +106,7 @@ export const generateLead = async (data, primaryPath) => {
             officeAddressLine1, officeAddressLine2, officeNearBy, officePincode, officeCity
         } = data
 
-        // console.log('data', data);
+         console.log('data', data);
 
 
         const leadId = getLeadId(primaryPath)
@@ -155,7 +156,7 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.work.companyId = companyId ? companyId.caseCompanyId : '1000000001'
         body.request.payload.work.netMonthlyIncome = netMonthlyIncome
 
-        body.request.payload.bankId = salaryBankName ? salaryBankName.bankName : "";
+        body.request.payload.bankId = bankId ? bankId.bankId : "";
         body.request.payload.work.otherCompany = otherCompany ? otherCompany.companyName : ""
 
 
@@ -165,49 +166,36 @@ export const generateLead = async (data, primaryPath) => {
 
 
 
-
-        body.request.payload.address[0].addressTypeMasterId = "1000000001"
-        body.request.payload.address[0].addressline1 = addressline1
-        body.request.payload.address[0].addressline2 = addressline2
-        body.request.payload.address[0].nearBy = nearBy
-        body.request.payload.address[0].city = city.cityId
-        body.request.payload.address[0].pincode = city.pincode;
-        body.request.payload.address[0].state = pincode ? pincode.stateId : ''
-
+      
+            console.log('else add 1')
+            body.request.payload.address[0].addressTypeMasterId = "1000000001"
+            body.request.payload.address[0].addressline1 = addressline1
+            body.request.payload.address[0].addressline2 = addressline2
+            body.request.payload.address[0].nearBy = nearBy
+            body.request.payload.address[0].city = city.cityId
+            body.request.payload.address[0].pincode = city.pincode;
+            body.request.payload.address[0].state = pincode ? pincode.stateId : ''
         
-        body.request.payload.address[1].addressTypeMasterId = "1000000002"
-        body.request.payload.address[1].addressline1 = officeAddressLine1
-        body.request.payload.address[1].addressline2 = officeAddressLine2
-        body.request.payload.address[1].nearBy = officeNearBy
-        body.request.payload.address[1].city = city.cityId;
-        body.request.payload.address[1].pincode = officePincode
-        body.request.payload.address[1].state = pincode ? pincode.stateId : ''
-       
 
+    
+            console.log('else')
+            body.request.payload.address[1].addressTypeMasterId = "1000000002"
+            body.request.payload.address[1].addressline1 = addressline1
+            body.request.payload.address[1].addressline2 = addressline2
+            body.request.payload.address[1].nearBy = officeNearBy
+            body.request.payload.address[1].city = city.cityId;
+            body.request.payload.address[1].pincode = city.pincode
+            body.request.payload.address[1].state = pincode ? pincode.stateId : ''
+        
 
-
-
-        // if (!addressline1 && !addressline2 && !pincode) {
-        //     body.request.payload.address[0] = {}
-        // } else {
-        //     body.request.payload.address[0].addressTypeMasterId = "1000000001"
-        //     body.request.payload.address[0].addressline1 = addressline1
-        //     body.request.payload.address[0].addressline2 = addressline2
-        //     body.request.payload.address[0].city = pincode ? pincode.cityId : ''
-        //     body.request.payload.address[0].state = pincode ? pincode.stateId : ''
-        //     body.request.payload.address[0].pincode = pincode ? pincode.pincode : ''
-        // }
-
-
-
-        // console.log(body.request.payload)
+        console.log(body.request.payload)
 
         axios.post(url, body)
             .then(res => {
                 resolve(res)
             })
             .catch(err => {
-                // console.log('err gl: ', err)
+                console.log('err gl: ', err)
                 reject(err)
             })
     })

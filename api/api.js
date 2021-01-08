@@ -131,7 +131,7 @@ const api = {
                             ],
                             "email": [
                                 {
-                                    "addressTypeMasterId": "1",
+                                    "addressTypeMasterId": "5",
                                     "email": "",
                                     "isDefault": "Y"
                                 }
@@ -207,7 +207,7 @@ const api = {
                                 "otherProjectName": ""
                             },
                             {
-                                "addressTypeMasterId": "1000000002",
+                                "addressTypeMasterId": "",
                                 "addressline1": "",
                                 "addressline2": "",
                                 "addressline3": "",

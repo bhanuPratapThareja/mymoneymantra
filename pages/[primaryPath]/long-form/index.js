@@ -12,7 +12,7 @@ const LongForm = props => {
             switch (block.__component) {
                 case 'blocks.long-form-banner':
                     return null
-                    
+                 
             }
         })
     }

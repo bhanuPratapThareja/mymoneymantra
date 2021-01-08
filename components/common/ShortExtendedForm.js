@@ -6,6 +6,8 @@ import SFSlides from '../ShortForm/SFSlides/SFSlides'
 import { getDropdownList } from '../../services/formService'
 import { getOtp, submitOtp } from '../../services/formService'
 import { getDevice } from '../../utils/getDevice'
+import axios from 'axios'
+import { getApiData } from '../../api/api';
 import {
     textTypeInputs,
     getCurrentSlideInputs,
@@ -147,11 +149,24 @@ class ShortExtendedForm extends React.Component {
             const res = await submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
             const leadIdData = JSON.parse(localStorage.getItem('leadId'))
             const leadId = { ...leadIdData, [primaryPath]: res.data.response.payload.leadId }
+            // console.log('leadId 111111111',leadId.credit-cards)
+            // // sendNotification(leadId);
             localStorage.setItem('leadId', JSON.stringify(leadId))
             goToSlides()
         } catch (err) {
             alert(err)
         }
+    }
+
+    sendNotification = async(leadId) => {
+        const { url, body } = getApiData('sendNotification')
+        body.request.payload.leadId = leadId;
+        body.request.payload.actionName = "Short Form Submit";
+        try {
+            const res = await axios.post(url, body)
+            console.log('sendNotification',res)
+            return res;
+        } catch (error) { }
     }
 
 
