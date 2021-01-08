@@ -171,15 +171,19 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.address[0].pincode = city.pincode;
         body.request.payload.address[0].state = pincode ? pincode.stateId : ''
 
-        
-        body.request.payload.address[1].addressTypeMasterId = "1000000002"
-        body.request.payload.address[1].addressline1 = officeAddressLine1
-        body.request.payload.address[1].addressline2 = officeAddressLine2
-        body.request.payload.address[1].nearBy = officeNearBy
-        body.request.payload.address[1].city = city.cityId;
-        body.request.payload.address[1].pincode = officePincode
-        body.request.payload.address[1].state = pincode ? pincode.stateId : ''
-       
+        if (!officeAddressLine1 && !officeAddressLine1) {
+            console.log('if')
+            body.request.payload.address[1]={}
+        } else {
+            console.log('else')
+            body.request.payload.address[1].addressTypeMasterId = "1000000002"
+            body.request.payload.address[1].addressline1 = officeAddressLine1
+            body.request.payload.address[1].addressline2 = officeAddressLine2
+            body.request.payload.address[1].nearBy = officeNearBy
+            body.request.payload.address[1].city = city.cityId;
+            body.request.payload.address[1].pincode = officePincode
+            body.request.payload.address[1].state = pincode ? pincode.stateId : ''
+        }
 
 
 
