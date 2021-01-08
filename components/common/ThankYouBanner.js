@@ -22,9 +22,6 @@ const ThankYouBanner = props => {
             leadId = getLeadId(primaryPath)
         }
 
-        setLeadId(getLeadId(primaryPath))
-        const leadId = getLeadId(primaryPath)
-        sendNotification(leadId)
         setLeadId(leadId)
 
         let productType = ''
