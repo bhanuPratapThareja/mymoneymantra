@@ -157,7 +157,7 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.work.netMonthlyIncome = netMonthlyIncome
 
         body.request.payload.bankId = bankId ? bankId.bankId : "";
-        body.request.payload.work.otherCompany = otherCompany ? otherCompany.companyName : ""
+        // body.request.payload.work.otherCompany = otherCompany ? otherCompany.companyName : ""
 
 
         body.request.payload.leadId = leadId
