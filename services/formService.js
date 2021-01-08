@@ -1,10 +1,13 @@
 import axios from 'axios'
+import Strapi from '../providers/strapi'
 import { getApiData } from '../api/api'
 import { getLeadId } from '../utils/localAccess'
 import { getFormattedDate } from '../utils/formatDataForApi'
 const CancelToken = axios.CancelToken
 let cancel
 let otpId = ''
+
+const strapi = new Strapi()
 
 export const getOtp = mobileNo => {
     const { url, body } = getApiData('otp')
@@ -102,7 +105,7 @@ export const generateLead = async (data, primaryPath) => {
             officeAddressLine1, officeAddressLine2, officeNearBy, officePincode, officeCity
         } = data
 
-        // console.log('data', data);
+         console.log('data', data);
 
 
         const leadId = getLeadId(primaryPath)
@@ -152,7 +155,7 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.work.companyId = companyId ? companyId.caseCompanyId : '1000000001'
         body.request.payload.work.netMonthlyIncome = netMonthlyIncome
 
-        body.request.payload.bankId = salaryBankName ? salaryBankName.bankName : "";
+        body.request.payload.bankId = bankId ? "bankId" : "";
         body.request.payload.work.otherCompany = otherCompany ? otherCompany.companyName : ""
 
 
@@ -162,14 +165,20 @@ export const generateLead = async (data, primaryPath) => {
 
 
 
+        if (!addressline1 && !addressline2) {
+            console.log('if add 1')
+            body.request.payload.address[0] = {}
+        } else {
+            console.log('else add 1')
+            body.request.payload.address[0].addressTypeMasterId = "1000000001"
+            body.request.payload.address[0].addressline1 = addressline1
+            body.request.payload.address[0].addressline2 = addressline2
+            body.request.payload.address[0].nearBy = nearBy
+            body.request.payload.address[0].city = city.cityId
+            body.request.payload.address[0].pincode = city.pincode;
+            body.request.payload.address[0].state = pincode ? pincode.stateId : ''
+        }
 
-        body.request.payload.address[0].addressTypeMasterId = "1000000001"
-        body.request.payload.address[0].addressline1 = addressline1
-        body.request.payload.address[0].addressline2 = addressline2
-        body.request.payload.address[0].nearBy = nearBy
-        body.request.payload.address[0].city = city.cityId
-        body.request.payload.address[0].pincode = city.pincode;
-        body.request.payload.address[0].state = pincode ? pincode.stateId : ''
 
         if (!officeAddressLine1 && !officeAddressLine1) {
             console.log('if')
@@ -185,22 +194,7 @@ export const generateLead = async (data, primaryPath) => {
             body.request.payload.address[1].state = pincode ? pincode.stateId : ''
         }
 
-
-
-
-        // if (!addressline1 && !addressline2 && !pincode) {
-        //     body.request.payload.address[0] = {}
-        // } else {
-        //     body.request.payload.address[0].addressTypeMasterId = "1000000001"
-        //     body.request.payload.address[0].addressline1 = addressline1
-        //     body.request.payload.address[0].addressline2 = addressline2
-        //     body.request.payload.address[0].city = pincode ? pincode.cityId : ''
-        //     body.request.payload.address[0].state = pincode ? pincode.stateId : ''
-        //     body.request.payload.address[0].pincode = pincode ? pincode.pincode : ''
-        // }
-
-
-
+        // console.log(body.request.payload)
 
         axios.post(url, body)
             .then(res => {
@@ -249,6 +243,9 @@ export const updateLongForm = async data => {
 }
 
 
+export const getProductAndBank = async (data, primaryPath, longFormProduct) => {
+    console.log('longFormProductlongFormProduct: ', longFormProduct)
+    let productData = await strapi.processReq('GET', `credit_card_product?slug=${longFormProduct}`)
+    console.log('credit_card_product:: ', productData)
 
-
-
+}

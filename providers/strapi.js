@@ -27,6 +27,9 @@ class Strapi {
                 body: body ? JSON.stringify(body) : null
             })
             const json = await res.json()
+            if(!json.length) {
+                return null
+            }
             return json
            
         } catch (err) {
