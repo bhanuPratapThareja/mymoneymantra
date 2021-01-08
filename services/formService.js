@@ -1,10 +1,13 @@
 import axios from 'axios'
+import Strapi from '../providers/strapi'
 import { getApiData } from '../api/api'
 import { getLeadId } from '../utils/localAccess'
 import { getFormattedDate } from '../utils/formatDataForApi'
 const CancelToken = axios.CancelToken
 let cancel
 let otpId = ''
+
+const strapi = new Strapi()
 
 export const getOtp = mobileNo => {
     const { url, body } = getApiData('otp')
@@ -197,6 +200,7 @@ export const generateLead = async (data, primaryPath) => {
 
 
 
+        // console.log(body.request.payload)
 
         axios.post(url, body)
             .then(res => {
@@ -245,6 +249,9 @@ export const updateLongForm = async data => {
 }
 
 
+export const getProductAndBank = async (data, primaryPath, longFormProduct) => {
+    console.log('longFormProductlongFormProduct: ', longFormProduct)
+    let productData = await strapi.processReq('GET', `credit_card_product?slug=${longFormProduct}`)
+    console.log('credit_card_product:: ', productData)
 
-
-
+}

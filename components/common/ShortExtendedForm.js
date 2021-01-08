@@ -30,13 +30,14 @@ class ShortExtendedForm extends React.Component {
     state = {
         slideIndex: 0,
         currentSlide: 'onboard',
-        letsGoButtonDisabled: true,
+        submitButtonDisabled: true,
         slides: [],
         defaultOtpTime: 10,
         otpTimeLeft: 0,
         errorMsgs: {
             mandatory: 'Required Field'
-        }
+        },
+        slideButtonText: 'Next'
     }
 
     decrementOtpTime = () => {
@@ -50,6 +51,13 @@ class ShortExtendedForm extends React.Component {
         // })
     }
 
+    scrollToTopOfSlide = () => {
+        const slideEl = document.getElementsByClassName('lets-find-container')[0]
+        if (slideEl) {
+            slideEl.scrollIntoView({ behavior: 'smooth' })
+        }
+    }
+
     setInputsInState = (inputsArray, slideId, heading, slideClass) => {
         if (getDevice() !== 'desktop') {
             const letsFindContaiiner = document.getElementsByClassName('lets-find-container')[0]
@@ -61,7 +69,6 @@ class ShortExtendedForm extends React.Component {
                 }
             }
         }
-
 
         let formInputs = []
         let slides = [...this.state.slides]
@@ -96,12 +103,14 @@ class ShortExtendedForm extends React.Component {
     }
 
     onGoToLetFindForm = () => {
-        this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
-            loadLetsFindForm()
-            if (this.otpInterval) {
-                clearInterval(this.otpInterval)
-            }
-        })
+        setTimeout(() => {
+            this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
+                loadLetsFindForm()
+                if (this.otpInterval) {
+                    clearInterval(this.otpInterval)
+                }
+            })
+        }, 500);
     }
 
     onClickLetsGo = async () => {
@@ -113,12 +122,7 @@ class ShortExtendedForm extends React.Component {
                     const mobileNo = getUserMobileNumber(this.state.slides[0])
                     this.setState({ mobileNo })
                     getOtp(mobileNo)
-                    // const { otpId } = await getOtp(mobileNo)
-                    // this.setState({ otpId })
                     letsFindFormToOtpForm()
-                    setTimeout(() => {
-                        this.decrementOtpTime()
-                    }, 2000)
                 } catch (err) {
                     alert(err.message)
                 }
@@ -171,7 +175,10 @@ class ShortExtendedForm extends React.Component {
                 if (!errorsPresent) {
                     const newSlideId = incrementSlideId(this.state.currentSlide)
                     if (this.state.slideIndex < this.state.slides.length - 1) {
-                        this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId }, () => {
+                        this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId, }, () => {
+                            if (this.state.slideIndex === this.state.slides.length - 1) {
+                                this.setState({ slideButtonText: 'Submit and view offers' })
+                            }
                             showSlides(n, this.state.slideIndex)
                         })
                     } else {
@@ -181,16 +188,21 @@ class ShortExtendedForm extends React.Component {
             })
         } else {
             const newSlideId = decrementSlideId(this.state.currentSlide)
-            this.setState({ slideIndex: this.state.slideIndex - 1, currentSlide: newSlideId }, () => {
+            this.setState({
+                slideIndex: this.state.slideIndex - 1,
+                currentSlide: newSlideId, slideButtonText: 'Next'
+            }, () => {
                 showSlides(n, this.state.slideIndex)
             })
         }
+
+        this.scrollToTopOfSlide()
 
     }
 
     handleChange = async field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const { newstate: { letsGoButtonDisabled, inputDropdown } } = await handleChangeInputs(inputs, field, this.state.letsGoButtonDisabled)
+        const { newstate: { submitButtonDisabled, inputDropdown } } = await handleChangeInputs(inputs, field, this.state.submitButtonDisabled)
         if (inputDropdown) {
             const { listType, masterName, inp } = inputDropdown
             const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
@@ -201,7 +213,7 @@ class ShortExtendedForm extends React.Component {
                 }), 500)
             debouncedSearch(listType, inp.value, masterName)
         }
-        this.setState({ ...this.state, slides: newSlides, letsGoButtonDisabled }, () => {
+        this.setState({ ...this.state, slides: newSlides, submitButtonDisabled }, () => {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
             }
@@ -235,11 +247,9 @@ class ShortExtendedForm extends React.Component {
     }
 
     onSubmitShortForm = submit => {
-        // console.log(submit)
         const primaryPath = this.state.primaryPath
         submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
         if (submit) {
-            // console.log(submit)
             this.props.router.push(`/${primaryPath}/listings`)
         }
     }
@@ -261,7 +271,7 @@ class ShortExtendedForm extends React.Component {
                         handleChange={this.handleChange}
                         checkInputValidity={this.checkInputValidity}
                         onClickLetsGo={this.onClickLetsGo}
-                        letsGoButtonDisabled={this.state.letsGoButtonDisabled}
+                        submitButtonDisabled={this.state.submitButtonDisabled}
                     />
 
                     <div className="lets-find-forms-container sms-otp" id="sms-otp">
@@ -289,7 +299,7 @@ class ShortExtendedForm extends React.Component {
                             handleClickOnSlideBackground={this.handleClickOnSlideBackground}
                             onGoToPrevious={this.onGoToPrevious}
                             onSubmitSlide={this.onSubmitSlide}
-                            onSubmitShortForm={this.onSubmitShortForm}
+                            slideButtonText={this.state.slideButtonText}
                         />
                     </div>
                 </div>

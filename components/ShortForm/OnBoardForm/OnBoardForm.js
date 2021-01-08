@@ -22,7 +22,7 @@ const OnBoardForm = props => {
                 <div className='lets-go-button'>
                     <button
                         onClick={props.onClickLetsGo}
-                        disabled={props.letsGoButtonDisabled}
+                        disabled={props.submitButtonDisabled}
                     >{props.data.button_text}</button>
                 </div>
             </div>

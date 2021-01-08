@@ -54,7 +54,7 @@ const ListingBanner = props => {
                                             <React.Fragment key={category.id}>
                                                 <input readOnly className="lets-checkbox" checked={selectedOption === listing_banner_category_label.toLowerCase()} value={listing_banner_category_label.toLowerCase()} type="radio" id={listing_banner_category_label.toLowerCase()} name="category" required />
                                                 <label htmlFor={listing_banner_category_label.toLowerCase()} className="banner_label">
-                                                    <img src={`${strapi.baseUrl}${listing_banner_category_image.url}`} alt={listing_banner_category_image.name} width="40" height="40" />
+                                                    <img style={{ color: 'red'}} src={`${strapi.baseUrl}${listing_banner_category_image.url}`} alt={listing_banner_category_image.name} width="40" height="40" />
                                                     <h4 className="listing-banner_category-label">{listing_banner_category_label}</h4>
                                                 </label>
                                             </React.Fragment>
