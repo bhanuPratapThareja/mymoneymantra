@@ -15,7 +15,7 @@ import {
 class LongForm extends React.Component {
     state = {
         longFormSections: [],
-        submitButtonDisabled: false,
+        submitButtonDisabled: true,
         errorMsgs: {
             mandatory: 'Required Field'
         },
@@ -24,8 +24,7 @@ class LongForm extends React.Component {
     }
 
     componentDidMount() {
-        const { primaryPath } = this.props.router.query
-        const { bank_name: bankName } = this.props.bank
+        const { primaryPath, bankName } = this.props.router.query
         const longFormSections = this.props.data.long_form_version_2.long_form[0].long_form_sections
         const formData = JSON.parse(localStorage.getItem('formData'))
         let sfData = null
@@ -116,7 +115,7 @@ class LongForm extends React.Component {
             long_form_blocks.forEach(async long_form_block => {
                 const inputs = long_form_block.blocks
 
-                const { newstate: { inputDropdown } } = await handleChangeInputs(inputs, field)
+                const { newstate: { submitButtonDisabled, inputDropdown } } = await handleChangeInputs(inputs, field)
                 if (inputDropdown) {
                     const { listType, masterName, inp } = inputDropdown
                     const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
@@ -127,6 +126,7 @@ class LongForm extends React.Component {
                         }), 500)
                     debouncedSearch(listType, inp.value, masterName)
                 }
+                this.setState({  submitButtonDisabled })
             })
         })
         this.setState({ longFormSections: newLongFormSections }, () => {
@@ -302,8 +302,9 @@ class LongForm extends React.Component {
         generateLead(data, primaryPath)
             .then((res) => {
                 console.log('long form submitted: ', res)
+                const leadId = res.data.response.payload.leadId
                 const pathname = `/${primaryPath}/thank-you`
-                const query = { bankName }
+                const query = { bankName, leadId }
                 this.props.router.push({ pathname, query }, pathname, { shallow: true })
             })
             .catch(err => {
@@ -354,7 +355,7 @@ class LongForm extends React.Component {
                             )
                         })}
                         <div className="long-form-submit">
-                            <button id="long-submit" type="button" onClick={this.onSubmitLongForm}>Submit Application</button>
+                            <button id="long-submit" disabled={this.state.submitButtonDisabled} type="button" onClick={this.onSubmitLongForm}>Submit Application</button>
                         </div>
                     </form>
                 </div>

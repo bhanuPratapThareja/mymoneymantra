@@ -39,18 +39,18 @@ const Header = () => {
 
                   if (window.pageYOffset >= longFormOffset && window.pageYOffset < longFormOffset + longFormHeight) {
                      longFormBanner.style.position = 'fixed'
-                     longFormBanner.style.marginTop = `${0}px`
+                     longFormBanner.style.marginTop = `${20}px`
                      longForm.classList.add('banner-sticky')
                      longFormBanner.classList.add('banner-sticky')
                   }
 
                   if (window.pageYOffset >= longFormOffset + longFormHeight - bannerHeight) {
                      longFormBanner.style.position = 'absolute'
-                     longFormBanner.style.marginTop = `${longFormOffset + longFormHeight - bannerHeight - 70}px`
+                     longFormBanner.style.marginTop = `${longFormHeight - bannerHeight - 20}px`
                   }
 
                   if (window.pageYOffset < longFormOffset) {
-                     longFormBanner.style.position = 'static'
+                     longFormBanner.style.position = 'relative'
                      longForm.classList.remove('banner-sticky')
                      longFormBanner.classList.remove('banner-sticky')
                   }

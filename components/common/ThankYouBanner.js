@@ -13,8 +13,14 @@ const ThankYouBanner = props => {
         thank_you_content, thank_you_button } = props.data.thank_you_banner
 
     useEffect(() => {
+        let leadId = ''
+        if(router.query.leadId) {
+            leadId = router.query.leadId
+        } else if(getLeadId(primaryPath)) {
+            leadId = getLeadId(primaryPath)
+        }
 
-        setLeadId(getLeadId(primaryPath))
+        setLeadId(leadId)
 
         let productType = ''
         if(primaryPath === 'credit-cards'){

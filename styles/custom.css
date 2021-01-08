@@ -3,7 +3,7 @@
   --next-btn: #221F1F;
 }
 
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.error-input {
+/* .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.error-input {
   border: none;
   background: url(/assets/images/icons/error.png);
   background-size: auto;
@@ -11,7 +11,7 @@
   background-position: 97% 80%;
   position: relative;
   box-shadow: 0 0 0 2px #DC3737;
-}
+} */
 
 .credit-card-flow .lets-find-form form .form__group.verified-input {
   margin-bottom: 0;
@@ -58,8 +58,9 @@ button:disabled {
 }
 
 .card-info.banner-sticky {
-  top: 120px;
+  top: 100px;
 }
+
 
 .long-form .long-form-wrapper .banner-sticky+.form-wrapper {
   max-width: 840px;
@@ -812,58 +813,56 @@ div#pincode_cc_input_with_dropdown {
   top: 5px;
 }
 
-/* .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container {
-  display: block;
+.long-form form .shortforms-container .dropdown-content {
+  width: 360px;
+  background: #ffffff;
+  border-radius: 6px;
+  position: absolute;
+  top: 42px;
+  left: 0;
+  z-index: 99;
+  -webkit-box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.08), 0px 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.08), 0px 4px 16px rgba(0, 0, 0, 0.08);
+  display: none;
+  overflow: hidden;
+  height: auto;
+  -webkit-transform: scale(0.5);
+  transform: scale(0.5);
+  -webkit-transition: all ease-in 1s;
+  transition: all ease-in 1s;
+  -webkit-transition-delay: 2s;
+  transition-delay: 2s;
 }
 
-.long-form .long-forms-wrapper .shortforms-container .radio-container > div {
-  display: inline-block;
-  margin: 0 16px 16px 0;
-  min-width: 169px;
-  position: relative;
-}
 
-.long-form .long-forms-wrapper .shortforms-container .radio-container > div:last-child {
-  margin-right: 0;
-}
-
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group {
-  margin: 0 16px 16px 0;
-  display: inline-block;
-  max-width: 48%;
-}
-
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group:last-child {
-  margin-right: 0;
-}
-
-.long-form .long-form-wrapper .form-wrapper .long-forms-wrapper .shortforms-container .cstm-cal,
-.long-form .long-form-wrapper .form-wrapper .long-forms-wrapper .shortforms-container .cstm-cal .form__group.field {
-  max-width: 100%;
+.long-form form .shortforms-container .dropdown-content {
   width: 100%;
+  top: 72p;
+  left: 0;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  padding: 12px;
+  height: 152px;
+    min-height: 152px;
 }
 
-
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(7),
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(8),
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(9),
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(10) {
-  display: inline-block;
-  width: 47%;
+.long-form form .shortforms-container .dropdown-content .dropdown-content-links {
+  height: 100%;
+  width: 100%;
+  opacity: 1;
+  overflow-y: scroll;
+  padding: 0;
+  overflow-x: hidden;
 }
 
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(7),
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(9) {
-  margin-right: 16px;
+.long-form form .shortforms-container .dropdown-content .dropdown-content-links a {
+  border-radius: 6px;
+  color: #221F1F;
+  font-size: 1rem;
+  font-family: "Avenir-Heavy";
+  line-height: 1.5rem;
+  padding: 8px 12px;
 }
-
-
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(7) .form__group.field,
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(8) .form__group.field,
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(9) .form__group.field,
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper:nth-child(10) .form__group.field {
-  max-width: 100% !important;
-} */
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
@@ -1005,7 +1004,7 @@ div#pincode_cc_input_with_dropdown {
   .sf-forms .shortforms-container.pan-card-cont .form__group.field,
   .sf-forms .shortforms-container .form__group.field.file-type {
     max-width: 100%;
-    margin-bottom: 8px !important;
+    margin-bottom: 8px;
   }
 
   .sf-forms .shortforms-container.current-address .form__group.field {
@@ -1045,8 +1044,13 @@ div#pincode_cc_input_with_dropdown {
     display: block;
   }
 
-  .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.error-input {
+  .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.error-input,
+  .sf-forms .shortforms-container .form__group.error-input {
     margin-bottom: 24px;
+  }
+
+  .long-form .long-form-wrapper, .c-detail-page .combined-wrapper .banner .banner-wrapper {
+    padding-top: 16px;
   }
   
 }
