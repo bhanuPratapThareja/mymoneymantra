@@ -7,8 +7,10 @@ import Image from '../ImageComponent/ImageComponent'
 
 const ThankYouBanner = props => {
     const router = useRouter()
-    const { bankName, primaryPath } = router.query
+    const { primaryPath } = router.query
+
     const [leadId, setLeadId] = useState('')
+    const [bankName, setBankName] = useState('')
     const [productType, setProductType] = useState('')
 
     const { thank_you_icon, thank_you_text, thank_you_sub_text,
@@ -16,13 +18,17 @@ const ThankYouBanner = props => {
 
     useEffect(() => {
         let leadId = ''
-        if(router.query.leadId) {
-            leadId = router.query.leadId
-        } else if(getLeadId(primaryPath)) {
+
+        if (router.query.leadId) {
+           leadId = router.query.leadId
+
+        } else if (getLeadId(primaryPath)) {
             leadId = getLeadId(primaryPath)
         }
 
-        setLeadId(getLeadId(primaryPath))
+
+        let bankName = router.query.bankName
+        setBankName(bankName)
         setLeadId(leadId)
 
         let productType = ''
@@ -36,13 +42,13 @@ const ThankYouBanner = props => {
         setProductType(productType)
     }, [])
 
-    const sendNotification = async(leadId) => {
+    const sendNotification = async (leadId) => {
         const { url, body } = getApiData('sendNotification')
         body.request.payload.leadId = leadId;
         body.request.payload.actionName = "Short Form Submit";
         try {
             const res = await axios.post(url, body)
-            console.log('res',res)
+            console.log('res', res)
             return res;
         } catch (error) { }
     }
