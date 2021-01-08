@@ -1086,3 +1086,9 @@ div#pincode_cc_input_with_dropdown {
 .MuiLinearProgress-barColorPrimary {
   background-color: #89C142 !important;
 }
+
+.interim-class {
+  height: 100vh !important;
+  width: 100vw !important;
+  background: linear-gradient(90deg, #0D2333 0%, #040A0F 100%) !important;
+}

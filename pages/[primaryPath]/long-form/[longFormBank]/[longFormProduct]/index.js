@@ -19,7 +19,7 @@ const LongFormProduct = props => {
         // console.log('dynamic: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
-                case 'blocks.long-form-banner':
+                case 'banners.long-form-banners-component':
                     return <LongFormBanner key={block.id} data={block} bank={bankData} product={productData} />
 
                 case 'form-components.long-form-component-new':
@@ -33,12 +33,12 @@ const LongFormProduct = props => {
         alert(`Page does not exist. Redirecting you to ${primaryPath.split('-').join(' ')} page`)
         const pathname = `/${primaryPath}`
         router.push(pathname)
-        return null
+        return <div className="interim-class"></div>
     }
 
     return (
         <div className="long-form">
-            <div class="mobile-background"></div>
+            <div className="mobile-background"></div>
             {props.data ? <Layout>
                 <section className="long-form-wrapper">
                     {getComponents(props.data.dynamic, props.bankData, props.productData)}
@@ -57,7 +57,7 @@ export async function getServerSideProps(ctx) {
     let bankData = null
     let productData = null
 
-    const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-long-form-${longFormBank}`)
+    const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${longFormBank}-long-form`)
 
     if (pageData) {
         data = pageData[0]
@@ -66,11 +66,14 @@ export async function getServerSideProps(ctx) {
         const detailsData = await strapi.processReq('GET', search)
         const details = detailsData[0]
         bankData = details.bank
+        console.log('bankData: ', bankData)
 
         const creditCardProductData = details.credit_card_product ? details.credit_card_product : null
         const personalLoanProductData = details.personal_loan_product ? details.personal_loan_product : null
         const homeLoanProductData = details.home_loan_product ? details.home_loan_product : null
         productData = creditCardProductData || personalLoanProductData || homeLoanProductData
+        console.log('productData: ', productData)
+
         return { props: { data, bankData, productData } }
     } else {
         return { props: { data: null } }
