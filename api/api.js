@@ -120,8 +120,6 @@ const api = {
                             "nationality": "",
                             "dependents": "",
                             "pan": "",
-                            "mothersName": "",
-                            "ffName": ""
                         },
                         "contact": {
                             "mobile": [
@@ -133,13 +131,25 @@ const api = {
                             ],
                             "email": [
                                 {
-                                    "addressTypeMasterId": "1",
+                                    "addressTypeMasterId": "5",
                                     "email": "",
                                     "isDefault": "Y"
                                 }
                             ],
                             "keyContact": [
-                                
+                                {
+                                    "caseContactMasterId": "6",
+                                    "caseContactName": "",
+                                    "caseContactEmail": "",
+                                    "caseContactMobileNo": ""
+                                },
+                                {
+                                    "caseContactMasterId": "5",
+                                    "caseContactName": "",
+                                    "caseContactEmail": "",
+                                    "caseContactMobileNo": ""
+                                },
+
                             ]
                         },
                         "work": {
@@ -195,6 +205,28 @@ const api = {
                                 "remarks": "",
                                 "otherDeveloperName": "",
                                 "otherProjectName": ""
+                            },
+                            {
+                                "addressTypeMasterId": "",
+                                "addressline1": "",
+                                "addressline2": "",
+                                "addressline3": "",
+                                "city": "",
+                                "state": "",
+                                "pincode": "",
+                                "occupancyStatus": "",
+                                "livingSince": "",
+                                "stdCode": "",
+                                "landline": "",
+                                "landmark": "",
+                                "livingSinceMM": "",
+                                "isMaillingAddress": "",
+                                "propertyName": "",
+                                "developerName": "",
+                                "projectrName": "",
+                                "remarks": "",
+                                "otherDeveloperName": "",
+                                "otherProjectName": ""
                             }
                         ]
                     }
@@ -228,6 +260,21 @@ const api = {
                     }
                 }
             }
+        },
+
+        sendNotification : {
+            devUrl: 'notification/api/notification/v1/sms-email/send',
+            uatUrl: 'api/master/v1/',
+            prodUrl: 'api/master/v1/',
+            body: {
+                request: {
+                    header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: {
+                        "actionName":"Short Form Submit",
+                        "leadId":"PR01019897"
+                    }
+                }
+            }
+
         }
 
 

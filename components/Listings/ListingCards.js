@@ -61,13 +61,13 @@ const ListingCards = props => {
                                 <img className="recommended" src="/assets/images/icons/stamp.svg" /> : null}
                             <div className="top">
                                 <div className="name">
-                                    {primaryPath === 'personal-loans' ?
+                                    
                                         <Image className="mob-logo" image={offer.bank.bank_logo}
-                                        /> : null}
+                                        /> 
 
-                                    <h3><span>{offer.bank.bank_name}</span> <br />
-                                    {/* {offer.product_name} <br /> */}
-                                    {offer.product_card_name} <br />
+                                    <h3><span>{offer.bank.bank_name}</span>
+                                    {offer.product_name || offer.product_card_name}
+                                    {/* {offer.product_card_name} <br /> */}
                                     </h3>
 
                                     {primaryPath === 'credit-cards' ? <div>
@@ -75,7 +75,7 @@ const ListingCards = props => {
                                     </div> : null}
 
                                     {primaryPath !== 'credit-cards' ? <div>
-                                        <Image image={offer.bank.bank_logo} />
+                                        <Image image={offer.bank.bank_image} />
                                     </div> : null}
 
                                 </div>

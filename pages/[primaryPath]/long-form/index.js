@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
 
-
 const LongForm = props => {
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -13,7 +12,7 @@ const LongForm = props => {
             switch (block.__component) {
                 case 'blocks.long-form-banner':
                     return null
-                    // return <LongFormBanner key={block.id} data={block} />
+                 
             }
         })
     }

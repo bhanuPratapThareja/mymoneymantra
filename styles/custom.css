@@ -243,7 +243,7 @@ button:disabled {
   z-index: 1;
 }
 
-.shortforms-container .form__group.field.file-type {
+.shortforms-container .form__group.field.upload_button {
   margin: 0 0 15px;
   display: inline-block;
   max-width: 50%;
@@ -685,9 +685,9 @@ div#pincode_cc_input_with_dropdown {
   vertical-align: top;
 } */
 
-.credit-card-flow form .form__group.error-input {
+/* .credit-card-flow form .form__group.error-input {
   margin-bottom: 24px !important;
-}
+} */
 
 .sf-forms .shortforms-container label {
   z-index: -1;
@@ -813,6 +813,39 @@ div#pincode_cc_input_with_dropdown {
   top: 5px;
 }
 
+/*-- css issues solution --*/
+.header-links a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.header-links a:last-child {
+  background: -webkit-gradient(linear, left top, right top, from(#56AB2F), to(#93D642));
+  background: linear-gradient(90deg, #56AB2F 0%, #93D642 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.header-links a:last-child:hover {
+  color: #56AB2F;
+}
+
+.long-cards-wrapper-card .top .name h3 span {
+  display: block;
+}
+
+.header-links a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: 6px;
+}
+
+.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container .form__group.verified-input {
+  margin-bottom: 8px;
+}
+
+
+
 .long-form form .shortforms-container .dropdown-content {
   width: 360px;
   background: #ffffff;
@@ -868,19 +901,31 @@ div#pincode_cc_input_with_dropdown {
   .banks h2 strong:nth-child(2) {
     display: block;
   }
+
   .banner-sticky {
     position: static;
     top: 0;
     width: 100%;
   }
+  
   .banner-sticky_bottom {
     margin-top: 0;
   }
+  
   .long-form .long-form-wrapper .banner-sticky+.form-wrapper {
     max-width: 100%;
     left: 0;
     position: relative;
   }
+
+  .blog-wrapper-card div > img {
+    display: none;
+  }
+
+  /* .blog-wrapper .card-1 .content, .blog-wrapper .card-2 .content, .blog-wrapper .card-3 .content {
+    min-height: 304px;
+  } */
+    
 }
 
 @media(max-width: 1023px) and (min-width: 769px) {
@@ -969,9 +1014,10 @@ div#pincode_cc_input_with_dropdown {
     max-width: 100%;
   }
   
-  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .form__group {
+  /* .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .form__group {
     margin: 0 0 8px;
-  }
+  } */
+
   .listings .banner-wrapper.cstm-bnr-txt h2 strong, .personal-loan-listing .banner-wrapper .top div h2 strong, .ltrong {
     color: #fff;
   }
@@ -1052,7 +1098,16 @@ div#pincode_cc_input_with_dropdown {
   .long-form .long-form-wrapper, .c-detail-page .combined-wrapper .banner .banner-wrapper {
     padding-top: 16px;
   }
-  
+ 
+  .cstm-heading h2 {
+    color: #ffffff;
+    text-align: center;
+    font-weight: inherit;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-family: "Avenir-Black";
+  }
+
 }
 
 @media(max-width: 767px) {
