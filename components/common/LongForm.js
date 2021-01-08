@@ -15,7 +15,7 @@ import {
 class LongForm extends React.Component {
     state = {
         longFormSections: [],
-        submitButtonDisabled: true,
+        submitButtonDisabled: false,
         errorMsgs: {
             mandatory: 'Required Field'
         },
