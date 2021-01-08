@@ -62,6 +62,7 @@ const Header = () => {
       getHeaderData()
       async function getHeaderData() {
          const header = await strapi.processReq('GET', 'header')
+         console.log('header: ', header)
          setHeaderData(header)
       }
    }, [])

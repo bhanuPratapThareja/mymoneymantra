@@ -24,8 +24,8 @@ export const handleChangeInputs = (inputs, field, submitButtonDisabled) => {
                         if (box.input_id === field.name) {
                             box.value = field.checked
                             if (box.end_point_name === 'tnc' ||
-                            box.end_point_name === 'tnc1' ||
-                            box.end_point_name === 'tnc2' ||
+                            box.end_point_name === 'tnc1' &&
+                            box.end_point_name === 'tnc2' &&
                             box.end_point_name === 'tnc3') {
                                 submitButtonDisabled = !field.checked
                             }
@@ -68,7 +68,6 @@ export const handleChangeInputs = (inputs, field, submitButtonDisabled) => {
                         field.value = null
                         field.error = true
                         field.errorMsg = `Number of attachments allowed: ${inp.number_of_uploads}`
-                        return
                     }
 
                     // if (field.value && field.value.length && inp.max_upload_size_in_mb) {
