@@ -66,13 +66,11 @@ export async function getServerSideProps(ctx) {
         const detailsData = await strapi.processReq('GET', search)
         const details = detailsData[0]
         bankData = details.bank
-        console.log('bankData: ', bankData)
 
         const creditCardProductData = details.credit_card_product ? details.credit_card_product : null
         const personalLoanProductData = details.personal_loan_product ? details.personal_loan_product : null
         const homeLoanProductData = details.home_loan_product ? details.home_loan_product : null
         productData = creditCardProductData || personalLoanProductData || homeLoanProductData
-        console.log('productData: ', productData)
 
         return { props: { data, bankData, productData } }
     } else {

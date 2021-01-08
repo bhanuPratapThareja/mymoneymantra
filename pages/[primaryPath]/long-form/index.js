@@ -1,9 +1,6 @@
 import { useEffect } from 'react'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
-//  import LongFormBanner from '../../../components/common/LongForm/LongFormBanner'
- import LongFormBanner from '../../../components/common/LongFormBanner';
- 
 
 const LongForm = props => {
     useEffect(() => {
@@ -15,9 +12,13 @@ const LongForm = props => {
             switch (block.__component) {
                 case 'blocks.long-form-banner':
                     return null
-                     return <LongFormBanner key={block.id} data={block} />
+                 
             }
         })
+    }
+
+    if(!props.data) {
+        return null
     }
 
     return (
@@ -32,7 +33,7 @@ export async function getServerSideProps(ctx) {
     const path = 'long-form'
     const pageData = await strapi.processReq('GET', `pages?slug=credit-cards-${path}`)
     const data = pageData[0]
-    return { props: { data, path } }
+    return { props: { data: null } }
 }
 
 export default LongForm

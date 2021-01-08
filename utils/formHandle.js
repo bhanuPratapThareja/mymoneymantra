@@ -23,10 +23,7 @@ export const handleChangeInputs = (inputs, field, submitButtonDisabled) => {
                     inp.checkbox.checkbox_input.forEach(box => {
                         if (box.input_id === field.name) {
                             box.value = field.checked
-                            if (box.end_point_name === 'tnc' ||
-                            box.end_point_name === 'tnc1' ||
-                            box.end_point_name === 'tnc2' ||
-                            box.end_point_name === 'tnc3') {
+                            if (box.end_point_name === 'tnc') {
                                 submitButtonDisabled = !field.checked
                             }
                         }
@@ -47,6 +44,7 @@ export const handleChangeInputs = (inputs, field, submitButtonDisabled) => {
                     }
                     inp.value = field.value
                     inputDropdown = { listType, masterName, inp }
+                    // console.log('inputDropdown: ', inputDropdown)
 
                 } else {
                     inp.list = []
@@ -68,7 +66,6 @@ export const handleChangeInputs = (inputs, field, submitButtonDisabled) => {
                         field.value = null
                         field.error = true
                         field.errorMsg = `Number of attachments allowed: ${inp.number_of_uploads}`
-                        return
                     }
 
                     // if (field.value && field.value.length && inp.max_upload_size_in_mb) {
@@ -219,7 +216,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.verified = true
                     }
                 } else if (textTypeInputs.includes(inp.type) && inp.input_id === field.currentActiveInput && inp.mandatory) {
-                    console.log('inp:: ', inp)
+                    // console.log('inp:: ', inp)
                     if (!inp.value) {
                         errors = true
                         inp.error = true
@@ -350,6 +347,7 @@ export const getSfData = slides => {
         slide.inputs.forEach(input => {
             switch (input.type) {
                 case 'input_with_dropdown':
+                    // console.log('data: ', data)
                     data[input.end_point_name] = input.selectedItem
                     break
 

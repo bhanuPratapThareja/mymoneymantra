@@ -315,6 +315,7 @@ class ShortExtendedForm extends React.Component {
                             onGoToPrevious={this.onGoToPrevious}
                             onSubmitSlide={this.onSubmitSlide}
                             slideButtonText={this.state.slideButtonText}
+                            onSubmitShortForm={this.onSubmitShortForm}
                         />
                     </div>
                 </div>
