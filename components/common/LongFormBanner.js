@@ -25,8 +25,8 @@ class LongFormBanner extends React.Component {
         const { bank, product } = this.props
         const strapi = new Strapi()
 
-        console.log(bank)
-        console.log(product)
+        // console.log(bank)
+        // console.log(product)
 
         return (
             <div className="card-info" id="longFormBanner">

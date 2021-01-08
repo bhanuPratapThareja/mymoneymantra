@@ -304,11 +304,12 @@ export const updateDropdownList = (inputs, listType, list, input_id) => {
 }
 
 export const updateSelectionFromDropdown = (inputs, name, item) => {
-    let update_field_with_input_id = ''
+    let update_field_with_end_point_name = ''
 
     inputs.forEach(inp => {
+
         if (inp.input_id === name) {
-            update_field_with_input_id = inp.update_field_with_input_id
+            update_field_with_end_point_name = inp.update_field_with_end_point_name
             inp.list = []
             inp.value = item.name
             inp.selectedId = item.id
@@ -316,9 +317,8 @@ export const updateSelectionFromDropdown = (inputs, name, item) => {
             inp.error = false
             inp.verified = true
         }
-
-        if (inp.end_point_name === update_field_with_input_id && inp.end_point_name === 'city' ||
-            inp.end_point_name === update_field_with_input_id && inp.end_point_name === 'officeCity') {
+        
+        if (inp.end_point_name === update_field_with_end_point_name) {
             inp.value = item.selectedItem.cityName
             inp.selectedId = item.selectedItem.cityId
             inp.selectedItem = item.selectedItem

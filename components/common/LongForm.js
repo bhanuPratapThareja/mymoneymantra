@@ -303,6 +303,7 @@ class LongForm extends React.Component {
             .then((res) => {
                 console.log('long form submitted: ', res)
                 const leadId = res.data.response.payload.leadId
+                
                 const pathname = `/${primaryPath}/thank-you`
                 const query = { bankName, leadId }
                 this.props.router.push({ pathname, query }, pathname, { shallow: true })

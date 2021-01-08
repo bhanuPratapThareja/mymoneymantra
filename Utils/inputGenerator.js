@@ -1,7 +1,5 @@
-import MaskedInput from 'react-maskedinput'
 import { properties } from '../api/dropdownApiConfig'
 import { getDevice } from './getDevice'
-import { allowedOtpKeys } from './allowedOtpKeys'
 
 export const generateInputs = (component, updateField,
     checkInputValidity, handleInputDropdownChange, handleInputDropdownSelection) => {
@@ -211,12 +209,15 @@ export const generateInputs = (component, updateField,
         )
     }
 
+
     if (type === 'input_with_dropdown') {
-        const { input_type, selectedId, end_point_name } = component
+        const { input_type, selectedId, end_point_name, dependent} = component
+        
         const { listName, listItemId, listItemName } = properties(listType)
+        // console.log('list::::: ',  listName, listItemId, listItemName)
         const fieldId = `${input_id}_${type}`
         const listStyles = list && list.length ? { display: 'block' } : { display: 'none' }
-        const dropDownClass = selectedId === '*' || end_point_name === 'city' || end_point_name === 'officeCity' ? 'disabled_input' : 'dropdown_enabled'
+        const dropDownClass = selectedId === '*' || dependent ? 'disabled_input' : 'dropdown_enabled'
         fieldClasses.push(dropDownClass)
         fieldClasses.push(input_class)
         return (
@@ -228,7 +229,7 @@ export const generateInputs = (component, updateField,
                     value={value}
                     placeholder={placeholder}
                     autoComplete='off'
-                    disabled={selectedId === '*' || end_point_name === 'city' || end_point_name === 'officeCity'}
+                    disabled={selectedId === '*' || dependent}
                     required={mandatory}
                     onBlur={e => validate(e, type)}
                     onChange={e => handleChange(e, type)}
