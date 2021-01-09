@@ -158,21 +158,21 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.productId = localStorage.getItem('productId')
         body.request.payload.requestedLoanamount = requestedLoanamount
 
-        body.request.payload.address[0].addressTypeMasterId = "1000000001"
-        body.request.payload.address[0].addressline1 = addressline1
-        body.request.payload.address[0].addressline2 = addressline2
-        body.request.payload.address[0].nearBy = nearBy
-        body.request.payload.address[0].city = city.cityId
-        body.request.payload.address[0].pincode = city.pincode;
-        body.request.payload.address[0].state = pincode ? pincode.stateId : ''
+        // body.request.payload.address[0].addressTypeMasterId = "1000000001"
+        // body.request.payload.address[0].addressline1 = addressline1
+        // body.request.payload.address[0].addressline2 = addressline2
+        // // body.request.payload.address[0].nearBy = nearBy
+        // body.request.payload.address[0].city = city.cityId
+        // body.request.payload.address[0].pincode = city.pincode;
+        // body.request.payload.address[0].state = pincode ? pincode.stateId : ''
 
-        body.request.payload.address[1].addressTypeMasterId = "1000000002"
-        body.request.payload.address[1].addressline1 = addressline1
-        body.request.payload.address[1].addressline2 = addressline2
-        body.request.payload.address[1].nearBy = officeNearBy
-        body.request.payload.address[1].city = city.cityId;
-        body.request.payload.address[1].pincode = city.pincode
-        body.request.payload.address[1].state = pincode ? pincode.stateId : ''
+        // body.request.payload.address[1].addressTypeMasterId = "1000000002"
+        // body.request.payload.address[1].addressline1 = addressline1
+        // body.request.payload.address[1].addressline2 = addressline2
+        // // body.request.payload.address[1].nearBy = officeNearBy
+        // body.request.payload.address[1].city = city.cityId;
+        // body.request.payload.address[1].pincode = city.pincode
+        // body.request.payload.address[1].state = pincode ? pincode.stateId : ''
 
 
         // for residence
@@ -180,7 +180,7 @@ export const generateLead = async (data, primaryPath) => {
             body.request.payload.address[0].addressTypeMasterId = "1000000001"
             body.request.payload.address[0].addressline1 = addressline1
             body.request.payload.address[0].addressline2 = addressline2
-            body.request.payload.address[0].landmark = nearByLandmark
+            // body.request.payload.address[0].landmark = nearByLandmark
             body.request.payload.address[0].city = city.cityId
             body.request.payload.address[0].pincode = city.pincode;
             body.request.payload.address[0].state = pincode ? pincode.stateId : ''
@@ -191,7 +191,7 @@ export const generateLead = async (data, primaryPath) => {
             body.request.payload.address[1].addressTypeMasterId = "1000000002"
             body.request.payload.address[1].addressline1 = addressline1
             body.request.payload.address[1].addressline2 = addressline1
-            body.request.payload.address[1].landmark = nearByLandmark
+            // body.request.payload.address[1].landmark = nearByLandmark
             body.request.payload.address[1].city = city.cityId;
             body.request.payload.address[1].pincode = city.pincode
             body.request.payload.address[1].state = pincode ? pincode.stateId : ''
