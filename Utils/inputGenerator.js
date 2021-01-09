@@ -1,7 +1,5 @@
-import MaskedInput from 'react-maskedinput'
 import { properties } from '../api/dropdownApiConfig'
 import { getDevice } from './getDevice'
-import { allowedOtpKeys } from './allowedOtpKeys'
 
 export const generateInputs = (component, updateField,
     checkInputValidity, handleInputDropdownChange, handleInputDropdownSelection) => {
@@ -28,9 +26,8 @@ export const generateInputs = (component, updateField,
         checkInputValidity(field)
     }
 
-    const onSelect = (input_id, type, name, id, selectedItem) => {
-        const item = { name, id, selectedItem }
-        handleInputDropdownSelection(input_id, type, item)
+    const onSelect = (input_id, type, selectedItem) => {
+        handleInputDropdownSelection(input_id, type, selectedItem)
     }
 
     const openDatePicker = () => {
@@ -211,12 +208,13 @@ export const generateInputs = (component, updateField,
         )
     }
 
+
     if (type === 'input_with_dropdown') {
-        const { input_type, selectedId, end_point_name } = component
-        const { listName, listItemId, listItemName } = properties(listType)
+        const { input_type, selectedId, dependent, select_name} = component
+
         const fieldId = `${input_id}_${type}`
         const listStyles = list && list.length ? { display: 'block' } : { display: 'none' }
-        const dropDownClass = selectedId === '*' || end_point_name === 'city' || end_point_name === 'officeCity' ? 'disabled_input' : 'dropdown_enabled'
+        const dropDownClass = selectedId === '*' || dependent ? 'disabled_input' : 'dropdown_enabled'
         fieldClasses.push(dropDownClass)
         fieldClasses.push(input_class)
         return (
@@ -228,7 +226,7 @@ export const generateInputs = (component, updateField,
                     value={value}
                     placeholder={placeholder}
                     autoComplete='off'
-                    disabled={selectedId === '*' || end_point_name === 'city' || end_point_name === 'officeCity'}
+                    disabled={selectedId === '*' || dependent}
                     required={mandatory}
                     onBlur={e => validate(e, type)}
                     onChange={e => handleChange(e, type)}
@@ -243,7 +241,7 @@ export const generateInputs = (component, updateField,
                     <div className="dropdown-content-links">
                         {list && list.map((item, i) => {
                             return (
-                                <a key={i} onClick={() => onSelect(input_id, type, item[listItemName], item[listItemId], item)}>{item[listItemName]}</a>
+                                <a key={i} onClick={() => onSelect(input_id, type, item)}>{item[select_name]}</a>
                             )
                         })}
                     </div>

@@ -3,6 +3,7 @@ import { uniq, debounce } from 'lodash'
 import { generateInputs } from '../../utils/inputGenerator'
 import { getDropdownList } from '../../services/formService'
 import { generateLead } from '../../services/formService'
+import { setLeadId } from '../../utils/localAccess'
 import {
     textTypeInputs,
     handleChangeInputs,
@@ -302,10 +303,10 @@ class LongForm extends React.Component {
         generateLead(data, primaryPath)
             .then((res) => {
                 console.log('long form submitted: ', res)
-                const leadId = res.data.response.payload.leadId
+                setLeadId(primaryPath, res.data.response.payload.leadId)
                 const pathname = `/${primaryPath}/thank-you`
-                const query = { bankName, leadId }
-                this.props.router.push({ pathname, query }, pathname, { shallow: true })
+                const query = { bankName }
+                this.props.router.push({ pathname, query })
             })
             .catch(err => {
                 // console.log('long form submission error: ', err)

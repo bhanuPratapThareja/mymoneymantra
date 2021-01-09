@@ -21,7 +21,6 @@ const LongFormProduct = props => {
             switch (block.__component) {
                 case 'banners.long-form-banners-component':
                     return <LongFormBanner key={block.id} data={block} bank={bankData} product={productData} />
-
                 case 'form-components.long-form-component-new':
                     return <LongForm key={block.id} data={block} />
             }
@@ -29,11 +28,17 @@ const LongFormProduct = props => {
     }
 
     if (!props.data) {
-        const { primaryPath, longFormBank, longFormProduct } = router.query
-        alert(`Page does not exist. Redirecting you to ${primaryPath.split('-').join(' ')} page`)
-        const pathname = `/${primaryPath}`
-        router.push(pathname)
-        return <div className="interim-class"></div>
+        if (typeof window !== 'undefined') {
+            const { primaryPath } = router.query
+            const pathname = `/${primaryPath}`
+            router.push({ pathname })
+            return <div className="interim-class">
+                <div className="page-not-found_center_msg">
+                    <h2>Page Not Found</h2>
+                    <p>redirecting to {primaryPath.split('-').join(' ').slice(0, -1)} page ...</p>
+                </div>
+            </div>
+        }
     }
 
     return (
@@ -59,24 +64,27 @@ export async function getServerSideProps(ctx) {
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${longFormBank}-long-form`)
 
-    if (pageData) {
-        data = pageData[0]
-
-        const search = getDetailsSearchParams(primaryPath, longFormBank, longFormProduct)
-        const detailsData = await strapi.processReq('GET', search)
-        const details = detailsData[0]
-        bankData = details.bank
-
-        const creditCardProductData = details.credit_card_product ? details.credit_card_product : null
-        const personalLoanProductData = details.personal_loan_product ? details.personal_loan_product : null
-        const homeLoanProductData = details.home_loan_product ? details.home_loan_product : null
-        productData = creditCardProductData || personalLoanProductData || homeLoanProductData
-
-        return { props: { data, bankData, productData } }
-    } else {
+    if (!pageData.length) {
         return { props: { data: null } }
     }
 
+    data = pageData[0]
+
+    const search = getDetailsSearchParams(primaryPath, longFormBank, longFormProduct)
+    const detailsData = await strapi.processReq('GET', search)
+    const details = detailsData ? detailsData[0] : null
+    bankData = details ? details.bank : null
+
+    console.log(2)
+
+    const creditCardProductData = details ? details.credit_card_product ? details.credit_card_product : null : null
+    const personalLoanProductData = details ? details.personal_loan_product ? details.personal_loan_product : null : null
+    const homeLoanProductData = details ? details.home_loan_product ? details.home_loan_product : null : null
+    productData = creditCardProductData || personalLoanProductData || homeLoanProductData
+
+    console.log(3)
+
+    return { props: { data, bankData, productData } }
 
 }
 

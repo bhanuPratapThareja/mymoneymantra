@@ -61,7 +61,6 @@ button:disabled {
   top: 100px;
 }
 
-
 .long-form .long-form-wrapper .banner-sticky+.form-wrapper {
   max-width: 840px;
   left: 26.5%;
@@ -229,8 +228,7 @@ button:disabled {
   border: none;
 } */
 
-.sf-forms .short-form-container .form__label,
-.long-form .form__label {
+.sf-forms .short-form-container .form__label, .long-form .form__label {
   z-index: 0;
 }
 
@@ -372,10 +370,7 @@ div#net_monthly_income_number,
 div#pincode_input_with_dropdown,  
 div#salary_bank_name_input_with_dropdown, */
 
-.sf-forms .shortforms-container.pan-card-cont .form__group.field, 
-.sf-forms .shortforms-container .form__group.field.file-type,
-.sf-forms .shortforms-container.current-address .form__group.field:first-child,
-.sf-forms .shortforms-container.current-address .form__group.field:nth-child(2) {
+.sf-forms .shortforms-container.pan-card-cont .form__group.field, .sf-forms .shortforms-container .form__group.field.file-type, .sf-forms .shortforms-container.current-address .form__group.field:first-child, .sf-forms .shortforms-container.current-address .form__group.field:nth-child(2) {
   display: inline-block;
   max-width: 49%;
   /* margin-top: 32px; */
@@ -383,8 +378,7 @@ div#salary_bank_name_input_with_dropdown, */
   margin-right: 14px;
 }
 
-.credit-card-flow .lets-find-container .shortforms-container .form__group.field.file-type,
-.sf-forms .shortforms-container.current-address .form__group.field:nth-child(2) {
+.credit-card-flow .lets-find-container .shortforms-container .form__group.field.file-type, .sf-forms .shortforms-container.current-address .form__group.field:nth-child(2) {
   margin-right: 0;
 }
 
@@ -814,6 +808,7 @@ div#pincode_cc_input_with_dropdown {
 }
 
 /*-- css issues solution --*/
+
 .header-links a:hover {
   background: rgba(255, 255, 255, 0.1);
 }
@@ -844,8 +839,6 @@ div#pincode_cc_input_with_dropdown {
   margin-bottom: 8px;
 }
 
-
-
 .long-form form .shortforms-container .dropdown-content {
   width: 360px;
   background: #ffffff;
@@ -867,7 +860,6 @@ div#pincode_cc_input_with_dropdown {
   transition-delay: 2s;
 }
 
-
 .long-form form .shortforms-container .dropdown-content {
   width: 100%;
   top: 72p;
@@ -876,7 +868,7 @@ div#pincode_cc_input_with_dropdown {
   transform: scale(1);
   padding: 12px;
   height: 152px;
-    min-height: 152px;
+  min-height: 152px;
 }
 
 .long-form form .shortforms-container .dropdown-content .dropdown-content-links {
@@ -901,31 +893,25 @@ div#pincode_cc_input_with_dropdown {
   .banks h2 strong:nth-child(2) {
     display: block;
   }
-
   .banner-sticky {
     position: static;
     top: 0;
     width: 100%;
   }
-  
   .banner-sticky_bottom {
     margin-top: 0;
   }
-  
   .long-form .long-form-wrapper .banner-sticky+.form-wrapper {
     max-width: 100%;
     left: 0;
     position: relative;
   }
-
-  .blog-wrapper-card div > img {
+  .blog-wrapper-card div>img {
     display: none;
   }
-
   /* .blog-wrapper .card-1 .content, .blog-wrapper .card-2 .content, .blog-wrapper .card-3 .content {
     min-height: 304px;
   } */
-    
 }
 
 @media(max-width: 1023px) and (min-width: 769px) {
@@ -1013,11 +999,9 @@ div#pincode_cc_input_with_dropdown {
   .credit-card-flow .lets-find-container .shortforms-container .form__group.field.file-type {
     max-width: 100%;
   }
-  
   /* .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .form__group {
     margin: 0 0 8px;
   } */
-
   .listings .banner-wrapper.cstm-bnr-txt h2 strong, .personal-loan-listing .banner-wrapper .top div h2 strong, .ltrong {
     color: #fff;
   }
@@ -1047,58 +1031,44 @@ div#pincode_cc_input_with_dropdown {
   .sf-forms .shortforms-container .cstm-cal {
     max-width: 100%;
   }
-  .sf-forms .shortforms-container.pan-card-cont .form__group.field,
-  .sf-forms .shortforms-container .form__group.field.file-type {
+  .sf-forms .shortforms-container.pan-card-cont .form__group.field, .sf-forms .shortforms-container .form__group.field.file-type {
     max-width: 100%;
     margin-bottom: 8px;
   }
-
   .sf-forms .shortforms-container.current-address .form__group.field {
     margin-bottom: 8px;
   }
-
   .sf-forms .shortforms-container.current-address .form__group.field:first-child {
     margin-right: 8px;
     max-width: 48%;
   }
-
   .long-form .long-form-wrapper {
     padding-top: 0;
   }
-
-  .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container > div {
+  .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div {
     margin: 0 8px 8px 0;
     min-width: 48%;
   }
-
   .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group {
     margin-bottom: 8px;
   }
-
   .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div:nth-child(even) {
     margin-right: 0;
   }
-  
-  .long-address .long-pincode,
-  .long-address .long-city {
+  .long-address .long-pincode, .long-address .long-city {
     width: 100% !important;
     display: inline-block;
     margin: 0 0 8px 0;
   }
-
   .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container {
     display: block;
   }
-
-  .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.error-input,
-  .sf-forms .shortforms-container .form__group.error-input {
+  .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.error-input, .sf-forms .shortforms-container .form__group.error-input {
     margin-bottom: 24px;
   }
-
   .long-form .long-form-wrapper, .c-detail-page .combined-wrapper .banner .banner-wrapper {
     padding-top: 16px;
   }
- 
   .cstm-heading h2 {
     color: #ffffff;
     text-align: center;
@@ -1107,7 +1077,6 @@ div#pincode_cc_input_with_dropdown {
     line-height: 1.75rem;
     font-family: "Avenir-Black";
   }
-
 }
 
 @media(max-width: 767px) {
@@ -1146,4 +1115,19 @@ div#pincode_cc_input_with_dropdown {
   height: 100vh !important;
   width: 100vw !important;
   background: linear-gradient(90deg, #0D2333 0%, #040A0F 100%) !important;
+}
+
+.dropdown-content {
+  display: block;
+  z-index: 9999;
+}
+
+.page-not-found_center_msg {
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%);
+  font-weight: 900;
 }
