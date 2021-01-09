@@ -4,6 +4,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import { getFormPercentage } from '../../utils/formPercentage';
 import { validEmailRegex, validMobileRegex, isValidPanNumber } from '../../utils/validator';
 import $ from "jquery";
+import { withRouter } from 'next/router'
 import { updateLongForm } from '../../services/formService';
 import { getBase64, documentUpload } from '../../services/formService';
 
@@ -19,20 +20,24 @@ class LongFormBanner extends React.Component {
             percentage = Math.ceil(percentage)
             this.setState({ percentage })
         })
+        const { primaryPath } = this.props.router.query
+        this.setState({ primaryPath })
     }
 
     render() {
         const { bank, product } = this.props
         const strapi = new Strapi()
+        // const primaryPath = this.props
+        
 
-        // console.log(bank)
+        console.log(bank)
         // console.log(product)
 
         return (
             <div className="card-info" id="longFormBanner">
-                {/* <h5 className="app-form">{'Application Form'}</h5> */}
                 <h3><b>{bank.bank_name}</b><br />{product.product_name}</h3>
-                <img src={`${strapi.baseUrl}${product.product_image.url}`} />
+                {this.state.primaryPath === 'credit-cards' ? <img src={`${strapi.baseUrl}${product.product_image.url}`} /> : 
+                <img src={`${strapi.baseUrl}${bank.bank_image.url}`} />}
                 <h4>Application form</h4>
                 <div className="form-range">
                     <h5><b id="long-form-complete">{this.state.percentage}%</b> Complete</h5>
@@ -45,4 +50,4 @@ class LongFormBanner extends React.Component {
     }
 }
 
-export default LongFormBanner
+export default withRouter(LongFormBanner)
