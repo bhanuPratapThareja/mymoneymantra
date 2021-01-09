@@ -75,7 +75,11 @@ export const getDropdownList = async (listType, value, masterName) => {
 
 export const documentUpload = async document => {
     const { base64, type, name } = document
+    console.log('for upload doc api base64',base64)
+    console.log('for upload doc api type',type)
+    console.log('for upload doc api name',name)
     const { url, body } = getApiData('documentUpload')
+    console.log('body for upload doc',body.request.payload)
     body.request.payload.docList[0].documentId = name
     body.request.payload.docList[0].documentExtension = type
     body.request.payload.docList[0].docBytes = base64
@@ -97,16 +101,18 @@ export const generateLead = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
         let { url, body  } = getApiData('generate')
         body =  JSON.parse(JSON.stringify(body))
-        const { fullName, dob, pan, mobile, email, applicantType,
-            companyId, netMonthlyIncome, bankId, addressline1, addressline2, pincode, city, nearBy,
+        const { fullName, dob, pan, mobile, email, applicantType,title,
+            companyId, netMonthlyIncome, bankId, addressline1, addressline2, pincode, city, nearByLandmark,
             requestedLoanamount, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
             fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
             // officAddressLine1,officAddressLine2,office_nearby_landmark,officePincode,officeCity,
-            officeAddressLine1, officeAddressLine2, officeNearBy, officePincode, officeCity
+            officeAddressLine1, officeAddressLine2, officeNearBy, officePincode, officeCity,
+            city_location,cost_of_property
         } = data
 
-         console.log('data', data);
+     
+         console.log('data ', data);
 
 
         const leadId = getLeadId(primaryPath)
@@ -145,15 +151,8 @@ export const generateLead = async (data, primaryPath) => {
             body.request.payload.contact.keyContact[1].caseContactName = "";
         }
 
-
-        // body.request.payload.contact.keyContact[0].caseContactMasterId = "16";
-        // body.request.payload.contact.keyContact[0].caseContactName = fathersFirstName + " "+ fathersLastName;
-
-        // body.request.payload.contact.keyContact[1].caseContactMasterId = "5";
-        // body.request.payload.contact.keyContact[1].caseContactName = mothersFirstName + " "+ mothersLastName;
-
         body.request.payload.work.applicantType = applicantType
-        body.request.payload.work.companyId = companyId ? companyId.caseCompanyId : '1000000001'
+        body.request.payload.work.companyId = companyId ? companyId.caseCompanyId : ''
         body.request.payload.work.netMonthlyIncome = netMonthlyIncome
 
         body.request.payload.bankId = bankId ? bankId.bankId : "";
@@ -166,27 +165,34 @@ export const generateLead = async (data, primaryPath) => {
 
 
 
-      
+        // for residence
             console.log('else add 1')
             body.request.payload.address[0].addressTypeMasterId = "1000000001"
             body.request.payload.address[0].addressline1 = addressline1
             body.request.payload.address[0].addressline2 = addressline2
-            body.request.payload.address[0].nearBy = nearBy
+            body.request.payload.address[0].landmark = nearByLandmark
             body.request.payload.address[0].city = city.cityId
             body.request.payload.address[0].pincode = city.pincode;
             body.request.payload.address[0].state = pincode ? pincode.stateId : ''
         
 
-    
+            // for office address
             console.log('else')
             body.request.payload.address[1].addressTypeMasterId = "1000000002"
             body.request.payload.address[1].addressline1 = addressline1
-            body.request.payload.address[1].addressline2 = addressline2
-            body.request.payload.address[1].nearBy = officeNearBy
+            body.request.payload.address[1].addressline2 = addressline1
+            body.request.payload.address[1].landmark = nearByLandmark
             body.request.payload.address[1].city = city.cityId;
             body.request.payload.address[1].pincode = city.pincode
             body.request.payload.address[1].state = pincode ? pincode.stateId : ''
-        
+
+            // for property 
+
+            body.request.payload.address[2].addressTypeMasterId = "1000000004"
+            body.request.payload.address[2].city = city_location;
+            //body.request.payload.address[1].state = pincode ? pincode.stateId : ''
+            body.request.payload.address[2].propertyValue = cost_of_property
+
 
         console.log(body.request.payload)
 

@@ -91,9 +91,16 @@ const api = {
                     },
                     payload: {
                         channelName: 'MOBILEAPP',
-                        caseId: '1001013258',        
+                        caseId: '1001013258',
                         insertFlag: 'Y',
-                        docList: [{ documentId: '1000000374',  documentTypeId: '1000000034', documentExtension: '', docBytes: '' }]
+                        docList: [
+                            {
+                                documentId: '1000000290',
+                                documentTypeId: '1000000036',
+                                documentExtension: '', 
+                                docBytes: ''
+                            }
+                        ]
                     }
                 }
             }
@@ -111,7 +118,7 @@ const api = {
                     },
                     "payload": {
                         "personal": {
-                            "title": "1000000001",
+                            "title": "",
                             "fullName": "",
                             "middleName": "",
                             "dob": "",
@@ -156,7 +163,7 @@ const api = {
                             "applicantType": "",
                             "otherCompany": "",
                             "nature": "",
-                            "companyId": "1000000001",
+                            "companyId": "",
                             "typeOfCompaY": "",
                             "netMonthlyIncome": "",
                             "grossMonthlyIncome": "",
@@ -204,7 +211,8 @@ const api = {
                                 "projectrName": "",
                                 "remarks": "",
                                 "otherDeveloperName": "",
-                                "otherProjectName": ""
+                                "otherProjectName": "",
+                                "propertyValue": ""
                             },
                             {
                                 "addressTypeMasterId": "",
@@ -226,7 +234,31 @@ const api = {
                                 "projectrName": "",
                                 "remarks": "",
                                 "otherDeveloperName": "",
-                                "otherProjectName": ""
+                                "otherProjectName": "",
+                                "propertyValue": ""
+                            },
+                            {
+                                "addressTypeMasterId": "",
+                                "addressline1": "",
+                                "addressline2": "",
+                                "addressline3": "",
+                                "city": "",
+                                "state": "",
+                                "pincode": "",
+                                "occupancyStatus": "",
+                                "livingSince": "",
+                                "stdCode": "",
+                                "landline": "",
+                                "landmark": "",
+                                "livingSinceMM": "",
+                                "isMaillingAddress": "",
+                                "propertyName": "",
+                                "developerName": "",
+                                "projectrName": "",
+                                "remarks": "",
+                                "otherDeveloperName": "",
+                                "otherProjectName": "",
+                                "propertyValue": ""
                             }
                         ]
                     }
@@ -248,7 +280,7 @@ const api = {
                 }
             }
         },
-        customerOffer : {
+        customerOffer: {
             devUrl: 'customer/api/customer/v1/profile/offers',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
@@ -262,15 +294,15 @@ const api = {
             }
         },
 
-        sendNotification : {
+        sendNotification: {
             devUrl: 'notification/api/notification/v1/sms-email/send',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
             body: {
                 request: {
                     header: { correlationId: "25478965874", appId: "MMMWEBAPP" }, payload: {
-                        "actionName":"Short Form Submit",
-                        "leadId":"PR01019897"
+                        "actionName": "Short Form Submit",
+                        "leadId": "PR01019897"
                     }
                 }
             }

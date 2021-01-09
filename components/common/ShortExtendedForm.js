@@ -149,8 +149,10 @@ class ShortExtendedForm extends React.Component {
             const res = await submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
             const leadIdData = JSON.parse(localStorage.getItem('leadId'))
             const leadId = { ...leadIdData, [primaryPath]: res.data.response.payload.leadId }
-            // console.log('leadId 111111111',leadId.credit-cards)
-            // // sendNotification(leadId);
+            
+             const leadIdSendNotification = leadId["credit-cards"]
+             console.log('leadIdSendNotification',leadIdSendNotification)
+              this.sendNotification(leadIdSendNotification);
             localStorage.setItem('leadId', JSON.stringify(leadId))
             goToSlides()
         } catch (err) {
@@ -158,10 +160,11 @@ class ShortExtendedForm extends React.Component {
         }
     }
 
-    sendNotification = async(leadId) => {
+     sendNotification = async(leadIdSendNotification) => {
         const { url, body } = getApiData('sendNotification')
-        body.request.payload.leadId = leadId;
+        body.request.payload.leadId = leadIdSendNotification;
         body.request.payload.actionName = "Short Form Submit";
+        console.log('sendNotification shortdorm body',body);
         try {
             const res = await axios.post(url, body)
             console.log('sendNotification',res)
