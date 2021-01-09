@@ -99,17 +99,10 @@ export const getBase64 = file => {
 
 export const generateLead = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
-<<<<<<< HEAD
         let { url, body  } = getApiData('generate')
         body =  JSON.parse(JSON.stringify(body))
         const { fullName, dob, pan, mobile, email, applicantType,title,
             companyId, netMonthlyIncome, bankId, addressline1, addressline2, pincode, city, nearByLandmark,
-=======
-        let { url, body } = getApiData('generate')
-        body = JSON.parse(JSON.stringify(body))
-        const { fullName, dob, pan, mobile, email, applicantType,
-            companyId, netMonthlyIncome, bankId, addressline1, addressline2, pincode, city, nearBy,
->>>>>>> 905422ca9b4a41556d99f886f298b4b2649e6ed9
             requestedLoanamount, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
             fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
@@ -118,15 +111,7 @@ export const generateLead = async (data, primaryPath) => {
             city_location,cost_of_property
         } = data
 
-<<<<<<< HEAD
-     
-         console.log('data ', data);
-
-
-        const leadId = getLeadId(primaryPath)
-=======
         console.log('data', data);
->>>>>>> 905422ca9b4a41556d99f886f298b4b2649e6ed9
 
         body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = getFormattedDate(dob)
@@ -190,7 +175,6 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.address[1].state = pincode ? pincode.stateId : ''
 
 
-<<<<<<< HEAD
         // for residence
             console.log('else add 1')
             body.request.payload.address[0].addressTypeMasterId = "1000000001"
@@ -220,8 +204,6 @@ export const generateLead = async (data, primaryPath) => {
             body.request.payload.address[2].propertyValue = cost_of_property
 
 
-=======
->>>>>>> 905422ca9b4a41556d99f886f298b4b2649e6ed9
         console.log(body.request.payload)
 
         axios.post(url, body)
