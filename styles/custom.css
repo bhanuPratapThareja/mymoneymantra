@@ -1121,3 +1121,13 @@ div#pincode_cc_input_with_dropdown {
   display: block;
   z-index: 9999;
 }
+
+.page-not-found_center_msg {
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%);
+  font-weight: 900;
+}

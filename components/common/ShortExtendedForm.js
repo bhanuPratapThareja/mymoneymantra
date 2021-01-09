@@ -8,6 +8,7 @@ import { getOtp, submitOtp } from '../../services/formService'
 import { getDevice } from '../../utils/getDevice'
 import axios from 'axios'
 import { getApiData } from '../../api/api';
+import { setLeadId } from '../../utils/localAccess'
 import {
     textTypeInputs,
     getCurrentSlideInputs,
@@ -147,11 +148,7 @@ class ShortExtendedForm extends React.Component {
         const primaryPath = this.state.primaryPath
         try {
             const res = await submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
-            const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-            const leadId = { ...leadIdData, [primaryPath]: res.data.response.payload.leadId }
-            // console.log('leadId 111111111',leadId.credit-cards)
-            // // sendNotification(leadId);
-            localStorage.setItem('leadId', JSON.stringify(leadId))
+            setLeadId(primaryPath, res.data.response.payload.leadId)
             goToSlides()
         } catch (err) {
             alert(err)
@@ -243,9 +240,9 @@ class ShortExtendedForm extends React.Component {
         this.setState({ ...this.state, slides: newSlides })
     }
 
-    handleInputDropdownSelection = (name, type, item) => {
+    handleInputDropdownSelection = (input_id, type, item) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        updateSelectionFromDropdown(inputs, name, item)
+        updateSelectionFromDropdown(inputs, input_id, item)
         this.setState({ ...this.state, slides: newSlides })
     }
 

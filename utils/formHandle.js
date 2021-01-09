@@ -44,7 +44,6 @@ export const handleChangeInputs = (inputs, field, submitButtonDisabled) => {
                     }
                     inp.value = field.value
                     inputDropdown = { listType, masterName, inp }
-                    // console.log('inputDropdown: ', inputDropdown)
 
                 } else {
                     inp.list = []
@@ -61,7 +60,7 @@ export const handleChangeInputs = (inputs, field, submitButtonDisabled) => {
             let errorMsg = ''
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
-                   
+
                     if (field.value && inp.number_of_uploads && field.value.length > inp.number_of_uploads) {
                         field.value = null
                         field.error = true
@@ -88,7 +87,7 @@ export const handleChangeInputs = (inputs, field, submitButtonDisabled) => {
                     inp.errorMsg = field.errorMsg
 
                     // if(inp.error) {
-                        inp.verified = false
+                    inp.verified = false
                     // }
 
                 }
@@ -113,9 +112,11 @@ export const handleChangeInputs = (inputs, field, submitButtonDisabled) => {
                                     secondary.mandatory = false
                                     secondary.error = false
                                     secondary.errorMsg = ''
+                                    secondary.verified = false
                                 } else {
                                     secondary.selectedId = null
                                     secondary.mandatory = true
+                                    secondary.verified = false
                                 }
                             }
                         })
@@ -295,35 +296,40 @@ export const decrementSlideId = slideId => {
 }
 
 export const updateDropdownList = (inputs, listType, list, input_id) => {
+    // console.log(inputs, listType, list, input_id)
     inputs.forEach(inp => {
         if (inp.input_id === input_id) {
             inp.listType = listType
             inp.list = list
+            // console.log(inp)
         }
     })
 }
 
-export const updateSelectionFromDropdown = (inputs, name, item) => {
+export const updateSelectionFromDropdown = (inputs, input_id, item) => {
     let update_field_with_end_point_name = ''
 
     inputs.forEach(inp => {
-
-        if (inp.input_id === name) {
+        // console.log(inp)
+        if (inp.input_id === input_id) {
             update_field_with_end_point_name = inp.update_field_with_end_point_name
             inp.list = []
-            inp.value = item.name
-            inp.selectedId = item.id
-            inp.selectedItem = item.selectedItem
+            inp.value = item[inp.select_name]
+            inp.selectedId = item[inp.select_id]
+            inp.selectedItem = item
             inp.error = false
             inp.verified = true
+            console.log(inp)
         }
-        
+
         if (inp.end_point_name === update_field_with_end_point_name) {
-            inp.value = item.selectedItem.cityName
-            inp.selectedId = item.selectedItem.cityId
             inp.selectedItem = item.selectedItem
             inp.error = false
             inp.verified = true
+            if (inp.search_for === 'city') {
+                inp.value = item.cityName
+                inp.selectedId = item.cityId
+            }
         }
     })
 }

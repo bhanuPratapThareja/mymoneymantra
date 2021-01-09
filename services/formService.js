@@ -95,8 +95,8 @@ export const getBase64 = file => {
 
 export const generateLead = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
-        let { url, body  } = getApiData('generate')
-        body =  JSON.parse(JSON.stringify(body))
+        let { url, body } = getApiData('generate')
+        body = JSON.parse(JSON.stringify(body))
         const { fullName, dob, pan, mobile, email, applicantType,
             companyId, netMonthlyIncome, bankId, addressline1, addressline2, pincode, city, nearBy,
             requestedLoanamount, propertyType, other_city_property_location,
@@ -106,10 +106,7 @@ export const generateLead = async (data, primaryPath) => {
             officeAddressLine1, officeAddressLine2, officeNearBy, officePincode, officeCity
         } = data
 
-         console.log('data', data);
-
-
-        const leadId = getLeadId(primaryPath)
+        console.log('data', data);
 
         body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = getFormattedDate(dob)
@@ -121,7 +118,6 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.work.preferedComm = preferedComm;
         body.request.payload.work.director = director;
         body.request.payload.work.jointAccHolder = jointAccHolder;
-
 
 
         body.request.payload.contact.mobile[0].mobile = mobile
@@ -160,33 +156,26 @@ export const generateLead = async (data, primaryPath) => {
         // body.request.payload.work.otherCompany = otherCompany ? otherCompany.companyName : ""
 
 
-        body.request.payload.leadId = leadId
+        body.request.payload.leadId = getLeadId(primaryPath)
         body.request.payload.productId = localStorage.getItem('productId')
         body.request.payload.requestedLoanamount = requestedLoanamount
 
+        body.request.payload.address[0].addressTypeMasterId = "1000000001"
+        body.request.payload.address[0].addressline1 = addressline1
+        body.request.payload.address[0].addressline2 = addressline2
+        body.request.payload.address[0].nearBy = nearBy
+        body.request.payload.address[0].city = city.cityId
+        body.request.payload.address[0].pincode = city.pincode;
+        body.request.payload.address[0].state = pincode ? pincode.stateId : ''
 
+        body.request.payload.address[1].addressTypeMasterId = "1000000002"
+        body.request.payload.address[1].addressline1 = addressline1
+        body.request.payload.address[1].addressline2 = addressline2
+        body.request.payload.address[1].nearBy = officeNearBy
+        body.request.payload.address[1].city = city.cityId;
+        body.request.payload.address[1].pincode = city.pincode
+        body.request.payload.address[1].state = pincode ? pincode.stateId : ''
 
-      
-            console.log('else add 1')
-            body.request.payload.address[0].addressTypeMasterId = "1000000001"
-            body.request.payload.address[0].addressline1 = addressline1
-            body.request.payload.address[0].addressline2 = addressline2
-            body.request.payload.address[0].nearBy = nearBy
-            body.request.payload.address[0].city = city.cityId
-            body.request.payload.address[0].pincode = city.pincode;
-            body.request.payload.address[0].state = pincode ? pincode.stateId : ''
-        
-
-    
-            console.log('else')
-            body.request.payload.address[1].addressTypeMasterId = "1000000002"
-            body.request.payload.address[1].addressline1 = addressline1
-            body.request.payload.address[1].addressline2 = addressline2
-            body.request.payload.address[1].nearBy = officeNearBy
-            body.request.payload.address[1].city = city.cityId;
-            body.request.payload.address[1].pincode = city.pincode
-            body.request.payload.address[1].state = pincode ? pincode.stateId : ''
-        
 
         console.log(body.request.payload)
 

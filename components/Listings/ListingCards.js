@@ -37,7 +37,6 @@ const ListingCards = props => {
             // view details
             default:
                 pathname = `/${primaryPath}/${bankSlug}/${productSlug}`
-                router.push({ pathname, query }, pathname, { shallow: true })
         }
         
         routerRedirect(pathname, query)

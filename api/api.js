@@ -48,7 +48,7 @@ const api = {
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { name: '' } } }
         },
         cities: {
-            devUrl: 'masters/api/master/v1/',
+            devUrl: 'masters/api/master/v1/cities',
             uatUrl: 'api/master/v1/',
             prodUrl: 'api/master/v1/',
             body: { request: { header: { correlationId: "", appId: "MMMWEBAPP" }, payload: { name: '' } } }

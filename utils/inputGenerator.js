@@ -26,9 +26,8 @@ export const generateInputs = (component, updateField,
         checkInputValidity(field)
     }
 
-    const onSelect = (input_id, type, name, id, selectedItem) => {
-        const item = { name, id, selectedItem }
-        handleInputDropdownSelection(input_id, type, item)
+    const onSelect = (input_id, type, selectedItem) => {
+        handleInputDropdownSelection(input_id, type, selectedItem)
     }
 
     const openDatePicker = () => {
@@ -211,10 +210,8 @@ export const generateInputs = (component, updateField,
 
 
     if (type === 'input_with_dropdown') {
-        const { input_type, selectedId, end_point_name, dependent} = component
-        
-        const { listName, listItemId, listItemName } = properties(listType)
-        // console.log('list::::: ',  listName, listItemId, listItemName)
+        const { input_type, selectedId, dependent, select_name} = component
+
         const fieldId = `${input_id}_${type}`
         const listStyles = list && list.length ? { display: 'block' } : { display: 'none' }
         const dropDownClass = selectedId === '*' || dependent ? 'disabled_input' : 'dropdown_enabled'
@@ -244,7 +241,7 @@ export const generateInputs = (component, updateField,
                     <div className="dropdown-content-links">
                         {list && list.map((item, i) => {
                             return (
-                                <a key={i} onClick={() => onSelect(input_id, type, item[listItemName], item[listItemId], item)}>{item[listItemName]}</a>
+                                <a key={i} onClick={() => onSelect(input_id, type, item)}>{item[select_name]}</a>
                             )
                         })}
                     </div>
