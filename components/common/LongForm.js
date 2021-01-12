@@ -247,7 +247,6 @@ class LongForm extends React.Component {
                 if (!errors) {
                     this.retrieveDataAndSubmit()
                 }
-                this.retrieveDataAndSubmit()
             })
     }
 
