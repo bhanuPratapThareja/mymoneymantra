@@ -1007,7 +1007,7 @@ div#pincode_cc_input_with_dropdown {
 
   .sf-forms .shortforms-container.current-address .form__group.field:first-child {
     margin-right: 8px;
-    max-width: 48%;
+    max-width: 47%;
   }
 
   .long-form .long-form-wrapper {
@@ -1054,6 +1054,11 @@ div#pincode_cc_input_with_dropdown {
     font-size: 1.25rem;
     line-height: 1.75rem;
     font-family: "Avenir-Black";
+  }
+  
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container.pan-card-cont, 
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container.monthly-earn {
+    display: block;
   }
 
 }
