@@ -4,7 +4,7 @@ import OnBoardForm from '../ShortForm/OnBoardForm/OnBoardForm'
 import OtpSlide from '../ShortForm/OtpForm/OtpSlide'
 import SFSlides from '../ShortForm/SFSlides/SFSlides'
 import { getDropdownList } from '../../services/formService'
-import { getOtp, submitOtp } from '../../services/formService'
+import { getOtp, submitOtp,sendNotification } from '../../services/formService'
 import { getDevice } from '../../utils/getDevice'
 import axios from 'axios'
 import { getApiData } from '../../api/api';
@@ -151,27 +151,27 @@ class ShortExtendedForm extends React.Component {
             setLeadId(primaryPath, res.data.response.payload.leadId)
             const leadIdData = JSON.parse(localStorage.getItem('leadId'))
             const leadId = { ...leadIdData, [primaryPath]: res.data.response.payload.leadId }
-            
-             const leadIdSendNotification = leadId["credit-cards"]
-              this.sendNotification(leadIdSendNotification);
+
+            const leadIdSendNotification = leadId["credit-cards"]
+            sendNotification(leadIdSendNotification);
+
             localStorage.setItem('leadId', JSON.stringify(leadId))
-            
             goToSlides()
         } catch (err) {
             alert(err)
         }
     }
 
-     sendNotification = async(leadIdSendNotification) => {
-        const { url, body } = getApiData('sendNotification')
-        body.request.payload.leadId = leadIdSendNotification;
-        body.request.payload.actionName = "Short Form Submit";
-        try {
-            const res = await axios.post(url, body)
-            console.log('sendNotification',res)
-            return res;
-        } catch (error) { }
-    }
+    // sendNotification = async (leadIdSendNotification) => {
+    //     const { url, body } = getApiData('sendNotification')
+    //     body.request.payload.leadId = leadIdSendNotification;
+    //     body.request.payload.actionName = "Short Form Submit";
+    //     try {
+    //         const res = await axios.post(url, body)
+    //         console.log('sendNotification', res)
+    //         return res;
+    //     } catch (error) { }
+    // }
 
 
     onSubmitSlide = () => {
@@ -274,13 +274,13 @@ class ShortExtendedForm extends React.Component {
     }
 
     render() {
-        const {onboard_short_form_mobile_view_heading} = this.props.data.onboard_short_form
+        const { onboard_short_form_mobile_view_heading } = this.props.data.onboard_short_form
         return (
             <section data-aos="fade-up" className="container lets-find-container aos-init">
 
                 <div className="mobile-background"></div>
                 <div className="mobile-content">
-                <div className="cstm-heading" dangerouslySetInnerHTML={{ __html: onboard_short_form_mobile_view_heading }}></div>
+                    <div className="cstm-heading" dangerouslySetInnerHTML={{ __html: onboard_short_form_mobile_view_heading }}></div>
                 </div>
 
                 <div className="all-form-wrapper">

@@ -106,8 +106,8 @@ const api = {
             }
 
         },
-        generate: {
-            devUrl: 'lead/api/lead/v1/generate',
+        orchestration: {
+            devUrl: 'orchestration/api/lead/v1/generate',
             uatUrl: 'api/lead/v1/',
             prodUrl: 'api/master/v1/',
             body: {
@@ -306,10 +306,7 @@ const api = {
                     }
                 }
             }
-
-        }
-
-
+        },
     }
 }
 
