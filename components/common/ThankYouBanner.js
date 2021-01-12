@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import { getLeadId } from '../../utils/localAccess';
 import Image from '../ImageComponent/ImageComponent'
-import { getApiData } from '../../api/api'
-import axios from 'axios'
+
+
 
 const ThankYouBanner = props => {
     const router = useRouter()
     const { bankName, primaryPath } = router.query
-    console.log('inside thankyourouter.query', router.query);
     const [leadId, setLeadId] = useState('')
     const [productType, setProductType] = useState('')
 
@@ -16,10 +15,15 @@ const ThankYouBanner = props => {
         thank_you_content, thank_you_button } = props.data.thank_you_banner
 
     useEffect(() => {
+        let leadId = ''
+        if(router.query.leadId) {
+            leadId = router.query.leadId
+        } else if(getLeadId(primaryPath)) {
+            leadId = getLeadId(primaryPath)
+        }
 
         setLeadId(getLeadId(primaryPath))
-        const leadId = getLeadId(primaryPath)
-        sendNotification(leadId)
+        setLeadId(leadId)
 
         let productType = ''
         if (primaryPath === 'credit-cards') {
@@ -34,8 +38,6 @@ const ThankYouBanner = props => {
 
     const sendNotification = async(leadId) => {
         const { url, body } = getApiData('sendNotification')
-        console.log('thankyou page notification body', body)
-        console.log('thankyou page notification leadId', leadId)
         body.request.payload.leadId = leadId;
         body.request.payload.actionName = "Short Form Submit";
         try {

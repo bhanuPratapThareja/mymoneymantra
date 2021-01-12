@@ -45,7 +45,6 @@ export const generateInputs = (component, updateField,
             const field = { name, value, type, blur: true, currentActiveInput: name }
             if (value) {
                 updateField(field)
-
             }
         }, 250);
     }
@@ -77,8 +76,8 @@ export const generateInputs = (component, updateField,
     let { type, input_id, placeholder, mandatory, label, value, id,
         checkbox, radio, question, error, errorMsg, verified, list, listType,
         upload_text, monetary_input, heading, input_class } = component
-
     if (!value) value = ''
+    
     const borderInputInvalid = { border: 'none', boxShadow: '0 0 0 2px var(--error-color)' }
     const borderInputValid = null
     const borderStyles = error ? borderInputInvalid : borderInputValid
@@ -188,12 +187,12 @@ export const generateInputs = (component, updateField,
     }
 
     if (type === 'upload_button') {
+        const { attachment } = component
         const inputFileId = `input_file_${input_id}`
         const fieldId = `${input_id}_${type}`
         let uploadText = value ? value.length === 1 ? value[0].name : value.length + ' files' : upload_text
         const uploadedFileStyles = { border: 'none', boxShadow: '0 0 0 2px #89C142' } 
-        const uploadButtonBorderStyles = value && value.attachment ? uploadedFileStyles  : borderStyles
-        console.log('uploadButtonBorderStyles: ',  value && value.attachment)
+        const uploadButtonBorderStyles = attachment && !error && !verified ? uploadedFileStyles  : borderStyles
         fieldClasses.push(type)
         fieldClasses.push('file-type')
         return (
@@ -205,7 +204,7 @@ export const generateInputs = (component, updateField,
                     {value ? <img src="/assets/images/icons/cross.svg" onClick={() => onUploadAttachment(input_id, type, inputFileId, false)} style={{ background: 'red' }} /> : null}
                     <h5 onClick={() => document.getElementById(inputFileId).click()}>{uploadText} {!mandatory && !value ? <b>(optional)</b> : null}</h5>
                 </div>
-                {error ? <div className='input-error'>
+                {error ? <div >
                     <p>{errorMsg}</p>
                 </div> : null}
             </>

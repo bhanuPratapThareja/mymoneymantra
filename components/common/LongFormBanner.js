@@ -22,15 +22,17 @@ class LongFormBanner extends React.Component {
     }
 
     render() {
-        const { bankName } = this.props.data
+        const { bank, product } = this.props
         const strapi = new Strapi()
-        const { bank_name, form_heading, product_type, banner_image } = this.props.data
+
+        console.log(bank)
+        console.log(product)
 
         return (
             <div className="card-info" id="longFormBanner">
-                <h5 className="app-form">{form_heading}</h5>
-                <h3><b>{bank_name}</b><br />{product_type}</h3>
-                <img src={`${strapi.baseUrl}${banner_image.url}`} />
+                {/* <h5 className="app-form">{'Application Form'}</h5> */}
+                <h3><b>{bank.bank_name}</b><br />{product.product_name}</h3>
+                <img src={`${strapi.baseUrl}${product.product_image.url}`} />
                 <h4>Application form</h4>
                 <div className="form-range">
                     <h5><b id="long-form-complete">{this.state.percentage}%</b> Complete</h5>

@@ -48,6 +48,7 @@ const SFSlides = props => {
                 onClickPrevious={props.onGoToPrevious}
                 onClickNext={props.onSubmitSlide}
                 onSubmitShortForm={props.onSubmitShortForm}
+                slideButtonText={props.slideButtonText}
             />
 
         </div>

@@ -3,7 +3,7 @@
   --next-btn: #221F1F;
 }
 
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.error-input {
+/* .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.error-input {
   border: none;
   background: url(/assets/images/icons/error.png);
   background-size: auto;
@@ -11,7 +11,7 @@
   background-position: 97% 80%;
   position: relative;
   box-shadow: 0 0 0 2px #DC3737;
-}
+} */
 
 .credit-card-flow .lets-find-form form .form__group.verified-input {
   margin-bottom: 0;
@@ -58,8 +58,9 @@ button:disabled {
 }
 
 .card-info.banner-sticky {
-  top: 120px;
+  top: 100px;
 }
+
 
 .long-form .long-form-wrapper .banner-sticky+.form-wrapper {
   max-width: 840px;
@@ -845,6 +846,57 @@ div#pincode_cc_input_with_dropdown {
 
 
 
+.long-form form .shortforms-container .dropdown-content {
+  width: 360px;
+  background: #ffffff;
+  border-radius: 6px;
+  position: absolute;
+  top: 42px;
+  left: 0;
+  z-index: 99;
+  -webkit-box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.08), 0px 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.08), 0px 4px 16px rgba(0, 0, 0, 0.08);
+  display: none;
+  overflow: hidden;
+  height: auto;
+  -webkit-transform: scale(0.5);
+  transform: scale(0.5);
+  -webkit-transition: all ease-in 1s;
+  transition: all ease-in 1s;
+  -webkit-transition-delay: 2s;
+  transition-delay: 2s;
+}
+
+
+.long-form form .shortforms-container .dropdown-content {
+  width: 100%;
+  top: 72p;
+  left: 0;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  padding: 12px;
+  height: 152px;
+    min-height: 152px;
+}
+
+.long-form form .shortforms-container .dropdown-content .dropdown-content-links {
+  height: 100%;
+  width: 100%;
+  opacity: 1;
+  overflow-y: scroll;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.long-form form .shortforms-container .dropdown-content .dropdown-content-links a {
+  border-radius: 6px;
+  color: #221F1F;
+  font-size: 1rem;
+  font-family: "Avenir-Heavy";
+  line-height: 1.5rem;
+  padding: 8px 12px;
+}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
@@ -1093,4 +1145,10 @@ div#pincode_cc_input_with_dropdown {
 
 .MuiLinearProgress-barColorPrimary {
   background-color: #89C142 !important;
+}
+
+.interim-class {
+  height: 100vh !important;
+  width: 100vw !important;
+  background: linear-gradient(90deg, #0D2333 0%, #040A0F 100%) !important;
 }
