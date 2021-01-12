@@ -106,7 +106,7 @@ export const generateLead = async (data, primaryPath) => {
             officeAddressLine1, officeAddressLine2, officeNearBy, officePincode, officeCity
         } = data
 
-        console.log('data', data);
+        console.log('data', data)
 
         body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = getFormattedDate(dob)
