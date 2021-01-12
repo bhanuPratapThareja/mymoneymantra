@@ -111,7 +111,7 @@ export const generateLead = async (data, primaryPath) => {
             city_location, cost_of_property
         } = data
 
-        console.log('data', data);
+        console.log('data', data)
 
         body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = getFormattedDate(dob)

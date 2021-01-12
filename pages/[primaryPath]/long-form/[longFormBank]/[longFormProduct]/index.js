@@ -27,7 +27,7 @@ const LongFormProduct = props => {
         })
     }
 
-    if (!props.data) {
+    if (!props.data || !props.bankData) {
         if (typeof window !== 'undefined') {
             const { primaryPath } = router.query
             const pathname = `/${primaryPath}`

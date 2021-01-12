@@ -296,12 +296,10 @@ export const decrementSlideId = slideId => {
 }
 
 export const updateDropdownList = (inputs, listType, list, input_id) => {
-    // console.log(inputs, listType, list, input_id)
     inputs.forEach(inp => {
         if (inp.input_id === input_id) {
             inp.listType = listType
             inp.list = list
-            // console.log(inp)
         }
     })
 }
@@ -310,7 +308,6 @@ export const updateSelectionFromDropdown = (inputs, input_id, item) => {
     let update_field_with_end_point_name = ''
 
     inputs.forEach(inp => {
-        // console.log(inp)
         if (inp.input_id === input_id) {
             update_field_with_end_point_name = inp.update_field_with_end_point_name
             inp.list = []
@@ -352,7 +349,6 @@ export const getSfData = slides => {
         slide.inputs.forEach(input => {
             switch (input.type) {
                 case 'input_with_dropdown':
-                    // console.log('data: ', data)
                     data[input.end_point_name] = input.selectedItem
                     break
 

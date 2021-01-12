@@ -43,7 +43,7 @@ class LongForm extends React.Component {
             long_form_blocks.forEach(long_form_block => {
                 const inputs = long_form_block.blocks
                 inputs.forEach(item => {
-             
+
                     item.error = false
                     item.verified = false
 
@@ -127,7 +127,7 @@ class LongForm extends React.Component {
                         }), 500)
                     debouncedSearch(listType, inp.value, masterName)
                 }
-                this.setState({  submitButtonDisabled })
+                this.setState({ submitButtonDisabled })
             })
         })
         this.setState({ longFormSections: newLongFormSections }, () => {
@@ -247,6 +247,7 @@ class LongForm extends React.Component {
                 if (!errors) {
                     this.retrieveDataAndSubmit()
                 }
+                this.retrieveDataAndSubmit()
             })
     }
 
@@ -267,13 +268,15 @@ class LongForm extends React.Component {
                             data[box.end_point_name] = box.value
                         })
 
-                    } else if (input.type === 'input_with_dropdown' && input.mandatory) {
+                    } else if (input.type === 'input_with_dropdown') {
 
-                        if (input.end_point_name === 'city') {
-                            data[input.end_point_name] = input.selectedItem.cityId
-                        } else {
-                            data[input.end_point_name] = input.selectedItem[input.end_point_name]
-                        }
+                        // if (input.end_point_name === 'city') {
+                        //     data[input.end_point_name] = input.selectedItem.cityId
+                        // } else {
+                        //     data[input.end_point_name] = input.selectedItem[input.end_point_name]
+                        // }
+
+                        data[input.end_point_name] = input.selectedItem
 
                     } else {
 
@@ -299,6 +302,8 @@ class LongForm extends React.Component {
             })
         })
 
+        console.log(data)
+
         const { primaryPath, bankName } = this.state
         generateLead(data, primaryPath)
             .then((res) => {
@@ -320,47 +325,45 @@ class LongForm extends React.Component {
         }
 
         return (
-            // <section className="long-form-wrapper">
-                <div className="form-wrapper" id="longForm">
-                    <form >
-                        {this.state.longFormSections.map(longFormSection => {
-                            const long_form_blocks = longFormSection.sections[0].long_form_blocks
+            <div className="form-wrapper" id="longForm">
+                <form >
+                    {this.state.longFormSections.map(longFormSection => {
+                        const long_form_blocks = longFormSection.sections[0].long_form_blocks
 
-                            return (
-                                <React.Fragment key={longFormSection.id}>
-                                    <h3>{longFormSection.section_display_name}</h3>
+                        return (
+                            <React.Fragment key={longFormSection.id}>
+                                <h3>{longFormSection.section_display_name}</h3>
 
-                                    {long_form_blocks.map(long_form_block => {
-                                        const inputs = long_form_block.blocks
-                                        ++index
-                                        const blockClasses = ['shortforms-container']
-                                        blockClasses.push(long_form_block.block_class)
-                                        return (
-                                            <div className="long-forms-wrapper" key={long_form_block.id}>
-                                                <h5><b>{`${index}. `}</b> {long_form_block.block_name}</h5>
-                                                
-                                                <div className={blockClasses.join(' ')}>
-                                                    {inputs.map(component => {
-                                                        return (
-                                                            <React.Fragment key={component.id}>
-                                                                {generateInputs(component, this.handleChange,
-                                                                    this.checkInputValidity, null, this.handleInputDropdownSelection)}
-                                                            </React.Fragment>
-                                                        )
-                                                    })}
-                                                </div>
+                                {long_form_blocks.map(long_form_block => {
+                                    const inputs = long_form_block.blocks
+                                    ++index
+                                    const blockClasses = ['shortforms-container']
+                                    blockClasses.push(long_form_block.block_class)
+                                    return (
+                                        <div className="long-forms-wrapper" key={long_form_block.id}>
+                                            <h5><b>{`${index}. `}</b> {long_form_block.block_name}</h5>
+
+                                            <div className={blockClasses.join(' ')}>
+                                                {inputs.map(component => {
+                                                    return (
+                                                        <React.Fragment key={component.id}>
+                                                            {generateInputs(component, this.handleChange,
+                                                                this.checkInputValidity, null, this.handleInputDropdownSelection)}
+                                                        </React.Fragment>
+                                                    )
+                                                })}
                                             </div>
-                                        )
-                                    })}
-                                </React.Fragment>
-                            )
-                        })}
-                        <div className="long-form-submit">
-                            <button id="long-submit" disabled={this.state.submitButtonDisabled} type="button" onClick={this.onSubmitLongForm}>Submit Application</button>
-                        </div>
-                    </form>
-                </div>
-            // </section>
+                                        </div>
+                                    )
+                                })}
+                            </React.Fragment>
+                        )
+                    })}
+                    <div className="long-form-submit">
+                        <button id="long-submit" disabled={this.state.submitButtonDisabled} type="button" onClick={this.onSubmitLongForm}>Submit Application</button>
+                    </div>
+                </form>
+            </div>
         )
     }
 }
