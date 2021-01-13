@@ -34,7 +34,7 @@ class LongFormBanner extends React.Component {
 
         return (
             <div className="card-info" id="longFormBanner">
-                <h5 class="app-form">Application form</h5>
+                <h5 className="app-form">Application form</h5>
                 <h3><b>{bank.bank_name}</b><br />{product.product_name}</h3>
                 {this.state.primaryPath === 'credit-cards' ? <img src={`${strapi.baseUrl}${product.product_image.url}`} /> :
                     <img src={`${strapi.baseUrl}${bank.bank_image.url}`} />}

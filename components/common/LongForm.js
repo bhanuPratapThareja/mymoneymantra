@@ -70,33 +70,6 @@ class LongForm extends React.Component {
                                 continue loop
                             }
 
-                            // if (key === item.end_point_name && key === 'pincode') {
-                            //     item.value = sfData[key].pincode
-                            //     item.selectedId = sfData[key].pincode
-                            //     item.selectedItem = sfData[key]
-                            //     item.verified = true
-                            //     item.error = false
-                            //     continue loop
-                            // }
-
-                            // if (key === item.end_point_name && key === 'otherCompany') {
-                            //     item.value = sfData[key].companyName
-                            //     item.selectedId = sfData[key].caseCompanyId
-                            //     item.selectedItem = sfData[key]
-                            //     item.verified = true
-                            //     item.error = false
-                            //     continue loop
-                            // }
-
-
-                            if (typeof sfData[key] === 'object' && key === item.end_point_name) {
-                                // item.value = sfData[key].cityId
-                                // item.selectedItem = sfData[key]
-                                // item.verified = true
-                                // item.error = false
-                                continue loop
-                            }
-
                             if (typeof sfData[key] === 'string' && key === item.end_point_name) {
                                 item.value = sfData[key]
                                 item.verified = true
@@ -266,26 +239,15 @@ class LongForm extends React.Component {
                     const input = inputs[i]
 
                     if (input.type === 'checkbox') {
-
                         input.checkbox.checkbox_input.forEach(box => {
                             data[box.end_point_name] = box.value
                         })
-
                     } else if (input.type === 'input_with_dropdown') {
-
-                        // if (input.end_point_name === 'city') {
-                        //     data[input.end_point_name] = input.selectedItem.cityId
-                        // } else {
-                        //     data[input.end_point_name] = input.selectedItem[input.end_point_name]
-                        // }
-
                         data[input.end_point_name] = input.selectedItem
 
                     } else {
-
                         data[input.end_point_name] = input.value
                     }
-
                 }
 
                 let { firstName, lastName } = data
@@ -368,7 +330,7 @@ class LongForm extends React.Component {
                         )
                     })}
                     <div className="long-form-submit">
-                        <button id="long-submit" disabled={this.state.submitButtonDisabled} type="button" onClick={this.onSubmitLongForm}>Submit Application</button>
+                        <button id="long-submit" type="button" onClick={this.onSubmitLongForm}>Submit Application</button>
                     </div>
                 </form>
             </div>

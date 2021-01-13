@@ -25,8 +25,6 @@ const Header = () => {
             }
          })
 
-
-
          if (!longFormBanner) {
             longFormBanner = document.getElementById('longFormBanner')
             longForm = document.getElementById('longForm')

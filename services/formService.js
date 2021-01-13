@@ -98,8 +98,8 @@ export const generateLead = async (data, primaryPath) => {
         let { url, body } = getApiData('orchestration')
         body = JSON.parse(JSON.stringify(body))
         const { fullName, dob, pan, mobile, email, applicantType, title,
-            companyId, netMonthlyIncome, bankId,totalWorkExp,
-            requestedLoanamount,requestedTenor,exisEmi, propertyType, other_city_property_location,
+            companyId, netMonthlyIncome, bankId, totalWorkExp,
+            requestedLoanamount, requestedTenor, exisEmi, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
             fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
             addressline1, addressline2, pincode, city, nearByLandmark,
@@ -107,7 +107,7 @@ export const generateLead = async (data, primaryPath) => {
             city_location, cost_of_property
         } = data
 
- 
+
         body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = getFormattedDate(dob)
         body.request.payload.personal.pan = pan
@@ -165,14 +165,14 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.address[0].city = pincode ? pincode.cityId : "";
         body.request.payload.address[0].state = pincode ? pincode.stateId : ''
 
-      // for office address
+        // for office address
         body.request.payload.address[1].addressTypeMasterId = "1000000002"
         body.request.payload.address[1].addressline1 = officeAddressLine1
         body.request.payload.address[1].addressline2 = officeAddressLine2
         body.request.payload.address[1].landmark = officeNearBy
         body.request.payload.address[1].pincode = officePincode ? officePincode.pincode : ""
         body.request.payload.address[1].city = officePincode ? officePincode.cityId : ""
-        body.request.payload.address[1].state = officeNearBy ? officePincode.stateId:""
+        body.request.payload.address[1].state = officeNearBy ? officePincode.stateId : ""
 
         // for property 
         body.request.payload.address[2].addressTypeMasterId = "1000000004"
@@ -192,7 +192,7 @@ export const generateLead = async (data, primaryPath) => {
     return promise
 }
 
-export const orchestrationApi = async(body) => {
+export const orchestrationApi = async (body) => {
     const { url } = getApiData('orchestration')
     try {
         const res = axios.post(url, body)
@@ -242,7 +242,7 @@ export const getProductAndBank = async (data, primaryPath, longFormProduct) => {
 }
 
 export const sendNotification = async (leadIdSendNotification) => {
-    console.log('in forservices leadIdSendNotification',leadIdSendNotification)
+    console.log('in forservices leadIdSendNotification', leadIdSendNotification)
     const { url, body } = getApiData('sendNotification')
     body.request.payload.leadId = leadIdSendNotification;
     body.request.payload.actionName = "Short Form Submit";
