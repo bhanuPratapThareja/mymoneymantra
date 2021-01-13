@@ -8,7 +8,6 @@ export const generateInputs = (component, updateField,
         let field = {}
         if (type === 'checkbox') {
             field = { name, checked, type }
-            console.log('checkbox field: ', field)
         } else {
             field = { name, value, type }
             if (type === 'input_with_dropdown') {
@@ -272,7 +271,6 @@ export const generateInputs = (component, updateField,
             <div id={fieldId} className="agree">
                 <div className="checkbox-container" key={id}>
                     {checkbox_input.map(box => {
-                        console.log(box)
                         const boxId = `${box.input_id}_${type}`
                         return (
                             <div key={box.id} className="checkbox" id={boxId}>

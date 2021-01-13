@@ -4,7 +4,7 @@ import { uniq } from 'lodash'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
 
-import ListingsBanner from '../../../components/Listings/ListingsBanner'
+import ListingsBanner from '../../../components/Banners/ListingsBanner'
 import ListingCards from '../../../components/Listings/ListingCards'
 import CreditScore from '../../../components/common/CreditScore'
 import Offers from '../../../components/common/Offers'
