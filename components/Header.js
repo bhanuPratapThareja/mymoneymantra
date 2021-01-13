@@ -118,10 +118,10 @@ const Header = () => {
 
             <section className="menu-login">
                <div className="main">
-                  <img className="menu-close" src="build/images/icons/cross.svg" />
+                  <img className="menu-close" src="/assests/images/icons/cross.svg" />
                   <div className="profile">
                      <div className="image">
-                        <img src="build/images/icons/profile.svg" />
+                        <img src="/assests/images/icons/profile.svg" />
                         <div className="hello">
                            <h2>Hello,</h2>
                            <h2 className="name">Shubham!</h2>

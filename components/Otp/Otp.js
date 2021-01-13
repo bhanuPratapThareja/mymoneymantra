@@ -51,27 +51,6 @@ const Otp = props => {
             <input type={type} maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" disabled={props.submitting} className="input_otp" onKeyDown={event => onInputChange(event, 3)} />
 
             <style jsx>{`
-            .input_otp {
-                height: 36px;
-                width: 40px;
-                margin: auto 10px;
-                text-align: center;
-                border: none;
-                background-color: transparent;
-                border-bottom: 2px solid grey;
-                outline: none;
-                font-size: 18px;
-                font-weight: 900;
-                color: var(--main-color);
-                border-radius: 0;
-                -webkit-border-radius: 0;
-                -moz--border-radius: 0;
-            }
-            
-            .input_otp:focus {
-                border-bottom: 2px solid lightblue;
-            }
-            
             input[type=number]::-webkit-inner-spin-button, 
             input[type=number]::-webkit-outer-spin-button { 
               -webkit-appearance: none; 

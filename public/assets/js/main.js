@@ -7,12 +7,15 @@ AOS.init({
   easing: 'ease', // default easing for AOS animations
 });
 
-$(document).ready(function () {
-
+$(window).on('load', function () {
   if ($(window).width() < 768) {
     $(".homepage-flow .header").addClass("mobile-header");
     
   }
+});
+
+$(document).ready(function () {
+
 
   // if ($(window).width() > 786) {
   // $(window).scroll(function () {

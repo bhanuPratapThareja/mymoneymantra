@@ -99,7 +99,7 @@ const ListingCards = props => {
                             </div>
                             <div className="bottom">
                                 <div className="lifetime">
-                                    <h5><span dangerouslySetInnerHTML={{ __html: offer.usp_highlights }}></span></h5>
+                                    <h5 dangerouslySetInnerHTML={{ __html: offer.usp_highlights }}></h5>
                                 </div>
                                 <div className="options">
                                     <DecisionButton

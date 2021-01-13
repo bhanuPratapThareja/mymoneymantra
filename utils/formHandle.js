@@ -385,7 +385,7 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
         slides.forEach(slide => {
             if (slide.slideId === currentSlide) {
                 slide.inputs.forEach(input => {
-                    if (input.attachment) {
+                    if (input.attachment && inpput.value && input.value.length) {
                         for (let i = 0; i < input.value.length; i++) {
                             const file = input.value[i]
                             submitDocument(file)
@@ -462,14 +462,14 @@ export const showSlides = (n, slideIndex) => {
         return true
     }
 
-    if (slideIndex === slides.length) {
-        $("#button-text").text("Submit and view offers").css("color", "#89C142");
-        $("#next").addClass("submit-short-form");
+    // if (slideIndex === slides.length) {
+    //     $("#button-text").text("Submit and view offers").css("color", "#89C142");
+    //     $("#next").addClass("submit-short-form");
 
-    } else {
-        $("#button-text").text("Next").css("color", "#221F1F");
-        $("#next").removeClass("submit-short-form");
-    }
+    // } else {
+    //     $("#button-text").text("Next").css("color", "#221F1F");
+    //     $("#next").removeClass("submit-short-form");
+    // }
 
     if (n < 1) {
         if (slideIndex) {
