@@ -320,25 +320,14 @@ export const updateSelectionFromDropdown = (inputs, input_id, item) => {
             inp.verified = true
         }
 
-        // inp.selectedItem = item.selectedItem
-        // inp.error = false
-        // inp.verified = true
-        // // if (inp.search_for === 'city') {
-        //     inp.value = item.select_name
-        //     inp.selectedId = item.select_id
-        // //}
-
         if (inp.end_point_name === update_field_with_end_point_name) {
             inputs.forEach(dependentInput => {
                 if (dependentInput.end_point_name == update_field_with_end_point_name) {
                     dependentInput.selectedItem = item
+                    dependentInput.value = item[dependentInput.select_name]
+                    dependentInput.selectedId = item[dependentInput.select_id]
                     dependentInput.error = false
                     dependentInput.verified = true
-                    // if (inp.search_for === 'city') {
-                        dependentInput.value = item[dependentInput.select_name]
-                        dependentInput.selectedId = item[dependentInput.select_id]
-                    //}
-
                 }
             })
         }
