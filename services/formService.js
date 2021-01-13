@@ -98,14 +98,15 @@ export const generateLead = async (data, primaryPath) => {
         let { url, body } = getApiData('orchestration')
         body = JSON.parse(JSON.stringify(body))
         const { fullName, dob, pan, mobile, email, applicantType, title,
-            companyId, netMonthlyIncome, bankId,
-            requestedLoanamount, propertyType, other_city_property_location,
+            companyId, netMonthlyIncome, bankId,totalWorkExp,
+            requestedLoanamount,requestedTenor,exisEmi, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
             fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
             addressline1, addressline2, pincode, city, nearByLandmark,
             officeAddressLine1, officeAddressLine2, officeNearBy, officePincode, officeCity,
             city_location, cost_of_property
         } = data
+
  
         body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = getFormattedDate(dob)
@@ -117,6 +118,7 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.work.preferedComm = preferedComm;
         body.request.payload.work.director = director;
         body.request.payload.work.jointAccHolder = jointAccHolder;
+        body.request.payload.work.totalWorkExp = totalWorkExp
 
 
         body.request.payload.contact.mobile[0].mobile = mobile
@@ -149,27 +151,21 @@ export const generateLead = async (data, primaryPath) => {
 
 
         body.request.payload.leadId = getLeadId(primaryPath)
-        // console.log('body.request.payload.leadId',body.request.payload.leadId)
         body.request.payload.productId = localStorage.getItem('productId')
         body.request.payload.requestedLoanamount = requestedLoanamount
-
-        
+        body.request.payload.requestedTenor = requestedTenor
+        body.request.payload.requestedTenor.exisEmi = exisEmi
 
         // for residence
-
-       // console.log('for resi add pincode', pincode);
         body.request.payload.address[0].addressTypeMasterId = "1000000001"
         body.request.payload.address[0].addressline1 = addressline1
         body.request.payload.address[0].addressline2 = addressline2
         body.request.payload.address[0].landmark = nearByLandmark
-
         body.request.payload.address[0].pincode = pincode ? pincode.pincode : "";
         body.request.payload.address[0].city = pincode ? pincode.cityId : "";
         body.request.payload.address[0].state = pincode ? pincode.stateId : ''
 
-
-        // for office address
-       // console.log('for office add  officePincode', officePincode)
+      // for office address
         body.request.payload.address[1].addressTypeMasterId = "1000000002"
         body.request.payload.address[1].addressline1 = officeAddressLine1
         body.request.payload.address[1].addressline2 = officeAddressLine2
