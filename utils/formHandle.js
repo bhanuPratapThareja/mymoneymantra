@@ -385,7 +385,7 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
         slides.forEach(slide => {
             if (slide.slideId === currentSlide) {
                 slide.inputs.forEach(input => {
-                    if (input.attachment && inpput.value && input.value.length) {
+                    if (input.attachment && input.value && input.value.length) {
                         for (let i = 0; i < input.value.length; i++) {
                             const file = input.value[i]
                             submitDocument(file)
