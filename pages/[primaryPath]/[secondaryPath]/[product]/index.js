@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import Strapi from '../../../../providers/strapi'
 import Layout from '../../../../components/Layout'
 
-import DetailsBanner from '../../../../components/common/DetailsBanner'
+import DetailsBanner from '../../../../components/Banners/DetailsBanner'
 import ProductDetails from '../../../../components/common/ProductDetails'
 import CreditScore from '../../../../components/common/CreditScore'
 import Offers from '../../../../components/common/Offers'
