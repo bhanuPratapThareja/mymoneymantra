@@ -106,10 +106,7 @@ export const generateLead = async (data, primaryPath) => {
             officeAddressLine1, officeAddressLine2, officeNearBy, officePincode, officeCity,
             city_location, cost_of_property
         } = data
-
-        
-        console.log('companyId', companyId)
-
+ 
         body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = getFormattedDate(dob)
         body.request.payload.personal.pan = pan
@@ -192,7 +189,6 @@ export const generateLead = async (data, primaryPath) => {
                 resolve(res)
             })
             .catch(err => {
-                console.log('err gl: ', err)
                 reject(err)
             })
     })
@@ -247,12 +243,11 @@ export const updateLongForm = async data => {
 
 export const getProductAndBank = async (data, primaryPath, longFormProduct) => {
     let productData = await strapi.processReq('GET', `credit_card_product?slug=${longFormProduct}`)
-
 }
 
 export const sendNotification = async (leadIdSendNotification) => {
+    console.log('in forservices leadIdSendNotification',leadIdSendNotification)
     const { url, body } = getApiData('sendNotification')
-    console.log('inside sendNotification api leadIdSendNotification',leadIdSendNotification)
     body.request.payload.leadId = leadIdSendNotification;
     body.request.payload.actionName = "Short Form Submit";
     try {

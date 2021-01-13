@@ -29,7 +29,7 @@ const PrimaryPage = props => {
     const goToShortForm = () => {
         const shortFormEl = document.getElementsByClassName('lets-find-container')
       if (shortFormEl.length) {
-         const shortFormElOffset = shortFormEl[0].offsetTop - 50
+         const shortFormElOffset = shortFormEl[0].offsetTop - 100
          window.scrollTo({ top: shortFormElOffset })
       } else {
          window.scrollTo({ top: 0 })

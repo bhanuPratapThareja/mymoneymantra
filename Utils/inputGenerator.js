@@ -1,4 +1,3 @@
-import { properties } from '../api/dropdownApiConfig'
 import { getDevice } from './getDevice'
 
 export const generateInputs = (component, updateField,
@@ -9,6 +8,7 @@ export const generateInputs = (component, updateField,
         let field = {}
         if (type === 'checkbox') {
             field = { name, checked, type }
+            console.log('checkbox field: ', field)
         } else {
             field = { name, value, type }
             if (type === 'input_with_dropdown') {
@@ -115,7 +115,7 @@ export const generateInputs = (component, updateField,
         )
     }
 
-    if (type === 'text' || type === 'email' || type === 'number' || type === 'tel') {
+    if (type === 'text' || type === 'email' || type === 'number' || type === 'tel'  || type === 'pan_card') {
         const fieldId = `${input_id}_${type}`
         const inputType = type === 'number' ? getDevice() === 'desktop' ? 'number' : 'tel' : type
         return (
@@ -160,38 +160,21 @@ export const generateInputs = (component, updateField,
         )
     }
 
-    if (type === 'pan_card') {
-        const fieldId = `${input_id}_${type}`
-        const inputType = 'text'
-        return (
-            <div className={fieldClasses.join(' ')} type={type} id={fieldId} key={id}>
-                <input className="form__field"
-                    name={input_id}
-                    type={inputType}
-                    value={value}
-                    placeholder={placeholder}
-                    autoComplete='off'
-                    required={mandatory}
-                    onBlur={e => validate(e, type)}
-                    onChange={e => handleChange(e, type)}
-                />
-                <label className="form__label">{label}</label>
-                {error ? <div className='input-error'>
-                    <p>{errorMsg}</p>
-                </div> : null}
-            </div>
-        )
-    }
-
     if (type === 'upload_button') {
         const { attachment } = component
         const inputFileId = `input_file_${input_id}`
         const fieldId = `${input_id}_${type}`
         let uploadText = value ? value.length === 1 ? value[0].name : value.length + ' files' : upload_text
-        const uploadedFileStyles = { border: 'none', boxShadow: '0 0 0 2px #89C142' } 
-        const uploadButtonBorderStyles = attachment && !error && !verified ? uploadedFileStyles  : borderStyles
+        // const uploadedFileStyles = { border: 'none', boxShadow: '0 0 0 2px #89C142' } 
+        const uploadButtonBorderStyles = attachment && !error && !verified ? null : borderStyles
         fieldClasses.push(type)
         fieldClasses.push('file-type')
+        
+        if(attachment && !error && !verified){
+            fieldClasses.push('file-type-border')
+            fieldClasses.push('file-type-back')
+        }
+        
         return (
             <>
                 <div className={fieldClasses.join(' ')} id={fieldId} style={uploadButtonBorderStyles}>
@@ -200,10 +183,13 @@ export const generateInputs = (component, updateField,
                     {value ? <img src="/assets/images/icons/Attach.svg" onClick={() => document.getElementById(inputFileId).click()} style={{ background: 'red' }} /> : null}
                     {value ? <img src="/assets/images/icons/cross.svg" onClick={() => onUploadAttachment(input_id, type, inputFileId, false)} style={{ background: 'red' }} /> : null}
                     <h5 onClick={() => document.getElementById(inputFileId).click()}>{uploadText} {!mandatory && !value ? <b>(optional)</b> : null}</h5>
-                </div>
-                {error ? <div >
+                    
+                    {error ? <div >
                     <p>{errorMsg}</p>
-                </div> : null}
+                    </div> : null}
+                    
+                </div>
+                
             </>
         )
     }
@@ -286,6 +272,7 @@ export const generateInputs = (component, updateField,
             <div id={fieldId} className="agree">
                 <div className="checkbox-container" key={id}>
                     {checkbox_input.map(box => {
+                        console.log(box)
                         const boxId = `${box.input_id}_${type}`
                         return (
                             <div key={box.id} className="checkbox" id={boxId}>
