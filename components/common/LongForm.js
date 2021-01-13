@@ -2,8 +2,9 @@ import { withRouter } from 'next/router'
 import { uniq, debounce } from 'lodash'
 import { generateInputs } from '../../utils/inputGenerator'
 import { getDropdownList } from '../../services/formService'
-import { generateLead,sendNotification } from '../../services/formService'
+import { generateLead, sendNotification } from '../../services/formService'
 import { setLeadId } from '../../utils/localAccess'
+import { getLeadId } from '../../utils/localAccess'
 import {
     textTypeInputs,
     handleChangeInputs,
@@ -21,7 +22,8 @@ class LongForm extends React.Component {
             mandatory: 'Required Field'
         },
         noOfMandatoryInputs: 0,
-        verifiedInputs: []
+        verifiedInputs: [],
+        leadId: "",
     }
 
     componentDidMount() {
@@ -30,8 +32,9 @@ class LongForm extends React.Component {
         const formData = JSON.parse(localStorage.getItem('formData'))
         let sfData = null
         let noOfMandatoryInputs = 0
+        let leadId = getLeadId(primaryPath)
 
-        this.setState({ primaryPath, bankName })
+        this.setState({ primaryPath, bankName, leadId })
 
         if (formData && formData[primaryPath]) {
             sfData = formData[primaryPath]
@@ -59,7 +62,6 @@ class LongForm extends React.Component {
                             }
 
                             if (typeof sfData[key] === 'object' && key === item.end_point_name) {
-                                console.log('sf----',sfData[key])
                                 item.value = sfData[key][item.select_name]
                                 item.selectedId = sfData[key][item.select_id]
                                 item.selectedItem = sfData[key]
@@ -85,7 +87,7 @@ class LongForm extends React.Component {
                             //     item.error = false
                             //     continue loop
                             // }
-                        
+
 
                             if (typeof sfData[key] === 'object' && key === item.end_point_name) {
                                 // item.value = sfData[key].cityId
@@ -303,18 +305,21 @@ class LongForm extends React.Component {
             })
         })
 
-        console.log("data",data)
+        console.log("data", data)
 
-        const { primaryPath, bankName } = this.state
+        const { primaryPath, bankName, leadId } = this.state
         generateLead(data, primaryPath)
             .then((res) => {
-                // console.log('long form submitted res: ', res.data.response.leadId)
-                const leadIdSendNotification = res.data.response.leadId;
+                if(!leadId){
+                    const leadIdSendNotification = res.data.response.payload.leadId;
+                    sendNotification(leadIdSendNotification)
+
+                }
                 setLeadId(primaryPath, res.data.response.payload.leadId)
                 const pathname = `/${primaryPath}/thank-you`
                 const query = { bankName }
                 this.props.router.push({ pathname, query })
-                sendNotification(leadIdSendNotification)
+                
             })
             .catch(err => {
                 // console.log('long form submission error: ', err)

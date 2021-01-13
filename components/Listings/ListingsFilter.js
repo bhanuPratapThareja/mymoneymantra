@@ -49,7 +49,7 @@ class ListingFilter extends React.Component {
 
     handleCheckbox = (e, type) => {
         const { name, checked } = e.target
-        console.log(e, type)
+        // console.log(e, type)
         const selectedCheckboxes = this.state.filters[type] ? this.state.filters[type] : []
         if (checked) {
             selectedCheckboxes.push(name)
@@ -117,7 +117,6 @@ class ListingFilter extends React.Component {
                                             <div className="fields-wrapper">
                                                 {checkboxGroup.values.map((checkbox, i) => {
                                                     if (i + 1 <= checkboxGroup.showCheckboxes) {
-                                                        console.log(i, checkbox)
                                                         return (
                                                             <div className="checkbox-container" key={checkbox.id}>
                                                                 <div className="checkbox">
