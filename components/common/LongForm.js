@@ -2,7 +2,7 @@ import { withRouter } from 'next/router'
 import { uniq, debounce } from 'lodash'
 import { generateInputs } from '../../utils/inputGenerator'
 import { getDropdownList } from '../../services/formService'
-import { generateLead } from '../../services/formService'
+import { generateLead,sendNotification } from '../../services/formService'
 import { setLeadId } from '../../utils/localAccess'
 import {
     textTypeInputs,
@@ -58,32 +58,34 @@ class LongForm extends React.Component {
                                 continue loop
                             }
 
-                            if (key === item.end_point_name && key === 'city') {
-                                item.value = sfData[key].cityName
-                                item.selectedId = sfData[key].cityId
+                            if (typeof sfData[key] === 'object' && key === item.end_point_name) {
+                                console.log('sf----',sfData[key])
+                                item.value = sfData[key][item.select_name]
+                                item.selectedId = sfData[key][item.select_id]
                                 item.selectedItem = sfData[key]
                                 item.verified = true
                                 item.error = false
                                 continue loop
                             }
 
-                            if (key === item.end_point_name && key === 'pincode') {
-                                item.value = sfData[key].pincode
-                                item.selectedId = sfData[key].pincode
-                                item.selectedItem = sfData[key]
-                                item.verified = true
-                                item.error = false
-                                continue loop
-                            }
+                            // if (key === item.end_point_name && key === 'pincode') {
+                            //     item.value = sfData[key].pincode
+                            //     item.selectedId = sfData[key].pincode
+                            //     item.selectedItem = sfData[key]
+                            //     item.verified = true
+                            //     item.error = false
+                            //     continue loop
+                            // }
 
-                            if (key === item.end_point_name && key === 'otherCompany') {
-                                item.value = sfData[key].companyName
-                                item.selectedId = sfData[key].caseCompanyId
-                                item.selectedItem = sfData[key]
-                                item.verified = true
-                                item.error = false
-                                continue loop
-                            }
+                            // if (key === item.end_point_name && key === 'otherCompany') {
+                            //     item.value = sfData[key].companyName
+                            //     item.selectedId = sfData[key].caseCompanyId
+                            //     item.selectedItem = sfData[key]
+                            //     item.verified = true
+                            //     item.error = false
+                            //     continue loop
+                            // }
+                        
 
                             if (typeof sfData[key] === 'object' && key === item.end_point_name) {
                                 // item.value = sfData[key].cityId
@@ -247,7 +249,6 @@ class LongForm extends React.Component {
                 if (!errors) {
                     this.retrieveDataAndSubmit()
                 }
-                this.retrieveDataAndSubmit()
             })
     }
 
@@ -302,16 +303,18 @@ class LongForm extends React.Component {
             })
         })
 
-        console.log(data)
+        console.log("data",data)
 
         const { primaryPath, bankName } = this.state
         generateLead(data, primaryPath)
             .then((res) => {
-                console.log('long form submitted: ', res)
+                // console.log('long form submitted res: ', res.data.response.leadId)
+                const leadIdSendNotification = res.data.response.leadId;
                 setLeadId(primaryPath, res.data.response.payload.leadId)
                 const pathname = `/${primaryPath}/thank-you`
                 const query = { bankName }
                 this.props.router.push({ pathname, query })
+                sendNotification(leadIdSendNotification)
             })
             .catch(err => {
                 // console.log('long form submission error: ', err)

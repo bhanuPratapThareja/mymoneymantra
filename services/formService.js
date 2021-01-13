@@ -75,11 +75,7 @@ export const getDropdownList = async (listType, value, masterName) => {
 
 export const documentUpload = async document => {
     const { base64, type, name } = document
-    console.log('for upload doc api base64', base64)
-    console.log('for upload doc api type', type)
-    console.log('for upload doc api name', name)
     const { url, body } = getApiData('documentUpload')
-    console.log('body for upload doc', body.request.payload)
     body.request.payload.docList[0].documentId = name
     body.request.payload.docList[0].documentExtension = type
     body.request.payload.docList[0].docBytes = base64
@@ -111,7 +107,8 @@ export const generateLead = async (data, primaryPath) => {
             city_location, cost_of_property
         } = data
 
-        console.log('data', data)
+        
+        console.log('companyId', companyId)
 
         body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = getFormattedDate(dob)
@@ -155,6 +152,7 @@ export const generateLead = async (data, primaryPath) => {
 
 
         body.request.payload.leadId = getLeadId(primaryPath)
+        // console.log('body.request.payload.leadId',body.request.payload.leadId)
         body.request.payload.productId = localStorage.getItem('productId')
         body.request.payload.requestedLoanamount = requestedLoanamount
 
@@ -162,7 +160,7 @@ export const generateLead = async (data, primaryPath) => {
 
         // for residence
 
-        console.log('for resi add pincode', pincode);
+       // console.log('for resi add pincode', pincode);
         body.request.payload.address[0].addressTypeMasterId = "1000000001"
         body.request.payload.address[0].addressline1 = addressline1
         body.request.payload.address[0].addressline2 = addressline2
@@ -174,20 +172,20 @@ export const generateLead = async (data, primaryPath) => {
 
 
         // for office address
-        console.log('for office add  officePincode', officePincode)
+       // console.log('for office add  officePincode', officePincode)
         body.request.payload.address[1].addressTypeMasterId = "1000000002"
         body.request.payload.address[1].addressline1 = officeAddressLine1
         body.request.payload.address[1].addressline2 = officeAddressLine2
         body.request.payload.address[1].landmark = officeNearBy
+        body.request.payload.address[1].pincode = officePincode ? officePincode.pincode : ""
+        body.request.payload.address[1].city = officePincode ? officePincode.cityId : ""
+        body.request.payload.address[1].state = officeNearBy ? officePincode.stateId:""
 
         // for property 
         body.request.payload.address[2].addressTypeMasterId = "1000000004"
         body.request.payload.address[2].city = city_location;
         //body.request.payload.address[1].state = pincode ? pincode.stateId : ''
         body.request.payload.address[2].propertyValue = cost_of_property
-
-
-        console.log("inside formService body.request.payload ",body.request.payload)
 
         axios.post(url, body)
             .then(res => {
@@ -204,10 +202,8 @@ export const generateLead = async (data, primaryPath) => {
 
 export const orchestrationApi = async(body) => {
     const { url } = getApiData('orchestration')
-    console.log('orchestrationApi body', body);
     try {
         const res = axios.post(url, body)
-        console.log('orchestrationApi res', res);
     }
     catch (error) {
 
@@ -250,20 +246,17 @@ export const updateLongForm = async data => {
 
 
 export const getProductAndBank = async (data, primaryPath, longFormProduct) => {
-    console.log('longFormProductlongFormProduct: ', longFormProduct)
     let productData = await strapi.processReq('GET', `credit_card_product?slug=${longFormProduct}`)
-    console.log('credit_card_product:: ', productData)
 
 }
 
 export const sendNotification = async (leadIdSendNotification) => {
-    console.log('inside form service sendNotification leadIdSendNotification', leadIdSendNotification)
     const { url, body } = getApiData('sendNotification')
+    console.log('inside sendNotification api leadIdSendNotification',leadIdSendNotification)
     body.request.payload.leadId = leadIdSendNotification;
     body.request.payload.actionName = "Short Form Submit";
     try {
         const res = await axios.post(url, body)
-        console.log('sendNotification', res)
         return res;
     } catch (error) { }
 }
