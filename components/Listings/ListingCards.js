@@ -37,7 +37,6 @@ const ListingCards = props => {
             // view details
             default:
                 pathname = `/${primaryPath}/${bankSlug}/${productSlug}`
-                router.push({ pathname, query }, pathname, { shallow: true })
         }
         
         routerRedirect(pathname, query)
@@ -61,20 +60,21 @@ const ListingCards = props => {
                                 <img className="recommended" src="/assets/images/icons/stamp.svg" /> : null}
                             <div className="top">
                                 <div className="name">
-                                    {primaryPath === 'credit-cards' ?
+                                    
                                         <Image className="mob-logo" image={offer.bank.bank_logo}
-                                        /> : null}
+                                        /> 
 
-                                    <h3><span>{offer.bank.bank_name}</span></h3>
-                                    <h3>{offer.product_name}</h3>
-                                    <h3>{offer.product_card_name}</h3>
+                                    <h3><span>{offer.bank.bank_name}</span>
+                                    {offer.product_name || offer.product_card_name}
+                                    {/* {offer.product_card_name} <br /> */}
+                                    </h3>
 
                                     {primaryPath === 'credit-cards' ? <div>
                                         <Image image={offer.product_image} />
                                     </div> : null}
 
                                     {primaryPath !== 'credit-cards' ? <div>
-                                        <Image image={offer.bank.bank_logo} />
+                                        <Image image={offer.bank.bank_image} />
                                     </div> : null}
 
                                 </div>
@@ -99,7 +99,7 @@ const ListingCards = props => {
                             </div>
                             <div className="bottom">
                                 <div className="lifetime">
-                                    <h5><span dangerouslySetInnerHTML={{ __html: offer.usp_highlights }}></span></h5>
+                                    <h5 dangerouslySetInnerHTML={{ __html: offer.usp_highlights }}></h5>
                                 </div>
                                 <div className="options">
                                     <DecisionButton

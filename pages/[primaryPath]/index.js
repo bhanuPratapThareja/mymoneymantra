@@ -27,11 +27,13 @@ const PrimaryPage = props => {
     })
 
     const goToShortForm = () => {
-        if (getDevice() === 'desktop') {
-            window.scrollTo({ top: 1000 })
-            return
-        }
-        window.scrollTo({ top: 0 })
+        const shortFormEl = document.getElementsByClassName('lets-find-container')
+      if (shortFormEl.length) {
+         const shortFormElOffset = shortFormEl[0].offsetTop - 100
+         window.scrollTo({ top: shortFormElOffset })
+      } else {
+         window.scrollTo({ top: 0 })
+      }
     }
 
     const getComponents = dynamic => {
@@ -65,7 +67,7 @@ const PrimaryPage = props => {
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.rewards-component':
-                    return <Rewards key={block.id} data={block} goToShortForm={goToShortForm} />
+                    return <Rewards key={block.id} data={block} />
                 case 'blocks.quick-financial-tools-component':
                     return <FinancialTools key={block.id} data={block} />
                 case 'blocks.blogger':

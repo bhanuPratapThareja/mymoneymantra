@@ -6,6 +6,7 @@ import Image from '../ImageComponent/ImageComponent'
 const ThankYouBanner = props => {
     const router = useRouter()
     const { bankName, primaryPath } = router.query
+
     const [leadId, setLeadId] = useState('')
     const [productType, setProductType] = useState('')
 
@@ -13,17 +14,10 @@ const ThankYouBanner = props => {
         thank_you_content, thank_you_button } = props.data.thank_you_banner
 
     useEffect(() => {
+        const leadId = getLeadId(primaryPath)
+        const productType = primaryPath.split('-').join(' ').slice(0, -1)
 
-        setLeadId(getLeadId(primaryPath))
-
-        let productType = ''
-        if(primaryPath === 'credit-cards'){
-            productType = 'credit card'
-        } else if(primaryPath === 'personal-loans'){
-            productType = 'personal loan'
-        } else if(primaryPath === 'home-loans') {
-            productType = 'home loan'
-        }
+        setLeadId(leadId)
         setProductType(productType)
     }, [])
 
@@ -37,16 +31,16 @@ const ThankYouBanner = props => {
                             <Image image={thank_you_icon} />
                             <div style={{ marginBottom: '10px' }} dangerouslySetInnerHTML={{ __html: thank_you_text }}></div>
 
-                            {leadId && bankName ? <>
+                            {bankName ? <>
                                 <p>{`for applying for a ${productType}`}</p>
                                 <p>{` with ${router.query.bankName} bank.`}</p>
                             </>
                                 : null}
                         </div>
 
-                        {leadId && bankName ? <div className="bottom">
+                        {leadId ? <div className="bottom">
                             <div dangerouslySetInnerHTML={{ __html: thank_you_sub_text }}></div>
-                            <h2 style={{color: 'darkgrey'}}>{leadId}</h2>
+                            <h2 style={{ color: 'darkgrey' }}>{leadId}</h2>
                             <div className="track-button">
                                 <button >{thank_you_button}</button>
                             </div>
@@ -58,4 +52,4 @@ const ThankYouBanner = props => {
     )
 }
 
-export default ThankYouBanner;
+export default ThankYouBanner

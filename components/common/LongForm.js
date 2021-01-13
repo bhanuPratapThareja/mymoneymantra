@@ -1,8 +1,9 @@
 import { withRouter } from 'next/router'
-import { debounce } from 'lodash'
+import { uniq, debounce } from 'lodash'
 import { generateInputs } from '../../utils/inputGenerator'
 import { getDropdownList } from '../../services/formService'
-import { generateLead } from '../../services/formService'
+import { generateLead,sendNotification } from '../../services/formService'
+import { setLeadId } from '../../utils/localAccess'
 import {
     textTypeInputs,
     handleChangeInputs,
@@ -18,15 +19,17 @@ class LongForm extends React.Component {
         submitButtonDisabled: false,
         errorMsgs: {
             mandatory: 'Required Field'
-        }
+        },
+        noOfMandatoryInputs: 0,
+        verifiedInputs: []
     }
 
     componentDidMount() {
-        const { primaryPath } = this.props.router.query
-        const { bank_name: bankName } = this.props.bank
+        const { primaryPath, bankName } = this.props.router.query
         const longFormSections = this.props.data.long_form_version_2.long_form[0].long_form_sections
         const formData = JSON.parse(localStorage.getItem('formData'))
         let sfData = null
+        let noOfMandatoryInputs = 0
 
         this.setState({ primaryPath, bankName })
 
@@ -40,8 +43,13 @@ class LongForm extends React.Component {
             long_form_blocks.forEach(long_form_block => {
                 const inputs = long_form_block.blocks
                 inputs.forEach(item => {
+
                     item.error = false
                     item.verified = false
+
+                    if (item.mandatory) {
+                        noOfMandatoryInputs++
+                    }
 
                     if (sfData) {
 
@@ -50,28 +58,37 @@ class LongForm extends React.Component {
                                 continue loop
                             }
 
-                            if (key === item.end_point_name && key === 'city') {
-                                console.log('city: ', item.end_point_name)
-                                item.value = sfData[key].cityName
-                                item.selectedId = sfData[key].cityId
+                            if (typeof sfData[key] === 'object' && key === item.end_point_name) {
+                                console.log('sf----',sfData[key])
+                                item.value = sfData[key][item.select_name]
+                                item.selectedId = sfData[key][item.select_id]
                                 item.selectedItem = sfData[key]
                                 item.verified = true
                                 item.error = false
                                 continue loop
                             }
 
-                            if (key === item.end_point_name && key === 'pincode') {
-                                console.log('pincode: ', item.end_point_name)
-                                item.value = sfData[key].pincode
-                                item.selectedId = sfData[key].pincode
-                                item.selectedItem = sfData[key]
-                                item.verified = true
-                                item.error = false
-                                continue loop
-                            }
+                            // if (key === item.end_point_name && key === 'pincode') {
+                            //     item.value = sfData[key].pincode
+                            //     item.selectedId = sfData[key].pincode
+                            //     item.selectedItem = sfData[key]
+                            //     item.verified = true
+                            //     item.error = false
+                            //     continue loop
+                            // }
+
+                            // if (key === item.end_point_name && key === 'otherCompany') {
+                            //     item.value = sfData[key].companyName
+                            //     item.selectedId = sfData[key].caseCompanyId
+                            //     item.selectedItem = sfData[key]
+                            //     item.verified = true
+                            //     item.error = false
+                            //     continue loop
+                            // }
+                        
 
                             if (typeof sfData[key] === 'object' && key === item.end_point_name) {
-                                // item.value = sfData[key].pincode
+                                // item.value = sfData[key].cityId
                                 // item.selectedItem = sfData[key]
                                 // item.verified = true
                                 // item.error = false
@@ -89,7 +106,9 @@ class LongForm extends React.Component {
             })
         })
 
-        this.setState({ longFormSections })
+        this.setState({ longFormSections, noOfMandatoryInputs }, () => {
+            this.handlePercentage()
+        })
     }
 
     handleChange = field => {
@@ -99,7 +118,7 @@ class LongForm extends React.Component {
             long_form_blocks.forEach(async long_form_block => {
                 const inputs = long_form_block.blocks
 
-                const { newstate: { inputDropdown } } = await handleChangeInputs(inputs, field)
+                const { newstate: { submitButtonDisabled, inputDropdown } } = await handleChangeInputs(inputs, field)
                 if (inputDropdown) {
                     const { listType, masterName, inp } = inputDropdown
                     const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
@@ -110,10 +129,10 @@ class LongForm extends React.Component {
                         }), 500)
                     debouncedSearch(listType, inp.value, masterName)
                 }
+                this.setState({ submitButtonDisabled })
             })
         })
         this.setState({ longFormSections: newLongFormSections }, () => {
-            console.log(this.state.longFormSections)
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
             }
@@ -127,7 +146,6 @@ class LongForm extends React.Component {
             long_form_blocks.forEach(async long_form_block => {
                 const inputs = long_form_block.blocks
                 updateDropdownList(inputs, listType, list, input_id)
-
             })
         })
         this.updateState(newLongFormSections)
@@ -172,8 +190,43 @@ class LongForm extends React.Component {
     updateState = longFormSections => {
         return new Promise((resolve) => {
             this.setState({ longFormSections }, () => {
+                this.handlePercentage()
                 resolve(true)
             })
+        })
+    }
+
+    handlePercentage = () => {
+        const newLongFormSections = [...this.state.longFormSections]
+        newLongFormSections.forEach(longFormSection => {
+            const long_form_blocks = longFormSection.sections[0].long_form_blocks
+            long_form_blocks.forEach(async long_form_block => {
+                const inputs = long_form_block.blocks
+                inputs.forEach(input => {
+                    if (input.mandatory) {
+
+                        this.handleVerifiedInputsArray(input)
+                    }
+                })
+            })
+        })
+    }
+
+    handleVerifiedInputsArray = input => {
+        const verifiedInputsArray = this.state.verifiedInputs
+        if (input.verified) {
+            verifiedInputsArray.push(input.input_id)
+        } else {
+            if (verifiedInputsArray.includes(input.input_id)) {
+                const index = verifiedInputsArray.indexOf(input.input_id)
+                verifiedInputsArray.splice(index, 1)
+            }
+        }
+        const uniqueVerifiedInputsArray = uniq(verifiedInputsArray)
+        this.setState({ verifiedInputs: uniqueVerifiedInputsArray }, () => {
+            const percentage = this.state.verifiedInputs.length / this.state.noOfMandatoryInputs * 100
+            const event = new CustomEvent('percentageCalulated', { detail: { percentage } })
+            document.dispatchEvent(event)
         })
     }
 
@@ -193,7 +246,6 @@ class LongForm extends React.Component {
 
         this.updateState(newLongFormSections)
             .then(() => {
-                console.log('errors: ', errors)
                 if (!errors) {
                     this.retrieveDataAndSubmit()
                 }
@@ -217,13 +269,15 @@ class LongForm extends React.Component {
                             data[box.end_point_name] = box.value
                         })
 
-                    } else if (input.type === 'input_with_dropdown' && input.mandatory) {
+                    } else if (input.type === 'input_with_dropdown') {
 
-                        if (input.end_point_name === 'city') {
-                            data[input.end_point_name] = input.selectedItem.cityId
-                        } else {
-                            data[input.end_point_name] = input.selectedItem[input.end_point_name]
-                        }
+                        // if (input.end_point_name === 'city') {
+                        //     data[input.end_point_name] = input.selectedItem.cityId
+                        // } else {
+                        //     data[input.end_point_name] = input.selectedItem[input.end_point_name]
+                        // }
+
+                        data[input.end_point_name] = input.selectedItem
 
                     } else {
 
@@ -249,19 +303,21 @@ class LongForm extends React.Component {
             })
         })
 
-        console.log('data: ', data)
+        console.log("data",data)
 
         const { primaryPath, bankName } = this.state
-
         generateLead(data, primaryPath)
             .then((res) => {
-                console.log('long form submitted: ', res)
+                // console.log('long form submitted res: ', res.data.response.leadId)
+                const leadIdSendNotification = res.data.response.leadId;
+                setLeadId(primaryPath, res.data.response.payload.leadId)
                 const pathname = `/${primaryPath}/thank-you`
                 const query = { bankName }
-                this.props.router.push({ pathname, query }, pathname, { shallow: true })
+                this.props.router.push({ pathname, query })
+                sendNotification(leadIdSendNotification)
             })
             .catch(err => {
-                console.log('long form submission error: ', err)
+                // console.log('long form submission error: ', err)
             })
     }
 
@@ -272,44 +328,45 @@ class LongForm extends React.Component {
         }
 
         return (
-            <section className="long-form-wrapper" id="longForm">
-                <div className="form-wrapper">
-                    <form>
-                        {this.state.longFormSections.map(longFormSection => {
-                            const long_form_blocks = longFormSection.sections[0].long_form_blocks
+            <div className="form-wrapper" id="longForm">
+                <form >
+                    {this.state.longFormSections.map(longFormSection => {
+                        const long_form_blocks = longFormSection.sections[0].long_form_blocks
 
-                            return (
-                                <React.Fragment key={longFormSection.id}>
-                                    <h3>{longFormSection.section_name}</h3>
+                        return (
+                            <React.Fragment key={longFormSection.id}>
+                                <h3>{longFormSection.section_display_name}</h3>
 
-                                    {long_form_blocks.map(long_form_block => {
-                                        const inputs = long_form_block.blocks
-                                        ++index
-                                        return (
-                                            <div className="long-forms-wrapper" key={long_form_block.id}>
-                                                <h5><b>{`${index}. `}</b> {long_form_block.block_name}</h5>
-                                                <div className="shortforms-container">
-                                                    {inputs.map(component => {
-                                                        return (
-                                                            <React.Fragment key={component.id}>
-                                                                {generateInputs(component, this.handleChange,
-                                                                    this.checkInputValidity, null, this.handleInputDropdownSelection)}
-                                                            </React.Fragment>
-                                                        )
-                                                    })}
-                                                </div>
+                                {long_form_blocks.map(long_form_block => {
+                                    const inputs = long_form_block.blocks
+                                    ++index
+                                    const blockClasses = ['shortforms-container']
+                                    blockClasses.push(long_form_block.block_class)
+                                    return (
+                                        <div className="long-forms-wrapper" key={long_form_block.id}>
+                                            <h5><b>{`${index}. `}</b> {long_form_block.block_name}</h5>
+
+                                            <div className={blockClasses.join(' ')}>
+                                                {inputs.map(component => {
+                                                    return (
+                                                        <React.Fragment key={component.id}>
+                                                            {generateInputs(component, this.handleChange,
+                                                                this.checkInputValidity, null, this.handleInputDropdownSelection)}
+                                                        </React.Fragment>
+                                                    )
+                                                })}
                                             </div>
-                                        )
-                                    })}
-                                </React.Fragment>
-                            )
-                        })}
-                        <div className="long-form-submit">
-                            <button id="long-submit" type="button" onClick={this.onSubmitLongForm}>Submit Application</button>
-                        </div>
-                    </form>
-                </div>
-            </section>
+                                        </div>
+                                    )
+                                })}
+                            </React.Fragment>
+                        )
+                    })}
+                    <div className="long-form-submit">
+                        <button id="long-submit" disabled={this.state.submitButtonDisabled} type="button" onClick={this.onSubmitLongForm}>Submit Application</button>
+                    </div>
+                </form>
+            </div>
         )
     }
 }

@@ -21,10 +21,10 @@ const Offers = props => {
       const { bank, slug: productSlug } = offer
       const { slug: bankSlug } = bank
       const productDetails = await getProductDecisionForDetailsBanner(offer, bank, primaryPath)
-      if(productDetails.productDecision === 'Apply Now') {
-         props.goToShortFormPage()
-         return
-      }
+      // if(productDetails.productDecision === 'Apply Now') {
+      //    props.goToShortFormPage()
+      //    return
+      // }
       router.push(`/${primaryPath}/${bankSlug}/${productSlug}`)
    }
 
@@ -40,12 +40,12 @@ const Offers = props => {
             <h2>{section_heading}</h2>
             <div className="popular-cards-slider" id="popular-cards-sec">
                {cards.map(offer => {
-                  const { id, bank, product_name, cards_features, annual_fee_fy, intrest_rate, usp_highlights } = offer
+                  const { id, bank, product_card_name,product_name, cards_features, annual_fee_fy, intrest_rate, usp_highlights } = offer
                   return (
                      <div className="popular-cards-slider-card" key={id} onClick={() => redirectToDetailsPage(offer)}>
                         <div className="popular-cards-slider-card-top">
                            <div className="head">
-                              <h3><b className="card_name">{bank.bank_name}</b><br />{product_name}</h3>
+                              <h3><b className="card_name">{bank.bank_name}</b><br />{product_card_name || product_name}</h3>
                               <Image image={bank.bank_logo} />
                            </div>
                            <div className="content">

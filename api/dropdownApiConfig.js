@@ -6,7 +6,7 @@ export const getApiToHit = apiEndPoint => {
             return { listType: 'bank', masterName: 'bankList' }
 
         case 'city':
-            return { listType: 'city', masterName: 'cityMaster' }
+            return { listType: 'cities', masterName: 'cityList' }
 
         case 'company':
             return { listType: 'company', masterName: 'companyMaster' }
@@ -21,13 +21,12 @@ export const getApiToHit = apiEndPoint => {
 
 export const properties = listType => {
     let properties = {}
-
     switch (listType) {
         case 'bank':
             properties = { listName: 'bankList', listItemId: 'bankId', listItemName: 'bankName' }
             break
 
-        case 'city':
+        case 'cities':
             properties = { listName: 'cityList', listItemId: 'cityMasterId', listItemName: 'cityMasterName' }
             break
 

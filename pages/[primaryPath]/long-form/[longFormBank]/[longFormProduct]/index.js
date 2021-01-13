@@ -1,35 +1,55 @@
 import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Strapi from '../../../../../providers/strapi'
 import Layout from '../../../../../components/Layout'
-import LongFormBanner from '../../../../../components/LongForm/LongFormBanner'
-import { getLongFormSearchParams, getDetailsSearchParams } from '../../../../../utils/searchParams'
+import LongFormBanner from '../../../../../components/common/LongFormBanner'
 import LongForm from '../../../../../components/common/LongForm'
+import { getLongFormSearchParams } from '../../../../../utils/searchParams'
+import { getProductAndBank } from '../../../../../services/formService'
+import { getDetailsSearchParams } from '../../../../../utils/searchParams'
 
 const LongFormProduct = props => {
+    const router = useRouter()
+
     useEffect(() => {
         window.scrollTo(0, 0)
     })
 
-    const getComponents = (dynamic, bank) => {
+    const getComponents = (dynamic, bankData, productData) => {
         // console.log('dynamic: ', dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
-                case 'blocks.long-form-banner':
-                    return <LongFormBanner 
-                        key={block.id} 
-                        data={block}
-                        bank={bank}
-                    />
-
+                case 'banners.long-form-banners-component':
+                    return <LongFormBanner key={block.id} data={block} bank={bankData} product={productData} />
                 case 'form-components.long-form-component-new':
-                    return <LongForm key={block.id} data={block} bank={bank} />
+                    return <LongForm key={block.id} data={block} />
             }
         })
     }
 
+    if (!props.data || !props.bankData) {
+        if (typeof window !== 'undefined') {
+            const { primaryPath } = router.query
+            const pathname = `/${primaryPath}`
+            router.push({ pathname })
+            return <div className="interim-class">
+                <div className="page-not-found_center_msg">
+                    <h2>Page Not Found</h2>
+                    <p>redirecting to {primaryPath.split('-').join(' ').slice(0, -1)} page ...</p>
+                </div>
+            </div>
+        }
+    }
+
     return (
         <div className="long-form">
-            {props.data ? <Layout>{getComponents(props.data.dynamic, props.bank)}</Layout> : null}
+            <div className="mobile-background"></div>
+            {props.data ? <Layout>
+                <section className="long-form-wrapper">
+                    {getComponents(props.data.dynamic, props.bankData, props.productData)}
+                </section>
+            </Layout> : null}
+
         </div>
     )
 }
@@ -38,23 +58,34 @@ export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const { query } = ctx
     const { primaryPath, longFormBank, longFormProduct } = query
-    
-    const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-long-form`)
-    const bankData = await strapi.processReq('GET', `banks?slug=${longFormBank}`)
+    let data = null
+    let bankData = null
+    let productData = null
 
-    const productSearch = getLongFormSearchParams(primaryPath, longFormProduct)
+    const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${longFormBank}-long-form`)
 
-    console.log('productSearch: ', productSearch)
-    const productData = await strapi.processReq('GET', `credit_card_products?product_type=${longFormProduct}`)
-    
-    // const productSearch = getDetailsSearchParams(primaryPath, longFormBank, longFormProduct)
-    // const productData = await strapi.processReq('GET', productSearch)
+    if (!pageData.length) {
+        return { props: { data: null } }
+    }
 
-    console.log('productData:: ', productData)
-    const data = pageData[0]
-    const bank = bankData[0]
-    
-    return { props: { data, bank } }
+    data = pageData[0]
+
+    const search = getDetailsSearchParams(primaryPath, longFormBank, longFormProduct)
+    const detailsData = await strapi.processReq('GET', search)
+    const details = detailsData ? detailsData[0] : null
+    bankData = details ? details.bank : null
+
+    console.log(2)
+
+    const creditCardProductData = details ? details.credit_card_product ? details.credit_card_product : null : null
+    const personalLoanProductData = details ? details.personal_loan_product ? details.personal_loan_product : null : null
+    const homeLoanProductData = details ? details.home_loan_product ? details.home_loan_product : null : null
+    productData = creditCardProductData || personalLoanProductData || homeLoanProductData
+
+    console.log(3)
+
+    return { props: { data, bankData, productData } }
+
 }
 
 export default LongFormProduct

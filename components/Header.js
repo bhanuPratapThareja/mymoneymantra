@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Strapi from '../providers/strapi'
 import { useEffect, useState, useRef } from 'react'
 import { isScrolledIntoView } from '../utils/elementInView'
+import { getDevice } from '../utils/getDevice';
 
 const Header = () => {
    const strapi = new Strapi()
@@ -24,31 +25,35 @@ const Header = () => {
          })
 
 
+
          if (!longFormBanner) {
             longFormBanner = document.getElementById('longFormBanner')
             longForm = document.getElementById('longForm')
          } else {
-            if (longForm && longFormBanner) {
-               const longFormOffset = longForm.offsetTop
-               const longFormHeight = longForm.clientHeight
-               const longFormBottomPos = longFormOffset + longFormHeight
-               const windowOffsetForBannerStop = longFormBottomPos - longFormBanner.clientHeight
+            if (getDevice() === 'desktop') {
+               if (longForm && longFormBanner) {
+                  const longFormOffset = longForm.offsetTop
+                  const longFormHeight = longForm.clientHeight
+                  const bannerOffset = longFormBanner.offsetTop
+                  const bannerHeight = longFormBanner.clientHeight
 
-               // console.log(window.pageYOffset, longFormOffset)
+                  if (window.pageYOffset >= longFormOffset && window.pageYOffset < longFormOffset + longFormHeight) {
+                     longFormBanner.style.position = 'fixed'
+                     longFormBanner.style.marginTop = `${20}px`
+                     longForm.classList.add('banner-sticky')
+                     longFormBanner.classList.add('banner-sticky')
+                  }
 
-               if (window.pageYOffset >= longFormOffset && window.pageYOffset < windowOffsetForBannerStop) {
-                  longFormBanner.classList.add("banner-sticky")
-                  longFormBanner.classList.remove("banner-sticky_bottom")
-               }
+                  if (window.pageYOffset >= longFormOffset + longFormHeight - bannerHeight) {
+                     longFormBanner.style.position = 'absolute'
+                     longFormBanner.style.marginTop = `${longFormHeight - bannerHeight - 20}px`
+                  }
 
-               if (window.pageYOffset >= windowOffsetForBannerStop - 70) {
-                  longFormBanner.classList.remove("banner-sticky")
-                  longFormBanner.classList.add("banner-sticky_bottom")
-               }
-
-               if (window.pageYOffset < longFormOffset) {
-                  longFormBanner.classList.remove("banner-sticky")
-                  longFormBanner.classList.remove("banner-sticky_bottom")
+                  if (window.pageYOffset < longFormOffset) {
+                     longFormBanner.style.position = 'relative'
+                     longForm.classList.remove('banner-sticky')
+                     longFormBanner.classList.remove('banner-sticky')
+                  }
                }
             }
          }
@@ -110,6 +115,137 @@ const Header = () => {
             <a className="header-menu-icon" id="menu-icon">
                <img src="/assets/images/icons/menu.svg" alt="menu" />
             </a>
+
+            <section className="menu-login">
+               <div className="main">
+                  <img className="menu-close" src="/assests/images/icons/cross.svg" />
+                  <div className="profile">
+                     <div className="image">
+                        <img src="/assests/images/icons/profile.svg" />
+                        <div className="hello">
+                           <h2>Hello,</h2>
+                           <h2 className="name">Shubham!</h2>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div className="content">
+                  <div className="content-wrapper">
+                     <a href="#">
+                        <div className="data">
+                           <img src="build/images/menu/login.svg" />
+                           <h5>My Profile</h5>
+                        </div>
+                     </a>
+                     <a href="#">
+                        <div className="data">
+                           <img src="build/images/menu/credit.svg" />
+                           <h5>My Credit Score</h5>
+                        </div>
+                     </a>
+
+                  </div>
+                  <div className="content-wrapper">
+                     <a href="#">
+                        <div className="data">
+                           <img src="build/images/menu/credit.svg" />
+                           <h5>My Credit Score</h5>
+                        </div>
+                     </a>
+                     <div className="data data-expand">
+                        <div className="content-wraps">
+                           <div className="data-expand-wrap">
+                              <img src="build/images/menu/loans.svg" />
+                              <h5>Loans</h5>
+                           </div>
+                           <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                 d="M14.83 12.036l-4.24-4.24a1 1 0 10-1.42 1.41l3.54 3.54-3.54 3.54a1 1 0 000 1.41 1 1 0 00.71.29 1 1 0 00.71-.29l4.24-4.24a1.002 1.002 0 000-1.42z"
+                                 fill="#fff" /></svg>
+                        </div>
+                        <div className="sub-data">
+                           <a href="https://www.google.com">
+                              <div className="data">
+                                 <img src="build/images/menu/credit.svg" />
+                                 <h5>Sub data 1</h5>
+                              </div>
+                           </a>
+                           <a href="#">
+                              <div className="data">
+                                 <img src="build/images/menu/credit.svg" />
+                                 <h5>Sub data 2</h5>
+                              </div>
+                           </a>
+                        </div>
+                     </div>
+                     <div className="data data-expand">
+                        <div className="content-wraps">
+                           <div className="data-expand-wrap">
+                              <img src="build/images/menu/insurance.svg" />
+                              <h5>Insurances</h5>
+                           </div>
+                           <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                 d="M14.83 12.036l-4.24-4.24a1 1 0 10-1.42 1.41l3.54 3.54-3.54 3.54a1 1 0 000 1.41 1 1 0 00.71.29 1 1 0 00.71-.29l4.24-4.24a1.002 1.002 0 000-1.42z"
+                                 fill="#fff" /></svg>
+                        </div>
+                        <div className="sub-data">
+                           <a href="#">
+                              <div className="data">
+                                 <img src="build/images/menu/credit.svg" />
+                                 <h5>Sub data 3</h5>
+                              </div>
+                           </a>
+                           <a href="#">
+                              <div className="data">
+                                 <img src="build/images/menu/credit.svg" />
+                                 <h5>Sub data 4</h5>
+                              </div>
+                           </a>
+                        </div>
+                     </div>
+
+                     <div className="data data-expand">
+                        <div className="content-wraps">
+                           <div className="data-expand-wrap">
+                              <img src="build/images/menu/tools.svg" />
+                              <h5>Financial Tools</h5>
+                           </div>
+                           <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                 d="M14.83 12.036l-4.24-4.24a1 1 0 10-1.42 1.41l3.54 3.54-3.54 3.54a1 1 0 000 1.41 1 1 0 00.71.29 1 1 0 00.71-.29l4.24-4.24a1.002 1.002 0 000-1.42z"
+                                 fill="#fff" /></svg>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div className="content-wrapper">
+                     <a href="#">
+                        <div className="data">
+                           <img src="build/images/menu/blogs.svg" />
+                           <h5>Blogs</h5>
+                        </div>
+                     </a>
+                     <a href="#">
+                        <div className="data">
+                           <img src="build/images/menu/support.svg" />
+                           <h5>Support</h5>
+                        </div>
+                     </a>
+
+                  </div>
+
+                  <div className="content-wrapper">
+                     <a href="#">
+                        <div className="data">
+                           <img src="build/images/menu/logout.svg" />
+                           <h5>Logout</h5>
+                        </div>
+                     </a>
+                  </div>
+               </div>
+            </section>
+            
             <Link href="/">
                <a>
                   <img

@@ -5,7 +5,7 @@ import { getBase64, documentUpload, generateLead } from '../services/formService
 import { getFormattedName } from './formatDataForApi'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel', 'phone_no',
-    'input_with_dropdown', 'input_with_calendar', 'upload_button']
+    'input_with_dropdown', 'input_with_calendar',]
 
 export const getCurrentSlideInputs = state => {
     const newSlides = [...state.slides]
@@ -14,7 +14,7 @@ export const getCurrentSlideInputs = state => {
     return { newSlides, inputs }
 }
 
-export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
+export const handleChangeInputs = (inputs, field, submitButtonDisabled) => {
     let inputDropdown = null
     return new Promise((resolve) => {
         if (field.type === 'checkbox') {
@@ -24,7 +24,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                         if (box.input_id === field.name) {
                             box.value = field.checked
                             if (box.end_point_name === 'tnc') {
-                                letsGoButtonDisabled = !field.checked
+                                submitButtonDisabled = !field.checked
                             }
                         }
                     })
@@ -34,7 +34,6 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
                     let { listType, masterName } = getApiToHit(inp.search_for)
-                    inp.selectedId = null
                     if (!field.value) {
                         inp.value = field.value
                         inp.selectedItem = null
@@ -57,29 +56,39 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                 }
             })
         } else if (field.type === 'upload_button') {
+            let error = false
+            let errorMsg = ''
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
-                    console.log(field)
 
-                    inp.value = field.value
-                    inp.attachment = field.attachment
+                    if (field.value && inp.number_of_uploads && field.value.length > inp.number_of_uploads) {
+                        field.value = null
+                        field.error = true
+                        field.errorMsg = `Number of attachments allowed: ${inp.number_of_uploads}`
+                    }
 
-                    // if (field.value && inp.number_of_uploads && field.value.length > inp.number_of_uploads) {
-                    //     field.value = null
-                    //     alert(`Number of attachments allowed: ${inp.number_of_uploads}`)
-
-                    // } else if (field.value && field.value.length && inp.max_upload_size_in_mb) {
+                    // if (field.value && field.value.length && inp.max_upload_size_in_mb) {
+                    //     console.log(field.value)
+                    //     console.log(field.value.length)
                     //     for (let i = 0; i < field.value.length; i++) {
                     //         const file = field.value[i]
                     //         const size = file.size / 1024 / 1024
                     //         if (size > inp.max_upload_size_in_mb) {
                     //             field.value = null
-                    //             alert(`Maximum upload size: ${inp.max_upload_size_in_mb} Mb`)
-                    //             break
+                    //             field.error = true
+                    //             field.errorMsg = `Maximum file size: ${inp.max_upload_size_in_mb} Mb`
                     //         }
                     //     }
-                    // } 
+                    // }
 
+                    inp.value = field.value
+                    inp.attachment = field.attachment
+                    inp.error = field.error
+                    inp.errorMsg = field.errorMsg
+
+                    // if(inp.error) {
+                    inp.verified = false
+                    // }
 
                 }
             })
@@ -88,6 +97,7 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
             inputs.forEach(inp => {
                 if (inp.input_id === field.name) {
                     inp.value = field.value
+                    inp.verified = true
 
                     // special case
 
@@ -102,9 +112,11 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                                     secondary.mandatory = false
                                     secondary.error = false
                                     secondary.errorMsg = ''
+                                    secondary.verified = false
                                 } else {
                                     secondary.selectedId = null
                                     secondary.mandatory = true
+                                    secondary.verified = false
                                 }
                             }
                         })
@@ -118,11 +130,14 @@ export const handleChangeInputs = (inputs, field, letsGoButtonDisabled) => {
                     inp.value = field.value
                     if (inp.type === 'pan_card' && inp.value) {
                         inp.value = inp.value.toUpperCase()
+                        inp.error = false
+                        inp.errorMsg = ''
+                        inp.verified = false
                     }
                 }
             })
         }
-        resolve({ newstate: { letsGoButtonDisabled, inputDropdown } })
+        resolve({ newstate: { submitButtonDisabled, inputDropdown } })
     })
 }
 
@@ -252,7 +267,6 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                 inp.error = false
                 inp.errorMsg = ''
                 inp.verified = true
-
             }
 
         })
@@ -292,26 +306,41 @@ export const updateDropdownList = (inputs, listType, list, input_id) => {
     })
 }
 
-export const updateSelectionFromDropdown = (inputs, name, item) => {
-    let update_field_with_input_id = ''
+export const updateSelectionFromDropdown = (inputs, input_id, item) => {
+    let update_field_with_end_point_name = ''
 
     inputs.forEach(inp => {
-        if (inp.input_id === name) {
-            update_field_with_input_id = inp.update_field_with_input_id
+        if (inp.input_id === input_id) {
+            update_field_with_end_point_name = inp.update_field_with_end_point_name
             inp.list = []
-            inp.value = item.name
-            inp.selectedId = item.id
-            inp.selectedItem = item.selectedItem
+            inp.value = item[inp.select_name]
+            inp.selectedId = item[inp.select_id]
+            inp.selectedItem = item
             inp.error = false
             inp.verified = true
         }
 
-        if (inp.end_point_name === update_field_with_input_id) {
-            inp.value = item.selectedItem.cityName
-            inp.selectedId = item.selectedItem.cityId
-            inp.selectedItem = item.selectedItem
-            inp.error = false
-            inp.verified = true
+        // inp.selectedItem = item.selectedItem
+        // inp.error = false
+        // inp.verified = true
+        // // if (inp.search_for === 'city') {
+        //     inp.value = item.select_name
+        //     inp.selectedId = item.select_id
+        // //}
+
+        if (inp.end_point_name === update_field_with_end_point_name) {
+            inputs.forEach(dependentInput => {
+                if (dependentInput.end_point_name == update_field_with_end_point_name) {
+                    dependentInput.selectedItem = item
+                    dependentInput.error = false
+                    dependentInput.verified = true
+                    // if (inp.search_for === 'city') {
+                        dependentInput.value = item[dependentInput.select_name]
+                        dependentInput.selectedId = item[dependentInput.select_id]
+                    //}
+
+                }
+            })
         }
     })
 }
@@ -369,7 +398,7 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
         slides.forEach(slide => {
             if (slide.slideId === currentSlide) {
                 slide.inputs.forEach(input => {
-                    if (input.attachment) {
+                    if (input.attachment && input.value && input.value.length) {
                         for (let i = 0; i < input.value.length; i++) {
                             const file = input.value[i]
                             submitDocument(file)
@@ -393,7 +422,6 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
                 resolve(res)
             })
             .catch((err) => {
-                console.log(err)
                 reject('Error while Submitting. Please try again.')
             })
     })
@@ -447,14 +475,14 @@ export const showSlides = (n, slideIndex) => {
         return true
     }
 
-    if (slideIndex === slides.length) {
-        $("#button-text").text("Submit and view offers").css("color", "#89C142");
-        $("#next").addClass("submit-short-form");
+    // if (slideIndex === slides.length) {
+    //     $("#button-text").text("Submit and view offers").css("color", "#89C142");
+    //     $("#next").addClass("submit-short-form");
 
-    } else {
-        $("#button-text").text("Next").css("color", "#221F1F");
-        $("#next").removeClass("submit-short-form");
-    }
+    // } else {
+    //     $("#button-text").text("Next").css("color", "#221F1F");
+    //     $("#next").removeClass("submit-short-form");
+    // }
 
     if (n < 1) {
         if (slideIndex) {

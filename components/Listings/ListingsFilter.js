@@ -9,33 +9,28 @@ class ListingFilter extends React.Component {
     }
 
     componentDidMount() {
-        const { checkboxes, filter_radio_name,
+        const { filter_radio_name,
             filter_fee_annual, filter_emi,
             filter_tenure, filter_roi, filter_max_loan_amount } = this.props.filters
 
-            // if(this.props.banksList.lenth){
-            //     this.props.banksList.forEach(bank => {
+        const updatedCheckboxes = [...this.props.filters.checkboxes]
 
-            //     })
-            // }
-
-            if (checkboxes.length) {
-            checkboxes.forEach((block, i) => {
+        if (updatedCheckboxes.length) {
+            updatedCheckboxes.forEach((block, i) => {
                 if (block.type === 'banks') {
                     const values = block.values.filter(value => {
                         return this.props.banksList.includes(value.tag)
                     })
-                    // console.log(values)
-                    
-                    checkboxes[i].values = values
+
+                    updatedCheckboxes[i].values = values
                 }
+
                 block.showCheckboxes = this.state.showCheckboxes
                 block.totalCheckboxes = block.values.length
                 block.veiwAll = block.values.length > this.state.showCheckboxes
-
             })
 
-            this.setState({ checkboxes })
+            this.setState({ checkboxes: updatedCheckboxes })
         }
 
         if (filter_radio_name.length) {
@@ -50,13 +45,11 @@ class ListingFilter extends React.Component {
             initializeYearRange(filter_tenure, 'tenure-range')
         })
 
-        setTimeout(() => {
-            console.log(this.state)
-        }, 1000);
     }
 
     handleCheckbox = (e, type) => {
         const { name, checked } = e.target
+        console.log(e, type)
         const selectedCheckboxes = this.state.filters[type] ? this.state.filters[type] : []
         if (checked) {
             selectedCheckboxes.push(name)
@@ -117,18 +110,19 @@ class ListingFilter extends React.Component {
 
                         <form>
                             {checkboxes && checkboxes.length ? <>
-                                {checkboxes.map(checkboxes => {
+                                {checkboxes.map(checkboxGroup => {
                                     return (
-                                        <div className="content-one" key={checkboxes.id}>
-                                            <h5>{checkboxes.name}</h5>
+                                        <div className="content-one" key={checkboxGroup.id}>
+                                            <h5>{checkboxGroup.name}</h5>
                                             <div className="fields-wrapper">
-                                                {checkboxes.values.map((checkbox, i) => {
-                                                    if (i + 1 <= checkboxes.showCheckboxes) {
+                                                {checkboxGroup.values.map((checkbox, i) => {
+                                                    if (i + 1 <= checkboxGroup.showCheckboxes) {
+                                                        console.log(i, checkbox)
                                                         return (
                                                             <div className="checkbox-container" key={checkbox.id}>
                                                                 <div className="checkbox">
-                                                                    <input type="checkbox" id={`f-checkbox-${i}`} name={checkbox.tag} onChange={e => this.handleCheckbox(e, checkboxes.type)} />
-                                                                    <label htmlFor={`f-checkbox-${i}`}><span>{checkbox.checkbox_name}</span></label>
+                                                                    <input type="checkbox" id={checkbox.tag} name={checkbox.tag} onChange={e => this.handleCheckbox(e, checkboxGroup.type)} />
+                                                                    <label htmlFor={checkbox.tag}><span>{checkbox.checkbox_name}</span></label>
                                                                 </div>
                                                             </div>
                                                         )
@@ -152,7 +146,7 @@ class ListingFilter extends React.Component {
                                 })}
                             </> : null}
 
-                            {filter_fee_annual && filter_fee_annual.enable  ? <div className="content-one">
+                            {filter_fee_annual && filter_fee_annual.enable ? <div className="content-one">
                                 <h5>{filter_fee_annual.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">
@@ -173,7 +167,7 @@ class ListingFilter extends React.Component {
                                 </div>
                             </div> : null}
 
-                            {filter_emi && filter_emi.enable  ? <div className="content-one">
+                            {filter_emi && filter_emi.enable ? <div className="content-one">
                                 <h5>{filter_emi.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">

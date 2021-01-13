@@ -21,7 +21,7 @@ const Layout = props => {
             <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
             <script src='/assets/js/vendors/aos.js'></script>
             <script src='/assets/js/vendors/noUI.js'></script>
-            <script src='/assets/js/vendors/slick.js'></script>
+            {/* <script src='/assets/js/vendors/slick.js'></script> */}
         </>
     )
 }

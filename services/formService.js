@@ -1,10 +1,13 @@
 import axios from 'axios'
+import Strapi from '../providers/strapi'
 import { getApiData } from '../api/api'
 import { getLeadId } from '../utils/localAccess'
 import { getFormattedDate } from '../utils/formatDataForApi'
 const CancelToken = axios.CancelToken
 let cancel
 let otpId = ''
+
+const strapi = new Strapi()
 
 export const getOtp = mobileNo => {
     const { url, body } = getApiData('otp')
@@ -92,61 +95,117 @@ export const getBase64 = file => {
 
 export const generateLead = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
-        const { url, body } = getApiData('generate')
-        const { fullName, dob, pan, mobile, email, applicantType,
-            companyId, netMonthlyIncome, bankId, addressline1, addressline2, pincode, requestedLoanamount,
-            gender, maritalStatus, nationality, ffName
+        let { url, body } = getApiData('orchestration')
+        body = JSON.parse(JSON.stringify(body))
+        const { fullName, dob, pan, mobile, email, applicantType, title,
+            companyId, netMonthlyIncome, bankId,
+            requestedLoanamount, propertyType, other_city_property_location,
+            gender, maritalStatus, nationality, salaryBankName, otherCompany,
+            fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
+            addressline1, addressline2, pincode, city, nearByLandmark,
+            officeAddressLine1, officeAddressLine2, officeNearBy, officePincode, officeCity,
+            city_location, cost_of_property
         } = data
-
-        const leadId = getLeadId(primaryPath)
-
+ 
         body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = getFormattedDate(dob)
         body.request.payload.personal.pan = pan
         body.request.payload.personal.gender = gender
         body.request.payload.personal.maritalStatus = maritalStatus
         body.request.payload.personal.nationality = nationality
-        body.request.payload.personal.ffName = ffName
+
+        body.request.payload.work.preferedComm = preferedComm;
+        body.request.payload.work.director = director;
+        body.request.payload.work.jointAccHolder = jointAccHolder;
+
 
         body.request.payload.contact.mobile[0].mobile = mobile
         body.request.payload.contact.email[0].email = email
 
+        if (fathersFirstName && fathersLastName) {
+            body.request.payload.contact.keyContact[0].caseContactMasterId = "5";
+            body.request.payload.contact.keyContact[0].caseContactName = fathersFirstName + " " + fathersLastName;
+        }
+        else {
+            body.request.payload.contact.keyContact[0].caseContactMasterId = "";
+            body.request.payload.contact.keyContact[0].caseContactName = "";
+        }
+
+        if (mothersFirstName && mothersLastName) {
+            body.request.payload.contact.keyContact[1].caseContactMasterId = "16";
+            body.request.payload.contact.keyContact[1].caseContactName = mothersFirstName + " " + mothersLastName;
+        }
+        else {
+            body.request.payload.contact.keyContact[1].caseContactMasterId = "";
+            body.request.payload.contact.keyContact[1].caseContactName = "";
+        }
+
         body.request.payload.work.applicantType = applicantType
-        body.request.payload.work.companyId = companyId ? companyId.caseCompanyId : '1000000001'
+        body.request.payload.work.companyId = companyId ? companyId.caseCompanyId : ''
         body.request.payload.work.netMonthlyIncome = netMonthlyIncome
 
-        // body.request.payload.bankId = bankId ? bankId.bankId : ''
+        body.request.payload.bankId = bankId ? bankId.bankId : "";
+        // body.request.payload.work.otherCompany = otherCompany ? otherCompany.companyName : ""
 
-        body.request.payload.leadId = leadId
+
+        body.request.payload.leadId = getLeadId(primaryPath)
+        // console.log('body.request.payload.leadId',body.request.payload.leadId)
         body.request.payload.productId = localStorage.getItem('productId')
         body.request.payload.requestedLoanamount = requestedLoanamount
 
         
-        if (!addressline1 && !addressline2 && !pincode) {
-            body.request.payload.address[0] = {}
-        } else {
-            body.request.payload.address[0].addressTypeMasterId = "1000000001"
-            body.request.payload.address[0].addressline1 = addressline1
-            body.request.payload.address[0].addressline2 = addressline2
-            body.request.payload.address[0].city = pincode ? pincode.cityId : ''
-            body.request.payload.address[0].state = pincode ? pincode.stateId : ''
-            body.request.payload.address[0].pincode = pincode ? pincode.pincode : ''
-        }
 
-        console.log(body.request.payload)
+        // for residence
+
+       // console.log('for resi add pincode', pincode);
+        body.request.payload.address[0].addressTypeMasterId = "1000000001"
+        body.request.payload.address[0].addressline1 = addressline1
+        body.request.payload.address[0].addressline2 = addressline2
+        body.request.payload.address[0].landmark = nearByLandmark
+
+        body.request.payload.address[0].pincode = pincode ? pincode.pincode : "";
+        body.request.payload.address[0].city = pincode ? pincode.cityId : "";
+        body.request.payload.address[0].state = pincode ? pincode.stateId : ''
+
+
+        // for office address
+       // console.log('for office add  officePincode', officePincode)
+        body.request.payload.address[1].addressTypeMasterId = "1000000002"
+        body.request.payload.address[1].addressline1 = officeAddressLine1
+        body.request.payload.address[1].addressline2 = officeAddressLine2
+        body.request.payload.address[1].landmark = officeNearBy
+        body.request.payload.address[1].pincode = officePincode ? officePincode.pincode : ""
+        body.request.payload.address[1].city = officePincode ? officePincode.cityId : ""
+        body.request.payload.address[1].state = officeNearBy ? officePincode.stateId:""
+
+        // for property 
+        body.request.payload.address[2].addressTypeMasterId = "1000000004"
+        body.request.payload.address[2].city = city_location;
+        //body.request.payload.address[1].state = pincode ? pincode.stateId : ''
+        body.request.payload.address[2].propertyValue = cost_of_property
 
         axios.post(url, body)
             .then(res => {
                 resolve(res)
             })
             .catch(err => {
-                // console.log('err gl: ', err)
                 reject(err)
             })
     })
+
     return promise
 }
 
+export const orchestrationApi = async(body) => {
+    const { url } = getApiData('orchestration')
+    try {
+        const res = axios.post(url, body)
+    }
+    catch (error) {
+
+    }
+
+}
 export const getPinCodeData = async (name, value) => {
     const { url, body } = getApiData('pincode');
     body.request.payload.name = value;
@@ -169,7 +228,7 @@ export const getCityData = async (name, value) => {
 }
 
 export const updateLongForm = async data => {
-    const { url, body } = getApiData('generate')
+    const { url, body } = getApiData('orchestration')
 
     try {
         const res = await axios.post(url, body)
@@ -182,3 +241,17 @@ export const updateLongForm = async data => {
 }
 
 
+export const getProductAndBank = async (data, primaryPath, longFormProduct) => {
+    let productData = await strapi.processReq('GET', `credit_card_product?slug=${longFormProduct}`)
+}
+
+export const sendNotification = async (leadIdSendNotification) => {
+    console.log('in forservices leadIdSendNotification',leadIdSendNotification)
+    const { url, body } = getApiData('sendNotification')
+    body.request.payload.leadId = leadIdSendNotification;
+    body.request.payload.actionName = "Short Form Submit";
+    try {
+        const res = await axios.post(url, body)
+        return res;
+    } catch (error) { }
+}

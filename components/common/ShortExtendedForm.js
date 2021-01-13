@@ -4,8 +4,11 @@ import OnBoardForm from '../ShortForm/OnBoardForm/OnBoardForm'
 import OtpSlide from '../ShortForm/OtpForm/OtpSlide'
 import SFSlides from '../ShortForm/SFSlides/SFSlides'
 import { getDropdownList } from '../../services/formService'
-import { getOtp, submitOtp } from '../../services/formService'
+import { getOtp, submitOtp, sendNotification } from '../../services/formService'
 import { getDevice } from '../../utils/getDevice'
+import axios from 'axios'
+import { getApiData } from '../../api/api';
+import { setLeadId } from '../../utils/localAccess'
 import {
     textTypeInputs,
     getCurrentSlideInputs,
@@ -30,13 +33,14 @@ class ShortExtendedForm extends React.Component {
     state = {
         slideIndex: 0,
         currentSlide: 'onboard',
-        letsGoButtonDisabled: true,
+        submitButtonDisabled: true,
         slides: [],
         defaultOtpTime: 10,
         otpTimeLeft: 0,
         errorMsgs: {
             mandatory: 'Required Field'
-        }
+        },
+        slideButtonText: 'Next'
     }
 
     decrementOtpTime = () => {
@@ -50,7 +54,19 @@ class ShortExtendedForm extends React.Component {
         // })
     }
 
-    setInputsInState = (inputsArray, slideId, heading) => {
+    scrollToTopOfSlide = () => {
+        const shortFormEl = document.getElementsByClassName('lets-find-container')
+        if (shortFormEl.length) {
+            if (getDevice() === 'desktop') {
+                const shortFormElOffset = shortFormEl[0].offsetTop - 100
+                window.scrollTo({ top: shortFormElOffset, behavior: 'smooth' })
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+            }
+        }
+    }
+
+    setInputsInState = (inputsArray, slideId, heading, slideClass) => {
         if (getDevice() !== 'desktop') {
             const letsFindContaiiner = document.getElementsByClassName('lets-find-container')[0]
             const uspCardsContainer = document.getElementsByClassName('banner-features-container')[0]
@@ -62,7 +78,6 @@ class ShortExtendedForm extends React.Component {
             }
         }
 
-
         let formInputs = []
         let slides = [...this.state.slides]
         inputsArray.forEach(item => {
@@ -73,7 +88,7 @@ class ShortExtendedForm extends React.Component {
             }
             formInputs.push(item)
         })
-        let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading }]
+        let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading, slideClass }]
         this.setState({ ...this.state, slides: [...upDatedSlides] })
     }
 
@@ -88,7 +103,8 @@ class ShortExtendedForm extends React.Component {
                 let slideId = `sf-${slideNo}`
                 const fields = slide.onboard_form_slide.fields
                 const heading = slide.onboard_form_slide.heading
-                this.setInputsInState(fields, slideId, heading)
+                const slideClass = slide.onboard_form_slide.slide_class
+                this.setInputsInState(fields, slideId, heading, slideClass)
                 slideNo++
             }, 500)
         })
@@ -96,10 +112,10 @@ class ShortExtendedForm extends React.Component {
 
     onGoToLetFindForm = () => {
         this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
-            loadLetsFindForm()
-            if (this.otpInterval) {
-                clearInterval(this.otpInterval)
-            }
+            this.scrollToTopOfSlide()
+            setTimeout(() => {
+                loadLetsFindForm()
+            }, 500);
         })
     }
 
@@ -107,17 +123,15 @@ class ShortExtendedForm extends React.Component {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
         this.setState({ ...this.state, slides: newSlides }, async () => {
+            this.scrollToTopOfSlide()
             if (!errorsPresent) {
                 try {
                     const mobileNo = getUserMobileNumber(this.state.slides[0])
                     this.setState({ mobileNo })
                     getOtp(mobileNo)
-                    // const { otpId } = await getOtp(mobileNo)
-                    // this.setState({ otpId })
-                    letsFindFormToOtpForm()
                     setTimeout(() => {
-                        this.decrementOtpTime()
-                    }, 2000)
+                        letsFindFormToOtpForm()
+                    }, 250)
                 } catch (err) {
                     alert(err.message)
                 }
@@ -133,6 +147,8 @@ class ShortExtendedForm extends React.Component {
             })
         } catch (err) {
             alert(err.message)
+        } finally {
+            this.scrollToTopOfSlide()
         }
     }
 
@@ -140,8 +156,12 @@ class ShortExtendedForm extends React.Component {
         const primaryPath = this.state.primaryPath
         try {
             const res = await submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
+            const leadIdSendNotification = res.data.response.payload.leadId;
+            setLeadId(primaryPath, res.data.response.payload.leadId)
             const leadIdData = JSON.parse(localStorage.getItem('leadId'))
             const leadId = { ...leadIdData, [primaryPath]: res.data.response.payload.leadId }
+            sendNotification(leadIdSendNotification);
+            console.log('in short ext form leadIdSendNotification', leadIdSendNotification)
             localStorage.setItem('leadId', JSON.stringify(leadId))
             goToSlides()
         } catch (err) {
@@ -149,14 +169,16 @@ class ShortExtendedForm extends React.Component {
         }
     }
 
-
     onSubmitSlide = () => {
         this.plusSlides(1)
     }
 
     onGoToPrevious = () => {
         if (this.state.slideIndex === 1) {
-            loadOtpForm()
+            this.scrollToTopOfSlide()
+            setTimeout(() => {
+                loadOtpForm()
+            }, 500)
             return
         }
         this.plusSlides(-1)
@@ -170,7 +192,10 @@ class ShortExtendedForm extends React.Component {
                 if (!errorsPresent) {
                     const newSlideId = incrementSlideId(this.state.currentSlide)
                     if (this.state.slideIndex < this.state.slides.length - 1) {
-                        this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId }, () => {
+                        this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId, }, () => {
+                            if (this.state.slideIndex === this.state.slides.length - 1) {
+                                this.setState({ slideButtonText: 'Submit and view offers' })
+                            }
                             showSlides(n, this.state.slideIndex)
                         })
                     } else {
@@ -180,16 +205,21 @@ class ShortExtendedForm extends React.Component {
             })
         } else {
             const newSlideId = decrementSlideId(this.state.currentSlide)
-            this.setState({ slideIndex: this.state.slideIndex - 1, currentSlide: newSlideId }, () => {
+            this.setState({
+                slideIndex: this.state.slideIndex - 1,
+                currentSlide: newSlideId, slideButtonText: 'Next'
+            }, () => {
                 showSlides(n, this.state.slideIndex)
             })
         }
+
+        this.scrollToTopOfSlide()
 
     }
 
     handleChange = async field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const { newstate: { letsGoButtonDisabled, inputDropdown } } = await handleChangeInputs(inputs, field, this.state.letsGoButtonDisabled)
+        const { newstate: { submitButtonDisabled, inputDropdown } } = await handleChangeInputs(inputs, field, this.state.submitButtonDisabled)
         if (inputDropdown) {
             const { listType, masterName, inp } = inputDropdown
             const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
@@ -200,7 +230,7 @@ class ShortExtendedForm extends React.Component {
                 }), 500)
             debouncedSearch(listType, inp.value, masterName)
         }
-        this.setState({ ...this.state, slides: newSlides, letsGoButtonDisabled }, () => {
+        this.setState({ ...this.state, slides: newSlides, submitButtonDisabled }, () => {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
             }
@@ -215,9 +245,9 @@ class ShortExtendedForm extends React.Component {
         this.setState({ ...this.state, slides: newSlides })
     }
 
-    handleInputDropdownSelection = (name, type, item) => {
+    handleInputDropdownSelection = (input_id, type, item) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        updateSelectionFromDropdown(inputs, name, item)
+        updateSelectionFromDropdown(inputs, input_id, item)
         this.setState({ ...this.state, slides: newSlides })
     }
 
@@ -234,22 +264,21 @@ class ShortExtendedForm extends React.Component {
     }
 
     onSubmitShortForm = submit => {
-        // console.log(submit)
         const primaryPath = this.state.primaryPath
         submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
         if (submit) {
-            // console.log(submit)
             this.props.router.push(`/${primaryPath}/listings`)
         }
     }
 
     render() {
+        const { onboard_short_form_mobile_view_heading } = this.props.data.onboard_short_form
         return (
             <section data-aos="fade-up" className="container lets-find-container aos-init">
 
                 <div className="mobile-background"></div>
                 <div className="mobile-content">
-                    <h1>Credit cards for<br />all your needs.</h1>
+                    <div className="cstm-heading" dangerouslySetInnerHTML={{ __html: onboard_short_form_mobile_view_heading }}></div>
                 </div>
 
                 <div className="all-form-wrapper">
@@ -259,7 +288,7 @@ class ShortExtendedForm extends React.Component {
                         handleChange={this.handleChange}
                         checkInputValidity={this.checkInputValidity}
                         onClickLetsGo={this.onClickLetsGo}
-                        letsGoButtonDisabled={this.state.letsGoButtonDisabled}
+                        submitButtonDisabled={this.state.submitButtonDisabled}
                     />
 
                     <div className="lets-find-forms-container sms-otp" id="sms-otp">
@@ -287,6 +316,7 @@ class ShortExtendedForm extends React.Component {
                             handleClickOnSlideBackground={this.handleClickOnSlideBackground}
                             onGoToPrevious={this.onGoToPrevious}
                             onSubmitSlide={this.onSubmitSlide}
+                            slideButtonText={this.state.slideButtonText}
                             onSubmitShortForm={this.onSubmitShortForm}
                         />
                     </div>

@@ -1,7 +1,4 @@
-import MaskedInput from 'react-maskedinput'
-import { properties } from '../api/dropdownApiConfig'
 import { getDevice } from './getDevice'
-import { allowedOtpKeys } from './allowedOtpKeys'
 
 export const generateInputs = (component, updateField,
     checkInputValidity, handleInputDropdownChange, handleInputDropdownSelection) => {
@@ -11,6 +8,7 @@ export const generateInputs = (component, updateField,
         let field = {}
         if (type === 'checkbox') {
             field = { name, checked, type }
+            console.log('checkbox field: ', field)
         } else {
             field = { name, value, type }
             if (type === 'input_with_dropdown') {
@@ -28,9 +26,8 @@ export const generateInputs = (component, updateField,
         checkInputValidity(field)
     }
 
-    const onSelect = (input_id, type, name, id, selectedItem) => {
-        const item = { name, id, selectedItem }
-        handleInputDropdownSelection(input_id, type, item)
+    const onSelect = (input_id, type, selectedItem) => {
+        handleInputDropdownSelection(input_id, type, selectedItem)
     }
 
     const openDatePicker = () => {
@@ -42,7 +39,7 @@ export const generateInputs = (component, updateField,
         setTimeout(() => {
             const datepicker = $(`#${'dob'}`).datepicker()
             const value = datepicker.val()
-            const field = { name, value, type }
+            const field = { name, value, type, blur: true, currentActiveInput: name }
             if (value) {
                 updateField(field)
             }
@@ -75,9 +72,10 @@ export const generateInputs = (component, updateField,
 
     let { type, input_id, placeholder, mandatory, label, value, id,
         checkbox, radio, question, error, errorMsg, verified, list, listType,
-        upload_text, monetary_input, heading } = component
-
-    const borderInputInvalid = { border: '2px solid var(--error-color)' }
+        upload_text, monetary_input, heading, input_class } = component
+    if (!value) value = ''
+    
+    const borderInputInvalid = { border: 'none', boxShadow: '0 0 0 2px var(--error-color)' }
     const borderInputValid = null
     const borderStyles = error ? borderInputInvalid : borderInputValid
 
@@ -117,8 +115,7 @@ export const generateInputs = (component, updateField,
         )
     }
 
-    if (type === 'text' || type === 'email' || type === 'number' || type === 'tel' || type === 'pan_card') {
-        if (!value) value = ''
+    if (type === 'text' || type === 'email' || type === 'number' || type === 'tel'  || type === 'pan_card') {
         const fieldId = `${input_id}_${type}`
         const inputType = type === 'number' ? getDevice() === 'desktop' ? 'number' : 'tel' : type
         return (
@@ -142,7 +139,6 @@ export const generateInputs = (component, updateField,
     }
 
     if (type === 'phone_no') {
-        if (!value) value = ''
         const fieldId = `${input_id}_${type}`
         return (
             <div className={fieldClasses.join(' ')} key={id} id={fieldId}>
@@ -165,11 +161,20 @@ export const generateInputs = (component, updateField,
     }
 
     if (type === 'upload_button') {
+        const { attachment } = component
         const inputFileId = `input_file_${input_id}`
         const fieldId = `${input_id}_${type}`
         let uploadText = value ? value.length === 1 ? value[0].name : value.length + ' files' : upload_text
-        const uploadButtonBorderStyles = upload_text ? { border: '1px solid green !important' } : borderStyles
+        // const uploadedFileStyles = { border: 'none', boxShadow: '0 0 0 2px #89C142' } 
+        const uploadButtonBorderStyles = attachment && !error && !verified ? null : borderStyles
         fieldClasses.push(type)
+        fieldClasses.push('file-type')
+        
+        if(attachment && !error && !verified){
+            fieldClasses.push('file-type-border')
+            fieldClasses.push('file-type-back')
+        }
+        
         return (
             <>
                 <div className={fieldClasses.join(' ')} id={fieldId} style={uploadButtonBorderStyles}>
@@ -178,22 +183,26 @@ export const generateInputs = (component, updateField,
                     {value ? <img src="/assets/images/icons/Attach.svg" onClick={() => document.getElementById(inputFileId).click()} style={{ background: 'red' }} /> : null}
                     {value ? <img src="/assets/images/icons/cross.svg" onClick={() => onUploadAttachment(input_id, type, inputFileId, false)} style={{ background: 'red' }} /> : null}
                     <h5 onClick={() => document.getElementById(inputFileId).click()}>{uploadText} {!mandatory && !value ? <b>(optional)</b> : null}</h5>
-                </div>
-                {error ? <div className='input-error'>
+                    
+                    {error ? <div >
                     <p>{errorMsg}</p>
-                </div> : null}
+                    </div> : null}
+                    
+                </div>
+                
             </>
         )
     }
 
+
     if (type === 'input_with_dropdown') {
-        if (!value) value = ''
-        const { input_type, selectedId, end_point_name } = component
-        const { listName, listItemId, listItemName } = properties(listType)
+        const { input_type, selectedId, dependent, select_name} = component
+
         const fieldId = `${input_id}_${type}`
         const listStyles = list && list.length ? { display: 'block' } : { display: 'none' }
-        const dropDownClass = selectedId === '*' || end_point_name === 'city' || end_point_name === 'officeCity' ? 'disabled_input' : 'dropdown_enabled'
+        const dropDownClass = selectedId === '*' || dependent ? 'disabled_input' : 'dropdown_enabled'
         fieldClasses.push(dropDownClass)
+        fieldClasses.push(input_class)
         return (
             <div className={fieldClasses.join(' ')} id={fieldId} key={id}>
                 <input className="form__field"
@@ -203,7 +212,7 @@ export const generateInputs = (component, updateField,
                     value={value}
                     placeholder={placeholder}
                     autoComplete='off'
-                    disabled={selectedId === '*' || end_point_name === 'city' || end_point_name === 'officeCity'}
+                    disabled={selectedId === '*' || dependent}
                     required={mandatory}
                     onBlur={e => validate(e, type)}
                     onChange={e => handleChange(e, type)}
@@ -218,7 +227,7 @@ export const generateInputs = (component, updateField,
                     <div className="dropdown-content-links">
                         {list && list.map((item, i) => {
                             return (
-                                <a key={i} onClick={() => onSelect(input_id, type, item[listItemName], item[listItemId], item)}>{item[listItemName]}</a>
+                                <a key={i} onClick={() => onSelect(input_id, type, item)}>{item[select_name]}</a>
                             )
                         })}
                     </div>
@@ -228,8 +237,6 @@ export const generateInputs = (component, updateField,
     }
 
     if (type === 'input_with_calendar') {
-        if (!value) value = ''
-
         const fieldId = `${input_id}_${type}`
         return (
             <div className="cstm-cal" id={fieldId}>
@@ -265,6 +272,7 @@ export const generateInputs = (component, updateField,
             <div id={fieldId} className="agree">
                 <div className="checkbox-container" key={id}>
                     {checkbox_input.map(box => {
+                        console.log(box)
                         const boxId = `${box.input_id}_${type}`
                         return (
                             <div key={box.id} className="checkbox" id={boxId}>
@@ -291,7 +299,7 @@ export const generateInputs = (component, updateField,
                 {radio_buttons ? <>
                     <div className="radio-container" key={id} name={input_id} id={radioParentId} required={mandatory}>
                         {radio_buttons.map(button => {
-                            const labelStyles = value === button.value ? { border: '1px solid green' } : null
+                            const labelStyles = value === button.value ? { border:'none', boxShadow: '0 0 0 2px #89C142', color: '#89C142' } : null
                             const radioId = `${input_id}_${type}`
                             return (
                                 <div key={button.id} id={radioId}>

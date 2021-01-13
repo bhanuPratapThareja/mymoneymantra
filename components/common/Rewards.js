@@ -1,15 +1,16 @@
-import { useRouter } from 'next/router'
-
 const Rewards = props => {
-   const router = useRouter()
    const { rewards_heading, rewards_sub_text, rewards_button, rewards_button_url } = props.data.reward
 
-   function onClickRewardsButton(url) {
-      if (router.route.split('/').length <= 2) {
-         window.scrollTo({
-            top: 1000
-         })
-      }
+   const onClickRewardsButton = url => {
+   
+         const shortFormEl = document.getElementsByClassName('lets-find-container')
+       if (shortFormEl.length) {
+          const shortFormElOffset = shortFormEl[0].offsetTop - 85
+          window.scrollTo({ top: shortFormElOffset })
+       } else {
+          window.scrollTo({ top: 0 })
+       }
+     
    }
 
    return (

@@ -72,7 +72,7 @@
     @media (max-width: 320px) {}
 }
 */
-.long-cards-wrapper-card, .long-cards-wrapper-card .top, .banner, .score, .banks, .banks-holder, .file-type, .file-type .upload-real, .mm-modal .mm-modal-wrapper, .mm-modal .mm-modal-wrapper .content form .content-one .shortforms-container .form__group-wrapper, .credit-card-flow .banner, .credit-card-flow .lets-find, .credit-card-flow .lets-find-container, .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper, .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .progress-grey .progress-blue, .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container .form__group-wrapper, .footer .container .bottom, .listings .banner-wrapper, .listings .banner-wrapper .top .category-wrapper .form__group-wrapper, .long-form .long-form-wrapper, .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group-wrapper, .blog-details .blog-detail-wrapper .blog-wrapper-content .comment-section .comment-section-wrapper .comment-wrap .added-comments .user .comment, .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-1-data > .personal-wrapper .personal-forms-wrapper .shortforms-container.gender-style .form__group-wrapper,
+.long-cards-wrapper-card, .long-cards-wrapper-card .top, .banner, .score, .banks, .banks-holder, .file-type, .upload-button, .file-type .upload-real, .mm-modal .mm-modal-wrapper, .mm-modal .mm-modal-wrapper .content form .content-one .shortforms-container .form__group-wrapper, .credit-card-flow .banner, .credit-card-flow .lets-find, .credit-card-flow .lets-find-container, .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper, .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .progress-grey .progress-blue, .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container .form__group-wrapper, .footer .container .bottom, .listings .banner-wrapper, .listings .banner-wrapper .top .category-wrapper .form__group-wrapper, .long-form .long-form-wrapper, .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group-wrapper, .blog-details .blog-detail-wrapper .blog-wrapper-content .comment-section .comment-section-wrapper .comment-wrap .added-comments .user .comment, .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-1-data > .personal-wrapper .personal-forms-wrapper .shortforms-container.gender-style .form__group-wrapper,
 .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-1-data > .personal-wrapper .personal-forms-wrapper .shortforms-container.marital-style .form__group-wrapper, .homepage-flow .homepage-banner, .homepage-flow .banner-content, .homepage-flow .product, .homepage-flow .aboutUs, .homepage-flow .app-download, .financial-tools .emi-calculator .container .emi-calculator-wrapper .ft-content .calculations form .calculation-wrap .buttons-wrap {
   position: relative; }
 
@@ -301,7 +301,8 @@ label {
           margin-top: 16px; }
           .popular-cards-slider .popular-cards-slider-card-top .content ul {
             width: 100%; }
-            .popular-cards-slider .popular-cards-slider-card-top .content ul li {
+            .popular-cards-slider .popular-cards-slider-card-top .content ul li,
+            .popular-cards-slider .popular-cards-slider-card-top .content ul li > span {
               font-size: 0.875rem;
               font-family: "Avenir-Roman";
               line-height: 1.5rem;
@@ -312,7 +313,8 @@ label {
               overflow: hidden;
               text-overflow: ellipsis; }
               @media (max-width: 768px) {
-                .popular-cards-slider .popular-cards-slider-card-top .content ul li {
+                .popular-cards-slider .popular-cards-slider-card-top .content ul li,
+                .popular-cards-slider .popular-cards-slider-card-top .content ul li > span {
                   font-size: 0.75rem;
                   line-height: 1.25rem;
                   width: 295px; } }
@@ -7876,7 +7878,7 @@ label {
           fill: #ffffff; }
       @media (max-width: 768px) {
         .homepage-flow .product-wrapper-left .flow-arrow {
-          max-width: 24px; } }
+          max-width: 100%; } }
       .homepage-flow .product-wrapper-left .flow-arrow path {
         fill: rgba(255, 255, 255, 0.5); }
     .homepage-flow .product-wrapper-right {
@@ -8082,13 +8084,16 @@ label {
     @media (min-width: 768px) and (max-width: 1200px) {
       .homepage-flow .product-wrapper .product-block h3 {
         margin-left: 24px; } }
-  @media (max-width: 768px) {
-    .homepage-flow .product-wrapper .product-block .flow-arrow {
-      position: absolute;
-      right: 16px; } }
+  
+        @media (max-width: 768px) {
+          .homepage-flow .product-wrapper .product-block .flow-arrow {
+            position: absolute;
+            right: 16px ; } 
+          }
   .homepage-flow .product-wrapper .product-block .flow-arrow {
     position: absolute;
-    right: 48px; }
+    right: 40px; }
+    
 .homepage-flow .banner-wrapper {
   max-width: 375px;
   width: 100%; }
