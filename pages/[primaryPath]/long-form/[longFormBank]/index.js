@@ -1,8 +1,7 @@
 import { useEffect } from 'react'
 import Strapi from '../../../../providers/strapi'
 import Layout from '../../../../components/Layout'
-// import LongFormBanner from '../../../../components/common/LongForm/LongFormBanner'
-import LongFormBanner from '../../../../components/common/LongFormBanner';
+import LongFormBanner from '../../../../components/Banners/LongFormBanner';
 
 const Bank = props => {
     useEffect(() => {

@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 
-import CreditCardsBanner from '../../components/Pages/CreditCards/CreditCardsBanner'
-import PersonalLoansBanner from '../../components/Pages/PersonalLoans/PersonalLoansBanner'
-import HomeLoansBanner from '../../components/Pages/HomeLoans/HomeLoansBanner'
+import CreditCardsBanner from '../../components/Banners/CreditCardsBanner'
+import PersonalLoansBanner from '../../components/Banners/PersonalLoansBanner'
+import HomeLoansBanner from '../../components/Banners/HomeLoansBanner'
 
 import UspCards from '../../components/common/UspCards'
 import Offers from '../../components/common/Offers'
