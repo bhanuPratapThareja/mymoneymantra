@@ -55,9 +55,14 @@ class ShortExtendedForm extends React.Component {
     }
 
     scrollToTopOfSlide = () => {
-        const slideEl = document.getElementsByClassName('lets-find-container')[0]
-        if (slideEl) {
-            slideEl.scrollIntoView({ behavior: 'smooth' })
+        const shortFormEl = document.getElementsByClassName('lets-find-container')
+        if (shortFormEl.length) {
+            if (getDevice() === 'desktop') {
+                const shortFormElOffset = shortFormEl[0].offsetTop - 100
+                window.scrollTo({ top: shortFormElOffset, behavior: 'smooth' })
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+            }
         }
     }
 
@@ -106,26 +111,27 @@ class ShortExtendedForm extends React.Component {
     }
 
     onGoToLetFindForm = () => {
-        setTimeout(() => {
-            this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
+        this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
+            this.scrollToTopOfSlide()
+            setTimeout(() => {
                 loadLetsFindForm()
-                if (this.otpInterval) {
-                    clearInterval(this.otpInterval)
-                }
-            })
-        }, 500);
+            }, 500);
+        })
     }
 
     onClickLetsGo = async () => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
         this.setState({ ...this.state, slides: newSlides }, async () => {
+            this.scrollToTopOfSlide()
             if (!errorsPresent) {
                 try {
                     const mobileNo = getUserMobileNumber(this.state.slides[0])
                     this.setState({ mobileNo })
                     getOtp(mobileNo)
-                    letsFindFormToOtpForm()
+                    setTimeout(() => {
+                        letsFindFormToOtpForm()
+                    }, 250)
                 } catch (err) {
                     alert(err.message)
                 }
@@ -141,6 +147,8 @@ class ShortExtendedForm extends React.Component {
             })
         } catch (err) {
             alert(err.message)
+        } finally {
+            this.scrollToTopOfSlide()
         }
     }
 
@@ -155,13 +163,13 @@ class ShortExtendedForm extends React.Component {
         }
     }
 
-    sendNotification = async(leadId) => {
+    sendNotification = async (leadId) => {
         const { url, body } = getApiData('sendNotification')
         body.request.payload.leadId = leadId;
         body.request.payload.actionName = "Short Form Submit";
         try {
             const res = await axios.post(url, body)
-            console.log('sendNotification',res)
+            console.log('sendNotification', res)
             return res;
         } catch (error) { }
     }
@@ -173,7 +181,10 @@ class ShortExtendedForm extends React.Component {
 
     onGoToPrevious = () => {
         if (this.state.slideIndex === 1) {
-            loadOtpForm()
+            this.scrollToTopOfSlide()
+            setTimeout(() => {
+                loadOtpForm()
+            }, 500) 
             return
         }
         this.plusSlides(-1)
@@ -267,13 +278,13 @@ class ShortExtendedForm extends React.Component {
     }
 
     render() {
-        const {onboard_short_form_mobile_view_heading} = this.props.data.onboard_short_form
+        const { onboard_short_form_mobile_view_heading } = this.props.data.onboard_short_form
         return (
             <section data-aos="fade-up" className="container lets-find-container aos-init">
 
                 <div className="mobile-background"></div>
                 <div className="mobile-content">
-                <div className="cstm-heading" dangerouslySetInnerHTML={{ __html: onboard_short_form_mobile_view_heading }}></div>
+                    <div className="cstm-heading" dangerouslySetInnerHTML={{ __html: onboard_short_form_mobile_view_heading }}></div>
                 </div>
 
                 <div className="all-form-wrapper">

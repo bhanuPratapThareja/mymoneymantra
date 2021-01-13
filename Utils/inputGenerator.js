@@ -1,4 +1,3 @@
-import { properties } from '../api/dropdownApiConfig'
 import { getDevice } from './getDevice'
 
 export const generateInputs = (component, updateField,
@@ -9,6 +8,7 @@ export const generateInputs = (component, updateField,
         let field = {}
         if (type === 'checkbox') {
             field = { name, checked, type }
+            console.log('checkbox field: ', field)
         } else {
             field = { name, value, type }
             if (type === 'input_with_dropdown') {
@@ -115,7 +115,7 @@ export const generateInputs = (component, updateField,
         )
     }
 
-    if (type === 'text' || type === 'email' || type === 'number' || type === 'tel') {
+    if (type === 'text' || type === 'email' || type === 'number' || type === 'tel'  || type === 'pan_card') {
         const fieldId = `${input_id}_${type}`
         const inputType = type === 'number' ? getDevice() === 'desktop' ? 'number' : 'tel' : type
         return (
@@ -145,29 +145,6 @@ export const generateInputs = (component, updateField,
                 <input className="form__field"
                     name={input_id}
                     type={getDevice() === 'desktop' ? 'number' : 'tel'}
-                    value={value}
-                    placeholder={placeholder}
-                    autoComplete='off'
-                    required={mandatory}
-                    onBlur={e => validate(e, type)}
-                    onChange={e => handleChange(e, type)}
-                />
-                <label className="form__label">{label}</label>
-                {error ? <div className='input-error'>
-                    <p>{errorMsg}</p>
-                </div> : null}
-            </div>
-        )
-    }
-
-    if (type === 'pan_card') {
-        const fieldId = `${input_id}_${type}`
-        const inputType = 'text'
-        return (
-            <div className={fieldClasses.join(' ')} type={type} id={fieldId} key={id}>
-                <input className="form__field"
-                    name={input_id}
-                    type={inputType}
                     value={value}
                     placeholder={placeholder}
                     autoComplete='off'
@@ -286,6 +263,7 @@ export const generateInputs = (component, updateField,
             <div id={fieldId} className="agree">
                 <div className="checkbox-container" key={id}>
                     {checkbox_input.map(box => {
+                        console.log(box)
                         const boxId = `${box.input_id}_${type}`
                         return (
                             <div key={box.id} className="checkbox" id={boxId}>

@@ -6,8 +6,10 @@ const Otp = props => {
     const inpRef = useRef()
 
     useEffect(() => {
-        inpRef.current.focus()
-    })
+        setTimeout(() => {
+            inpRef.current.focus()
+        }, 500);
+    },[])
 
     const onInputChange = (event, val) => {
         const keyCode = event.keyCode

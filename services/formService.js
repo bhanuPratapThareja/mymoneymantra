@@ -105,10 +105,7 @@ export const generateLead = async (data, primaryPath) => {
             // officAddressLine1,officAddressLine2,office_nearby_landmark,officePincode,officeCity,
             officeAddressLine1, officeAddressLine2, officeNearBy, officePincode, officeCity
         } = data
-
-        console.log('data', data)
-
-        return 
+ 
         body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = getFormattedDate(dob)
         body.request.payload.personal.pan = pan
@@ -177,15 +174,11 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.address[1].pincode = city.pincode
         body.request.payload.address[1].state = pincode ? pincode.stateId : ''
 
-
-        console.log(body.request.payload)
-
         axios.post(url, body)
             .then(res => {
                 resolve(res)
             })
             .catch(err => {
-                console.log('err gl: ', err)
                 reject(err)
             })
     })
@@ -228,8 +221,5 @@ export const updateLongForm = async data => {
 
 
 export const getProductAndBank = async (data, primaryPath, longFormProduct) => {
-    console.log('longFormProductlongFormProduct: ', longFormProduct)
     let productData = await strapi.processReq('GET', `credit_card_product?slug=${longFormProduct}`)
-    console.log('credit_card_product:: ', productData)
-
 }

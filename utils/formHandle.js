@@ -130,6 +130,9 @@ export const handleChangeInputs = (inputs, field, submitButtonDisabled) => {
                     inp.value = field.value
                     if (inp.type === 'pan_card' && inp.value) {
                         inp.value = inp.value.toUpperCase()
+                        inp.error = false
+                        inp.errorMsg = ''
+                        inp.verified = false
                     }
                 }
             })
@@ -217,7 +220,6 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.verified = true
                     }
                 } else if (textTypeInputs.includes(inp.type) && inp.input_id === field.currentActiveInput && inp.mandatory) {
-                    // console.log('inp:: ', inp)
                     if (!inp.value) {
                         errors = true
                         inp.error = true
@@ -316,7 +318,6 @@ export const updateSelectionFromDropdown = (inputs, input_id, item) => {
             inp.selectedItem = item
             inp.error = false
             inp.verified = true
-            console.log(inp)
         }
 
         if (inp.end_point_name === update_field_with_end_point_name) {
@@ -408,7 +409,6 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
                 resolve(res)
             })
             .catch((err) => {
-                console.log(err)
                 reject('Error while Submitting. Please try again.')
             })
     })
