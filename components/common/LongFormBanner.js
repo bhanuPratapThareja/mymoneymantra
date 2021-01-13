@@ -30,7 +30,7 @@ class LongFormBanner extends React.Component {
 
         return (
             <div className="card-info" id="longFormBanner">
-                {/* <h5 className="app-form">{'Application Form'}</h5> */}
+                <h5 class="app-form">Application form</h5>
                 <h3><b>{bank.bank_name}</b><br />{product.product_name}</h3>
                 <img src={`${strapi.baseUrl}${product.product_image.url}`} />
                 <h4>Application form</h4>

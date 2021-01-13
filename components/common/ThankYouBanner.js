@@ -57,14 +57,14 @@ const ThankYouBanner = props => {
                             <Image image={thank_you_icon} />
                             <div style={{ marginBottom: '10px' }} dangerouslySetInnerHTML={{ __html: thank_you_text }}></div>
 
-                            {leadId && bankName ? <>
-                                <p>{`for applying for a ${productType}`}</p>
-                                <p>{` with ${router.query.bankName} bank.`}</p>
+                            {bankName ? <>
+                                <h5>{`for applying for a ${productType}`} <br />
+                                {` with ${router.query.bankName} bank.`}</h5>
                             </>
                                 : null}
                         </div>
 
-                        {leadId && bankName ? <div className="bottom">
+                        {leadId ? <div className="bottom">
                             <div dangerouslySetInnerHTML={{ __html: thank_you_sub_text }}></div>
                             <h2 style={{ color: 'darkgrey' }}>{leadId}</h2>
                             <div className="track-button">
