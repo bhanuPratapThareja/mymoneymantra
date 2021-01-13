@@ -118,13 +118,13 @@ const Header = () => {
 
             <section className="menu-login">
                <div className="main">
-                  <img className="menu-close" src="/assests/images/icons/cross.svg" />
+                  <img className="menu-close" src="/assets/images/icons/cross.svg" />
                   <div className="profile">
                      <div className="image">
-                        <img src="/assests/images/icons/profile.svg" />
+                        <img src="/assets/images/icons/profile.svg" />
                         <div className="hello">
                            <h2>Hello,</h2>
-                           <h2 className="name">Shubham!</h2>
+                           <h2 className="name">Rakesh Pawa!</h2>
                         </div>
                      </div>
                   </div>
@@ -133,13 +133,13 @@ const Header = () => {
                   <div className="content-wrapper">
                      <a href="#">
                         <div className="data">
-                           <img src="build/images/menu/login.svg" />
+                           <img src="/assets/images/menu/login.svg" />
                            <h5>My Profile</h5>
                         </div>
                      </a>
                      <a href="#">
                         <div className="data">
-                           <img src="build/images/menu/credit.svg" />
+                           <img src="/assets/images/menu/credit.svg" />
                            <h5>My Credit Score</h5>
                         </div>
                      </a>
@@ -148,14 +148,14 @@ const Header = () => {
                   <div className="content-wrapper">
                      <a href="#">
                         <div className="data">
-                           <img src="build/images/menu/credit.svg" />
+                           <img src="/assets/images/menu/credit.svg" />
                            <h5>My Credit Score</h5>
                         </div>
                      </a>
                      <div className="data data-expand">
                         <div className="content-wraps">
                            <div className="data-expand-wrap">
-                              <img src="build/images/menu/loans.svg" />
+                              <img src="/assets/images/menu/loans.svg" />
                               <h5>Loans</h5>
                            </div>
                            <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -166,13 +166,13 @@ const Header = () => {
                         <div className="sub-data">
                            <a href="https://www.google.com">
                               <div className="data">
-                                 <img src="build/images/menu/credit.svg" />
+                                 <img src="/assets/images/menu/credit.svg" />
                                  <h5>Sub data 1</h5>
                               </div>
                            </a>
                            <a href="#">
                               <div className="data">
-                                 <img src="build/images/menu/credit.svg" />
+                                 <img src="/assets/images/menu/credit.svg" />
                                  <h5>Sub data 2</h5>
                               </div>
                            </a>
@@ -181,7 +181,7 @@ const Header = () => {
                      <div className="data data-expand">
                         <div className="content-wraps">
                            <div className="data-expand-wrap">
-                              <img src="build/images/menu/insurance.svg" />
+                              <img src="/assets/images/menu/insurance.svg" />
                               <h5>Insurances</h5>
                            </div>
                            <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -192,13 +192,13 @@ const Header = () => {
                         <div className="sub-data">
                            <a href="#">
                               <div className="data">
-                                 <img src="build/images/menu/credit.svg" />
+                                 <img src="/assets/images/menu/credit.svg" />
                                  <h5>Sub data 3</h5>
                               </div>
                            </a>
                            <a href="#">
                               <div className="data">
-                                 <img src="build/images/menu/credit.svg" />
+                                 <img src="/assets/images/menu/credit.svg" />
                                  <h5>Sub data 4</h5>
                               </div>
                            </a>
@@ -208,7 +208,7 @@ const Header = () => {
                      <div className="data data-expand">
                         <div className="content-wraps">
                            <div className="data-expand-wrap">
-                              <img src="build/images/menu/tools.svg" />
+                              <img src="/assets/images/menu/tools.svg" />
                               <h5>Financial Tools</h5>
                            </div>
                            <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -222,13 +222,13 @@ const Header = () => {
                   <div className="content-wrapper">
                      <a href="#">
                         <div className="data">
-                           <img src="build/images/menu/blogs.svg" />
+                           <img src="/assets/images/menu/blogs.svg" />
                            <h5>Blogs</h5>
                         </div>
                      </a>
                      <a href="#">
                         <div className="data">
-                           <img src="build/images/menu/support.svg" />
+                           <img src="/assets/images/menu/support.svg" />
                            <h5>Support</h5>
                         </div>
                      </a>
@@ -238,7 +238,7 @@ const Header = () => {
                   <div className="content-wrapper">
                      <a href="#">
                         <div className="data">
-                           <img src="build/images/menu/logout.svg" />
+                           <img src="/assets/images/menu/logout.svg" />
                            <h5>Logout</h5>
                         </div>
                      </a>
