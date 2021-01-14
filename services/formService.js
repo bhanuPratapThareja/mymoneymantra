@@ -38,7 +38,9 @@ export const submitOtp = async mobileNo => {
 
     try {
         const res = await axios.post(url, body)
+        console.log('otp verify res',res);
         if (res.data.response.msgInfo.code == 200) {
+            console.log('if')
             return true
         } else if (res.data.response.msgInfo.code == 500) {
             throw new Error(res.data.response.msgInfo.message)
@@ -153,8 +155,8 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.leadId = getLeadId(primaryPath)
         body.request.payload.productId = localStorage.getItem('productId')
         body.request.payload.requestedLoanamount = requestedLoanamount
-        body.request.payload.requestedTenor = requestedTenor
-        body.request.payload.requestedTenor.exisEmi = exisEmi
+        // body.request.payload.requestedTenor = requestedTenor
+        // body.request.payload.requestedTenor.exisEmi = exisEmi
 
         // for residence
         body.request.payload.address[0].addressTypeMasterId = "1000000001"
