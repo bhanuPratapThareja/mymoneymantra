@@ -1256,3 +1256,8 @@ button.sf-submit-button {
   transform: translate(-50%);
   font-weight: 900;
 }
+
+.selected-filter {
+  color: red !important;
+  fill: red !important;
+}

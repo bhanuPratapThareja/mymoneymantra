@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react'
 import ListingFilter from '../Listings/ListingsFilter'
-import Strapi from '../../providers/strapi'
 import $ from 'jquery'
+import { useRouter } from 'next/router'
 import Image from '../../components/ImageComponent/ImageComponent'
 // import All from  '../../public/assets/images/listings/all.svg'
 // import Shopping from  '../../public/assets/images/listings/all.svg'
 // import Travel from  '../../public/assets/images/listings/all.svg'
 // import All from  '../../public/assets/images/listings/all.svg'
 
+
 const ListingBanner = props => {
-    const strapi = new Strapi()
-    const { listing_banner_heading, category_component, listing_banner_products } = props.data.listing_banner
+    const router = useRouter()
+    const { primaryPath } = router.query
+    const primaryProduct = primaryPath.split('-').join(' ')
+    const { listing_banner_heading, categories: { filter_category } } = props.data.listing_banner
     const [selectedOption, setSelectedOption] = useState('all')
 
     useEffect(() => {
@@ -36,7 +39,7 @@ const ListingBanner = props => {
     }
 
     const getCalulatedProductType = () => {
-        return props.numberOfCards == 1 ? listing_banner_products.slice(0, -1) : listing_banner_products
+        return props.numberOfCards == 1 ? primaryProduct.slice(0, -1) : primaryProduct
     }
 
     return (
@@ -45,18 +48,18 @@ const ListingBanner = props => {
             <div className="banner-wrapper cstm-bnr-txt">
                 <div className="top">
                     <div dangerouslySetInnerHTML={{ __html: listing_banner_heading }}></div>
-                    {category_component && category_component.length ? <div className="category">
+                    {filter_category && filter_category.length ? <div className="category">
                         <h5>Browse by category:</h5>
                         <div className="category-wrapper">
                             <div className="checkbox-container" name="category" value={selectedOption} onChange={e => setSelectedOption(e.target.value)}>
-                                {category_component.map(category => {
-                                    const { listing_banner_category_label, listing_banner_category_image } = category
+                                {filter_category.map(category => {
+                                    const { label, image } = category
                                     return (
                                         <React.Fragment key={category.id}>
-                                            <input readOnly className="lets-checkbox" checked={selectedOption === listing_banner_category_label.toLowerCase()} value={listing_banner_category_label.toLowerCase()} type="radio" id={listing_banner_category_label.toLowerCase()} name="category" required />
-                                            <label htmlFor={listing_banner_category_label.toLowerCase()} className="banner_label">
-                                                <Image image={listing_banner_category_image} />
-                                                <h4 className="listing-banner_category-label">{listing_banner_category_label}</h4>
+                                            <input readOnly className="lets-checkbox" checked={selectedOption === label.toLowerCase()} value={label.toLowerCase()} type="radio" id={label.toLowerCase()} name="category" required />
+                                            <label htmlFor={label.toLowerCase()} className="banner_label">
+                                                <Image image={image} className="selected-filter" />
+                                                <h4 className="listing-banner_category-label">{label}</h4>
                                             </label>
                                         </React.Fragment>
                                     )
