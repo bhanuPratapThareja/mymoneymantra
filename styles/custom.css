@@ -1190,7 +1190,7 @@ button.sf-submit-button {
     line-height: 1.5rem; 
   }
 
-  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper {
+  .credit-card-flow.home-loan-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper {
     min-height: 635px;
   }
 
