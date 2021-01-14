@@ -1,5 +1,6 @@
 import { closeFilter } from '../../utils/loanListingFilterHandler'
 import { initializeMoneyRange, initializeYearRange, getSliderFilterValues } from '../../utils/noUiSliderHandler'
+import DownChevron from '../../public/assets/images/icons/down-chevron.svg'
 
 class ListingFilter extends React.Component {
 
@@ -9,33 +10,28 @@ class ListingFilter extends React.Component {
     }
 
     componentDidMount() {
-        const { checkboxes, filter_radio_name,
+        const { filter_radio_name,
             filter_fee_annual, filter_emi,
             filter_tenure, filter_roi, filter_max_loan_amount } = this.props.filters
 
-            // if(this.props.banksList.lenth){
-            //     this.props.banksList.forEach(bank => {
+        const updatedCheckboxes = [...this.props.filters.checkboxes]
 
-            //     })
-            // }
-
-            if (checkboxes.length) {
-            checkboxes.forEach((block, i) => {
+        if (updatedCheckboxes.length) {
+            updatedCheckboxes.forEach((block, i) => {
                 if (block.type === 'banks') {
                     const values = block.values.filter(value => {
                         return this.props.banksList.includes(value.tag)
                     })
-                    // console.log(values)
-                    
-                    checkboxes[i].values = values
+
+                    updatedCheckboxes[i].values = values
                 }
+
                 block.showCheckboxes = this.state.showCheckboxes
                 block.totalCheckboxes = block.values.length
                 block.veiwAll = block.values.length > this.state.showCheckboxes
-
             })
 
-            this.setState({ checkboxes })
+            this.setState({ checkboxes: updatedCheckboxes })
         }
 
         if (filter_radio_name.length) {
@@ -50,13 +46,11 @@ class ListingFilter extends React.Component {
             initializeYearRange(filter_tenure, 'tenure-range')
         })
 
-        setTimeout(() => {
-            console.log(this.state)
-        }, 1000);
     }
 
     handleCheckbox = (e, type) => {
         const { name, checked } = e.target
+        // console.log(e, type)
         const selectedCheckboxes = this.state.filters[type] ? this.state.filters[type] : []
         if (checked) {
             selectedCheckboxes.push(name)
@@ -117,18 +111,18 @@ class ListingFilter extends React.Component {
 
                         <form>
                             {checkboxes && checkboxes.length ? <>
-                                {checkboxes.map(checkboxes => {
+                                {checkboxes.map(checkboxGroup => {
                                     return (
-                                        <div className="content-one" key={checkboxes.id}>
-                                            <h5>{checkboxes.name}</h5>
+                                        <div className="content-one" key={checkboxGroup.id}>
+                                            <h5>{checkboxGroup.name}</h5>
                                             <div className="fields-wrapper">
-                                                {checkboxes.values.map((checkbox, i) => {
-                                                    if (i + 1 <= checkboxes.showCheckboxes) {
+                                                {checkboxGroup.values.map((checkbox, i) => {
+                                                    if (i + 1 <= checkboxGroup.showCheckboxes) {
                                                         return (
                                                             <div className="checkbox-container" key={checkbox.id}>
                                                                 <div className="checkbox">
-                                                                    <input type="checkbox" id={`f-checkbox-${i}`} name={checkbox.tag} onChange={e => this.handleCheckbox(e, checkboxes.type)} />
-                                                                    <label htmlFor={`f-checkbox-${i}`}><span>{checkbox.checkbox_name}</span></label>
+                                                                    <input type="checkbox" id={checkbox.tag} name={checkbox.tag} onChange={e => this.handleCheckbox(e, checkboxGroup.type)} />
+                                                                    <label htmlFor={checkbox.tag}><span>{checkbox.checkbox_name}</span></label>
                                                                 </div>
                                                             </div>
                                                         )
@@ -137,13 +131,9 @@ class ListingFilter extends React.Component {
                                                     }
                                                 })}
 
-                                                {checkboxes.veiwAll ? <div className="view-all">
-                                                    <button onClick={() => this.onClickViewAll(checkboxes.type)}>{'View All'}
-                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M16.9999 9.79079C16.8126 9.60454 16.5591 9.5 16.2949 9.5C16.0308 9.5 15.7773 9.60454 15.5899 9.79079L11.9999 13.3308L8.45995 9.79079C8.27259 9.60454 8.01913 9.5 7.75495 9.5C7.49076 9.5 7.23731 9.60454 7.04995 9.79079C6.95622 9.88376 6.88183 9.99436 6.83106 10.1162C6.78029 10.2381 6.75415 10.3688 6.75415 10.5008C6.75415 10.6328 6.78029 10.7635 6.83106 10.8854C6.88183 11.0072 6.95622 11.1178 7.04995 11.2108L11.2899 15.4508C11.3829 15.5445 11.4935 15.6189 11.6154 15.6697C11.7372 15.7205 11.8679 15.7466 11.9999 15.7466C12.132 15.7466 12.2627 15.7205 12.3845 15.6697C12.5064 15.6189 12.617 15.5445 12.7099 15.4508L16.9999 11.2108C17.0937 11.1178 17.1681 11.0072 17.2188 10.8854C17.2696 10.7635 17.2957 10.6328 17.2957 10.5008C17.2957 10.3688 17.2696 10.2381 17.2188 10.1162C17.1681 9.99436 17.0937 9.88376 16.9999 9.79079Z"
-                                                                fill="white" />
-                                                        </svg>
+                                                {checkboxGroup.veiwAll ? <div className="view-all">
+                                                    <button onClick={() => this.onClickViewAll(checkboxGroup.type)}>{'View All'}
+                                                        <DownChevron />
                                                     </button>
                                                 </div> : null}
                                             </div>
@@ -152,7 +142,7 @@ class ListingFilter extends React.Component {
                                 })}
                             </> : null}
 
-                            {filter_fee_annual && filter_fee_annual.enable  ? <div className="content-one">
+                            {filter_fee_annual && filter_fee_annual.enable ? <div className="content-one">
                                 <h5>{filter_fee_annual.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">
@@ -173,7 +163,7 @@ class ListingFilter extends React.Component {
                                 </div>
                             </div> : null}
 
-                            {filter_emi && filter_emi.enable  ? <div className="content-one">
+                            {filter_emi && filter_emi.enable ? <div className="content-one">
                                 <h5>{filter_emi.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">
@@ -251,8 +241,8 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" />
                                             </div>
                                         </div>
-                                        <span className="min-max left">1 yr</span>
-                                        <span className="min-max right">10 yr+</span>
+                                        <span className="min-max left">{filter_max_loan_amount.min}</span>
+                                        <span className="min-max right">{filter_max_loan_amount.max}</span>
                                     </div>
                                 </div>
                             </div> : null}

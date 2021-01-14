@@ -75,6 +75,7 @@ button:disabled {
   font-size: 0.75rem;
   padding-left: 0;
   line-height: 1.25rem;
+  font-family: "Avenir-Medium";
 }
 
 .lets-find-form .agree .checkbox span p a {
@@ -278,7 +279,7 @@ button:disabled {
 
 .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .shortforms-container-buttons>div h4 {
   margin-right: 16px;
-  color: rgb(34, 31, 31) !important;
+  /* color: rgb(34, 31, 31); */
 }
 
 input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
@@ -462,43 +463,6 @@ div#address_proof_upload_button {
   line-height: 1.5rem;
 }
 
-.credit-card-flow .lets-find-content.otp-card_custom {
-  position: relative;
-}
-
-.otp-wrapper.login-options {
-  position: absolute;
-  font-family: "Avenir-Roman";
-  top: 150px;
-  min-width: 270px;
-  border: 1px solid #ccc;
-  padding: 40px 10px 15px 10px;
-  border-radius: 5px;
-}
-
-.otp-wrapper.login-options label {
-  position: absolute;
-  top: 10px;
-  left: 0;
-  font-size: 17px;
-  line-height: 20px;
-  text-align: center;
-  margin: 0 auto;
-  right: 0;
-}
-
-.otp-wrapper.login-options span {
-  font-size: 13px;
-  text-align: center;
-  display: block;
-  line-height: 19px;
-  margin: 3px 0 0;
-}
-
-.otp-wrapper.login-options .form__group.field {
-  margin: 0 0 15px;
-}
-
 .credit-card-flow .homepage-banner-wrapper h2, .homepage-flow .buy-section-wrapper h2, .homepage-flow .aboutUs-left h2 {
   color: #ffffff;
   font-size: 2.5rem;
@@ -622,7 +586,8 @@ div#address_proof_upload_button {
   margin-bottom: 16px;
 }
 
-.long-cards-wrapper-card .top .content ul li span, .popular-cards-slider .popular-cards-slider-card-top .content ul li span {
+/* .popular-cards-slider .popular-cards-slider-card-top .content ul li span, */
+.long-cards-wrapper-card .top .content ul li span {
   font-size: 0.875rem;
 }
 
@@ -656,34 +621,8 @@ div#address_proof_upload_button {
   cursor: pointer;
 }
 
-/* div#cc_holder_bank_input_with_dropdown, */
-
-/* div#other_city_property_location_text {
-  margin-top: 16px;
-} */
-
-/* div#pan_card_cc_text,
-div#pan_cc_pan_card,
-div#net_monthly_income_cc_number,
-div#salary_bank_name_cc_input_with_dropdown,
-div#pincode_cc_input_with_dropdown {
-  margin: 0 16px 0 0;
-  display: inline-block;
-  max-width: 48.8%;
-  vertical-align: top;
-} */
-
-/* div#city_cc_input_with_dropdown {
-  display: inline-block;
-  max-width: 48.8%;
-  vertical-align: top;
-} */
-
-/* .credit-card-flow form .form__group.error-input {
-  margin-bottom: 24px !important;
-} */
-
-.sf-forms .shortforms-container label {
+.sf-forms .shortforms-container label,
+.lets-find-form form label {
   z-index: -1;
 }
 
@@ -703,12 +642,27 @@ div#pincode_cc_input_with_dropdown {
   margin: -49px 0 0;
 }
 
-.thankyou-banner .top>div>p, .thankyou-banner .bottom h2 {
+.thankyou-banner .bottom h2 {
   color: #222 !important;
   font-size: 24px;
   line-height: 30px;
   margin: 20px 0 0;
   font-family: "Avenir-Black";
+}
+
+.thankyou-banner .top > div > p {
+  font-size: 1.75rem;
+  font-family: "Avenir-Heavy";
+  line-height: 2.5rem;
+  color: #222 !important;
+  margin-top: 16px;
+}
+
+.thankyou-page .container .thankyou-banner .top h5 {
+  color: rgba(34, 31, 31, 0.6);
+  margin-top: 8px;
+  max-width: 225px;
+  text-align: center;
 }
 
 .thankyou-page .container .thankyou-banner .bottom .track-button {
@@ -734,11 +688,6 @@ div#pincode_cc_input_with_dropdown {
   max-width: 39%;
 }
 
-/* div#cc_holder_credit_cards_radio {
-  display: inline-block;
-  min-width: 48.9%;
-} */
-
 .sf-forms .shortforms-container .radio-container>div {
   display: inline-block;
   min-width: 48.9%;
@@ -753,6 +702,21 @@ div#pincode_cc_input_with_dropdown {
 
 .sf-forms .shortforms-container .cstm-cal {
   max-width: 50%;
+}
+
+.thankyou-page .container .thankyou-banner .bottom h4 {
+  color: rgba(34, 31, 31, 0.4);
+  max-width: 296px;
+  text-align: center;
+  font-weight: normal;
+  font-size: 0.875rem;
+  font-family: "Avenir-Roman";
+  line-height: 1.5rem;
+}
+
+.thankyou-page .container .thankyou-banner .bottom h4 {
+  font-size: 0.75rem;
+  line-height: 1.25rem;
 }
 
 /*-- Long Form --*/
@@ -801,10 +765,6 @@ div#pincode_cc_input_with_dropdown {
 
 .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container.long-terms {
   display: block;
-}
-
-.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container.long-terms label:before {
-  top: 5px;
 }
 
 /*-- css issues solution --*/
@@ -887,6 +847,113 @@ div#pincode_cc_input_with_dropdown {
   font-family: "Avenir-Heavy";
   line-height: 1.5rem;
   padding: 8px 12px;
+}
+
+/*--  Short Form --*/
+.error-input.file-type > div {
+  position: absolute;
+  bottom: -35px;
+  left: 10px;
+  color: var(--error-color);
+  font-weight: bold;
+}
+
+.sf-next-button_text {
+  color: #221f1f; 
+}
+
+.sf-next-button {
+  background: #221F1F;
+  border: 2px solid #221F1F;
+}
+
+
+.sf-submit-button_text {
+  color: #89C142;
+}
+
+button.sf-submit-button {
+  background: #89C142;
+  border: 2px solid #89C142;
+}
+
+.credit-card-flow .lets-find-content.otp-card_custom {
+  position: relative;
+}
+
+
+.otp-wrapper.login-options {
+  position: absolute;
+  top: 150px;
+}
+
+.otp-wrapper.login-options .form__group{
+  font-family: "Avenir-Roman";
+  min-width: 270px;
+  border: 1px solid rgba(34, 31, 31, 0.2);
+  padding: 40px 10px 15px 10px;
+  border-radius: 5px; 
+}
+
+.otp-wrapper.login-options label.form__label {
+  position: absolute;
+  top: 10px;
+  display: block;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  font-size: 0.75rem;
+  font-family: "Avenir-Medium";
+  line-height: 1.25rem;
+  color: rgba(34, 31, 31, 0.6);
+}
+
+.input_otp  {
+  height: 30px;
+  width: 30px;
+  margin: auto 10px;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+  border-bottom: 2px solid rgba(34, 31, 31, 0.2);
+  outline: none;
+  line-height: 20px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: "Avenir-Heavy";
+  color: var(--main-color);
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz--border-radius: 0;
+}
+
+.input_otp:focus {
+  border-bottom: 2px solid rgba(34, 31, 31, 0.6);
+}
+
+.otp-wrapper.login-options span {
+  font-size: 13px;
+  text-align: center;
+  display: block;
+  line-height: 19px;
+  margin: 3px 0 0;
+}
+
+.otp-wrapper.login-options .form__group.field {
+  margin: 0 0 15px;
+}
+
+.cstm-opt-txt span {
+  color: rgba(34, 31, 31, 0.4);
+}
+
+.otp-wrapper .cstm-opt-txt span {
+  text-align: right;
+}
+
+.otp-wrapper .cstm-opt-txt span.resend_otp {
+  color: #89C142;
+  font-size: 14px;
+  text-decoration: underline;
 }
 
 @media(max-width: 1199px) {
@@ -1040,7 +1107,7 @@ div#pincode_cc_input_with_dropdown {
   }
   .sf-forms .shortforms-container.current-address .form__group.field:first-child {
     margin-right: 8px;
-    max-width: 48%;
+    max-width: 47%;
   }
   .long-form .long-form-wrapper {
     padding-top: 0;
@@ -1077,6 +1144,54 @@ div#pincode_cc_input_with_dropdown {
     line-height: 1.75rem;
     font-family: "Avenir-Black";
   }
+  
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container.pan-card-cont, 
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container.monthly-earn {
+    display: block;
+  }
+
+  .lets-find-form .agree .checkbox span p {
+    font-size: 0.625rem;
+    line-height: 1rem;
+  }
+
+  .popular-cards-slider .popular-cards-slider-card-bottom div {
+    font-size: 0.875rem;
+    line-height: 1.5rem; 
+  }
+
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper {
+    min-height: 635px;
+  }
+
+  .thankyou-page .container .thankyou-banner .bottom h4 {
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+  }
+
+  .thankyou-banner .top > div > p {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+  
+  .thankyou-page .container .thankyou-banner .top h5 {
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+  }
+
+  .mobile-otp {
+    width: 100%;
+  }
+
+  .otp-wrapper.login-options .form__group {
+    min-width: 100%;
+  }
+
+  .long-cards-wrapper-card .top .content ul li span {
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+  }
+
 }
 
 @media(max-width: 767px) {
@@ -1107,6 +1222,16 @@ div#pincode_cc_input_with_dropdown {
   }
 }
 
+@media(max-width: 479px) {
+  .sf-submit-button_text {
+    margin-right: 5px !important;
+    font-size: 12px;
+  
+    text-align: right;
+    line-height: 15px;
+  }
+}
+
 .MuiLinearProgress-barColorPrimary {
   background-color: #89C142 !important;
 }
@@ -1130,4 +1255,9 @@ div#pincode_cc_input_with_dropdown {
   text-align: center;
   transform: translate(-50%);
   font-weight: 900;
+}
+
+.selected-filter {
+  color: red !important;
+  fill: red !important;
 }

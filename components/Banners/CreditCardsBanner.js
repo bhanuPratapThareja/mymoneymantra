@@ -1,4 +1,4 @@
-import Image from '../../ImageComponent/ImageComponent'
+import Image from '../ImageComponent/ImageComponent'
 
 const CreditCardsBanner = props => {
     const { product_banner_heading, product_banner_sub_text,

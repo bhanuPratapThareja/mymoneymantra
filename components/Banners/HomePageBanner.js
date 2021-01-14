@@ -1,4 +1,4 @@
-import Image from '../../ImageComponent/ImageComponent'
+import Image from '../ImageComponent/ImageComponent'
 
 const HomePageBanner = props => {
     const { product_banner_heading, product_banner_sub_text, product_banner_image } = props.data.product_banner

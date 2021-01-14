@@ -28,15 +28,16 @@ class LongFormBanner extends React.Component {
         const { bank, product } = this.props
         const strapi = new Strapi()
 
-        if(!bank) {
+        if (!bank) {
             return null
         }
 
         return (
             <div className="card-info" id="longFormBanner">
+                <h5 className="app-form">Application form</h5>
                 <h3><b>{bank.bank_name}</b><br />{product.product_name}</h3>
-                {this.state.primaryPath === 'credit-cards' ? <img src={`${strapi.baseUrl}${product.product_image.url}`} /> : 
-                <img src={`${strapi.baseUrl}${bank.bank_image.url}`} />}
+                {this.state.primaryPath === 'credit-cards' ? <img src={`${strapi.baseUrl}${product.product_image.url}`} /> :
+                    <img src={`${strapi.baseUrl}${bank.bank_image.url}`} />}
                 <h4>Application form</h4>
                 <div className="form-range">
                     <h5><b id="long-form-complete">{this.state.percentage}%</b> Complete</h5>

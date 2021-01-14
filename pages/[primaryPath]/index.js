@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 
-import CreditCardsBanner from '../../components/Pages/CreditCards/CreditCardsBanner'
-import PersonalLoansBanner from '../../components/Pages/PersonalLoans/PersonalLoansBanner'
-import HomeLoansBanner from '../../components/Pages/HomeLoans/HomeLoansBanner'
+import CreditCardsBanner from '../../components/Banners/CreditCardsBanner'
+import PersonalLoansBanner from '../../components/Banners/PersonalLoansBanner'
+import HomeLoansBanner from '../../components/Banners/HomeLoansBanner'
 
 import UspCards from '../../components/common/UspCards'
 import Offers from '../../components/common/Offers'
@@ -29,7 +29,7 @@ const PrimaryPage = props => {
     const goToShortForm = () => {
         const shortFormEl = document.getElementsByClassName('lets-find-container')
       if (shortFormEl.length) {
-         const shortFormElOffset = shortFormEl[0].offsetTop - 50
+         const shortFormElOffset = shortFormEl[0].offsetTop - 100
          window.scrollTo({ top: shortFormElOffset })
       } else {
          window.scrollTo({ top: 0 })

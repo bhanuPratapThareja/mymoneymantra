@@ -142,6 +142,9 @@ export const handleChangeInputs = (inputs, field, submitButtonDisabled) => {
           inp.value = field.value;
           if (inp.type === "pan_card" && inp.value) {
             inp.value = inp.value.toUpperCase();
+            inp.error = false;
+            inp.errorMsg = "";
+            inp.verified = false;
           }
         }
       });
@@ -240,7 +243,6 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
           inp.input_id === field.currentActiveInput &&
           inp.mandatory
         ) {
-          // console.log('inp:: ', inp)
           if (!inp.value) {
             errors = true;
             inp.error = true;
@@ -336,27 +338,16 @@ export const updateSelectionFromDropdown = (inputs, input_id, item) => {
       inp.selectedItem = item;
       inp.error = false;
       inp.verified = true;
-      console.log(inp);
     }
-
-    // inp.selectedItem = item.selectedItem
-    // inp.error = false
-    // inp.verified = true
-    // // if (inp.search_for === 'city') {
-    //     inp.value = item.select_name
-    //     inp.selectedId = item.select_id
-    // //}
 
     if (inp.end_point_name === update_field_with_end_point_name) {
       inputs.forEach((dependentInput) => {
         if (dependentInput.end_point_name == update_field_with_end_point_name) {
           dependentInput.selectedItem = item;
-          dependentInput.error = false;
-          dependentInput.verified = true;
-          // if (inp.search_for === 'city') {
           dependentInput.value = item[dependentInput.select_name];
           dependentInput.selectedId = item[dependentInput.select_id];
-          //}
+          dependentInput.error = false;
+          dependentInput.verified = true;
         }
       });
     }
@@ -406,7 +397,6 @@ export const getSfData = (slides) => {
   });
   return data;
 };
-
 export const submitDocument = async (document, documentName = "") => {
   const base64 = await getBase64(document);
   const { type, name } = document;
@@ -497,13 +487,14 @@ export const showSlides = (n, slideIndex) => {
     return true;
   }
 
-  if (slideIndex === slides.length) {
-    $("#button-text").text("Submit and view offers").css("color", "#89C142");
-    $("#next").addClass("submit-short-form");
-  } else {
-    $("#button-text").text("Next").css("color", "#221F1F");
-    $("#next").removeClass("submit-short-form");
-  }
+  // if (slideIndex === slides.length) {
+  //     $("#button-text").text("Submit and view offers").css("color", "#89C142");
+  //     $("#next").addClass("submit-short-form");
+
+  // } else {
+  //     $("#button-text").text("Next").css("color", "#221F1F");
+  //     $("#next").removeClass("submit-short-form");
+  // }
 
   if (n < 1) {
     if (slideIndex) {
