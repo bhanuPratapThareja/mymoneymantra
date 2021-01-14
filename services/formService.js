@@ -3,6 +3,8 @@ import Strapi from "../providers/strapi";
 import { getApiData } from "../api/api";
 import { getLeadId } from "../utils/localAccess";
 import { getFormattedDate } from "../utils/formatDataForApi";
+import { getDocumentIdandTypeId } from "../Utils/uploadDocumentHelper";
+
 const CancelToken = axios.CancelToken;
 let cancel;
 let otpId = "";
@@ -74,11 +76,18 @@ export const getDropdownList = async (listType, value, masterName) => {
     return res.data.response.payload[masterName];
   } catch (err) {}
 };
-export const documentUpload = async (base64, type, name, documentName) => {
+export const documentUpload = async (
+  base64,
+  type,
+  name,
+  documentName,
+  primaryPath
+) => {
   // const { base64, type, name } = document
   const { url, body } = getApiData("documentUpload");
   const documentIds = getDocumentIdandTypeId(documentName);
   const { documentId, documentTypeId } = documentIds[0];
+  body.request.payload.caseId = getLeadId(primaryPath);
   body.request.payload.docList[0].documentId = documentId;
   body.request.payload.docList[0].documentTypeId = documentTypeId;
   body.request.payload.docList[0].documentExtension = type.split("/")[1];

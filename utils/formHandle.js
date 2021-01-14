@@ -397,10 +397,14 @@ export const getSfData = (slides) => {
   });
   return data;
 };
-export const submitDocument = async (document, documentName = "") => {
+export const submitDocument = async (
+  document,
+  documentName = "",
+  primaryPath
+) => {
   const base64 = await getBase64(document);
   const { type, name } = document;
-  documentUpload(base64, type, name, documentName);
+  documentUpload(base64, type, name, documentName, primaryPath);
 };
 
 export const submitShortForm = (slides, currentSlide, primaryPath) => {
@@ -412,7 +416,7 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
             console.log("submitting document :", input);
             for (let i = 0; i < input.value.length; i++) {
               const file = input.value[i];
-              submitDocument(file, input.end_point_name);
+              submitDocument(file, input.end_point_name, primaryPath);
             }
           }
         });
