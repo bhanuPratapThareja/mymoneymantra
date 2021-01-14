@@ -17,13 +17,14 @@ import {
 class LongForm extends React.Component {
     state = {
         longFormSections: [],
-        submitButtonDisabled: false,
+        submitButtonDisabled: true,
         errorMsgs: {
             mandatory: 'Required Field'
         },
         noOfMandatoryInputs: 0,
         verifiedInputs: [],
-        leadId: "",
+        leadId: '',
+        enableCheckboxes: []
     }
 
     componentDidMount() {
@@ -33,8 +34,9 @@ class LongForm extends React.Component {
         let sfData = null
         let noOfMandatoryInputs = 0
         let leadId = getLeadId(primaryPath)
+        let enableCheckboxes = []
 
-        this.setState({ primaryPath, bankName, leadId })
+        // this.setState({ primaryPath, bankName, leadId })
 
         if (formData && formData[primaryPath]) {
             sfData = formData[primaryPath]
@@ -52,6 +54,14 @@ class LongForm extends React.Component {
 
                     if (item.mandatory) {
                         noOfMandatoryInputs++
+                    }
+
+                    if (item.type === 'checkbox') {
+                        item.checkbox.checkbox_input.forEach(box => {
+                            if (box.enable_submit) {
+                                enableCheckboxes.push(box)
+                            }
+                        })
                     }
 
                     if (sfData) {
@@ -81,8 +91,9 @@ class LongForm extends React.Component {
             })
         })
 
-        this.setState({ longFormSections, noOfMandatoryInputs }, () => {
+        this.setState({ longFormSections, noOfMandatoryInputs, enableCheckboxes, primaryPath, bankName, leadId }, () => {
             this.handlePercentage()
+            console.log(this.state)
         })
     }
 
@@ -93,7 +104,7 @@ class LongForm extends React.Component {
             long_form_blocks.forEach(async long_form_block => {
                 const inputs = long_form_block.blocks
 
-                const { newstate: { submitButtonDisabled, inputDropdown } } = await handleChangeInputs(inputs, field)
+                const inputDropdown = handleChangeInputs(inputs, field)
                 if (inputDropdown) {
                     const { listType, masterName, inp } = inputDropdown
                     const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
@@ -104,12 +115,25 @@ class LongForm extends React.Component {
                         }), 500)
                     debouncedSearch(listType, inp.value, masterName)
                 }
-                this.setState({ submitButtonDisabled })
             })
         })
         this.setState({ longFormSections: newLongFormSections }, () => {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
+            }
+            const { enableCheckboxes } = this.state
+            let trueEnableCheckboxes = []
+            if (enableCheckboxes.length) {
+                enableCheckboxes.forEach(box => {
+                    if (box.value) {
+                        trueEnableCheckboxes.push(true)
+                    }
+                })
+            }
+            if (enableCheckboxes.length === trueEnableCheckboxes.length) {
+                this.setState({ submitButtonDisabled: false })
+            } else {
+                this.setState({ submitButtonDisabled: true })
             }
         })
     }
@@ -330,7 +354,7 @@ class LongForm extends React.Component {
                         )
                     })}
                     <div className="long-form-submit">
-                        <button id="long-submit" type="button" onClick={this.onSubmitLongForm}>Submit Application</button>
+                        <button id="long-submit" disabled={this.state.submitButtonDisabled} type="button" onClick={this.onSubmitLongForm}>Submit Application</button>
                     </div>
                 </form>
             </div>

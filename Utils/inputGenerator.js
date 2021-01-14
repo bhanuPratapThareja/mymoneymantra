@@ -164,7 +164,6 @@ export const generateInputs = (component, updateField,
         const inputFileId = `input_file_${input_id}`
         const fieldId = `${input_id}_${type}`
         let uploadText = value ? value.length === 1 ? value[0].name : value.length + ' files' : upload_text
-        // const uploadedFileStyles = { border: 'none', boxShadow: '0 0 0 2px #89C142' } 
         const uploadButtonBorderStyles = attachment && !error && !verified ? null : borderStyles
         fieldClasses.push(type)
         fieldClasses.push('file-type')
