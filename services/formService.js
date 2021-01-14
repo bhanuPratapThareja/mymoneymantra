@@ -154,7 +154,7 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.productId = localStorage.getItem('productId')
         body.request.payload.requestedLoanamount = requestedLoanamount
         body.request.payload.requestedTenor = requestedTenor
-        body.request.payload.requestedTenor.exisEmi = exisEmi
+        // body.request.payload.requestedTenor.exisEmi = exisEmi
 
         // for residence
         body.request.payload.address[0].addressTypeMasterId = "1000000001"

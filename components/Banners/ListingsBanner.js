@@ -8,15 +8,6 @@ import Image from '../../components/ImageComponent/ImageComponent'
 // import Travel from  '../../public/assets/images/listings/all.svg'
 // import All from  '../../public/assets/images/listings/all.svg'
 
-if (typeof window != 'undefined') {
-    $(document).ready(function () {
-        $(".filter-option").click(function () {
-            $("#" + this.id + "-show").slideToggle("300");
-            $('body', "html").css("overflow", "hidden")
-        })
-    })
-}
-
 const ListingBanner = props => {
     const strapi = new Strapi()
     const { listing_banner_heading, category_component, listing_banner_products } = props.data.listing_banner
@@ -25,6 +16,12 @@ const ListingBanner = props => {
     useEffect(() => {
         onBannerCategoryChange(selectedOption)
     }, [selectedOption])
+
+    const onOpenFilter = () => {
+        const el = document.getElementsByClassName('filter-option')[0]
+        $("#" + el.id + "-show").slideToggle("300");
+        $('body', "html").css("overflow", "hidden")
+    }
 
     const onBannerCategoryChange = category => {
         const els = document.getElementsByClassName('banner_label')
@@ -75,7 +72,8 @@ const ListingBanner = props => {
                     {props.filters ? <div className="filter">
                         <button
                             className="filter-option"
-                            id="listing-filter">
+                            id="listing-filter"
+                            onClick={onOpenFilter}>
                             Filters
                                 <img src="/assets/images/icons/down-chevron.svg" />
                         </button>

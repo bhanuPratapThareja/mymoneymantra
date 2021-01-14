@@ -411,6 +411,7 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
                 resolve(res)
             })
             .catch((err) => {
+                console.log(err)
                 reject('Error while Submitting. Please try again.')
             })
     })

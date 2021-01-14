@@ -5,6 +5,7 @@ import SideMenu from './SideMenu'
 import { useEffect, useState, useRef } from 'react'
 import { isScrolledIntoView } from '../utils/elementInView'
 import { getDevice } from '../utils/getDevice'
+import $ from 'jquery'
 
 const Header = () => {
    const strapi = new Strapi()
@@ -103,6 +104,11 @@ const Header = () => {
       })
    }
 
+   const onOpenSideMenu = () => {
+      $(".menu-login").show("slide");
+      $('body', "html").css("overflow", "hidden")
+   }
+
    return (
       <>
          <Head>
@@ -111,8 +117,8 @@ const Header = () => {
          </Head>
 
          {headerData ? <header className="header" ref={headerRef}>
-            <a className="header-menu-icon" id="menu-icon">
-               <img src="/assets/images/icons/menu.svg" alt="menu" />
+            <a className="header-menu-icon" id="menu-icon" >
+               <img src="/assets/images/icons/menu.svg" alt="menu" onClick={onOpenSideMenu} />
             </a>
 
             <SideMenu />

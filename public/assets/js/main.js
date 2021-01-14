@@ -170,18 +170,18 @@ $(document).ready(function () {
   // })
 
   //menu toggle
-  $("#menu-icon").click(function () {
-    $(".menu-login").show("slide");
-    $('body', "html").css("overflow", "hidden")
-  })
-  $(".menu-close").click(function () {
-    $(".menu-login").hide("slide");
-    $('body', "html").css("overflow", "scroll")
-  })
-  $(".data-expand").click(function () {
-    $(this).find(".sub-data").slideToggle("slow");
-    $(this).find("svg").toggleClass("rotate-menu-icons")
-  })
+  // $("#menu-icon").click(function () {
+  //   $(".menu-login").show("slide");
+  //   $('body', "html").css("overflow", "hidden")
+  // })
+  // $(".menu-close").click(function () {
+  //   $(".menu-login").hide("slide");
+  //   $('body', "html").css("overflow", "scroll")
+  // })
+  // $(".data-expand").click(function () {
+  //   $(this).find(".sub-data").slideToggle("slow");
+  //   $(this).find("svg").toggleClass("rotate-menu-icons")
+  // })
 
   //toggle of the profile page options
   //learn more toggle
