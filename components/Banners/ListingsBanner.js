@@ -13,7 +13,7 @@ const ListingBanner = props => {
     const router = useRouter()
     const { primaryPath } = router.query
     const primaryProduct = primaryPath.split('-').join(' ')
-    const { listing_banner_heading, categories: { filter_category } } = props.data.listing_banner
+    const { listing_banner_heading, categories } = props.data.listing_banner
     const [selectedOption, setSelectedOption] = useState('all')
 
     useEffect(() => {
@@ -48,11 +48,11 @@ const ListingBanner = props => {
             <div className="banner-wrapper cstm-bnr-txt">
                 <div className="top">
                     <div dangerouslySetInnerHTML={{ __html: listing_banner_heading }}></div>
-                    {filter_category && filter_category.length ? <div className="category">
+                    {categories && categories.filter_category && categories.filter_category.length ? <div className="category">
                         <h5>Browse by category:</h5>
                         <div className="category-wrapper">
                             <div className="checkbox-container" name="category" value={selectedOption} onChange={e => setSelectedOption(e.target.value)}>
-                                {filter_category.map(category => {
+                                {categories.filter_category.map(category => {
                                     const { label, image } = category
                                     return (
                                         <React.Fragment key={category.id}>
