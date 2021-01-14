@@ -1,6 +1,6 @@
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
-import HomePageBanner from '../components/Pages/HomePage/HomePageBanner'
+import HomePageBanner from '../components/Banners/HomePageBanner'
 import Testimonials from '../components/common/Testimonials'
 import BuySection from '../components/common/BuySection'
 import ProductType from '../components/common/ProductTypes'
