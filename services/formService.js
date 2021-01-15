@@ -3,7 +3,7 @@ import Strapi from "../providers/strapi";
 import { getApiData } from "../api/api";
 import { getLeadId } from "../utils/localAccess";
 import { getFormattedDate } from "../utils/formatDataForApi";
-import { getDocumentIdandTypeId } from "../Utils/uploadDocumentHelper";
+import { getDocumentIdandTypeId } from "../utils/uploadDocumentHelper";
 
 const CancelToken = axios.CancelToken;
 let cancel;
