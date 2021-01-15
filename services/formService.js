@@ -155,10 +155,18 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.leadId = getLeadId(primaryPath)
         body.request.payload.productId = localStorage.getItem('productId')
         body.request.payload.requestedLoanamount = requestedLoanamount
+
+        // start : after credit card
+
         // body.request.payload.requestedTenor = requestedTenor
         // body.request.payload.exisEmi = exisEmi
+    
+        
+
+        // end after credit card
 
         // for residence
+        console.log('resi add pincode',pincode)
         body.request.payload.address[0].addressTypeMasterId = "1000000001"
         body.request.payload.address[0].addressline1 = addressline1
         body.request.payload.address[0].addressline2 = addressline2
@@ -168,6 +176,7 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.address[0].state = pincode ? pincode.stateId : ''
 
         // for office address
+        console.log('office add officePincode',officePincode)
         body.request.payload.address[1].addressTypeMasterId = "1000000002"
         body.request.payload.address[1].addressline1 = officeAddressLine1
         body.request.payload.address[1].addressline2 = officeAddressLine2

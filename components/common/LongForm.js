@@ -311,7 +311,7 @@ class LongForm extends React.Component {
                                     blockClasses.push(long_form_block.block_class)
                                     return (
                                         <div className="long-forms-wrapper" key={long_form_block.id}>
-                                            <h5><b>{`${index}. `}</b> {long_form_block.block_name}</h5>
+                                            <h5><b>{`${index}. `}</b> {long_form_block.block_label}</h5>
 
                                             <div className={blockClasses.join(' ')}>
                                                 {inputs.map(component => {
