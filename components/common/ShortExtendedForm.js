@@ -116,10 +116,6 @@ class ShortExtendedForm extends React.Component {
                 slideNo++
             }, 500)
         })
-
-        setTimeout(() => {
-            console.log(this.state)
-        }, 1000);
     }
 
     onGoToLetFindForm = () => {

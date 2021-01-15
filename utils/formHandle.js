@@ -52,8 +52,6 @@ export const handleChangeInputs = (inputs, field) => {
             }
         })
     } else if (field.type === 'upload_button') {
-        let error = false
-        let errorMsg = ''
         let noOfUploadsError = false
         inputs.forEach(inp => {
             if (inp.input_id === field.name) {
@@ -132,6 +130,7 @@ export const handleChangeInputs = (inputs, field) => {
     }
     return inputDropdown
 }
+
 
 export const updateInputsValidity = (inputs, field, errorMsgs) => {
     let errors = false

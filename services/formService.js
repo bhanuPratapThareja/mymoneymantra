@@ -48,7 +48,7 @@ export const submitOtp = async mobileNo => {
             throw new Error('Something went wrong. Please try again.')
         }
     } catch (err) {
-        if (err.response.status == 400) {
+        if (err.response.status == 404) {
             throw new Error('Please enter valid OTP!')
         } else {
             throw new Error(err.message)

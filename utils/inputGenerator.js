@@ -73,7 +73,7 @@ export const generateInputs = (component, updateField,
         checkbox, radio, question, error, errorMsg, verified, list, listType,
         upload_text, monetary_input, heading, input_class } = component
     if (!value) value = ''
-    
+
     const borderInputInvalid = { border: 'none', boxShadow: '0 0 0 2px var(--error-color)' }
     const borderInputValid = null
     const borderStyles = error ? borderInputInvalid : borderInputValid
@@ -114,7 +114,7 @@ export const generateInputs = (component, updateField,
         )
     }
 
-    if (type === 'text' || type === 'email' || type === 'number' || type === 'tel'  || type === 'pan_card') {
+    if (type === 'text' || type === 'email' || type === 'number' || type === 'tel' || type === 'pan_card') {
         const fieldId = `${input_id}_${type}`
         const inputType = type === 'number' ? getDevice() === 'desktop' ? 'number' : 'tel' : type
         return (
@@ -167,12 +167,12 @@ export const generateInputs = (component, updateField,
         const uploadButtonBorderStyles = attachment && !error && !verified ? null : borderStyles
         fieldClasses.push(type)
         fieldClasses.push('file-type')
-        
-        if(attachment && !error && !verified){
+
+        if (attachment && !error && !verified) {
             fieldClasses.push('file-type-border')
             fieldClasses.push('file-type-back')
         }
-        
+
         return (
             <>
                 <div className={fieldClasses.join(' ')} id={fieldId} style={uploadButtonBorderStyles}>
@@ -181,26 +181,33 @@ export const generateInputs = (component, updateField,
                     {value ? <img src="/assets/images/icons/Attach.svg" onClick={() => document.getElementById(inputFileId).click()} style={{ background: 'red' }} /> : null}
                     {value ? <img src="/assets/images/icons/cross.svg" onClick={() => onUploadAttachment(input_id, type, inputFileId, false)} style={{ background: 'red' }} /> : null}
                     <h5 onClick={() => document.getElementById(inputFileId).click()}>{uploadText} {!mandatory && !value ? <b>(optional)</b> : null}</h5>
-                    
+
                     {error ? <div >
-                    <p>{errorMsg}</p>
+                        <p>{errorMsg}</p>
                     </div> : null}
-                    
+
                 </div>
-                
+
             </>
         )
     }
 
 
     if (type === 'input_with_dropdown') {
-        const { input_type, selectedId, dependent, select_name} = component
+        const { input_type, selectedId, dependent, select_name } = component
 
         const fieldId = `${input_id}_${type}`
         const listStyles = list && list.length ? { display: 'block' } : { display: 'none' }
         const dropDownClass = selectedId === '*' || dependent ? 'disabled_input' : 'dropdown_enabled'
         fieldClasses.push(dropDownClass)
         fieldClasses.push(input_class)
+        if (list && list.length) {
+            const listEl = document.getElementById(fieldId)
+            if (listEl) {
+                const listElOffset = listEl.offsetTop + 40
+                window.scrollTo({ top: listElOffset, behavior: 'smooth' })
+            }
+        }
         return (
             <div className={fieldClasses.join(' ')} id={fieldId} key={id}>
                 <input className="form__field"
@@ -221,15 +228,15 @@ export const generateInputs = (component, updateField,
                     <p>{errorMsg}</p>
                 </div> : null}
 
-                <div className="dropdown-content" style={listStyles}>
+                {list ? <div className="dropdown-content" style={listStyles}>
                     <div className="dropdown-content-links">
-                        {list && list.map((item, i) => {
+                        {list.map((item, i) => {
                             return (
                                 <a key={i} onClick={() => onSelect(input_id, type, item)}>{item[select_name]}</a>
                             )
                         })}
                     </div>
-                </div>
+                </div> : null}
             </div>
         )
     }
@@ -279,7 +286,8 @@ export const generateInputs = (component, updateField,
                                     value={box.checked}
                                     onChange={e => handleChange(e, type)}
                                 />
-                                <label htmlFor={box.input_id}><span dangerouslySetInnerHTML={{ __html: box.label }}></span></label>
+                                <label htmlFor={box.input_id}></label>
+                                <span dangerouslySetInnerHTML={{ __html: box.label }}></span>
                             </div>
                         )
                     })}
@@ -296,7 +304,7 @@ export const generateInputs = (component, updateField,
                 {radio_buttons ? <>
                     <div className="radio-container" key={id} name={input_id} id={radioParentId} required={mandatory}>
                         {radio_buttons.map(button => {
-                            const labelStyles = value === button.value ? { border:'none', boxShadow: '0 0 0 2px #89C142', color: '#89C142' } : null
+                            const labelStyles = value === button.value ? { border: 'none', boxShadow: '0 0 0 2px #89C142', color: '#89C142' } : null
                             const radioId = `${input_id}_${type}`
                             return (
                                 <div key={button.id} id={radioId}>
