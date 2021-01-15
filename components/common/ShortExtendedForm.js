@@ -229,7 +229,6 @@ class ShortExtendedForm extends React.Component {
         const inputDropdown = handleChangeInputs(inputs, field, this.props.preferredBanks, field.focusDropdown)
         if (inputDropdown) {
             const { listType, masterName, inp, prefferedList } = inputDropdown
-
             if (prefferedList) {
                 inp.listType = listType
                 inp.list = prefferedList
@@ -265,8 +264,6 @@ class ShortExtendedForm extends React.Component {
                 this.setState({ submitButtonDisabled: true })
             }
         })
-
-
     }
 
     handleInputDropdownChange = (listType, list, input_id) => {

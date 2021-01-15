@@ -45,7 +45,6 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
       if (inp.input_id === field.name) {
         let { listType, masterName } = getApiToHit(inp.search_for)
 
-
         if (!field.value && field.focusDropdown) {
           if (inp.search_for === preferredBanks.search_for && preferredBanks) {
             let prefferedList = []
@@ -54,8 +53,9 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
               prefferedList.push(preferredBank)
             })
             inputDropdown = { listType, masterName, inp, prefferedList }
-            return
+           
           }
+          return
 
         } else if (!field.value) {
           inp.value = field.value;
@@ -65,9 +65,6 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
           inputDropdown = { listType, masterName, inp };
           return
         }
-
-
-
 
         inp.value = field.value;
         inputDropdown = { listType, masterName, inp };
@@ -143,9 +140,11 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
                 secondary.errorMsg = "";
                 secondary.verified = false;
               } else {
-                secondary.selectedId = null;
                 secondary.mandatory = true;
                 secondary.verified = false;
+                if(secondary.selectedId === '*') {
+                  secondary.selectedId = null
+                }
               }
             }
           });
