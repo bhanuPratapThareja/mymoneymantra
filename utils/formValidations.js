@@ -5,6 +5,9 @@ export const isInputValid = inp => {
 }
 
 export const isMonetaryValid = inp => {
+    if(!inp.min_value) {
+        return false
+    }
     const money = getWholeNumberFromCurrency(inp.value)
     return Number(money) > inp.min_value
 }

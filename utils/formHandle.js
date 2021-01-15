@@ -81,6 +81,7 @@ export const handleChangeInputs = (inputs, field) => {
                 inp.attachment = field.attachment
                 inp.error = field.error
                 inp.errorMsg = field.errorMsg
+                inp.verified = false
 
             }
         })
