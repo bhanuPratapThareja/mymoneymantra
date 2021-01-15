@@ -283,16 +283,14 @@ export const generateInputs = (
     const { input_type, selectedId, dependent, select_name } = component;
 
     const fieldId = `${input_id}_${type}`;
-    const listStyles =
-      list && list.length ? { display: "block" } : { display: "none" };
-    const dropDownClass =
-      selectedId === "*" || dependent ? "disabled_input" : "dropdown_enabled";
+    const listStyles = list && list.length ? { display: "block" } : { display: "none" };
+    const dropDownClass = selectedId === "*" || dependent ? "disabled_input" : "dropdown_enabled";
     fieldClasses.push(dropDownClass);
     fieldClasses.push(input_class);
     if (list && list.length && getDevice() !== "desktop") {
       const listEl = document.getElementById(fieldId);
       if (listEl) {
-        const listElOffset = listEl.offsetTop + 60;
+        const listElOffset = listEl.offsetTop + 200;
         window.scrollTo({ top: listElOffset, behavior: "smooth" });
       }
     }

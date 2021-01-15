@@ -226,23 +226,26 @@ class ShortExtendedForm extends React.Component {
 
     handleChange = field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const inputDropdown = handleChangeInputs(inputs, field, this.props.preferredBanks, field.focusDropdown)
+        const inputDropdown = handleChangeInputs(inputs, field, this.props.preferredBanks)
         if (inputDropdown) {
             const { listType, masterName, inp, prefferedList } = inputDropdown
             if (prefferedList) {
                 inp.listType = listType
                 inp.list = prefferedList
+                inp.error = false
                 setTimeout(() => {
                     this.handleInputDropdownChange(listType, prefferedList, inp.input_id)
-                }, 250)
+                }, 300)
             } else {
-                const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
-                    .then(list => {
-                        inp.listType = listType
-                        inp.list = list
-                        this.handleInputDropdownChange(listType, list, inp.input_id)
-                    }), 500)
-                debouncedSearch(listType, inp.value, masterName)
+                if(!field.focusDropdown){
+                    const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
+                        .then(list => {
+                            inp.listType = listType
+                            inp.list = list
+                            this.handleInputDropdownChange(listType, list, inp.input_id)
+                        }), 500)
+                    debouncedSearch(listType, inp.value, masterName)
+                }
             }
         }
         this.setState({ ...this.state, slides: newSlides }, () => {
@@ -270,6 +273,8 @@ class ShortExtendedForm extends React.Component {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateDropdownList(inputs, listType, list, input_id)
         this.setState({ ...this.state, slides: newSlides })
+
+
     }
 
     handleInputDropdownSelection = (input_id, type, item) => {
@@ -280,10 +285,8 @@ class ShortExtendedForm extends React.Component {
 
     checkInputValidity = (field, focusDropdown) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        setTimeout(() => {
-            updateInputsValidity(inputs, field, this.state.errorMsgs, focusDropdown)
-            this.setState({ ...this.state, slides: newSlides })
-        }, 150)
+        updateInputsValidity(inputs, field, this.state.errorMsgs, focusDropdown)
+        this.setState({ ...this.state, slides: newSlides })
     }
 
     handleClickOnSlideBackground = () => {

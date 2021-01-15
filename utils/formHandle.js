@@ -124,6 +124,7 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
       if (inp.input_id === field.name) {
         inp.value = field.value;
         inp.verified = true;
+        inp.error = false
 
         // special case
 
@@ -180,14 +181,22 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
           inp.verified = false
           return
         }
-        if (inp.mandatory && !inp.value) {
-          inp.error = true;
-          inp.errorMsg = errorMsgs.mandatory
-          inp.verified = false;
-        } else {
-          inp.error = false
-          inp.errorMsg = ''
+        if(inp.mandatory && !inp.value && inp.list) {
+          
         }
+        setTimeout(() => {
+          if (inp.mandatory && !inp.value) {
+            inp.error = true;
+            inp.errorMsg = errorMsgs.mandatory
+            inp.verified = false;
+          } else {
+            inp.error = false
+            inp.errorMsg = ''
+            if(inp.list) {
+              inp.list = []
+            }
+          }
+        }, 150);
       }
 
       // check on blur
@@ -298,7 +307,9 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
     // check on slide or form submit
   } else {
     inputs.forEach((inp) => {
-      if (
+      if(inp.selectedId && inp.selectedId === "*") {
+        inp.verified = false
+      } else if (
         (textTypeInputs.includes(inp.type) || inp.type === "radio") &&
         !inp.value &&
         inp.mandatory
