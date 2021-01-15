@@ -11,7 +11,7 @@ export const generateInputs = (
   handleInputDropdownChange,
   handleInputDropdownSelection
 ) => {
-  const handleChange = (e, type) => {
+  const handleChange = (e, type, focusDropdown) => {
     let { name, value, checked } = e.target;
     let field = {};
 
@@ -28,9 +28,10 @@ export const generateInputs = (
     } else {
       field = { name, value, type };
       if (type === "input_with_dropdown") {
-        setTimeout(() => {
-          document.getElementById(name).focus();
-        }, 100);
+        field.focusDropdown = focusDropdown
+        // setTimeout(() => {
+        //   document.getElementById(name).focus();
+        // }, 100);
       }
     }
     updateField(field);
@@ -309,30 +310,27 @@ export const generateInputs = (
           required={mandatory}
           onBlur={(e) => validate(e, type)}
           onChange={(e) => handleChange(e, type)}
+          onFocus={e => handleChange(e, type, true)}
         />
         <label className="form__label">{label}</label>
 
-        {error ? (
-          <div className="input-error">
-            <p>{errorMsg}</p>
-          </div>
-        ) : null}
+        {error ? <div className="input-error">
+          <p>{errorMsg}</p>
+        </div> : null}
 
-        {list ? (
-          <div className="dropdown-content" style={listStyles}>
-            <div className="dropdown-content-links">
-              {list.map((item, i) => {
-                return (
-                  <a key={i} onClick={() => onSelect(input_id, type, item)}>
-                    {item[select_name]}
-                  </a>
-                );
-              })}
-            </div>
+        {list ? <div className="dropdown-content" style={listStyles}>
+          <div className="dropdown-content-links">
+            {list.map((item, i) => {
+              return (
+                <a key={i} onClick={() => onSelect(input_id, type, item)}>
+                  {item[select_name]}
+                </a>
+              );
+            })}
           </div>
-        ) : null}
+        </div> : null}
       </div>
-    );
+    )
   }
 
   if (type === "input_with_calendar") {
@@ -407,14 +405,7 @@ export const generateInputs = (
               required={mandatory}
             >
               {radio_buttons.map((button) => {
-                const labelStyles =
-                  value === button.value
-                    ? {
-                        border: "none",
-                        boxShadow: "0 0 0 2px #89C142",
-                        color: "#89C142",
-                      }
-                    : null;
+                const labelStyles = value === button.value ? { border: "none", boxShadow: "0 0 0 2px #89C142", color: "#89C142" } : null;
                 const radioId = `${input_id}_${type}`;
                 return (
                   <div key={button.id} id={radioId}>

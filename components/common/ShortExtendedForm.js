@@ -226,20 +226,29 @@ class ShortExtendedForm extends React.Component {
 
     handleChange = field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const inputDropdown = handleChangeInputs(inputs, field, this.state.submitButtonDisabled)
+        const inputDropdown = handleChangeInputs(inputs, field, this.props.preferredBanks, field.focusDropdown)
         if (inputDropdown) {
-            const { listType, masterName, inp } = inputDropdown
-            const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
-                .then(list => {
-                    inp.listType = listType
-                    inp.list = list
-                    this.handleInputDropdownChange(listType, list, inp.input_id)
-                }), 500)
-            debouncedSearch(listType, inp.value, masterName)
+            const { listType, masterName, inp, prefferedList } = inputDropdown
+
+            if (prefferedList) {
+                inp.listType = listType
+                inp.list = prefferedList
+                setTimeout(() => {
+                    this.handleInputDropdownChange(listType, prefferedList, inp.input_id)
+                }, 250)
+            } else {
+                const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
+                    .then(list => {
+                        inp.listType = listType
+                        inp.list = list
+                        this.handleInputDropdownChange(listType, list, inp.input_id)
+                    }), 500)
+                debouncedSearch(listType, inp.value, masterName)
+            }
         }
         this.setState({ ...this.state, slides: newSlides }, () => {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
-                this.checkInputValidity(field)
+                this.checkInputValidity(field, field.focusDropdown)
             }
             const { enableCheckboxes } = this.state
             let trueEnableCheckboxes = []
@@ -272,10 +281,12 @@ class ShortExtendedForm extends React.Component {
         this.setState({ ...this.state, slides: newSlides })
     }
 
-    checkInputValidity = field => {
+    checkInputValidity = (field, focusDropdown) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        updateInputsValidity(inputs, field, this.state.errorMsgs)
-        this.setState({ ...this.state, slides: newSlides })
+        setTimeout(() => {
+            updateInputsValidity(inputs, field, this.state.errorMsgs, focusDropdown)
+            this.setState({ ...this.state, slides: newSlides })
+        }, 150)
     }
 
     handleClickOnSlideBackground = () => {

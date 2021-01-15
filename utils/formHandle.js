@@ -28,7 +28,7 @@ export const getCurrentSlideInputs = (state) => {
   return { newSlides, inputs };
 };
 
-export const handleChangeInputs = (inputs, field) => {
+export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropdown) => {
   let inputDropdown = null;
   if (field.type === "checkbox") {
     inputs.forEach((inp) => {
@@ -43,15 +43,32 @@ export const handleChangeInputs = (inputs, field) => {
   } else if (field.type === "input_with_dropdown") {
     inputs.forEach((inp) => {
       if (inp.input_id === field.name) {
-        let { listType, masterName } = getApiToHit(inp.search_for);
-        if (!field.value) {
+        let { listType, masterName } = getApiToHit(inp.search_for)
+
+
+        if (!field.value && field.focusDropdown) {
+          if (inp.search_for === preferredBanks.search_for && preferredBanks) {
+            let prefferedList = []
+            preferredBanks.banks.forEach(bank => {
+              const preferredBank = { bankId: bank.bank_id, bankName: bank.bank_name }
+              prefferedList.push(preferredBank)
+            })
+            inputDropdown = { listType, masterName, inp, prefferedList }
+            return
+          }
+
+        } else if (!field.value) {
           inp.value = field.value;
           inp.selectedItem = null;
           inp.selectedId = null;
           inp.list = [];
           inputDropdown = { listType, masterName, inp };
-          return;
+          return
         }
+
+
+
+
         inp.value = field.value;
         inputDropdown = { listType, masterName, inp };
       } else {
@@ -151,20 +168,26 @@ export const handleChangeInputs = (inputs, field) => {
   return inputDropdown;
 };
 
-export const updateInputsValidity = (inputs, field, errorMsgs) => {
+export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) => {
   let errors = false;
 
   // check on input
   if (field) {
     inputs.forEach((inp) => {
       if (inp.input_id === field.name) {
+        if (inp.mandatory && focusDropdown) {
+          inp.error = false
+          inp.errorMsg = ''
+          inp.verified = false
+          return
+        }
         if (inp.mandatory && !inp.value) {
           inp.error = true;
-          inp.errorMsg = errorMsgs.mandatory;
+          inp.errorMsg = errorMsgs.mandatory
           inp.verified = false;
         } else {
-          inp.error = false;
-          inp.errorMsg = "";
+          inp.error = false
+          inp.errorMsg = ''
         }
       }
 
@@ -342,6 +365,7 @@ export const updateDropdownList = (inputs, listType, list, input_id) => {
     if (inp.input_id === input_id) {
       inp.listType = listType;
       inp.list = list;
+      inp.error = false;
     }
   });
 };
@@ -419,8 +443,7 @@ export const getSfData = (slides) => {
       }
     });
   });
-  console.log(data);
-  return data;
+  return data
 };
 
 export const submitDocument = async (document) => {
