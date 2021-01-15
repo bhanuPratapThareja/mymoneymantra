@@ -1,13 +1,11 @@
-import { withRouter } from 'next/router'
-import { debounce } from 'lodash'
 import OnBoardForm from '../ShortForm/OnBoardForm/OnBoardForm'
 import OtpSlide from '../ShortForm/OtpForm/OtpSlide'
 import SFSlides from '../ShortForm/SFSlides/SFSlides'
+import { debounce } from 'lodash'
+import { withRouter } from 'next/router'
 import { getDropdownList } from '../../services/formService'
 import { getOtp, submitOtp, sendNotification } from '../../services/formService'
 import { getDevice } from '../../utils/getDevice'
-import axios from 'axios'
-import { getApiData } from '../../api/api';
 import { setLeadId } from '../../utils/localAccess'
 import {
     textTypeInputs,
@@ -40,7 +38,8 @@ class ShortExtendedForm extends React.Component {
         errorMsgs: {
             mandatory: 'Required Field'
         },
-        slideButtonText: 'Next'
+        slideButtonText: 'Next',
+        enableCheckboxes: []
     }
 
     decrementOtpTime = () => {
@@ -79,6 +78,7 @@ class ShortExtendedForm extends React.Component {
         }
 
         let formInputs = []
+        let enableCheckboxes = []
         let slides = [...this.state.slides]
         inputsArray.forEach(item => {
             item.error = false
@@ -86,10 +86,18 @@ class ShortExtendedForm extends React.Component {
             if (item.type === 'input_with_dropdown') {
                 item.list = []
             }
+            if (item.type === 'checkbox') {
+                item.checkbox.checkbox_input.forEach(box => {
+                    if (box.enable_submit) {
+                        enableCheckboxes.push(box)
+                    }
+                })
+            }
             formInputs.push(item)
         })
+
         let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading, slideClass }]
-        this.setState({ ...this.state, slides: [...upDatedSlides] })
+        this.setState({ ...this.state, slides: [...upDatedSlides], enableCheckboxes: [...this.state.enableCheckboxes, ...enableCheckboxes] })
     }
 
     componentDidMount() {
@@ -161,7 +169,6 @@ class ShortExtendedForm extends React.Component {
             const leadIdData = JSON.parse(localStorage.getItem('leadId'))
             const leadId = { ...leadIdData, [primaryPath]: res.data.response.payload.leadId }
             sendNotification(leadIdSendNotification);
-            console.log('in short ext form leadIdSendNotification', leadIdSendNotification)
             localStorage.setItem('leadId', JSON.stringify(leadId))
             goToSlides()
         } catch (err) {
@@ -217,9 +224,9 @@ class ShortExtendedForm extends React.Component {
 
     }
 
-    handleChange = async field => {
+    handleChange = field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const { newstate: { submitButtonDisabled, inputDropdown } } = await handleChangeInputs(inputs, field, this.state.submitButtonDisabled)
+        const inputDropdown = handleChangeInputs(inputs, field, this.state.submitButtonDisabled)
         if (inputDropdown) {
             const { listType, masterName, inp } = inputDropdown
             const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
@@ -230,9 +237,23 @@ class ShortExtendedForm extends React.Component {
                 }), 500)
             debouncedSearch(listType, inp.value, masterName)
         }
-        this.setState({ ...this.state, slides: newSlides, submitButtonDisabled }, () => {
+        this.setState({ ...this.state, slides: newSlides }, () => {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 this.checkInputValidity(field)
+            }
+            const { enableCheckboxes } = this.state
+            let trueEnableCheckboxes = []
+            if (enableCheckboxes.length) {
+                enableCheckboxes.forEach(box => {
+                    if (box.value) {
+                        trueEnableCheckboxes.push(true)
+                    }
+                })
+            }
+            if (enableCheckboxes.length === trueEnableCheckboxes.length) {
+                this.setState({ submitButtonDisabled: false })
+            } else {
+                this.setState({ submitButtonDisabled: true })
             }
         })
 

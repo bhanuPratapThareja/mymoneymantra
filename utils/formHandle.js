@@ -1,12 +1,13 @@
 import $ from "jquery";
 import { getApiToHit } from "../api/dropdownApiConfig";
-import { isInputValid } from "./formValidations";
+import { isInputValid, isMonetaryValid } from "./formValidations";
 import {
   getBase64,
   documentUpload,
   generateLead,
 } from "../services/formService";
 import { getFormattedName } from "./formatDataForApi";
+import { getWholeNumberFromCurrency } from "./formattedCurrency";
 
 export const textTypeInputs = [
   "text",
@@ -27,130 +28,127 @@ export const getCurrentSlideInputs = (state) => {
   return { newSlides, inputs };
 };
 
-export const handleChangeInputs = (inputs, field, submitButtonDisabled) => {
+export const handleChangeInputs = (inputs, field) => {
   let inputDropdown = null;
-  return new Promise((resolve) => {
-    if (field.type === "checkbox") {
-      inputs.forEach((inp) => {
-        if (inp.type === "checkbox") {
-          inp.checkbox.checkbox_input.forEach((box) => {
-            if (box.input_id === field.name) {
-              box.value = field.checked;
-              if (box.end_point_name === "tnc") {
-                submitButtonDisabled = !field.checked;
+  if (field.type === "checkbox") {
+    inputs.forEach((inp) => {
+      if (inp.type === "checkbox") {
+        inp.checkbox.checkbox_input.forEach((box) => {
+          if (box.input_id === field.name) {
+            box.value = field.checked;
+          }
+        });
+      }
+    });
+  } else if (field.type === "input_with_dropdown") {
+    inputs.forEach((inp) => {
+      if (inp.input_id === field.name) {
+        let { listType, masterName } = getApiToHit(inp.search_for);
+        if (!field.value) {
+          inp.value = field.value;
+          inp.selectedItem = null;
+          inp.selectedId = null;
+          inp.list = [];
+          inputDropdown = { listType, masterName, inp };
+          return;
+        }
+        inp.value = field.value;
+        inputDropdown = { listType, masterName, inp };
+      } else {
+        inp.list = [];
+      }
+    });
+  } else if (field.type === "input_with_calendar") {
+    inputs.forEach((inp) => {
+      if (inp.input_id === field.name) {
+        inp.value = field.value;
+      }
+    });
+  } else if (field.type === "upload_button") {
+    let noOfUploadsError = false;
+    inputs.forEach((inp) => {
+      if (inp.input_id === field.name) {
+        const testFiles = { ...field };
+
+        if (
+          testFiles.value &&
+          inp.number_of_uploads &&
+          testFiles.value.length > inp.number_of_uploads
+        ) {
+          field.value = null;
+          field.error = true;
+          noOfUploadsError = true;
+          field.errorMsg = inp.maximum_uploads_error;
+        }
+
+        if (
+          !noOfUploadsError &&
+          testFiles.value &&
+          testFiles.value.length &&
+          inp.max_upload_size_in_mb
+        ) {
+          for (let i = 0; i < testFiles.value.length; i++) {
+            const file = testFiles.value[i];
+            const size = file.size / 1024 / 1024;
+            if (size > inp.max_upload_size_in_mb) {
+              field.value = null;
+              field.error = true;
+              field.errorMsg = inp.upload_size_error;
+            }
+          }
+        }
+
+        inp.value = field.value;
+        inp.attachment = field.attachment;
+        inp.error = field.error;
+        inp.errorMsg = field.errorMsg;
+        inp.verified = false;
+      }
+    });
+  } else if (field.type === "radio") {
+    inputs.forEach((inp) => {
+      if (inp.input_id === field.name) {
+        inp.value = field.value;
+        inp.verified = true;
+
+        // special case
+
+        if (inp.end_point_name === "cc_holder") {
+          inputs.forEach((secondary) => {
+            if (secondary.end_point_name === "bankId") {
+              if (inp.value === "no") {
+                secondary.value = "";
+                secondary.list = [];
+                secondary.selectedId = "*";
+                secondary.selectedItem = null;
+                secondary.mandatory = false;
+                secondary.error = false;
+                secondary.errorMsg = "";
+                secondary.verified = false;
+              } else {
+                secondary.selectedId = null;
+                secondary.mandatory = true;
+                secondary.verified = false;
               }
             }
           });
         }
-      });
-    } else if (field.type === "input_with_dropdown") {
-      inputs.forEach((inp) => {
-        if (inp.input_id === field.name) {
-          let { listType, masterName } = getApiToHit(inp.search_for);
-          if (!field.value) {
-            inp.value = field.value;
-            inp.selectedItem = null;
-            inp.selectedId = null;
-            inp.list = [];
-            inputDropdown = { listType, masterName, inp };
-            return;
-          }
-          inp.value = field.value;
-          inputDropdown = { listType, masterName, inp };
-        } else {
-          inp.list = [];
-        }
-      });
-    } else if (field.type === "input_with_calendar") {
-      inputs.forEach((inp) => {
-        if (inp.input_id === field.name) {
-          inp.value = field.value;
-        }
-      });
-    } else if (field.type === "upload_button") {
-      let error = false;
-      let errorMsg = "";
-      inputs.forEach((inp) => {
-        if (inp.input_id === field.name) {
-          if (
-            field.value &&
-            inp.number_of_uploads &&
-            field.value.length > inp.number_of_uploads
-          ) {
-            field.value = null;
-            field.error = true;
-            field.errorMsg = `Number of attachments allowed: ${inp.number_of_uploads}`;
-          }
-
-          // if (field.value && field.value.length && inp.max_upload_size_in_mb) {
-          //     console.log(field.value)
-          //     console.log(field.value.length)
-          //     for (let i = 0; i < field.value.length; i++) {
-          //         const file = field.value[i]
-          //         const size = file.size / 1024 / 1024
-          //         if (size > inp.max_upload_size_in_mb) {
-          //             field.value = null
-          //             field.error = true
-          //             field.errorMsg = `Maximum file size: ${inp.max_upload_size_in_mb} Mb`
-          //         }
-          //     }
-          // }
-
-          inp.value = field.value;
-          inp.attachment = field.attachment;
-          inp.error = field.error;
-          inp.errorMsg = field.errorMsg;
-
-          // if(inp.error) {
+      }
+    });
+  } else {
+    inputs.forEach((inp) => {
+      if (inp.input_id === field.name) {
+        inp.value = field.value;
+        if (inp.type === "pan_card" && inp.value) {
+          inp.value = inp.value.toUpperCase();
+          inp.error = false;
+          inp.errorMsg = "";
           inp.verified = false;
-          // }
         }
-      });
-    } else if (field.type === "radio") {
-      inputs.forEach((inp) => {
-        if (inp.input_id === field.name) {
-          inp.value = field.value;
-          inp.verified = true;
-
-          // special case
-
-          if (inp.end_point_name === "cc_holder") {
-            inputs.forEach((secondary) => {
-              if (secondary.end_point_name === "bankId") {
-                if (inp.value === "no") {
-                  secondary.value = "";
-                  secondary.list = [];
-                  secondary.selectedId = "*";
-                  secondary.selectedItem = null;
-                  secondary.mandatory = false;
-                  secondary.error = false;
-                  secondary.errorMsg = "";
-                  secondary.verified = false;
-                } else {
-                  secondary.selectedId = null;
-                  secondary.mandatory = true;
-                  secondary.verified = false;
-                }
-              }
-            });
-          }
-        }
-      });
-    } else {
-      inputs.forEach((inp) => {
-        if (inp.input_id === field.name) {
-          inp.value = field.value;
-          if (inp.type === "pan_card" && inp.value) {
-            inp.value = inp.value.toUpperCase();
-            inp.error = false;
-            inp.errorMsg = "";
-            inp.verified = false;
-          }
-        }
-      });
-    }
-    resolve({ newstate: { submitButtonDisabled, inputDropdown } });
-  });
+      }
+    });
+  }
+  return inputDropdown;
 };
 
 export const updateInputsValidity = (inputs, field, errorMsgs) => {
@@ -175,6 +173,24 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
       if (field.blur) {
         if (inp.type === "email" && inp.input_id === field.currentActiveInput) {
           if (!isInputValid(inp)) {
+            errors = true;
+            inp.error = true;
+            inp.verified = false;
+            if (!inp.value) {
+              inp.errorMsg = errorMsgs.mandatory;
+            } else {
+              inp.errorMsg = inp.validation_error;
+            }
+          } else {
+            inp.error = false;
+            inp.errorMsg = "";
+            inp.verified = true;
+          }
+        } else if (
+          inp.type === "money" &&
+          inp.input_id === field.currentActiveInput
+        ) {
+          if (!isMonetaryValid(inp)) {
             errors = true;
             inp.error = true;
             inp.verified = false;
@@ -280,6 +296,10 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
         inp.errorMsg = inp.validation_error;
         inp.error = true;
         errors = true;
+      } else if (inp.type === "money" && !isMonetaryValid(inp)) {
+        inp.error = true;
+        inp.errorMsg = inp.validation_error;
+        errors = true;
       } else if (inp.type === "input_with_dropdown" && !inp.selectedId) {
         inp.error = true;
         inp.errorMsg = inp.validation_error;
@@ -375,6 +395,10 @@ export const getSfData = (slides) => {
           data[input.end_point_name] = input.selectedItem;
           break;
 
+        case "money":
+          data[input.end_point_name] = getWholeNumberFromCurrency(input.value);
+          break;
+
         case "checkbox":
           input.checkbox.checkbox_input.forEach((box) => {
             data[box.end_point_name] = box.value;
@@ -395,16 +419,14 @@ export const getSfData = (slides) => {
       }
     });
   });
+  console.log(data);
   return data;
 };
-export const submitDocument = async (
-  document,
-  documentName = "",
-  primaryPath
-) => {
+
+export const submitDocument = async (document) => {
   const base64 = await getBase64(document);
   const { type, name } = document;
-  documentUpload(base64, type, name, documentName, primaryPath);
+  documentUpload(base64, type, name);
 };
 
 export const submitShortForm = (slides, currentSlide, primaryPath) => {
@@ -412,11 +434,10 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
     slides.forEach((slide) => {
       if (slide.slideId === currentSlide) {
         slide.inputs.forEach((input) => {
-          if (input.attachment) {
-            console.log("submitting document :", input);
+          if (input.attachment && input.value && input.value.length) {
             for (let i = 0; i < input.value.length; i++) {
               const file = input.value[i];
-              submitDocument(file, input.end_point_name, primaryPath);
+              submitDocument(file);
             }
           }
         });

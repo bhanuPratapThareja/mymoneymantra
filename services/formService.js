@@ -3,8 +3,6 @@ import Strapi from "../providers/strapi";
 import { getApiData } from "../api/api";
 import { getLeadId } from "../utils/localAccess";
 import { getFormattedDate } from "../utils/formatDataForApi";
-import { getDocumentIdandTypeId } from "../utils/uploadDocumentHelper";
-
 const CancelToken = axios.CancelToken;
 let cancel;
 let otpId = "";
@@ -51,7 +49,7 @@ export const submitOtp = async (mobileNo) => {
       throw new Error("Something went wrong. Please try again.");
     }
   } catch (err) {
-    if (err.response.status == 400) {
+    if (err.response.status == 404) {
       throw new Error("Please enter valid OTP!");
     } else {
       throw new Error(err.message);
@@ -76,22 +74,13 @@ export const getDropdownList = async (listType, value, masterName) => {
     return res.data.response.payload[masterName];
   } catch (err) {}
 };
-export const documentUpload = async (
-  base64,
-  type,
-  name,
-  documentName,
-  primaryPath
-) => {
-  // const { base64, type, name } = document
+
+export const documentUpload = async (document) => {
+  const { base64, type, name } = document;
   const { url, body } = getApiData("documentUpload");
-  const documentIds = getDocumentIdandTypeId(documentName);
-  const { documentId, documentTypeId } = documentIds[0];
-  body.request.payload.caseId = getLeadId(primaryPath);
-  body.request.payload.docList[0].documentId = documentId;
-  body.request.payload.docList[0].documentTypeId = documentTypeId;
-  body.request.payload.docList[0].documentExtension = type.split("/")[1];
-  body.request.payload.docList[0].docBytes = base64.split(",")[1];
+  body.request.payload.docList[0].documentId = name;
+  body.request.payload.docList[0].documentExtension = type;
+  body.request.payload.docList[0].docBytes = base64;
   axios.post(url, body).catch(() => {});
 };
 

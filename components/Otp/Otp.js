@@ -1,5 +1,5 @@
-import { allowedOtpKeys } from "../../utils/allowedOtpKeys";
 import { useEffect, useRef } from "react";
+import { allowedOtpKeys } from "../../utils/allowedOtpKeys";
 
 const Otp = (props) => {
   const inpRef = useRef();
