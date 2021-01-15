@@ -1261,3 +1261,19 @@ button.sf-submit-button {
   color: red !important;
   fill: red !important;
 }
+
+.material-modal {
+  /* background-color: white;
+  position: fixed;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 100000 !important; */
+}
+
+.modal-body {
+  /* background-color: #f4f4f4;
+  height: 100%;
+  width: 100%;
+  overflow: scroll; */
+}
