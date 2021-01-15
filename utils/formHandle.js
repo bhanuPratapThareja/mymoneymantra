@@ -1,8 +1,9 @@
 import $ from 'jquery'
 import { getApiToHit } from '../api/dropdownApiConfig'
-import { isInputValid } from './formValidations'
+import { isInputValid, isMonetaryValid } from './formValidations'
 import { getBase64, documentUpload, generateLead } from '../services/formService'
 import { getFormattedName } from './formatDataForApi'
+import { getWholeNumberFromCurrency } from './formattedCurrency'
 
 export const textTypeInputs = ['text', 'number', 'email', 'tel', 'phone_no',
     'input_with_dropdown', 'input_with_calendar',]
@@ -167,6 +168,23 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
                         inp.errorMsg = ''
                         inp.verified = true
                     }
+
+                } else if(inp.type === 'money' && inp.input_id === field.currentActiveInput) {
+                    if (!isMonetaryValid(inp)) {
+                        errors = true
+                        inp.error = true
+                        inp.verified = false
+                        if (!inp.value) {
+                            inp.errorMsg = errorMsgs.mandatory
+                        } else {
+                            inp.errorMsg = inp.validation_error
+                        }
+                    } else {
+                        inp.error = false
+                        inp.errorMsg = ''
+                        inp.verified = true
+                    }
+
                 } else if (inp.type === 'phone_no' && inp.input_id === field.currentActiveInput) {
                     if (!isInputValid(inp)) {
                         errors = true
@@ -248,6 +266,11 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
             else if (inp.type === 'pan_card' && !isInputValid(inp)) {
                 inp.errorMsg = inp.validation_error
                 inp.error = true
+                errors = true
+            }
+            else if (inp.type === 'money' && !isMonetaryValid(inp)) {
+                inp.error = true
+                inp.errorMsg = inp.validation_error
                 errors = true
             }
             else if (inp.type === 'input_with_dropdown' && !inp.selectedId) {
@@ -346,6 +369,10 @@ export const getSfData = slides => {
                     data[input.end_point_name] = input.selectedItem
                     break
 
+                case 'money':
+                    data[input.end_point_name] = getWholeNumberFromCurrency(input.value)
+                    break
+
                 case 'checkbox':
                     input.checkbox.checkbox_input.forEach(box => {
                         data[box.end_point_name] = box.value
@@ -364,6 +391,7 @@ export const getSfData = slides => {
             }
         })
     })
+    console.log(data)
     return data
 }
 

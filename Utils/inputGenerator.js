@@ -1,11 +1,21 @@
 import { getDevice } from './getDevice'
+import { getFormattedCurrency, getWholeNumberFromCurrency } from './formattedCurrency'
 
 export const generateInputs = (component, updateField,
     checkInputValidity, handleInputDropdownChange, handleInputDropdownSelection) => {
 
     const handleChange = (e, type) => {
-        const { name, value, checked } = e.target
+        let { name, value, checked } = e.target
         let field = {}
+
+        if(type === 'money')  {
+            const numString = getWholeNumberFromCurrency(value)
+            if(isNaN(numString)) {
+                return
+            }
+            value = getFormattedCurrency(value)
+        }
+
         if (type === 'checkbox') {
             field = { name, checked, type }
         } else {
@@ -114,7 +124,7 @@ export const generateInputs = (component, updateField,
         )
     }
 
-    if (type === 'text' || type === 'email' || type === 'number' || type === 'tel' || type === 'pan_card') {
+    if (type === 'text' || type === 'email' || type === 'number' || type === 'pan_card' || type === 'money') {
         const fieldId = `${input_id}_${type}`
         const inputType = type === 'number' ? getDevice() === 'desktop' ? 'number' : 'tel' : type
         return (
@@ -201,10 +211,10 @@ export const generateInputs = (component, updateField,
         const dropDownClass = selectedId === '*' || dependent ? 'disabled_input' : 'dropdown_enabled'
         fieldClasses.push(dropDownClass)
         fieldClasses.push(input_class)
-        if (list && list.length) {
+        if (list && list.length && getDevice() !== 'desktop') {
             const listEl = document.getElementById(fieldId)
             if (listEl) {
-                const listElOffset = listEl.offsetTop + 40
+                const listElOffset = listEl.offsetTop + 60
                 window.scrollTo({ top: listElOffset, behavior: 'smooth' })
             }
         }

@@ -7,6 +7,7 @@ import { getDropdownList } from '../../services/formService'
 import { generateLead, sendNotification, submitOtp, getOtp } from '../../services/formService'
 import { setLeadId } from '../../utils/localAccess'
 import { getLeadId } from '../../utils/localAccess'
+import { getFormattedCurrency, getWholeNumberFromCurrency } from '../../utils/formattedCurrency'
 import {
     textTypeInputs,
     handleChangeInputs,
@@ -89,6 +90,9 @@ class LongForm extends React.Component {
                                 item.value = sfData[key]
                                 item.verified = true
                                 item.error = false
+                                if(item.type === 'money') {
+                                    item.value = getFormattedCurrency(sfData[key])
+                                }
                             }
                         }
                     }
@@ -257,7 +261,7 @@ class LongForm extends React.Component {
 
         this.updateState(newLongFormSections)
             .then(() => {
-                // if (!errors) {
+                if (!errors) {
                     if (!this.state.leadId || this.state.askForOtp) {
                         let mobileNo = ''
                         const newLongFormSections = [...this.state.longFormSections]
@@ -279,7 +283,7 @@ class LongForm extends React.Component {
                     } else {
                         this.retrieveDataAndSubmit()
                     }
-                // }
+                }
             })
     }
 
@@ -311,6 +315,9 @@ class LongForm extends React.Component {
                         })
                     } else if (input.type === 'input_with_dropdown') {
                         data[input.end_point_name] = input.selectedItem
+
+                    } else if (input.type === 'money') {
+                        data[input.end_point_name] = getWholeNumberFromCurrency(input.value)
 
                     } else {
                         data[input.end_point_name] = input.value
