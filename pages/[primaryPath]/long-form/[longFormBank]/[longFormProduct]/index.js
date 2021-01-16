@@ -15,13 +15,13 @@ const LongFormProduct = props => {
         window.scrollTo(0, 0)
     })
 
-    const getComponents = (dynamic, bankData, productData) => {
+    const getComponents = (dynamic, bankData, productData, preferredBanks) => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.long-form-banners-component':
                     return <LongFormBanner key={block.id} data={block} bank={bankData} product={productData} />
                 case 'form-components.long-form-component-new':
-                    return <LongForm key={block.id} data={block} bank={bankData} />
+                    return <LongForm key={block.id} data={block} bank={bankData} preferredBanks={preferredBanks} />
             }
         })
     }
@@ -45,7 +45,7 @@ const LongFormProduct = props => {
             <div className="mobile-background"></div>
             {props.data ? <Layout>
                 <section className="long-form-wrapper">
-                    {getComponents(props.data.dynamic, props.bankData, props.productData)}
+                    {getComponents(props.data.dynamic, props.bankData, props.productData, props.preferredBanks)}
                 </section>
             </Layout> : null}
 
@@ -74,16 +74,17 @@ export async function getServerSideProps(ctx) {
     const details = detailsData ? detailsData[0] : null
     bankData = details ? details.bank : null
 
-    console.log(2)
+
 
     const creditCardProductData = details ? details.credit_card_product ? details.credit_card_product : null : null
     const personalLoanProductData = details ? details.personal_loan_product ? details.personal_loan_product : null : null
     const homeLoanProductData = details ? details.home_loan_product ? details.home_loan_product : null : null
     productData = creditCardProductData || personalLoanProductData || homeLoanProductData
 
-    console.log(3)
+    const preferredBanksData = await strapi.processReq("GET", `list-preferences`)
+    const preferredBanks = preferredBanksData[0]
 
-    return { props: { data, bankData, productData } }
+    return { props: { data, bankData, productData, preferredBanks } }
 
 }
 
