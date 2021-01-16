@@ -286,6 +286,7 @@ class LongForm extends React.Component {
       });
     });
 
+    console.log("")
     this.updateState(newLongFormSections).then(() => {
       if (!errors) {
         if (!this.state.leadId || this.state.askForOtp) {
