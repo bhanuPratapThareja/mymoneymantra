@@ -956,6 +956,127 @@ button.sf-submit-button {
   text-decoration: underline;
 }
 
+/*-- Material Modal styling --*/
+.material-modal {
+  z-index: 9999999999 !important;
+  top: 20% !important;
+}
+
+.modal-body {
+  background: #fff;
+  position: relative;
+  padding: 20px;
+  max-width: 50%;
+  margin: 0 auto;
+  z-index: 0;
+  border-radius: 5px;
+}
+
+.otp-modal-form .mobile-otp {
+  margin: 0 auto;
+  position: relative;
+  top: 0;
+}
+
+.otp-modal-form .otp-wrapper.login-options {
+  position: relative;
+  top: 0;
+  margin: 30px 0;
+}
+
+.otp-modal-form button {
+  width: auto;
+  border-radius: 6px;
+  background: -webkit-gradient(linear, left top, right top, from(#56AB2F), to(#93D642));
+  background: linear-gradient(90deg, #56AB2F 0%, #93D642 100%);
+  padding: 8px 16px;
+  color: #ffffff;
+  font-family: "Avenir-Black";
+  font-size: 16px;
+  line-height: 24px;
+  border: none;
+  cursor: pointer;
+  display: block;
+  outline: none;
+  margin: 10px auto;
+  text-align: right;
+}
+
+button.close-btn {
+  border-radius: 0;
+  position: absolute;
+  right: 30px;
+  background: none;
+  cursor: pointer;
+  font-size: 0;
+  border: 0;
+  top: 12px;
+  padding: 15px;
+  z-index: 99;
+}
+
+button.close-btn:after {
+  content: " ";
+  display: block;
+  background: #666;
+  width: 2px;
+  transform: rotate(45deg);
+  top: 6px;
+  height: 20px;
+  position: absolute;
+}
+button.close-btn:before {content: "";display: block;background: #666;width: 2px;transform: rotate(-45deg);height: 20px;position: absolute;top: 6px;}
+
+.checkbox label {
+  position: absolute;
+  left: 0;
+  top: 5px;
+}
+
+.checkbox {
+  position: relative;
+  padding-left: 40px;
+  margin: 0 0 15px;
+}
+
+.MuiLinearProgress-barColorPrimary {
+  background-color: #89C142 !important;
+}
+
+.interim-class {
+  height: 100vh !important;
+  width: 100vw !important;
+  background: linear-gradient(90deg, #0D2333 0%, #040A0F 100%) !important;
+}
+
+.dropdown-content {
+  display: block;
+  z-index: 9999;
+}
+
+.page-not-found_center_msg {
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%);
+  font-weight: 900;
+}
+
+.selected-filter {
+  color: red !important;
+  fill: red !important;
+}
+
+img {
+  max-width: 100%
+}
+
+.form__group.field.filled-input.dropdown_enabled {
+  z-index: 9999 !important;
+}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
@@ -1192,6 +1313,10 @@ button.sf-submit-button {
     line-height: 1.25rem;
   }
 
+  .modal-body {
+    max-width: 90%;
+  }
+
 }
 
 @media(max-width: 767px) {
@@ -1232,48 +1357,3 @@ button.sf-submit-button {
   }
 }
 
-.MuiLinearProgress-barColorPrimary {
-  background-color: #89C142 !important;
-}
-
-.interim-class {
-  height: 100vh !important;
-  width: 100vw !important;
-  background: linear-gradient(90deg, #0D2333 0%, #040A0F 100%) !important;
-}
-
-.dropdown-content {
-  display: block;
-  z-index: 9999;
-}
-
-.page-not-found_center_msg {
-  color: white;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  text-align: center;
-  transform: translate(-50%);
-  font-weight: 900;
-}
-
-.selected-filter {
-  color: red !important;
-  fill: red !important;
-}
-
-.material-modal {
-  /* background-color: white;
-  position: fixed;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  z-index: 100000 !important; */
-}
-
-.modal-body {
-  /* background-color: #f4f4f4;
-  height: 100%;
-  width: 100%;
-  overflow: scroll; */
-}

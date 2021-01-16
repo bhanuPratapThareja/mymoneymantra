@@ -270,7 +270,7 @@ export const generateInputs = (
           </h5>
 
           {error ? (
-            <div>
+            <div className="input-error">
               <p>{errorMsg}</p>
             </div>
           ) : null}
@@ -290,7 +290,7 @@ export const generateInputs = (
     if (list && list.length && getDevice() !== "desktop") {
       const listEl = document.getElementById(fieldId);
       if (listEl) {
-        const listElOffset = listEl.offsetTop + 200;
+        const listElOffset = listEl.offsetTop + 40;
         window.scrollTo({ top: listElOffset, behavior: "smooth" });
       }
     }

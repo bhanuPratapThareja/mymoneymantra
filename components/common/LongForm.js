@@ -287,7 +287,7 @@ class LongForm extends React.Component {
     });
 
     this.updateState(newLongFormSections).then(() => {
-      if (!errors) {
+      // if (!errors) {
         if (!this.state.leadId || this.state.askForOtp) {
           let mobileNo = "";
           const newLongFormSections = [...this.state.longFormSections];
@@ -309,7 +309,7 @@ class LongForm extends React.Component {
         } else {
           this.retrieveDataAndSubmit();
         }
-      }
+      // }
     });
   };
 
@@ -465,7 +465,7 @@ class LongForm extends React.Component {
             openModal={this.state.openOtpModal}
             closeOtpModal={this.closeOtpModal}
           >
-            <button onClick={this.closeOtpModal}>Close</button>
+            <button onClick={this.closeOtpModal} className="close-btn">Close</button>
             <form className="otp-modal-form short-forms-wrapper">
               <div className="mobile-otp">
                 <div className="lets-find-content otp-card_custom">
