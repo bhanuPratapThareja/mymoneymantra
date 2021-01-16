@@ -26,6 +26,7 @@ export const submitOtp = async (mobileNo) => {
   for (let inp of inps) {
     otp += inp.value;
   }
+
   if (otp.length !== 4) {
     throw new Error("Otp mush have 4 characters");
   }
@@ -36,12 +37,11 @@ export const submitOtp = async (mobileNo) => {
   body.request.payload.mobileNo = mobileNo;
   body.request.payload.otp = otp;
   body.request.payload.otpId = otpId;
-
   try {
     const res = await axios.post(url, body);
     console.log("otp verify res", res);
     if (res.data.response.msgInfo.code == 200) {
-      console.log("if");
+     
       return true;
     } else if (res.data.response.msgInfo.code == 500) {
       throw new Error(res.data.response.msgInfo.message);

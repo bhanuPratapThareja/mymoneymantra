@@ -44,10 +44,11 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
     inputs.forEach((inp) => {
       if (inp.input_id === field.name) {
         let { listType, masterName } = getApiToHit(inp.search_for)
-
         if (!field.value && field.focusDropdown) {
-          if (inp.search_for === preferredBanks.search_for && preferredBanks) {
+          if (preferredBanks && inp.search_for === preferredBanks.search_for) {
             let prefferedList = []
+            inp.selectedItem = null;
+        inp.selectedId = null;
             preferredBanks.banks.forEach(bank => {
               const preferredBank = { bankId: bank.bank_id, bankName: bank.bank_name }
               prefferedList.push(preferredBank)
@@ -64,11 +65,17 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
           inp.list = [];
           inputDropdown = { listType, masterName, inp };
           return
+        } else {
+          // inp.selectedItem = null;
+          // inp.selectedId = null;
+          inp.value = field.value;
+          inputDropdown = { listType, masterName, inp };
         }
 
-        inp.value = field.value;
-        inputDropdown = { listType, masterName, inp };
+       
       } else {
+        inp.selectedItem = null;
+          inp.selectedId = null;
         inp.list = [];
       }
     });
@@ -413,8 +420,11 @@ export const resetDropdowns = (inputs, errorMsgs) => {
     if (inp.type === "input_with_dropdown") {
       inp.list = [];
       if (inp.value && !inp.selectedId) {
-        inp.error = true;
-        inp.errorMsg = errorMsgs.mandatory;
+        inp.error = false;
+        inp.errorMsg = '';
+        inp.selectedId = null
+        inp.selectedItem = null
+        inp.value = ''
       }
     }
   });
@@ -491,7 +501,7 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
         resolve(res);
       })
       .catch((err) => {
-        console.log(err);
+         console.log(err);
         reject("Error while Submitting. Please try again.");
       });
   });
