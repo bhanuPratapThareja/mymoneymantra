@@ -298,7 +298,6 @@ class LongForm extends React.Component {
 
     this.updateState(newLongFormSections).then(() => {
       if (!errors) {
-        console.log('test')
         if (!this.state.leadId || this.state.askForOtp) {
           let mobileNo = "";
           const newLongFormSections = [...this.state.longFormSections];
