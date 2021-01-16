@@ -15,15 +15,29 @@ class ListingFilter extends React.Component {
             filter_tenure, filter_roi, filter_max_loan_amount } = this.props.filters
 
         const updatedCheckboxes = [...this.props.filters.checkboxes]
-
+        
         if (updatedCheckboxes.length) {
             updatedCheckboxes.forEach((block, i) => {
+                let blockValues = [...block.values]
                 if (block.type === 'banks') {
-                    const values = block.values.filter(value => {
-                        return this.props.banksList.includes(value.tag)
+                    let values = []
+                    let tempBanksTags = []
+
+                    blockValues.forEach(value => {
+                        this.props.banksList.forEach(tag => {
+                            if (value.tag === tag) {
+                                if (!tempBanksTags.includes(tag)) {
+                                    tempBanksTags.push(tag)
+                                    values.push(value)
+                                }
+                            }
+                        })
                     })
 
                     updatedCheckboxes[i].values = values
+
+                } else {
+                    updatedCheckboxes[i].values = blockValues
                 }
 
                 block.showCheckboxes = this.state.showCheckboxes
