@@ -73,8 +73,7 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
 
 
       } else {
-        inp.selectedItem = null;
-        inp.selectedId = null;
+       
         inp.list = [];
       }
     });
@@ -421,8 +420,6 @@ export const resetDropdowns = (inputs, errorMsgs) => {
       if (inp.value && !inp.selectedId) {
         inp.error = false;
         inp.errorMsg = '';
-        inp.selectedId = null
-        inp.selectedItem = null
         inp.value = ''
       }
     }
