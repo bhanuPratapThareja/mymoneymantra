@@ -287,7 +287,7 @@ class LongForm extends React.Component {
     });
 
     this.updateState(newLongFormSections).then(() => {
-      // if (!errors) {
+      if (!errors) {
         if (!this.state.leadId || this.state.askForOtp) {
           let mobileNo = "";
           const newLongFormSections = [...this.state.longFormSections];
@@ -309,7 +309,7 @@ class LongForm extends React.Component {
         } else {
           this.retrieveDataAndSubmit();
         }
-      // }
+       }
     });
   };
 
