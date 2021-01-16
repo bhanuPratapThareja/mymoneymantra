@@ -234,7 +234,7 @@ class ShortExtendedForm extends React.Component {
                 inp.list = prefferedList
                 inp.error = false
                 setTimeout(() => {
-                    this.handleInputDropdownChange(listType, prefferedList, inp.input_id)
+                    this.handleInputDropdownChange(listType, prefferedList, inp.input_id, field.focusDropdown)
                 }, 300)
             } else {
                 if(!field.focusDropdown){
@@ -248,9 +248,12 @@ class ShortExtendedForm extends React.Component {
                 }
             }
         }
+
         this.setState({ ...this.state, slides: newSlides }, () => {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
-                this.checkInputValidity(field, field.focusDropdown)
+                setTimeout(() => {
+                    this.checkInputValidity(field, field.focusDropdown)
+                }, 50);
             }
             const { enableCheckboxes } = this.state
             let trueEnableCheckboxes = []
@@ -273,8 +276,6 @@ class ShortExtendedForm extends React.Component {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateDropdownList(inputs, listType, list, input_id)
         this.setState({ ...this.state, slides: newSlides })
-
-
     }
 
     handleInputDropdownSelection = (input_id, type, item) => {

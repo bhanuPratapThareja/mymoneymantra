@@ -137,25 +137,35 @@ class LongForm extends React.Component {
       long_form_blocks.forEach(async (long_form_block) => {
         const inputs = long_form_block.blocks;
 
-        const inputDropdown = handleChangeInputs(inputs, field);
+        const inputDropdown = handleChangeInputs(inputs, field, this.props.preferredBanks);
         if (inputDropdown) {
-          const { listType, masterName, inp } = inputDropdown;
-          const debouncedSearch = debounce(
-            () =>
-              getDropdownList(listType, inp.value, masterName).then((list) => {
-                inp.listType = listType;
-                inp.list = list;
-                this.handleInputDropdownChange(listType, list, inp.input_id);
-              }),
-            500
-          );
-          debouncedSearch(listType, inp.value, masterName);
-        }
+          const { listType, masterName, inp, prefferedList } = inputDropdown
+          if (prefferedList) {
+              inp.listType = listType
+              inp.list = prefferedList
+              inp.error = false
+              setTimeout(() => {
+                  this.handleInputDropdownChange(listType, prefferedList, inp.input_id, field.focusDropdown)
+              }, 300)
+          } else {
+              if(!field.focusDropdown){
+                  const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
+                      .then(list => {
+                          inp.listType = listType
+                          inp.list = list
+                          this.handleInputDropdownChange(listType, list, inp.input_id)
+                      }), 500)
+                  debouncedSearch(listType, inp.value, masterName)
+              }
+          }
+      }
       });
     });
     this.setState({ longFormSections: newLongFormSections }, () => {
       if (textTypeInputs.includes(field.type) || field.type === "radio") {
-        this.checkInputValidity(field);
+        setTimeout(() => {
+          this.checkInputValidity(field, field.focusDropdown)
+      }, 50);
       }
       const { enableCheckboxes } = this.state;
       let trueEnableCheckboxes = [];
@@ -210,13 +220,13 @@ class LongForm extends React.Component {
     this.updateState(newLongFormSections);
   };
 
-  checkInputValidity = (field) => {
+  checkInputValidity = (field, focusDropdown) => {
     const newLongFormSections = [...this.state.longFormSections];
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
       long_form_blocks.forEach(async (long_form_block) => {
         const inputs = long_form_block.blocks;
-        updateInputsValidity(inputs, field, this.state.errorMsgs);
+        updateInputsValidity(inputs, field, this.state.errorMsgs, focusDropdown);
       });
     });
     this.updateState(newLongFormSections);
@@ -287,7 +297,8 @@ class LongForm extends React.Component {
     });
 
     this.updateState(newLongFormSections).then(() => {
-      // if (!errors) {
+      if (!errors) {
+        console.log('test')
         if (!this.state.leadId || this.state.askForOtp) {
           let mobileNo = "";
           const newLongFormSections = [...this.state.longFormSections];
@@ -309,7 +320,7 @@ class LongForm extends React.Component {
         } else {
           this.retrieveDataAndSubmit();
         }
-      // }
+      }
     });
   };
 

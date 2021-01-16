@@ -44,38 +44,37 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
     inputs.forEach((inp) => {
       if (inp.input_id === field.name) {
         let { listType, masterName } = getApiToHit(inp.search_for)
-        if (!field.value && field.focusDropdown) {
+        if (!field.value && field.focusDropdown && !inp.selectedId) {
           if (preferredBanks && inp.search_for === preferredBanks.search_for) {
             let prefferedList = []
             inp.selectedItem = null;
-        inp.selectedId = null;
+            inp.selectedId = null;
             preferredBanks.banks.forEach(bank => {
               const preferredBank = { bankId: bank.bank_id, bankName: bank.bank_name }
               prefferedList.push(preferredBank)
             })
             inputDropdown = { listType, masterName, inp, prefferedList }
-           
           }
-          return
 
         } else if (!field.value) {
           inp.value = field.value;
           inp.selectedItem = null;
           inp.selectedId = null;
           inp.list = [];
+          
           inputDropdown = { listType, masterName, inp };
-          return
         } else {
           // inp.selectedItem = null;
           // inp.selectedId = null;
+          inp.error = false
           inp.value = field.value;
           inputDropdown = { listType, masterName, inp };
         }
 
-       
+
       } else {
         inp.selectedItem = null;
-          inp.selectedId = null;
+        inp.selectedId = null;
         inp.list = [];
       }
     });
@@ -150,7 +149,7 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
               } else {
                 secondary.mandatory = true;
                 secondary.verified = false;
-                if(secondary.selectedId === '*') {
+                if (secondary.selectedId === '*') {
                   secondary.selectedId = null
                 }
               }
@@ -188,8 +187,8 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
           inp.verified = false
           return
         }
-        if(inp.mandatory && !inp.value && inp.list) {
-          
+        if (inp.mandatory && !inp.value && inp.list) {
+
         }
         setTimeout(() => {
           if (inp.mandatory && !inp.value) {
@@ -199,7 +198,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
           } else {
             inp.error = false
             inp.errorMsg = ''
-            if(inp.list) {
+            if (inp.list) {
               inp.list = []
             }
           }
@@ -314,7 +313,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
     // check on slide or form submit
   } else {
     inputs.forEach((inp) => {
-      if(inp.selectedId && inp.selectedId === "*") {
+      if (inp.selectedId && inp.selectedId === "*") {
         inp.verified = false
       } else if (
         (textTypeInputs.includes(inp.type) || inp.type === "radio") &&
@@ -501,7 +500,7 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
         resolve(res);
       })
       .catch((err) => {
-         console.log(err);
+        console.log(err);
         reject("Error while Submitting. Please try again.");
       });
   });
