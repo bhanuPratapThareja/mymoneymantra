@@ -280,6 +280,7 @@ class LongForm extends React.Component {
 
   onSubmitLongForm = () => {
     let errors = false;
+    console.log(this.state)
     const newLongFormSections = [...this.state.longFormSections];
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
