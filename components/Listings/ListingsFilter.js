@@ -213,14 +213,14 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" />
                                             </div>
                                         </div>
-                                        <span className="min-max left">₹{filter_tenure.min}</span>
-                                        <span className="min-max right">₹{filter_tenure.max}+</span>
+                                        <span className="min-max left">{filter_tenure.min} years</span>
+                                        <span className="min-max right">{filter_tenure.max} years +</span>
                                     </div>
                                 </div>
                             </div> : null}
 
                             {filter_roi && filter_roi.enable ? <div className="content-one">
-                                <h5>Return On Investment</h5>
+                                <h5>Rate Of Interest</h5>
                                 <div className="range__slider">
                                     <div className="container">
                                         <div className="row">
@@ -234,8 +234,8 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" />
                                             </div>
                                         </div>
-                                        <span className="min-max left">₹{filter_roi.min}</span>
-                                        <span className="min-max right">₹{filter_roi.max}+</span>
+                                        <span className="min-max left">{filter_roi.min}%</span>
+                                        <span className="min-max right">{filter_roi.max}% +</span>
                                     </div>
                                 </div>
                             </div> : null}
