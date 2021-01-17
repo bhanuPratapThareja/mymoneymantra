@@ -64,8 +64,6 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
           
           inputDropdown = { listType, masterName, inp };
         } else {
-          // inp.selectedItem = null;
-          // inp.selectedId = null;
           inp.error = false
           inp.value = field.value;
           inputDropdown = { listType, masterName, inp };
@@ -417,10 +415,11 @@ export const resetDropdowns = (inputs, errorMsgs) => {
   inputs.forEach((inp) => {
     if (inp.type === "input_with_dropdown") {
       inp.list = [];
-      if (inp.value && !inp.selectedId) {
-        inp.error = false;
-        inp.errorMsg = '';
-        inp.value = ''
+      if ((inp.selectedItem && inp.selectedItem[inp.select_name] !== inp.value)) {
+        inp.error = true;
+        inp.errorMsg = errorMsgs.mandatory
+        inp.selectedId = null
+        inp.selectedItem = null
       }
     }
   });

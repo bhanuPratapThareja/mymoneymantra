@@ -253,7 +253,7 @@ class ShortExtendedForm extends React.Component {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
                 setTimeout(() => {
                     this.checkInputValidity(field, field.focusDropdown)
-                }, 50);
+                }, 1000);
             }
             const { enableCheckboxes } = this.state
             let trueEnableCheckboxes = []
