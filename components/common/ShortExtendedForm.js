@@ -135,7 +135,7 @@ class ShortExtendedForm extends React.Component {
             if (!errorsPresent) {
                 try {
                     const mobileNo = getUserMobileNumber(this.state.slides[0])
-                    this.setState({ mobileNo })
+                    this.setState({ mobileNo, slideButtonText: 'Verify' })
                     getOtp(mobileNo)
                     setTimeout(() => {
                         letsFindFormToOtpForm()
@@ -166,11 +166,9 @@ class ShortExtendedForm extends React.Component {
             const res = await submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
             const leadIdSendNotification = res.data.response.payload.leadId;
             setLeadId(primaryPath, res.data.response.payload.leadId)
-            const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-            const leadId = { ...leadIdData, [primaryPath]: res.data.response.payload.leadId }
             sendNotification(leadIdSendNotification);
-            localStorage.setItem('leadId', JSON.stringify(leadId))
             goToSlides()
+            this.setState({ slideButtonText: 'Next' })
         } catch (err) {
             alert(err)
         }
@@ -185,6 +183,7 @@ class ShortExtendedForm extends React.Component {
             this.scrollToTopOfSlide()
             setTimeout(() => {
                 loadOtpForm()
+                this.setState({ slideButtonText: 'Verify' })
             }, 500)
             return
         }
@@ -199,7 +198,7 @@ class ShortExtendedForm extends React.Component {
                 if (!errorsPresent) {
                     const newSlideId = incrementSlideId(this.state.currentSlide)
                     if (this.state.slideIndex < this.state.slides.length - 1) {
-                        this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId, }, () => {
+                        this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId }, () => {
                             if (this.state.slideIndex === this.state.slides.length - 1) {
                                 this.setState({ slideButtonText: 'Submit and view offers' })
                             }
@@ -237,7 +236,7 @@ class ShortExtendedForm extends React.Component {
                     this.handleInputDropdownChange(listType, prefferedList, inp.input_id, field.focusDropdown)
                 }, 300)
             } else {
-                if(!field.focusDropdown){
+                if (!field.focusDropdown) {
                     const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
                         .then(list => {
                             inp.listType = listType
@@ -251,9 +250,7 @@ class ShortExtendedForm extends React.Component {
 
         this.setState({ ...this.state, slides: newSlides }, () => {
             if (textTypeInputs.includes(field.type) || field.type === 'radio') {
-                setTimeout(() => {
-                    this.checkInputValidity(field, field.focusDropdown)
-                }, 1000);
+                this.checkInputValidity(field, field.focusDropdown)
             }
             const { enableCheckboxes } = this.state
             let trueEnableCheckboxes = []
@@ -279,6 +276,7 @@ class ShortExtendedForm extends React.Component {
     }
 
     handleInputDropdownSelection = (input_id, type, item) => {
+        console.log('item: ', item)
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateSelectionFromDropdown(inputs, input_id, item)
         this.setState({ ...this.state, slides: newSlides })
@@ -332,6 +330,7 @@ class ShortExtendedForm extends React.Component {
                                 decrementOtpTime={this.decrementOtpTime}
                                 otpTimeLeft={this.state.otpTimeLeft}
                                 mobileNo={this.state.mobileNo}
+                                slideButtonText={this.state.slideButtonText}
                                 disableOtpSubmitButton={this.state.disableOtpSubmitButton}
                             />
                         </div>

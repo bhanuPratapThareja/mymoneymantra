@@ -42,18 +42,14 @@ class LongForm extends React.Component {
   componentDidMount() {
     const { primaryPath } = this.props.router.query;
     const bankName = this.props.bank.bank_name;
-    const {
-      long_form,
-      always_ask_for_otp,
-    } = this.props.data.long_form_version_2;
-    const longFormSections = long_form[0].long_form_sections;
+    const { long_form_version_2, always_ask_for_otp, invalid_form_error_message } = this.props.data
+ 
+    const longFormSections = long_form_version_2.long_form[0].long_form_sections;
     const formData = JSON.parse(localStorage.getItem("formData"));
     let sfData = null;
     let noOfMandatoryInputs = 0;
     let leadId = getLeadId(primaryPath);
     let enableCheckboxes = [];
-
-    // this.setState({ primaryPath, bankName, leadId })
 
     if (formData && formData[primaryPath]) {
       sfData = formData[primaryPath];
@@ -122,6 +118,7 @@ class LongForm extends React.Component {
         primaryPath,
         bankName,
         leadId,
+        invalidFormError: invalid_form_error_message,
         askForOtp: always_ask_for_otp,
       },
       () => {
@@ -141,31 +138,29 @@ class LongForm extends React.Component {
         if (inputDropdown) {
           const { listType, masterName, inp, prefferedList } = inputDropdown
           if (prefferedList) {
-              inp.listType = listType
-              inp.list = prefferedList
-              inp.error = false
-              setTimeout(() => {
-                  this.handleInputDropdownChange(listType, prefferedList, inp.input_id, field.focusDropdown)
-              }, 300)
+            inp.listType = listType
+            inp.list = prefferedList
+            inp.error = false
+            setTimeout(() => {
+              this.handleInputDropdownChange(listType, prefferedList, inp.input_id, field.focusDropdown)
+            }, 300)
           } else {
-              if(!field.focusDropdown){
-                  const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
-                      .then(list => {
-                          inp.listType = listType
-                          inp.list = list
-                          this.handleInputDropdownChange(listType, list, inp.input_id)
-                      }), 500)
-                  debouncedSearch(listType, inp.value, masterName)
-              }
+            if (!field.focusDropdown) {
+              const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
+                .then(list => {
+                  inp.listType = listType
+                  inp.list = list
+                  this.handleInputDropdownChange(listType, list, inp.input_id)
+                }), 500)
+              debouncedSearch(listType, inp.value, masterName)
+            }
           }
-      }
+        }
       });
     });
-    this.setState({ longFormSections: newLongFormSections }, () => {
+    this.setState({ longFormSections: newLongFormSections, errors: false }, () => {
       if (textTypeInputs.includes(field.type) || field.type === "radio") {
-            this.checkInputValidity(field, field.focusDropdown)
-      
-
+        this.checkInputValidity(field, field.focusDropdown)
       }
       const { enableCheckboxes } = this.state;
       let trueEnableCheckboxes = [];
@@ -280,7 +275,6 @@ class LongForm extends React.Component {
 
   onSubmitLongForm = () => {
     let errors = false;
-    console.log(this.state)
     const newLongFormSections = [...this.state.longFormSections];
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
@@ -292,7 +286,8 @@ class LongForm extends React.Component {
           this.state.errorMsgs
         );
         if (errorsPresent) {
-          errors = true;
+          errors = true
+          this.setState({ errors: true })
         }
       });
     });
@@ -393,7 +388,6 @@ class LongForm extends React.Component {
       })
       .catch((err) => {
         this.setState({ submitButtonDisabled: false });
-        // console.log('long form submission error: ', err)
       });
   };
 
@@ -459,6 +453,7 @@ class LongForm extends React.Component {
               </React.Fragment>
             );
           })}
+          {this.state.errors ?<p className="form-invalid-text">{this.state.invalidFormError}</p> : null}
           <div className="long-form-submit">
             <button
               id="long-submit"

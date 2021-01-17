@@ -33,7 +33,7 @@ const ThankYouBanner = props => {
 
                             {bankName ? <>
                                 <p>{`for applying for a ${productType}`}</p>
-                                <p>{` with ${router.query.bankName} bank.`}</p>
+                                <p>{` with ${router.query.bankName}.`}</p>
                             </>
                                 : null}
                         </div>

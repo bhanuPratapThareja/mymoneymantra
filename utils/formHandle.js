@@ -61,7 +61,7 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
           inp.selectedItem = null;
           inp.selectedId = null;
           inp.list = [];
-          
+
           inputDropdown = { listType, masterName, inp };
         } else {
           inp.error = false
@@ -71,7 +71,7 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
 
 
       } else {
-       
+
         inp.list = [];
       }
     });
@@ -178,28 +178,35 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
   if (field) {
     inputs.forEach((inp) => {
       if (inp.input_id === field.name) {
-        if (inp.mandatory && focusDropdown) {
-          inp.error = false
-          inp.errorMsg = ''
-          inp.verified = false
+        if (inp.type === 'input_with_dropdown') {
+          setTimeout(() => {
+            if (inp.mandatory && !inp.value) {
+              inp.error = true;
+              inp.errorMsg = errorMsgs.mandatory
+              inp.verified = false;
+            }
+            else {
+              inp.error = false
+              inp.errorMsg = ''
+              if (inp.list) {
+                inp.list = []
+              }
+            }
+          }, 500);
           return
         }
-        if (inp.mandatory && !inp.value && inp.list) {
 
+
+
+
+        if (inp.mandatory && !inp.value) {
+          inp.error = true;
+          inp.errorMsg = errorMsgs.mandatory
+          inp.verified = false;
+        } else {
+          inp.error = false
+          inp.errorMsg = ''
         }
-        setTimeout(() => {
-          if (inp.mandatory && !inp.value) {
-            inp.error = true;
-            inp.errorMsg = errorMsgs.mandatory
-            inp.verified = false;
-          } else {
-            inp.error = false
-            inp.errorMsg = ''
-            if (inp.list) {
-              inp.list = []
-            }
-          }
-        }, 150);
       }
 
       // check on blur
@@ -276,7 +283,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
           }
         } else if (
           inp.type === "input_with_dropdown" &&
-          inp.input_id === field.currentActiveInput
+          inp.input_id === field.currentActiveInput && inp.mandatory
         ) {
           if (!inp.selectedId) {
             errors = true;
@@ -288,6 +295,8 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
             inp.errorMsg = "";
             inp.verified = true;
           }
+
+
         } else if (
           textTypeInputs.includes(inp.type) &&
           inp.input_id === field.currentActiveInput &&
@@ -310,7 +319,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
     // check on slide or form submit
   } else {
     inputs.forEach((inp) => {
-      if (inp.selectedId && inp.selectedId === "*") {
+      if (inp.selectedId && inp.selectedId === "*" || !inp.mandatory) {
         inp.verified = false
       } else if (
         (textTypeInputs.includes(inp.type) || inp.type === "radio") &&
@@ -397,7 +406,7 @@ export const updateSelectionFromDropdown = (inputs, input_id, item) => {
       inp.verified = true;
     }
 
-    if (inp.end_point_name === update_field_with_end_point_name) {
+    if (inp.end_point_name === update_field_with_end_point_name && inp.dependent) {
       inputs.forEach((dependentInput) => {
         if (dependentInput.end_point_name == update_field_with_end_point_name) {
           dependentInput.selectedItem = item;
@@ -405,6 +414,7 @@ export const updateSelectionFromDropdown = (inputs, input_id, item) => {
           dependentInput.selectedId = item[dependentInput.select_id];
           dependentInput.error = false;
           dependentInput.verified = true;
+          update_field_with_end_point_name = dependentInput.update_field_with_end_point_name
         }
       });
     }
@@ -415,9 +425,9 @@ export const resetDropdowns = (inputs, errorMsgs) => {
   inputs.forEach((inp) => {
     if (inp.type === "input_with_dropdown") {
       inp.list = [];
-      if ((inp.selectedItem && inp.selectedItem[inp.select_name] !== inp.value)) {
+      if ((inp.value && !inp.selectedId) || (inp.selectedItem && inp.selectedItem[inp.select_name] !== inp.value)) {
         inp.error = true;
-        inp.errorMsg = errorMsgs.mandatory
+        inp.errorMsg = inp.validation_error
         inp.selectedId = null
         inp.selectedItem = null
       }

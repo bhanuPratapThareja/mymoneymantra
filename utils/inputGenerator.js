@@ -36,9 +36,9 @@ export const generateInputs = ( component, updateField,  checkInputValidity,
     const { name, value } = e.target;
     const field = { name, value, type, blur: true, currentActiveInput: name };
     if(type === 'input_with_dropdown') {
-      setTimeout(() => {
-        checkInputValidity(field);
-      }, 500);
+      // setTimeout(() => {
+        // checkInputValidity(field);
+      // }, 500);
     } else {
       checkInputValidity(field);
     }
@@ -170,6 +170,7 @@ export const generateInputs = ( component, updateField,  checkInputValidity,
           name={input_id}
           type={inputType}
           value={value}
+          id={input_id}
           placeholder={placeholder}
           autoComplete="off"
           required={mandatory}
@@ -345,6 +346,7 @@ export const generateInputs = ( component, updateField,  checkInputValidity,
             name={input_id}
             type="text"
             value={value}
+            readOnly
             autoComplete="off"
             required={mandatory}
             onFocus={() => openDatePicker()}
