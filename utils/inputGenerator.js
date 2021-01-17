@@ -368,7 +368,6 @@ export const generateInputs = ( component, updateField,  checkInputValidity,
     const { checkbox_input, checkboxes_for } = checkbox;
     const fieldId = `${checkboxes_for}_${type}_container`;
     return (
-      // <div className="agree" id={fieldId}>
       <div id={fieldId} className="agree">
         <div className="checkbox-container" key={id}>
           {checkbox_input.map((box) => {
@@ -378,6 +377,7 @@ export const generateInputs = ( component, updateField,  checkInputValidity,
                 <input
                   type={type}
                   name={box.input_id}
+                  id={box.input_id}
                   value={box.checked}
                   onChange={(e) => handleChange(e, type)}
                 />
