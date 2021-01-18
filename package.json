@@ -22,6 +22,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-maskedinput": "^4.0.1",
+    "react-svg": "^11.2.2",
     "sass": "^1.29.0",
     "smoothscroll-polyfill": "^0.4.4"
   }

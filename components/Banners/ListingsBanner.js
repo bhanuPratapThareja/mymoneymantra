@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react'
-import ListingFilter from '../Listings/ListingsFilter'
-import $ from 'jquery'
 import { useRouter } from 'next/router'
-import Image from '../../components/ImageComponent/ImageComponent'
-// import All from  '../../public/assets/images/listings/all.svg'
-// import Shopping from  '../../public/assets/images/listings/all.svg'
-// import Travel from  '../../public/assets/images/listings/all.svg'
-// import All from  '../../public/assets/images/listings/all.svg'
+import $ from 'jquery'
+import ListingFilter from '../Listings/ListingsFilter'
+import SvgImage from '../ImageComponent/SvgComponents'
 
 
 const ListingBanner = props => {
@@ -54,11 +50,12 @@ const ListingBanner = props => {
                             <div className="checkbox-container" name="category" value={selectedOption} onChange={e => setSelectedOption(e.target.value)}>
                                 {categories.filter_category.map(category => {
                                     const { label, image } = category
+                                    console.log(image)
                                     return (
                                         <React.Fragment key={category.id}>
                                             <input readOnly className="lets-checkbox" checked={selectedOption === label.toLowerCase()} value={label.toLowerCase()} type="radio" id={label.toLowerCase()} name="category" required />
                                             <label htmlFor={label.toLowerCase()} className="banner_label">
-                                                <Image image={image} className="selected-filter" />
+                                                <SvgImage image={image} />
                                                 <h4 className="listing-banner_category-label">{label}</h4>
                                             </label>
                                         </React.Fragment>

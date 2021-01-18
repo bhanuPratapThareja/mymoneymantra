@@ -130,8 +130,8 @@ button:disabled {
 }
 
 .lets-find-form span p a {
-  color: #221F1F;
-  text-decoration: underline;
+  position: relative;
+  z-index: 99;
 }
 
 .lets-find-form input[type="checkbox"] {
@@ -234,7 +234,7 @@ button:disabled {
 }
 
 .sf-forms .short-form-container .form__group .form__field, .long-form .form__group .form__field {
-  z-index: 999;
+  z-index: 10;
   position: relative;
 }
 
@@ -322,15 +322,15 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 }
 
 .checkbox input[type="checkbox"] {
-  width: auto;
   opacity: 0.00000001;
   position: absolute;
   left: 0;
-  z-index: 1000;
+  right: 0;
+  z-index: 10;
   cursor: pointer;
   margin-left: 0;
-  width: 24px;
-  height: 24px;
+  width: 100%;
+  height: 100%;
 }
 
 /* .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group {
@@ -1027,15 +1027,15 @@ button.close-btn:after {
 }
 button.close-btn:before {content: "";display: block;background: #666;width: 2px;transform: rotate(-45deg);height: 20px;position: absolute;top: 6px;}
 
-.checkbox label {
+/* .checkbox label {
   position: absolute;
   left: 0;
   top: 5px;
-}
+} */
 
 .checkbox {
   position: relative;
-  padding-left: 40px;
+  /* padding-left: 40px; */
   margin: 0 0 15px;
 }
 

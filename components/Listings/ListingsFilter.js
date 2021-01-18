@@ -136,7 +136,9 @@ class ListingFilter extends React.Component {
                                                             <div className="checkbox-container" key={checkbox.id}>
                                                                 <div className="checkbox">
                                                                     <input type="checkbox" id={checkbox.tag} name={checkbox.tag} onChange={e => this.handleCheckbox(e, checkboxGroup.type)} />
-                                                                    <label htmlFor={checkbox.tag}><span>{checkbox.checkbox_name}</span></label>
+                                                                    <label htmlFor={checkbox.tag}>
+                                                                    <span>{checkbox.checkbox_name}</span>
+                                                                    </label>
                                                                 </div>
                                                             </div>
                                                         )
