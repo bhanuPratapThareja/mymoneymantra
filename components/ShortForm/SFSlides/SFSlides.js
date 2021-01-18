@@ -8,16 +8,15 @@ const SFSlides = props => {
     const sfSlides = props.slides
 
     return (
-        <div className="lets-find-stepper-wrapper">
+        <div className="lets-find-stepper-wrapper" onClick={props.handleClickOnSlideBackground}>
             <div className="progress-grey">
                 <div className="progress-blue" style={{ width: progressWidth }}></div>
             </div>
 
             <h5 className="pages"><span id="pages-count">{slideNumber} of {totalSlides}</span></h5>
 
-            {sfSlides && sfSlides.length ? <form className="short-forms-wrapper" onClick={props.handleClickOnSlideBackground}>
+            {sfSlides && sfSlides.length ? <form className="short-forms-wrapper">
                 {sfSlides.map(slide => {
-                    // console.log('slide: ', slide)
                     const slideStyles = props.currentSlide == slide.slideId ? { display: 'block' } : { display: 'none' }
                     const slideClass = slide.slideClass
                     const shortFromContainerClasses = ['shortforms-container']

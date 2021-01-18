@@ -430,6 +430,7 @@ export const resetDropdowns = (inputs, errorMsgs) => {
         inp.errorMsg = inp.validation_error
         inp.selectedId = null
         inp.selectedItem = null
+        inp.verified = false
       }
     }
   });
