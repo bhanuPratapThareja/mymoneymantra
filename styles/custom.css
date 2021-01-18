@@ -234,7 +234,7 @@ button:disabled {
 }
 
 .sf-forms .short-form-container .form__group .form__field, .long-form .form__group .form__field {
-  z-index: 999;
+  z-index: 10;
   position: relative;
 }
 
