@@ -160,11 +160,7 @@ class LongForm extends React.Component {
     });
     this.setState({ longFormSections: newLongFormSections, errors: false }, () => {
       if (textTypeInputs.includes(field.type) || field.type === "radio") {
-<<<<<<< HEAD
-        this.checkInputValidity(field);
-=======
         this.checkInputValidity(field, field.focusDropdown)
->>>>>>> origin/master
       }
       const { enableCheckboxes } = this.state;
       let trueEnableCheckboxes = [];
