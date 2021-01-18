@@ -110,8 +110,8 @@ export const generateLead = async (data, primaryPath) => {
             requestedLoanamount, requestedTenor, exisEmi, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
             fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
-            addressline1, addressline2, pincode, city, nearByLandmark,
-            officeAddressline1, officeAddressline2,addressline3, officeNearBy, officePincode, officeCity,
+            addressline1, addressline2,addressline3, pincode, city, nearByLandmark,
+            officeAddressLine1, officeAddressLine2, officeNearBy, officePincode, officeCity,
             permanentAddressline1,permanentAddressline2,permanentPincode,permannentCity,
             city_location, cost_of_property,
             propertyPincode
@@ -181,9 +181,10 @@ export const generateLead = async (data, primaryPath) => {
         // body.request.payload.address[0].stdCode = pincode ? pincode.stdCode : ''
 
         // for office address
+        // console.log('for ofc add officePincode',officePincode)
         body.request.payload.address[1].addressTypeMasterId = "1000000002"
-        body.request.payload.address[1].addressline1 = officeAddressline1
-        body.request.payload.address[1].addressline2 = officeAddressline2
+        body.request.payload.address[1].addressline1 = officeAddressLine1
+        body.request.payload.address[1].addressline2 = officeAddressLine2
         body.request.payload.address[1].landmark = officeNearBy
         body.request.payload.address[1].pincode = officePincode ? officePincode.pincode : ""
         body.request.payload.address[1].city = officePincode ? officePincode.cityId : ""
