@@ -1200,7 +1200,8 @@ img {
   .long-cards-wrapper-card .top .name .mob-logo {
     max-height: 30px;
   }
-  .sf-forms .shortforms-container .radio-container {
+  .sf-forms .shortforms-container .radio-container,
+  .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1210,7 +1211,8 @@ img {
   .sf-forms .shortforms-container .radio-container>div {
     min-width: 47%;
   }
-  .sf-forms .shortforms-container .radio-container>div {
+  .sf-forms .shortforms-container .radio-container>div,
+  .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div {
     min-width: 47%;
     display: flex;
     justify-content: space-between;
@@ -1233,10 +1235,10 @@ img {
   .long-form .long-form-wrapper {
     padding-top: 0;
   }
-  .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div {
+  /* .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div {
     margin: 0 8px 8px 0;
     min-width: 48%;
-  }
+  } */
   .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group {
     margin-bottom: 8px;
   }
