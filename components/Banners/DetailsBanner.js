@@ -59,8 +59,8 @@ const DetailsBanner = props => {
             <div className="mobile-background"></div>
             <section className="banner container">
                 <div className="banner-wrapper">
-                <b>{bank_name}</b><br />
-                    <h1>{product_name || product_card_name}</h1>
+                    <h1><b>{bank_name}</b><br />
+                    {product_name || product_card_name}</h1>
                     <div dangerouslySetInnerHTML={{ __html: details.content }}></div>
                     {productDetails ? <span className="details-button-div">
                         <button onClick={() => onButtonClick(productDetails.productDecision, props.bank, productDetails)}>{productDetails.productDecision}</button>
