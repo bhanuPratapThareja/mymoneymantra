@@ -1027,15 +1027,15 @@ button.close-btn:after {
 }
 button.close-btn:before {content: "";display: block;background: #666;width: 2px;transform: rotate(-45deg);height: 20px;position: absolute;top: 6px;}
 
-.checkbox label {
+/* .checkbox label {
   position: absolute;
   left: 0;
   top: 5px;
-}
+} */
 
 .checkbox {
   position: relative;
-  padding-left: 40px;
+  /* padding-left: 40px; */
   margin: 0 0 15px;
 }
 
