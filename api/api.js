@@ -186,6 +186,11 @@ const api = {
                   email: "",
                   isDefault: "Y",
                 },
+                {
+                  addressTypeMasterId: "6",
+                  email: "",
+                  isDefault: "N",
+                },
               ],
               keyContact: [
                 {

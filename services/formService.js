@@ -105,13 +105,13 @@ export const generateLead = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
         let { url, body } = getApiData('orchestration')
         body = JSON.parse(JSON.stringify(body))
-        const { fullName, dob, pan, mobile, email, applicantType, title,
+        const { fullName, dob, pan, mobile, email, applicantType, title,officeEmail,
             companyId, netMonthlyIncome, bankId, totalWorkExp,
             requestedLoanamount, requestedTenor, exisEmi, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
             fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
             addressline1, addressline2, pincode, city, nearByLandmark,
-            officeAddressline1, officeAddressline2, officeNearBy, officePincode, officeCity,
+            officeAddressline1, officeAddressline2,addressline3, officeNearBy, officePincode, officeCity,
             permanentAddressline1,permanentAddressline2,permanentPincode,permannentCity,
             city_location, cost_of_property,
             propertyPincode
@@ -130,9 +130,9 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.work.jointAccHolder = jointAccHolder;
         body.request.payload.work.totalWorkExp = totalWorkExp
 
-
         body.request.payload.contact.mobile[0].mobile = mobile
         body.request.payload.contact.email[0].email = email
+        body.request.payload.contact.email[1].email = officeEmail
 
         if (fathersFirstName && fathersLastName) {
             body.request.payload.contact.keyContact[0].caseContactMasterId = "5";
@@ -173,10 +173,12 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.address[0].addressTypeMasterId = "1000000001"
         body.request.payload.address[0].addressline1 = addressline1
         body.request.payload.address[0].addressline2 = addressline2
+        body.request.payload.address[0].addressline3 = addressline3
         body.request.payload.address[0].landmark = nearByLandmark
         body.request.payload.address[0].pincode = pincode ? pincode.pincode : "";
         body.request.payload.address[0].city = pincode ? pincode.cityId : "";
         body.request.payload.address[0].state = pincode ? pincode.stateId : ''
+        // body.request.payload.address[0].stdCode = pincode ? pincode.stdCode : ''
 
         // for office address
         body.request.payload.address[1].addressTypeMasterId = "1000000002"
@@ -185,7 +187,8 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.address[1].landmark = officeNearBy
         body.request.payload.address[1].pincode = officePincode ? officePincode.pincode : ""
         body.request.payload.address[1].city = officePincode ? officePincode.cityId : ""
-        body.request.payload.address[1].state = officeNearBy ? officePincode.stateId : ""
+        body.request.payload.address[1].state = officePincode ? officePincode.stateId : ""
+       // body.request.payload.address[1].stdCode = officePincode ? officePincode.stdCode : ""
 
         // for property
         // console.log('for property propertyPincode',propertyPincode)
