@@ -4,13 +4,8 @@ import {
   getWholeNumberFromCurrency,
 } from "./formattedCurrency";
 
-export const generateInputs = (
-  component,
-  updateField,
-  checkInputValidity,
-  handleInputDropdownChange,
-  handleInputDropdownSelection
-) => {
+export const generateInputs = ( component, updateField,  checkInputValidity,
+                                handleInputDropdownChange, handleInputDropdownSelection) => {
   const handleChange = (e, type, focusDropdown) => {
     let { name, value, checked } = e.target;
     let field = {};
@@ -40,7 +35,13 @@ export const generateInputs = (
   const validate = (e, type) => {
     const { name, value } = e.target;
     const field = { name, value, type, blur: true, currentActiveInput: name };
-    checkInputValidity(field);
+    if(type === 'input_with_dropdown') {
+      // setTimeout(() => {
+        // checkInputValidity(field);
+      // }, 500);
+    } else {
+      checkInputValidity(field);
+    }
   };
 
   const onSelect = (input_id, type, selectedItem) => {
@@ -169,6 +170,7 @@ export const generateInputs = (
           name={input_id}
           type={inputType}
           value={value}
+          id={input_id}
           placeholder={placeholder}
           autoComplete="off"
           required={mandatory}
@@ -344,6 +346,7 @@ export const generateInputs = (
             name={input_id}
             type="text"
             value={value}
+            readOnly
             autoComplete="off"
             required={mandatory}
             onFocus={() => openDatePicker()}
@@ -365,7 +368,6 @@ export const generateInputs = (
     const { checkbox_input, checkboxes_for } = checkbox;
     const fieldId = `${checkboxes_for}_${type}_container`;
     return (
-      // <div className="agree" id={fieldId}>
       <div id={fieldId} className="agree">
         <div className="checkbox-container" key={id}>
           {checkbox_input.map((box) => {
@@ -375,6 +377,7 @@ export const generateInputs = (
                 <input
                   type={type}
                   name={box.input_id}
+                  id={box.input_id}
                   value={box.checked}
                   onChange={(e) => handleChange(e, type)}
                 />

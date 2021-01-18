@@ -21,10 +21,10 @@ const Offers = props => {
       const { bank, slug: productSlug } = offer
       const { slug: bankSlug } = bank
       const productDetails = await getProductDecisionForDetailsBanner(offer, bank, primaryPath)
-      // if(productDetails.productDecision === 'Apply Now') {
-      //    props.goToShortFormPage()
-      //    return
-      // }
+      if(productDetails.productDecision === 'Apply Now') {
+         props.goToShortFormPage()
+         return
+      }
       router.push(`/${primaryPath}/${bankSlug}/${productSlug}`)
    }
 

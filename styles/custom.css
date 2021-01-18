@@ -1357,3 +1357,13 @@ img {
   }
 }
 
+.long-form-submit {
+  margin-top: 2rem !important;
+}
+
+.form-invalid-text {
+  color: var(--error-color);
+  text-align: center;
+  font-weight: 900;
+  font-size: 1rem;
+}
