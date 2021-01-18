@@ -8,7 +8,6 @@ const TermsAndConditions = (props) => {
     router.push(`/${primaryPath}`);
   };
   const { button, terms_and_conditions } = props.data.terms_and_condition;
-  console.log(props.data);
   return (
     <section data-aos="fade-up" className="container aos-init">
       <div className="container product-wrapper">
