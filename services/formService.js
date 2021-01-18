@@ -4,6 +4,7 @@ import { getApiData } from '../api/api'
 import { getLeadId } from '../utils/localAccess'
 import { getFormattedDate } from '../utils/formatDataForApi'
 const CancelToken = axios.CancelToken
+import { getDocumentIdandTypeId } from '../Utils/uploadDocumentHelper'
 let cancel
 let otpId = ''
 
@@ -76,11 +77,16 @@ export const getDropdownList = async (listType, value, masterName) => {
 }
 
 export const documentUpload = async document => {
-    const { base64, type, name } = document
+    const { base64, type, name,documentName,primaryPath } = document;
     const { url, body } = getApiData('documentUpload')
-    body.request.payload.docList[0].documentId = name
-    body.request.payload.docList[0].documentExtension = type
-    body.request.payload.docList[0].docBytes = base64
+    let documentIds =  getDocumentIdandTypeId(documentName);
+    const { documentId,documentTypeId } = documentIds[0];
+    body.request.payload.docList[0].documentId = documentId
+    body.request.payload.docList[0].documentExtension = type.split("/")[1]
+    body.request.payload.docList[0].documentTypeId = documentTypeId
+    body.request.payload.docList[0].docBytes = base64.split(",")[1]
+    body.request.payload.caseId = getLeadId(primaryPath)
+    
     axios.post(url, body)
         .catch(() => { })
 }
@@ -99,16 +105,18 @@ export const generateLead = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
         let { url, body } = getApiData('orchestration')
         body = JSON.parse(JSON.stringify(body))
-        const { fullName, dob, pan, mobile, email, applicantType, title,
+        const { fullName, dob, pan, mobile, email, applicantType, title,officeEmail,
             companyId, netMonthlyIncome, bankId, totalWorkExp,
             requestedLoanamount, requestedTenor, exisEmi, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
             fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
             addressline1, addressline2, pincode, city, nearByLandmark,
-            officeAddressLine1, officeAddressLine2, officeNearBy, officePincode, officeCity,
-            city_location, cost_of_property
-        } = data
+            officeAddressline1, officeAddressline2,addressline3, officeNearBy, officePincode, officeCity,
+            permanentAddressline1,permanentAddressline2,permanentPincode,permannentCity,
+            city_location, cost_of_property,
+            propertyPincode
 
+        } = data
 
         body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = getFormattedDate(dob)
@@ -122,9 +130,9 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.work.jointAccHolder = jointAccHolder;
         body.request.payload.work.totalWorkExp = totalWorkExp
 
-
         body.request.payload.contact.mobile[0].mobile = mobile
         body.request.payload.contact.email[0].email = email
+        body.request.payload.contact.email[1].email = officeEmail
 
         if (fathersFirstName && fathersLastName) {
             body.request.payload.contact.keyContact[0].caseContactMasterId = "5";
@@ -148,39 +156,61 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.work.companyId = companyId ? companyId.caseCompanyId : ''
         body.request.payload.work.netMonthlyIncome = netMonthlyIncome
 
-        body.request.payload.bankId = bankId ? bankId.bankId : "";
+        // body.request.payload.bankId = bankId ? bankId.bankId : "";
+        body.request.payload.bankId = salaryBankName ? salaryBankName.bankId : "";
         // body.request.payload.work.otherCompany = otherCompany ? otherCompany.companyName : ""
 
 
         body.request.payload.leadId = getLeadId(primaryPath)
         body.request.payload.productId = localStorage.getItem('productId')
         body.request.payload.requestedLoanamount = requestedLoanamount
-        // body.request.payload.requestedTenor = requestedTenor
-        // body.request.payload.exisEmi = exisEmi
+        // console.log('body.request.payload.requestedTenor',body.request.payload.requestedTenor)
+        // console.log('requestedTenor',requestedTenor)
+        body.request.payload.requestedTenor = requestedTenor
+        body.request.payload.exisEmi = exisEmi
 
         // for residence
         body.request.payload.address[0].addressTypeMasterId = "1000000001"
         body.request.payload.address[0].addressline1 = addressline1
         body.request.payload.address[0].addressline2 = addressline2
+        body.request.payload.address[0].addressline3 = addressline3
         body.request.payload.address[0].landmark = nearByLandmark
         body.request.payload.address[0].pincode = pincode ? pincode.pincode : "";
         body.request.payload.address[0].city = pincode ? pincode.cityId : "";
         body.request.payload.address[0].state = pincode ? pincode.stateId : ''
+        // body.request.payload.address[0].stdCode = pincode ? pincode.stdCode : ''
 
         // for office address
         body.request.payload.address[1].addressTypeMasterId = "1000000002"
-        body.request.payload.address[1].addressline1 = officeAddressLine1
-        body.request.payload.address[1].addressline2 = officeAddressLine2
+        body.request.payload.address[1].addressline1 = officeAddressline1
+        body.request.payload.address[1].addressline2 = officeAddressline2
         body.request.payload.address[1].landmark = officeNearBy
         body.request.payload.address[1].pincode = officePincode ? officePincode.pincode : ""
         body.request.payload.address[1].city = officePincode ? officePincode.cityId : ""
-        body.request.payload.address[1].state = officeNearBy ? officePincode.stateId : ""
+        body.request.payload.address[1].state = officePincode ? officePincode.stateId : ""
+       // body.request.payload.address[1].stdCode = officePincode ? officePincode.stdCode : ""
 
-        // for property 
+        // for property
+        // console.log('for property propertyPincode',propertyPincode)
         body.request.payload.address[2].addressTypeMasterId = "1000000004"
-        body.request.payload.address[2].city = city_location;
-        //body.request.payload.address[1].state = pincode ? pincode.stateId : ''
+        body.request.payload.address[2].purposeOfLoan = propertyType
         body.request.payload.address[2].propertyValue = cost_of_property
+        body.request.payload.address[2].city = city_location;
+        body.request.payload.address[2].pincode = propertyPincode ? propertyPincode.pincode :"";
+        body.request.payload.address[2].state = propertyPincode ? propertyPincode.stateId :"";
+        //body.request.payload.address[1].state = pincode ? pincode.stateId : ''
+      
+
+
+        //for permanent add
+        // console.log('form service permanentPincode',permanentPincode)
+        body.request.payload.address[3].addressTypeMasterId = "1000000003"
+        body.request.payload.address[3].addressline1 = permanentAddressline1
+        body.request.payload.address[3].addressline2 = permanentAddressline2
+        body.request.payload.address[3].pincode = permanentPincode ? permanentPincode.pincode : ""
+        body.request.payload.address[3].city = permanentPincode ? permanentPincode.cityId : ""
+        body.request.payload.address[3].state = permanentPincode ? permanentPincode.stateId : ""
+
 
         axios.post(url, body)
             .then(res => {

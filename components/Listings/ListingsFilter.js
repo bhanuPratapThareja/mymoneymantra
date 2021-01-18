@@ -15,15 +15,29 @@ class ListingFilter extends React.Component {
             filter_tenure, filter_roi, filter_max_loan_amount } = this.props.filters
 
         const updatedCheckboxes = [...this.props.filters.checkboxes]
-
+        
         if (updatedCheckboxes.length) {
             updatedCheckboxes.forEach((block, i) => {
+                let blockValues = [...block.values]
                 if (block.type === 'banks') {
-                    const values = block.values.filter(value => {
-                        return this.props.banksList.includes(value.tag)
+                    let values = []
+                    let tempBanksTags = []
+
+                    blockValues.forEach(value => {
+                        this.props.banksList.forEach(tag => {
+                            if (value.tag === tag) {
+                                if (!tempBanksTags.includes(tag)) {
+                                    tempBanksTags.push(tag)
+                                    values.push(value)
+                                }
+                            }
+                        })
                     })
 
                     updatedCheckboxes[i].values = values
+
+                } else {
+                    updatedCheckboxes[i].values = blockValues
                 }
 
                 block.showCheckboxes = this.state.showCheckboxes
@@ -199,14 +213,14 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" />
                                             </div>
                                         </div>
-                                        <span className="min-max left">₹{filter_tenure.min}</span>
-                                        <span className="min-max right">₹{filter_tenure.max}+</span>
+                                        <span className="min-max left">{filter_tenure.min} years</span>
+                                        <span className="min-max right">{filter_tenure.max} years +</span>
                                     </div>
                                 </div>
                             </div> : null}
 
                             {filter_roi && filter_roi.enable ? <div className="content-one">
-                                <h5>Return On Investment</h5>
+                                <h5>Rate Of Interest</h5>
                                 <div className="range__slider">
                                     <div className="container">
                                         <div className="row">
@@ -220,8 +234,8 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" />
                                             </div>
                                         </div>
-                                        <span className="min-max left">₹{filter_roi.min}</span>
-                                        <span className="min-max right">₹{filter_roi.max}+</span>
+                                        <span className="min-max left">{filter_roi.min}%</span>
+                                        <span className="min-max right">{filter_roi.max}% +</span>
                                     </div>
                                 </div>
                             </div> : null}

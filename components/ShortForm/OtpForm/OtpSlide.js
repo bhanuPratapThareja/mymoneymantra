@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import Otp from '../../Otp/Otp'
 import SFButtons from '../SFButtons/SFButtons'
 import { getOtp } from '../../../services/formService'
