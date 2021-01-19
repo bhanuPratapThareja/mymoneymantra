@@ -315,7 +315,7 @@ class ShortExtendedForm extends React.Component {
             return
         }
         try {
-            await submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
+            submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
             this.props.router.push(`/${primaryPath}/listings`)
         } catch { }
     }
