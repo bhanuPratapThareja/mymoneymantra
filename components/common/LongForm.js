@@ -391,10 +391,6 @@ class LongForm extends React.Component {
       });
   };
 
-  openOtpModal = () => {
-    this.setState({ openOtpModal: true });
-  };
-
   closeOtpModal = () => {
     this.setState({ openOtpModal: false });
   };
