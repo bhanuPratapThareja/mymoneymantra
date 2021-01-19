@@ -9,6 +9,7 @@ import {
   sendNotification,
   submitOtp,
   getOtp,
+  orchestration,
 } from "../../services/formService";
 import { setLeadId } from "../../utils/localAccess";
 import { getLeadId } from "../../utils/localAccess";
@@ -24,6 +25,8 @@ import {
   updateSelectionFromDropdown,
   resetDropdowns,
 } from "../../utils/formHandle";
+
+import { getApiData } from '../../api/api';
 
 class LongForm extends React.Component {
   state = {
@@ -371,7 +374,6 @@ class LongForm extends React.Component {
       });
     });
 
-    console.log("data", data);
 
     const { primaryPath, bankName, leadId } = this.state;
 
@@ -380,13 +382,16 @@ class LongForm extends React.Component {
         if (!leadId) {
           const leadIdSendNotification = res.data.response.payload.leadId;
           sendNotification(leadIdSendNotification);
-        }
+        
+        }  
+     
         setLeadId(primaryPath, res.data.response.payload.leadId);
         const pathname = `/${primaryPath}/thank-you`;
         const query = { bankName };
         this.props.router.push({ pathname, query });
       })
       .catch((err) => {
+        console.log('inside catch error',err)
         this.setState({ submitButtonDisabled: false });
       });
   };

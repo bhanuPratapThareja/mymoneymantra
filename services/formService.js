@@ -104,6 +104,9 @@ export const getBase64 = file => {
 export const generateLead = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
         let { url, body } = getApiData('orchestration')
+        if(!body.request.payload.leadId){
+            body.request.header.sync = true
+        }
         body = JSON.parse(JSON.stringify(body))
         const { fullName, dob, pan, mobile, email, applicantType, title,officeEmail,
             companyId, netMonthlyIncome, bankId, totalWorkExp,
@@ -163,6 +166,7 @@ export const generateLead = async (data, primaryPath) => {
 
         body.request.payload.leadId = getLeadId(primaryPath)
         body.request.payload.productId = localStorage.getItem('productId')
+        body.request.payload.cardType = localStorage.getItem('cardType')
         body.request.payload.requestedLoanamount = requestedLoanamount
         // console.log('body.request.payload.requestedTenor',body.request.payload.requestedTenor)
         // console.log('requestedTenor',requestedTenor)

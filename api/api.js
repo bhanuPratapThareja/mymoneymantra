@@ -307,7 +307,7 @@ const api = {
                 otherDeveloperName: "",
                 otherProjectName: "",
                 propertyValue: "",
-                purposeOfLoan:"",
+                purposeOfLoan: "",
               },
               {
                 addressTypeMasterId: "",
@@ -361,8 +361,8 @@ const api = {
         request: {
           header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
           payload: {
-            mobileNo: "9999000090",
-            customerId: "9999000090",
+            mobileNo: "",
+            customerId: "",
           },
         },
       },

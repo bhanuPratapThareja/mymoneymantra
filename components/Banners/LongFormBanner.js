@@ -24,13 +24,19 @@ class LongFormBanner extends React.Component {
         this.setState({ primaryPath })
     }
 
+  
+
     render() {
         const { bank, product } = this.props
+        let cardType = product.product_name
+        localStorage.setItem("cardType", cardType);
+        
         const strapi = new Strapi()
 
         if (!bank) {
             return null
         }
+
 
         return (
             <div className="card-info" id="longFormBanner">

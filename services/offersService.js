@@ -20,7 +20,7 @@ export const customerOfferData = async () => {
     const { url, body } = getApiData('customerOffer');
     try {
         const res = await axios.post(url, body)
-
+        return res.data.response.payload;
     } catch (error) {
 
     }
