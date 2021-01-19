@@ -163,10 +163,10 @@ class ShortExtendedForm extends React.Component {
     onSubmitLetGoSlide = async () => {
         const primaryPath = this.state.primaryPath
         try {
-            const res = await submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
-            const leadId = res.data.response.payload.leadId
-            setLeadId(primaryPath, leadId)
-            sendNotification(leadId)
+            const res =  submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
+            // const leadId = res.data.response.payload.leadId
+            // setLeadId(primaryPath, leadId)
+            // sendNotification(leadId)
             goToSlides()
             this.setState({ slideButtonText: 'Next' })
         } catch (err) {

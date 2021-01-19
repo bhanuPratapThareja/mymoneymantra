@@ -17,6 +17,7 @@ export const textTypeInputs = [
   "phone_no",
   "input_with_dropdown",
   "input_with_calendar",
+  'money'
 ];
 
 export const getCurrentSlideInputs = (state) => {
@@ -195,9 +196,6 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
           }, 500);
           return
         }
-
-
-
 
         if (inp.mandatory && !inp.value) {
           inp.error = true;

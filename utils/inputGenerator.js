@@ -170,7 +170,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
 
   if (type === 'money') {
     const fieldId = `${input_id}_${type}`;
-    const inputType = getDevice() === 'desktop' ? 'number' : 'tel'
+    const inputType = getDevice() === 'desktop' ? 'text' : 'tel'
     return (
       <div className={fieldClasses.join(' ')} type={type} id={fieldId} key={id}>
         <input
