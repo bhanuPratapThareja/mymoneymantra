@@ -108,7 +108,6 @@ export async function getServerSideProps(ctx) {
         productData.productTypeId = productDataDetails[0].product_id
     }
 
-
     return { props: { details, pageClasses, bankData, productData } }
 }
 

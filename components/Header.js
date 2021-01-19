@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Strapi from '../providers/strapi'
 import SideMenu from './SideMenu'
+import { useRouter } from 'next/router'
 import { useEffect, useState, useRef } from 'react'
 import { isScrolledIntoView } from '../utils/elementInView'
 import { getDevice } from '../utils/getDevice'
@@ -9,13 +10,20 @@ import $ from 'jquery'
 
 const Header = () => {
    const strapi = new Strapi()
+   const router = useRouter()
    const headerRef = useRef()
    const [headerData, setHeaderData] = useState(null)
+   const [headerClasses, setHeaderClasses] = useState('header')
 
    let longFormBanner = null
    let longForm = null
 
    useEffect(() => {
+
+      if (router.pathname === '/' && getDevice() !== 'desktop') {
+         setHeaderClasses('header mobile-header')
+      }
+
       window.onscroll = () => {
          headerEffect(headerRef.current)
 
@@ -116,7 +124,7 @@ const Header = () => {
             <link rel="preload" href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
          </Head>
 
-         {headerData ? <header className="header" ref={headerRef}>
+         {headerData ? <header className={headerClasses} ref={headerRef}>
             <a className="header-menu-icon" id="menu-icon" >
                <img src="/assets/images/icons/menu.svg" alt="menu" onClick={onOpenSideMenu} />
             </a>

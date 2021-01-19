@@ -688,7 +688,7 @@ div#address_proof_upload_button {
   max-width: 39%;
 }
 
-.sf-forms .shortforms-container .radio-container>div {
+ .shortforms-container .radio-container>div {
   display: inline-block;
   min-width: 48.9%;
   position: relative;
@@ -696,7 +696,7 @@ div#address_proof_upload_button {
   margin-bottom: 16px;
 }
 
-.sf-forms .shortforms-container .radio-container>div:nth-child(even) {
+.shortforms-container .radio-container>div:nth-child(even) {
   margin: 0;
 }
 
@@ -1077,6 +1077,11 @@ img {
   z-index: 9999 !important;
 }
 
+
+.shortforms-container .form__group {
+  padding-right: 40px !important;
+}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
@@ -1200,17 +1205,20 @@ img {
   .long-cards-wrapper-card .top .name .mob-logo {
     max-height: 30px;
   }
-  .sf-forms .shortforms-container .radio-container {
+   .shortforms-container .radio-container {
+  /* .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div */
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
-  .sf-forms .shortforms-container .radio-container>div:nth-child(even) {
+   .shortforms-container .radio-container>div:nth-child(even),
+   .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div:nth-child(even) {
     margin: 0 0 8px;
   }
-  .sf-forms .shortforms-container .radio-container>div {
+  .shortforms-container .radio-container>div {
     min-width: 47%;
   }
-  .sf-forms .shortforms-container .radio-container>div {
+   .shortforms-container .radio-container>div {
+  /* .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div */
     min-width: 47%;
     display: flex;
     justify-content: space-between;
@@ -1233,16 +1241,22 @@ img {
   .long-form .long-form-wrapper {
     padding-top: 0;
   }
-  .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div {
+  /* .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div {
     margin: 0 8px 8px 0;
     min-width: 48%;
-  }
+  } */
   .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group {
     margin-bottom: 8px;
   }
-  .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div:nth-child(even) {
-    margin-right: 0;
+  .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div {
+    min-width: 47%;
+    display: flex;
+    margin: 0 8px 8px 0;
   }
+
+  /* .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div:nth-child(even) {
+    margin-right: 0;
+  } */
   .long-address .long-pincode, .long-address .long-city {
     width: 100% !important;
     display: inline-block;
@@ -1351,10 +1365,20 @@ img {
   .sf-submit-button_text {
     margin-right: 5px !important;
     font-size: 12px;
-  
     text-align: right;
     line-height: 15px;
   }
+
+  .file-type h5 b {
+    line-height: 17px;
+    display: block;
+  }
+
+  .file-type h5 {
+    top: 10px;
+    margin-bottom: 0 !important;
+  }
+
 }
 
 .long-form-submit {

@@ -4,7 +4,6 @@ import $ from 'jquery'
 import ListingFilter from '../Listings/ListingsFilter'
 import SvgImage from '../ImageComponent/SvgComponents'
 
-
 const ListingBanner = props => {
     const router = useRouter()
     const { primaryPath } = router.query

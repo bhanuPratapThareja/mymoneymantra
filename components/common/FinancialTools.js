@@ -11,7 +11,6 @@ const FinancialTools = props => {
                      <div className="financial-wrapper-card" key={tool.id}>
                         <div className="financial-wrapper-card-content">
                            <div dangerouslySetInnerHTML={{ __html: tool.heading }}></div>
-                           {/* <span style={{ marginTop: '8px' }} dangerouslySetInnerHTML={{ __html: tool.sub_text }}></span> */}
                            <p style={{ marginTop: '8px' }}>{tool.display_sub_text}</p>
                         </div>
                      </div>
