@@ -51,9 +51,11 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
             inp.selectedItem = null;
             inp.selectedId = null;
             preferredBanks.banks.forEach(bank => {
-              const preferredBank = { bankId: bank.bank_id, bankName: bank.bank_name }
+              const preferredBank = { bankId: bank.bank_id, bankName: bank.bank_name, priority: bank.priority }
               prefferedList.push(preferredBank)
             })
+            prefferedList.sort((a, b) => (a.priority > b.priority) ? 1 : -1)
+            console.log(prefferedList)
             inputDropdown = { listType, masterName, inp, prefferedList }
           }
 

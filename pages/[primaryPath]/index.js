@@ -1,7 +1,7 @@
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 import Strapi from "../../providers/strapi";
 import Layout from "../../components/Layout";
-import { useRouter } from "next/router";
 
 import CreditCardsBanner from "../../components/Banners/CreditCardsBanner";
 import PersonalLoansBanner from "../../components/Banners/PersonalLoansBanner";
@@ -16,10 +16,7 @@ import FinancialTools from "../../components/common/FinancialTools";
 import ShortExtendedForm from "../../components/common/ShortExtendedForm";
 import Blogger from "../../components/common/Blogger";
 import LearnMore from "../../components/common/LearnMore";
-import {
-  updatePopularOffers,
-  updateTrendingOffers,
-} from "../../services/offersService";
+import { updatePopularOffers, updateTrendingOffers } from "../../services/offersService";
 import { getClassesForPage } from "../../utils/classesForPage";
 
 const PrimaryPage = (props) => {
