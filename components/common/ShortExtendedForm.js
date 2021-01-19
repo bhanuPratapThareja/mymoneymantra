@@ -150,9 +150,7 @@ class ShortExtendedForm extends React.Component {
     onSubmitOtp = async () => {
         try {
             await submitOtp(this.state.mobileNo)
-            this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
-                this.onSubmitLetGoSlide()
-            })
+            this.onSubmitLetGoSlide()
         } catch (err) {
             alert(err.message)
         } finally {
@@ -167,8 +165,9 @@ class ShortExtendedForm extends React.Component {
             const leadId = res.data.response.payload.leadId
             setLeadId(primaryPath, leadId)
             sendNotification(leadId)
-            goToSlides()
-            this.setState({ slideButtonText: 'Next' })
+            this.setState({ currentSlide: 'sf-1', slideIndex: 1, slideButtonText: 'Next' }, () => {
+                goToSlides()
+            })
         } catch (err) {
             alert(err)
         }
@@ -194,8 +193,11 @@ class ShortExtendedForm extends React.Component {
         if (n >= 1) {
             const { newSlides, inputs } = getCurrentSlideInputs(this.state)
             const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
-            this.setState({ ...this.state, slides: newSlides }, () => {
+            this.setState({ ...this.state, slides: newSlides }, async () => {
                 if (!errorsPresent) {
+                    console.log('1')
+                    submitShortForm([...this.state.slides], this.state.currentSlide, this.state.primaryPath)
+                    console.log('2')
                     const newSlideId = incrementSlideId(this.state.currentSlide)
                     if (this.state.slideIndex < this.state.slides.length - 1) {
                         this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId }, () => {
@@ -203,7 +205,6 @@ class ShortExtendedForm extends React.Component {
                                 this.setState({ slideButtonText: 'Submit and view offers' })
                             }
                             showSlides(n, this.state.slideIndex)
-                            this.onSubmitShortForm()
                         })
                     } else {
                         this.onSubmitShortForm('submit')
@@ -311,7 +312,8 @@ class ShortExtendedForm extends React.Component {
     onSubmitShortForm = async submit => {
         const primaryPath = this.state.primaryPath
         if (!submit) {
-            submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
+            console.log('check1')
+            await submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
             return
         }
         try {
