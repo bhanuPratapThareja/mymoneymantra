@@ -164,9 +164,9 @@ class ShortExtendedForm extends React.Component {
         const primaryPath = this.state.primaryPath
         try {
             const res = await submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
-            const leadIdSendNotification = res.data.response.payload.leadId;
-            setLeadId(primaryPath, res.data.response.payload.leadId)
-            sendNotification(leadIdSendNotification);
+            const leadId = res.data.response.payload.leadId
+            setLeadId(primaryPath, leadId)
+            sendNotification(leadId)
             goToSlides()
             this.setState({ slideButtonText: 'Next' })
         } catch (err) {
@@ -203,6 +203,7 @@ class ShortExtendedForm extends React.Component {
                                 this.setState({ slideButtonText: 'Submit and view offers' })
                             }
                             showSlides(n, this.state.slideIndex)
+                            this.onSubmitShortForm()
                         })
                     } else {
                         this.onSubmitShortForm('submit')
@@ -276,7 +277,6 @@ class ShortExtendedForm extends React.Component {
     }
 
     handleInputDropdownSelection = (input_id, type, item) => {
-        console.log('item: ', item)
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateSelectionFromDropdown(inputs, input_id, item)
         this.setState({ ...this.state, slides: newSlides })
@@ -285,7 +285,21 @@ class ShortExtendedForm extends React.Component {
     checkInputValidity = (field, focusDropdown) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateInputsValidity(inputs, field, this.state.errorMsgs, focusDropdown)
-        this.setState({ ...this.state, slides: newSlides })
+        this.setState({ ...this.state, slides: newSlides }, () => {
+            if (field.type === 'radio') {
+                let mandatoryInputsHaveValues = true
+                inputs.forEach(input => {
+                    if (input.mandatory && !input.value) {
+                        mandatoryInputsHaveValues = false
+                    }
+                })
+                if (mandatoryInputsHaveValues) {
+                    setTimeout(() => {
+                        this.plusSlides(1)
+                    }, 100)
+                }
+            }
+        })
     }
 
     handleClickOnSlideBackground = () => {
@@ -294,12 +308,16 @@ class ShortExtendedForm extends React.Component {
         this.setState({ slides: newSlides })
     }
 
-    onSubmitShortForm = submit => {
+    onSubmitShortForm = async submit => {
         const primaryPath = this.state.primaryPath
-        submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
-        if (submit) {
-            this.props.router.push(`/${primaryPath}/listings`)
+        if (!submit) {
+            submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
+            return
         }
+        try {
+            await submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
+            this.props.router.push(`/${primaryPath}/listings`)
+        } catch { }
     }
 
     render() {
@@ -344,7 +362,6 @@ class ShortExtendedForm extends React.Component {
                             handleChange={this.handleChange}
                             checkInputValidity={this.checkInputValidity}
                             handleInputDropdownSelection={this.handleInputDropdownSelection}
-                            handleInputDropdownChange={this.handleInputDropdownChange}
                             handleClickOnSlideBackground={this.handleClickOnSlideBackground}
                             onGoToPrevious={this.onGoToPrevious}
                             onSubmitSlide={this.onSubmitSlide}

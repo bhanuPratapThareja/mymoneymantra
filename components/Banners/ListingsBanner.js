@@ -49,7 +49,6 @@ const ListingBanner = props => {
                             <div className="checkbox-container" name="category" value={selectedOption} onChange={e => setSelectedOption(e.target.value)}>
                                 {categories.filter_category.map(category => {
                                     const { label, image } = category
-                                    console.log(image)
                                     return (
                                         <React.Fragment key={category.id}>
                                             <input readOnly className="lets-checkbox" checked={selectedOption === label.toLowerCase()} value={label.toLowerCase()} type="radio" id={label.toLowerCase()} name="category" required />

@@ -4,14 +4,12 @@ import {
   getWholeNumberFromCurrency,
 } from "./formattedCurrency";
 
-export const generateInputs = (component, updateField, checkInputValidity,
-  handleInputDropdownChange, handleInputDropdownSelection) => {
+export const generateInputs = (component, updateField, checkInputValidity, handleInputDropdownSelection) => {
   const handleChange = (e, type, focusDropdown) => {
     let { name, value, checked } = e.target;
     let field = {};
 
-    if (type === "money") {
-      console.log(value)
+    if (type === 'money') {
       value = value.toString()
       const numString = getWholeNumberFromCurrency(value);
       if (isNaN(numString)) {
@@ -20,15 +18,12 @@ export const generateInputs = (component, updateField, checkInputValidity,
       value = getFormattedCurrency(value);
     }
 
-    if (type === "checkbox") {
+    if (type === 'checkbox') {
       field = { name, checked, type };
     } else {
       field = { name, value, type };
       if (type === "input_with_dropdown") {
         field.focusDropdown = focusDropdown
-        // setTimeout(() => {
-        //   document.getElementById(name).focus();
-        // }, 100);
       }
     }
     updateField(field);
@@ -37,13 +32,7 @@ export const generateInputs = (component, updateField, checkInputValidity,
   const validate = (e, type) => {
     const { name, value } = e.target;
     const field = { name, value, type, blur: true, currentActiveInput: name };
-    if (type === 'input_with_dropdown') {
-      // setTimeout(() => {
-      // checkInputValidity(field);
-      // }, 500);
-    } else {
-      checkInputValidity(field);
-    }
+    checkInputValidity(field);
   };
 
   const onSelect = (input_id, type, selectedItem) => {
