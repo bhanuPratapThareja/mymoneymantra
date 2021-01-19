@@ -4,8 +4,8 @@ import {
   getWholeNumberFromCurrency,
 } from "./formattedCurrency";
 
-export const generateInputs = ( component, updateField,  checkInputValidity,
-                                handleInputDropdownChange, handleInputDropdownSelection) => {
+export const generateInputs = (component, updateField, checkInputValidity,
+  handleInputDropdownChange, handleInputDropdownSelection) => {
   const handleChange = (e, type, focusDropdown) => {
     let { name, value, checked } = e.target;
     let field = {};
@@ -37,9 +37,9 @@ export const generateInputs = ( component, updateField,  checkInputValidity,
   const validate = (e, type) => {
     const { name, value } = e.target;
     const field = { name, value, type, blur: true, currentActiveInput: name };
-    if(type === 'input_with_dropdown') {
+    if (type === 'input_with_dropdown') {
       // setTimeout(() => {
-        // checkInputValidity(field);
+      // checkInputValidity(field);
       // }, 500);
     } else {
       checkInputValidity(field);
@@ -235,16 +235,11 @@ export const generateInputs = ( component, updateField,  checkInputValidity,
   }
 
   if (type === "upload_button") {
-    const { attachment } = component;
+    const { attachment, upload_types } = component;
     const inputFileId = `input_file_${input_id}`;
     const fieldId = `${input_id}_${type}`;
-    let uploadText = value
-      ? value.length === 1
-        ? value[0].name
-        : value.length + " files"
-      : upload_text;
-    const uploadButtonBorderStyles =
-      attachment && !error && !verified ? null : borderStyles;
+    let uploadText = value ? value.length === 1 ? value[0].name : value.length + " files" : upload_text;
+    const uploadButtonBorderStyles = attachment && !error && !verified ? null : borderStyles;
     fieldClasses.push(type);
     fieldClasses.push("file-type");
 
@@ -254,52 +249,25 @@ export const generateInputs = ( component, updateField,  checkInputValidity,
     }
 
     return (
-      <>
-        <div
-          className={fieldClasses.join(" ")}
-          id={fieldId}
-          style={uploadButtonBorderStyles}
-        >
-          <input
-            id={inputFileId}
-            type="file"
-            accept="application/pdf, image/*"
-            multiple
-            onChange={() =>
-              onUploadAttachment(input_id, type, inputFileId, true)
-            }
-          />
-          {!value ? (
-            <img
-              src="/assets/images/icons/Upload.svg"
-              onClick={() => document.getElementById(inputFileId).click()}
-            />
-          ) : null}
-          {value ? (
-            <img
-              src="/assets/images/icons/Attach.svg"
-              onClick={() => document.getElementById(inputFileId).click()}
-            />
-          ) : null}
-          {value ? (
-            <img
-              src="/assets/images/icons/cross.svg"
-              onClick={() =>
-                onUploadAttachment(input_id, type, inputFileId, false)
-              }
-            />
-          ) : null}
-          <h5 onClick={() => document.getElementById(inputFileId).click()}>
-            {uploadText} {!mandatory && !value ? <b>(optional)</b> : null}
-          </h5>
+      <div className={fieldClasses.join(" ")} id={fieldId} style={uploadButtonBorderStyles}>
+        <input
+          id={inputFileId}
+          type="file"
+          accept={upload_types}
+          multiple
+          onChange={() => onUploadAttachment(input_id, type, inputFileId, true)}
+        />
+        {!value ? <img src="/assets/images/icons/Upload.svg" onClick={() => document.getElementById(inputFileId).click()} /> : null}
+        {value ? <img src="/assets/images/icons/Attach.svg" onClick={() => document.getElementById(inputFileId).click()} /> : null}
+        {value ? <img src="/assets/images/icons/cross.svg" onClick={() => onUploadAttachment(input_id, type, inputFileId, false)} /> : null}
+        <h5 onClick={() => document.getElementById(inputFileId).click()}>
+          {uploadText} {!mandatory && !value ? <b>(optional)</b> : null}
+        </h5>
 
-          {error ? (
-            <div className="input-error">
-              <p>{errorMsg}</p>
-            </div>
-          ) : null}
-        </div>
-      </>
+        {error ? <div className="input-error">
+          <p>{errorMsg}</p>
+        </div> : null}
+      </div>
     );
   }
 
@@ -404,7 +372,7 @@ export const generateInputs = ( component, updateField,  checkInputValidity,
                   onChange={(e) => handleChange(e, type)}
                 />
                 <label htmlFor={box.input_id}>
-                <span dangerouslySetInnerHTML={{ __html: box.label }}></span></label>
+                  <span dangerouslySetInnerHTML={{ __html: box.label }}></span></label>
               </div>
             );
           })}

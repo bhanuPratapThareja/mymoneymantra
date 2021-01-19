@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Strapi from '../../providers/strapi'
 import Link from 'next/link'
-import { useRouter } from 'next/router';
-
+import SvgImage from '../ImageComponent/SvgComponents'
 
 const ProductType = props => {
     const strapi = new Strapi()
@@ -34,7 +34,7 @@ const ProductType = props => {
                         return (
                             <Link href={home_product_type_url} key={productType.id}>
                                 <a className="product-block">
-                                    <img src={`${strapi.baseUrl}${home_product_type_image.url}`} alt={home_product_type_image.name} />
+                                    <SvgImage image={home_product_type_image} />
                                     <h3>{home_product_type_heading_label}</h3>
                                     <img className="flow-arrow" src="/assets/images/icons/arrow-right-32.svg" alt="" />
                                 </a>
@@ -50,7 +50,7 @@ const ProductType = props => {
                         return (
                             <Link href={home_product_type_url} key={productType.id}>
                                 <a className="product-block">
-                                    <img src={`${strapi.baseUrl}${home_product_type_image.url}`} alt={home_product_type_image.name} />
+                                    <SvgImage image={home_product_type_image} />
                                     <h3>{home_product_type_heading_label}</h3>
                                     <img className="flow-arrow" src="/assets/images/icons/arrow-right-32.svg" alt="" />
                                 </a>
