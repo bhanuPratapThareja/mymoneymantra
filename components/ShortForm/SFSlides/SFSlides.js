@@ -30,9 +30,7 @@ const SFSlides = props => {
                                         return (
                                             <React.Fragment key={component.id}>
                                                 {generateInputs(component, props.handleChange,
-                                                    props.checkInputValidity, props.handleInputDropdownChange,
-                                                    props.handleInputDropdownSelection
-                                                )}
+                                                    props.checkInputValidity, props.handleInputDropdownSelection)}
                                             </React.Fragment>
                                         )
                                     })}
@@ -46,7 +44,6 @@ const SFSlides = props => {
             <SFButtons
                 onClickPrevious={props.onGoToPrevious}
                 onClickNext={props.onSubmitSlide}
-                onSubmitShortForm={props.onSubmitShortForm}
                 slideButtonText={props.slideButtonText}
             />
 

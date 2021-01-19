@@ -1,3 +1,7 @@
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 :root {
   --error-color: #DC3737;
   --next-btn: #221F1F;
@@ -1076,7 +1080,6 @@ img {
 .form__group.field.filled-input.dropdown_enabled {
   z-index: 9999 !important;
 }
-
 
 .shortforms-container .form__group {
   padding-right: 40px !important;

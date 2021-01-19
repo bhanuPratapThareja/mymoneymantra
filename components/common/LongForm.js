@@ -46,7 +46,7 @@ class LongForm extends React.Component {
     const { primaryPath } = this.props.router.query;
     const bankName = this.props.bank.bank_name;
     const { long_form_version_2, always_ask_for_otp, invalid_form_error_message } = this.props.data
- 
+
     const longFormSections = long_form_version_2.long_form[0].long_form_sections;
     const formData = JSON.parse(localStorage.getItem("formData"));
     let sfData = null;
@@ -437,13 +437,8 @@ class LongForm extends React.Component {
                         {inputs.map((component) => {
                           return (
                             <React.Fragment key={component.id}>
-                              {generateInputs(
-                                component,
-                                this.handleChange,
-                                this.checkInputValidity,
-                                null,
-                                this.handleInputDropdownSelection
-                              )}
+                              {generateInputs(component, this.handleChange,
+                                this.checkInputValidity, this.handleInputDropdownSelection)}
                             </React.Fragment>
                           );
                         })}
@@ -454,7 +449,7 @@ class LongForm extends React.Component {
               </React.Fragment>
             );
           })}
-          {this.state.errors ?<p className="form-invalid-text">{this.state.invalidFormError}</p> : null}
+          {this.state.errors ? <p className="form-invalid-text">{this.state.invalidFormError}</p> : null}
           <div className="long-form-submit">
             <button
               id="long-submit"
