@@ -9,11 +9,6 @@ AOS.init({
 
 $(document).ready(function () {
 
-  if ($(window).width() < 768) {
-    $(".homepage-flow .header").addClass("mobile-header");
-    
-  }
-
   // if ($(window).width() > 786) {
   // $(window).scroll(function () {
   //   var sticky = $('header'),

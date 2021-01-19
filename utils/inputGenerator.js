@@ -11,6 +11,8 @@ export const generateInputs = ( component, updateField,  checkInputValidity,
     let field = {};
 
     if (type === "money") {
+      console.log(value)
+      value = value.toString()
       const numString = getWholeNumberFromCurrency(value);
       if (isNaN(numString)) {
         return;
@@ -153,18 +155,38 @@ export const generateInputs = ( component, updateField,  checkInputValidity,
     );
   }
 
-  if (
-    type === "text" ||
-    type === "email" ||
-    type === "number" ||
-    type === "pan_card" ||
-    type === "money"
-  ) {
+  if (type === "text" || type === "email" || type === "number" || type === "pan_card") {
     const fieldId = `${input_id}_${type}`;
-    const inputType =
-      type === "number" ? (getDevice() === "desktop" ? "number" : "tel") : type;
+    const inputType = type === "number" ? (getDevice() === "desktop" ? "number" : "tel") : type;
     return (
       <div className={fieldClasses.join(" ")} type={type} id={fieldId} key={id}>
+        <input
+          className="form__field"
+          name={input_id}
+          type={inputType}
+          value={value}
+          id={input_id}
+          placeholder={placeholder}
+          autoComplete="off"
+          required={mandatory}
+          onBlur={(e) => validate(e, type)}
+          onChange={(e) => handleChange(e, type)}
+        />
+        <label className="form__label">{label}</label>
+        {error ? (
+          <div className="input-error">
+            <p>{errorMsg}</p>
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+
+  if (type === 'money') {
+    const fieldId = `${input_id}_${type}`;
+    const inputType = getDevice() === 'desktop' ? 'number' : 'tel'
+    return (
+      <div className={fieldClasses.join(' ')} type={type} id={fieldId} key={id}>
         <input
           className="form__field"
           name={input_id}
