@@ -172,7 +172,7 @@ export const generateLead = async (data, primaryPath) => {
         // console.log('requestedTenor',requestedTenor)
         body.request.payload.requestedTenor = requestedTenor
         body.request.payload.exisEmi = exisEmi
-
+console.log('')
         // for residence
         body.request.payload.address[0].addressTypeMasterId = "1000000001"
         body.request.payload.address[0].addressline1 = addressline1
