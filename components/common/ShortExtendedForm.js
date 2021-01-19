@@ -306,7 +306,7 @@ class ShortExtendedForm extends React.Component {
                 if (mandatoryInputsHaveValues) {
                     setTimeout(() => {
                         this.plusSlides(1)
-                    }, 150)
+                    }, 125)
                 }
             }
         })
