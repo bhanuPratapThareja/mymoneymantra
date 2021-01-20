@@ -4,7 +4,7 @@ import { getApiData } from '../api/api'
 import { getLeadId } from '../utils/localAccess'
 import { getFormattedDate } from '../utils/formatDataForApi'
 const CancelToken = axios.CancelToken
-import { getDocumentIdandTypeId } from '../utils/uploadDocumentHelper'
+import { getDocumentIdandTypeId } from '../Utils/uploadDocumentHelper'
 let cancel
 let otpId = ''
 
@@ -39,7 +39,7 @@ export const submitOtp = async mobileNo => {
 
     try {
         const res = await axios.post(url, body)
-        console.log('otp verify res',res);
+        console.log('otp verify res', res);
         if (res.data.response.msgInfo.code == 200) {
             console.log('if')
             return true
@@ -77,16 +77,16 @@ export const getDropdownList = async (listType, value, masterName) => {
 }
 
 export const documentUpload = async document => {
-    const { base64, type, name,documentName,primaryPath } = document;
+    const { base64, type, name, documentName, primaryPath } = document;
     const { url, body } = getApiData('documentUpload')
-    let documentIds =  getDocumentIdandTypeId(documentName);
-    const { documentId,documentTypeId } = documentIds[0];
+    let documentIds = getDocumentIdandTypeId(documentName);
+    const { documentId, documentTypeId } = documentIds[0];
     body.request.payload.docList[0].documentId = documentId
     body.request.payload.docList[0].documentExtension = type.split("/")[1]
     body.request.payload.docList[0].documentTypeId = documentTypeId
     body.request.payload.docList[0].docBytes = base64.split(",")[1]
     body.request.payload.caseId = getLeadId(primaryPath)
-    
+
     axios.post(url, body)
         .catch(() => { })
 }
@@ -104,18 +104,15 @@ export const getBase64 = file => {
 export const generateLead = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
         let { url, body } = getApiData('orchestration')
-        if(!body.request.payload.leadId){
-            body.request.header.sync = true
-        }
         body = JSON.parse(JSON.stringify(body))
-        const { fullName, dob, pan, mobile, email, applicantType, title,officeEmail,
+        const { fullName, dob, pan, mobile, email, applicantType, title, officeEmail,
             companyId, netMonthlyIncome, bankId, totalWorkExp,
             requestedLoanamount, requestedTenor, exisEmi, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
             fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
-            addressline1, addressline2,addressline3, pincode, city, nearByLandmark,
-            officeAddressLine1, officeAddressLine2, officeNearBy, officePincode, officeCity,
-            permanentAddressline1,permanentAddressline2,permanentPincode,permannentCity,
+            addressline1, addressline2, pincode, city, nearByLandmark,
+            officeAddressline1, officeAddressline2, addressline3, officeNearBy, officePincode, officeCity,
+            permanentAddressline1, permanentAddressline2, permanentPincode, permannentCity,
             city_location, cost_of_property,
             propertyPincode
 
@@ -166,13 +163,12 @@ export const generateLead = async (data, primaryPath) => {
 
         body.request.payload.leadId = getLeadId(primaryPath)
         body.request.payload.productId = localStorage.getItem('productId')
-        body.request.payload.cardType = localStorage.getItem('cardType')
         body.request.payload.requestedLoanamount = requestedLoanamount
         // console.log('body.request.payload.requestedTenor',body.request.payload.requestedTenor)
         // console.log('requestedTenor',requestedTenor)
         body.request.payload.requestedTenor = requestedTenor
         body.request.payload.exisEmi = exisEmi
-console.log('')
+
         // for residence
         body.request.payload.address[0].addressTypeMasterId = "1000000001"
         body.request.payload.address[0].addressline1 = addressline1
@@ -185,15 +181,14 @@ console.log('')
         // body.request.payload.address[0].stdCode = pincode ? pincode.stdCode : ''
 
         // for office address
-        // console.log('for ofc add officePincode',officePincode)
         body.request.payload.address[1].addressTypeMasterId = "1000000002"
-        body.request.payload.address[1].addressline1 = officeAddressLine1
-        body.request.payload.address[1].addressline2 = officeAddressLine2
+        body.request.payload.address[1].addressline1 = officeAddressline1
+        body.request.payload.address[1].addressline2 = officeAddressline2
         body.request.payload.address[1].landmark = officeNearBy
         body.request.payload.address[1].pincode = officePincode ? officePincode.pincode : ""
         body.request.payload.address[1].city = officePincode ? officePincode.cityId : ""
         body.request.payload.address[1].state = officePincode ? officePincode.stateId : ""
-       // body.request.payload.address[1].stdCode = officePincode ? officePincode.stdCode : ""
+        // body.request.payload.address[1].stdCode = officePincode ? officePincode.stdCode : ""
 
         // for property
         // console.log('for property propertyPincode',propertyPincode)
@@ -201,10 +196,10 @@ console.log('')
         body.request.payload.address[2].purposeOfLoan = propertyType
         body.request.payload.address[2].propertyValue = cost_of_property
         body.request.payload.address[2].city = city_location;
-        body.request.payload.address[2].pincode = propertyPincode ? propertyPincode.pincode :"";
-        body.request.payload.address[2].state = propertyPincode ? propertyPincode.stateId :"";
+        body.request.payload.address[2].pincode = propertyPincode ? propertyPincode.pincode : "";
+        body.request.payload.address[2].state = propertyPincode ? propertyPincode.stateId : "";
         //body.request.payload.address[1].state = pincode ? pincode.stateId : ''
-      
+
 
 
         //for permanent add

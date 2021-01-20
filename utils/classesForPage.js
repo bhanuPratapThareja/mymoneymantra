@@ -2,7 +2,9 @@ const classes = {
     'home-page': ['credit-card-flow', 'homepage-flow'],
     'credit-cards': ['credit-card-flow'],
     'personal-loans': ['credit-card-flow', 'personal-loan-flow'],
-    'home-loans': ['credit-card-flow', 'personal-loan-flow', 'home-loan-flow', 'gold-loan-flow', 'health-flow'], //'lap-flow'
+    'home-loans': ['credit-card-flow', 'personal-loan-flow', 'home-loan-flow', 'gold-loan-flow', 'health-flow'],
+    'blog': ['credit-card-flow', 'b2c-flow', 'blogs-flow'],
+
     'listings': {
         'credit-cards': ['listings'],
         'personal-loans': ['listings', 'personal-loan-listing'],
@@ -16,7 +18,8 @@ const classes = {
     'details': {
         'credit-cards': ['credit-card-flow', 'c-detail-page'],
         'personal-loans': ['credit-card-flow', 'c-detail-page', 'personal-detail-flow'],
-        'home-loans': ['credit-card-flow', 'c-detail-page', 'personal-detail-flow'] //'home-loan-flow-detail'
+        'home-loans': ['credit-card-flow', 'c-detail-page', 'personal-detail-flow'],
+        'blog': ['credit-card-flow', 'b2c-flow', 'blogs-flow', 'blog-details']
     }
 
 }
@@ -29,7 +32,7 @@ export const getClassesForPage = (primary, secondary) => {
         pageClasses = classes[secondary][primary]
     }
 
-    if(pageClasses && pageClasses.length) {
+    if (pageClasses && pageClasses.length) {
         return pageClasses.join(' ')
     } else {
         return ''
