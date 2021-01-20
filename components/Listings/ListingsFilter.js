@@ -1,5 +1,5 @@
 import { closeFilter } from '../../utils/loanListingFilterHandler'
-import { initializeMoneyRange, initializeYearRange, getSliderFilterValues } from '../../utils/noUiSliderHandler'
+import { initializeMoneyRange, initializeYearRange, getSliderFilterValues,initializePercentRange } from '../../utils/noUiSliderHandler'
 import DownChevron from '../../public/assets/images/icons/down-chevron.svg'
 
 class ListingFilter extends React.Component {
@@ -55,7 +55,7 @@ class ListingFilter extends React.Component {
         this.setState({ filter_fee_annual, filter_emi, filter_tenure, filter_roi, filter_max_loan_amount }, () => {
             initializeMoneyRange(filter_fee_annual, 'annual-fees-range')
             initializeMoneyRange(filter_emi, 'emi-range')
-            initializeMoneyRange(filter_roi, 'roi-range')
+            initializePercentRange(filter_roi, 'roi-range')
             initializeMoneyRange(filter_max_loan_amount, 'max-loan-amount-range')
             initializeYearRange(filter_tenure, 'tenure-range')
         })

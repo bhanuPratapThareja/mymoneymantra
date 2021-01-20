@@ -267,6 +267,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
           inp.type === "pan_card" &&
           inp.input_id === field.currentActiveInput
         ) {
+          console.log('inp',inp)
           if (!isInputValid(inp)) {
             errors = true;
             inp.error = true;
