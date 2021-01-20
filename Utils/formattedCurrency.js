@@ -1,7 +1,5 @@
 export const getFormattedCurrency = value => {
-    console.log('val: ', value)
     const currencyNumber = getWholeNumberFromCurrency(value)
-    console.log('currencyNumber: ', currencyNumber)
     const currency = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(currencyNumber)
     const wholeNumberWithCurrency = currency.split('.')[0]
     return wholeNumberWithCurrency

@@ -150,9 +150,7 @@ class ShortExtendedForm extends React.Component {
     onSubmitOtp = async () => {
         try {
             await submitOtp(this.state.mobileNo)
-            this.setState({ currentSlide: 'sf-1', slideIndex: 1 }, () => {
-                this.onSubmitLetGoSlide()
-            })
+            this.onSubmitLetGoSlide()
         } catch (err) {
             alert(err.message)
         } finally {
@@ -161,14 +159,14 @@ class ShortExtendedForm extends React.Component {
     }
 
     onSubmitLetGoSlide = async () => {
-        const primaryPath = this.state.primaryPath
         try {
-            const res = await submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
+            const res = await this.onSubmitShortForm()
             const leadId = res.data.response.payload.leadId
-            setLeadId(primaryPath, leadId)
+            setLeadId(this.state.primaryPath, leadId)
             sendNotification(leadId)
-            goToSlides()
-            this.setState({ slideButtonText: 'Next' })
+            this.setState({ currentSlide: 'sf-1', slideIndex: 1, slideButtonText: 'Next' }, () => {
+                goToSlides()
+            })
         } catch (err) {
             alert(err)
         }
@@ -194,8 +192,9 @@ class ShortExtendedForm extends React.Component {
         if (n >= 1) {
             const { newSlides, inputs } = getCurrentSlideInputs(this.state)
             const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
-            this.setState({ ...this.state, slides: newSlides }, () => {
+            this.setState({ ...this.state, slides: newSlides }, async () => {
                 if (!errorsPresent) {
+                    this.onSubmitShortForm()
                     const newSlideId = incrementSlideId(this.state.currentSlide)
                     if (this.state.slideIndex < this.state.slides.length - 1) {
                         this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId }, () => {
@@ -203,10 +202,10 @@ class ShortExtendedForm extends React.Component {
                                 this.setState({ slideButtonText: 'Submit and view offers' })
                             }
                             showSlides(n, this.state.slideIndex)
-                            this.onSubmitShortForm()
                         })
                     } else {
-                        this.onSubmitShortForm('submit')
+                        this.onSubmitShortForm()
+                        this.props.router.push(`/${this.state.primaryPath}/listings`)
                     }
                 }
             })
@@ -221,7 +220,18 @@ class ShortExtendedForm extends React.Component {
         }
 
         this.scrollToTopOfSlide()
+    }
 
+    onSubmitShortForm = () => {
+        return new Promise((resolve, reject) => {
+            submitShortForm([...this.state.slides], this.state.currentSlide, this.state.primaryPath)
+                .then(res => {
+                    resolve(res)
+                })
+                .catch(err => {
+                    reject(err)
+                })
+        })
     }
 
     handleChange = field => {
@@ -296,7 +306,7 @@ class ShortExtendedForm extends React.Component {
                 if (mandatoryInputsHaveValues) {
                     setTimeout(() => {
                         this.plusSlides(1)
-                    }, 100)
+                    }, 125)
                 }
             }
         })
@@ -306,18 +316,6 @@ class ShortExtendedForm extends React.Component {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         resetDropdowns(inputs, this.state.errorMsgs)
         this.setState({ slides: newSlides })
-    }
-
-    onSubmitShortForm = async submit => {
-        const primaryPath = this.state.primaryPath
-        if (!submit) {
-            submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
-            return
-        }
-        try {
-            await submitShortForm([...this.state.slides], this.state.currentSlide, primaryPath)
-            this.props.router.push(`/${primaryPath}/listings`)
-        } catch { }
     }
 
     render() {

@@ -1,9 +1,6 @@
 const SFButtons = props => {
     const clickNext = () => {
         props.onClickNext()
-        if (props.onSubmitShortForm) {
-            props.onSubmitShortForm()
-        }
     }
 
     const buttonText = props.slideButtonText
