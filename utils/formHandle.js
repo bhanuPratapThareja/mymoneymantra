@@ -134,10 +134,12 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
 
         // special case
 
-        if (inp.end_point_name === "cc_holder") {
+        console.log(inp)
+
+        if (inp.disable_input_with_end_point_name) {
           inputs.forEach((secondary) => {
-            if (secondary.end_point_name === "bankId") {
-              if (inp.value === "no") {
+            if (secondary.end_point_name === inp.disable_input_with_end_point_name) {
+              if (inp.value === inp.disable_when_value) {
                 secondary.value = "";
                 secondary.list = [];
                 secondary.selectedId = "*";
