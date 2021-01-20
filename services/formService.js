@@ -105,6 +105,9 @@ export const generateLead = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
         let { url, body } = getApiData('orchestration')
         body = JSON.parse(JSON.stringify(body))
+        if(!body.request.payload.leadId){
+            body.request.header.sync = true
+        }
         const { fullName, dob, pan, mobile, email, applicantType, title, officeEmail,
             companyId, netMonthlyIncome, bankId, totalWorkExp,
             requestedLoanamount, requestedTenor, exisEmi, propertyType, other_city_property_location,
