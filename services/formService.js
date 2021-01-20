@@ -166,6 +166,7 @@ export const generateLead = async (data, primaryPath) => {
 
         body.request.payload.leadId = getLeadId(primaryPath)
         body.request.payload.productId = localStorage.getItem('productId')
+        body.request.payload.cardType = localStorage.getItem('cardType')
         body.request.payload.requestedLoanamount = requestedLoanamount
         // console.log('body.request.payload.requestedTenor',body.request.payload.requestedTenor)
         // console.log('requestedTenor',requestedTenor)
