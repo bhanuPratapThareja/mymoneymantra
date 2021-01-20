@@ -1,5 +1,5 @@
 import { closeFilter } from '../../utils/loanListingFilterHandler'
-import { initializeMoneyRange, initializeYearRange, getSliderFilterValues,initializePercentRange } from '../../utils/noUiSliderHandler'
+import { initializeMoneyRange, initializeYearRange, getSliderFilterValues,initializePercentRange } from '../../utils/noUiSliderHandler';
 import DownChevron from '../../public/assets/images/icons/down-chevron.svg'
 
 class ListingFilter extends React.Component {
