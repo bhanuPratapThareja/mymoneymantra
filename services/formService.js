@@ -81,10 +81,6 @@ export const documentUpload = async (docs, documentName, primaryPath) => {
     let documentIds = getDocumentIdandTypeId(documentName);
     const { documentId, documentTypeId } = documentIds[0];
     let docList = []
-    // body.request.payload.docList[0].documentId = documentId
-    // body.request.payload.docList[0].documentExtension = type.split("/")[1]
-    // body.request.payload.docList[0].documentTypeId = documentTypeId
-    // body.request.payload.docList[0].docBytes = base64.split(",")[1]
     body.request.payload.caseId = getLeadId(primaryPath)
     for (let i = 0; i < docs.length; i++) {
         const { type, base64 } = docs[i]
