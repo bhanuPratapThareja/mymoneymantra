@@ -3,7 +3,6 @@ import Strapi from "../../providers/strapi"
 import { useEffect, useState } from 'react'
 
 const FeaturedContributors = (props) => {
-   console.log("contributors props", props)
    const { section_heading, blog_contributors } = props.data
    const [sliceLength, setSliceLength] = useState(4)
    const strapi = new Strapi()
