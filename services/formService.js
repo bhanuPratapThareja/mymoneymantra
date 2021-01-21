@@ -109,8 +109,9 @@ export const generateLead = async (data, primaryPath) => {
             body.request.header.sync = true
         }
         const { fullName, dob, pan, mobile, email, applicantType, title, officeEmail,
-            companyId, netMonthlyIncome, bankId, totalWorkExp,
-            requestedLoanamount, requestedTenor, exisEmi, propertyType, other_city_property_location,
+            companyId, netMonthlyIncome, bankId, totalWorkExp,cardType,
+            exisTenorBalMonths,exisLoanAmount,exisEmi,exisRemark,
+            requestedLoanamount, requestedTenor, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
             fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
             addressline1, addressline2, pincode, city, nearByLandmark,
@@ -166,12 +167,22 @@ export const generateLead = async (data, primaryPath) => {
 
         body.request.payload.leadId = getLeadId(primaryPath)
         body.request.payload.productId = localStorage.getItem('productId')
-        body.request.payload.cardType = localStorage.getItem('cardType')
+        body.request.payload.cardType = cardType
         body.request.payload.requestedLoanamount = requestedLoanamount
-        // console.log('body.request.payload.requestedTenor',body.request.payload.requestedTenor)
-        // console.log('requestedTenor',requestedTenor)
+
+        // for facility requested
+        console.log('bankId-----',bankId)
+        body.request.payload.existingFacility[0].exisTenorBalMonths = exisTenorBalMonths
+        body.request.payload.existingFacility[0].exisfacility = localStorage.getItem('productId')
+        body.request.payload.existingFacility[0].exisBankId = bankId ? bankId.bankId : ""
+        body.request.payload.existingFacility[0].exisLoanAmount = exisLoanAmount
+        body.request.payload.existingFacility[0].exisEmi = exisEmi
+        body.request.payload.existingFacility[0].exisRemark = exisRemark
+
+
         body.request.payload.requestedTenor = requestedTenor
-        body.request.payload.exisEmi = exisEmi
+        // body.request.payload.exisEmi = exisEmi
+
 
         // for residence
         body.request.payload.address[0].addressTypeMasterId = "1000000001"

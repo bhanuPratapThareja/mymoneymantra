@@ -302,16 +302,30 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
           inp.input_id === field.currentActiveInput &&
           inp.mandatory
         ) {
-          if (!inp.value) {
+          if (!isInputValid(inp)) {
             errors = true;
             inp.error = true;
-            inp.errorMsg = errorMsgs.mandatory;
             inp.verified = false;
+            if (!inp.value) {
+              inp.errorMsg = errorMsgs.mandatory;
+            } else {
+              inp.errorMsg = inp.validation_error;
+            }
           } else {
             inp.error = false;
             inp.errorMsg = "";
             inp.verified = true;
           }
+          // if (!inp.value) {
+          //   errors = true;
+          //   inp.error = true;
+          //   inp.errorMsg = errorMsgs.mandatory;
+          //   inp.verified = false;
+          // } else {
+          //   inp.error = false;
+          //   inp.errorMsg = "";
+          //   inp.verified = true;
+          // }
         }
       }
     });
@@ -322,13 +336,17 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
       if (inp.selectedId && inp.selectedId === "*" || !inp.mandatory) {
         inp.verified = false
       } else if (
-        (textTypeInputs.includes(inp.type) || inp.type === "radio") &&
-        !inp.value &&
-        inp.mandatory
-      ) {
-        inp.errorMsg = errorMsgs.mandatory;
-        inp.error = true;
-        errors = true;
+        (textTypeInputs.includes(inp.type) || inp.type === "radio") ){
+        
+          if ((inp.mandatory && !inp.value)|| !isInputValid(inp)) {
+            errors = true;
+            inp.error = true;
+            if (!inp.value) {
+              inp.errorMsg = errorMsgs.mandatory;
+            } else {
+              inp.errorMsg = inp.validation_error;
+            }
+          } 
       } else if (inp.type === "email" && !isInputValid(inp)) {
         inp.errorMsg = inp.validation_error;
         inp.error = true;

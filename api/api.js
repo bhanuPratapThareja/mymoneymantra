@@ -233,11 +233,20 @@ const api = {
             productId: "",
             cardAge: "",
             cardType: "",
-            exisEmi: "",
-            exisLoanAmount: "",
+            // exisEmi: "",
+            // exisLoanAmount: "",
             loanStartYear: "",
             totalExisTenor: "",
             offerId: "",
+            existingFacility: [
+              {
+                  "exisTenorBalMonths": "",
+                  "exisfacility": "",
+                  "exisBankId": "",
+                  "exisLoanAmount": "",
+                  "exisEmi": "",
+                  "exisRemark": ""
+              }],
             address: [
               {
                 addressTypeMasterId: "1000000001",
