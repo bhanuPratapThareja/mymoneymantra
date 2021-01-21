@@ -1370,19 +1370,30 @@ img {
     font-size: 12px;
     text-align: right;
     line-height: 15px;
+  
   }
 
   .file-type h5 b {
     line-height: 17px;
-    display: block;
+    font-size: 15px;
+    
+  }
+
+  .credit-card-flow .sf-forms .form__group.field.file-type>img {
+    left: 15px;
   }
 
   .file-type h5 {
-    top: 10px;
-    margin-bottom: 0 !important;
+    white-space: nowrap;
+    font-size: 13px;
+    left: 47px;
+    overflow: hidden;
+    max-width: 165px;
   }
 
+
 }
+
 
 .long-form-submit {
   margin-top: 2rem !important;
@@ -1394,3 +1405,129 @@ img {
   font-weight: 900;
   font-size: 1rem;
 }
+
+/* vikas css */
+
+ .comment-section {
+  background-color: #c2c2c2;;
+  width: 100%;
+}
+
+ .comment-section .comment-section-wrapper {
+  max-width: 688px;
+  margin: 0 auto;
+  padding: 30px 24px 42px 24px;
+}
+
+ .comment-section .comment-section-wrapper .options {
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.comment-section .comment-section-wrapper .options .like-dislike-wrap {
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.comment-section .comment-section-wrapper .options .like-dislike-wrap .like-dislike {
+  margin-right: 40px;
+  border: none;
+  background: transparent;
+  outline: none;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+}
+.comment-section .comment-section-wrapper .options .like-dislike-wrap .like-dislike h6 {
+  color: rgba(34, 31, 31, 0.6);
+}
+.comment-section .comment-section-wrapper .options .share-blog {
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -ms-flex-align: center;
+  align-items: center;
+  border: none;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+}
+.comment-section .comment-section-wrapper .options .share-blog h6 {
+  color: rgba(34, 31, 31, 0.6);
+}
+
+.comment-section .comment-section-wrapper .comment-wrap {
+  margin-top: 24px;
+}
+.comment-section .comment-section-wrapper .comment-wrap input {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 24px;
+  font-size: 1.25rem;
+  font-family: "Avenir-Heavy";
+  line-height: 2rem;
+  color: #221F1F;
+  outline: none;
+  border: none;
+}
+.comment-section .comment-section-wrapper .comment-wrap .added-comments {
+  width: 100%;
+}
+.comment-section .comment-section-wrapper .comment-wrap .added-comments .user:not(:last-child) {
+  border-bottom: 1px solid rgba(34, 31, 31, 0.1);
+}
+.comment-section .comment-section-wrapper .comment-wrap .added-comments .user {
+  margin-top: 24px;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  width: 100%;
+  padding-bottom: 16px;
+}
+.comment-section .comment-section-wrapper .comment-wrap .added-comments .user .image {
+  max-width: 56px;
+  width: 100%;
+  height: 56px;
+  border-radius: 50%;
+  /* background: url(assets/images/icons/user.png); */
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-right: 8px;
+}
+.comment-section .comment-section-wrapper .comment-wrap .added-comments .user .comment {
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  width: 100%;
+}
+.comment-section .comment-section-wrapper .comment-wrap .added-comments .user .comment h5 {
+  color: #221F1F;
+}
+
+.comment-section .comment-section-wrapper .comment-wrap .added-comments .user .comment h6 {
+  margin-top: 8px;
+  color: rgba(34, 31, 31, 0.6);
+}
+
+.comment-section .comment-section-wrapper .comment-wrap .added-comments .user .comment .like-dislike-click {
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-top: 24px;
+}
+
+
+.comment-section .comment-section-wrapper .comment-wrap .added-comments .user .comment span {
+  color: rgba(34, 31, 31, 0.6);
+  right: 0;
+  top: 0;
+}
+
+/* vikas css ends*/
