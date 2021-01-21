@@ -139,12 +139,12 @@ const api = {
             caseId: "1001013258",
             insertFlag: "Y",
             docList: [
-              {
-                documentId: "1000000290",
-                documentTypeId: "1000000036",
-                documentExtension: "",
-                docBytes: "",
-              },
+              // {
+              //   documentId: "1000000290",
+              //   documentTypeId: "1000000036",
+              //   documentExtension: "",
+              //   docBytes: "",
+              // },
             ],
           },
         },

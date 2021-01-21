@@ -490,11 +490,14 @@ export const getSfData = (slides) => {
   return data
 };
 
-export const submitDocument = async (document, documentName = "", primaryPath) => {
-  const base64 = await getBase64(document);
-  const { type, name } = document;
-  let documentData = { base64, type, name, documentName, primaryPath }
-  documentUpload(documentData);
+export const submitDocument = async (documentName = "", primaryPath, files) => {
+  let docs = []
+  for (let i = 0; i < files.length; i++) {
+    const { type, name } = files[i]
+    const base64 = await getBase64(files[i])
+    docs.push({ name, base64, type })
+  }
+  documentUpload(docs, documentName, primaryPath);
 };
 
 export const submitShortForm = (slides, currentSlide, primaryPath) => {
@@ -503,10 +506,11 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
       if (slide.slideId === currentSlide) {
         slide.inputs.forEach((input) => {
           if (input.attachment && input.value && input.value.length) {
-            for (let i = 0; i < input.value.length; i++) {
-              const file = input.value[i];
-              submitDocument(file, input.end_point_name, primaryPath);
-            }
+            submitDocument(input.end_point_name, primaryPath, input.value)
+            // for (let i = 0; i < input.value.length; i++) {
+            //   const file = input.value[i];
+            //   submitDocument(file, input.end_point_name, primaryPath, input.value.length);
+            // }
           }
         });
       }
