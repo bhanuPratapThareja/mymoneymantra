@@ -21,7 +21,7 @@ const LongFormProduct = props => {
                 case 'banners.long-form-banners-component':
                     return <LongFormBanner key={block.id} data={block} bank={bankData} product={productData} />
                 case 'form-components.long-form-component-new':
-                    return <LongForm key={block.id} data={block} bank={bankData} preferredBanks={preferredBanks} />
+                    return <LongForm key={block.id} data={block} bank={bankData} product={productData} preferredBanks={preferredBanks} />
             }
         })
     }
