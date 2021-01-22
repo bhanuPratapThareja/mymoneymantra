@@ -3,7 +3,7 @@ import BlogBanner from '../../components/Banners/BlogBanner';
 import BlogList from '../../components/common/BlogList';
 import Layout from '../../components/Layout';
 import Strapi from '../../providers/strapi'
-import { getClassesForPage } from '../../Utils/classesForPage';
+import { getClassesForPage } from '../../utils/classesForPage';
 
 const BlogSearchPage = (props) => {
     const [data, setData] = useState([])
