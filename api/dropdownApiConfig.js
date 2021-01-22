@@ -5,7 +5,7 @@ export const getApiToHit = apiEndPoint => {
         case 'bank':
             return { listType: 'bank', masterName: 'bankList' }
 
-        case 'city':
+        case 'cities':
             return { listType: 'cities', masterName: 'cityList' }
 
         case 'company':
@@ -13,6 +13,16 @@ export const getApiToHit = apiEndPoint => {
 
         case 'pincode':
             return { listType: 'pincode', masterName: 'pinList' }
+
+        case 'designation':
+            return { listType: 'designation', masterName: 'designationMaster'}
+
+        case 'qualification':
+            return { listType: 'qualification', masterName: 'qualificationMaster'}
+
+        case 'occupancy':
+            return { listType: 'occupancyStatus', masterName: 'occupancyStatusMaster'}
+
 
     }
 }
@@ -27,7 +37,7 @@ export const properties = listType => {
             break
 
         case 'cities':
-            properties = { listName: 'cityList', listItemId: 'cityMasterId', listItemName: 'cityMasterName' }
+            properties = { listName: 'cityList', listItemId: 'cityId', listItemName: 'cityName' }
             break
 
         case 'company':
@@ -36,7 +46,20 @@ export const properties = listType => {
 
         case 'pincode':
             properties = { listName: 'pinList', listItemId: 'pincode', listItemName: 'pincode' }
-    }
+            break
+        
+        case 'designation':
+            properties = { listName: 'designationList', listItemId:'designationId', listItemName: 'designationName'}
+            break
+
+        case 'qualification':
+            properties = {listName: 'qualificationList', listItemId: 'qualificationId', listItemName:'qualificationName'}
+            break
+
+        case 'occupancyStatus':
+            properties = {listName:'occupancyStatusList', listItemId:'occupancyStId', listItemName: "occupancyStName"}
+    
+        }
 
     return properties
 }

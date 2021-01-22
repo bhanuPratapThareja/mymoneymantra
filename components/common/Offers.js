@@ -43,7 +43,7 @@ const Offers = props => {
    }
 
    const { section_heading } = props.data
-   console.log('props.data ---',props.data)
+   
 
    return (
       <section data-aos="fade-up" className="container popular-card-container">

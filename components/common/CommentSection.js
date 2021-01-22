@@ -1,14 +1,27 @@
+import { useState } from 'react';
+import {commentLikeDislike} from '../../services/blogService'
+import {addComment} from '../../services/blogService'
 const CommentSection = (props) => {
+    const [comment,setComment] = useState('')
+
+    const postComment = (e) =>{
+        console.log(e.keyCode);
+        if(e.keyCode==13){
+            addComment(comment)
+        }
+
+    }
+    
     return (
         <div className="comment-section">
             <div className="comment-section-wrapper">
                 <div className="options">
                     <div className="like-dislike-wrap">
-                        <button className="like-dislike">
+                        <button onClick= {() => commentLikeDislike('like')} className="like-dislike">
                             <img src='/assets/images/icons/like.svg' />
                             <h6 id="like-count">250k</h6>
                         </button>
-                        <button className="like-dislike">
+                        <button onClick= {() => commentLikeDislike('dislike')} className="like-dislike">
 
                             <img src='/assets/images/icons/dislike.svg' />
                             <h6 id="dislike-count">250k</h6>
@@ -22,7 +35,7 @@ const CommentSection = (props) => {
                 </div>
 
                 <div className="comment-wrap">
-                    <input id="user-comment" type="text" value="" name="comment" placeholder="Add a comment..." />
+                    <input id="user-comment" type="text" value={comment} onChange={(e)=>setComment(e.target.value)} onKeyUp={postComment} name="comment" placeholder="Add a comment..." />
                     <div className="added-comments">
                         <div className="user">
                             <div className="image"></div>

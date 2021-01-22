@@ -1,6 +1,9 @@
 import { getWholeNumberFromCurrency } from './formattedCurrency'
 
 export const isInputValid = inp => {
+    if(!inp.pattern){
+        return true
+    }
     return RegExp(inp.pattern).test(inp.value)
 }
 
