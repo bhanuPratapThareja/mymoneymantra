@@ -49,6 +49,8 @@ class LongForm extends React.Component {
   
     const { primaryPath } = this.props.router.query;
     const bankName = this.props.bank.bank_name;
+    const bankId = this.props.bank.bank_id
+
     const { long_form_version_2, always_ask_for_otp, invalid_form_error_message } = this.props.data
 console.log('this.state =====',this.state)
     const longFormSections = long_form_version_2.long_form[0].long_form_sections;
@@ -124,11 +126,13 @@ console.log('this.state =====',this.state)
         enableCheckboxes,
         primaryPath,
         bankName,
+        bankId,
         leadId,
         invalidFormError: invalid_form_error_message,
         askForOtp: always_ask_for_otp,
       },
       () => {
+        console.log('----thi.state', this.state)
         this.handlePercentage();
       }
     );
@@ -378,11 +382,12 @@ console.log('this.state =====',this.state)
       });
     });
 
-    console.log('this.props--',this.props)
+    console.log('this.ststee----',this.state)
 
     const { primaryPath, bankName, leadId } = this.state;
     console.log("data 111",data)
     data.cardType = this.props.product.product_name
+    data.bankId = this.state.bankId
     console.log('data 2222',data);
 
     generateLead(data, primaryPath)
