@@ -10,7 +10,7 @@ const BlogSearchPage = (props) => {
     let searchKey = ''
     useEffect(() => {
         searchKey = props.query.s
-        console.log(searchKey)
+        console.log("blogs", props.blogData)
         let filteredBlogs = props.blogData.filter(blog => blog.header.toLowerCase().includes(searchKey.toLowerCase()))
         setData(filteredBlogs)
     }, [props.query.s])

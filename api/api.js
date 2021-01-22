@@ -137,7 +137,7 @@ const api = {
         },
       },
     },
-    
+
     leadProductDecision: {
       devUrl: "lead/api/lead/v1/product/decision",
       uatUrl: "api/master/v1/",
@@ -274,12 +274,12 @@ const api = {
             offerId: "",
             existingFacility: [
               {
-                  "exisTenorBalMonths": "",
-                  "exisfacility": "",
-                  "exisBankId": "",
-                  "exisLoanAmount": "",
-                  "exisEmi": "",
-                  "exisRemark": ""
+                "exisTenorBalMonths": "",
+                "exisfacility": "",
+                "exisBankId": "",
+                "exisLoanAmount": "",
+                "exisEmi": "",
+                "exisRemark": ""
               }],
             address: [
               {
@@ -426,24 +426,21 @@ const api = {
       },
     },
     blogLikeDislike: {
-      devUrl: "api/blog/v1/like-dislike",
+      devUrl: "customer/api/blog/v1/like-dislike",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
       body: {
         request: {
           header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-          payload: {
-            "blogId": "3",
-            "customerId": "12345",
-            "commentId": "1",
-            "sentiment": "like"
-          },
         },
+        blogId: "3",
+        customerId: "3",
+        sentiment: "like"
       },
 
     },
     getBlogs: {
-      devUrl: "/customer/api/blog/v1/getBlog?blogId=3",
+      devUrl: "customer/api/blog/v1/getBlog?blogId=",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
       body: {
@@ -463,13 +460,12 @@ const api = {
       body: {
         request: {
           header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-          payload: {
-            "blogId": "3",
-            "customerId": "12345",
-            "commentId": "1",
-            "sentiment": "like"
-          },
         },
+        "blogId": "3",
+        "customerId": "12345",
+        "commentId": "1",
+        "sentiment": "like"
+
       },
 
     },
@@ -480,13 +476,13 @@ const api = {
       body: {
         request: {
           header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-          payload: {
-            "blogId": "3",
-            "customerId": "12345",
-            "commentId": "1"          
-          },
         },
+        blogId: "3",
+        customerId: "12345",
+        comment: "1"
       },
+
+
 
     }
   },
