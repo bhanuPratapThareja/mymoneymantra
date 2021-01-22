@@ -10,22 +10,19 @@ const ListingCards = (props) => {
   const [offers, setOffers] = useState([]);
 
   useEffect(() => {
-    setOffers(props.offerCards);
+    setOffers(props.offerCards)
   });
 
   const onOfferClick = (buttonText, offer) => {
     if (getDevice() !== "desktop") {
-      onButtonClick(buttonText, offer);
+      onButtonClick(buttonText, offer)
     }
   };
 
   const onButtonClick = (buttonText, offer) => {
-    const {
-      bank: { bank_name: bankName, slug: bankSlug },
-      slug: productSlug,
-    } = offer;
-    let pathname = "";
-    const query = { bankName };
+    const { bank: { bank_name: bankName, slug: bankSlug }, product: { slug: productSlug } } = offer
+    let pathname = ''
+    const query = { bankName }
 
     switch (buttonText) {
       case "Apply Now":
@@ -55,87 +52,77 @@ const ListingCards = (props) => {
 
   return (
     <section className="container long-cards">
+
       {offers.map((offer, i) => {
         return (
-          <div
-            className="long-cards-wrapper"
+          <div className="long-cards-wrapper"
             key={offer.id}
             onClick={() => onOfferClick(offer.productDecision, offer)}
           >
-            <div
-              data-aos={i ? "fade-up" : ""}
-              className="long-cards-wrapper-card aos-init"
-            >
-              {offer.recommended ? (
-                <img
-                  className="recommended"
-                  src="/assets/images/icons/stamp.svg"
-                />
-              ) : null}
+
+            <div data-aos={i ? "fade-up" : ""} className="long-cards-wrapper-card aos-init">
+              {offer.product.recommended ?
+                <img className="recommended" src="/assets/images/icons/stamp.svg" /> : null}
+
               <div className="top">
                 <div className="name">
                   <Image className="mob-logo" image={offer.bank.bank_logo} />
+                  <h3><span>{offer.bank.bank_name}</span> {offer.product.product_name}</h3>
 
-                  <h3>
-                    <span>{offer.bank.bank_name}</span>
-                    {offer.product_name || offer.product_card_name}
-                    {/* {offer.product_card_name} <br /> */}
-                  </h3>
+                  {primaryPath === "credit-cards" ?
+                    <div> <Image image={offer.product.product_image.image} /></div>
+                    : null}
 
-                  {primaryPath === "credit-cards" ? (
-                    <div>
-                      <Image image={offer.product_image} />
-                    </div>
-                  ) : null}
-
-                  {primaryPath !== "credit-cards" ? (
+                  {primaryPath !== "credit-cards" ?
                     <div>
                       <Image image={offer.bank.bank_image} />
                     </div>
-                  ) : null}
+                    : null}
                 </div>
+
                 <div className="content">
                   <h5>Features:</h5>
-                  <ul>
-                    {offer.listing_cards_features.map((feature) => (
+                  {offer.product.product_listing_feature ? <ul>
+                    {offer.product.product_listing_feature.listing_feature.map((feature) => (
                       <li key={feature.id}>
-                        <span
+                        <p>{feature.description}</p>
+                        {/* <span
                           dangerouslySetInnerHTML={{
                             __html: feature.listing_card_feature,
                           }}
-                        ></span>
+                        ></span> */}
                       </li>
                     ))}
-                  </ul>
+                  </ul> : null}
                 </div>
-                {offer.annual_fee_fy ? (
+
+                {offer.product.product_annual_fee ? (
                   <div className="fee">
                     <h5>Annual fee:</h5>
                     <p>
-                      <b>₹ {offer.annual_fee_fy}</b> (First Year)
+                      <b>₹ {offer.product.product_annual_fee.annual_fee_fy}</b> (First Year)
                     </p>
-                    {offer.annual_fee_sy ? (
+                    {offer.product.product_annual_fee.annual_fee_sy ? (
                       <p>
-                        <b>₹ {offer.annual_fee_sy}</b> (Second year onwards)
+                        <b>₹ {offer.product.product_annual_fee.annual_fee_sy}</b> (Second year onwards)
                       </p>
                     ) : null}
                   </div>
                 ) : null}
 
-                {offer.intrest_rate ? (
+                {/* {offer.intrest_rate ? (
                   <div className="fee">
                     <h5>Interest Rate:</h5>
                     <p
                       dangerouslySetInnerHTML={{ __html: offer.intrest_rate }}
                     ></p>
                   </div>
-                ) : null}
+                ) : null} */}
               </div>
+
               <div className="bottom">
                 <div className="lifetime">
-                  <h5
-                    dangerouslySetInnerHTML={{ __html: offer.usp_highlights }}
-                  ></h5>
+                  <h5>{offer.product.product_usp_highlight.highlight}</h5>
                 </div>
                 <div className="options">
                   <DecisionButton
@@ -156,6 +143,7 @@ const ListingCards = (props) => {
           </div>
         );
       })}
+
     </section>
   );
 };

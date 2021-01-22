@@ -14,6 +14,7 @@ import FinancialTools from '../../../components/common/FinancialTools'
 import Blogger from '../../../components/common/Blogger'
 import LearnMore from '../../../components/common/LearnMore'
 
+import { unpackComponents } from '../../../services/componentsService'
 import { updateTrendingOffers, updateListingOffers, getProductDecision } from '../../../services/offersService'
 import { filterOfferCardsInFilterComponent } from '../../../utils/loanListingFilterHandler'
 import { getClassesForPage } from '../../../utils/classesForPage'
@@ -26,8 +27,11 @@ const Listings = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        let cards = props.listingOfferCards
-        getCardsWithButtonText(cards)
+        let listingOffers = []
+        props.listingOffers.forEach(offer => {
+            listingOffers.push(unpackComponents(offer))
+        })
+        getCardsWithButtonText(listingOffers)
     }, [])
 
     const getCardsWithButtonText = async cards => {
@@ -42,7 +46,7 @@ const Listings = props => {
             setOfferCards(unFilteredCards)
             return
         }
-        let filteredOfferCards = unFilteredCards.filter(card => card.category === category)
+        let filteredOfferCards = unFilteredCards.filter(card => card.product.product_category.tag === category)
         setOfferCards(filteredOfferCards)
     }
 
@@ -65,19 +69,12 @@ const Listings = props => {
                         filterCardsFilterComponent={filterCardsFilterComponent}
                         banksList={uniq(props.banksList)}
                     />
-                case 'offers.listing-offers-credit-cards-compnent':
-                case 'offers.listing-offers-personal-loan-compnent':
-                case 'offers.listing-offers-home-loans-component':
-                    return <ListingCards
-                        key={block.id}
-                        data={block}
-                        offerCards={offerCards}
-                    />
+
+                case 'blocks.listing-cards':
+                    return <ListingCards key={block.id} data={block} offerCards={offerCards} v />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
-                case 'offers.trending-offer-cards':
-                    case 'offers.trending-offers-home-loans-component':     
-                case 'offers.trending-offers-personal-loans':
+                case 'offers.trending-offers-component':
                     return <Offers key={block.id} data={block} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
@@ -108,25 +105,25 @@ export async function getServerSideProps(ctx) {
     const primaryPath = query.primaryPath
     const secondaryPath = 'listings'
     const pageClasses = getClassesForPage(primaryPath, secondaryPath)
-
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
+
     const listingFilter = await strapi.processReq('GET', `filters?slug=${primaryPath}-filters`)
     const filters = listingFilter && listingFilter.length ? listingFilter[0] : null
     const data = pageData[0]
-    let listingOfferCards = []
+
+    let listingOffers = await updateListingOffers(data)
     let banksList = []
 
     if (data) {
         await updateTrendingOffers(data)
-        listingOfferCards = await updateListingOffers(data)
-        if (listingOfferCards.length) {
-            listingOfferCards.forEach(card => {
+        if (listingOffers.length) {
+            listingOffers.forEach(card => {
                 banksList.push(card.bank.slug)
             })
         }
     }
 
-    return { props: { data, filters, listingOfferCards, banksList, pageClasses } }
+    return { props: { data, filters, listingOffers, banksList, pageClasses } }
 }
 
 export default Listings

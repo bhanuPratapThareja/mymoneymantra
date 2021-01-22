@@ -71,7 +71,8 @@ const ListingBanner = props => {
                         <button
                             className="filter-option"
                             id="listing-filter"
-                            onClick={onOpenFilter}>
+                            onClick={onOpenFilter}
+                            disabled={props.numberOfCards === 0}>
                             Filters
                                 <img src="/assets/images/icons/down-chevron.svg" />
                         </button>

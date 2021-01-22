@@ -27,6 +27,7 @@ import {
 } from "../../utils/formHandle";
 
 import { getApiData } from '../../api/api';
+import { unpackComponents } from '../../services/componentsService';
 
 class LongForm extends React.Component {
   state = {
@@ -43,8 +44,9 @@ class LongForm extends React.Component {
   };
 
   componentDidMount() {
-    const { primaryPath } = this.props.router.query;
-    const bankName = this.props.bank.bank_name;
+    const { primaryPath } = this.props.router.query
+    const { bank } = unpackComponents(this.props.productData[0])
+    const bankName = bank.bank_name
     const { long_form_version_2, always_ask_for_otp, invalid_form_error_message } = this.props.data
 
     const longFormSections = long_form_version_2.long_form[0].long_form_sections;

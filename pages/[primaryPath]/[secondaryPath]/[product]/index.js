@@ -12,9 +12,8 @@ import FinancialTools from '../../../../components/common/FinancialTools'
 import Blogger from '../../../../components/common/Blogger'
 import LearnMore from '../../../../components/common/LearnMore'
 
-import { updateTrendingOffers } from '../../../../services/offersService'
 import { getClassesForPage } from '../../../../utils/classesForPage'
-import { getDetailsSearchParams } from '../../../../utils/searchParams'
+import { updateTrendingOffers } from '../../../../services/offersService'
 
 const Details = props => {
 
@@ -22,7 +21,7 @@ const Details = props => {
         window.scrollTo(0, 0)
     })
 
-    const getProductDetailsComponents = (dynamic, bankData, productData) => {
+    const getProductDetailsComponents = (dynamic, productData) => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.credit-cards-detail-banner-component':
@@ -31,23 +30,21 @@ const Details = props => {
                     return <DetailsBanner
                         key={block.id}
                         data={block}
-                        bank={bankData}
-                        product={productData}
+                        productData={productData}
                     />
+
                 case 'blocks.credit-cards-details-component':
                 case 'blocks.details-component':
                 case 'blocks.home-loans-details':
                     return <ProductDetails
                         key={block.id}
                         data={block}
-                        bank={bankData}
-                        product={productData}
+                        productData={productData}
                     />
+
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
-                case 'offers.trending-offer-cards':
-                case 'offers.trending-offers-home-loans-component':
-                case 'offers.trending-offers-personal-loans':
+                case 'offers.trending-offers-component':
                     return <Offers key={block.id} data={block} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
@@ -63,11 +60,9 @@ const Details = props => {
         })
     }
 
-    const { details, bankData, productData } = props
-
     return (
         <div className={props.pageClasses}>
-            {details.dynamic ? <Layout>{getProductDetailsComponents(details.dynamic, bankData, productData)}</Layout> : null}
+            {props.data.dynamic ? <Layout>{getProductDetailsComponents(props.data.dynamic, props.productData)}</Layout> : null}
         </div>
     )
 }
@@ -75,40 +70,21 @@ const Details = props => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const { query } = ctx
-    const { primaryPath, secondaryPath: bank, product } = query
-
+    const { primaryPath, product: productSlug } = query
     const pageClasses = getClassesForPage(primaryPath, 'details')
-    const search = getDetailsSearchParams(primaryPath, bank, product)
 
-    const detailsData = await strapi.processReq('GET', search)
-    const details = detailsData[0]
-    const bankData = details.bank
+    const pageData = await strapi.processReq('GET', `${primaryPath}-details-pages?slug=${productSlug}`)
+    const data = pageData[0]
 
-    const creditCardProductData = details.credit_card_product ? details.credit_card_product : null
-    const personalLoanProductData = details.personal_loan_product ? details.personal_loan_product : null
-    const homeLoanProductData = details.home_loan_product ? details.home_loan_product : null
-    const productData = creditCardProductData || personalLoanProductData || homeLoanProductData
+    const productData = await strapi.processReq('GET', `product-v-2-s?slug=${productSlug}`)
 
-    let productDataDetails = null
-    let productDataTypeDetails = null
+    try {
+        if (data) {
+            await updateTrendingOffers(data)
+        }
+    } catch { }
 
-    if (details) {
-        await updateTrendingOffers(details)
-    }
-
-    if (productData) {
-        productDataDetails = await strapi.processReq('GET', `products?id=${productData.product}`)
-        productData.productId =  productDataDetails[0].product_id
-    }
-
-    if(productData.product_type) {
-        productDataTypeDetails = await strapi.processReq('GET', `product-types?id=${productData.product_type}`)
-        productData.productTypeId = productDataTypeDetails[0].product_type_id
-    } else {
-        productData.productTypeId = productDataDetails[0].product_id
-    }
-
-    return { props: { details, pageClasses, bankData, productData } }
+    return { props: { data, pageClasses, productData } }
 }
 
 export default Details

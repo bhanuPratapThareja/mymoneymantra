@@ -26,19 +26,19 @@ export const customerOfferData = async () => {
     }
 }
 
-export const getProductDecision = (cards, primaryPath) => {
+export const getProductDecision = (offers, primaryPath) => {
     const promise = new Promise((resolve) => {
-        const pendingCards = [...cards]
-        if (!pendingCards.length) {
+        const pendingOffers = [...offers]
+        if (!pendingOffers.length) {
             resolve([])
         }
         const { url, body } = getApiData('leadProductDecision')
 
-        pendingCards.forEach(async card => {
+        pendingOffers.forEach(async offer => {
             const leadId = getLeadId(primaryPath)
-            body.request.payload.productId = card.productId.toString()
-            body.request.payload.productTypeId = card.productTypeId.toString()
-            body.request.payload.bankId = card.bank.bank_id
+            body.request.payload.productId = offer.product.product_id.toString()
+            body.request.payload.productTypeId = offer.productType.product_type_id.toString()
+            body.request.payload.bankId = offer.bank.bank_id
             body.request.payload.leadId = leadId
 
             let productDecision = ''
@@ -48,98 +48,35 @@ export const getProductDecision = (cards, primaryPath) => {
             } catch {
                 productDecision = defaultDecision
             }
-            card.productDecision = productDecision
-            pendingCards.shift()
-            if (!pendingCards.length) {
-                resolve(cards)
+            offer.productDecision = productDecision
+            pendingOffers.shift()
+            if (!pendingOffers.length) {
+                resolve(offers)
             }
         })
     })
     return promise
 }
 
-export const getProductDecisionForDetailsBanner = (product, bank, primaryPath) => {
-    const promise = new Promise(async (resolve) => {
-        const { url, body } = getApiData('leadProductDecision')
-        
-        const leadId = getLeadId(primaryPath)
-        body.request.payload.productId = product.productId.toString()
-        body.request.payload.productTypeId = product.productTypeId.toString()
-        body.request.payload.bankId = bank.bank_id
-        body.request.payload.leadId = leadId
-
-        let productDecision = ''
-        try {
-            const res = await axios.post(url, body)
-            productDecision = res.data.response.payload.productDecision
-        } catch {
-            productDecision = defaultDecision
-        }
-        product.productDecision = productDecision
-        resolve(product)
-
-    })
-    return promise
-}
-
 export const updatePopularOffers = data => {
     return new Promise((resolve) => {
+        let updatedProducts = []
         data.dynamic.forEach((block) => {
-            if (block.__component === 'offers.popular-offers-credit-cards-component') {
-                let pendingCards = [...block.credit_card_products]
+            if (block.__component === 'offers.trending-offers-component') {
+                let pendingCards = [...block.product_v_2s]
+
                 if (!pendingCards.length) {
                     resolve([])
                 }
-                block.credit_card_products.forEach(async card => {
-                    const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
-                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
-                    const productTypeData = await strapi.processReq('GET', `product-types?id=${card.product_type}`)
-
-                    card.bank = bankData[0]
-                    card.productId = productData[0].product_id
-                    card.productTypeId = productTypeData[0].product_type_id
-
+                block.product_v_2s.forEach(async product => {
+                    const bankData = await strapi.processReq('GET', `banks?id=${product.bank}`)
+                    const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?id=${product.product_type_v_2}`)
+                    product.bank = bankData[0]
+                    product.product_type_v_2 = productTypeData[0]
+                    updatedProducts.push(product)
                     pendingCards.shift()
                     if (!pendingCards.length) {
-                        resolve(block.credit_card_products)
-                    }
-                })
-            }
-            if (block.__component === 'offers.popular-offers-personal-loans-component') {
-                let pendingCards = [...block.personal_loan_products]
-                if (!pendingCards.length) {
-                    resolve([])
-                }
-                block.personal_loan_products.forEach(async card => {
-                    const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
-                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
-
-                    card.bank = bankData[0]
-                    card.productId = productData[0].product_id
-                    card.productTypeId = productData[0].product_id
-
-                    pendingCards.shift()
-                    if (!pendingCards.length) {
-                        resolve(block.personal_loan_products)
-                    }
-                })
-            }
-            if (block.__component === 'offers.popular-offers-home-loans-component') {
-                let pendingCards = [...block.home_loan_products]
-                if (!pendingCards.length) {
-                    resolve([])
-                }
-                block.home_loan_products.forEach(async card => {
-                    const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
-                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
-
-                    card.bank = bankData[0]
-                    card.productId = productData[0].product_id
-                    card.productTypeId = productData[0].product_id
-                    
-                    pendingCards.shift()
-                    if (!pendingCards.length) {
-                        resolve(block.home_loan_products)
+                        resolve(updatedProducts)
                     }
                 })
             }
@@ -149,64 +86,23 @@ export const updatePopularOffers = data => {
 
 export const updateTrendingOffers = data => {
     return new Promise((resolve) => {
+        let updatedProducts = []
         data.dynamic.forEach((block) => {
-            if (block.__component === 'offers.trending-offer-cards') {
-                let pendingCards = [...block.credit_card_products]
+            if (block.__component === 'offers.trending-offers-component') {
+                let pendingCards = [...block.product_v_2s]
+
                 if (!pendingCards.length) {
                     resolve([])
                 }
-                block.credit_card_products.forEach(async card => {
-                    const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
-                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
-                    const productTypeData = await strapi.processReq('GET', `product-types?id=${card.product_type}`)
-
-                    card.bank = bankData[0]
-                    card.productId = productData[0].product_id
-                    card.productTypeId = productTypeData[0].product_type_id
-
+                block.product_v_2s.forEach(async product => {
+                    const bankData = await strapi.processReq('GET', `banks?id=${product.bank}`)
+                    const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?id=${product.product_type_v_2}`)
+                    product.bank = bankData[0]
+                    product.product_type_v_2 = productTypeData[0]
+                    updatedProducts.push(product)
                     pendingCards.shift()
                     if (!pendingCards.length) {
-                        resolve(block.credit_card_products)
-                    }
-                })
-            }
-            if (block.__component === 'offers.trending-offers-personal-loans') {
-                let pendingCards = [...block.personal_loan_products]
-                if (!pendingCards.length) {
-                    resolve([])
-                }
-                block.personal_loan_products.forEach(async card => {
-                    const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
-                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
-                    const productTypeData = productData
-
-                    card.bank = bankData[0]
-                    card.productId = productData[0].product_id
-                    card.productTypeId = productData[0].product_id
-
-                    pendingCards.shift()
-                    if (!pendingCards.length) {
-                        resolve(block.personal_loan_products)
-                    }
-                })
-            }
-            if (block.__component === 'offers.trending-offers-home-loans-component') {
-                let pendingCards = [...block.home_loan_products]
-                if (!pendingCards.length) {
-                    resolve([])
-                }
-                block.home_loan_products.forEach(async card => {
-                    const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
-                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
-                    const productTypeData = productData
-
-                    card.bank = bankData[0]
-                    card.productId = productData[0].product_id
-                    card.productTypeId = productData[0].product_id
-
-                    pendingCards.shift()
-                    if (!pendingCards.length) {
-                        resolve(block.home_loan_products)
+                        resolve(updatedProducts)
                     }
                 })
             }
@@ -216,63 +112,23 @@ export const updateTrendingOffers = data => {
 
 export const updateListingOffers = data => {
     return new Promise((resolve) => {
+        let updatedProducts = []
         data.dynamic.forEach((block) => {
-            if (block.__component === 'offers.listing-offers-credit-cards-compnent') {
-                let pendingCards = [...block.credit_card_products]
+            if (block.__component === 'blocks.listing-cards') {
+                let pendingCards = [...block.product_v_2s]
+
                 if (!pendingCards.length) {
                     resolve([])
                 }
-                block.credit_card_products.forEach(async card => {
-                    // console.log(card)
-                    const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
-                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
-                    const productTypeData = await strapi.processReq('GET', `product-types?id=${card.product_type}`)
-
-                    card.bank = bankData[0]
-                    card.productId = productData[0].product_id
-                    card.productTypeId = productTypeData[0].product_type_id
-
+                block.product_v_2s.forEach(async product => {
+                    const bankData = await strapi.processReq('GET', `banks?id=${product.bank}`)
+                    const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?id=${product.product_type_v_2}`)
+                    product.bank = bankData[0]
+                    product.product_type_v_2 = productTypeData[0]
+                    updatedProducts.push(product)
                     pendingCards.shift()
                     if (!pendingCards.length) {
-                        resolve(block.credit_card_products)
-                    }
-                })
-            }
-            if (block.__component === 'offers.listing-offers-personal-loan-compnent') {
-                let pendingCards = [...block.personal_loan_products]
-                if (!pendingCards.length) {
-                    resolve([])
-                }
-                block.personal_loan_products.forEach(async card => {
-                    const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
-                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
-
-                    card.bank = bankData[0]
-                    card.productId = productData[0].product_id
-                    card.productTypeId = productData[0].product_id
-
-                    pendingCards.shift()
-                    if (!pendingCards.length) {
-                        resolve(block.personal_loan_products)
-                    }
-                })
-            }
-            if (block.__component === 'offers.listing-offers-home-loans-component') {
-                let pendingCards = [...block.home_loan_products]
-                if (!pendingCards.length) {
-                    resolve([])
-                }
-                block.home_loan_products.forEach(async card => {
-                    const bankData = await strapi.processReq('GET', `banks?id=${card.bank}`)
-                    const productData = await strapi.processReq('GET', `products?id=${card.product}`)
-
-                    card.bank = bankData[0]
-                    card.productId = productData[0].product_id
-                    card.productTypeId = productData[0].product_id
-
-                    pendingCards.shift()
-                    if (!pendingCards.length) {
-                        resolve(block.home_loan_products)
+                        resolve(updatedProducts)
                     }
                 })
             }

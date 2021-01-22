@@ -2,35 +2,35 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Image from '../ImageComponent/ImageComponent'
 
-import { getProductDecisionForDetailsBanner } from '../../services/offersService'
+import { getProductDecision } from '../../services/offersService'
+import { unpackComponents } from '../../services/componentsService';
 
 const DetailsBanner = props => {
+    const productData = unpackComponents(props.productData[0])
     const router = useRouter()
     const primaryPath = router.query.primaryPath
-    const [productDetails, setPoductDetails] = useState(null)
+    const [productDecision, setProductDecision] = useState('')
+
+    const { bank_name } = productData.bank
+    const { product_name, product_banner_detail, product_image } = productData.product
 
     useEffect(() => {
-        getDetailsWithButtonText(props.product)
+        getDetailsWithButtonText()
     }, [])
 
-    const getDetailsWithButtonText = async product => {
-        const productDetails = await getProductDecisionForDetailsBanner(product, props.bank, primaryPath)
-        setPoductDetails(productDetails)
+    const getDetailsWithButtonText = async () => {
+        const response = await getProductDecision([productData], primaryPath)
+        setProductDecision(response[0].productDecision)
     }
 
-    const { bank_name } = props.bank
-    const { product_name, product_image, product_card_name } = props.product
-    const details = props.data.credit_cards_details_banner || props.data.personal_loans_details_banner ||  props.data.home_loans_details_banner
-
-    const onButtonClick = (buttonText, bank, offer) => {
-        const { slug: productSlug } = offer
-        const { bank_name: bankName, slug: bankSlug } = bank
+    const onButtonClick = productDecision => {
+        const { bank_name: bankName, slug: bankSlug } = productData.bank
+        const { slug: productSlug } = productData.product
 
         let pathname = ''
         const query = { bankName }
 
-
-        switch (buttonText) {
+        switch (productDecision) {
             case 'Apply Now':
             case 'Instant Approval':
                 pathname = `/${primaryPath}/thank-you`
@@ -60,14 +60,14 @@ const DetailsBanner = props => {
             <section className="banner container">
                 <div className="banner-wrapper">
                     <h1><b>{bank_name}</b><br />
-                    {product_name || product_card_name}</h1>
-                    <div dangerouslySetInnerHTML={{ __html: details.content }}></div>
-                    {productDetails ? <span className="details-button-div">
-                        <button onClick={() => onButtonClick(productDetails.productDecision, props.bank, productDetails)}>{productDetails.productDecision}</button>
+                        {product_name}</h1>
+                    <div dangerouslySetInnerHTML={{ __html: product_banner_detail.content }}></div>
+                    {productDecision ? <span className="details-button-div">
+                        <button onClick={() => onButtonClick(productDecision)}>{productDecision}</button>
                     </span> : null}
                 </div>
                 <div>
-                    <Image className="banner-card" image={product_image} />
+                    <Image className="banner-card" image={product_image.image} />
                 </div>
             </section>
         </div>
