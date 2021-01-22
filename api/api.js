@@ -382,7 +382,72 @@ const api = {
         },
       },
     },
+    blogLikeDislike: {
+      devUrl: "api/blog/v1/like-dislike",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        request: {
+          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+          payload: {
+            "blogId": "3",
+            "customerId": "12345",
+            "commentId": "1",
+            "sentiment": "like"
+          },
+        },
+      },
+
+    },
+    getBlogs: {
+      devUrl: "/customer/api/blog/v1/getBlog?blogId=3",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        request: {
+          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+          payload: {
+
+          },
+        },
+      },
+
+    },
+    commentLikeDislike: {
+      devUrl: "customer/api/blog/v1/comment-sentiment",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        request: {
+          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+          payload: {
+            "blogId": "3",
+            "customerId": "12345",
+            "commentId": "1",
+            "sentiment": "like"
+          },
+        },
+      },
+
+    },
+    addComment: {
+      devUrl: "customer/api/blog/v1/comment",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        request: {
+          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+          payload: {
+            "blogId": "3",
+            "customerId": "12345",
+            "commentId": "1"          
+          },
+        },
+      },
+
+    }
   },
+
 };
 
 const getUrl = (route) => {
