@@ -7,10 +7,14 @@ import CommentSection from '../../components/common/CommentSection'
 import ProductSlider from '../../components/common/ProductSlider'
 import Offers from '../../components/common/Offers'
 import Blogger from '../../components/common/Blogger'
+import { useEffect } from 'react'
 
 
 
 const BlogDetail = props => {
+    useEffect(() => {
+        window.scroll(0, 0)
+    }, [props.blogData])
     const getComponents = (dynamic) => {
         return dynamic.map(block => {
             switch (block.__component) {

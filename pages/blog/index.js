@@ -6,9 +6,13 @@ import ProductSlider from '../../components/common/ProductSlider'
 import Blogger from "../../components/common/Blogger"
 import { getClassesForPage } from '../../utils/classesForPage'
 import FeaturedContributors from "../../components/common/FeaturedContributors";
+import { useEffect } from "react";
 
 
 const Blog = (props) => {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  })
   const getComponents = (dynamic) => {
     return dynamic.map((block) => {
       switch (block.__component) {

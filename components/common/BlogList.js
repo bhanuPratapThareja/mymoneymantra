@@ -1,11 +1,16 @@
+import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 
 const BlogList = (props) => {
     const { data } = props
-    console.log("data-----------",data)
+    const router = useRouter()
+
+    const onOpenBlog = blog => {
+        router.push({ pathname: '/blog/details', query: { id: blog.id } })
+    }
     return (
-        <section class="blogs-filter container">
-            <div class="filter-cards">
+        <section className="blogs-filter container">
+            <div className="filter-cards">
                 <div className="filter-cards-wrapper" >
                     {data.length ? data.map((blog, i) => {
                         const { header, short_text, image, read_text, redirect_url, id, createdAt } = blog
@@ -26,7 +31,7 @@ const BlogList = (props) => {
 
                                     <div className="details">
                                         <span>{createdDate} </span><span>{read_text}</span>
-                                        <button onClick={() => onOpenBlog(redirect_url)}>Read more</button>
+                                        <button onClick={() => onOpenBlog(blog)}>Read more</button>
                                     </div>
                                 </div>
                             </div>

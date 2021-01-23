@@ -1,9 +1,6 @@
 import axios from 'axios'
-import Strapi from '../providers/strapi'
 import { getApiData } from '../api/api'
-import { getLeadId } from '../utils/localAccess'
 
-const strapi = new Strapi()
 
 export const commentLikeDislike = (sentiment) => {
   const { url, body } = getApiData('commentLikeDislike')
@@ -30,7 +27,7 @@ export const addComment = (comment, blogId) => {
   body.comment = comment
   axios.post(url, body).then().catch()
 }
-export const getBlogComments = (blogId) => {
+export const getBlogComments = async (blogId) => {
   const { url } = getApiData('getBlogs')
   axios.get(`${url}${blogId}`).then(res => console.log(res)).catch(err => console.log(err))
 }

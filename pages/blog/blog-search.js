@@ -13,6 +13,7 @@ const BlogSearchPage = (props) => {
         console.log("blogs", props.blogData)
         let filteredBlogs = props.blogData.filter(blog => blog.header.toLowerCase().includes(searchKey.toLowerCase()))
         setData(filteredBlogs)
+        window.scroll(0, 0)
     }, [props.query.s])
     const getComponents = (dynamic) => {
         return dynamic.map((block) => {
