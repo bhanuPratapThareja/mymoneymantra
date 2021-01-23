@@ -111,14 +111,14 @@ export const generateLead = async (data, primaryPath) => {
     const promise = new Promise((resolve, reject) => {
         let { url, body } = getApiData('orchestration')
         body = JSON.parse(JSON.stringify(body))
-        if(!body.request.payload.leadId){
+        if (!body.request.payload.leadId) {
             body.request.header.sync = true
             body.request.header.formBankId = data.bankId
 
         }
         const { fullName, dob, pan, mobile, email, applicantType, title, officeEmail,
-            companyId, netMonthlyIncome, bankId, totalWorkExp,cardType,designationId,qualificationId,
-            exisTenorBalMonths,exisLoanAmount,exisEmi,exisRemark,
+            companyId, netMonthlyIncome, bankId, totalWorkExp, cardType, designationId, qualificationId,
+            exisTenorBalMonths, exisLoanAmount, exisEmi, exisRemark,
             requestedLoanamount, requestedTenor, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
             fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
@@ -126,11 +126,11 @@ export const generateLead = async (data, primaryPath) => {
             officeAddressline1, officeAddressline2, addressline3, officeNearBy, officePincode, officeCity,
             permanentAddressline1, permanentAddressline2, permanentPincode, permannentCity,
             city_location, cost_of_property,
-            propertyPincode
+            propertyPincode, livingSince, livingSinceMM
 
         } = data
-        console.log('form service data',data);
-        
+        console.log('form service data', data);
+
 
         body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = getFormattedDate(dob)
@@ -184,7 +184,7 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.requestedLoanamount = requestedLoanamount
 
         // for facility requested
-        console.log('bankId-----',bankId)
+        console.log('bankId-----', bankId)
         body.request.payload.existingFacility[0].exisTenorBalMonths = exisTenorBalMonths
         body.request.payload.existingFacility[0].exisfacility = localStorage.getItem('productId')
         body.request.payload.existingFacility[0].exisBankId = bankId ? bankId.bankId : ""
@@ -198,7 +198,7 @@ export const generateLead = async (data, primaryPath) => {
 
 
         // for residence
-        console.log('residence pincode',pincode)
+        console.log('residence pincode', pincode)
         body.request.payload.address[0].addressTypeMasterId = "1000000001"
         body.request.payload.address[0].addressline1 = addressline1
         body.request.payload.address[0].addressline2 = addressline2
@@ -208,6 +208,8 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.address[0].city = pincode ? pincode.cityId : "";
         body.request.payload.address[0].state = pincode ? pincode.stateId : ''
         body.request.payload.address[0].stdCode = pincode ? pincode.stdCode : ''
+        body.request.payload.address[0].livingSince = livingSince ? livingSince : ''
+        body.request.payload.address[0].livingSinceMM = livingSinceMM ? livingSinceMM : ''
 
         // for office address
         body.request.payload.address[1].addressTypeMasterId = "1000000002"
@@ -217,7 +219,7 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.address[1].pincode = officePincode ? officePincode.pincode : ""
         body.request.payload.address[1].city = officePincode ? officePincode.cityId : ""
         body.request.payload.address[1].state = officePincode ? officePincode.stateId : ""
-         body.request.payload.address[1].stdCode = officePincode ? officePincode.stdCode : ""
+        body.request.payload.address[1].stdCode = officePincode ? officePincode.stdCode : ""
 
         // for property
         // console.log('for property propertyPincode',propertyPincode)
