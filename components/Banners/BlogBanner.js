@@ -25,7 +25,7 @@ const BlogBanner = props => {
         <section className="main-head">
             <div className="mobile-background"></div>
             <div className="container">
-                <span dangerouslySetInnerHTML={{ __html: blog_banner_heading }}></span>
+                <span dangerouslySetInnerHTML={{ __html: props.name?props.name:blog_banner_heading }}></span>
                 <div className="search-wrap">
                     <input type="text" onKeyUp={handleEnterPress} onChange={(e) => setSearchKey(e.target.value)} value={searchKey} placeholder={blog_banner_label} />
                     <Image image={blog_banner_image} />

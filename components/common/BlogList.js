@@ -2,6 +2,7 @@ import Image from '../ImageComponent/ImageComponent'
 
 const BlogList = (props) => {
     const { data } = props
+    console.log("data-----------",data)
     return (
         <section class="blogs-filter container">
             <div class="filter-cards">
