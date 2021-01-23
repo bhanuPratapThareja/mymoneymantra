@@ -7,12 +7,16 @@ import CommentSection from '../../components/common/CommentSection'
 import ProductSlider from '../../components/common/ProductSlider'
 import Offers from '../../components/common/Offers'
 import Blogger from '../../components/common/Blogger'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { getBlogComments } from '../../services/blogService'
 
 
 
 const BlogDetail = props => {
+    let [commentData, setCommentData] = useState([])
     useEffect(() => {
+        const data = getBlogComments("3")
+        data.then(res => (setCommentData(res)))
         window.scroll(0, 0)
     }, [props.blogData])
     const getComponents = (dynamic) => {
@@ -23,7 +27,7 @@ const BlogDetail = props => {
                 case 'blocks.blog-social-media-links-component':
                     return <BlogMediaLinks key={block.id} data={block} />
                 case "blocks.blogs-comment-section-component":
-                    return <CommentSection blogId={props.blogData.id} />
+                    return <CommentSection blogId={props.blogData.id} commentData={commentData} />
                 case "blocks.blog-category":
                     return <ProductSlider key={block.id} data={block} />;
                 case "offers.popular-offers-personal-loans-component":

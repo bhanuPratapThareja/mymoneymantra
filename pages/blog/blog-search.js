@@ -10,10 +10,9 @@ const BlogSearchPage = (props) => {
     let searchKey = ''
     useEffect(() => {
         searchKey = props.query.s
-        console.log("blogs", props.blogData)
         let filteredBlogs = props.blogData.filter(blog => blog.header.toLowerCase().includes(searchKey.toLowerCase()))
         setData(filteredBlogs)
-        window.scroll(0, 0)
+        // window.scroll(0, 0)
     }, [props.query.s])
     const getComponents = (dynamic) => {
         return dynamic.map((block) => {
@@ -36,7 +35,6 @@ const BlogSearchPage = (props) => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi();
     const { query } = ctx;
-    const primaryPath = query.primaryPath;
     const pageClasses = getClassesForPage('blog')
 
     const blogData = await strapi.processReq(
@@ -48,6 +46,7 @@ export async function getServerSideProps(ctx) {
         `pages?slug=blogs-search`
     );
     const data = pageData && pageData.length ? pageData[0] : null;
+    console.log("search query", query)
     return { props: { data, pageClasses, query, blogData } };
 }
 

@@ -28,7 +28,7 @@ const ContributorDetails = (props) => {
                 case "banners.blog-banners-component":
                     return <BlogBanner key={block.id} data={block} name={name} />
                 case "blocks.blogger-about-contributors-component":
-                    return <AboutContributors key={block.id} data={filteredContributors[0]} />
+                    return <AboutContributors key={block.id} blogsCount={filteredBlogs.length} data={filteredContributors[0]} />
                 case "blocks.blog-by-contributor-componrnt":
                     return <BlogList key={block.id} data={filteredBlogs} />
 

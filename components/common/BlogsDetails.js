@@ -1,7 +1,6 @@
 import Image from '../ImageComponent/ImageComponent'
 
 const BlogsDetails = props => {
-    console.log("blog details", props.data)
     // const { header, read_text, blog_sub_category, content, display_short_text } = props.data.blogger
     const { header, read_text, blog_sub_category, content, display_short_text } = props.data
     const subCategory = blog_sub_category ? blog_sub_category.blog_sub_category : ""
