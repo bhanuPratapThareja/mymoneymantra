@@ -39,7 +39,7 @@ const ListingCards = (props) => {
         pathname = `/${primaryPath}/${bankSlug}/${productSlug}`;
     }
 
-    routerRedirect(pathname, query);
+    routerRedirect(pathname, query)
   };
 
   const routerRedirect = (pathname, query) => {

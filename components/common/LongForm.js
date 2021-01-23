@@ -44,9 +44,17 @@ class LongForm extends React.Component {
   };
 
   componentDidMount() {
+    this.getProductData()
+  }
+
+  getProductData = async () => {
+    const productData = await unpackComponents(this.props.productData[0])
+    const bankName = productData.bank.bank_name
+    this.setupLongForm(bankName)
+  }
+
+  setupLongForm = bankName => {
     const { primaryPath } = this.props.router.query
-    const { bank } = unpackComponents(this.props.productData[0])
-    const bankName = bank.bank_name
     const { long_form_version_2, always_ask_for_otp, invalid_form_error_message } = this.props.data
 
     const longFormSections = long_form_version_2.long_form[0].long_form_sections;

@@ -16,7 +16,6 @@ import FinancialTools from "../../components/common/FinancialTools";
 import ShortExtendedForm from "../../components/common/ShortExtendedForm";
 import Blogger from "../../components/common/Blogger";
 import LearnMore from "../../components/common/LearnMore";
-import { updatePopularOffers, updateTrendingOffers } from "../../services/offersService";
 import { getClassesForPage } from "../../utils/classesForPage";
 
 const PrimaryPage = (props) => {
@@ -65,25 +64,17 @@ const PrimaryPage = (props) => {
               goToShortForm={goToShortForm}
             />
           );
+
         case "blocks.ups-cards-component":
           return <UspCards key={block.id} data={block} />;
         case "form-components.onboarding-short-form":
           return <ShortExtendedForm key={block.id} data={block} preferredBanks={preferredBanks} />;
 
-        case "offers.popular-offers-credit-cards-component":
-        case "offers.popular-offers-personal-loans-component":
-        case "offers.popular-offers-home-loans-component":
-        case "offers.trending-offer-cards":
-        case "offers.trending-offers-personal-loans":
-        case "blocks.popular-home-loan-cards":
-        case "offers.trending-offers-home-loans-component":
+        case 'offers.popular-offers-component':
+        case 'offers.trending-offers-component':
           return <Offers key={block.id} data={block} goToShortForm={goToShortForm} />
-
         case "blocks.credit-score-component":
           return <CreditScore key={block.id} data={block} />;
-        case "blocks.trending-offers":
-        case "blocks.trending-personal-loans":
-          return <Offers key={block.id} data={block} />;
         case "blocks.bank-slider-component":
           return <BankSlider key={block.id} data={block} />;
         case "blocks.rewards-component":
@@ -115,11 +106,6 @@ export async function getServerSideProps(ctx) {
   const data = pageData && pageData.length ? pageData[0] : null;
   const preferredBanksData = await strapi.processReq("GET", `list-preferences`)
   const preferredBanks = preferredBanksData[0]
-
-  if (data) {
-    await updatePopularOffers(data);
-    await updateTrendingOffers(data);
-  }
 
   return { props: { data, pageClasses, preferredBanks } };
 }

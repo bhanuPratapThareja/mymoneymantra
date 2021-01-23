@@ -10,29 +10,37 @@ class LongFormBanner extends React.Component {
     }
 
     componentDidMount() {
-        document.addEventListener('percentageCalulated', event => {
-            let { percentage } = event.detail
-            percentage = Math.ceil(percentage)
-            this.setState({ percentage })
-        })
-        const { primaryPath } = this.props.router.query
-        this.setState({ primaryPath })
+        this.getProductData()
     }
 
+    getProductData = async () => {
+        const { primaryPath } = this.props.router.query
+        const productData = await unpackComponents(this.props.productData[0])
+        this.setState({ productData, primaryPath }, () => {
+            document.addEventListener('percentageCalulated', event => {
+                let { percentage } = event.detail
+                percentage = Math.ceil(percentage)
+                this.setState({ percentage })
+            })
+        })
+    }
 
     render() {
-        const productData = unpackComponents(this.props.productData[0])
-        const { bank, product } = productData
+        if (!this.state.productData) {
+            return null
+        }
 
+        const { productData : { product, bank } } = this.state
+        
         return (
             <div className="card-info" id="longFormBanner">
                 <h5 className="app-form">Application form</h5>
                 <h3><b>{bank.bank_name}</b><br />{product.product_name}</h3>
-                
+
                 {this.state.primaryPath === 'credit-cards' ?
-                    <ImageComponent image={product.product_image.image} /> : <ImageComponent image={bank.bank_image} 
-                />}
-                
+                    <ImageComponent image={product.product_image.image} /> : <ImageComponent image={bank.bank_image}
+                    />}
+
                 <h4>Application form</h4>
                 <div className="form-range">
                     <h5><b id="long-form-complete">{this.state.percentage}%</b> Complete</h5>

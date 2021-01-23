@@ -6,12 +6,16 @@ import { unpackComponents } from '../../services/componentsService';
 const ProductDetails = props => {
     const router = useRouter()
     const primaryPath = router.query.primaryPath
-    const productData = unpackComponents(props.productData[0])
     
     const [leftPositionedOffers, setlLeftPositionedOffers] = useState([])
     const [rightPositionedOffers, setlRightPositionedOffers] = useState([])
 
     useEffect(() => {
+        getProductData()
+    }, [])
+
+    const getProductData = async () => {
+        const productData = await unpackComponents(props.productData[0])
         let leftOffers = []
         let rightOffers = []
         productData.product.product_detail.details.forEach(offer => {
@@ -23,7 +27,7 @@ const ProductDetails = props => {
         })
         setlLeftPositionedOffers(leftOffers)
         setlRightPositionedOffers(rightOffers)
-    }, [])
+    }
 
     return (
         <div className="c-detail-page">

@@ -11,9 +11,7 @@ import Rewards from '../../../../components/common/Rewards'
 import FinancialTools from '../../../../components/common/FinancialTools'
 import Blogger from '../../../../components/common/Blogger'
 import LearnMore from '../../../../components/common/LearnMore'
-
 import { getClassesForPage } from '../../../../utils/classesForPage'
-import { updateTrendingOffers } from '../../../../services/offersService'
 
 const Details = props => {
 
@@ -77,12 +75,6 @@ export async function getServerSideProps(ctx) {
     const data = pageData[0]
 
     const productData = await strapi.processReq('GET', `product-v-2-s?slug=${productSlug}`)
-
-    try {
-        if (data) {
-            await updateTrendingOffers(data)
-        }
-    } catch { }
 
     return { props: { data, pageClasses, productData } }
 }

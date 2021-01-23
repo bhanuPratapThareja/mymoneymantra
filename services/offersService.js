@@ -36,6 +36,7 @@ export const getProductDecision = (offers, primaryPath) => {
 
         pendingOffers.forEach(async offer => {
             const leadId = getLeadId(primaryPath)
+
             body.request.payload.productId = offer.product.product_id.toString()
             body.request.payload.productTypeId = offer.productType.product_type_id.toString()
             body.request.payload.bankId = offer.bank.bank_id
@@ -56,82 +57,4 @@ export const getProductDecision = (offers, primaryPath) => {
         })
     })
     return promise
-}
-
-export const updatePopularOffers = data => {
-    return new Promise((resolve) => {
-        let updatedProducts = []
-        data.dynamic.forEach((block) => {
-            if (block.__component === 'offers.trending-offers-component') {
-                let pendingCards = [...block.product_v_2s]
-
-                if (!pendingCards.length) {
-                    resolve([])
-                }
-                block.product_v_2s.forEach(async product => {
-                    const bankData = await strapi.processReq('GET', `banks?id=${product.bank}`)
-                    const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?id=${product.product_type_v_2}`)
-                    product.bank = bankData[0]
-                    product.product_type_v_2 = productTypeData[0]
-                    updatedProducts.push(product)
-                    pendingCards.shift()
-                    if (!pendingCards.length) {
-                        resolve(updatedProducts)
-                    }
-                })
-            }
-        })
-    })
-}
-
-export const updateTrendingOffers = data => {
-    return new Promise((resolve) => {
-        let updatedProducts = []
-        data.dynamic.forEach((block) => {
-            if (block.__component === 'offers.trending-offers-component') {
-                let pendingCards = [...block.product_v_2s]
-
-                if (!pendingCards.length) {
-                    resolve([])
-                }
-                block.product_v_2s.forEach(async product => {
-                    const bankData = await strapi.processReq('GET', `banks?id=${product.bank}`)
-                    const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?id=${product.product_type_v_2}`)
-                    product.bank = bankData[0]
-                    product.product_type_v_2 = productTypeData[0]
-                    updatedProducts.push(product)
-                    pendingCards.shift()
-                    if (!pendingCards.length) {
-                        resolve(updatedProducts)
-                    }
-                })
-            }
-        })
-    })
-}
-
-export const updateListingOffers = data => {
-    return new Promise((resolve) => {
-        let updatedProducts = []
-        data.dynamic.forEach((block) => {
-            if (block.__component === 'blocks.listing-cards') {
-                let pendingCards = [...block.product_v_2s]
-
-                if (!pendingCards.length) {
-                    resolve([])
-                }
-                block.product_v_2s.forEach(async product => {
-                    const bankData = await strapi.processReq('GET', `banks?id=${product.bank}`)
-                    const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?id=${product.product_type_v_2}`)
-                    product.bank = bankData[0]
-                    product.product_type_v_2 = productTypeData[0]
-                    updatedProducts.push(product)
-                    pendingCards.shift()
-                    if (!pendingCards.length) {
-                        resolve(updatedProducts)
-                    }
-                })
-            }
-        })
-    })
 }

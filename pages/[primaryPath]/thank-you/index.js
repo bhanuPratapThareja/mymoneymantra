@@ -10,8 +10,6 @@ import Rewards from '../../../components/common/Rewards'
 import FinancialTools from '../../../components/common/FinancialTools'
 import Blogger from '../../../components/common/Blogger'
 import LearnMore from '../../../components/common/LearnMore'
-
-import { updateTrendingOffers } from '../../../services/offersService'
 import { getClassesForPage } from '../../../utils/classesForPage'
 
 const ThankYouProduct = props => {
@@ -26,9 +24,7 @@ const ThankYouProduct = props => {
                     return <ThankYouBanner key={block.id} data={block} />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
-                case 'offers.trending-offer-cards':
-                case 'offers.trending-offers-personal-loans':
-                case 'blocks.trending-home-loan-component':
+                case 'offers.trending-offers-component':
                     return <Offers key={block.id} data={block} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
@@ -60,7 +56,6 @@ export async function getServerSideProps(ctx) {
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const data = pageData[0]
-    await updateTrendingOffers(data)
 
     return { props: { data, pageClasses } }
 }
