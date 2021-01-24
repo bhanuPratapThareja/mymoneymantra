@@ -10,7 +10,7 @@ const ProductSlider = props => {
                 <div className="banks-slider">
                     { Blog_product_card.map(card => {
                         return (
-                            <div className="slide_cell" key={card.id}>
+                            <div className="slide_cell cstm-prd" key={card.id}>
                               <h3>{card.blog_products_cards_text}</h3> 
                             </div>
                         )
