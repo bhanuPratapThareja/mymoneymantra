@@ -111,12 +111,7 @@ export const generateLead = async (data, primaryPath, formType) => {
     const promise = new Promise((resolve, reject) => {
         let { url, body } = getApiData('orchestration')
         body = JSON.parse(JSON.stringify(body))
-        // if(!body.request.payload.leadId){
-        //     body.request.header.sync = true
-        //     body.request.header.formBankId = data.bankId
-
-        // }
-
+      
         const { fullName, dob, pan, mobile, email, applicantType, title, officeEmail,
             companyId, netMonthlyIncome, bankId, totalWorkExp, cardType, designationId, qualificationId,
             exisTenorBalMonths, exisLoanAmount, exisEmi, exisRemark,

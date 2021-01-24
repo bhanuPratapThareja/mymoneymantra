@@ -3,16 +3,16 @@ import BlogBanner from '../../components/Banners/BlogBanner';
 import BlogList from '../../components/common/BlogList';
 import Layout from '../../components/Layout';
 import Strapi from '../../providers/strapi'
-import { getClassesForPage } from '../../Utils/classesForPage';
+import { getClassesForPage } from '../../utils/classesForPage';
 
 const BlogSearchPage = (props) => {
     const [data, setData] = useState([])
     let searchKey = ''
     useEffect(() => {
         searchKey = props.query.s
-        console.log(searchKey)
         let filteredBlogs = props.blogData.filter(blog => blog.header.toLowerCase().includes(searchKey.toLowerCase()))
         setData(filteredBlogs)
+        // window.scroll(0, 0)
     }, [props.query.s])
     const getComponents = (dynamic) => {
         return dynamic.map((block) => {
@@ -35,7 +35,6 @@ const BlogSearchPage = (props) => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi();
     const { query } = ctx;
-    const primaryPath = query.primaryPath;
     const pageClasses = getClassesForPage('blog')
 
     const blogData = await strapi.processReq(
@@ -47,6 +46,7 @@ export async function getServerSideProps(ctx) {
         `pages?slug=blogs-search`
     );
     const data = pageData && pageData.length ? pageData[0] : null;
+    console.log("search query", query)
     return { props: { data, pageClasses, query, blogData } };
 }
 

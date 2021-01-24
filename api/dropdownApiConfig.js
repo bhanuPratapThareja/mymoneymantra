@@ -64,7 +64,6 @@ export const properties = listType => {
         case 'purposeOfLoan':
             properties = { listName: 'purposeOfLoanList', listItemId: 'purposeOfLoanId', listItemName: "purposeOfLoanName" }
             break
-
     }
 
     return properties

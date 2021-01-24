@@ -3,19 +3,11 @@ import Image from '../ImageComponent/ImageComponent'
 
 
 const Blogger = props => {
-    // const router = useRouter()
+    const router = useRouter()
     let { section_heading, bloggers } = props.data
-    // const { searchKey, searchBlog, setSearchBlog } = props
-    // if (searchBlog) {
-    //     console.log("bloggers", bloggers)
-    //     let filteredBlogs = bloggers.filter(blog => blog.header.toLowerCase().includes(searchKey.toLowerCase()))
-    //     console.log("filtered bloggers", filteredBlogs)
-    //     // bloggers = filteredBlogs
-    //     router.push(`/blog/blog-search?s=${searchKey}`)
-    //     setSearchBlog(false)
-    // }
 
-    const onOpenBlog = url => {
+    const onOpenBlog = blog => {
+        router.push({ pathname: '/blog/details', query: { id: blog.id } })
     }
 
     return (
@@ -43,7 +35,7 @@ const Blogger = props => {
 
                                     <div className="details">
                                         <span>{createdDate} </span><span>{read_text}</span>
-                                        <button onClick={() => onOpenBlog(redirect_url)}>Read more</button>
+                                        <button onClick={() => onOpenBlog(blog)}>Read more</button>
                                     </div>
                                 </div>
                             </div>

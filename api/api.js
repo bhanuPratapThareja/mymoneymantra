@@ -286,12 +286,12 @@ const api = {
             offerId: "",
             existingFacility: [
               {
-                  "exisTenorBalMonths": "",
-                  "exisfacility": "",
-                  "exisBankId": "",
-                  "exisLoanAmount": "",
-                  "exisEmi": "",
-                  "exisRemark": ""
+                "exisTenorBalMonths": "",
+                "exisfacility": "",
+                "exisBankId": "",
+                "exisLoanAmount": "",
+                "exisEmi": "",
+                "exisRemark": ""
               }],
             address: [
               {
@@ -437,7 +437,68 @@ const api = {
         },
       },
     },
+    blogLikeDislike: {
+      devUrl: "customer/api/blog/v1/like-dislike",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        request: {
+          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+        },
+        blogId: "3",
+        customerId: "3",
+        sentiment: "like"
+      },
+
+    },
+    getBlogs: {
+      devUrl: "customer/api/blog/v1/getBlog?blogId=",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        request: {
+          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+          payload: {
+
+          },
+        },
+      },
+
+    },
+    commentLikeDislike: {
+      devUrl: "customer/api/blog/v1/comment-sentiment",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        request: {
+          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+        },
+        "blogId": "3",
+        "customerId": "12345",
+        "commentId": "1",
+        "sentiment": "like"
+
+      },
+
+    },
+    addComment: {
+      devUrl: "customer/api/blog/v1/comment",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        request: {
+          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+        },
+        blogId: "3",
+        customerId: "12345",
+        comment: "1"
+      },
+
+
+
+    }
   },
+
 };
 
 const getUrl = (route) => {

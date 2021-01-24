@@ -1085,6 +1085,84 @@ img {
   padding-right: 40px !important;
 }
 
+.blogs-flow .main-head .container h2{
+  max-width: 549px;
+  width: 100%;
+}
+
+.b2c-flow .main-head div h2{
+  color: #ffffff;
+  font-size: 2.5rem;
+}
+
+.blogs-flow .main-head .container div img:last-child{
+  right: 16px;
+  left: auto;
+}
+
+.cstm-prd{
+  margin: 0 10px;
+}
+.cstm-head{
+  font-size: 2.5rem;
+  color: #fff;
+}
+
+.cstm-head + span >h3{
+  font-size: 2.5rem;
+  color: #fff;
+}
+
+.cstm-head + span{
+  width: 34%;
+}
+
+.cstm-post{
+  background: #fff;
+  border-radius: 5px;
+  padding: 40px 50px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -0.75rem;
+  margin-left: -0.75rem;
+}
+
+.cstm-pic{
+  width: 15%;
+}
+
+.cstm-pic>img{
+  border: 6px solid #93D642;
+  border-radius: 70px;
+  width: 80%;
+}
+
+.cstm-content{
+  width: 85%;
+  padding-left: 20px;
+}
+
+.cstm-content>h3>span{
+  font-size: 1.25rem;
+  font-family: "Avenir-Heavy";
+  line-height: 2rem;
+}
+
+.cstm-content>h3:first-child{
+  float: left;
+}
+
+.cstm-main-content{
+  color: #8A8989;
+}
+
+.cstm-desig{
+  color: #000;
+  font-weight: bold;
+  float: left;
+  margin-right: 5px;;
+}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
