@@ -26,6 +26,7 @@ const PrimaryPage = (props) => {
     window.scrollTo(0, 0);
     localStorage.clear();
     localStorage.setItem("primaryPath", router.query.primaryPath);
+   
   });
 
   const goToShortForm = () => {
@@ -109,6 +110,7 @@ export async function getServerSideProps(ctx) {
   const strapi = new Strapi();
   const { query } = ctx;
   const primaryPath = query.primaryPath;
+ 
   const pageClasses = getClassesForPage(primaryPath);
 
   const pageData = await strapi.processReq("GET", `pages?slug=${primaryPath}`)

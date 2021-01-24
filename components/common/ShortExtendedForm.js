@@ -224,7 +224,7 @@ class ShortExtendedForm extends React.Component {
 
     onSubmitShortForm = () => {
         return new Promise((resolve, reject) => {
-            submitShortForm([...this.state.slides], this.state.currentSlide, this.state.primaryPath)
+            submitShortForm([...this.state.slides], this.state.currentSlide, this.state.primaryPath,'sf')
                 .then(res => {
                     resolve(res)
                 })

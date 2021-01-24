@@ -500,7 +500,7 @@ export const submitDocument = async (documentName = "", primaryPath, files) => {
   documentUpload(docs, documentName, primaryPath);
 };
 
-export const submitShortForm = (slides, currentSlide, primaryPath) => {
+export const submitShortForm = (slides, currentSlide, primaryPath,formType) => {
   return new Promise((resolve, reject) => {
     slides.forEach((slide) => {
       if (slide.slideId === currentSlide) {
@@ -525,7 +525,7 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
     const previouslySavedData = JSON.parse(localStorage.getItem("formData"));
     const formData = { ...previouslySavedData, [primaryPath]: data };
     localStorage.setItem("formData", JSON.stringify(formData));
-    generateLead(data, primaryPath)
+    generateLead(data, primaryPath,formType)
       .then((res) => {
         resolve(res);
       })

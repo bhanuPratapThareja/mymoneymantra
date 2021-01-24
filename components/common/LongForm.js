@@ -44,12 +44,18 @@ class LongForm extends React.Component {
   };
 
   componentDidMount() {
-    console.log('card type',this.props.product.product_name)
-    let cardType = this.props.product.product_name;
+    // console.log('card type',this.props.product.product_name)
+    // let cardType = this.props.product.product_name;
   
-    const { primaryPath } = this.props.router.query;
-    const bankName = this.props.bank.bank_name;
-    const bankId = this.props.bank.bank_id
+    let { primaryPath } = this.props.router.query;
+let bankName
+let bankId
+    console.log('this.props.router',this.props.router)
+    if(this.props.bank){
+    
+     bankName = this.props.bank.bank_name;
+     bankId = this.props.bank.bank_id
+    }
 
     const { long_form_version_2, always_ask_for_otp, invalid_form_error_message } = this.props.data
 console.log('this.state =====',this.state)
@@ -118,6 +124,10 @@ console.log('this.state =====',this.state)
         });
       });
     });
+
+    if(!this.props.bank){
+      primaryPath = 'rkpl'
+    }
 
     this.setState(
       {
@@ -386,11 +396,13 @@ console.log('this.state =====',this.state)
 
     const { primaryPath, bankName, leadId } = this.state;
     console.log("data 111",data)
+    
     data.cardType = this.props.product.product_name
     data.bankId = this.state.bankId
     console.log('data 2222',data);
 
-    generateLead(data, primaryPath)
+
+    generateLead(data, primaryPath,'lf')
       .then((res) => {
         if (!leadId) {
           const leadIdSendNotification = res.data.response.payload.leadId;
