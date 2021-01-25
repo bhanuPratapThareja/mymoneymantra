@@ -8,12 +8,32 @@ import { getClassesForPage } from '../../utils/classesForPage';
 const BlogSearchPage = (props) => {
     const [data, setData] = useState([])
     let searchKey = ''
+    console.log(props.blogData)
     useEffect(() => {
-        searchKey = props.query.s
-        let filteredBlogs = props.blogData.filter(blog => blog.header.toLowerCase().includes(searchKey.toLowerCase()))
-        setData(filteredBlogs)
+        if (props.query.s) {
+            searchKey = props.query.s
+            let filteredBlogs = props.blogData.filter(blog => blog.header.toLowerCase().includes(searchKey.toLowerCase()))
+            setData(filteredBlogs)
+        }
+        if (props.query.subcategory) {
+            setData(props.blogData)
+        }
+        if (props.query.category) {
+            console.log(props.query.category)
+            let filteredBlogs = []
+            props.blogData.forEach((blog) => {
+                blog.blog_categories.forEach(category => {
+                    if (props.query.category === category.id) {
+                        filteredBlogs.push(blog)
+                    }
+                })
+            })
+            console.log("category", filteredBlogs)
+            setData(filteredBlogs)
+        }
+
         // window.scroll(0, 0)
-    }, [props.query.s])
+    }, [props.query])
     const getComponents = (dynamic) => {
         return dynamic.map((block) => {
             switch (block.__component) {

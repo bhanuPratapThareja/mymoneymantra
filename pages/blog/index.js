@@ -7,9 +7,12 @@ import Blogger from "../../components/common/Blogger"
 import { getClassesForPage } from '../../utils/classesForPage'
 import FeaturedContributors from "../../components/common/FeaturedContributors";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 
 const Blog = (props) => {
+  const router = useRouter()
+
   useEffect(() => {
     window.scrollTo(0, 0)
   })

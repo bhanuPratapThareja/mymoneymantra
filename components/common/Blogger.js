@@ -17,15 +17,16 @@ const Blogger = props => {
                 <div className="blog-wrapper" id="slider_blogs">
 
                     {bloggers.map((blog, i) => {
-                        const { header, short_text, image, read_text, redirect_url, id, createdAt } = blog
+                        const { header, short_text, image, read_text, redirect_url, id, createdAt, popular } = blog
                         const date = new Date(createdAt);
                         const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
                         const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
                         const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
                         const createdDate = `${da} ${mo} ${ye}`;
                         const blogClasses = ['blog-wrapper-card', `card-${i + 1}`]
+                        console.log(blog)
                         return (
-                            <div className={blogClasses.join(' ')} id={`blog-card-${i + 1}`} key={id}>
+                            popular ? <div className={blogClasses.join(' ')} id={`blog-card-${i + 1}`} key={id}>
                                 <div className={`image_${i + 1}`}>
                                     <Image image={image} />
                                 </div>
@@ -38,7 +39,7 @@ const Blogger = props => {
                                         <button onClick={() => onOpenBlog(blog)}>Read more</button>
                                     </div>
                                 </div>
-                            </div>
+                            </div> : null
                         )
                     })}
 
