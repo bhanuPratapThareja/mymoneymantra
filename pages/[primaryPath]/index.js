@@ -49,21 +49,10 @@ const PrimaryPage = (props) => {
             />
           );
         case "banners.personal-loans-banner-component":
-          return (
-            <PersonalLoansBanner
-              key={block.id}
-              data={block}
-              goToShortForm={goToShortForm}
-            />
-          );
+          return  <PersonalLoansBanner key={block.id} data={block} goToShortForm={goToShortForm} />
+       
         case "banners.home-loans-banner-component":
-          return (
-            <HomeLoansBanner
-              key={block.id}
-              data={block}
-              goToShortForm={goToShortForm}
-            />
-          );
+          return <HomeLoansBanner key={block.id} data={block} goToShortForm={goToShortForm} />
 
         case "blocks.ups-cards-component":
           return <UspCards key={block.id} data={block} />;

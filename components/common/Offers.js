@@ -56,7 +56,8 @@ const Offers = props => {
             <div className="popular-cards-slider" id="popular-cards-sec">
                {cards.map(offer => {
                   const { bank, product } = offer
-                  const { product_name, product_feature, product_annual_fee, product_usp_highlight } = product
+                  const { product_name, product_feature, product_annual_fee, 
+                     product_usp_highlight, product_interest_rate } = product
                   return (
                      <div className="popular-cards-slider-card" key={product.id} onClick={() => onOfferClick(offer)}>
                         <div className="popular-cards-slider-card-top">
@@ -70,13 +71,14 @@ const Offers = props => {
                               </ul>
                            </div>
 
-                           {product_annual_fee.annual_fee_fy ? <div className="fee">
+                           {product_annual_fee ? <div className="fee">
                               <h5><b>₹{product_annual_fee.annual_fee_fy}</b> Annual fee</h5>
                            </div> : null}
 
-                           {/* {intrest_rate ? <div className="fee">
-                              <div dangerouslySetInnerHTML={{ __html: intrest_rate }}></div>
-                           </div> : null} */}
+                           {product_interest_rate ? <div className="fee">
+                              <h5>{product_interest_rate.min_value}% - {product_interest_rate.max_value}% 
+                              {product_interest_rate.duration === 'Annually' ? 'p.a.' : 'm.a.'}</h5>
+                           </div> : null}
                         </div>
                         <div className="popular-cards-slider-card-bottom">
                            <div dangerouslySetInnerHTML={{ __html: product_usp_highlight.highlight }}></div>

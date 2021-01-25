@@ -286,9 +286,10 @@ class LongForm extends React.Component {
     });
   };
 
-  onSubmitLongForm = () => {
+  onSubmitLongForm = e => {
+    e.preventDefault()
     let errors = false;
-    const newLongFormSections = [...this.state.longFormSections];
+    const newLongFormSections = [...this.state.longFormSections]
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
       long_form_blocks.forEach(async (long_form_block) => {
@@ -418,7 +419,7 @@ class LongForm extends React.Component {
 
     return (
       <div className="form-wrapper" id="longForm">
-        <form onClick={this.handleClickOnSlideBackground}>
+        <form onClick={this.handleClickOnSlideBackground} onSubmit={this.onSubmitLongForm} noValidate>
           {this.state.longFormSections.map((longFormSection) => {
             const long_form_blocks =
               longFormSection.sections[0].long_form_blocks;
@@ -464,8 +465,7 @@ class LongForm extends React.Component {
             <button
               id="long-submit"
               disabled={this.state.submitButtonDisabled}
-              type="button"
-              onClick={this.onSubmitLongForm}
+              type="submit"
             >
               Submit Application
             </button>

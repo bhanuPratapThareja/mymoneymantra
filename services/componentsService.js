@@ -4,7 +4,7 @@ const strapi = new Strapi()
 const componentsToUnpack = ['product_type_v_2', 'product_image', 'product_banner_detail',
     'product_category', 'product_promotion', 'product_annual_fee',
     'product_usp_highlight', 'product_feature', 'product_listing_feature',
-    'product_detail', 'product_learn_more']
+    'product_detail', 'product_learn_more', 'product_interest_rate']
 
 export const unpackComponents = async data => {
     let bank = data.bank

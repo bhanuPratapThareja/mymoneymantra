@@ -29,13 +29,12 @@ const OtpSlide = props => {
                         </div>
                     </div>
                 </div>
-            </form>
-
-            <SFButtons
+                <SFButtons
                 onClickPrevious={props.onGoToLetFindForm}
                 onClickNext={props.onSubmitOtp}
                 slideButtonText={props.slideButtonText}
             />
+            </form>
         </>
     )
 }
