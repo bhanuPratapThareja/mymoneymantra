@@ -238,7 +238,9 @@ class ShortExtendedForm extends React.Component {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         const inputDropdown = handleChangeInputs(inputs, field, this.props.preferredBanks)
         if (inputDropdown) {
+            
             const { listType, masterName, inp, prefferedList } = inputDropdown
+          
             if (prefferedList) {
                 inp.listType = listType
                 inp.list = prefferedList

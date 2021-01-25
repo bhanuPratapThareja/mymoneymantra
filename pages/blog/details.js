@@ -15,7 +15,7 @@ import { getBlogComments } from '../../services/blogService'
 const BlogDetail = props => {
     let [commentData, setCommentData] = useState([])
     useEffect(() => {
-        const data = getBlogComments("3")
+        const data = getBlogComments(props.blogData.id)
         data.then(res => (setCommentData(res)))
         window.scroll(0, 0)
     }, [props.blogData])

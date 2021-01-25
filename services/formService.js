@@ -122,7 +122,7 @@ export const generateLead = async (data, primaryPath, formType) => {
             officeAddressline1, officeAddressline2, addressline3, officeNearBy, officePincode, officeCity,
             permanentAddressline1, permanentAddressline2, permanentPincode, permannentCity,
             city_location, cost_of_property,
-            propertyPincode
+            propertyPincode,purposeOfLoan
 
         } = data
         console.log('form service data', data);
@@ -219,6 +219,8 @@ export const generateLead = async (data, primaryPath, formType) => {
         // console.log('for property propertyPincode',propertyPincode)
         body.request.payload.address[2].addressTypeMasterId = "1000000004"
         body.request.payload.address[2].purposeOfLoan = propertyType
+        // body.request.payload.address[2].purposeOfLoan = purposeOfLoan
+
         body.request.payload.address[2].propertyValue = cost_of_property
         body.request.payload.address[2].city = city_location;
         body.request.payload.address[2].pincode = propertyPincode ? propertyPincode.pincode : "";
