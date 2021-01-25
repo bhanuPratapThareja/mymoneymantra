@@ -1,5 +1,4 @@
 import $ from "jquery";
-import { getApiToHit } from "../api/dropdownApiConfig";
 import { isInputValid, isMonetaryValid } from "./formValidations";
 import {
   getBase64,
@@ -44,7 +43,7 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
   } else if (field.type === "input_with_dropdown") {
     inputs.forEach((inp) => {
       if (inp.input_id === field.name) {
-        let { listType, masterName } = getApiToHit(inp.search_for)
+        let { list_type: listType, master_name: masterName } = inp
         if (!field.value && field.focusDropdown && !inp.selectedId) {
           if (preferredBanks && inp.search_for === preferredBanks.search_for) {
             let prefferedList = []
@@ -55,7 +54,6 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
               prefferedList.push(preferredBank)
             })
             prefferedList.sort((a, b) => (a.priority > b.priority) ? 1 : -1)
-            console.log(prefferedList)
             inputDropdown = { listType, masterName, inp, prefferedList }
           }
 

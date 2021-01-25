@@ -15,7 +15,6 @@ const Offers = props => {
       //    localStorage.setItem('productId', cards[0].productId)
       // }, 2000);
       getProducts()
-      dataToShow()
    }, [])
 
    const getProducts = () => {
@@ -27,10 +26,6 @@ const Offers = props => {
       })
    }
 
-   const dataToShow = async() =>{
-      let offerData =  await customerOfferData();
-      let { populars,trendings } = offerData
-   }
 
    const onOfferClick = async offer => {
       const {  product, bank } = offer

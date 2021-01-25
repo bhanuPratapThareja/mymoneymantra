@@ -34,7 +34,7 @@ const Listings = props => {
 
     const getListingOffers = listingOffersComponent => {
         let listingOffers = []
-        let tempOffers = [...listingOffersComponent.product_v_2s]
+        let tempOffers = listingOffersComponent ? [...listingOffersComponent.product_v_2s] : []
         if (!tempOffers || !tempOffers.length) {
             return []
         }
@@ -79,6 +79,7 @@ const Listings = props => {
     }
 
     const getComponents = (dynamic, filters) => {
+        // console.log(props.filters)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.listings-banner-component':
