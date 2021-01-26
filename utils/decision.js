@@ -1,8 +1,8 @@
-export const makeDecision = (buttonText, primaryPath, offer) => {
+export const makeDecision = (buttonText, primaryPath, offer, changePageType) => {
 
     const { bank: { bank_name: bankName, slug: bankSlug }, product: { slug: productSlug } } = offer
     let pathname = ''
-    const query = { bankName }
+    let query = { bankName }
 
     switch (buttonText) {
       case "Apply Now":
@@ -11,12 +11,19 @@ export const makeDecision = (buttonText, primaryPath, offer) => {
         break;
 
       case "EConnect":
-        pathname = `/${primaryPath}/long-form/${bankSlug}/${productSlug}`;
+        pathname = `/${primaryPath}/${bankSlug}/${productSlug}?type=long-form`
+        if(changePageType) {
+          changePageType('long-form')
+        }
+        // query = { bankName, type: 'long-form' }
         break;
 
       // view details
       default:
-        pathname = `/${primaryPath}/${bankSlug}/${productSlug}`;
+        pathname = `/${primaryPath}/${bankSlug}/${productSlug}`
+        if(changePageType) {
+          changePageType('details')
+        }
     }
 
     return { pathname, query }

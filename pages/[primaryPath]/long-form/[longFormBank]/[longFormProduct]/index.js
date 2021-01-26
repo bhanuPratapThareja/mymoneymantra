@@ -37,6 +37,7 @@ const LongFormProduct = props => {
         }
     }
 
+
     return (
         <div className="long-form">
             <div className="mobile-background"></div>
@@ -53,6 +54,7 @@ const LongFormProduct = props => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const { query } = ctx
+    console.log('ctx: ', ctx)
     const { primaryPath, longFormBank, longFormProduct } = query
     let data
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${longFormBank}-long-form`)

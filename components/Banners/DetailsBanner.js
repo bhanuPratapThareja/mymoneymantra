@@ -38,7 +38,11 @@ const DetailsBanner = props => {
 
                     {productDecision ?
                         <span className="details-button-div">
-                            <DecisionButton buttonText={productDecision} offer={productData} />
+                            <DecisionButton 
+                                buttonText={productDecision} 
+                                offer={productData}
+                                changePageType={props.changePageType}
+                            />
                         </span> : null}
                 </div>
 

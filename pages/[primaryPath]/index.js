@@ -25,7 +25,7 @@ const PrimaryPage = (props) => {
     window.scrollTo(0, 0);
     localStorage.clear();
     localStorage.setItem("primaryPath", router.query.primaryPath);
-  });
+  })
 
   const goToShortForm = () => {
     const shortFormEl = document.getElementsByClassName("lets-find-container");

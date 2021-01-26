@@ -4,7 +4,7 @@ const classes = {
     'personal-loans': ['credit-card-flow', 'personal-loan-flow'],
     'home-loans': ['credit-card-flow', 'personal-loan-flow', 'home-loan-flow', 'gold-loan-flow', 'health-flow'],
     'blog': ['credit-card-flow', 'b2c-flow', 'blogs-flow'],
-
+    'long-form': ['long-form'],
     'listings': {
         'credit-cards': ['listings'],
         'personal-loans': ['listings', 'personal-loan-listing'],

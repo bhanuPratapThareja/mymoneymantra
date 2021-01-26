@@ -7,7 +7,7 @@ const DecisionButton = props => {
     const { idForStyle, buttonText, offer } = props
 
     const onButtonClick = () => {
-        const decision = makeDecision(buttonText, primaryPath, offer)
+        const decision = makeDecision(buttonText, primaryPath, offer, props.changePageType)
         const { pathname, query } = decision
         router.push({ pathname, query }, pathname, { shallow: true })
     }
