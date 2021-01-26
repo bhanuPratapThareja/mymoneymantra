@@ -1,5 +1,4 @@
 import $ from "jquery";
-import { getApiToHit } from "../api/dropdownApiConfig";
 import { isInputValid, isMonetaryValid } from "./formValidations";
 import { getBase64, documentUpload, generateLead } from "../services/formService";
 import { getFormattedName } from "./formatDataForApi";
@@ -38,7 +37,7 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
   } else if (field.type === "input_with_dropdown") {
     inputs.forEach((inp) => {
       if (inp.input_id === field.name) {
-        let { listType, masterName } = getApiToHit(inp.search_for)
+        const { list_type: listType, master_name: masterName } = inp
         if (!field.value && field.focusDropdown && !inp.selectedId) {
           if (preferredBanks && inp.search_for === preferredBanks.search_for) {
             let prefferedList = []
@@ -193,7 +192,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
           return
         }
 
-       
+
         if (inp.mandatory && !inp.value) {
           inp.error = true;
           inp.errorMsg = errorMsgs.mandatory
@@ -330,16 +329,16 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
     inputs.forEach((inp) => {
       if (inp.selectedId && inp.selectedId === "*" || !inp.mandatory) {
         inp.verified = false
-      } else if ((textTypeInputs.includes(inp.type) || inp.type === "radio") ){
-          if ((inp.mandatory && !inp.value)|| !isInputValid(inp)) {
-            errors = true;
-            inp.error = true;
-            if (!inp.value) {
-              inp.errorMsg = errorMsgs.mandatory;
-            } else {
-              inp.errorMsg = inp.validation_error;
-            }
-          } 
+      } else if ((textTypeInputs.includes(inp.type) || inp.type === "radio")) {
+        if ((inp.mandatory && !inp.value) || !isInputValid(inp)) {
+          errors = true;
+          inp.error = true;
+          if (!inp.value) {
+            inp.errorMsg = errorMsgs.mandatory;
+          } else {
+            inp.errorMsg = inp.validation_error;
+          }
+        }
       } else if (inp.type === "email" && !isInputValid(inp)) {
         inp.errorMsg = inp.validation_error;
         inp.error = true;
@@ -356,7 +355,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
         inp.error = true;
         inp.errorMsg = inp.validation_error;
         errors = true;
-      } else if (inp.type === "input_with_dropdown" &&  (inp.value && !inp.selectedId) || (inp.selectedItem && inp.selectedItem[inp.select_name] !== inp.value)) {
+      } else if (inp.type === "input_with_dropdown" && (inp.value && !inp.selectedId) || (inp.selectedItem && inp.selectedItem[inp.select_name] !== inp.value)) {
         inp.error = true;
         inp.errorMsg = inp.validation_error;
         errors = true;
@@ -493,7 +492,7 @@ export const submitDocument = async (documentName = "", primaryPath, files) => {
   documentUpload(docs, documentName, primaryPath);
 };
 
-export const submitShortForm = (slides, currentSlide, primaryPath,formType) => {
+export const submitShortForm = (slides, currentSlide, primaryPath, formType) => {
   return new Promise((resolve, reject) => {
     slides.forEach((slide) => {
       if (slide.slideId === currentSlide) {
@@ -518,7 +517,7 @@ export const submitShortForm = (slides, currentSlide, primaryPath,formType) => {
     const previouslySavedData = JSON.parse(localStorage.getItem("formData"));
     const formData = { ...previouslySavedData, [primaryPath]: data };
     localStorage.setItem("formData", JSON.stringify(formData));
-    generateLead(data, primaryPath,formType)
+    generateLead(data, primaryPath, formType)
       .then((res) => {
         resolve(res);
       })
