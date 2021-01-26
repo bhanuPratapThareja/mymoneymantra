@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import Strapi from '../../../../providers/strapi'
-import Layout from '../../../../components/Layout'
-import LongForm from '../../../../components/common/LongForm'
+import Strapi from '../../providers/strapi'
+import Layout from '../../components/Layout'
+import LongForm from '../../components/common/LongForm'
 
 
-const LongFormBank = props => {
+const RKPLBank = props => {
     const router = useRouter()
 
     useEffect(() => {
@@ -37,13 +37,10 @@ const LongFormBank = props => {
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const { query } = ctx
-    const { primaryPath, longFormBank } = query
-    let data = null
-    console.log('query ---',query)
-    
-    const pageData = await strapi.processReq('GET', `pages?slug=${longFormBank}-long-form`)
-    data = pageData[0]
+    const primaryPath = 'rkpl'
+    console.log('in rkpl primaryPath',primaryPath)
+    const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-long-form`)
+    const data = pageData[0]
     console.log('longformbank data',data)
    
 
@@ -54,4 +51,4 @@ export async function getServerSideProps(ctx) {
 
 }
 
-export default LongFormBank
+export default RKPLBank

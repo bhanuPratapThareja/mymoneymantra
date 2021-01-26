@@ -1,13 +1,16 @@
 import Image from '../ImageComponent/ImageComponent'
 import Strapi from "../../providers/strapi"
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 const FeaturedContributors = (props) => {
-   console.log("contributors props", props)
    const { section_heading, blog_contributors } = props.data
    const [sliceLength, setSliceLength] = useState(4)
+   const router = useRouter()
    const strapi = new Strapi()
-
+   const goToContributorDetailPage = (contributor) => {
+      router.push({ pathname: "/blog/contributor-detail", query: { id: contributor.id } })
+   }
    useEffect(() => {
       if (blog_contributors.length > 4) {
          setSliceLength(4)
@@ -24,8 +27,8 @@ const FeaturedContributors = (props) => {
             {blog_contributors.map((contributor, index) => {
 
                if (index + 1 <= sliceLength) {
-                  return <div className="people" key={index}>
-                     <img src={`${strapi.baseUrl}${contributor.blog_contributors_image.url}`} alt={contributor.blog_contributors_image.name} />
+                  return <div onClick={() => goToContributorDetailPage(contributor)} className="people" key={index}>
+                     <div className="image"><img src={`${strapi.baseUrl}${contributor.blog_contributors_image.url}`} alt={contributor.blog_contributors_image.name} /></div>
                      <div className="detail">
                         <span dangerouslySetInnerHTML={{ __html: contributor.blog_contributors_name }}></span>
                         <h5 dangerouslySetInnerHTML={{ __html: contributor.blog_contributors_text }}></h5>

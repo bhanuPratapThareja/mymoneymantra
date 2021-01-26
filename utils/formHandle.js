@@ -1,11 +1,7 @@
 import $ from "jquery";
 import { getApiToHit } from "../api/dropdownApiConfig";
 import { isInputValid, isMonetaryValid } from "./formValidations";
-import {
-  getBase64,
-  documentUpload,
-  generateLead,
-} from "../services/formService";
+import { getBase64, documentUpload, generateLead } from "../services/formService";
 import { getFormattedName } from "./formatDataForApi";
 import { getWholeNumberFromCurrency } from "./formattedCurrency";
 
@@ -15,9 +11,7 @@ export const textTypeInputs = [
   "email",
   "tel",
   "phone_no",
-  "input_with_dropdown",
-  "input_with_calendar",
-  'money'
+  "input_with_calendar"
 ];
 
 export const getCurrentSlideInputs = (state) => {
@@ -55,7 +49,6 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
               prefferedList.push(preferredBank)
             })
             prefferedList.sort((a, b) => (a.priority > b.priority) ? 1 : -1)
-            console.log(prefferedList)
             inputDropdown = { listType, masterName, inp, prefferedList }
           }
 
@@ -179,6 +172,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
 
   // check on input
   if (field) {
+
     inputs.forEach((inp) => {
       if (inp.input_id === field.name) {
         if (inp.type === 'input_with_dropdown') {
@@ -199,6 +193,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
           return
         }
 
+       
         if (inp.mandatory && !inp.value) {
           inp.error = true;
           inp.errorMsg = errorMsgs.mandatory
@@ -302,16 +297,30 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
           inp.input_id === field.currentActiveInput &&
           inp.mandatory
         ) {
-          if (!inp.value) {
+          if (!isInputValid(inp)) {
             errors = true;
             inp.error = true;
-            inp.errorMsg = errorMsgs.mandatory;
             inp.verified = false;
+            if (!inp.value) {
+              inp.errorMsg = errorMsgs.mandatory;
+            } else {
+              inp.errorMsg = inp.validation_error;
+            }
           } else {
             inp.error = false;
             inp.errorMsg = "";
             inp.verified = true;
           }
+          // if (!inp.value) {
+          //   errors = true;
+          //   inp.error = true;
+          //   inp.errorMsg = errorMsgs.mandatory;
+          //   inp.verified = false;
+          // } else {
+          //   inp.error = false;
+          //   inp.errorMsg = "";
+          //   inp.verified = true;
+          // }
         }
       }
     });
@@ -321,14 +330,16 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
     inputs.forEach((inp) => {
       if (inp.selectedId && inp.selectedId === "*" || !inp.mandatory) {
         inp.verified = false
-      } else if (
-        (textTypeInputs.includes(inp.type) || inp.type === "radio") &&
-        !inp.value &&
-        inp.mandatory
-      ) {
-        inp.errorMsg = errorMsgs.mandatory;
-        inp.error = true;
-        errors = true;
+      } else if ((textTypeInputs.includes(inp.type) || inp.type === "radio") ){
+          if ((inp.mandatory && !inp.value)|| !isInputValid(inp)) {
+            errors = true;
+            inp.error = true;
+            if (!inp.value) {
+              inp.errorMsg = errorMsgs.mandatory;
+            } else {
+              inp.errorMsg = inp.validation_error;
+            }
+          } 
       } else if (inp.type === "email" && !isInputValid(inp)) {
         inp.errorMsg = inp.validation_error;
         inp.error = true;
@@ -345,7 +356,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
         inp.error = true;
         inp.errorMsg = inp.validation_error;
         errors = true;
-      } else if (inp.type === "input_with_dropdown" && !inp.selectedId) {
+      } else if (inp.type === "input_with_dropdown" &&  (inp.value && !inp.selectedId) || (inp.selectedItem && inp.selectedItem[inp.select_name] !== inp.value)) {
         inp.error = true;
         inp.errorMsg = inp.validation_error;
         errors = true;
@@ -472,23 +483,27 @@ export const getSfData = (slides) => {
   return data
 };
 
-export const submitDocument = async (document, documentName = "", primaryPath) => {
-  const base64 = await getBase64(document);
-  const { type, name } = document;
-  let documentData = { base64, type, name, documentName, primaryPath }
-  documentUpload(documentData);
+export const submitDocument = async (documentName = "", primaryPath, files) => {
+  let docs = []
+  for (let i = 0; i < files.length; i++) {
+    const { type, name } = files[i]
+    const base64 = await getBase64(files[i])
+    docs.push({ name, base64, type })
+  }
+  documentUpload(docs, documentName, primaryPath);
 };
 
-export const submitShortForm = (slides, currentSlide, primaryPath) => {
+export const submitShortForm = (slides, currentSlide, primaryPath,formType) => {
   return new Promise((resolve, reject) => {
     slides.forEach((slide) => {
       if (slide.slideId === currentSlide) {
         slide.inputs.forEach((input) => {
           if (input.attachment && input.value && input.value.length) {
-            for (let i = 0; i < input.value.length; i++) {
-              const file = input.value[i];
-              submitDocument(file, input.end_point_name, primaryPath);
-            }
+            submitDocument(input.end_point_name, primaryPath, input.value)
+            // for (let i = 0; i < input.value.length; i++) {
+            //   const file = input.value[i];
+            //   submitDocument(file, input.end_point_name, primaryPath, input.value.length);
+            // }
           }
         });
       }
@@ -503,12 +518,11 @@ export const submitShortForm = (slides, currentSlide, primaryPath) => {
     const previouslySavedData = JSON.parse(localStorage.getItem("formData"));
     const formData = { ...previouslySavedData, [primaryPath]: data };
     localStorage.setItem("formData", JSON.stringify(formData));
-    generateLead(data, primaryPath)
+    generateLead(data, primaryPath,formType)
       .then((res) => {
         resolve(res);
       })
       .catch((err) => {
-        console.log(err);
         reject("Error while Submitting. Please try again.");
       });
   });

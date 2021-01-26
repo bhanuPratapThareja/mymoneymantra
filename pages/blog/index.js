@@ -4,11 +4,15 @@ import BlogBanner from '../../components/Banners/BlogBanner'
 import BlogFilter from '../../components/common/BlogFilter'
 import ProductSlider from '../../components/common/ProductSlider'
 import Blogger from "../../components/common/Blogger"
-import { getClassesForPage } from '../../Utils/classesForPage'
+import { getClassesForPage } from '../../utils/classesForPage'
 import FeaturedContributors from "../../components/common/FeaturedContributors";
+import { useEffect } from "react";
 
 
 const Blog = (props) => {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  })
   const getComponents = (dynamic) => {
     return dynamic.map((block) => {
       switch (block.__component) {
@@ -37,7 +41,6 @@ const Blog = (props) => {
 export async function getServerSideProps(ctx) {
   const strapi = new Strapi();
   const { query } = ctx;
-  console.log("ctx----------", ctx);
   const primaryPath = query.primaryPath;
   const pageClasses = getClassesForPage('blog')
 

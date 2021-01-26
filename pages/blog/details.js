@@ -7,20 +7,27 @@ import CommentSection from '../../components/common/CommentSection'
 import ProductSlider from '../../components/common/ProductSlider'
 import Offers from '../../components/common/Offers'
 import Blogger from '../../components/common/Blogger'
+import { useEffect, useState } from 'react'
+import { getBlogComments } from '../../services/blogService'
 
 
 
 const BlogDetail = props => {
-    console.log("blog details page props", props.data)
+    let [commentData, setCommentData] = useState([])
+    useEffect(() => {
+        const data = getBlogComments(props.blogData.id)
+        data.then(res => (setCommentData(res)))
+        window.scroll(0, 0)
+    }, [props.blogData])
     const getComponents = (dynamic) => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.blog-texts-component':
-                    return <BlogDetails key={block.id} data={block} />
+                    return <BlogDetails key={block.id} data={props.blogData} blogId={props.blogData.id} commentData={commentData} />
                 case 'blocks.blog-social-media-links-component':
                     return <BlogMediaLinks key={block.id} data={block} />
-                case "blocks.blogs-comment-section-component":
-                    return <CommentSection />
+                // case "blocks.blogs-comment-section-component":
+                //     return <CommentSection blogId={props.blogData.id} commentData={commentData} />
                 case "blocks.blog-category":
                     return <ProductSlider key={block.id} data={block} />;
                 case "offers.popular-offers-personal-loans-component":
@@ -42,13 +49,16 @@ export async function getServerSideProps(ctx) {
     const primaryPath = 'blog'
     const secondaryPath = 'details'
     const pageClasses = getClassesForPage(primaryPath, secondaryPath)
-
-
+    const blogData = await strapi.processReq(
+        "GET",
+        `quick-blogs/${query.id}`
+    );
+    console.log("blog detail id", blogData)
     const pageData = await strapi.processReq(
         "GET",
         `pages?slug=${primaryPath}-${secondaryPath}`
     );
     const data = pageData && pageData.length ? pageData[0] : null;
-    return { props: { data, pageClasses } };
+    return { props: { data, pageClasses, blogData } };
 }
 export default BlogDetail

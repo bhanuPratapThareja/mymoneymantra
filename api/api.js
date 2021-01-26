@@ -104,6 +104,52 @@ const api = {
         },
       },
     },
+    designation: {
+      devUrl: "masters/api/master/v1/designation",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        request: {
+          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+          payload: { name: "" },
+        },
+      },
+    },
+    qualification: {
+      devUrl: "masters/api/master/v1/qualification",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        request: {
+          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+          payload: { name: "" },
+        },
+      },
+    },
+    occupancyStatus: {
+      devUrl: "masters/api/master/v1/occupancyStatus",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        request: {
+          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+          payload: { name: "" },
+        },
+      },
+    },
+    purposeOfLoan :{
+      devUrl: "masters/api/master/v1/purpose-of-loan",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        request: {
+          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+          payload: { name: "" },
+        },
+      },
+
+    },
+    
     leadProductDecision: {
       devUrl: "lead/api/lead/v1/product/decision",
       uatUrl: "api/master/v1/",
@@ -139,12 +185,12 @@ const api = {
             caseId: "1001013258",
             insertFlag: "Y",
             docList: [
-              {
-                documentId: "1000000290",
-                documentTypeId: "1000000036",
-                documentExtension: "",
-                docBytes: "",
-              },
+              // {
+              //   documentId: "1000000290",
+              //   documentTypeId: "1000000036",
+              //   documentExtension: "",
+              //   docBytes: "",
+              // },
             ],
           },
         },
@@ -233,11 +279,20 @@ const api = {
             productId: "",
             cardAge: "",
             cardType: "",
-            exisEmi: "",
-            exisLoanAmount: "",
+            // exisEmi: "",
+            // exisLoanAmount: "",
             loanStartYear: "",
             totalExisTenor: "",
             offerId: "",
+            existingFacility: [
+              {
+                "exisTenorBalMonths": "",
+                "exisfacility": "",
+                "exisBankId": "",
+                "exisLoanAmount": "",
+                "exisEmi": "",
+                "exisRemark": ""
+              }],
             address: [
               {
                 addressTypeMasterId: "1000000001",
@@ -382,7 +437,68 @@ const api = {
         },
       },
     },
+    blogLikeDislike: {
+      devUrl: "customer/api/blog/v1/like-dislike",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        request: {
+          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+        },
+        blogId: "3",
+        customerId: "3",
+        sentiment: "like"
+      },
+
+    },
+    getBlogs: {
+      devUrl: "customer/api/blog/v1/getBlog?blogId=",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        request: {
+          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+          payload: {
+
+          },
+        },
+      },
+
+    },
+    commentLikeDislike: {
+      devUrl: "customer/api/blog/v1/comment-sentiment",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        request: {
+          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+        },
+        "blogId": "3",
+        "customerId": "12345",
+        "commentId": "1",
+        "sentiment": "like"
+
+      },
+
+    },
+    addComment: {
+      devUrl: "customer/api/blog/v1/comment",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        request: {
+          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+        },
+        blogId: "3",
+        customerId: "12345",
+        comment: "1"
+      },
+
+
+
+    }
   },
+
 };
 
 const getUrl = (route) => {

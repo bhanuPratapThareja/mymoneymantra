@@ -26,7 +26,7 @@ class LongFormBanner extends React.Component {
 
   
     render() {
-        const { bank, product } = this.props        
+        const { bank, product } = this.props    
         const strapi = new Strapi()
 
         if (!bank) {

@@ -39,9 +39,7 @@ export const submitOtp = async mobileNo => {
 
     try {
         const res = await axios.post(url, body)
-        console.log('otp verify res', res);
         if (res.data.response.msgInfo.code == 200) {
-            console.log('if')
             return true
         } else if (res.data.response.msgInfo.code == 500) {
             throw new Error(res.data.response.msgInfo.message)
@@ -76,17 +74,23 @@ export const getDropdownList = async (listType, value, masterName) => {
     } catch (err) { }
 }
 
-export const documentUpload = async document => {
-    const { base64, type, name, documentName, primaryPath } = document;
+export const documentUpload = async (docs, documentName, primaryPath) => {
     const { url, body } = getApiData('documentUpload')
     let documentIds = getDocumentIdandTypeId(documentName);
     const { documentId, documentTypeId } = documentIds[0];
-    body.request.payload.docList[0].documentId = documentId
-    body.request.payload.docList[0].documentExtension = type.split("/")[1]
-    body.request.payload.docList[0].documentTypeId = documentTypeId
-    body.request.payload.docList[0].docBytes = base64.split(",")[1]
+    let docList = []
     body.request.payload.caseId = getLeadId(primaryPath)
-
+    for (let i = 0; i < docs.length; i++) {
+        const { type, base64 } = docs[i]
+        let doc = {
+            documentId,
+            documentTypeId,
+            documentExtension: type.split("/")[1],
+            docBytes: base64.split(",")[1]
+        }
+        docList.push(doc)
+    }
+    body.request.payload.docList = docList
     axios.post(url, body)
         .catch(() => { })
 }
@@ -101,22 +105,25 @@ export const getBase64 = file => {
     })
 }
 
-export const generateLead = async (data, primaryPath) => {
+export const generateLead = async (data, primaryPath, formType) => {
     const promise = new Promise((resolve, reject) => {
         let { url, body } = getApiData('orchestration')
         body = JSON.parse(JSON.stringify(body))
+      
         const { fullName, dob, pan, mobile, email, applicantType, title, officeEmail,
-            companyId, netMonthlyIncome, bankId, totalWorkExp,
-            requestedLoanamount, requestedTenor, exisEmi, propertyType, other_city_property_location,
+            companyId, netMonthlyIncome, bankId, totalWorkExp, cardType, designationId, qualificationId,
+            exisTenorBalMonths, exisLoanAmount, exisEmi, exisRemark,
+            requestedLoanamount, requestedTenor, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
             fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
-            addressline1, addressline2, pincode, city, nearByLandmark,
+            addressline1, addressline2, pincode, city, nearByLandmark,stdCode,
             officeAddressline1, officeAddressline2, addressline3, officeNearBy, officePincode, officeCity,
             permanentAddressline1, permanentAddressline2, permanentPincode, permannentCity,
             city_location, cost_of_property,
-            propertyPincode
+            propertyPincode,purposeOfLoan
 
         } = data
+
 
         body.request.payload.personal.fullName = fullName
         body.request.payload.personal.dob = getFormattedDate(dob)
@@ -156,6 +163,9 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.work.companyId = companyId ? companyId.caseCompanyId : ''
         body.request.payload.work.netMonthlyIncome = netMonthlyIncome
 
+        body.request.payload.work.designation = designationId ? designationId.designationName : ""
+        body.request.payload.work.qualification = qualificationId ? qualificationId.qualificationName : ""
+
         // body.request.payload.bankId = bankId ? bankId.bankId : "";
         body.request.payload.bankId = salaryBankName ? salaryBankName.bankId : "";
         // body.request.payload.work.otherCompany = otherCompany ? otherCompany.companyName : ""
@@ -163,11 +173,21 @@ export const generateLead = async (data, primaryPath) => {
 
         body.request.payload.leadId = getLeadId(primaryPath)
         body.request.payload.productId = localStorage.getItem('productId')
+        body.request.payload.cardType = cardType
         body.request.payload.requestedLoanamount = requestedLoanamount
-        // console.log('body.request.payload.requestedTenor',body.request.payload.requestedTenor)
-        // console.log('requestedTenor',requestedTenor)
+
+        // for facility requested
+        body.request.payload.existingFacility[0].exisTenorBalMonths = exisTenorBalMonths
+        body.request.payload.existingFacility[0].exisfacility = localStorage.getItem('productId')
+        body.request.payload.existingFacility[0].exisBankId = bankId ? bankId.bankId : ""
+        body.request.payload.existingFacility[0].exisLoanAmount = exisLoanAmount
+        body.request.payload.existingFacility[0].exisEmi = exisEmi
+        body.request.payload.existingFacility[0].exisRemark = exisRemark
+
+
         body.request.payload.requestedTenor = requestedTenor
-        body.request.payload.exisEmi = exisEmi
+        // body.request.payload.exisEmi = exisEmi
+
 
         // for residence
         body.request.payload.address[0].addressTypeMasterId = "1000000001"
@@ -175,10 +195,10 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.address[0].addressline2 = addressline2
         body.request.payload.address[0].addressline3 = addressline3
         body.request.payload.address[0].landmark = nearByLandmark
-        body.request.payload.address[0].pincode = pincode ? pincode.pincode : "";
-        body.request.payload.address[0].city = pincode ? pincode.cityId : "";
+        body.request.payload.address[0].pincode = pincode ? pincode.pincode : ""
+        body.request.payload.address[0].city = pincode ? pincode.cityId : ""
         body.request.payload.address[0].state = pincode ? pincode.stateId : ''
-        // body.request.payload.address[0].stdCode = pincode ? pincode.stdCode : ''
+        body.request.payload.address[0].stdCode = pincode ? pincode.stdCode : ''
 
         // for office address
         body.request.payload.address[1].addressTypeMasterId = "1000000002"
@@ -188,31 +208,38 @@ export const generateLead = async (data, primaryPath) => {
         body.request.payload.address[1].pincode = officePincode ? officePincode.pincode : ""
         body.request.payload.address[1].city = officePincode ? officePincode.cityId : ""
         body.request.payload.address[1].state = officePincode ? officePincode.stateId : ""
-        // body.request.payload.address[1].stdCode = officePincode ? officePincode.stdCode : ""
+        body.request.payload.address[1].stdCode = officePincode ? officePincode.stdCode : ""
 
         // for property
-        // console.log('for property propertyPincode',propertyPincode)
         body.request.payload.address[2].addressTypeMasterId = "1000000004"
         body.request.payload.address[2].purposeOfLoan = propertyType
+        // body.request.payload.address[2].purposeOfLoan = purposeOfLoan
+
         body.request.payload.address[2].propertyValue = cost_of_property
         body.request.payload.address[2].city = city_location;
         body.request.payload.address[2].pincode = propertyPincode ? propertyPincode.pincode : "";
         body.request.payload.address[2].state = propertyPincode ? propertyPincode.stateId : "";
-        //body.request.payload.address[1].state = pincode ? pincode.stateId : ''
-
+        body.request.payload.address[2].stdCode = propertyPincode ? propertyPincode.stdCode : "";
 
 
         //for permanent add
-        // console.log('form service permanentPincode',permanentPincode)
         body.request.payload.address[3].addressTypeMasterId = "1000000003"
         body.request.payload.address[3].addressline1 = permanentAddressline1
         body.request.payload.address[3].addressline2 = permanentAddressline2
         body.request.payload.address[3].pincode = permanentPincode ? permanentPincode.pincode : ""
         body.request.payload.address[3].city = permanentPincode ? permanentPincode.cityId : ""
         body.request.payload.address[3].state = permanentPincode ? permanentPincode.stateId : ""
+        body.request.payload.address[3].stdCode = permanentPincode ? permanentPincode.stdCode : ""
+        let headers
+        if (formType === 'lf') {
+            headers = {
+                'sync': 'true',
+                'formBankId': data.bankId.toString()
+            }
+        }
 
 
-        axios.post(url, body)
+        axios.post(url, body, { headers })
             .then(res => {
                 resolve(res)
             })
@@ -274,7 +301,6 @@ export const getProductAndBank = async (data, primaryPath, longFormProduct) => {
 }
 
 export const sendNotification = async (leadIdSendNotification) => {
-    console.log('in forservices leadIdSendNotification', leadIdSendNotification)
     const { url, body } = getApiData('sendNotification')
     body.request.payload.leadId = leadIdSendNotification;
     body.request.payload.actionName = "Short Form Submit";

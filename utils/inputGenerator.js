@@ -4,8 +4,8 @@ import {
   getWholeNumberFromCurrency,
 } from "./formattedCurrency";
 
-export const generateInputs = (component, updateField, checkInputValidity, handleInputDropdownSelection) => {
-  const handleChange = (e, type, focusDropdown) => {
+export const generateInputs = (component, handleChange, checkInputValidity, handleInputDropdownSelection) => {
+  const handleInputChange = (e, type, focusDropdown) => {
     let { name, value, checked } = e.target;
     let field = {};
 
@@ -15,7 +15,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
       if (isNaN(numString)) {
         return;
       }
-      value = getFormattedCurrency(value);
+      value = getFormattedCurrency(value)
     }
 
     if (type === 'checkbox') {
@@ -26,7 +26,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
         field.focusDropdown = focusDropdown
       }
     }
-    updateField(field);
+    handleChange(field)
   };
 
   const validate = (e, type) => {
@@ -50,7 +50,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
       const value = datepicker.val();
       const field = { name, value, type, blur: true, currentActiveInput: name };
       if (value) {
-        updateField(field);
+        handleChange(field);
       }
     }, 250);
   };
@@ -74,7 +74,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
         attachment = false;
       }
       const field = { name, value, type, attachment };
-      updateField(field);
+      handleChange(field);
     }
   };
 
@@ -156,7 +156,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
           autoComplete="off"
           required={mandatory}
           onBlur={(e) => validate(e, type)}
-          onChange={(e) => handleChange(e, type)}
+          onChange={(e) => handleInputChange(e, type)}
         />
         <label className="form__label">{label}</label>
         {error ? (
@@ -183,7 +183,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
           autoComplete="off"
           required={mandatory}
           onBlur={(e) => validate(e, type)}
-          onChange={(e) => handleChange(e, type)}
+          onChange={(e) => handleInputChange(e, type)}
         />
         <label className="form__label">{label}</label>
         {error ? (
@@ -208,7 +208,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
           autoComplete="off"
           required={mandatory}
           onBlur={(e) => validate(e, type)}
-          onChange={(e) => handleChange(e, type)}
+          onChange={(e) => handleInputChange(e, type)}
         />
         <label className="form__label">{label}</label>
         {error ? (
@@ -285,8 +285,8 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
           disabled={selectedId === "*" || dependent}
           required={mandatory}
           onBlur={(e) => validate(e, type)}
-          onChange={(e) => handleChange(e, type)}
-          onFocus={e => handleChange(e, type, true)}
+          onChange={(e) => handleInputChange(e, type)}
+          onFocus={e => handleInputChange(e, type, true)}
         />
         <label className="form__label">{label}</label>
 
@@ -355,7 +355,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
                   name={box.input_id}
                   id={box.input_id}
                   value={box.checked}
-                  onChange={(e) => handleChange(e, type)}
+                  onChange={(e) => handleInputChange(e, type)}
                 />
                 <label htmlFor={box.input_id}>
                   <span dangerouslySetInnerHTML={{ __html: box.label }}></span></label>
@@ -394,7 +394,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
                       name={input_id}
                       id={button.value}
                       value={button.value}
-                      onChange={(e) => handleChange(e, type)}
+                      onChange={(e) => handleInputChange(e, type)}
                     />
                   </div>
                 );

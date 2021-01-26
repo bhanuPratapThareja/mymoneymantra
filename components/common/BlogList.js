@@ -1,32 +1,28 @@
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 
-
-const Blogger = props => {
+const BlogList = (props) => {
+    const { data } = props
     const router = useRouter()
-    let { section_heading, bloggers } = props.data
 
     const onOpenBlog = blog => {
         router.push({ pathname: '/blog/details', query: { id: blog.id } })
     }
-
     return (
-        <section data-aos="fade-up" className="container blog-container aos-init">
-            <div className="blog">
-                <div dangerouslySetInnerHTML={{ __html: section_heading }}></div>
-                <div className="blog-wrapper" id="slider_blogs">
-
-                    {bloggers.map((blog, i) => {
+        <section className="blogs-filter container">
+            <div className="filter-cards">
+                <div className="filter-cards-wrapper" >
+                    {data.length ? data.map((blog, i) => {
                         const { header, short_text, image, read_text, redirect_url, id, createdAt } = blog
                         const date = new Date(createdAt);
                         const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
                         const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
                         const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
                         const createdDate = `${da} ${mo} ${ye}`;
-                        const blogClasses = ['blog-wrapper-card', `card-${i + 1}`]
+                        const blogClasses = ['blog-wrapper-card', 'single', `card-1`]
                         return (
                             <div className={blogClasses.join(' ')} id={`blog-card-${i + 1}`} key={id}>
-                                <div className={`image_${i + 1}`}>
+                                <div className={`image_1`}>
                                     <Image image={image} />
                                 </div>
                                 <div className="content">
@@ -40,12 +36,12 @@ const Blogger = props => {
                                 </div>
                             </div>
                         )
-                    })}
+                    }) : <div>No Result Found</div>}
 
                 </div>
             </div>
         </section>
-    )
+    );
 }
 
-export default Blogger
+export default BlogList;

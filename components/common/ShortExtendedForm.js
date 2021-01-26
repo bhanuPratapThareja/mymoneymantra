@@ -224,7 +224,7 @@ class ShortExtendedForm extends React.Component {
 
     onSubmitShortForm = () => {
         return new Promise((resolve, reject) => {
-            submitShortForm([...this.state.slides], this.state.currentSlide, this.state.primaryPath)
+            submitShortForm([...this.state.slides], this.state.currentSlide, this.state.primaryPath,'sf')
                 .then(res => {
                     resolve(res)
                 })
@@ -238,7 +238,9 @@ class ShortExtendedForm extends React.Component {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         const inputDropdown = handleChangeInputs(inputs, field, this.props.preferredBanks)
         if (inputDropdown) {
+            
             const { listType, masterName, inp, prefferedList } = inputDropdown
+          
             if (prefferedList) {
                 inp.listType = listType
                 inp.list = prefferedList
@@ -260,7 +262,7 @@ class ShortExtendedForm extends React.Component {
         }
 
         this.setState({ ...this.state, slides: newSlides }, () => {
-            if (textTypeInputs.includes(field.type) || field.type === 'radio') {
+            if (textTypeInputs.includes(field.type) || field.type === 'radio' || field.type === 'money') {
                 this.checkInputValidity(field, field.focusDropdown)
             }
             const { enableCheckboxes } = this.state
