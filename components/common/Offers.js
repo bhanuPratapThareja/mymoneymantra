@@ -19,6 +19,7 @@ const Offers = props => {
 
    const getProducts = () => {
       let offers = []
+      
       props.data.product_v_2s.forEach(async product => {
          const components = await unpackComponents(product)
          offers.push(components)

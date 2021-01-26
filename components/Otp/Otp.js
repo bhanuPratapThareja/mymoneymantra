@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { allowedOtpKeys } from "../../utils/allowedOtpKeys";
 
-const Otp = (props) => {
+const Otp = props => {
   const inpRef = useRef();
 
   useEffect(() => {
@@ -11,6 +11,7 @@ const Otp = (props) => {
   }, []);
 
   const onInputChange = (event, val) => {
+    props.removeSubmissionErrorMsg()
     const keyCode = event.keyCode;
     event.persist();
     let inputs = document.getElementsByClassName("input_otp");

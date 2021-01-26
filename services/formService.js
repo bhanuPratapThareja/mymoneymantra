@@ -39,9 +39,7 @@ export const submitOtp = async mobileNo => {
 
     try {
         const res = await axios.post(url, body)
-        console.log('otp verify res', res);
         if (res.data.response.msgInfo.code == 200) {
-            console.log('if')
             return true
         } else if (res.data.response.msgInfo.code == 500) {
             throw new Error(res.data.response.msgInfo.message)
@@ -49,6 +47,9 @@ export const submitOtp = async mobileNo => {
             throw new Error('Something went wrong. Please try again.')
         }
     } catch (err) {
+        if(!err.response) {
+            throw new Error(err.message)
+        }
         if (err.response.status == 400) {
             throw new Error('Please enter valid OTP!')
         } else {
