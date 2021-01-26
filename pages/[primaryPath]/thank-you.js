@@ -1,16 +1,16 @@
 import { useEffect } from 'react'
-import Strapi from '../../../providers/strapi'
-import Layout from '../../../components/Layout'
+import Strapi from '../../providers/strapi'
+import Layout from '../../components/Layout'
 
-import ThankYouBanner from '../../../components/Banners/ThankYouBanner'
-import CreditScore from '../../../components/common/CreditScore'
-import Offers from '../../../components/common/Offers'
-import BankSlider from '../../../components/common/BankSlider'
-import Rewards from '../../../components/common/Rewards'
-import FinancialTools from '../../../components/common/FinancialTools'
-import Blogger from '../../../components/common/Blogger'
-import LearnMore from '../../../components/common/LearnMore'
-import { getClassesForPage } from '../../../utils/classesForPage'
+import ThankYouBanner from '../../components/Banners/ThankYouBanner'
+import CreditScore from '../../components/common/CreditScore'
+import Offers from '../../components/common/Offers'
+import BankSlider from '../../components/common/BankSlider'
+import Rewards from '../../components/common/Rewards'
+import FinancialTools from '../../components/common/FinancialTools'
+import Blogger from '../../components/common/Blogger'
+import LearnMore from '../../components/common/LearnMore'
+import { getClassesForPage } from '../../utils/classesForPage'
 
 const ThankYouProduct = props => {
     useEffect(() => {
