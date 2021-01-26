@@ -19,7 +19,7 @@ import LongForm from '../../../../components/common/LongForm'
 const Details = props => {
     const router = useRouter()
 
-    const [type, setType] = useState(props.type)
+    const [page, setPage] = useState(props.page)
     const [pageClasses, setPageClasses] = useState('')
     const [previousPath, setPreviousPath] = useState('')
 
@@ -32,29 +32,29 @@ const Details = props => {
     useEffect(() => {
         window.scrollTo(0, 0)
         let pageClasses = ''
-        if (type === 'details') {
-            pageClasses = getClassesForPage(primaryPath, type)
-        } else if (type === 'long-form') {
-            pageClasses = getClassesForPage(type)
+        if (page === 'details') {
+            pageClasses = getClassesForPage(primaryPath, page)
+        } else if (page === 'long-form') {
+            pageClasses = getClassesForPage(page)
         }
 
-        setPreviousPath(type)
+        setPreviousPath(page)
         window.onpopstate = () => {
             if (previousPath !== 'long-form') {
-                setType(previousPath)
+                setPage(previousPath)
             }
         }
-        if(type === 'details' || type === 'long-form') {
+        if(page === 'details' || page === 'long-form') {
             setPageClasses(pageClasses)
         }
-    }, [type])
+    }, [page])
 
 
-    const changePageType = (type) => {
-        setType(type)
+    const changePageType = page => {
+        setPage(page)
     }
 
-    if (type === 'long-form' && !longFormData) {
+    if (page === 'long-form' && !longFormData) {
         if (typeof window !== 'undefined') {
             const { primaryPath } = router.query
             const pathname = `/${primaryPath}`
@@ -68,7 +68,7 @@ const Details = props => {
         }
     }
 
-    if (!type && !detailsData) {
+    if (!page && !detailsData) {
         return null
     }
 
@@ -117,7 +117,7 @@ const Details = props => {
     }
 
 
-    if (type === 'long-form') {
+    if (page === 'long-form') {
         return (
             <div className={pageClasses}>
                 <div className="mobile-background"></div>
@@ -143,9 +143,9 @@ export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const { query } = ctx
 
-    let { primaryPath, bank: bankSlug, product: productSlug, type } = query
-    if (!type) {
-        type = 'details'
+    let { primaryPath, bank: bankSlug, product: productSlug, page } = query
+    if (!page) {
+        page = 'details'
     }
 
     const detailsPageData = await strapi.processReq('GET', `${primaryPath}-details-pages?slug=${productSlug}`)
@@ -159,7 +159,7 @@ export async function getServerSideProps(ctx) {
 
     const preferredBanks = preferredBanksData[0]
 
-    return { props: { detailsData, longFormData, productData, preferredBanks, type, primaryPath } }
+    return { props: { detailsData, longFormData, productData, preferredBanks, page, primaryPath } }
 }
 
 export default Details

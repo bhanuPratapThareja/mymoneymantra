@@ -38,7 +38,7 @@ const Offers = props => {
       }
       const { slug: bankSlug } = bank
       const { slug: productSlug } = product
-      router.push(`/${primaryPath}/${bankSlug}/${productSlug}?type=long-form`)
+      router.push(`/${primaryPath}/${bankSlug}/${productSlug}`)
    }
 
    if (!cards || !cards.length) {

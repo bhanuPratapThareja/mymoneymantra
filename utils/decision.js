@@ -11,11 +11,10 @@ export const makeDecision = (buttonText, primaryPath, offer, changePageType) => 
         break;
 
       case "EConnect":
-        pathname = `/${primaryPath}/${bankSlug}/${productSlug}?type=long-form`
+        pathname = `/${primaryPath}/${bankSlug}/${productSlug}?page=long-form`
         if(changePageType) {
           changePageType('long-form')
         }
-        // query = { bankName, type: 'long-form' }
         break;
 
       // view details
