@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { getApiData } from '../../api/api';
-import { commentLikeDislike, getBlogComments } from '../../services/blogService'
+import { getBlogComments } from '../../services/blogService'
 
 const CommentSection = (props) => {
     console.log("blog id =", props.blogId)
@@ -19,8 +19,29 @@ const CommentSection = (props) => {
         body.sentiment = sentiment
         body.blogId = blogId
         body.customerId = '12345'
-        console.log(url, body)
-        axios.post(url, body).then().catch()
+        axios.post(url, body).then(
+            res => {
+                getCommentData(blogId)
+            }
+        ).catch(
+            err => {
+                console.log(err)
+            }
+        )
+    }
+    const commentLikeDislike = (sentiment, blogId, commentId) => {
+        const { url, body } = getApiData('commentLikeDislike')
+        body.sentiment = sentiment
+        body.blogId = blogId
+        body.customerId = '12345'
+        body.commentId = commentId
+        axios.post(url, body).then(
+            res => {
+                getCommentData(blogId)
+            }
+        ).catch(
+            err => console.log(err)
+        )
     }
 
     const postComment = (e, comment, blogId) => {
@@ -32,8 +53,7 @@ const CommentSection = (props) => {
             axios.post(url, body).then(
                 response => {
                     console.log("res of add comment", response)
-                    const data = getBlogComments(blogId)
-                    data.then(res => (setCommentData(res))).catch(err => console.log("post comment err", err))
+                    getCommentData(blogId)
                     setComment('')
                 }
             ).catch(
@@ -41,6 +61,11 @@ const CommentSection = (props) => {
             )
         }
 
+    }
+
+    const getCommentData = (blogId) => {
+        const data = getBlogComments(blogId)
+        data.then(res => (setCommentData(res))).catch(err => console.log("post comment err", err))
     }
 
     return (
