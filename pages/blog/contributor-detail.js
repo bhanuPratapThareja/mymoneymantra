@@ -26,7 +26,7 @@ const ContributorDetails = (props) => {
         return dynamic.map((block) => {
             switch (block.__component) {
                 case "banners.blog-banners-component":
-                    return <BlogBanner key={block.id} data={block} name={name} />
+                    return <BlogBanner key={block.id} data={block} name={name} author={filteredContributors[0]} />
                 case "blocks.blogger-about-contributors-component":
                     return <AboutContributors key={block.id} blogsCount={filteredBlogs.length} data={filteredContributors[0]} />
                 case "blocks.blog-by-contributor-componrnt":

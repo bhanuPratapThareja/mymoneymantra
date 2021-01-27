@@ -28,7 +28,7 @@ const Blog = (props) => {
         case "blocks.blog-category":
           return <ProductSlider key={block.id} data={block} />;
         case "blocks.blog-list-component":
-          return <BlogFilter key={block.id} data={block} />;
+          return <BlogFilter key={block.id} data={props.allBlogs} blogsFilter={props.blogsFilter} />;
 
       }
     });
@@ -46,14 +46,18 @@ export async function getServerSideProps(ctx) {
   const { query } = ctx;
   const primaryPath = query.primaryPath;
   const pageClasses = getClassesForPage('blog')
-
+  const blogsFilter = await strapi.processReq('GET', `filters?slug=blogs-filter`)
 
   const pageData = await strapi.processReq(
     "GET",
     `pages?slug=blog`
   );
+  const allBlogs = await strapi.processReq(
+    "GET",
+    `quick-blogs`
+  );
   const data = pageData && pageData.length ? pageData[0] : null;
-  return { props: { data, pageClasses } };
+  return { props: { data, pageClasses, blogsFilter, allBlogs } };
 }
 
 export default Blog;

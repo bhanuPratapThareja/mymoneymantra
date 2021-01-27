@@ -13,21 +13,20 @@ import { getBlogComments } from '../../services/blogService'
 
 
 const BlogDetail = props => {
-    let [commentData, setCommentData] = useState([])
-    useEffect(() => {
-        const data = getBlogComments(props.blogData.id)
-        data.then(res => (setCommentData(res)))
-        window.scroll(0, 0)
-    }, [props.blogData])
+    // let [commentData, setCommentData] = useState([])
+    // useEffect(() => {
+    //     const data = getBlogComments(props.blogData.id)
+    //     data.then(res => (setCommentData(res)))
+    //     window.scroll(0, 0)
+    // }, [props.blogData])
     const getComponents = (dynamic) => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.blog-texts-component':
-                    return <BlogDetails key={block.id} data={props.blogData} blogId={props.blogData.id} commentData={commentData} />
+                    return <BlogDetails key={block.id} data={props.blogData} blogId={props.blogData.id} />
+                // return <BlogDetails key={block.id} data={props.blogData} blogId={props.blogData.id} commentData={commentData} />
                 case 'blocks.blog-social-media-links-component':
                     return <BlogMediaLinks key={block.id} data={block} />
-                // case "blocks.blogs-comment-section-component":
-                //     return <CommentSection blogId={props.blogData.id} commentData={commentData} />
                 case "blocks.blog-category":
                     return <ProductSlider key={block.id} data={block} />;
                 case "offers.popular-offers-personal-loans-component":

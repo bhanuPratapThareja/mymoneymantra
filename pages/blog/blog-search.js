@@ -1,3 +1,4 @@
+import { filter } from 'lodash';
 import { useEffect, useState } from 'react';
 import BlogBanner from '../../components/Banners/BlogBanner';
 import BlogList from '../../components/common/BlogList';
@@ -8,31 +9,49 @@ import { getClassesForPage } from '../../utils/classesForPage';
 const BlogSearchPage = (props) => {
     const [data, setData] = useState([])
     let searchKey = ''
-    console.log(props.blogData)
     useEffect(() => {
         if (props.query.s) {
             searchKey = props.query.s
-            let filteredBlogs = props.blogData.filter(blog => blog.header.toLowerCase().includes(searchKey.toLowerCase()))
+            // let filteredBlogs = props.blogData.filter(blog => blog.header.toLowerCase().includes(searchKey.toLowerCase()))
+            let filteredBlogs = []
+            props.blogData.forEach(blog => {
+                if (blog.header.toLowerCase().includes(searchKey.toLowerCase())) {
+                    filteredBlogs.push(blog)
+                }
+                if (blog.blog_author) {
+                    if (blog.blog_author.toLowerCase().includes(searchKey.toLowerCase())) {
+                        filteredBlogs.push(blog)
+                    }
+                }
+            })
             setData(filteredBlogs)
+            // console.log("search query", filteredBlogs)
         }
         if (props.query.subcategory) {
             setData(props.blogData)
         }
         if (props.query.category) {
-            console.log(props.query.category)
             let filteredBlogs = []
             props.blogData.forEach((blog) => {
                 blog.blog_categories.forEach(category => {
-                    if (props.query.category === category.id) {
+                    if (category.blog_category_name.toLowerCase().includes(props.query.category.toLowerCase())) {
                         filteredBlogs.push(blog)
                     }
                 })
             })
-            console.log("category", filteredBlogs)
             setData(filteredBlogs)
         }
-
-        // window.scroll(0, 0)
+        if (props.query.author) {
+            let filteredBlogs = []
+            props.blogData.forEach(blog => {
+                if (props.query.author.toLowerCase().includes(blog.blog_author.toLowerCase())) {
+                    if (blog.header.toLowerCase().includes(props.query.s.toLowerCase())) {
+                        filteredBlogs.push(blog)
+                    }
+                }
+            })
+            setData(filteredBlogs)
+        }
     }, [props.query])
     const getComponents = (dynamic) => {
         return dynamic.map((block) => {
