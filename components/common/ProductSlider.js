@@ -17,7 +17,7 @@ const ProductSlider = props => {
                     {Blog_product_card.map(card => {
 
                         return (
-                            <Link href={`/blog/blog-search?category=${card.id}`}>
+                            <Link href={`/blog/blog-search?category=${card.blog_products_cards_text}`}>
                                 <div className="slide_cell cstm-prd" key={card.id} onClick={blogsByCategory(card)} >
                                     <h3>{card.blog_products_cards_text}</h3>
                                 </div>
