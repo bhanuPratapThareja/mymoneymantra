@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Image from '../ImageComponent/ImageComponent'
 import BlogFilterOptions from './BlogFilterOptions'
@@ -5,6 +6,11 @@ import BlogFilterOptions from './BlogFilterOptions'
 const BlogFilter = props => {
    const { blogsFilter, data } = props
    const [blogs, setBlogs] = useState([])
+   const router = useRouter()
+
+   const onOpenBlog = blog => {
+      router.push({ pathname: '/blog/details', query: { id: blog.id } })
+   }
    const onOpenFilter = () => {
       const el = document.getElementsByClassName('filter-option')[0]
       $("#" + el.id + "-show").slideToggle("300");
@@ -16,8 +22,6 @@ const BlogFilter = props => {
    }, [])
 
    const onApplyFilter = (filter) => {
-      console.log("filter from options", filter)
-      console.log("filter from data", data)
       if (filter.categories.length) {
          let filteredBlogs = []
          data.forEach(blog => {
@@ -30,7 +34,6 @@ const BlogFilter = props => {
                   }
                })
             }
-            console.log(filteredBlogs)
             setBlogs(filteredBlogs)
          })
          return
@@ -47,11 +50,12 @@ const BlogFilter = props => {
                   }
                })
             }
-            console.log(filteredBlogs)
             setBlogs(filteredBlogs)
          })
          return
       }
+
+      setBlogs(data)
 
    }
    return (
@@ -88,7 +92,7 @@ const BlogFilter = props => {
                               <span dangerouslySetInnerHTML={{ __html: short_text }}></span>
                               <div className="details">
                                  <span>{createdDate} </span><span>{read_text}</span>
-                                 <button>Read more</button>
+                                 <button onClick={() => onOpenBlog(blog)}>Read more</button>
                               </div>
                            </div>
                         </div>

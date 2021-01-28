@@ -1,4 +1,4 @@
-
+import DownChevron from '../../public/assets/images/icons/down-chevron.svg'
 
 class BlogFilterOptions extends React.Component {
     state = {
@@ -6,7 +6,8 @@ class BlogFilterOptions extends React.Component {
             categories: [],
             subCategories: []
         },
-        checkboxes: []
+        checkboxes: [],
+        showCheckboxes: 4,
     }
 
 
@@ -14,7 +15,23 @@ class BlogFilterOptions extends React.Component {
 
         const { filters } = this.props
         const { checkboxes } = filters[0]
-        this.setState({ checkboxes })
+        const updatedCheckboxes = this.props.filters[0].checkboxes
+
+        if (updatedCheckboxes.length) {
+            updatedCheckboxes.forEach((block, i) => {
+                let blockValues = [...block.values]
+
+                updatedCheckboxes[i].values = blockValues
+
+                block.showCheckboxes = this.state.showCheckboxes
+                block.totalCheckboxes = block.values.length
+                block.veiwAll = block.values.length > this.state.showCheckboxes
+            })
+
+            this.setState({ checkboxes: updatedCheckboxes })
+        }
+        console.log(filters)
+
     }
     closeFilter = () => {
         $(".filter-cross").closest(".mm-modal").slideToggle(300);
@@ -36,8 +53,18 @@ class BlogFilterOptions extends React.Component {
         const filters = { ...this.state.filters, [type]: selectedCheckboxes }
         this.setState({ ...this.state, filters })
     }
+    onClickViewAll = type => {
+        const updatedCheckboxes = [...this.state.checkboxes]
+        updatedCheckboxes.forEach(checkboxes => {
+            if (checkboxes.type === type) {
+                checkboxes.veiwAll = false
+                checkboxes.showCheckboxes = checkboxes.values.length
+            }
+        })
+        this.setState({ checkboxes: updatedCheckboxes })
+    }
     render() {
-        let { checkboxes } = this.state
+        let { checkboxes, showCheckboxes } = this.state
         return (
             <section className="listing-modal mm-modal" id="listing-filter-show">
                 <div className="overlay"></div>
@@ -48,7 +75,7 @@ class BlogFilterOptions extends React.Component {
                     </div>
                     <div className="content">
                         <form>
-                            {checkboxes && checkboxes.length ? <>
+                            {/* {checkboxes && checkboxes.length ? <>
                                 {checkboxes.map(checkboxGroup => {
                                     return (
                                         <div className="content-one" key={checkboxGroup.id}>
@@ -67,6 +94,40 @@ class BlogFilterOptions extends React.Component {
                                                     )
 
                                                 })}
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </> : null} */}
+
+                            {checkboxes && checkboxes.length ? <>
+                                {checkboxes.map(checkboxGroup => {
+                                    return (
+                                        <div className="content-one" key={checkboxGroup.id}>
+                                            <h5>{checkboxGroup.name}</h5>
+                                            <div className="fields-wrapper">
+                                                {checkboxGroup.values.map((checkbox, i) => {
+                                                    if (i + 1 <= checkboxGroup.showCheckboxes) {
+                                                        return (
+                                                            <div className="checkbox-container" key={checkbox.id}>
+                                                                <div className="checkbox">
+                                                                    <input type="checkbox" id={checkbox.tag} name={checkbox.checkbox_name} onChange={e => this.handleCheckbox(e, checkboxGroup.type)} />
+                                                                    <label htmlFor={checkbox.tag}>
+                                                                        <span>{checkbox.checkbox_name}</span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    } else {
+                                                        return null
+                                                    }
+                                                })}
+
+                                                {checkboxGroup.veiwAll ? <div className="view-all">
+                                                    <button onClick={() => this.onClickViewAll(checkboxGroup.type)}>{'View All'}
+                                                        <DownChevron />
+                                                    </button>
+                                                </div> : null}
                                             </div>
                                         </div>
                                     )
