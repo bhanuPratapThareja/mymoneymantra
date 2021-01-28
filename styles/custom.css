@@ -1203,6 +1203,17 @@ img {
   line-height: 1.5rem;
 }
 
+.blog-wrap-top>p>p {
+  max-width: 688px;
+  margin: 0 auto;
+  margin-top: 40px;
+  padding: 0 24px;
+}
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top h1>h2{
+  text-align: center;
+  color: #221F1F;
+  font-size: 2.5rem;
+}
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
