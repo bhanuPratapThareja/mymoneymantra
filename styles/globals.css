@@ -4225,11 +4225,16 @@ label {
       .long-form .long-form-wrapper .card-info img {
         margin-top: 22px;
         width: 100%; }
+        
         @media (max-width: 768px) {
           .long-form .long-form-wrapper .card-info img {
-            margin-top: 24px;
-            max-width: 295px;
-            width: 100%; } }
+            margin: 24px auto 0;
+            max-width: 40%;
+            width: 100%;
+            display: block;
+          }
+        }
+
       .long-form .long-form-wrapper .card-info h4 {
         color: #ffffff;
         margin-top: 24px; }
@@ -6398,8 +6403,8 @@ label {
     display: none !important; } }
 .blog-details .blog h2 {
   padding-top: 0; }
-.blog-details .header {
-  background: linear-gradient(90deg, #0D2333 0%, #040A0F 100%); }
+/* .blog-details .header {
+  background: linear-gradient(90deg, #0D2333 0%, #040A0F 100%); } */
 
 .profile-flow .profile-head {
   width: 100%;
