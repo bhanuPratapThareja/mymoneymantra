@@ -23,7 +23,7 @@ const BlogsDetails = props => {
                     <div className="blog-wrap-top">
                         <h1 dangerouslySetInnerHTML={{ __html: header }}></h1>
                         <span>
-                            {blogreadTime.text}
+                           {read_text}//{blogreadTime.text}
                             {mainCategories.length ? mainCategories.map((category, i) => (
                                 <span onClick={() => goToPage(category.blog_category_name)}>
                                     // {category.blog_category_name}
