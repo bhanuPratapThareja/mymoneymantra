@@ -77,13 +77,13 @@ class BlogFilterOptions extends React.Component {
                         <h3>Filters</h3>
                         <img src="/assets/images/icons/cross.svg" className="filter-cross" onClick={this.closeFilter} />
                     </div>
-                    <div className="content">
+                    <div className="filter-content content">
                         <form>
 
                             {checkboxes && checkboxes.length ? <>
                                 {checkboxes.map(checkboxGroup => {
                                     return (
-                                        <div className="content-one" key={checkboxGroup.id}>
+                                        <div className=" filter-content content-one" key={checkboxGroup.id}>
                                             <h5>{checkboxGroup.name}</h5>
                                             <div className="fields-wrapper">
                                                 {checkboxGroup.values.map((checkbox, i) => {
