@@ -4,7 +4,7 @@ import Strapi from '../../providers/strapi'
 import Image from '../ImageComponent/ImageComponent'
 
 const BlogBanner = props => {
-    const { blog_banner_heading, blog_banner_image, blog_banner_label, blog_banner_url, blog_banner_arrow_image } = props.data.blog_banner
+    const { blog_banner_heading, blog_banner_image, blog_banner_label, blog_banner_url, blog_banner_arrow_image,author } = props.data.blog_banner
     const router = useRouter()
     const strapi = new Strapi()
     const [searchKey, setSearchKey] = useState('')
