@@ -18,7 +18,7 @@ const CommentSection = (props) => {
         const { url, body } = getApiData('blogLikeDislike')
         body.sentiment = sentiment
         body.blogId = blogId
-        body.customerId = '12345'
+        body.customerId = '101'
         axios.post(url, body).then(
             res => {
                 getCommentData(blogId)
@@ -33,7 +33,7 @@ const CommentSection = (props) => {
         const { url, body } = getApiData('commentLikeDislike')
         body.sentiment = sentiment
         body.blogId = blogId
-        body.customerId = '12345'
+        body.customerId = '101'
         body.commentId = commentId
         axios.post(url, body).then(
             res => {
@@ -48,7 +48,7 @@ const CommentSection = (props) => {
         if (e.keyCode == 13) {
             const { url, body } = getApiData('addComment')
             body.blogId = blogId
-            body.customerId = '12345'
+            body.customerId = '101'
             body.comment = comment
             axios.post(url, body).then(
                 response => {
