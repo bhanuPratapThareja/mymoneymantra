@@ -4,7 +4,7 @@ import { getApiData } from '../api/api'
 import { getLeadId } from '../utils/localAccess'
 import { getFormattedDate } from '../utils/formatDataForApi'
 const CancelToken = axios.CancelToken
-import { getDocumentIdandTypeId } from '../Utils/uploadDocumentHelper'
+import { getDocumentIdandTypeId } from '../utils/uploadDocumentHelper'
 let cancel
 let otpId = ''
 
@@ -111,18 +111,18 @@ export const generateLead = async (data, primaryPath, formType) => {
     const promise = new Promise((resolve, reject) => {
         let { url, body } = getApiData('orchestration')
         body = JSON.parse(JSON.stringify(body))
-      
+
         const { fullName, dob, pan, mobile, email, applicantType, title, officeEmail,
             companyId, netMonthlyIncome, bankId, totalWorkExp, cardType, designationId, qualificationId,
             exisTenorBalMonths, exisLoanAmount, exisEmi, exisRemark,
             requestedLoanamount, requestedTenor, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
             fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
-            addressline1, addressline2, pincode, city, nearByLandmark,stdCode,
+            addressline1, addressline2, pincode, city, nearByLandmark, stdCode,
             officeAddressline1, officeAddressline2, addressline3, officeNearBy, officePincode, officeCity,
             permanentAddressline1, permanentAddressline2, permanentPincode, permannentCity,
             city_location, cost_of_property,
-            propertyPincode,purposeOfLoan
+            propertyPincode, purposeOfLoan
 
         } = data
         console.log('form service data', data);
