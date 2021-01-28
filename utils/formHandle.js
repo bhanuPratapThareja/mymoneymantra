@@ -42,8 +42,6 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists) => {
         if (field.focusDropdown && inp.list_preference && preferredSelectionLists) {
           let prefferedList = []
           let isPrioritized = false
-          console.log(inp.list_preference)
-          console.log(preferredSelectionLists)
           let preferredListDataArray = preferredSelectionLists.filter(listItem => inp.list_preference.name === listItem.name)
           
           if(preferredListDataArray.length) {
@@ -141,7 +139,7 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists) => {
         inp.value = field.value;
         inp.verified = true;
         inp.error = false
-        
+
         // special case for radio to disable another input
 
         if (inp.radio.disable_input_with_end_point_name) {

@@ -23,9 +23,9 @@ export const generateInputs = (component, handleChange, checkInputValidity, hand
     } else {
       field = { name, value, type };
       if (type === "input_with_dropdown") {
-        // if (!focusDropdown && style_as_dropdown) {
-        //   return
-        // }
+        if (style_as_dropdown) {
+          return
+        }
         field.focusDropdown = focusDropdown
       }
     }
