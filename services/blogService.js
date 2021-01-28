@@ -24,7 +24,7 @@ export const blogLikeDislike = (sentiment, blogId) => {
 export const addComment = (comment, blogId) => {
   const { url, body } = getApiData('addComment')
   body.blogId = blogId
-  body.customerId = '12345'
+  body.customerId = '101'
   body.comment = comment
   axios.post(url, body).then().catch()
 }

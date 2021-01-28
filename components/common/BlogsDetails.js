@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import Image from '../ImageComponent/ImageComponent'
+import { useEffect } from 'react'
 import CommentSection from './CommentSection'
 
 const BlogsDetails = props => {
@@ -7,6 +7,9 @@ const BlogsDetails = props => {
     const goToPage = (name) => {
         router.push({ pathname: "/blog/blog-search", query: { category: name } })
     }
+    useEffect(() => {
+        window.scroll(0, 0)
+    }, [props.data])
     // const { header, read_text, blog_sub_category, content, display_short_text } = props.data.blogger
     const { header, read_text, blog_sub_category, content, display_short_text, blog, blog_categories } = props.data
     const mainCategories = blog_categories ? blog_categories : []
