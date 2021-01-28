@@ -1,9 +1,8 @@
-import $ from "jquery";
+import $ from "jquery"
 import { isInputValid, isMonetaryValid } from "./formValidations";
 import { getBase64, documentUpload, generateLead } from "../services/formService";
 import { getFormattedName } from "./formatDataForApi";
 import { getWholeNumberFromCurrency } from "./formattedCurrency";
-
 export const textTypeInputs = [
   "text",
   "number",
@@ -22,7 +21,7 @@ export const getCurrentSlideInputs = (state) => {
   return { newSlides, inputs };
 };
 
-export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropdown) => {
+export const handleChangeInputs = (inputs, field, preferredSelectionLists) => {
   let inputDropdown = null;
   if (field.type === "checkbox") {
     inputs.forEach((inp) => {
@@ -35,21 +34,39 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
       }
     });
   } else if (field.type === "input_with_dropdown") {
-    inputs.forEach((inp) => {
+    inputs.forEach(async inp => {
       if (inp.input_id === field.name) {
-        const { list_type: listType, master_name: masterName } = inp
-        if (!field.value && field.focusDropdown && !inp.selectedId) {
-          if (preferredBanks && inp.search_for === preferredBanks.search_for) {
-            let prefferedList = []
-            inp.selectedItem = null;
-            inp.selectedId = null;
-            preferredBanks.banks.forEach(bank => {
-              const preferredBank = { bankId: bank.bank_id, bankName: bank.bank_name, priority: bank.priority }
-              prefferedList.push(preferredBank)
+        const listType = inp.list_type
+        const masterName = inp.master_name
+        // if (!field.value && field.focusDropdown && !inp.selectedId && inp.list_preference && preferredSelectionLists) {
+        if (field.focusDropdown && inp.list_preference && preferredSelectionLists) {
+          let prefferedList = []
+          let isPrioritized = false
+          console.log(inp.list_preference)
+          console.log(preferredSelectionLists)
+          let preferredListDataArray = preferredSelectionLists.filter(listItem => inp.list_preference.name === listItem.name)
+          
+          if(preferredListDataArray.length) {
+            const preferredListData = preferredListDataArray[0]
+            preferredListData[preferredListData.extract_list].forEach(item => {
+              if (item.priority) {
+                isPrioritized = true
+              }
+  
+              const preferredItem = {
+                [inp.select_id]: item[preferredListData.extract_id],
+                [inp.select_name]: item[preferredListData.extract_name],
+                priority: item.priority
+              }
+              prefferedList.push(preferredItem)
             })
-            prefferedList.sort((a, b) => (a.priority > b.priority) ? 1 : -1)
-            inputDropdown = { listType, masterName, inp, prefferedList }
+  
+            if (isPrioritized) {
+              prefferedList.sort((a, b) => (a.priority > b.priority) ? 1 : -1)
+            }
           }
+
+          inputDropdown = { listType, masterName, inp, prefferedList }
 
         } else if (!field.value) {
           inp.value = field.value;
@@ -57,13 +74,14 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
           inp.selectedId = null;
           inp.list = [];
 
-          inputDropdown = { listType, masterName, inp };
+          inputDropdown = { listType, masterName, inp }
+
         } else {
           inp.error = false
           inp.value = field.value;
           inputDropdown = { listType, masterName, inp };
-        }
 
+        }
 
       } else {
 
@@ -163,10 +181,11 @@ export const handleChangeInputs = (inputs, field, preferredBanks, listFocusDropd
       }
     });
   }
-  return inputDropdown;
+
+  return inputDropdown
 };
 
-export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) => {
+export const updateInputsValidity = (inputs, field, errorMsgs) => {
   let errors = false;
 
   // check on input
@@ -174,32 +193,10 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
 
     inputs.forEach((inp) => {
       if (inp.input_id === field.name) {
-        if (inp.type === 'input_with_dropdown') {
-          setTimeout(() => {
-            if (inp.mandatory && !inp.value) {
-              inp.error = true;
-              inp.errorMsg = errorMsgs.mandatory
-              inp.verified = false;
-            }
-            else {
-              inp.error = false
-              inp.errorMsg = ''
-              if (inp.list) {
-                inp.list = []
-              }
-            }
-          }, 500);
-          return
-        }
-
-
-        if (inp.mandatory && !inp.value) {
-          inp.error = true;
-          inp.errorMsg = errorMsgs.mandatory
-          inp.verified = false;
-        } else {
+        if (inp.value && inp.mandatory) {
           inp.error = false
           inp.errorMsg = ''
+          inp.verified = false
         }
       }
 
@@ -275,10 +272,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
             inp.errorMsg = "";
             inp.verified = true;
           }
-        } else if (
-          inp.type === "input_with_dropdown" &&
-          inp.input_id === field.currentActiveInput && inp.mandatory
-        ) {
+        } else if (inp.type === "input_with_dropdown" && inp.input_id === field.currentActiveInput && inp.mandatory) {
           if (!inp.selectedId) {
             errors = true;
             inp.error = true;
@@ -296,7 +290,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
           inp.input_id === field.currentActiveInput &&
           inp.mandatory
         ) {
-          if (!isInputValid(inp)) {
+          if (!inp.value || !isInputValid(inp)) {
             errors = true;
             inp.error = true;
             inp.verified = false;
@@ -310,16 +304,6 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
             inp.errorMsg = "";
             inp.verified = true;
           }
-          // if (!inp.value) {
-          //   errors = true;
-          //   inp.error = true;
-          //   inp.errorMsg = errorMsgs.mandatory;
-          //   inp.verified = false;
-          // } else {
-          //   inp.error = false;
-          //   inp.errorMsg = "";
-          //   inp.verified = true;
-          // }
         }
       }
     });
@@ -355,7 +339,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, focusDropdown) =>
         inp.error = true;
         inp.errorMsg = inp.validation_error;
         errors = true;
-      } else if (inp.type === "input_with_dropdown" && (inp.value && !inp.selectedId) || (inp.selectedItem && inp.selectedItem[inp.select_name] !== inp.value)) {
+      } else if (inp.type === "input_with_dropdown" && (!inp.value || (inp.value && !inp.selectedId) || (inp.selectedItem && inp.selectedItem[inp.select_name] !== inp.value))) {
         inp.error = true;
         inp.errorMsg = inp.validation_error;
         errors = true;
@@ -403,17 +387,16 @@ export const updateDropdownList = (inputs, listType, list, input_id) => {
 };
 
 export const updateSelectionFromDropdown = (inputs, input_id, item) => {
-  let update_field_with_end_point_name = "";
-
+  let update_field_with_end_point_name = ""
   inputs.forEach((inp) => {
     if (inp.input_id === input_id) {
-      update_field_with_end_point_name = inp.update_field_with_end_point_name;
-      inp.list = [];
-      inp.value = item[inp.select_name];
-      inp.selectedId = item[inp.select_id];
-      inp.selectedItem = item;
-      inp.error = false;
-      inp.verified = true;
+      update_field_with_end_point_name = inp.update_field_with_end_point_name
+      inp.list = []
+      inp.value = item[inp.select_name]
+      inp.selectedId = item[inp.select_id]
+      inp.selectedItem = item
+      inp.error = false
+      inp.verified = true
     }
 
     if (inp.end_point_name === update_field_with_end_point_name && inp.dependent) {

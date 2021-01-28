@@ -109,18 +109,18 @@ export const generateLead = async (data, primaryPath, formType) => {
     const promise = new Promise((resolve, reject) => {
         let { url, body } = getApiData('orchestration')
         body = JSON.parse(JSON.stringify(body))
-      
+
         const { fullName, dob, pan, mobile, email, applicantType, title, officeEmail,
             companyId, netMonthlyIncome, bankId, totalWorkExp, cardType, designationId, qualificationId,
             exisTenorBalMonths, exisLoanAmount, exisEmi, exisRemark,
             requestedLoanamount, requestedTenor, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
             fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
-            addressline1, addressline2, pincode, city, nearByLandmark,stdCode,
+            addressline1, addressline2, pincode, city, nearByLandmark, stdCode,
             officeAddressline1, officeAddressline2, addressline3, officeNearBy, officePincode, officeCity,
             permanentAddressline1, permanentAddressline2, permanentPincode, permannentCity,
             city_location, cost_of_property,
-            propertyPincode,purposeOfLoan
+            propertyPincode, purposeOfLoan
 
         } = data
 
@@ -163,23 +163,25 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.request.payload.work.companyId = companyId ? companyId.caseCompanyId : ''
         body.request.payload.work.netMonthlyIncome = netMonthlyIncome
 
-        body.request.payload.work.designation = designationId ? designationId.designationName : ""
+        body.request.payload.work.designation = designationId ? designationId.designationId : ""
         body.request.payload.work.qualification = qualificationId ? qualificationId.qualificationName : ""
 
         // body.request.payload.bankId = bankId ? bankId.bankId : "";
-        body.request.payload.bankId = salaryBankName ? salaryBankName.bankId : "";
+        body.request.payload.bankId = typeof bankId === 'string' ? bankId : bankId.bankId ? bankId.bankId : salaryBankName.bankId ? salaryBankName.bankId : ''
+
+        // salaryBankName ? salaryBankName.bankId : "";
         // body.request.payload.work.otherCompany = otherCompany ? otherCompany.companyName : ""
 
 
         body.request.payload.leadId = getLeadId(primaryPath)
         body.request.payload.productId = localStorage.getItem('productId')
-        body.request.payload.cardType = cardType
+        body.request.payload.cardType = cardType.card_type_id ? cardType.card_type_id : ''
         body.request.payload.requestedLoanamount = requestedLoanamount
 
         // for facility requested
         body.request.payload.existingFacility[0].exisTenorBalMonths = exisTenorBalMonths
         body.request.payload.existingFacility[0].exisfacility = localStorage.getItem('productId')
-        body.request.payload.existingFacility[0].exisBankId = bankId ? bankId.bankId : ""
+        body.request.payload.existingFacility[0].exisBankId = bankId.bankId ? bankId.bankId : ""
         body.request.payload.existingFacility[0].exisLoanAmount = exisLoanAmount
         body.request.payload.existingFacility[0].exisEmi = exisEmi
         body.request.payload.existingFacility[0].exisRemark = exisRemark
@@ -230,20 +232,28 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.request.payload.address[3].city = permanentPincode ? permanentPincode.cityId : ""
         body.request.payload.address[3].state = permanentPincode ? permanentPincode.stateId : ""
         body.request.payload.address[3].stdCode = permanentPincode ? permanentPincode.stdCode : ""
-        let headers
-        if (formType === 'lf') {
+        let headers = {}
+
+        console.log('bbbbbb')
+
+        console.log(body.request.payload)
+
+        if (formType === 'lf' && primaryPath) {
             headers = {
                 'sync': 'true',
                 'formBankId': data.bankId.toString()
             }
         }
 
+        // return
 
         axios.post(url, body, { headers })
             .then(res => {
+                console.log('red')
                 resolve(res)
             })
             .catch(err => {
+                console.log('rerr')
                 reject(err)
             })
     })

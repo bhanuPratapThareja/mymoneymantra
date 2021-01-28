@@ -6,6 +6,7 @@ const SFSlides = props => {
     const slideNumber = props.slideIndex
     const progressWidth = `${slideNumber / totalSlides * 100}%`
     const sfSlides = props.slides
+    const formType = 'sf'
 
     return (
         <div className="lets-find-stepper-wrapper" onClick={props.handleClickOnSlideBackground}>
@@ -30,7 +31,8 @@ const SFSlides = props => {
                                         return (
                                             <React.Fragment key={component.id}>
                                                 {generateInputs(component, props.handleChange,
-                                                    props.checkInputValidity, props.handleInputDropdownSelection)}
+                                                    props.checkInputValidity, props.handleInputDropdownSelection,
+                                                    formType)}
                                             </React.Fragment>
                                         )
                                     })}

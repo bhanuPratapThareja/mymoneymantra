@@ -5,7 +5,11 @@ import Image from '../ImageComponent/ImageComponent'
 
 const ThankYouBanner = props => {
     const router = useRouter()
-    const { bankName, primaryPath } = router.query
+    let { bankName, primaryPath } = router.query
+
+    if(!primaryPath) {
+        primaryPath = 'rkpl'
+    }
 
     const [leadId, setLeadId] = useState('')
     const [productType, setProductType] = useState('')
@@ -15,10 +19,15 @@ const ThankYouBanner = props => {
 
     useEffect(() => {
         const leadId = getLeadId(primaryPath)
-        const productType = primaryPath.split('-').join(' ').slice(0, -1)
 
         setLeadId(leadId)
-        setProductType(productType)
+
+        console.log(primaryPath)
+        if(primaryPath !== 'rkpl') {
+            setProductType(primaryPath.split('-').join(' ').slice(0, -1))
+        } else {
+            setProductType('Credit Card')
+        }
     }, [])
 
     return (

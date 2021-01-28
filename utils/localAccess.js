@@ -1,7 +1,9 @@
 export const setLeadId = (primaryPath, newLeadId) => {
-    const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-    const leadId = { ...leadIdData, [primaryPath]: newLeadId }
-    localStorage.setItem('leadId', JSON.stringify(leadId))
+    if(primaryPath) {
+        const leadIdData = JSON.parse(localStorage.getItem('leadId'))
+        const leadId = { ...leadIdData, [primaryPath]: newLeadId }
+        localStorage.setItem('leadId', JSON.stringify(leadId))
+    }
 }
 
 export const getLeadId = primaryPath => {

@@ -39,7 +39,8 @@ const PrimaryPage = (props) => {
     }
   };
 
-  const getComponents = (dynamic, preferredBanks) => {
+  const getComponents = (dynamic, preferredSelectionLists) => {
+    console.log('preferredSelectionLists: ', preferredSelectionLists)
     return dynamic.map((block) => {
       switch (block.__component) {
         case "banners.credit-cards-banner-component":
@@ -69,7 +70,7 @@ const PrimaryPage = (props) => {
         case "blocks.ups-cards-component":
           return <UspCards key={block.id} data={block} />;
         case "form-components.onboarding-short-form":
-          return <ShortExtendedForm key={block.id} data={block} preferredBanks={preferredBanks} />;
+          return <ShortExtendedForm key={block.id} data={block} preferredSelectionLists={preferredSelectionLists} />;
 
         case "offers.popular-offers-credit-cards-component":
         case "offers.popular-offers-personal-loans-component":
@@ -101,7 +102,7 @@ const PrimaryPage = (props) => {
 
   return (
     <div className={props.pageClasses}>
-      {props.data ? <Layout>{getComponents(props.data.dynamic, props.preferredBanks)}</Layout> : null}
+      {props.data ? <Layout>{getComponents(props.data.dynamic, props.preferredSelectionLists)}</Layout> : null}
     </div>
   );
 };
@@ -115,15 +116,14 @@ export async function getServerSideProps(ctx) {
 
   const pageData = await strapi.processReq("GET", `pages?slug=${primaryPath}`)
   const data = pageData && pageData.length ? pageData[0] : null;
-  const preferredBanksData = await strapi.processReq("GET", `list-preferences`)
-  const preferredBanks = preferredBanksData[0]
+  const preferredSelectionLists = await strapi.processReq("GET", `list-preferences`)
 
   if (data) {
     await updatePopularOffers(data);
     await updateTrendingOffers(data);
   }
 
-  return { props: { data, pageClasses, preferredBanks } };
+  return { props: { data, pageClasses, preferredSelectionLists } };
 }
 
 export default PrimaryPage;

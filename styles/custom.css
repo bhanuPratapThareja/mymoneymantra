@@ -800,7 +800,7 @@ div#address_proof_upload_button {
 }
 
 .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container .form__group.verified-input {
-  margin-bottom: 8px;
+  margin-bottom: 0px;
 }
 
 .long-form form .shortforms-container .dropdown-content {
@@ -1640,3 +1640,12 @@ img {
 }
 
 /* vikas css ends*/
+
+.style_as_dropdown input {
+  cursor: pointer !important;
+  caret-color: transparent !important;
+}
+
+.dropdown-content-links_link:hover {
+  background-color: #f2f3f2 !important;
+}
