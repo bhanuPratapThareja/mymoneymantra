@@ -4,8 +4,8 @@ import {
   getWholeNumberFromCurrency,
 } from "./formattedCurrency";
 
-export const generateInputs = (component, updateField, checkInputValidity, handleInputDropdownSelection) => {
-  const handleChange = (e, type, focusDropdown) => {
+export const generateInputs = (component, handleChange, checkInputValidity, handleInputDropdownSelection, formType) => {
+  const handleInputChange = (e, type, focusDropdown, style_as_dropdown) => {
     let { name, value, checked } = e.target;
     let field = {};
 
@@ -15,7 +15,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
       if (isNaN(numString)) {
         return;
       }
-      value = getFormattedCurrency(value);
+      value = getFormattedCurrency(value)
     }
 
     if (type === 'checkbox') {
@@ -23,10 +23,13 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
     } else {
       field = { name, value, type };
       if (type === "input_with_dropdown") {
+        // if (!focusDropdown && style_as_dropdown) {
+        //   return
+        // }
         field.focusDropdown = focusDropdown
       }
     }
-    updateField(field);
+    handleChange(field)
   };
 
   const validate = (e, type) => {
@@ -50,7 +53,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
       const value = datepicker.val();
       const field = { name, value, type, blur: true, currentActiveInput: name };
       if (value) {
-        updateField(field);
+        handleChange(field);
       }
     }, 250);
   };
@@ -74,7 +77,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
         attachment = false;
       }
       const field = { name, value, type, attachment };
-      updateField(field);
+      handleChange(field);
     }
   };
 
@@ -156,7 +159,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
           autoComplete="off"
           required={mandatory}
           onBlur={(e) => validate(e, type)}
-          onChange={(e) => handleChange(e, type)}
+          onChange={(e) => handleInputChange(e, type)}
         />
         <label className="form__label">{label}</label>
         {error ? (
@@ -183,7 +186,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
           autoComplete="off"
           required={mandatory}
           onBlur={(e) => validate(e, type)}
-          onChange={(e) => handleChange(e, type)}
+          onChange={(e) => handleInputChange(e, type)}
         />
         <label className="form__label">{label}</label>
         {error ? (
@@ -208,7 +211,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
           autoComplete="off"
           required={mandatory}
           onBlur={(e) => validate(e, type)}
-          onChange={(e) => handleChange(e, type)}
+          onChange={(e) => handleInputChange(e, type)}
         />
         <label className="form__label">{label}</label>
         {error ? (
@@ -258,22 +261,33 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
   }
 
   if (type === "input_with_dropdown") {
-    const { input_type, selectedId, dependent, select_name } = component;
+    const { input_type, selectedId, dependent, select_name, style_as_dropdown } = component;
 
     const fieldId = `${input_id}_${type}`;
     const listStyles = list && list.length ? { display: "block" } : { display: "none" };
     const dropDownClass = selectedId === "*" || dependent ? "disabled_input" : "dropdown_enabled";
     fieldClasses.push(dropDownClass);
     fieldClasses.push(input_class);
+    if (style_as_dropdown) {
+      fieldClasses.push('style_as_dropdown')
+    }
     if (list && list.length && getDevice() !== "desktop") {
-      const listEl = document.getElementById(fieldId);
-      if (listEl) {
-        const listElOffset = listEl.offsetTop + 40;
+      let listEl
+      let listElOffset = 0
+      if (formType === 'lf') {
+        listEl = document.getElementById(fieldId)
+        listElOffset = listEl.offsetTop
+      } else if (formType === 'sf') {
+        listEl = document.getElementsByClassName('lets-find-container')[0]
+        listElOffset = listEl.offsetTop + 140
+      }
+
+      if (listEl && listElOffset) {
         window.scrollTo({ top: listElOffset, behavior: "smooth" });
       }
     }
     return (
-      <div className={fieldClasses.join(" ")} id={fieldId} key={id}>
+      <div className={fieldClasses.join(' ')} id={fieldId} key={id}>
         <input
           className="form__field"
           name={input_id}
@@ -285,8 +299,8 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
           disabled={selectedId === "*" || dependent}
           required={mandatory}
           onBlur={(e) => validate(e, type)}
-          onChange={(e) => handleChange(e, type)}
-          onFocus={e => handleChange(e, type, true)}
+          onChange={(e) => handleInputChange(e, type, false, style_as_dropdown)}
+          onFocus={e => handleInputChange(e, type, true)}
         />
         <label className="form__label">{label}</label>
 
@@ -298,7 +312,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
           <div className="dropdown-content-links">
             {list.map((item, i) => {
               return (
-                <a key={i} onClick={() => onSelect(input_id, type, item)}>
+                <a key={i} onClick={() => onSelect(input_id, type, item)} className="dropdown-content-links_link">
                   {item[select_name]}
                 </a>
               );
@@ -355,7 +369,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
                   name={box.input_id}
                   id={box.input_id}
                   value={box.checked}
-                  onChange={(e) => handleChange(e, type)}
+                  onChange={(e) => handleInputChange(e, type)}
                 />
                 <label htmlFor={box.input_id}>
                   <span dangerouslySetInnerHTML={{ __html: box.label }}></span></label>
@@ -394,7 +408,7 @@ export const generateInputs = (component, updateField, checkInputValidity, handl
                       name={input_id}
                       id={button.value}
                       value={button.value}
-                      onChange={(e) => handleChange(e, type)}
+                      onChange={(e) => handleInputChange(e, type)}
                     />
                   </div>
                 );
