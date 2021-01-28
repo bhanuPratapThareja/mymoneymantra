@@ -75,30 +75,6 @@ class BlogFilterOptions extends React.Component {
                     </div>
                     <div className="content">
                         <form>
-                            {/* {checkboxes && checkboxes.length ? <>
-                                {checkboxes.map(checkboxGroup => {
-                                    return (
-                                        <div className="content-one" key={checkboxGroup.id}>
-                                            <h5>{checkboxGroup.name}</h5>
-                                            <div className="fields-wrapper">
-                                                {checkboxGroup.values.map((checkbox, i) => {
-                                                    return (
-                                                        <div className="checkbox-container" key={checkbox.id}>
-                                                            <div className="checkbox">
-                                                                <input type="checkbox" id={checkbox.tag} name={checkbox.checkbox_name} onChange={e => this.handleCheckbox(e, checkboxGroup.type)} />
-                                                                <label htmlFor={checkbox.tag}>
-                                                                    <span>{checkbox.checkbox_name}</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    )
-
-                                                })}
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                            </> : null} */}
 
                             {checkboxes && checkboxes.length ? <>
                                 {checkboxes.map(checkboxGroup => {
