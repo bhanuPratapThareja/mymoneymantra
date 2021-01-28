@@ -234,7 +234,6 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.request.payload.address[3].stdCode = permanentPincode ? permanentPincode.stdCode : ""
         let headers = {}
 
-        console.log('bbbbbb')
 
         console.log(body.request.payload)
 
