@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Image from '../ImageComponent/ImageComponent'
@@ -55,6 +56,19 @@ const BlogFilter = props => {
          return
       }
 
+      if (filter.date) {
+         let filteredBlogs = []
+         data.forEach(blog => {
+            const { published_at } = blog
+            let blogPublishDate = moment(published_at).format('YYYY-MM-DD')
+            if (moment(blogPublishDate).isSame(filter.date)) {
+               filteredBlogs.push(blog)
+            }
+         })
+
+         setBlogs(filteredBlogs)
+         return
+      }
       setBlogs(data)
 
    }
@@ -77,8 +91,8 @@ const BlogFilter = props => {
             <div className="filter-cards-wrapper">
                {
                   blogs.length ? blogs.map((blog, i) => {
-                     const { header, short_text, image, read_text, redirect_url, id, createdAt, popular } = blog
-                     const date = new Date(createdAt);
+                     const { header, short_text, image, read_text, redirect_url, id, createdAt, popular, published_at } = blog
+                     const date = new Date(published_at);
                      const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
                      const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
                      const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);

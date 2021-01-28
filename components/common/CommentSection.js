@@ -11,8 +11,30 @@ const CommentSection = (props) => {
 
     useEffect(() => {
         const data = getBlogComments(props.blogId)
-        data.then(res => (setCommentData(res))).catch(err => console.log(err))
+        data.then(res => (
+            setCommentData(res))
+        ).catch(err => console.log(err))
     }, [props.blogId])
+
+    const getCommentSentiment = async (userId, commentId) => {
+        let result = {}
+        const { url } = getApiData('commentLikeDislike')
+        let data = JSON.parse(JSON.stringify(commentData))
+        try {
+            const response = await axios.get(`${url}?customerId=${userId}&commentId=${commentId}`)
+            data.comments.forEach(c => {
+                if (c.commentId == commentId) {
+                    c.sentiment = response.data.sentiment
+                    console.log("sentiment captured")
+                }
+            })
+            // result = response.data
+            // return result
+            setCommentData(data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     const blogLikeDislike = (sentiment, blogId) => {
         const { url, body } = getApiData('blogLikeDislike')
@@ -95,20 +117,23 @@ const CommentSection = (props) => {
                     <input id="user-comment" type="text" value={comment} onChange={(e) => setComment(e.target.value)} onKeyUp={(e) => postComment(e, comment, blogId)} name="comment" placeholder="Add a comment..." />
                     <div className="added-comments">
                         {
-                            commentData.comments ? commentData.comments.map((comment, i) => (
-                                <div key={i} className="user">
-                                    <div className="image"></div>
-                                    <div className="comment">
-                                        <h5>{comment.userName}</h5>
-                                        <h6>{comment.comment}</h6>
-                                        <div className="like-dislike-click">
-                                            <img onClick={() => commentLikeDislike('like', blogId, comment.commentId)} src='/assets/images/icons/like.svg' />
-                                            <img onClick={() => commentLikeDislike('dislike', blogId, comment.commentId)} src='/assets/images/icons/dislike.svg' />
+                            commentData.comments ? commentData.comments.map((comment, i) => {
+                                // getCommentSentiment('101', comment.commentId)
+                                return (
+                                    <div key={i} className="user">
+                                        <div className="image"></div>
+                                        <div className="comment">
+                                            <h5>{comment.userName}</h5>
+                                            <h6>{comment.comment}</h6>
+                                            <div className="like-dislike-click">
+                                                <img onClick={() => commentLikeDislike('like', blogId, comment.commentId)} src='/assets/images/icons/like.svg' />
+                                                <img onClick={() => commentLikeDislike('dislike', blogId, comment.commentId)} src='/assets/images/icons/dislike.svg' />
+                                            </div>
+                                            <span className="time">{comment.date}</span>
                                         </div>
-                                        <span className="time">{comment.date}</span>
                                     </div>
-                                </div>
-                            )) : null
+                                )
+                            }) : null
                         }
                     </div>
                 </div>
