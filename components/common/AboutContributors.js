@@ -12,7 +12,6 @@ const AboutContributors = (props) => {
                         <h3>{props.blogsCount ? props.blogsCount : "0"} <span>{props.blogsCount == 1 ? "Post" : "Posts"}</span></h3>
                         <h3>, 0 <span>Comment</span></h3>
                     </div>
-                    <p className="cstm-desig">Employee - MyMoneyMantra  |</p>
                     <h5 className="cstm-main-content" dangerouslySetInnerHTML={{ __html: blog_contributor_about }}></h5>
                 </div>
             </section>

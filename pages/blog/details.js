@@ -3,22 +3,13 @@ import { getClassesForPage } from '../../utils/classesForPage'
 import Layout from '../../components/Layout'
 import BlogDetails from '../../components/common/BlogsDetails'
 import BlogMediaLinks from '../../components/common/BlogMediaLinks'
-import CommentSection from '../../components/common/CommentSection'
 import ProductSlider from '../../components/common/ProductSlider'
 import Offers from '../../components/common/Offers'
 import Blogger from '../../components/common/Blogger'
-import { useEffect, useState } from 'react'
-import { getBlogComments } from '../../services/blogService'
 
 
 
 const BlogDetail = props => {
-    // let [commentData, setCommentData] = useState([])
-    // useEffect(() => {
-    //     const data = getBlogComments(props.blogData.id)
-    //     data.then(res => (setCommentData(res)))
-    //     window.scroll(0, 0)
-    // }, [props.blogData])
     const getComponents = (dynamic) => {
         return dynamic.map(block => {
             switch (block.__component) {

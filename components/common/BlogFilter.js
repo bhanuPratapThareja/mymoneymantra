@@ -1,16 +1,73 @@
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import Image from '../ImageComponent/ImageComponent'
+import BlogFilterOptions from './BlogFilterOptions'
 
 const BlogFilter = props => {
    const { blogsFilter, data } = props
+   const [blogs, setBlogs] = useState([])
+   const router = useRouter()
+
+   const onOpenBlog = blog => {
+      router.push({ pathname: '/blog/details', query: { id: blog.id } })
+   }
+   const onOpenFilter = () => {
+      const el = document.getElementsByClassName('filter-option')[0]
+      $("#" + el.id + "-show").slideToggle("300");
+      $('body', "html").css("overflow", "hidden")
+   }
+
+   useEffect(() => {
+      setBlogs(data)
+   }, [])
+
+   const onApplyFilter = (filter) => {
+      if (filter.categories.length) {
+         let filteredBlogs = []
+         data.forEach(blog => {
+            const { blog_categories } = blog
+            if (blog_categories.length) {
+               blog_categories.forEach(category => {
+                  console.log(category.blog_category_name)
+                  if (filter.categories.includes(category.blog_category_name)) {
+                     filteredBlogs.push(blog)
+                  }
+               })
+            }
+            setBlogs(filteredBlogs)
+         })
+         return
+      }
+      if (filter.subCategories.length) {
+         let filteredBlogs = []
+         data.forEach(blog => {
+            const { blog_sub_categories } = blog
+            if (blog_sub_categories.length) {
+               blog_sub_categories.forEach(category => {
+                  console.log(category.blog_sub_category)
+                  if (filter.subCategories.includes(category.blog_sub_category)) {
+                     filteredBlogs.push(blog)
+                  }
+               })
+            }
+            setBlogs(filteredBlogs)
+         })
+         return
+      }
+
+      setBlogs(data)
+
+   }
    return (
       <section className="blogs-filter container">
          <div className="blogs-filter-wrapper">
             <div className="filters">
                <div className="cards">
-                  <h3><span id="count">57</span> credit cards</h3>
+                  <h3><span id="count">{blogs.length}</span> Blogs</h3>
                </div>
                <div className="filter">
-                  <button className="" id="listing-filter">Filters
+                  <button className="filter-option"
+                     id="listing-filter" onClick={onOpenFilter} >Filters
                    <Image src="/assets/images/icons/down-chevron.svg" />
                   </button>
                </div>
@@ -19,7 +76,7 @@ const BlogFilter = props => {
          <div className="filter-cards">
             <div className="filter-cards-wrapper">
                {
-                  data.map((blog, i) => {
+                  blogs.length ? blogs.map((blog, i) => {
                      const { header, short_text, image, read_text, redirect_url, id, createdAt, popular } = blog
                      const date = new Date(createdAt);
                      const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
@@ -35,22 +92,25 @@ const BlogFilter = props => {
                               <span dangerouslySetInnerHTML={{ __html: short_text }}></span>
                               <div className="details">
                                  <span>{createdDate} </span><span>{read_text}</span>
-                                 <button>Read more</button>
+                                 <button onClick={() => onOpenBlog(blog)}>Read more</button>
                               </div>
                            </div>
                         </div>
                      )
-                  })
+                  }) : null
                }
             </div>
-            <div className="register-partner load-more">
+            <div>
+               <BlogFilterOptions filters={blogsFilter} applyFilter={onApplyFilter} />
+            </div>
+            {/* <div className="register-partner load-more">
                <div className="header-access register-cta">
                   <div className="signup-cta secondary-cta">
                      <div className="border"></div>
                      <button id="load_more">Load More</button>
                   </div>
                </div>
-            </div>
+            </div> */}
          </div>
       </section>
 

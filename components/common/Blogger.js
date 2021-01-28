@@ -31,6 +31,7 @@ const Blogger = props => {
                                 <div className="content">
                                     <span dangerouslySetInnerHTML={{ __html: header }}></span>
                                     <span dangerouslySetInnerHTML={{ __html: short_text }}></span>
+                                    
 
                                     <div className="details">
                                         <span>{createdDate} </span><span>{read_text}</span>
