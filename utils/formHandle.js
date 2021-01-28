@@ -141,7 +141,7 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists) => {
         inp.value = field.value;
         inp.verified = true;
         inp.error = false
-
+        
         // special case for radio to disable another input
 
         if (inp.radio.disable_input_with_end_point_name) {

@@ -49,9 +49,7 @@ class LongForm extends React.Component {
     let bankName
     let bankId
 
-    console.log(this.props.bank)
     if (this.props.bank) {
-
       bankName = this.props.bank.bank_name;
       bankId = this.props.bank.bank_id
     }
@@ -131,7 +129,7 @@ class LongForm extends React.Component {
       bankName: bankName ? bankName : 'Rkpl',
       bankId,
       leadId,
-      submitButtonDisabled: false,
+      submitButtonDisabled: enableCheckboxes.length !== 0,
       invalidFormError: invalid_form_error_message,
       askForOtp: always_ask_for_otp,
       formType: 'lf'
@@ -175,9 +173,11 @@ class LongForm extends React.Component {
 
     this.setState({ longFormSections: newLongFormSections, errors: false }, () => {
       if (textTypeInputs.includes(field.type) || field.type === "radio" || field.type === 'input_with_dropdown' || field.type === 'money') {
-
         this.checkInputValidity(field, field.focusDropdown)
       }
+
+      console.log(this.state.longFormSections)
+
       const { enableCheckboxes } = this.state;
       let trueEnableCheckboxes = [];
       if (enableCheckboxes.length) {
