@@ -286,12 +286,12 @@ class ShortExtendedForm extends React.Component {
         updateDropdownList(inputs, listType, list, input_id)
         inputs.forEach(input => {
             if(input.input_id === input_id) {
-              if(list && list.length){
-                let filteredItemList = list.filter(item => item[input.select_name] === field.value)
-                let filteredItem = filteredItemList.length ? filteredItemList[0] : null
-                this.handleInputDropdownSelection(input_id, filteredItem)
+                if(list && list.length && field.value){
+                  let filteredItemList = list.filter(item => item[input.select_name] === field.value.toUpperCase())
+                  let filteredItem = filteredItemList.length ? filteredItemList[0] : null
+                  this.handleInputDropdownSelection(input_id, filteredItem)
+                }
               }
-            }
           })
         this.setState({ ...this.state, slides: newSlides })
     }
