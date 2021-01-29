@@ -21,7 +21,7 @@ export const getCurrentSlideInputs = (state) => {
   return { newSlides, inputs };
 };
 
-export const handleChangeInputs = (inputs, field, preferredSelectionLists) => {
+export const handleChangeInputs = (inputs, field, preferredSelectionLists, selectedBank) => {
   let inputDropdown = null;
   if (field.type === "checkbox") {
     inputs.forEach((inp) => {
@@ -38,14 +38,17 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists) => {
       if (inp.input_id === field.name) {
         const listType = inp.list_type
         const masterName = inp.master_name
-        // if (!field.value && field.focusDropdown && !inp.selectedId && inp.list_preference && preferredSelectionLists) {
         if (field.focusDropdown && inp.list_preference && preferredSelectionLists) {
           let prefferedList = []
           let isPrioritized = false
+
           let preferredListDataArray = preferredSelectionLists.filter(listItem => inp.list_preference.name === listItem.name)
+
           
           if(preferredListDataArray.length) {
-            const preferredListData = preferredListDataArray[0]
+            let preferredListData = preferredListDataArray[0]
+          
+            
             preferredListData[preferredListData.extract_list].forEach(item => {
               if (item.priority) {
                 isPrioritized = true
@@ -54,6 +57,7 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists) => {
               const preferredItem = {
                 [inp.select_id]: item[preferredListData.extract_id],
                 [inp.select_name]: item[preferredListData.extract_name],
+                slug: item.slug,
                 priority: item.priority
               }
               prefferedList.push(preferredItem)
@@ -63,6 +67,13 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists) => {
               prefferedList.sort((a, b) => (a.priority > b.priority) ? 1 : -1)
             }
           }
+
+          if(inp.list_preference.extract_list === 'card_types') {
+            if(selectedBank && selectedBank.bankId) {
+              prefferedList = prefferedList.filter(listItem => listItem.card_type_id === selectedBank.bankId)
+            }
+          }
+
 
           inputDropdown = { listType, masterName, inp, prefferedList }
 
@@ -385,7 +396,6 @@ export const updateDropdownList = (inputs, listType, list, input_id) => {
 };
 
 export const updateSelectionFromDropdown = (inputs, input_id, item) => {
-  // console.log(item)
   let bankItem
   let update_field_with_end_point_name = ""
   inputs.forEach((inp) => {

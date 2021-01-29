@@ -137,7 +137,7 @@ class LongForm extends React.Component {
       long_form_blocks.forEach(long_form_block => {
         const inputs = long_form_block.blocks;
 
-        const inputDropdown = handleChangeInputs(inputs, field, this.props.preferredSelectionLists)
+        const inputDropdown = handleChangeInputs(inputs, field, this.props.preferredSelectionLists, this.state.bank)
         if (inputDropdown && field.type === 'input_with_dropdown') {
           const { listType, masterName, inp, prefferedList } = inputDropdown
           if (field.focusDropdown && prefferedList) {
@@ -207,11 +207,30 @@ class LongForm extends React.Component {
     const newLongFormSections = [...this.state.longFormSections];
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
-      long_form_blocks.forEach(async (long_form_block) => {
+      long_form_blocks.forEach((long_form_block) => {
         const inputs = long_form_block.blocks;
         const {bankItem} = updateSelectionFromDropdown(inputs, input_id, item)
-        if(bankItem &&  this.state.primaryPath === 'rkpl') {
-          this.setState({ bank: bankItem })
+        
+        if(bankItem && bankItem.bankId && this.state.primaryPath === 'rkpl') {
+          this.setState({ bank: bankItem }, () => {
+            newLongFormSections.forEach((longFormSectionRkpl) => {
+              const rkplBlocks = longFormSectionRkpl.sections[0].long_form_blocks
+              rkplBlocks.forEach(rkplBlocks => {
+                const rkplInputs = rkplBlocks.blocks
+                rkplInputs.forEach(rkplInput => {
+                  if(rkplInput.end_point_name === 'cardType' && rkplInput.selectedId !== bankItem.bankId) {
+                    rkplInput.selectedId = null
+                    rkplInput.selectedItem = null
+                    rkplInput.error = false
+                    rkplInput.errorMsg = ''
+                    rkplInput.verified = false
+                    rkplInput.list = []
+                    rkplInput.value = ''
+                  }
+                })
+              })
+            })
+          })
         }
       });
     });
