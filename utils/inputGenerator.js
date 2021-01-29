@@ -4,7 +4,8 @@ import {
   getWholeNumberFromCurrency,
 } from "./formattedCurrency";
 
-export const generateInputs = (component, handleChange, checkInputValidity, handleInputDropdownSelection, formType) => {
+export const generateInputs = (component, handleChange, checkInputValidity, 
+  handleInputDropdownSelection, formType) => {
   const handleInputChange = (e, type, focusDropdown, style_as_dropdown) => {
     let { name, value, checked } = e.target;
     let field = {};
@@ -23,9 +24,9 @@ export const generateInputs = (component, handleChange, checkInputValidity, hand
     } else {
       field = { name, value, type };
       if (type === "input_with_dropdown") {
-        // if (!focusDropdown && style_as_dropdown) {
-        //   return
-        // }
+        if (style_as_dropdown) {
+          return
+        }
         field.focusDropdown = focusDropdown
       }
     }
@@ -38,8 +39,8 @@ export const generateInputs = (component, handleChange, checkInputValidity, hand
     checkInputValidity(field);
   };
 
-  const onSelect = (input_id, type, selectedItem) => {
-    handleInputDropdownSelection(input_id, type, selectedItem);
+  const onSelect = (input_id, selectedItem) => {
+    handleInputDropdownSelection(input_id, selectedItem);
   };
 
   const openDatePicker = () => {
@@ -310,9 +311,10 @@ export const generateInputs = (component, handleChange, checkInputValidity, hand
 
         {list ? <div className="dropdown-content" style={listStyles}>
           <div className="dropdown-content-links">
+          {style_as_dropdown ? <a className="dropdown-content-links_link-label">Select {label}</a> : null}
             {list.map((item, i) => {
               return (
-                <a key={i} onClick={() => onSelect(input_id, type, item)} className="dropdown-content-links_link">
+                <a key={i} onClick={() => onSelect(input_id, item)} className="dropdown-content-links_link">
                   {item[select_name]}
                 </a>
               );

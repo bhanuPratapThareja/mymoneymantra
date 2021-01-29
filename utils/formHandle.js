@@ -21,7 +21,7 @@ export const getCurrentSlideInputs = (state) => {
   return { newSlides, inputs };
 };
 
-export const handleChangeInputs = (inputs, field, preferredSelectionLists) => {
+export const handleChangeInputs = (inputs, field, preferredSelectionLists, selectedBank) => {
   let inputDropdown = null;
   if (field.type === "checkbox") {
     inputs.forEach((inp) => {
@@ -38,16 +38,17 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists) => {
       if (inp.input_id === field.name) {
         const listType = inp.list_type
         const masterName = inp.master_name
-        // if (!field.value && field.focusDropdown && !inp.selectedId && inp.list_preference && preferredSelectionLists) {
         if (field.focusDropdown && inp.list_preference && preferredSelectionLists) {
           let prefferedList = []
           let isPrioritized = false
-          console.log(inp.list_preference)
-          console.log(preferredSelectionLists)
+
           let preferredListDataArray = preferredSelectionLists.filter(listItem => inp.list_preference.name === listItem.name)
+
           
           if(preferredListDataArray.length) {
-            const preferredListData = preferredListDataArray[0]
+            let preferredListData = preferredListDataArray[0]
+          
+            
             preferredListData[preferredListData.extract_list].forEach(item => {
               if (item.priority) {
                 isPrioritized = true
@@ -56,7 +57,9 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists) => {
               const preferredItem = {
                 [inp.select_id]: item[preferredListData.extract_id],
                 [inp.select_name]: item[preferredListData.extract_name],
-                priority: item.priority
+                priority: item.priority,
+                cardTypeBankId: item.cardTypeBankId,
+                designationBankId: item.designationBankId
               }
               prefferedList.push(preferredItem)
             })
@@ -65,6 +68,27 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists) => {
               prefferedList.sort((a, b) => (a.priority > b.priority) ? 1 : -1)
             }
           }
+
+          if(inp.list_preference.extract_list === 'card_types') {
+            if(selectedBank && selectedBank.bankId) {
+              prefferedList = prefferedList.filter(listItem => listItem.cardTypeBankId === selectedBank.bankId)
+            }
+          }
+
+          if(inp.list_preference.extract_list === 'designations') {
+            if(selectedBank && selectedBank.bankId) {
+              prefferedList = prefferedList.filter(listItem => listItem.designationBankId === selectedBank.bankId)
+            }
+          }
+
+
+          prefferedList.forEach(item => {
+            delete item.cardTypeBankId
+            delete item.designationBankId
+            if(!isPrioritized) {
+              delete item.priority
+            }
+          })
 
           inputDropdown = { listType, masterName, inp, prefferedList }
 
@@ -141,7 +165,7 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists) => {
         inp.value = field.value;
         inp.verified = true;
         inp.error = false
-        
+
         // special case for radio to disable another input
 
         if (inp.radio.disable_input_with_end_point_name) {
@@ -387,9 +411,10 @@ export const updateDropdownList = (inputs, listType, list, input_id) => {
 };
 
 export const updateSelectionFromDropdown = (inputs, input_id, item) => {
+  let bankItem
   let update_field_with_end_point_name = ""
   inputs.forEach((inp) => {
-    if (inp.input_id === input_id) {
+    if (inp.input_id === input_id && item) {
       update_field_with_end_point_name = inp.update_field_with_end_point_name
       inp.list = []
       inp.value = item[inp.select_name]
@@ -397,6 +422,9 @@ export const updateSelectionFromDropdown = (inputs, input_id, item) => {
       inp.selectedItem = item
       inp.error = false
       inp.verified = true
+      if(inp.end_point_name === 'bankId' &&  inp.selectedItem) {
+        bankItem = inp.selectedItem
+      }
     }
 
     if (inp.end_point_name === update_field_with_end_point_name && inp.dependent) {
@@ -411,7 +439,8 @@ export const updateSelectionFromDropdown = (inputs, input_id, item) => {
         }
       });
     }
-  });
+  })
+  return {bankItem}
 };
 
 export const resetDropdowns = (inputs, errorMsgs) => {

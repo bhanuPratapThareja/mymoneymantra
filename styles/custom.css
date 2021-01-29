@@ -1777,3 +1777,12 @@ img {
 .dropdown-content-links_link:hover {
   background-color: #f2f3f2 !important;
 }
+
+.style_as_dropdown .dropdown-content {
+  margin-top: -70px !important;
+}
+
+.dropdown-content-links_link-label {
+  font-size: 14px !important;
+  color: grey !important;
+}
