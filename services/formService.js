@@ -173,7 +173,7 @@ export const generateLead = async (data, primaryPath, formType) => {
 
 
         body.request.payload.leadId = getLeadId()
-        body.request.payload.productId = localStorage.getItem('productId')
+        body.request.payload.productId = '6'
         body.request.payload.cardType = cardType.cardTypeId ? cardType.cardTypeId : ''
         body.request.payload.surrogateType = surrogateType.surrogateTypeId ? surrogateType.surrogateTypeId : ''
         body.request.payload.requestedLoanamount = requestedLoanamount
