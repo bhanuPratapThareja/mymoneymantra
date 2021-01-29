@@ -240,9 +240,9 @@ export const generateLead = async (data, primaryPath, formType) => {
             utmCampaignChoice = utmCampaign ? utmCampaign : ''
         }
 
-        body.request.payload.utmCampaign = utmCampaignChoice,
-        body.request.payload.utmMedium = utmMedium ? utmMedium : '',
-        body.request.payload.utmSource = utmSource ? utmSource : '',
+        body.request.payload.utmCampaign = utmCampaignChoice
+        body.request.payload.utmMedium = utmMedium ? utmMedium : ''
+        body.request.payload.utmSource = utmSource ? utmSource : ''
         body.request.payload.utmRemark = utmRemark ? utmRemark : ''
         
         let headers = {}
