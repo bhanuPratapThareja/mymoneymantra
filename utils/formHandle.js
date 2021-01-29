@@ -82,13 +82,13 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
           }
 
 
-          prefferedList.forEach(item => {
-            delete item.cardTypeBankId
-            delete item.designationBankId
-            if(!isPrioritized) {
-              delete item.priority
-            }
-          })
+          // prefferedList.forEach(item => {
+          //   delete item.cardTypeBankId
+          //   delete item.designationBankId
+          //   if(!isPrioritized) {
+          //     delete item.priority
+          //   }
+          // })
 
           inputDropdown = { listType, masterName, inp, prefferedList }
 

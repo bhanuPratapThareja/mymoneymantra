@@ -173,7 +173,7 @@ export const generateLead = async (data, primaryPath, formType) => {
 
 
         body.request.payload.leadId = getLeadId()
-        body.request.payload.productId = localStorage.getItem('productId')
+        body.request.payload.productId = '6'
         body.request.payload.cardType = cardType.cardTypeId ? cardType.cardTypeId : ''
         body.request.payload.surrogateType = surrogateType.surrogateTypeId ? surrogateType.surrogateTypeId : ''
         body.request.payload.requestedLoanamount = requestedLoanamount
@@ -240,9 +240,9 @@ export const generateLead = async (data, primaryPath, formType) => {
             utmCampaignChoice = utmCampaign ? utmCampaign : ''
         }
 
-        body.request.payload.utmCampaign = utmCampaignChoice,
-        body.request.payload.utmMedium = utmMedium ? utmMedium : '',
-        body.request.payload.utmSource = utmSource ? utmSource : '',
+        body.request.payload.utmCampaign = utmCampaignChoice
+        body.request.payload.utmMedium = utmMedium ? utmMedium : ''
+        body.request.payload.utmSource = utmSource ? utmSource : ''
         body.request.payload.utmRemark = utmRemark ? utmRemark : ''
         
         let headers = {}
