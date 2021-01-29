@@ -12,7 +12,6 @@ class BlogFilterOptions extends React.Component {
 
 
     componentDidMount() {
-
         const { filters } = this.props
         const { checkboxes } = filters[0]
         const updatedCheckboxes = this.props.filters[0].checkboxes
@@ -30,7 +29,7 @@ class BlogFilterOptions extends React.Component {
 
             this.setState({ checkboxes: updatedCheckboxes })
         }
-        console.log(filters)
+        console.log("all filters", filters)
 
     }
     closeFilter = () => {
@@ -40,6 +39,11 @@ class BlogFilterOptions extends React.Component {
     applyFilters = () => {
         this.props.applyFilter(this.state.filters)
         this.closeFilter()
+    }
+    handleDateChange = (e) => {
+        console.log(e.target.value)
+        const filters = { ...this.state.filters, date: e.target.value }
+        this.setState({ ...this.state, filters })
     }
     handleCheckbox = (e, type) => {
         const { name, checked } = e.target
@@ -73,13 +77,13 @@ class BlogFilterOptions extends React.Component {
                         <h3>Filters</h3>
                         <img src="/assets/images/icons/cross.svg" className="filter-cross" onClick={this.closeFilter} />
                     </div>
-                    <div className="content">
+                    <div className="filter-content content">
                         <form>
 
                             {checkboxes && checkboxes.length ? <>
                                 {checkboxes.map(checkboxGroup => {
                                     return (
-                                        <div className="content-one" key={checkboxGroup.id}>
+                                        <div className=" filter-content content-one" key={checkboxGroup.id}>
                                             <h5>{checkboxGroup.name}</h5>
                                             <div className="fields-wrapper">
                                                 {checkboxGroup.values.map((checkbox, i) => {
@@ -110,7 +114,10 @@ class BlogFilterOptions extends React.Component {
                                 })}
                             </> : null}
 
-
+                            <div className="content-one">
+                                <h5>By Published Date</h5>
+                                <input onChange={this.handleDateChange} type="date" />
+                            </div>
                             <div className="apply-filter">
                                 <button type="button" onClick={this.applyFilters}>Apply Filters</button>
                             </div>
