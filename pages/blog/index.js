@@ -17,22 +17,26 @@ const Blog = (props) => {
     window.scrollTo(0, 0)
   })
   const getComponents = (dynamic) => {
+    console.log(dynamic)
     return dynamic.map((block) => {
       switch (block.__component) {
         case "banners.blog-banners-component":
           return <BlogBanner key={block.id} data={block} />;
         case "offers.popular-blogs-component":
           return <Blogger key={block.id} data={block} />;
+          case "blocks.recent-blog":
+            return <Blogger key={block.id} data={block} />;  
         case "blocks.blog-contributors-component":
           return <FeaturedContributors key={block.id} data={block} />
         case "blocks.blog-category":
           return <ProductSlider key={block.id} data={block} />;
         case "blocks.blog-list-component":
           return <BlogFilter key={block.id} data={props.allBlogs} blogsFilter={props.blogsFilter} />;
-
+             
       }
     });
   };
+  
 
   return (
     <div className={props.pageClasses}>

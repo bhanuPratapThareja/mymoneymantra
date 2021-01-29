@@ -27,8 +27,11 @@ import {
 } from "../../utils/formHandle";
 
 import { getApiData } from '../../api/api';
+import Strapi from "../../providers/strapi"
 
+const strapi = new Strapi()
 class LongForm extends React.Component {
+  
   state = {
     longFormSections: [],
     submitButtonDisabled: true,
@@ -42,6 +45,7 @@ class LongForm extends React.Component {
     openOtpModal: false,
     cardType: "",
   };
+  
 
   componentDidMount() {
     let { primaryPath } = this.props.router.query;
@@ -430,10 +434,13 @@ class LongForm extends React.Component {
     if (!this.state.longFormSections) {
       return null;
     }
+    const { bank, product } = this.props 
 
     return (
       <div className="form-wrapper" id="longForm">
         <form onClick={this.handleClickOnSlideBackground}>
+        <div className="bank-logo">{this.state.primaryPath === 'credit-cards' ? <img src={`${strapi.baseUrl}${product.product_image.url}`} /> :
+                    <img src={`${strapi.baseUrl}${bank.bank_image.url}`} />}</div>
           {this.state.longFormSections.map((longFormSection) => {
             const long_form_blocks =
               longFormSection.sections[0].long_form_blocks;
