@@ -447,9 +447,9 @@ const api = {
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
       body: {
-        request: {
-          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-        },
+        // request: {
+        //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+        // },
         blogId: "3",
         customerId: "3",
         sentiment: "like"
@@ -475,9 +475,9 @@ const api = {
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
       body: {
-        request: {
-          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-        },
+        // request: {
+        //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+        // },
         "blogId": "3",
         "customerId": "12345",
         "commentId": "1",
@@ -491,9 +491,9 @@ const api = {
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
       body: {
-        request: {
-          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-        },
+        // request: {
+        //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+        // },
         blogId: "3",
         customerId: "12345",
         comment: "1"
