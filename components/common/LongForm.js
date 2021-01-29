@@ -22,12 +22,16 @@ import {
   updateDropdownList,
   updateSelectionFromDropdown,
   resetDropdowns,
-} from "../../utils/formHandle"
+} from "../../utils/formHandle";
+
+import { getApiData } from '../../api/api';
+import { unpackComponents } from '../../services/componentsService';
 
 class LongForm extends React.Component {
   state = {
     longFormSections: [],
     submitButtonDisabled: true,
+    submissionError: '',
     errorMsgs: {
       mandatory: "Required Field",
     },
@@ -315,9 +319,10 @@ class LongForm extends React.Component {
     });
   };
 
-  onSubmitLongForm = () => {
+  onSubmitLongForm = e => {
+    e.preventDefault()
     let errors = false;
-    const newLongFormSections = [...this.state.longFormSections];
+    const newLongFormSections = [...this.state.longFormSections]
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
       long_form_blocks.forEach(async (long_form_block) => {
@@ -370,9 +375,13 @@ class LongForm extends React.Component {
       this.setState({ submitButtonDisabled: true });
       this.retrieveDataAndSubmit();
     } catch (err) {
-      alert(err.message);
+      this.setState({ submissionError: err.message })
     }
-  };
+  }
+
+  removeSubmissionErrorMsg = () => {
+    this.setState({ submissionError: '' })
+  }
 
   retrieveDataAndSubmit = () => {
     this.setState({ submitButtonDisabled: true, submissionError: '' })
@@ -450,7 +459,7 @@ class LongForm extends React.Component {
   };
 
   closeOtpModal = () => {
-    this.setState({ openOtpModal: false });
+    this.setState({ openOtpModal: false, submissionError: '' })
   };
 
   render() {
@@ -508,8 +517,7 @@ class LongForm extends React.Component {
             <button
               id="long-submit"
               disabled={this.state.submitButtonDisabled}
-              type="button"
-              onClick={this.onSubmitLongForm}
+              type="submit"
             >
               Submit Application
             </button>
@@ -517,10 +525,7 @@ class LongForm extends React.Component {
         </form>
 
         {this.state.openOtpModal ? (
-          <Modal
-            openModal={this.state.openOtpModal}
-            closeOtpModal={this.closeOtpModal}
-          >
+          <Modal openModal={this.state.openOtpModal} closeOtpModal={this.closeOtpModal} >
             <button onClick={this.closeOtpModal} className="close-btn">Close</button>
             <form className="otp-modal-form short-forms-wrapper">
               <div className="mobile-otp">
@@ -536,7 +541,7 @@ class LongForm extends React.Component {
                   />
                   <div className="otp-wrapper login-options">
                     <div className="form__group field">
-                      <Otp />
+                      <Otp  removeSubmissionErrorMsg={this.removeSubmissionErrorMsg} />
                       <label className="form__label" htmlFor="phone">
                         One time password
                       </label>
@@ -552,6 +557,7 @@ class LongForm extends React.Component {
                     </div>
                   </div>
                 </div>
+                {this.state.submissionError ? <p className="form-invalid-text">{this.state.submissionError}</p> : null}
                 <button type="button" onClick={this.onSubmitOtp}>
                   Submit OTP
                 </button>

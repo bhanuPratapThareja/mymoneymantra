@@ -11,16 +11,22 @@ axios.interceptors.request.use(async config => {
     try {
       const { url, body } = getApiData('authenticate')
       body.request.header.correlationId = generateCorrelationId()
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      })
-      const json = await res.json()
-      setAuthToken(json.response.payload)
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        })
+        const json = await res.json()
+        console.log(1)
+        setAuthToken(json.response.payload)
+      }catch(err) {
+        console.log(err)
+        throw new Error(err.message)
+      }
     } catch(err) {
       throw new Error('Authorization Error')
     }

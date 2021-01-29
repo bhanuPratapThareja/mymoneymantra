@@ -2,6 +2,10 @@ export const setPrimaryPath = primaryPath => {
     localStorage.setItem('primaryPath', primaryPath)
 }
 
+export const setProductType = productType => {
+    localStorage.setItem('productType', JSON.stringify(productType))
+}
+
 export const setLeadId = newLeadId => {
     const primaryPath = getPrimaryPath()
     const leadIdData = JSON.parse(localStorage.getItem('leadId'))
@@ -18,6 +22,10 @@ export const setLeadBank = newleadBank => {
 
 export const getPrimaryPath = () => {
     return localStorage.getItem('primaryPath')
+}
+
+export const getProductType = () => {
+    return JSON.parse(localStorage.getItem('productType'))
 }
 
 export const getLeadId = () => {

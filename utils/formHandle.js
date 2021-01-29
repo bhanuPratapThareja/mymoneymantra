@@ -1,4 +1,4 @@
-import $ from "jquery"
+import $ from "jquery";
 import { isInputValid, isMonetaryValid } from "./formValidations";
 import { getBase64, documentUpload, generateLead } from "../services/formService";
 import { getFormattedName } from "./formatDataForApi";

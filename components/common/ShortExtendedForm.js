@@ -32,6 +32,7 @@ class ShortExtendedForm extends React.Component {
         slideIndex: 0,
         currentSlide: 'onboard',
         submitButtonDisabled: true,
+        submissionError: '',
         slides: [],
         defaultOtpTime: 10,
         otpTimeLeft: 0,
@@ -40,17 +41,6 @@ class ShortExtendedForm extends React.Component {
         },
         slideButtonText: 'Next',
         enableCheckboxes: []
-    }
-
-    decrementOtpTime = () => {
-        // this.setState({ otpTimeLeft: this.state.defaultOtpTime }, () => {
-        //     this.otpInterval = setInterval(() => {
-        //         this.setState({ otpTimeLeft: --this.state.otpTimeLeft })
-        //         if (this.state.otpTimeLeft == 0 && this.otpInterval) {
-        //             clearInterval(this.otpInterval)
-        //         }
-        //     }, 1000)
-        // })
     }
 
     scrollToTopOfSlide = () => {
@@ -133,16 +123,12 @@ class ShortExtendedForm extends React.Component {
         this.setState({ ...this.state, slides: newSlides }, async () => {
             this.scrollToTopOfSlide()
             if (!errorsPresent) {
-                try {
-                    const mobileNo = getUserMobileNumber(this.state.slides[0])
-                    this.setState({ mobileNo, slideButtonText: 'Verify' })
-                    getOtp(mobileNo)
-                    setTimeout(() => {
-                        letsFindFormToOtpForm()
-                    }, 250)
-                } catch (err) {
-                    alert(err.message)
-                }
+                const mobileNo = getUserMobileNumber(this.state.slides[0])
+                this.setState({ mobileNo, slideButtonText: 'Verify' })
+                getOtp(mobileNo)
+                setTimeout(() => {
+                    letsFindFormToOtpForm()
+                }, 250)
             }
         })
     }
@@ -152,7 +138,7 @@ class ShortExtendedForm extends React.Component {
             await submitOtp(this.state.mobileNo)
             this.onSubmitLetGoSlide()
         } catch (err) {
-            alert(err.message)
+            this.setState({ submissionError: err.message })
         } finally {
             this.scrollToTopOfSlide()
         }
@@ -168,8 +154,12 @@ class ShortExtendedForm extends React.Component {
                 goToSlides()
             })
         } catch (err) {
-            alert(err)
+            this.setState({ submissionError: err })
         }
+    }
+
+    removeSubmissionErrorMsg = () => {
+        this.setState({ submissionError: '' })
     }
 
     onSubmitSlide = () => {
@@ -353,11 +343,12 @@ class ShortExtendedForm extends React.Component {
                             <OtpSlide
                                 onGoToLetFindForm={this.onGoToLetFindForm}
                                 onSubmitOtp={this.onSubmitOtp}
-                                decrementOtpTime={this.decrementOtpTime}
                                 otpTimeLeft={this.state.otpTimeLeft}
                                 mobileNo={this.state.mobileNo}
                                 slideButtonText={this.state.slideButtonText}
                                 disableOtpSubmitButton={this.state.disableOtpSubmitButton}
+                                submissionError={this.state.submissionError}
+                                removeSubmissionErrorMsg={this.removeSubmissionErrorMsg}
                             />
                         </div>
                     </div>
@@ -375,6 +366,7 @@ class ShortExtendedForm extends React.Component {
                             onSubmitSlide={this.onSubmitSlide}
                             slideButtonText={this.state.slideButtonText}
                             onSubmitShortForm={this.onSubmitShortForm}
+                            submissionError={this.state.submissionError}
                         />
                     </div>
                 </div>

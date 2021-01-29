@@ -1,17 +1,24 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from '../../components/ImageComponent/ImageComponent'
+import { unpackComponents } from '../../services/componentsService';
 
 const ProductDetails = props => {
     const router = useRouter()
     const primaryPath = router.query.primaryPath
+    
     const [leftPositionedOffers, setlLeftPositionedOffers] = useState([])
     const [rightPositionedOffers, setlRightPositionedOffers] = useState([])
 
     useEffect(() => {
+        getProductData()
+    }, [])
+
+    const getProductData = async () => {
+        const productData = await unpackComponents(props.productData[0])
         let leftOffers = []
         let rightOffers = []
-        props.product.details_component.forEach(offer => {
+        productData.product.product_detail.details.forEach(offer => {
             if (offer.position === 'left') {
                 leftOffers.push(offer)
             } else {
@@ -20,9 +27,7 @@ const ProductDetails = props => {
         })
         setlLeftPositionedOffers(leftOffers)
         setlRightPositionedOffers(rightOffers)
-    }, [])
-
-    const { bank } = props
+    }
 
     return (
         <div className="c-detail-page">

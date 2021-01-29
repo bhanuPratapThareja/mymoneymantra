@@ -1,73 +1,50 @@
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Image from '../ImageComponent/ImageComponent'
+import DecisionButton from '../DecisionButton/DescisionButton'
 
-import { getProductDecisionForDetailsBanner } from '../../services/offersService'
+import { getProductDecision } from '../../services/offersService'
+import { unpackComponents } from '../../services/componentsService'
 
 const DetailsBanner = props => {
-    const router = useRouter()
-    const primaryPath = router.query.primaryPath
-    const [productDetails, setPoductDetails] = useState(null)
+    const [productData, setproductData] = useState(null)
 
     useEffect(() => {
-        getDetailsWithButtonText(props.product)
+        getProductData()
     }, [])
 
-    const getDetailsWithButtonText = async product => {
-        const productDetails = await getProductDecisionForDetailsBanner(product, props.bank, primaryPath)
-        setPoductDetails(productDetails)
+    const getProductData = async () => {
+        const productData = await unpackComponents(props.productData[0])
+        await getProductDecision([productData])
+        setproductData(productData)
     }
 
-    const { bank_name } = props.bank
-    const { product_name, product_image, product_card_name } = props.product
-    const details = props.data.credit_cards_details_banner || props.data.personal_loans_details_banner ||  props.data.home_loans_details_banner
-
-    const onButtonClick = (buttonText, bank, offer) => {
-        const { slug: productSlug } = offer
-        const { bank_name: bankName, slug: bankSlug } = bank
-
-        let pathname = ''
-        const query = { bankName }
-
-
-        switch (buttonText) {
-            case 'Apply Now':
-            case 'Instant Approval':
-                pathname = `/thank-you?bankName=${bankName}`
-                break
-
-            // case 'Apply Now':
-            case 'EConnect':
-                pathname = `/${primaryPath}/long-form/${bankSlug}/${productSlug}`
-
-                break
-            // view details
-            default:
-                pathname = `/${primaryPath}/${bankSlug}/${productSlug}`
-                router.push({ pathname, query }, pathname, { shallow: true })
-        }
-
-        routerRedirect(pathname, query)
+    if (!productData) {
+        return null
     }
 
-    const routerRedirect = (pathname, query) => {
-        router.push({ pathname, query }, pathname, { shallow: true })
-    }
+    const { bank, product, productDecision } = productData
 
     return (
         <div className="combined-wrapper">
             <div className="mobile-background"></div>
             <section className="banner container">
                 <div className="banner-wrapper">
-                    <h1><b>{bank_name}</b><br />
-                    {product_name || product_card_name}</h1>
-                    <div dangerouslySetInnerHTML={{ __html: details.content }}></div>
-                    {productDetails ? <span className="details-button-div">
-                        <button onClick={() => onButtonClick(productDetails.productDecision, props.bank, productDetails)}>{productDetails.productDecision}</button>
-                    </span> : null}
+                    <h1><b>{bank.bank_name}</b><br />
+                        {product.product_name}</h1>
+                    <div dangerouslySetInnerHTML={{ __html: product.product_banner_detail.content }}></div>
+
+                    {productDecision ?
+                        <span className="details-button-div">
+                            <DecisionButton 
+                                buttonText={productDecision} 
+                                offer={productData}
+                                changePageType={props.changePageType}
+                            />
+                        </span> : null}
                 </div>
+
                 <div>
-                    <Image className="banner-card" image={product_image} />
+                    <Image className="banner-card" image={product.product_image.image} />
                 </div>
             </section>
         </div>
