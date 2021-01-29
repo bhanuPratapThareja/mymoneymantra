@@ -10,7 +10,7 @@ import {
   submitOtp,
   getOtp,
 } from "../../services/formService";
-import { getPrimaryPath, setLeadId, getLeadId, setLeadBank, getLeadBank } from "../../utils/localAccess";
+import { getPrimaryPath, setLeadId, getLeadId, setLeadBank, clearLeadId } from "../../utils/localAccess";
 import {
   getFormattedCurrency,
   getWholeNumberFromCurrency,
@@ -42,6 +42,10 @@ class LongForm extends React.Component {
 
   componentDidMount() {
     const primaryPath = getPrimaryPath()
+
+    if(primaryPath === 'rkpl') {
+      clearLeadId()
+    }
 
     let bank
     if (this.props.bank) {

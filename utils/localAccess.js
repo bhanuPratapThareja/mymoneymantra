@@ -33,3 +33,7 @@ export const getLeadBank = () => {
     const leadBank = leadBankData && leadBankData[primaryPath] ? leadBankData[primaryPath] : ''
     return leadBank
 }
+
+export const clearLeadId = () => {
+    localStorage.removeItem('leadId')
+}
