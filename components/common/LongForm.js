@@ -43,7 +43,7 @@ class LongForm extends React.Component {
   componentDidMount() {
     const primaryPath = getPrimaryPath()
 
-    if(primaryPath === 'rkpl') {
+    if (primaryPath === 'rkpl') {
       clearLeadId()
     }
 
@@ -222,7 +222,8 @@ class LongForm extends React.Component {
               rkplBlocks.forEach(rkplBlocks => {
                 const rkplInputs = rkplBlocks.blocks
                 rkplInputs.forEach(rkplInput => {
-                  if ((rkplInput.end_point_name === 'cardType' || rkplInput.end_point_name === 'designationId') && rkplInput.selectedId !== bankItem.bankId) {
+                  if ((rkplInput.end_point_name === 'cardType' && rkplInput.selectedItem && rkplInput.selectedItem.cardTypeBankId !== bankItem.bankId) ||
+                    (rkplInput.end_point_name === 'designationId' && rkplInput.selectedItem && rkplInput.selectedItem.designationBankId !== bankItem.bankId)) {
                     rkplInput.selectedId = null
                     rkplInput.selectedItem = null
                     rkplInput.error = false
