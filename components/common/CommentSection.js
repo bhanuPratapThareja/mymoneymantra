@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { getApiData } from '../../api/api';
 import { getBlogComments } from '../../services/blogService'
@@ -143,6 +144,19 @@ const CommentSection = (props) => {
 
     }
 
+    const getDateToDisplay = (date) => {
+        let newDate = new Date()
+        let today = moment(newDate).format('YYYY-MM-DD')
+        let yesterday = moment(newDate).subtract(1, 'day')
+        if (moment(date).isSame(today)) {
+            return 'Today'
+        } else if (moment(date).isSame(yesterday.format('YYYY-MM-DD'))) {
+            return 'Yesterday'
+        } else {
+            return date
+        }
+    }
+
     const getCommentData = (blogId) => {
         const data = getBlogComments(blogId)
         data.then(res => {
@@ -187,7 +201,7 @@ const CommentSection = (props) => {
                                                 <img onClick={() => commentLikeDislike(comment.sentiment, blogId, comment.commentId, true)} src={`/assets/images/icons/${comment.sentiment == 'LIKE' ? 'like_active' : 'like'}.svg`} />
                                                 <img onClick={() => commentLikeDislike(comment.sentiment, blogId, comment.commentId, false)} src={`/assets/images/icons/${comment.sentiment == 'DISLIKE' ? 'dislike_active' : 'dislike'}.svg`} />
                                             </div>
-                                            <span className="time">{comment.date}</span>
+                                            <span className="time">{getDateToDisplay(comment.date)}</span>
                                         </div>
                                     </div>
                                 )
