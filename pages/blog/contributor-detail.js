@@ -21,7 +21,6 @@ const ContributorDetails = (props) => {
     useEffect(() => {
         window.scroll(0, 0)
     }, [])
-    console.log("filteredBlogs", filteredBlogs)
     const getComponents = (dynamic) => {
         return dynamic.map((block) => {
             switch (block.__component) {

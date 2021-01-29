@@ -43,7 +43,6 @@ export async function getServerSideProps(ctx) {
         "GET",
         `quick-blogs/${query.id}`
     );
-    console.log("blog detail id", blogData)
     const pageData = await strapi.processReq(
         "GET",
         `pages?slug=${primaryPath}-${secondaryPath}`

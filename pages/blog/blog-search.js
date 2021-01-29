@@ -25,7 +25,6 @@ const BlogSearchPage = (props) => {
                 }
             })
             setData(filteredBlogs)
-            // console.log("search query", filteredBlogs)
         }
         if (props.query.subcategory) {
             setData(props.blogData)
@@ -85,7 +84,6 @@ export async function getServerSideProps(ctx) {
         `pages?slug=blogs-search`
     );
     const data = pageData && pageData.length ? pageData[0] : null;
-    console.log("search query", query)
     return { props: { data, pageClasses, query, blogData } };
 }
 
