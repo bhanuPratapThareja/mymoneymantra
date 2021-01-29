@@ -32,7 +32,9 @@ axios.interceptors.request.use(async config => {
     newConfig.headers.correlationId = generateCorrelationId()
     newConfig.headers.appId = 'webapi'
   } else {
-    newConfig.data.request.header.correlationId = generateCorrelationId()
+    newConfig.headers.correlationId = generateCorrelationId()
+    newConfig.headers.appId = 'webapi'
+    // newConfig.data.request.header.correlationId = generateCorrelationId()
   }
   newConfig.headers.Authorization = `Bearer ${getAuthToken()}`
   return newConfig
