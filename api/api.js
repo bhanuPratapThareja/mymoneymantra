@@ -207,6 +207,7 @@ const api = {
             appId: "MMMWEBAPP",
           },
           payload: {
+
             personal: {
               title: "1000000002",
               fullName: "",
@@ -284,6 +285,10 @@ const api = {
             loanStartYear: "",
             totalExisTenor: "",
             offerId: "",
+            utmCompaign: '',
+            utmMedium: '',
+            utmSource: '',
+            utmRemark: '',
             existingFacility: [
               {
                 "exisTenorBalMonths": "",
@@ -431,7 +436,7 @@ const api = {
         request: {
           header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
           payload: {
-            actionName: "Short Form Submit",
+            actionName: "",
             leadId: "PR01019897",
           },
         },

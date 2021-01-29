@@ -10,7 +10,7 @@ import {
   submitOtp,
   getOtp,
 } from "../../services/formService";
-import { getPrimaryPath, setLeadId, getLeadId, setLeadBank } from "../../utils/localAccess";
+import { getPrimaryPath, setLeadId, getLeadId, setLeadBank, getLeadBank } from "../../utils/localAccess";
 import {
   getFormattedCurrency,
   getWholeNumberFromCurrency,
@@ -149,14 +149,14 @@ class LongForm extends React.Component {
             }, 500);
 
           } else if (!field.focusDropdown && listType && listType !== 'null') {
-              const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
-                .then(list => {
-                  inp.listType = listType
-                  inp.list = list
-                  this.handleInputDropdownChange(listType, list, inp.input_id, field)
-                }), 500)
-              debouncedSearch(listType, inp.value, masterName)
-            }
+            const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
+              .then(list => {
+                inp.listType = listType
+                inp.list = list
+                this.handleInputDropdownChange(listType, list, inp.input_id, field)
+              }), 500)
+            debouncedSearch(listType, inp.value, masterName)
+          }
         }
       });
     });
@@ -190,8 +190,8 @@ class LongForm extends React.Component {
         const inputs = long_form_block.blocks;
         updateDropdownList(inputs, listType, list, input_id)
         inputs.forEach(input => {
-          if(input.input_id === input_id) {
-            if(list && list.length && field.value){
+          if (input.input_id === input_id) {
+            if (list && list.length && field.value) {
               let filteredItemList = list.filter(item => item[input.select_name] === field.value.toUpperCase())
               let filteredItem = filteredItemList.length ? filteredItemList[0] : null
               this.handleInputDropdownSelection(input_id, filteredItem)
@@ -209,16 +209,15 @@ class LongForm extends React.Component {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
       long_form_blocks.forEach((long_form_block) => {
         const inputs = long_form_block.blocks;
-        const {bankItem} = updateSelectionFromDropdown(inputs, input_id, item)
-        
-        if(bankItem && bankItem.bankId && this.state.primaryPath === 'rkpl') {
+        const { bankItem } = updateSelectionFromDropdown(inputs, input_id, item)
+        if (bankItem && bankItem.bankId && this.state.primaryPath === 'rkpl') {
           this.setState({ bank: bankItem }, () => {
             newLongFormSections.forEach((longFormSectionRkpl) => {
               const rkplBlocks = longFormSectionRkpl.sections[0].long_form_blocks
               rkplBlocks.forEach(rkplBlocks => {
                 const rkplInputs = rkplBlocks.blocks
                 rkplInputs.forEach(rkplInput => {
-                  if(rkplInput.end_point_name === 'cardType' && rkplInput.selectedId !== bankItem.bankId) {
+                  if ((rkplInput.end_point_name === 'cardType' || rkplInput.end_point_name === 'designationId') && rkplInput.selectedId !== bankItem.bankId) {
                     rkplInput.selectedId = null
                     rkplInput.selectedItem = null
                     rkplInput.error = false
@@ -235,7 +234,7 @@ class LongForm extends React.Component {
       });
     });
     this.updateState(newLongFormSections)
-      .then(()  => {
+      .then(() => {
         // console.log(this.state)
       })
   };
@@ -331,27 +330,27 @@ class LongForm extends React.Component {
 
     this.updateState(newLongFormSections).then(() => {
       if (!errors) {
-        if (this.state.primaryPath && this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
-          let mobileNo = "";
-          const newLongFormSections = [...this.state.longFormSections];
-          newLongFormSections.forEach((longFormSection) => {
-            const long_form_blocks =
-              longFormSection.sections[0].long_form_blocks;
-            long_form_blocks.forEach(async (long_form_block) => {
-              const inputs = long_form_block.blocks;
-              inputs.forEach((inp) => {
-                if (inp.end_point_name === "mobile") {
-                  mobileNo = inp.value;
-                }
-              });
+      if (this.state.primaryPath && this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
+        let mobileNo = "";
+        const newLongFormSections = [...this.state.longFormSections];
+        newLongFormSections.forEach((longFormSection) => {
+          const long_form_blocks =
+            longFormSection.sections[0].long_form_blocks;
+          long_form_blocks.forEach(async (long_form_block) => {
+            const inputs = long_form_block.blocks;
+            inputs.forEach((inp) => {
+              if (inp.end_point_name === "mobile") {
+                mobileNo = inp.value;
+              }
             });
           });
-          this.setState({ mobileNo });
-          getOtp(mobileNo);
-          this.setState({ openOtpModal: true });
-        } else {
-          this.retrieveDataAndSubmit();
-        }
+        });
+        this.setState({ mobileNo });
+        getOtp(mobileNo);
+        this.setState({ openOtpModal: true });
+      } else {
+        this.retrieveDataAndSubmit();
+      }
       }
     });
   };
@@ -407,27 +406,38 @@ class LongForm extends React.Component {
           }
         }
 
-        if(this.state.bankId) {
+        if (this.state.bankId) {
           data.bankId = this.state.bankId
         }
-
-      });
+        const {
+          utm_campaign: utmCampaign,
+          utm_medium: utmMedium,
+          utm_source: utmSource,
+          utm_remark: utmRemark
+        } = this.props.router.query
+        data.utmCampaign = utmCampaign
+        data.utmMedium = utmMedium
+        data.utmSource = utmSource
+        data.utmRemark = utmRemark
+      })
     });
 
-    let { primaryPath, bank  } = this.state
+    let { primaryPath, bank } = this.state
 
     generateLead(data, primaryPath, 'lf')
       .then((res) => {
         const leadId = res.data.response.payload.leadId
-        sendNotification(leadId);
+        let actionName = this.state.primaryPath === 'rkpl' ? 'RKPL-CC' : 'Short Form Submit'
+        sendNotification(leadId, actionName)
         setLeadId(leadId)
         setLeadBank(bank)
         const pathname = `/thank-you`
         this.props.router.push(pathname)
-        this.setState({ submitButtonDisabled: false });
+        this.setState({ submitButtonDisabled: false })
       })
       .catch((err) => {
         console.log('leaderr: ', err)
+        this.setState({ submitButtonDisabled: false })
       })
   };
 

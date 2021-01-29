@@ -111,7 +111,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         body = JSON.parse(JSON.stringify(body))
 
         const { fullName, dob, pan, mobile, email, applicantType, title, officeEmail,
-            companyId, netMonthlyIncome, bankId, totalWorkExp, cardType, designationId, qualificationId,
+            companyId, netMonthlyIncome, bankId, totalWorkExp, cardType, surrogateType, designationId, qualificationId,
             exisTenorBalMonths, exisLoanAmount, exisEmi, exisRemark,
             requestedLoanamount, requestedTenor, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
@@ -119,9 +119,8 @@ export const generateLead = async (data, primaryPath, formType) => {
             addressline1, addressline2, pincode, city, nearByLandmark, stdCode,
             officeAddressline1, officeAddressline2, addressline3, officeNearBy, officePincode, officeCity,
             permanentAddressline1, permanentAddressline2, permanentPincode, permannentCity,
-            city_location, cost_of_property,
-            propertyPincode, purposeOfLoan
-
+            city_location, cost_of_property, propertyPincode, purposeOfLoan,
+            utmCampaign, utmMedium, utmSource, utmRemark
         } = data
 
 
@@ -175,7 +174,8 @@ export const generateLead = async (data, primaryPath, formType) => {
 
         body.request.payload.leadId = getLeadId()
         body.request.payload.productId = localStorage.getItem('productId')
-        body.request.payload.cardType = cardType.card_type_id ? cardType.card_type_id : ''
+        body.request.payload.cardType = cardType.cardTypeId ? cardType.cardTypeId : ''
+        body.request.payload.surrogateType = surrogateType.surrogateTypeId ? surrogateType.surrogateTypeId : ''
         body.request.payload.requestedLoanamount = requestedLoanamount
 
         // for facility requested
@@ -232,11 +232,23 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.request.payload.address[3].city = permanentPincode ? permanentPincode.cityId : ""
         body.request.payload.address[3].state = permanentPincode ? permanentPincode.stateId : ""
         body.request.payload.address[3].stdCode = permanentPincode ? permanentPincode.stdCode : ""
+        
+        let utmCampaignChoice = ''
+        if(primaryPath == 'rkpl') {
+            utmCampaignChoice = utmCampaign ? utmCampaign.includes('offcc') ? utmCampaign : 'offcc-rkpl' : ''
+        }  else {
+            utmCampaignChoice = utmCampaign ? utmCampaign : ''
+        }
+
+        body.request.payload.utmCampaign = utmCampaignChoice,
+        body.request.payload.utmMedium = utmMedium ? utmMedium : '',
+        body.request.payload.utmSource = utmSource ? utmSource : '',
+        body.request.payload.utmRemark = utmRemark ? utmRemark : ''
+        
         let headers = {}
 
-
         console.log(body.request.payload)
-        console.log(primaryPath)
+
 
         if (formType === 'lf' && primaryPath !== 'rkpl') {
             headers = {
@@ -245,9 +257,6 @@ export const generateLead = async (data, primaryPath, formType) => {
             }
 
         }
-        console.log('headers: ', headers)
-
-        // return
 
         axios.post(url, body, { headers })
             .then(res => {
@@ -310,10 +319,10 @@ export const getProductAndBank = async (data, primaryPath, longFormProduct) => {
     let productData = await strapi.processReq('GET', `credit_card_product?slug=${longFormProduct}`)
 }
 
-export const sendNotification = async (leadIdSendNotification) => {
+export const sendNotification = async (leadId, action) => {
     const { url, body } = getApiData('sendNotification')
-    body.request.payload.leadId = leadIdSendNotification;
-    body.request.payload.actionName = "Short Form Submit";
+    body.request.payload.leadId = leadId
+    body.request.payload.actionName = action
     try {
         const res = await axios.post(url, body)
         return res;

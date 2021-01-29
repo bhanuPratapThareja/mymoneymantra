@@ -3,9 +3,9 @@ import CommentSection from './CommentSection'
 
 const BlogsDetails = props => {
     // const { header, read_text, blog_sub_category, content, display_short_text } = props.data.blogger
-    const { header, read_text, blog_sub_category, content, display_short_text } = props.data
+    let { header, read_text, blog_sub_category, content, display_short_text } = props.data
     const subCategory = blog_sub_category ? blog_sub_category.blog_sub_category : ""
-    console.log(subCategory)
+   
     const { blogId, commentData } = props
     return (
         <section className="blog-head">

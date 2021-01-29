@@ -57,8 +57,9 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
               const preferredItem = {
                 [inp.select_id]: item[preferredListData.extract_id],
                 [inp.select_name]: item[preferredListData.extract_name],
-                slug: item.slug,
-                priority: item.priority
+                priority: item.priority,
+                cardTypeBankId: item.cardTypeBankId,
+                designationBankId: item.designationBankId
               }
               prefferedList.push(preferredItem)
             })
@@ -70,10 +71,24 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
 
           if(inp.list_preference.extract_list === 'card_types') {
             if(selectedBank && selectedBank.bankId) {
-              prefferedList = prefferedList.filter(listItem => listItem.card_type_id === selectedBank.bankId)
+              prefferedList = prefferedList.filter(listItem => listItem.cardTypeBankId === selectedBank.bankId)
             }
           }
 
+          if(inp.list_preference.extract_list === 'designations') {
+            if(selectedBank && selectedBank.bankId) {
+              prefferedList = prefferedList.filter(listItem => listItem.designationBankId === selectedBank.bankId)
+            }
+          }
+
+
+          prefferedList.forEach(item => {
+            delete item.cardTypeBankId
+            delete item.designationBankId
+            if(!isPrioritized) {
+              delete item.priority
+            }
+          })
 
           inputDropdown = { listType, masterName, inp, prefferedList }
 
