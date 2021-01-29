@@ -37,6 +37,7 @@ class LongForm extends React.Component {
     enableCheckboxes: [],
     openOtpModal: false,
     cardType: '',
+    submissionError: ''
   };
 
   componentDidMount() {
@@ -47,7 +48,7 @@ class LongForm extends React.Component {
       bank = { bankId: this.props.bank.bank_id, bankName: this.props.bank.bank_name }
     }
 
-    const { long_form_version_2, always_ask_for_otp, invalid_form_error_message } = this.props.data
+    const { long_form_version_2, always_ask_for_otp } = this.props.data
     const longFormSections = long_form_version_2.long_form[0].long_form_sections;
     const formData = JSON.parse(localStorage.getItem("formData"));
     let sfData = null;
@@ -122,7 +123,6 @@ class LongForm extends React.Component {
       bank,
       leadId,
       submitButtonDisabled: enableCheckboxes.length !== 0,
-      invalidFormError: invalid_form_error_message,
       askForOtp: always_ask_for_otp,
       formType: 'lf'
     }, () => {
@@ -131,6 +131,7 @@ class LongForm extends React.Component {
   }
 
   handleChange = field => {
+    this.setState({ submissionError: '' })
     const newLongFormSections = [...this.state.longFormSections];
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
@@ -330,27 +331,29 @@ class LongForm extends React.Component {
 
     this.updateState(newLongFormSections).then(() => {
       if (!errors) {
-      if (this.state.primaryPath && this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
-        let mobileNo = "";
-        const newLongFormSections = [...this.state.longFormSections];
-        newLongFormSections.forEach((longFormSection) => {
-          const long_form_blocks =
-            longFormSection.sections[0].long_form_blocks;
-          long_form_blocks.forEach(async (long_form_block) => {
-            const inputs = long_form_block.blocks;
-            inputs.forEach((inp) => {
-              if (inp.end_point_name === "mobile") {
-                mobileNo = inp.value;
-              }
+        if (this.state.primaryPath && this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
+          let mobileNo = "";
+          const newLongFormSections = [...this.state.longFormSections];
+          newLongFormSections.forEach((longFormSection) => {
+            const long_form_blocks =
+              longFormSection.sections[0].long_form_blocks;
+            long_form_blocks.forEach(async (long_form_block) => {
+              const inputs = long_form_block.blocks;
+              inputs.forEach((inp) => {
+                if (inp.end_point_name === "mobile") {
+                  mobileNo = inp.value;
+                }
+              });
             });
           });
-        });
-        this.setState({ mobileNo });
-        getOtp(mobileNo);
-        this.setState({ openOtpModal: true });
+          this.setState({ mobileNo });
+          getOtp(mobileNo);
+          this.setState({ openOtpModal: true });
+        } else {
+          this.retrieveDataAndSubmit();
+        }
       } else {
-        this.retrieveDataAndSubmit();
-      }
+        this.setState({ submissionError: 'Please correct the fields marked in red' })
       }
     });
   };
@@ -367,7 +370,7 @@ class LongForm extends React.Component {
   };
 
   retrieveDataAndSubmit = () => {
-    this.setState({ submitButtonDisabled: true })
+    this.setState({ submitButtonDisabled: true, submissionError: '' })
     let data = {};
     const newLongFormSections = [...this.state.longFormSections];
     newLongFormSections.forEach((longFormSection) => {
@@ -437,7 +440,7 @@ class LongForm extends React.Component {
       })
       .catch((err) => {
         console.log('leaderr: ', err)
-        this.setState({ submitButtonDisabled: false })
+        this.setState({ submitButtonDisabled: false, submissionError: 'Something went wrong. Please try again.' })
       })
   };
 
@@ -495,7 +498,7 @@ class LongForm extends React.Component {
               </React.Fragment>
             );
           })}
-          {this.state.errors ? <p className="form-invalid-text">{this.state.invalidFormError}</p> : null}
+          {this.state.submissionError ? <p className="form-invalid-text">{this.state.submissionError}</p> : null}
           <div className="long-form-submit">
             <button
               id="long-submit"
