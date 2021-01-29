@@ -385,9 +385,11 @@ export const updateDropdownList = (inputs, listType, list, input_id) => {
 };
 
 export const updateSelectionFromDropdown = (inputs, input_id, item) => {
+  // console.log(item)
+  let bankItem
   let update_field_with_end_point_name = ""
   inputs.forEach((inp) => {
-    if (inp.input_id === input_id) {
+    if (inp.input_id === input_id && item) {
       update_field_with_end_point_name = inp.update_field_with_end_point_name
       inp.list = []
       inp.value = item[inp.select_name]
@@ -395,6 +397,9 @@ export const updateSelectionFromDropdown = (inputs, input_id, item) => {
       inp.selectedItem = item
       inp.error = false
       inp.verified = true
+      if(inp.end_point_name === 'bankId' &&  inp.selectedItem) {
+        bankItem = inp.selectedItem
+      }
     }
 
     if (inp.end_point_name === update_field_with_end_point_name && inp.dependent) {
@@ -409,7 +414,8 @@ export const updateSelectionFromDropdown = (inputs, input_id, item) => {
         }
       });
     }
-  });
+  })
+  return {bankItem}
 };
 
 export const resetDropdowns = (inputs, errorMsgs) => {

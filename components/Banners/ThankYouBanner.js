@@ -1,33 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
-import { getLeadId } from '../../utils/localAccess';
+import { getPrimaryPath, getLeadId, getLeadBank } from '../../utils/localAccess';
 import Image from '../ImageComponent/ImageComponent'
 
 const ThankYouBanner = props => {
-    const router = useRouter()
-    let { bankName, primaryPath } = router.query
-
-    if(!primaryPath) {
-        primaryPath = 'rkpl'
-    }
-
-    const [leadId, setLeadId] = useState('')
     const [productType, setProductType] = useState('')
-
     const { thank_you_icon, thank_you_text, thank_you_sub_text,
-        thank_you_content, thank_you_button } = props.data.thank_you_banner
+            thank_you_button } = props.data.thank_you_banner
 
     useEffect(() => {
-        const leadId = getLeadId(primaryPath)
-
-        setLeadId(leadId)
-
-        console.log(primaryPath)
-        if(primaryPath !== 'rkpl') {
-            setProductType(primaryPath.split('-').join(' ').slice(0, -1))
-        } else {
+        console.log('leadId:::',props.primaryPath)
+        if(props.primaryPath === 'rkpl') {
             setProductType('Credit Card')
+        } else {
+            setProductType(props.primaryPath.split('-').join(' ').slice(0, -1))
         }
+        setTimeout(() => {
+            console.log('productType: ', productType)
+        }, 1000)
     }, [])
 
     return (
@@ -39,17 +29,13 @@ const ThankYouBanner = props => {
                         <div className="top" style={{ textAlign: 'center' }}>
                             <Image image={thank_you_icon} />
                             <div style={{ marginBottom: '10px' }} dangerouslySetInnerHTML={{ __html: thank_you_text }}></div>
-
-                            {bankName ? <>
-                                <p>{`for applying for a ${productType}`}</p>
-                                <p>{` with ${router.query.bankName}.`}</p>
-                            </>
-                                : null}
+                            <p>{`for applying for a ${'Credit Card'}`}</p>
+                            <p>{` with ${props.bankName}.`}</p>
                         </div>
 
-                        {leadId ? <div className="bottom">
+                        {props.leadId ? <div className="bottom">
                             <div dangerouslySetInnerHTML={{ __html: thank_you_sub_text }}></div>
-                            <h2 style={{ color: 'darkgrey' }}>{leadId}</h2>
+                            <h2 style={{ color: 'darkgrey' }}>{props.leadId}</h2>
                             <div className="track-button">
                                 <button >{thank_you_button}</button>
                             </div>

@@ -284,10 +284,19 @@ class ShortExtendedForm extends React.Component {
     handleInputDropdownChange = (listType, list, input_id) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateDropdownList(inputs, listType, list, input_id)
+        inputs.forEach(input => {
+            if(input.input_id === input_id) {
+              if(list && list.length){
+                let filteredItemList = list.filter(item => item[input.select_name] === field.value)
+                let filteredItem = filteredItemList.length ? filteredItemList[0] : null
+                this.handleInputDropdownSelection(input_id, filteredItem)
+              }
+            }
+          })
         this.setState({ ...this.state, slides: newSlides })
     }
 
-    handleInputDropdownSelection = (input_id, type, item) => {
+    handleInputDropdownSelection = (input_id, item) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateSelectionFromDropdown(inputs, input_id, item)
         this.setState({ ...this.state, slides: newSlides })

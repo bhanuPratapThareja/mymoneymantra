@@ -79,7 +79,7 @@ export const documentUpload = async (docs, documentName, primaryPath) => {
     let documentIds = getDocumentIdandTypeId(documentName);
     const { documentId, documentTypeId } = documentIds[0];
     let docList = []
-    body.request.payload.caseId = getLeadId(primaryPath)
+    body.request.payload.caseId = getLeadId()
     for (let i = 0; i < docs.length; i++) {
         const { type, base64 } = docs[i]
         let doc = {
@@ -173,7 +173,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         // body.request.payload.work.otherCompany = otherCompany ? otherCompany.companyName : ""
 
 
-        body.request.payload.leadId = getLeadId(primaryPath)
+        body.request.payload.leadId = getLeadId()
         body.request.payload.productId = localStorage.getItem('productId')
         body.request.payload.cardType = cardType.card_type_id ? cardType.card_type_id : ''
         body.request.payload.requestedLoanamount = requestedLoanamount
@@ -236,23 +236,24 @@ export const generateLead = async (data, primaryPath, formType) => {
 
 
         console.log(body.request.payload)
+        console.log(primaryPath)
 
-        if (formType === 'lf' && primaryPath) {
+        if (formType === 'lf' && primaryPath !== 'rkpl') {
             headers = {
                 'sync': 'true',
                 'formBankId': data.bankId.toString()
             }
+
         }
+        console.log('headers: ', headers)
 
         // return
 
         axios.post(url, body, { headers })
             .then(res => {
-                console.log('red')
                 resolve(res)
             })
             .catch(err => {
-                console.log('rerr')
                 reject(err)
             })
     })
