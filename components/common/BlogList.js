@@ -19,6 +19,8 @@ const BlogList = (props) => {
                         const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
                         const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
                         const createdDate = `${da} ${mo} ${ye}`;
+                        const readingTime = require('reading-time');
+                        const blogreadTime = readingTime(content);
                         const blogClasses = ['blog-wrapper-card', 'single', `card-1`]
                         return (
                             <div className={blogClasses.join(' ')} id={`blog-card-${i + 1}`} key={id}>
@@ -30,7 +32,7 @@ const BlogList = (props) => {
                                     <span dangerouslySetInnerHTML={{ __html: short_text }}></span>
 
                                     <div className="details">
-                                        <span>{createdDate} </span><span>{read_text}</span>
+                                        <span>{createdDate}//{blogreadTime.text} </span>
                                         <button onClick={() => onOpenBlog(blog)}>Read more</button>
                                     </div>
                                 </div>
