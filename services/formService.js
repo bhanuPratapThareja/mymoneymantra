@@ -4,7 +4,7 @@ import { getApiData } from '../api/api'
 import { getLeadId } from '../utils/localAccess'
 import { getFormattedDate } from '../utils/formatDataForApi'
 const CancelToken = axios.CancelToken
-import { getDocumentIdandTypeId } from '../Utils/uploadDocumentHelper'
+import { getDocumentIdandTypeId } from '../utils/uploadDocumentHelper'
 let cancel
 let otpId = ''
 

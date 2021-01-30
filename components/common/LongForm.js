@@ -22,9 +22,12 @@ import {
   updateDropdownList,
   updateSelectionFromDropdown,
   resetDropdowns,
-} from "../../utils/formHandle"
+} from "../../utils/formHandle";
+import strapi from '../../providers/strapi';
+
 
 class LongForm extends React.Component {
+  
   state = {
     longFormSections: [],
     submitButtonDisabled: true,
@@ -39,6 +42,7 @@ class LongForm extends React.Component {
     cardType: '',
     submissionError: ''
   };
+  
 
   componentDidMount() {
     const primaryPath = getPrimaryPath()
@@ -458,6 +462,8 @@ class LongForm extends React.Component {
     if (!this.state.longFormSections) {
       return null;
     }
+    const { bank, product } = this.props 
+
 
     return (
       <div className="form-wrapper" id="longForm">

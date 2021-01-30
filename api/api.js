@@ -137,7 +137,7 @@ const api = {
         },
       },
     },
-    purposeOfLoan :{
+    purposeOfLoan: {
       devUrl: "masters/api/master/v1/purpose-of-loan",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
@@ -149,7 +149,7 @@ const api = {
       },
 
     },
-    
+
     leadProductDecision: {
       devUrl: "lead/api/lead/v1/product/decision",
       uatUrl: "api/master/v1/",
@@ -443,13 +443,13 @@ const api = {
       },
     },
     blogLikeDislike: {
-      devUrl: "customer/api/blog/v1/like-dislike",
+      devUrl: "customer/api/blog/v1/blog-sentiment",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
       body: {
-        request: {
-          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-        },
+        // request: {
+        //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+        // },
         blogId: "3",
         customerId: "3",
         sentiment: "like"
@@ -457,7 +457,7 @@ const api = {
 
     },
     getBlogs: {
-      devUrl: "customer/api/blog/v1/getBlog?blogId=",
+      devUrl: "customer/api/blog/v1/blog?blogId=",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
       body: {
@@ -475,9 +475,9 @@ const api = {
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
       body: {
-        request: {
-          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-        },
+        // request: {
+        //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+        // },
         "blogId": "3",
         "customerId": "12345",
         "commentId": "1",
@@ -491,9 +491,9 @@ const api = {
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
       body: {
-        request: {
-          header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-        },
+        // request: {
+        //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+        // },
         blogId: "3",
         customerId: "12345",
         comment: "1"
