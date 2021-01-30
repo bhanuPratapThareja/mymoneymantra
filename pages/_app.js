@@ -3,7 +3,7 @@ import '../styles/custom.css'
 import axios from 'axios'
 import { setAuthToken, getAuthToken } from '../api/headers'
 import { generateCorrelationId } from '../utils/correlationId'
-import { getApiData } from '../api/api';
+import { getApiData } from '../api/api'
 
 axios.interceptors.request.use(async config => {
   const accessToken = getAuthToken()
@@ -21,10 +21,8 @@ axios.interceptors.request.use(async config => {
           body: JSON.stringify(body)
         })
         const json = await res.json()
-        console.log(1)
         setAuthToken(json.response.payload)
       }catch(err) {
-        console.log(err)
         throw new Error(err.message)
       }
     } catch(err) {
