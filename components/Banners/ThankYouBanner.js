@@ -1,20 +1,11 @@
-import { useEffect, useState } from 'react'
-import { getLeadId, getLeadBank, getProductType } from '../../utils/localAccess'
 import Image from '../ImageComponent/ImageComponent'
 
 const ThankYouBanner = props => {
-    const [leadId, setLeadId] = useState('')
-    const [bank, setBank] = useState('')
-    const [productType, setProductType] = useState('')
 
     const { thank_you_icon, thank_you_text, thank_you_sub_text,
         thank_you_button } = props.data.thank_you_banner
 
-    useEffect(() => {
-        setLeadId(getLeadId())
-        setBank(getLeadBank())
-        setProductType(getProductType())
-    }, [])
+    const { leadId, bank, productType } = props
 
     return (
         <div className="thankyou-page">

@@ -76,7 +76,7 @@ export const getDropdownList = async (listType, value, masterName) => {
     } catch (err) { }
 }
 
-export const documentUpload = async (docs, documentName, primaryPath) => {
+export const documentUpload = async (docs, documentName) => {
     const { url, body } = getApiData('documentUpload')
     let documentIds = getDocumentIdandTypeId(documentName);
     const { documentId, documentTypeId } = documentIds[0];

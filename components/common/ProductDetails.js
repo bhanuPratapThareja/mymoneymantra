@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
 import Image from '../../components/ImageComponent/ImageComponent'
 import { unpackComponents } from '../../services/componentsService';
 
 const ProductDetails = props => {
-    const router = useRouter()
-    const primaryPath = router.query.primaryPath
     
     const [leftPositionedOffers, setlLeftPositionedOffers] = useState([])
     const [rightPositionedOffers, setlRightPositionedOffers] = useState([])
@@ -34,7 +31,7 @@ const ProductDetails = props => {
             <section className="container annual-fee">
                 <div className="annual-fee-wrapper">
                     <div className="left">
-                        {primaryPath != "credit-cards"? <div className="logo"><Image image={bank.bank_image} /></div> : null}
+                        {props.primaryPath != "credit-cards"? <div className="logo"><Image image={bank.bank_image} /></div> : null}
                         {leftPositionedOffers.map(offer => {
                             return (
                                 <React.Fragment key={offer.id}>

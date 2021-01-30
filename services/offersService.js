@@ -32,7 +32,7 @@ export const getProductDecision = offers => {
         const { url, body } = getApiData('leadProductDecision')
 
         pendingOffers.forEach(async offer => {
-            const leadId = getLeadId(getPrimaryPath())
+            const leadId = getLeadId()
 
             body.request.payload.productId = offer.product.product_id.toString()
             body.request.payload.productTypeId = offer.productType.product_type_id.toString()

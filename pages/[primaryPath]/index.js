@@ -21,11 +21,8 @@ import { setPrimaryPath, setProductType } from '../../utils/localAccess'
 const PrimaryPage = props => {
   useEffect(() => {
     window.scrollTo(0, 0)
-    localStorage.clear()
     setPrimaryPath(props.primaryPath)
-    const {product_type_name: productTypeName, product_type_id: productTypeId, slug } = props.productType
-    const productType = { productTypeName, productTypeId, slug }
-    setProductType(productType)
+    setProductType(props.productTypeData)
   }, [])
 
   const goToShortForm = () => {
@@ -53,7 +50,7 @@ const PrimaryPage = props => {
           return <ShortExtendedForm key={block.id} data={block} preferredSelectionLists={props.preferredSelectionLists} />
         case 'offers.popular-offers-component':
         case 'offers.trending-offers-component':
-          return <Offers key={block.id} data={block} goToShortForm={goToShortForm} />
+          return <Offers key={block.id} data={block} primaryPath={props.primaryPath} goToShortForm={goToShortForm} />
         case 'blocks.credit-score-component':
           return <CreditScore key={block.id} data={block} />
         case 'blocks.bank-slider-component':
@@ -81,12 +78,11 @@ export async function getServerSideProps(ctx) {
   const strapi = new Strapi()
   const { query } = ctx
   const primaryPath = query.primaryPath
-  const productTypeData = await strapi.processReq('GET', `product-type-v-2-s`)
-  const productType = productTypeData[0]
+  const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
   const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)
   const data = pageData && pageData.length ? pageData[0] : null
   const preferredSelectionLists = await strapi.processReq('GET', `list-preferences`)
-  return { props: { data, primaryPath, preferredSelectionLists, productType } }
+  return { props: { data, primaryPath, preferredSelectionLists, productTypeData } }
 }
 
 export default PrimaryPage

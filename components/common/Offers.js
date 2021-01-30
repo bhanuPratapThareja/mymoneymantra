@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import { getProductDecision } from '../../services/offersService'
 import { unpackComponents } from '../../services/componentsService'
-import { getPrimaryPath } from '../../utils/localAccess'
 
 const Offers = props => {
    const router = useRouter()
@@ -33,7 +32,7 @@ const Offers = props => {
       }
       const { slug: bankSlug } = bank
       const { slug: productSlug } = product
-      const primaryPath = getPrimaryPath()()
+      const primaryPath = props.primaryPath
       router.push(`/${primaryPath}/${bankSlug}/${productSlug}`)
    }
 

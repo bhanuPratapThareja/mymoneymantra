@@ -18,7 +18,7 @@ const ListingCards = (props) => {
 
   const onOfferClick = (buttonText, offer) => {
     if (getDevice() !== "desktop") {
-      const decision = makeDecision(buttonText, offer)
+      const decision = makeDecision(buttonText, offer, primaryPath)
       const { pathname, query } = decision
       router.push({ pathname, query }, pathname, { shallow: true })
     }
@@ -102,11 +102,13 @@ const ListingCards = (props) => {
                   <DecisionButton
                     idForStyle="view-details"
                     buttonText="View Details"
+                    primaryPath={primaryPath}
                     offer={offer}
                   />
                   <DecisionButton
                     idForStyle="apply-now"
                     buttonText={offer.productDecision}
+                    primaryPath={primaryPath}
                     offer={offer}
                   />
                 </div>

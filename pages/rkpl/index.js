@@ -2,13 +2,16 @@ import { useEffect } from 'react'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 import LongForm from '../../components/common/LongForm'
-import { setPrimaryPath } from '../../utils/localAccess'
+import { setPrimaryPath, setProductType, clearLeadId, clearLeadBank } from '../../utils/localAccess'
 
 const RKPLBank = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
         setPrimaryPath(props.primaryPath)
+        setProductType(props.productTypeData)
+        clearLeadId()
+        clearLeadBank()
     },[])
 
     const getComponents = dynamic => {
@@ -42,9 +45,10 @@ export async function getServerSideProps(ctx) {
     const primaryPath = 'rkpl'
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-long-form`)
     const data = pageData[0]
+    const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${'credit-cards'}`)
     const preferredSelectionLists = await strapi.processReq("GET", `list-preferences`)
 
-    return { props: { data, preferredSelectionLists, primaryPath } }
+    return { props: { data, preferredSelectionLists, primaryPath, productTypeData } }
 
 }
 

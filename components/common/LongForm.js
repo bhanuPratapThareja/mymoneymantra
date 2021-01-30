@@ -10,7 +10,7 @@ import {
   submitOtp,
   getOtp,
 } from "../../services/formService";
-import { getPrimaryPath, setLeadId, getLeadId, setLeadBank, clearLeadId } from "../../utils/localAccess";
+import { setLeadId, getLeadId, setLeadBank, clearLeadId } from "../../utils/localAccess";
 import {
   getFormattedCurrency,
   getWholeNumberFromCurrency,
@@ -22,10 +22,7 @@ import {
   updateDropdownList,
   updateSelectionFromDropdown,
   resetDropdowns,
-} from "../../utils/formHandle";
-
-import { getApiData } from '../../api/api';
-import { unpackComponents } from '../../services/componentsService';
+} from "../../utils/formHandle"
 
 class LongForm extends React.Component {
   state = {
@@ -45,7 +42,7 @@ class LongForm extends React.Component {
   };
 
   componentDidMount() {
-    const primaryPath = getPrimaryPath()
+    const primaryPath = this.props.primaryPath
 
     if (primaryPath === 'rkpl') {
       clearLeadId()

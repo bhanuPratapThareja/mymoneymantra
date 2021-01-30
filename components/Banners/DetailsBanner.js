@@ -38,6 +38,7 @@ const DetailsBanner = props => {
                             <DecisionButton 
                                 buttonText={productDecision} 
                                 offer={productData}
+                                primaryPath={props.primaryPath}
                                 changePageType={props.changePageType}
                             />
                         </span> : null}

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import { uniq } from 'lodash'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
@@ -18,18 +17,23 @@ import { unpackComponents, extractListingOffersComponent } from '../../services/
 import { getProductDecision } from '../../services/offersService'
 import { filterOfferCardsInFilterComponent } from '../../utils/loanListingFilterHandler'
 import { getClassesForPage } from '../../utils/classesForPage'
+import { setPrimaryPath, setProductType, getProductType } from '../../utils/localAccess'
 
 const Listings = props => {
-    const router = useRouter()
-    const primaryPath = router.query.primaryPath
     const [allOfferCards, setAllOfferCards] = useState([])
     const [offerCards, setOfferCards] = useState([])
     const [banksList, setBanksList] = useState([])
+    const [productTypeName, setProductTypeName] = useState(null)
 
     useEffect(() => {
         window.scrollTo(0, 0)
+        setPrimaryPath(props.primaryPath)
+        setProductType(props.productTypeData)
         let listingOffersComponent = extractListingOffersComponent(props.data)
         getListingOffers(listingOffersComponent)
+        const productType = getProductType()
+        const productTypeName = productType.productTypeName
+        setProductTypeName(productTypeName)
     }, [])
 
     const getListingOffers = listingOffersComponent => {
@@ -49,7 +53,7 @@ const Listings = props => {
     }
 
     const getCardsWithButtonText = async cards => {
-        const newCards = await getProductDecision(cards, primaryPath)
+        const newCards = await getProductDecision(cards, props.primaryPath)
         setOfferCards(newCards)
         setAllOfferCards(newCards)
 
@@ -78,28 +82,33 @@ const Listings = props => {
         setOfferCards(filteredOfferCards)
     }
 
-    const getComponents = (dynamic, filters) => {
-        // console.log(props.filters)
+    const getComponents = dynamic => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.listings-banner-component':
                     return <ListingsBanner
                         key={block.id}
                         data={block}
-                        filters={filters}
+                        filters={props.filters}
                         numberOfCards={offerCards.length}
                         filterOfferCards={filterOfferCards}
                         filterCardsFilterComponent={filterCardsFilterComponent}
                         banksList={uniq(banksList)}
+                        productTypeName={productTypeName}
                     />
 
                 case 'blocks.listing-cards':
-                    return <ListingCards key={block.id} data={block} offerCards={offerCards} v />
+                    return <ListingCards 
+                                key={block.id} 
+                                data={block} 
+                                offerCards={offerCards}
+                                primaryPath={props.primaryPath}
+                            />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
 
                 case 'offers.trending-offers-component':
-                    return <Offers key={block.id} data={block} />
+                    return <Offers key={block.id} data={block} primaryPath={props.primaryPath} />
 
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
@@ -116,7 +125,7 @@ const Listings = props => {
     }
 
     return (
-        <div className={props.pageClasses}>
+        <div className={getClassesForPage(props.primaryPath, 'listings')}>
             {props.data ? <Layout>
                 {getComponents(props.data.dynamic, props.filters)}
             </Layout> : null}
@@ -129,14 +138,13 @@ export async function getServerSideProps(ctx) {
     const { query } = ctx
     const primaryPath = query.primaryPath
     const secondaryPath = 'listings'
-    const pageClasses = getClassesForPage(primaryPath, secondaryPath)
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
-
+    const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
     const listingFilter = await strapi.processReq('GET', `filters?slug=${primaryPath}-filters`)
     const filters = listingFilter && listingFilter.length ? listingFilter[0] : null
     const data = pageData[0]
 
-    return { props: { data, pageClasses, filters } }
+    return { props: { data, filters, primaryPath, productTypeData } }
 }
 
 export default Listings

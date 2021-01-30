@@ -1,7 +1,4 @@
-import { getPrimaryPath } from "./localAccess"
-
-export const makeDecision = (buttonText, offer, changePageType) => {
-    const primaryPath = getPrimaryPath()
+export const makeDecision = (buttonText, offer, primaryPath, changePageType) => {
     const { bank: { bank_name: bankName, slug: bankSlug }, product: { slug: productSlug } } = offer
     let pathname = ''
     let query = { bankName }

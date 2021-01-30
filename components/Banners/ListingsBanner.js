@@ -7,12 +7,9 @@ import { getProductType } from '../../utils/localAccess'
 const ListingBanner = props => {
     const { listing_banner_heading, categories } = props.data.listing_banner
     const [selectedOption, setSelectedOption] = useState('all')
-    const [productTypeName, setProductTypeName] = useState('')
 
     useEffect(() => {
         onBannerCategoryChange(selectedOption)
-        const productType = getProductType()
-        setProductTypeName(productType.productTypeName)
     }, [selectedOption])
 
     const onOpenFilter = () => {
@@ -34,7 +31,8 @@ const ListingBanner = props => {
     }
 
     const getCalulatedProductType = () => {
-        return props.numberOfCards == 1 ? productTypeName.slice(0, -1) : productTypeName
+        const productTypeName = props.numberOfCards == 1 ? props.productTypeName.slice(0, -1) : props.productTypeName
+        return productTypeName.toLowerCase()
     }
 
     return (
@@ -64,9 +62,9 @@ const ListingBanner = props => {
                     </div> : null}
                 </div>
                 <div className="bottom">
-                    <div className="cards">
+                    {props.productTypeName ? <div className="cards">
                         <h3><span id="count">{props.numberOfCards}</span> {getCalulatedProductType()}</h3>
-                    </div>
+                    </div> : null}
                     {props.filters ? <div className="filter">
                         <button
                             className="filter-option"

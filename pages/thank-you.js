@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 
@@ -13,22 +12,36 @@ import Blogger from '../components/common/Blogger'
 import LearnMore from '../components/common/LearnMore'
 
 import { getClassesForPage } from '../utils/classesForPage'
+import { getLeadId, getLeadBank, getProductType } from '../utils/localAccess'
 
 const ThankYouPage = props => {
-    const router = useRouter()
+
+    const [leadId, setLeadId] = useState('')
+    const [bank, setBank] = useState('')
+    const [productType, setProductType] = useState('')
+
     useEffect(() => {
         window.scrollTo(0, 0)
+        setLeadId(getLeadId())
+        setBank(getLeadBank())
+        setProductType(getProductType())
     }, [])
 
     const getComponents = dynamic => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.credit-cards-thank-you':
-                    return <ThankYouBanner key={block.id} data={block} />
+                    return <ThankYouBanner
+                        key={block.id}
+                        data={block}
+                        leadId={leadId}
+                        bank={bank}
+                        productType={productType}
+                    />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
-                    return <Offers key={block.id} data={block} />
+                    return <Offers key={block.id} data={block} primaryPath={props.primaryPath} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.rewards-component':
@@ -43,17 +56,6 @@ const ThankYouPage = props => {
         })
     }
 
-    if(!props.data) {
-        if (typeof window !== 'undefined') {
-            router.push('/')
-            return <div className="interim-class">
-                <div className="page-not-found_center_msg">
-                    <p>redirecting to Home Page ...</p>
-                </div>
-            </div>
-        }
-    }
-
     return (
         <div className={getClassesForPage('credit-cards', 'thank-you')}>
             {props.data ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
@@ -64,14 +66,10 @@ const ThankYouPage = props => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const { query } = ctx
-    const { primaryPath } = query
-
-    if(!primaryPath) {
-        return { props: { data: null } }
-    }
-
+    let { primaryPath } = query
+    primaryPath = !primaryPath || primaryPath === 'rkpl' ? 'credit-cards' : primaryPath
     const secondaryPath = 'thank-you'
-    const pageData = await strapi.processReq('GET', `pages?slug=${!primaryPath || primaryPath === 'rkpl' ? 'credit-cards' : primaryPath}-${secondaryPath}`)
+    const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const data = pageData[0]
 
     return { props: { data, primaryPath } }

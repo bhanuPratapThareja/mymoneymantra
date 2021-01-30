@@ -12,10 +12,10 @@ import Rewards from '../../../../components/common/Rewards'
 import FinancialTools from '../../../../components/common/FinancialTools'
 import Blogger from '../../../../components/common/Blogger'
 import LearnMore from '../../../../components/common/LearnMore'
-import { getClassesForPage } from '../../../../utils/classesForPage'
 import LongFormBanner from '../../../../components/Banners/LongFormBanner'
 import LongForm from '../../../../components/common/LongForm'
-import { getPrimaryPath } from '../../../../utils/localAccess'
+import { getClassesForPage } from '../../../../utils/classesForPage'
+import { setPrimaryPath, setProductType } from '../../../../utils/localAccess'
 
 const Details = props => {
     const router = useRouter()
@@ -24,6 +24,8 @@ const Details = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
+        setPrimaryPath(props.primaryPath)
+        setProductType(props.productTypeData)
         setPreviousPath(page)
         window.onpopstate = () => {
             if (previousPath !== 'long-form') {
@@ -33,9 +35,9 @@ const Details = props => {
     }, [page])
 
     const changePageType = page => {
-       setTimeout(() => {
-        setPage(page)
-       }, 2500)
+        setTimeout(() => {
+            setPage(page)
+        }, 2500)
     }
 
     if (page === 'long-form' && !props.longFormData) {
@@ -66,6 +68,7 @@ const Details = props => {
                         key={block.id}
                         data={block}
                         productData={props.productData}
+                        primaryPath={props.primaryPath}
                         changePageType={changePageType}
                     />
 
@@ -75,13 +78,14 @@ const Details = props => {
                     return <ProductDetails
                         key={block.id}
                         data={block}
+                        primaryPath={props.primaryPath}
                         productData={props.productData}
                     />
 
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
-                    return <Offers key={block.id} data={block} />
+                    return <Offers key={block.id} data={block} primaryPath={props.primaryPath} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.rewards-component':
@@ -93,9 +97,20 @@ const Details = props => {
                 case 'blocks.learn-more-component':
                     return <LearnMore key={block.id} data={block} />
                 case 'banners.long-form-banners-component':
-                    return <LongFormBanner key={block.id} data={block} productData={props.productData} />
+                    return <LongFormBanner 
+                                key={block.id} 
+                                data={block}
+                                primaryPath={props.primaryPath} 
+                                productData={props.productData} 
+                            />
                 case 'form-components.long-form-component-new':
-                    return <LongForm key={block.id} data={block} productData={props.productData} preferredBanks={props.preferredBanks} />
+                    return <LongForm 
+                                key={block.id}
+                                data={block}
+                                primaryPath={props.primaryPath}
+                                productData={props.productData}
+                                preferredBanks={props.preferredBanks}
+                            />
             }
         })
     }
@@ -115,7 +130,7 @@ const Details = props => {
         )
     } else {
         return (
-            <div className={getClassesForPage(getPrimaryPath(), 'details')}>
+            <div className={getClassesForPage(props.primaryPath, 'details')}>
                 {props.detailsData ? <Layout>{getComponents(props.detailsData.dynamic)}</Layout> : null}
             </div>
         )
@@ -134,16 +149,20 @@ export async function getServerSideProps(ctx) {
 
     const detailsPageData = await strapi.processReq('GET', `${primaryPath}-details-pages?slug=${productSlug}`)
     const longFormPageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${bankSlug}-long-form`)
-
     const detailsData = detailsPageData ? detailsPageData[0] : null
     const longFormData = longFormPageData ? longFormPageData[0] : null
 
     const productData = await strapi.processReq('GET', `product-v-2-s?slug=${productSlug}`)
+    const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
     const preferredBanksData = await strapi.processReq("GET", `list-preferences`)
-
     const preferredBanks = preferredBanksData[0]
 
-    return { props: { detailsData, longFormData, productData, preferredBanks, page, primaryPath } }
+    return {
+        props: {
+            detailsData, longFormData, productData,
+            productTypeData, preferredBanks, page, primaryPath
+        }
+    }
 }
 
 export default Details
