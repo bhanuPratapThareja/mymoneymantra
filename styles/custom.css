@@ -1551,8 +1551,7 @@ img {
 
   .file-type h5 b {
     line-height: 17px;
-    font-size: 15px;
-    
+    font-size: 15px; 
   }
 
   .credit-card-flow .sf-forms .form__group.field.file-type>img {
@@ -1566,7 +1565,7 @@ img {
     overflow: hidden;
     max-width: 181px;
   }
-  
+
 }
 
 
