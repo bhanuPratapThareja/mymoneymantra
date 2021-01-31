@@ -260,6 +260,8 @@ export const generateLead = async (data, primaryPath, formType) => {
 
         }
 
+        return
+
         axios.post(url, body, { headers })
             .then(res => {
                 resolve(res)

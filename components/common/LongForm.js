@@ -211,7 +211,7 @@ class LongForm extends React.Component {
   };
 
   handleInputDropdownSelection = (input_id, item) => {
-    const newLongFormSections = [...this.state.longFormSections];
+    const newLongFormSections = [...this.state.longFormSections]
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
       long_form_blocks.forEach((long_form_block) => {
@@ -281,7 +281,6 @@ class LongForm extends React.Component {
   };
 
   handlePercentage = () => {
-    console.log('check')
     const newLongFormSections = [...this.state.longFormSections];
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
@@ -421,21 +420,21 @@ class LongForm extends React.Component {
             data[key] = "";
           }
         }
-
-        if (this.state.bankId) {
-          data.bankId = this.state.bankId
-        }
-        const {
-          utm_campaign: utmCampaign,
-          utm_medium: utmMedium,
-          utm_source: utmSource,
-          utm_remark: utmRemark
-        } = this.props.router.query
-        data.utmCampaign = utmCampaign
-        data.utmMedium = utmMedium
-        data.utmSource = utmSource
-        data.utmRemark = utmRemark
       })
+
+      const {
+        utm_campaign: utmCampaign,
+        utm_medium: utmMedium,
+        utm_source: utmSource,
+        utm_remark: utmRemark
+      } = this.props.router.query
+      data.utmCampaign = utmCampaign
+      data.utmMedium = utmMedium
+      data.utmSource = utmSource
+      data.utmRemark = utmRemark
+
+      data.bankId = this.state.bank
+
     });
 
     let { primaryPath, bank } = this.state
