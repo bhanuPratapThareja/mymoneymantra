@@ -168,7 +168,7 @@ class LongForm extends React.Component {
     });
 
     this.setState({ longFormSections: newLongFormSections, errors: false }, () => {
-      if (textTypeInputs.includes(field.type) || field.type === "radio" || field.type === 'input_with_dropdown' || field.type === 'money') {
+      if (textTypeInputs.includes(field.type)  || field.type === 'input_with_dropdown' || field.type === 'money') {
         this.checkInputValidity(field, field.focusDropdown)
       }
       const { enableCheckboxes } = this.state;
@@ -186,6 +186,7 @@ class LongForm extends React.Component {
         this.setState({ submitButtonDisabled: true });
       }
     });
+    this.updateState(newLongFormSections)
   };
 
   handleInputDropdownChange = (listType, list, input_id, field) => {
@@ -280,6 +281,7 @@ class LongForm extends React.Component {
   };
 
   handlePercentage = () => {
+    console.log('check')
     const newLongFormSections = [...this.state.longFormSections];
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
@@ -295,7 +297,7 @@ class LongForm extends React.Component {
   };
 
   handleVerifiedInputsArray = (input) => {
-    const verifiedInputsArray = this.state.verifiedInputs;
+    const verifiedInputsArray = this.state.verifiedInputs
     if (input.verified) {
       verifiedInputsArray.push(input.input_id);
     } else {
@@ -467,7 +469,7 @@ class LongForm extends React.Component {
 
     return (
       <div className="form-wrapper" id="longForm">
-        <form onClick={this.handleClickOnSlideBackground} id='long-form_id'>
+        <form onClick={this.handleClickOnSlideBackground} id='long-form_id' noValidate>
           {this.state.longFormSections.map((longFormSection) => {
             const long_form_blocks =
               longFormSection.sections[0].long_form_blocks;
@@ -514,7 +516,8 @@ class LongForm extends React.Component {
             <button
               id="long-submit"
               disabled={this.state.submitButtonDisabled}
-              type="submit"
+              type="button"
+              onClick={this.onSubmitLongForm}
             >
               Submit Application
             </button>
