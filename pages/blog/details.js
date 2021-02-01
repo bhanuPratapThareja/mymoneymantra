@@ -41,7 +41,7 @@ export async function getServerSideProps(ctx) {
     const pageClasses = getClassesForPage(primaryPath, secondaryPath)
     const blogData = await strapi.processReq(
         "GET",
-        `quick-blogs/${query.id}`
+        `quick-blogs/${query.slug}`
     );
     const pageData = await strapi.processReq(
         "GET",
