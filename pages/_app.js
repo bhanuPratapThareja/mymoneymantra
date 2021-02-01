@@ -6,7 +6,6 @@ import { generateCorrelationId } from '../utils/correlationId'
 import { getApiData } from '../api/api';
 
 axios.interceptors.request.use(async config => {
-
   const accessToken = getAuthToken()
   if (!accessToken) {
     try {
@@ -22,20 +21,13 @@ axios.interceptors.request.use(async config => {
       })
       const json = await res.json()
       setAuthToken(json.response.payload)
-    } catch (err) {
+    } catch(err) {
       throw new Error('Authorization Error')
     }
   }
 
   let newConfig = Object.assign({}, config)
-  if (config.method === "get") {
-    newConfig.headers.correlationId = generateCorrelationId()
-    newConfig.headers.appId = 'webapi'
-  } else {
-    newConfig.headers.correlationId = generateCorrelationId()
-    newConfig.headers.appId = 'webapi'
-    // newConfig.data.request.header.correlationId = generateCorrelationId()
-  }
+  newConfig.data.request.header.correlationId = generateCorrelationId()
   newConfig.headers.Authorization = `Bearer ${getAuthToken()}`
   return newConfig
 })
