@@ -2,13 +2,14 @@ import { useEffect } from 'react'
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 import LongForm from '../components/common/LongForm'
-import { setPrimaryPath } from '../utils/localAccess'
+import { setPrimaryPath, clearLeadId } from '../utils/localAccess'
 
 const RKPLBank = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
         setPrimaryPath(props.primaryPath)
+        clearLeadId()
     },[])
 
     const getComponents = dynamic => {

@@ -79,9 +79,9 @@ export async function getServerSideProps(ctx) {
    
     let { primaryPath } = query
     const secondaryPath = 'thank-you'
-    const pageClasses = getClassesForPage(!primaryPath || primaryPath === 'rkpl' ? 'credit-cards' : primaryPath)
+    const pageClasses = getClassesForPage(!primaryPath || primaryPath === 'rkpl' || primaryPath === 'talent-edge-form' ? 'credit-cards' : primaryPath)
 
-    const pageData = await strapi.processReq('GET', `pages?slug=${!primaryPath || primaryPath === 'rkpl' ? 'credit-cards' : primaryPath}-${secondaryPath}`)
+    const pageData = await strapi.processReq('GET', `pages?slug=${!primaryPath || primaryPath === 'rkpl' || primaryPath === 'talent-edge-form' ? 'credit-cards' : primaryPath}-${secondaryPath}`)
     const data = pageData[0]
 
     if(primaryPath && primaryPath !== 'rkpl') {
