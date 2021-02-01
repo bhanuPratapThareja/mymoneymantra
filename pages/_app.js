@@ -1,9 +1,12 @@
 import '../styles/globals.css'
 import '../styles/custom.css'
 import axios from 'axios'
-import { setAuthToken, getAuthToken } from '../api/headers'
+import { setAuthToken, getAuthToken, appId } from '../api/headers'
 import { generateCorrelationId } from '../utils/correlationId'
 import { getApiData } from '../api/api'
+
+axios.defaults.headers.common['correlationId'] = generateCorrelationId()
+axios.defaults.headers.common['appId'] = appId
 
 axios.interceptors.request.use(async config => {
   const accessToken = getAuthToken()
@@ -31,7 +34,6 @@ axios.interceptors.request.use(async config => {
   }
 
   let newConfig = Object.assign({}, config)
-  newConfig.data.request.header.correlationId = generateCorrelationId()
   newConfig.headers.Authorization = `Bearer ${getAuthToken()}`
   return newConfig
 })

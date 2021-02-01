@@ -1,4 +1,6 @@
-import { getCookie } from '../utils/cookie';
+import { getCookie } from '../utils/cookie'
+
+export const appId = 'MMMWEBAPP'
 
 export const getAuthToken = () => {
     return getCookie('accessToken')
