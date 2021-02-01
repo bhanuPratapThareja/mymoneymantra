@@ -1,9 +1,12 @@
 import '../styles/globals.css'
 import '../styles/custom.css'
 import axios from 'axios'
-import { setAuthToken, getAuthToken } from '../api/headers'
+import { setAuthToken, getAuthToken, appId } from '../api/headers'
 import { generateCorrelationId } from '../utils/correlationId'
-import { getApiData } from '../api/api';
+import { getApiData } from '../api/api'
+
+axios.defaults.headers.common['correlationId'] = generateCorrelationId()
+axios.defaults.headers.common['appId'] = appId
 
 axios.interceptors.request.use(async config => {
   const accessToken = getAuthToken()
@@ -11,23 +14,26 @@ axios.interceptors.request.use(async config => {
     try {
       const { url, body } = getApiData('authenticate')
       body.request.header.correlationId = generateCorrelationId()
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      })
-      const json = await res.json()
-      setAuthToken(json.response.payload)
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        })
+        const json = await res.json()
+        setAuthToken(json.response.payload)
+      }catch(err) {
+        throw new Error(err.message)
+      }
     } catch(err) {
       throw new Error('Authorization Error')
     }
   }
 
   let newConfig = Object.assign({}, config)
-  newConfig.data.request.header.correlationId = generateCorrelationId()
   newConfig.headers.Authorization = `Bearer ${getAuthToken()}`
   return newConfig
 })

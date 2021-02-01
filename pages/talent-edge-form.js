@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
-import Strapi from '../../providers/strapi'
-import Layout from '../../components/Layout'
-import LongForm from '../../components/common/LongForm'
-import { setPrimaryPath } from '../../utils/localAccess'
+import Strapi from '../providers/strapi'
+import Layout from '../components/Layout'
+import LongForm from '../components/common/LongForm'
+import { setPrimaryPath } from '../utils/localAccess'
 
 const RKPLBank = props => {
 
@@ -39,7 +39,7 @@ const RKPLBank = props => {
 
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
-    const primaryPath = 'rkpl'
+    const primaryPath = 'talent-edge-form'
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-long-form`)
     const data = pageData[0]
     const preferredSelectionLists = await strapi.processReq("GET", `list-preferences`)

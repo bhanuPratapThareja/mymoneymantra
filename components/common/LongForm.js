@@ -339,8 +339,11 @@ class LongForm extends React.Component {
     });
 
     this.updateState(newLongFormSections).then(() => {
+      console.log(this.state.primaryPath)
+      console.log(this.state.leadId)
+      console.log(this.state.askForOtp)
       if (!errors) {
-        if (this.state.primaryPath && this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
+        if (this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
           let mobileNo = "";
           const newLongFormSections = [...this.state.longFormSections];
           newLongFormSections.forEach((longFormSection) => {
@@ -364,8 +367,8 @@ class LongForm extends React.Component {
       } else {
         this.setState({ submissionError: 'Please correct the fields marked in red' })
       }
-    });
-  };
+    })
+  }
 
   onSubmitOtp = async () => {
     try {
@@ -381,7 +384,7 @@ class LongForm extends React.Component {
   retrieveDataAndSubmit = () => {
     this.setState({ submitButtonDisabled: true, submissionError: '' })
     let data = {};
-    const newLongFormSections = [...this.state.longFormSections];
+    const newLongFormSections = [...this.state.longFormSections]
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
       long_form_blocks.forEach(async (long_form_block) => {
@@ -436,9 +439,11 @@ class LongForm extends React.Component {
 
     let { primaryPath, bank } = this.state
 
+
     generateLead(data, primaryPath, 'lf')
       .then((res) => {
-        const leadId = res.data.response.payload.leadId
+        console.log('resres:: ', res)
+        const leadId = res.data.leadId
         let actionName = this.state.primaryPath === 'rkpl' ? 'RKPL-CC' : 'Short Form Submit'
         sendNotification(leadId, actionName)
         setLeadId(leadId)
