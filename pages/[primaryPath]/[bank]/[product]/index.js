@@ -59,6 +59,7 @@ const Details = props => {
     }
 
     const getComponents = dynamic => {
+        console.log(props.productData)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.credit-cards-detail-banner-component':

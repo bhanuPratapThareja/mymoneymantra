@@ -69,7 +69,7 @@ const PrimaryPage = props => {
 
   return (
     <div className={getClassesForPage(props.primaryPath)}>
-      {props.data ? <Layout>{getComponents(props.data.dynamic, props.preferredSelectionLists)}</Layout> : null}
+      {props.data ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
     </div>
   )
 }

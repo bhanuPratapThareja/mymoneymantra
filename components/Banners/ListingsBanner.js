@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import $ from 'jquery'
 import SvgImage from '../ImageComponent/SvgComponents'
 import ListingFilter from '../Listings/ListingsFilter'
-import { getProductType } from '../../utils/localAccess'
 
 const ListingBanner = props => {
     const { listing_banner_heading, categories } = props.data.listing_banner

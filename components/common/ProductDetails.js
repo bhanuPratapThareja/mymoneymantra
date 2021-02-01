@@ -28,7 +28,7 @@ const ProductDetails = props => {
 
     return (
         <div className="c-detail-page">
-            <section className="container annual-fee">
+            {/* <section className="container annual-fee">
                 <div className="annual-fee-wrapper">
                     <div className="left">
                         {props.primaryPath != "credit-cards"? <div className="logo"><Image image={bank.bank_image} /></div> : null}
@@ -50,7 +50,7 @@ const ProductDetails = props => {
                         })}
                     </div>
                 </div>
-            </section>
+            </section> */}
         </div>
     )
 }
