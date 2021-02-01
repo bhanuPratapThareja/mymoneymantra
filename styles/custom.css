@@ -1251,6 +1251,20 @@ img {
   padding: 0 24px;
 }
 
+/*-- Fateh Feb work --*/
+
+.long-form .long-form-wrapper .form-wrapper.cstm-margin form .long-forms-wrapper .shortforms-container .form__group.verified-input {
+  margin-bottom: 0;
+}
+
+.long-form .long-form-wrapper .form-wrapper.cstm-margin form .long-forms-wrapper .shortforms-container.long-address .form__group.verified-input {
+  margin-bottom: 16px;
+}
+
+.single.card-1 .image_1 {
+  max-height: 240px;
+}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;

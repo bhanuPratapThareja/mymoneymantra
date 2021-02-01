@@ -472,7 +472,7 @@ class LongForm extends React.Component {
 
 
     return (
-      <div className="form-wrapper" id="longForm">
+      <div className="form-wrapper cstm-margin" id="longForm">
         <form onClick={this.handleClickOnSlideBackground} id='long-form_id'>
           {this.state.longFormSections.map((longFormSection) => {
             const long_form_blocks =
