@@ -219,6 +219,7 @@ class LongForm extends React.Component {
       long_form_blocks.forEach((long_form_block) => {
         const inputs = long_form_block.blocks;
         const { bankItem } = updateSelectionFromDropdown(inputs, input_id, item)
+        console.log('bankItem:: ', bankItem)
         if (bankItem && bankItem.bankId && this.state.primaryPath === 'rkpl') {
           this.setState({ bank: bankItem }, () => {
             newLongFormSections.forEach((longFormSectionRkpl) => {
@@ -471,7 +472,7 @@ class LongForm extends React.Component {
 
 
     return (
-      <div className="form-wrapper" id="longForm">
+      <div className="form-wrapper cstm-margin" id="longForm">
         <form onClick={this.handleClickOnSlideBackground} id='long-form_id'>
           {this.state.longFormSections.map((longFormSection) => {
             const long_form_blocks =

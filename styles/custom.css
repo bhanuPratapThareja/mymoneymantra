@@ -1245,6 +1245,31 @@ img {
   height: 240px;
 }
 
+.blog-wrap-top p> h3, .blog-wrap-top p> ul {
+  max-width: 688px;
+  margin: 40px auto 0;
+  padding: 0 24px;
+}
+
+/*-- Fateh Feb work --*/
+
+.long-form .long-form-wrapper .form-wrapper.cstm-margin form .long-forms-wrapper .shortforms-container .form__group.verified-input {
+  margin-bottom: 0;
+}
+
+.long-form .long-form-wrapper .form-wrapper.cstm-margin form .long-forms-wrapper .shortforms-container.long-address .form__group.verified-input {
+  margin-bottom: 16px;
+}
+
+.single.card-1 .image_1 {
+  max-height: 240px;
+}
+
+#popular-cards-sec .slick-list.draggable {
+  padding: 0 !important;
+  margin: 0 55px;
+}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
@@ -1497,6 +1522,15 @@ img {
   .modal-body {
     max-width: 90%;
   }
+  .blogs-flow .main-head .container h2 {
+    text-align: center;
+    z-index: 99999;
+    position: relative;
+    font-size: 1.25rem;
+  }
+  .mobile-background{
+    top: 62px;
+  }
 
   .blogs-flow .featured-wrapper .container .people .detail h5 p {
     text-align: center;
@@ -1651,8 +1685,7 @@ img {
 
   .file-type h5 b {
     line-height: 17px;
-    font-size: 15px;
-    
+    font-size: 15px; 
   }
 
   .credit-card-flow .sf-forms .form__group.field.file-type>img {
@@ -1666,7 +1699,7 @@ img {
     overflow: hidden;
     max-width: 181px;
   }
-  
+
 }
 
 
