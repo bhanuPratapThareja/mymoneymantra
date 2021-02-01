@@ -5,11 +5,21 @@ import { useRouter } from 'next/router'
 
 const FeaturedContributors = (props) => {
    const { section_heading, blog_contributors } = props.data
+   let featuredContributors = blog_contributors
+   featuredContributors.forEach((contributor => {
+      props.allBlogs.forEach(blog => {
+         if (contributor.blog_contributors_name.includes(blog.blog_author)) {
+            contributor.blog_count++
+         }
+      })
+   })
+   )
+   let sortedContributors = featuredContributors.sort((a, b) => b.blog_count - a.blog_count)
    const [sliceLength, setSliceLength] = useState(4)
    const router = useRouter()
    const strapi = new Strapi()
    const goToContributorDetailPage = (contributor) => {
-      router.push({ pathname: "/blog/contributor-detail", query: { id: contributor.id } })
+      router.push({ pathname: "/blog/contributor-detail", query: { slug: contributor.id } })
    }
    useEffect(() => {
       if (blog_contributors.length > 4) {
@@ -24,8 +34,7 @@ const FeaturedContributors = (props) => {
       <section className="featured-wrapper">
          <h2>{section_heading}</h2>
          <div className="container">
-            {blog_contributors.map((contributor, index) => {
-
+            {sortedContributors.map((contributor, index) => {
                if (index + 1 <= sliceLength) {
                   return <div onClick={() => goToContributorDetailPage(contributor)} className="people" key={index}>
                      <div className="image">

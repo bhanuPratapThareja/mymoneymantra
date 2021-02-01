@@ -1,4 +1,3 @@
-import { filter } from 'lodash';
 import { useEffect, useState } from 'react';
 import BlogBanner from '../../components/Banners/BlogBanner';
 import BlogList from '../../components/common/BlogList';
@@ -8,6 +7,10 @@ import { getClassesForPage } from '../../utils/classesForPage';
 
 const BlogSearchPage = (props) => {
     const [data, setData] = useState([])
+    const sortBlogs = (searchKeyword, blogs) => {
+        let sortedBlogsByKeyword = blogs.sort((a, b) => a.header.indexOf(searchKeyword) < b.header.indexOf(searchKeyword) ? 1 : -1)
+        return sortedBlogsByKeyword
+    }
     let searchKey = ''
     useEffect(() => {
         if (props.query.s) {
@@ -24,7 +27,8 @@ const BlogSearchPage = (props) => {
                     }
                 }
             })
-            setData(filteredBlogs)
+            let blogs = sortBlogs(searchKey, filteredBlogs)
+            setData(blogs)
         }
         if (props.query.subcategory) {
             setData(props.blogData)
