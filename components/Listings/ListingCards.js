@@ -30,7 +30,7 @@ const ListingCards = (props) => {
     switch (buttonText) {
       case "Apply Now":
       case "Instant Approval":
-        pathname = `/${primaryPath}/thank-you`;
+        pathname = `/thank-you?bankName=${bankName}`;
         break;
 
       case "EConnect":

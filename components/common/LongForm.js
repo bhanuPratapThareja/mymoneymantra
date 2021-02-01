@@ -9,10 +9,8 @@ import {
   sendNotification,
   submitOtp,
   getOtp,
-  orchestration,
 } from "../../services/formService";
-import { setLeadId } from "../../utils/localAccess";
-import { getLeadId } from "../../utils/localAccess";
+import { getPrimaryPath, setLeadId, getLeadId, setLeadBank, clearLeadId } from "../../utils/localAccess";
 import {
   getFormattedCurrency,
   getWholeNumberFromCurrency,
@@ -24,9 +22,7 @@ import {
   updateDropdownList,
   updateSelectionFromDropdown,
   resetDropdowns,
-} from "../../utils/formHandle";
-
-import { getApiData } from '../../api/api';
+} from "../../utils/formHandle"
 
 class LongForm extends React.Component {
   state = {
@@ -37,27 +33,31 @@ class LongForm extends React.Component {
     },
     noOfMandatoryInputs: 0,
     verifiedInputs: [],
-    leadId: "",
+    leadId: '',
     enableCheckboxes: [],
     openOtpModal: false,
-    cardType :"",
+    cardType: '',
+    submissionError: ''
   };
 
   componentDidMount() {
-    console.log('card type',this.props.product.product_name)
-    let cardType = this.props.product.product_name;
-  
-    const { primaryPath } = this.props.router.query;
-    const bankName = this.props.bank.bank_name;
-    const bankId = this.props.bank.bank_id
+    const primaryPath = getPrimaryPath()
 
-    const { long_form_version_2, always_ask_for_otp, invalid_form_error_message } = this.props.data
-console.log('this.state =====',this.state)
+    if (primaryPath === 'rkpl') {
+      clearLeadId()
+    }
+
+    let bank
+    if (this.props.bank) {
+      bank = { bankId: this.props.bank.bank_id, bankName: this.props.bank.bank_name }
+    }
+
+    const { long_form_version_2, always_ask_for_otp } = this.props.data
     const longFormSections = long_form_version_2.long_form[0].long_form_sections;
     const formData = JSON.parse(localStorage.getItem("formData"));
     let sfData = null;
     let noOfMandatoryInputs = 0;
-    let leadId = getLeadId(primaryPath);
+    let leadId = getLeadId();
     let enableCheckboxes = [];
 
     if (formData && formData[primaryPath]) {
@@ -119,58 +119,55 @@ console.log('this.state =====',this.state)
       });
     });
 
-    this.setState(
-      {
-        longFormSections,
-        noOfMandatoryInputs,
-        enableCheckboxes,
-        primaryPath,
-        bankName,
-        bankId,
-        leadId,
-        invalidFormError: invalid_form_error_message,
-        askForOtp: always_ask_for_otp,
-      },
-      () => {
-        console.log('----thi.state', this.state)
-        this.handlePercentage();
-      }
-    );
+    this.setState({
+      longFormSections,
+      noOfMandatoryInputs,
+      enableCheckboxes,
+      primaryPath,
+      bank,
+      leadId,
+      submitButtonDisabled: enableCheckboxes.length !== 0,
+      askForOtp: always_ask_for_otp,
+      formType: 'lf'
+    }, () => {
+      this.handlePercentage()
+    })
   }
 
-  handleChange = (field) => {
+  handleChange = field => {
+    this.setState({ submissionError: '' })
     const newLongFormSections = [...this.state.longFormSections];
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
-      long_form_blocks.forEach(async (long_form_block) => {
+      long_form_blocks.forEach(long_form_block => {
         const inputs = long_form_block.blocks;
 
-        const inputDropdown = handleChangeInputs(inputs, field);
-        if (inputDropdown) {
+        const inputDropdown = handleChangeInputs(inputs, field, this.props.preferredSelectionLists, this.state.bank)
+        if (inputDropdown && field.type === 'input_with_dropdown') {
           const { listType, masterName, inp, prefferedList } = inputDropdown
-          if (prefferedList) {
+          if (field.focusDropdown && prefferedList) {
             inp.listType = listType
             inp.list = prefferedList
             inp.error = false
             setTimeout(() => {
               this.handleInputDropdownChange(listType, prefferedList, inp.input_id, field.focusDropdown)
-            }, 300)
-          } else {
-            if (!field.focusDropdown) {
-              const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
-                .then(list => {
-                  inp.listType = listType
-                  inp.list = list
-                  this.handleInputDropdownChange(listType, list, inp.input_id)
-                }), 500)
-              debouncedSearch(listType, inp.value, masterName)
-            }
+            }, 500);
+
+          } else if (!field.focusDropdown && listType && listType !== 'null') {
+            const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
+              .then(list => {
+                inp.listType = listType
+                inp.list = list
+                this.handleInputDropdownChange(listType, list, inp.input_id, field)
+              }), 500)
+            debouncedSearch(listType, inp.value, masterName)
           }
         }
       });
     });
+
     this.setState({ longFormSections: newLongFormSections, errors: false }, () => {
-      if (textTypeInputs.includes(field.type) || field.type === "radio") {
+      if (textTypeInputs.includes(field.type) || field.type === "radio" || field.type === 'input_with_dropdown' || field.type === 'money') {
         this.checkInputValidity(field, field.focusDropdown)
       }
       const { enableCheckboxes } = this.state;
@@ -190,28 +187,62 @@ console.log('this.state =====',this.state)
     });
   };
 
-  handleInputDropdownChange = (listType, list, input_id) => {
+  handleInputDropdownChange = (listType, list, input_id, field) => {
     const newLongFormSections = [...this.state.longFormSections];
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
       long_form_blocks.forEach(async (long_form_block) => {
         const inputs = long_form_block.blocks;
-        updateDropdownList(inputs, listType, list, input_id);
+        updateDropdownList(inputs, listType, list, input_id)
+        inputs.forEach(input => {
+          if (input.input_id === input_id) {
+            if (list && list.length && field.value) {
+              let filteredItemList = list.filter(item => item[input.select_name] === field.value.toUpperCase())
+              let filteredItem = filteredItemList.length ? filteredItemList[0] : null
+              this.handleInputDropdownSelection(input_id, filteredItem)
+            }
+          }
+        })
       });
     });
-    this.updateState(newLongFormSections);
+    this.updateState(newLongFormSections)
   };
 
-  handleInputDropdownSelection = (name, type, item) => {
+  handleInputDropdownSelection = (input_id, item) => {
     const newLongFormSections = [...this.state.longFormSections];
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
-      long_form_blocks.forEach(async (long_form_block) => {
+      long_form_blocks.forEach((long_form_block) => {
         const inputs = long_form_block.blocks;
-        updateSelectionFromDropdown(inputs, name, item);
+        const { bankItem } = updateSelectionFromDropdown(inputs, input_id, item)
+        if (bankItem && bankItem.bankId && this.state.primaryPath === 'rkpl') {
+          this.setState({ bank: bankItem }, () => {
+            newLongFormSections.forEach((longFormSectionRkpl) => {
+              const rkplBlocks = longFormSectionRkpl.sections[0].long_form_blocks
+              rkplBlocks.forEach(rkplBlocks => {
+                const rkplInputs = rkplBlocks.blocks
+                rkplInputs.forEach(rkplInput => {
+                  if ((rkplInput.end_point_name === 'cardType' && rkplInput.selectedItem && rkplInput.selectedItem.cardTypeBankId !== bankItem.bankId) ||
+                    (rkplInput.end_point_name === 'designationId' && rkplInput.selectedItem && rkplInput.selectedItem.designationBankId !== bankItem.bankId)) {
+                    rkplInput.selectedId = null
+                    rkplInput.selectedItem = null
+                    rkplInput.error = false
+                    rkplInput.errorMsg = ''
+                    rkplInput.verified = false
+                    rkplInput.list = []
+                    rkplInput.value = ''
+                  }
+                })
+              })
+            })
+          })
+        }
       });
     });
-    this.updateState(newLongFormSections);
+    this.updateState(newLongFormSections)
+      .then(() => {
+        // console.log(this.state)
+      })
   };
 
   handleClickOnSlideBackground = () => {
@@ -224,7 +255,7 @@ console.log('this.state =====',this.state)
       });
     });
     this.updateState(newLongFormSections);
-  };
+  }
 
   checkInputValidity = (field) => {
     const newLongFormSections = [...this.state.longFormSections];
@@ -305,7 +336,7 @@ console.log('this.state =====',this.state)
 
     this.updateState(newLongFormSections).then(() => {
       if (!errors) {
-        if (!this.state.leadId || this.state.askForOtp) {
+        if (this.state.primaryPath && this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
           let mobileNo = "";
           const newLongFormSections = [...this.state.longFormSections];
           newLongFormSections.forEach((longFormSection) => {
@@ -326,14 +357,16 @@ console.log('this.state =====',this.state)
         } else {
           this.retrieveDataAndSubmit();
         }
-       }
+      } else {
+        this.setState({ submissionError: 'Please correct the fields marked in red' })
+      }
     });
   };
 
   onSubmitOtp = async () => {
     try {
       await submitOtp(this.state.mobileNo);
-      this.closeOtpModal();
+      this.closeOtpModal()
       this.setState({ submitButtonDisabled: true });
       this.retrieveDataAndSubmit();
     } catch (err) {
@@ -342,6 +375,7 @@ console.log('this.state =====',this.state)
   };
 
   retrieveDataAndSubmit = () => {
+    this.setState({ submitButtonDisabled: true, submissionError: '' })
     let data = {};
     const newLongFormSections = [...this.state.longFormSections];
     newLongFormSections.forEach((longFormSection) => {
@@ -379,34 +413,40 @@ console.log('this.state =====',this.state)
             data[key] = "";
           }
         }
-      });
+
+        if (this.state.bankId) {
+          data.bankId = this.state.bankId
+        }
+        const {
+          utm_campaign: utmCampaign,
+          utm_medium: utmMedium,
+          utm_source: utmSource,
+          utm_remark: utmRemark
+        } = this.props.router.query
+        data.utmCampaign = utmCampaign
+        data.utmMedium = utmMedium
+        data.utmSource = utmSource
+        data.utmRemark = utmRemark
+      })
     });
 
-    console.log('this.ststee----',this.state)
+    let { primaryPath, bank } = this.state
 
-    const { primaryPath, bankName, leadId } = this.state;
-    console.log("data 111",data)
-    data.cardType = this.props.product.product_name
-    data.bankId = this.state.bankId
-    console.log('data 2222',data);
-
-    generateLead(data, primaryPath)
+    generateLead(data, primaryPath, 'lf')
       .then((res) => {
-        if (!leadId) {
-          const leadIdSendNotification = res.data.response.payload.leadId;
-          sendNotification(leadIdSendNotification);
-        
-        }  
-     
-        setLeadId(primaryPath, res.data.response.payload.leadId);
-        const pathname = `/${primaryPath}/thank-you`;
-        const query = { bankName };
-        this.props.router.push({ pathname, query });
+        const leadId = res.data.response.payload.leadId
+        let actionName = this.state.primaryPath === 'rkpl' ? 'RKPL-CC' : 'Short Form Submit'
+        sendNotification(leadId, actionName)
+        setLeadId(leadId)
+        setLeadBank(bank)
+        const pathname = `/thank-you`
+        this.props.router.push(pathname)
+        this.setState({ submitButtonDisabled: false })
       })
       .catch((err) => {
-        console.log('inside catch error',err)
-        this.setState({ submitButtonDisabled: false });
-      });
+        console.log('leaderr: ', err)
+        this.setState({ submitButtonDisabled: false, submissionError: 'Something went wrong. Please try again.' })
+      })
   };
 
   closeOtpModal = () => {
@@ -421,7 +461,7 @@ console.log('this.state =====',this.state)
 
     return (
       <div className="form-wrapper" id="longForm">
-        <form onClick={this.handleClickOnSlideBackground}>
+        <form onClick={this.handleClickOnSlideBackground} id='long-form_id'>
           {this.state.longFormSections.map((longFormSection) => {
             const long_form_blocks =
               longFormSection.sections[0].long_form_blocks;
@@ -451,7 +491,8 @@ console.log('this.state =====',this.state)
                           return (
                             <React.Fragment key={component.id}>
                               {generateInputs(component, this.handleChange,
-                                this.checkInputValidity, this.handleInputDropdownSelection)}
+                                this.checkInputValidity, this.handleInputDropdownSelection,
+                                this.state.formType)}
                             </React.Fragment>
                           );
                         })}
@@ -462,7 +503,7 @@ console.log('this.state =====',this.state)
               </React.Fragment>
             );
           })}
-          {this.state.errors ? <p className="form-invalid-text">{this.state.invalidFormError}</p> : null}
+          {this.state.submissionError ? <p className="form-invalid-text">{this.state.submissionError}</p> : null}
           <div className="long-form-submit">
             <button
               id="long-submit"

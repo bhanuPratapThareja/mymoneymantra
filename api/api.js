@@ -137,7 +137,7 @@ const api = {
         },
       },
     },
-    purposeOfLoan: {
+    purposeOfLoan :{
       devUrl: "masters/api/master/v1/purpose-of-loan",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
@@ -147,8 +147,9 @@ const api = {
           payload: { name: "" },
         },
       },
-    },
 
+    },
+    
     leadProductDecision: {
       devUrl: "lead/api/lead/v1/product/decision",
       uatUrl: "api/master/v1/",
@@ -206,6 +207,7 @@ const api = {
             appId: "MMMWEBAPP",
           },
           payload: {
+
             personal: {
               title: "1000000002",
               fullName: "",
@@ -283,6 +285,10 @@ const api = {
             loanStartYear: "",
             totalExisTenor: "",
             offerId: "",
+            utmCompaign: '',
+            utmMedium: '',
+            utmSource: '',
+            utmRemark: '',
             existingFacility: [
               {
                 "exisTenorBalMonths": "",
@@ -430,7 +436,7 @@ const api = {
         request: {
           header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
           payload: {
-            actionName: "Short Form Submit",
+            actionName: "",
             leadId: "PR01019897",
           },
         },

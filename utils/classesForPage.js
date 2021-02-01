@@ -4,7 +4,7 @@ const classes = {
     'personal-loans': ['credit-card-flow', 'personal-loan-flow'],
     'home-loans': ['credit-card-flow', 'personal-loan-flow', 'home-loan-flow', 'gold-loan-flow', 'health-flow'],
     'blog': ['credit-card-flow', 'b2c-flow', 'blogs-flow'],
-
+    'Forms': ['credit-card-flow', 'homepage-flow'],
     'listings': {
         'credit-cards': ['listings'],
         'personal-loans': ['listings', 'personal-loan-listing'],
@@ -13,7 +13,8 @@ const classes = {
     'thank-you': {
         'credit-cards': ['credit-card-flow', 'thankyou-page'],
         'personal-loans': ['credit-card-flow', 'thankyou-page', 'personal-loan-thankyou'],
-        'home-loans': ['credit-card-flow', 'thankyou-page', 'personal-loan-thankyou', 'home-loan-thank-you', 'health-flow']
+        'home-loans': ['credit-card-flow', 'thankyou-page', 'personal-loan-thankyou', 'home-loan-thank-you', 'health-flow'],
+        'rkpl': ['credit-card-flow', 'thankyou-page']
     },
     'details': {
         'credit-cards': ['credit-card-flow', 'c-detail-page'],

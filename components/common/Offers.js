@@ -20,9 +20,9 @@ const Offers = props => {
 
    const dataToShow = async() =>{
       let offerData =  await customerOfferData();
-      let { populars,trendings } = offerData
-      console.log('inside offer.js populars productId',populars[0].productId)
-      console.log('inside offer.js trendings productId',trendings[0].productId)
+    //  let { populars,trendings } = offerData
+      // console.log('inside offer.js populars productId',populars[0].productId)
+      // console.log('inside offer.js trendings productId',trendings[0].productId)
 
    }
    

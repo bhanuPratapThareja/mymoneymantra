@@ -224,7 +224,7 @@ class ShortExtendedForm extends React.Component {
 
     onSubmitShortForm = () => {
         return new Promise((resolve, reject) => {
-            submitShortForm([...this.state.slides], this.state.currentSlide, this.state.primaryPath)
+            submitShortForm([...this.state.slides], this.state.currentSlide, this.state.primaryPath, 'sf')
                 .then(res => {
                     resolve(res)
                 })
@@ -234,20 +234,21 @@ class ShortExtendedForm extends React.Component {
         })
     }
 
-    handleChange = field => {
+    handleChange = async field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const inputDropdown = handleChangeInputs(inputs, field, this.props.preferredBanks)
-        if (inputDropdown) {
+        const inputDropdown = await handleChangeInputs(inputs, field, this.props.preferredSelectionLists)
+
+        if (inputDropdown && field.type === 'input_with_dropdown') {
             const { listType, masterName, inp, prefferedList } = inputDropdown
             if (prefferedList) {
                 inp.listType = listType
                 inp.list = prefferedList
                 inp.error = false
                 setTimeout(() => {
-                    this.handleInputDropdownChange(listType, prefferedList, inp.input_id, field.focusDropdown)
-                }, 300)
+                this.handleInputDropdownChange(listType, prefferedList, inp.input_id)
+            }, 500);
             } else {
-                if (!field.focusDropdown) {
+                if (!field.focusDropdown && listType && listType !== 'null') {
                     const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
                         .then(list => {
                             inp.listType = listType
@@ -256,12 +257,12 @@ class ShortExtendedForm extends React.Component {
                         }), 500)
                     debouncedSearch(listType, inp.value, masterName)
                 }
-            }
+            } 
         }
 
         this.setState({ ...this.state, slides: newSlides }, () => {
-            if (textTypeInputs.includes(field.type) || field.type === 'radio') {
-                this.checkInputValidity(field, field.focusDropdown)
+            if (textTypeInputs.includes(field.type) || field.type === "radio" || field.type === 'input_with_dropdown' || field.type === 'money') {
+                this.checkInputValidity(field)
             }
             const { enableCheckboxes } = this.state
             let trueEnableCheckboxes = []
@@ -283,18 +284,27 @@ class ShortExtendedForm extends React.Component {
     handleInputDropdownChange = (listType, list, input_id) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateDropdownList(inputs, listType, list, input_id)
+        inputs.forEach(input => {
+            if(input.input_id === input_id) {
+                if(list && list.length && field.value){
+                  let filteredItemList = list.filter(item => item[input.select_name] === field.value.toUpperCase())
+                  let filteredItem = filteredItemList.length ? filteredItemList[0] : null
+                  this.handleInputDropdownSelection(input_id, filteredItem)
+                }
+              }
+          })
         this.setState({ ...this.state, slides: newSlides })
     }
 
-    handleInputDropdownSelection = (input_id, type, item) => {
+    handleInputDropdownSelection = (input_id, item) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateSelectionFromDropdown(inputs, input_id, item)
         this.setState({ ...this.state, slides: newSlides })
     }
 
-    checkInputValidity = (field, focusDropdown) => {
+    checkInputValidity = field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        updateInputsValidity(inputs, field, this.state.errorMsgs, focusDropdown)
+        updateInputsValidity(inputs, field, this.state.errorMsgs)
         this.setState({ ...this.state, slides: newSlides }, () => {
             if (field.type === 'radio') {
                 let mandatoryInputsHaveValues = true
