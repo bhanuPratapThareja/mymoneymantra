@@ -8,6 +8,8 @@ import { withRouter } from 'next/router'
 import { updateLongForm } from '../../services/formService';
 import { getBase64, documentUpload } from '../../services/formService';
 
+const strapi = new Strapi()
+
 class LongFormBanner extends React.Component {
 
     state = {
@@ -27,7 +29,6 @@ class LongFormBanner extends React.Component {
   
     render() {
         const { bank, product } = this.props    
-        const strapi = new Strapi()
 
         if (!bank) {
             return null

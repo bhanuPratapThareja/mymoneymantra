@@ -13,8 +13,8 @@ const BlogList = (props) => {
             <div className="filter-cards">
                 <div className="filter-cards-wrapper" >
                     {data.length ? data.map((blog, i) => {
-                        const { header, short_text, image, read_text, redirect_url, id, createdAt } = blog
-                        const date = new Date(createdAt);
+                        const { header, short_text, image, read_text, redirect_url, id, createdAt, published_at } = blog
+                        const date = new Date(published_at);
                         const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
                         const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
                         const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);

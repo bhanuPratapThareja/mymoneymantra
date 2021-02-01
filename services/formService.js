@@ -4,7 +4,7 @@ import { getApiData } from '../api/api'
 import { getLeadId } from '../utils/localAccess'
 import { getFormattedDate } from '../utils/formatDataForApi'
 const CancelToken = axios.CancelToken
-import { getDocumentIdandTypeId } from '../Utils/uploadDocumentHelper'
+import { getDocumentIdandTypeId } from '../utils/uploadDocumentHelper'
 let cancel
 let otpId = ''
 
@@ -124,114 +124,114 @@ export const generateLead = async (data, primaryPath, formType) => {
         } = data
 
 
-        body.request.payload.personal.fullName = fullName
-        body.request.payload.personal.dob = getFormattedDate(dob)
-        body.request.payload.personal.pan = pan
-        body.request.payload.personal.gender = gender
-        body.request.payload.personal.maritalStatus = maritalStatus
-        body.request.payload.personal.nationality = nationality
+        body.personal.fullName = fullName
+        body.personal.dob = getFormattedDate(dob)
+        body.personal.pan = pan
+        body.personal.gender = gender
+        body.personal.maritalStatus = maritalStatus
+        body.personal.nationality = nationality
 
-        body.request.payload.work.preferedComm = preferedComm;
-        body.request.payload.work.director = director;
-        body.request.payload.work.jointAccHolder = jointAccHolder;
-        body.request.payload.work.totalWorkExp = totalWorkExp
+        body.work.preferedComm = preferedComm;
+        body.work.director = director;
+        body.work.jointAccHolder = jointAccHolder;
+        body.work.totalWorkExp = totalWorkExp
 
-        body.request.payload.contact.mobile[0].mobile = mobile
-        body.request.payload.contact.email[0].email = email
-        body.request.payload.contact.email[1].email = officeEmail
+        body.contact.mobile[0].mobile = mobile
+        body.contact.email[0].email = email
+        body.contact.email[1].email = officeEmail
 
         if (fathersFirstName && fathersLastName) {
-            body.request.payload.contact.keyContact[0].caseContactMasterId = "5";
-            body.request.payload.contact.keyContact[0].caseContactName = fathersFirstName + " " + fathersLastName;
+            body.contact.keyContact[0].caseContactMasterId = "5";
+            body.contact.keyContact[0].caseContactName = fathersFirstName + " " + fathersLastName;
         }
         else {
-            body.request.payload.contact.keyContact[0].caseContactMasterId = "";
-            body.request.payload.contact.keyContact[0].caseContactName = "";
+            body.contact.keyContact[0].caseContactMasterId = "";
+            body.contact.keyContact[0].caseContactName = "";
         }
 
         if (mothersFirstName && mothersLastName) {
-            body.request.payload.contact.keyContact[1].caseContactMasterId = "16";
-            body.request.payload.contact.keyContact[1].caseContactName = mothersFirstName + " " + mothersLastName;
+            body.contact.keyContact[1].caseContactMasterId = "16";
+            body.contact.keyContact[1].caseContactName = mothersFirstName + " " + mothersLastName;
         }
         else {
-            body.request.payload.contact.keyContact[1].caseContactMasterId = "";
-            body.request.payload.contact.keyContact[1].caseContactName = "";
+            body.contact.keyContact[1].caseContactMasterId = "";
+            body.contact.keyContact[1].caseContactName = "";
         }
 
-        body.request.payload.work.applicantType = applicantType
-        body.request.payload.work.companyId = companyId ? companyId.caseCompanyId : ''
-        body.request.payload.work.netMonthlyIncome = netMonthlyIncome
+        body.work.applicantType = applicantType
+        body.work.companyId = companyId ? companyId.caseCompanyId : ''
+        body.work.netMonthlyIncome = netMonthlyIncome
 
-        body.request.payload.work.designation = designationId ? designationId.designationId : ""
-        body.request.payload.work.qualification = qualificationId ? qualificationId.qualificationName : ""
+        body.work.designation = designationId ? designationId.designationId : ""
+        body.work.qualification = qualificationId ? qualificationId.qualificationName : ""
 
         // body.request.payload.bankId = bankId ? bankId.bankId : "";
-        body.request.payload.bankId = typeof bankId === 'string' ? bankId : bankId.bankId ? bankId.bankId : salaryBankName.bankId ? salaryBankName.bankId : ''
+        body.bankId = typeof bankId === 'string' ? bankId : bankId.bankId ? bankId.bankId : salaryBankName.bankId ? salaryBankName.bankId : ''
 
         // salaryBankName ? salaryBankName.bankId : "";
-        // body.request.payload.work.otherCompany = otherCompany ? otherCompany.companyName : ""
+        // body.work.otherCompany = otherCompany ? otherCompany.companyName : ""
 
 
-        body.request.payload.leadId = getLeadId()
-        body.request.payload.productId = '6'
-        body.request.payload.cardType = cardType.cardTypeId ? cardType.cardTypeId : ''
-        body.request.payload.surrogateType = surrogateType.surrogateTypeId ? surrogateType.surrogateTypeId : ''
-        body.request.payload.requestedLoanamount = requestedLoanamount
+        body.leadId = getLeadId()
+        body.productId = '6'
+        body.cardType = cardType ? cardType.cardTypeId ? cardType.cardTypeId : '' : ''
+        body.surrogateType = surrogateType ?  surrogateType.surrogateTypeId ? surrogateType.surrogateTypeId : '' : ''
+        body.requestedLoanamount = requestedLoanamount
 
         // for facility requested
-        body.request.payload.existingFacility[0].exisTenorBalMonths = exisTenorBalMonths
-        body.request.payload.existingFacility[0].exisfacility = localStorage.getItem('productId')
-        body.request.payload.existingFacility[0].exisBankId = bankId.bankId ? bankId.bankId : ""
-        body.request.payload.existingFacility[0].exisLoanAmount = exisLoanAmount
-        body.request.payload.existingFacility[0].exisEmi = exisEmi
-        body.request.payload.existingFacility[0].exisRemark = exisRemark
+        body.existingFacility[0].exisTenorBalMonths = exisTenorBalMonths
+        body.existingFacility[0].exisfacility = localStorage.getItem('productId')
+        body.existingFacility[0].exisBankId = bankId ? bankId.bankId ? bankId.bankId : '' : ''
+        body.existingFacility[0].exisLoanAmount = exisLoanAmount
+        body.existingFacility[0].exisEmi = exisEmi
+        body.existingFacility[0].exisRemark = exisRemark
 
 
-        body.request.payload.requestedTenor = requestedTenor
+        body.requestedTenor = requestedTenor
         // body.request.payload.exisEmi = exisEmi
 
 
         // for residence
-        body.request.payload.address[0].addressTypeMasterId = "1000000001"
-        body.request.payload.address[0].addressline1 = addressline1
-        body.request.payload.address[0].addressline2 = addressline2
-        body.request.payload.address[0].addressline3 = addressline3
-        body.request.payload.address[0].landmark = nearByLandmark
-        body.request.payload.address[0].pincode = pincode ? pincode.pincode : ""
-        body.request.payload.address[0].city = pincode ? pincode.cityId : ""
-        body.request.payload.address[0].state = pincode ? pincode.stateId : ''
-        body.request.payload.address[0].stdCode = pincode ? pincode.stdCode : ''
+        body.address[0].addressTypeMasterId = "1000000001"
+        body.address[0].addressline1 = addressline1
+        body.address[0].addressline2 = addressline2
+        body.address[0].addressline3 = addressline3
+        body.address[0].landmark = nearByLandmark
+        body.address[0].pincode = pincode ? pincode.pincode : ""
+        body.address[0].city = pincode ? pincode.cityId : ""
+        body.address[0].state = pincode ? pincode.stateId : ''
+        body.address[0].stdCode = pincode ? pincode.stdCode : ''
 
         // for office address
-        body.request.payload.address[1].addressTypeMasterId = "1000000002"
-        body.request.payload.address[1].addressline1 = officeAddressline1
-        body.request.payload.address[1].addressline2 = officeAddressline2
-        body.request.payload.address[1].landmark = officeNearBy
-        body.request.payload.address[1].pincode = officePincode ? officePincode.pincode : ""
-        body.request.payload.address[1].city = officePincode ? officePincode.cityId : ""
-        body.request.payload.address[1].state = officePincode ? officePincode.stateId : ""
-        body.request.payload.address[1].stdCode = officePincode ? officePincode.stdCode : ""
+        body.address[1].addressTypeMasterId = "1000000002"
+        body.address[1].addressline1 = officeAddressline1
+        body.address[1].addressline2 = officeAddressline2
+        body.address[1].landmark = officeNearBy
+        body.address[1].pincode = officePincode ? officePincode.pincode : ""
+        body.address[1].city = officePincode ? officePincode.cityId : ""
+        body.address[1].state = officePincode ? officePincode.stateId : ""
+        body.address[1].stdCode = officePincode ? officePincode.stdCode : ""
 
         // for property
-        body.request.payload.address[2].addressTypeMasterId = "1000000004"
-        body.request.payload.address[2].purposeOfLoan = propertyType
-        // body.request.payload.address[2].purposeOfLoan = purposeOfLoan
+        body.address[2].addressTypeMasterId = "1000000004"
+        body.address[2].purposeOfLoan = propertyType
+        // body.address[2].purposeOfLoan = purposeOfLoan
 
-        body.request.payload.address[2].propertyValue = cost_of_property
-        body.request.payload.address[2].city = city_location;
-        body.request.payload.address[2].pincode = propertyPincode ? propertyPincode.pincode : "";
-        body.request.payload.address[2].state = propertyPincode ? propertyPincode.stateId : "";
-        body.request.payload.address[2].stdCode = propertyPincode ? propertyPincode.stdCode : "";
+        body.address[2].propertyValue = cost_of_property
+        body.address[2].city = city_location;
+        body.address[2].pincode = propertyPincode ? propertyPincode.pincode : "";
+        body.address[2].state = propertyPincode ? propertyPincode.stateId : "";
+        body.address[2].stdCode = propertyPincode ? propertyPincode.stdCode : "";
 
 
         //for permanent add
-        body.request.payload.address[3].addressTypeMasterId = "1000000003"
-        body.request.payload.address[3].addressline1 = permanentAddressline1
-        body.request.payload.address[3].addressline2 = permanentAddressline2
-        body.request.payload.address[3].pincode = permanentPincode ? permanentPincode.pincode : ""
-        body.request.payload.address[3].city = permanentPincode ? permanentPincode.cityId : ""
-        body.request.payload.address[3].state = permanentPincode ? permanentPincode.stateId : ""
-        body.request.payload.address[3].stdCode = permanentPincode ? permanentPincode.stdCode : ""
+        body.address[3].addressTypeMasterId = "1000000003"
+        body.address[3].addressline1 = permanentAddressline1
+        body.address[3].addressline2 = permanentAddressline2
+        body.address[3].pincode = permanentPincode ? permanentPincode.pincode : ""
+        body.address[3].city = permanentPincode ? permanentPincode.cityId : ""
+        body.address[3].state = permanentPincode ? permanentPincode.stateId : ""
+        body.address[3].stdCode = permanentPincode ? permanentPincode.stdCode : ""
         
         let utmCampaignChoice = ''
         if(primaryPath == 'rkpl') {
@@ -240,14 +240,14 @@ export const generateLead = async (data, primaryPath, formType) => {
             utmCampaignChoice = utmCampaign ? utmCampaign : ''
         }
 
-        body.request.payload.utmCampaign = utmCampaignChoice
-        body.request.payload.utmMedium = utmMedium ? utmMedium : ''
-        body.request.payload.utmSource = utmSource ? utmSource : ''
-        body.request.payload.utmRemark = utmRemark ? utmRemark : ''
+        body.utmCampaign = utmCampaignChoice
+        body.utmMedium = utmMedium ? utmMedium : ''
+        body.utmSource = utmSource ? utmSource : ''
+        body.utmRemark = utmRemark ? utmRemark : ''
         
         let headers = {}
 
-        console.log(body.request.payload)
+        console.log(body)
 
 
         if (formType === 'lf' && primaryPath !== 'rkpl') {
