@@ -6,7 +6,7 @@ const BlogList = (props) => {
     const router = useRouter()
 
     const onOpenBlog = blog => {
-        router.push({ pathname: '/blog/details', query: { id: blog.id } })
+        router.push({ pathname: '/blog/details', query: { slug: blog.id } })
     }
     return (
         <section className="blogs-filter container">

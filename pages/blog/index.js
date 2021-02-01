@@ -8,11 +8,10 @@ import { getClassesForPage } from '../../utils/classesForPage'
 import FeaturedContributors from "../../components/common/FeaturedContributors";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import RecentBlogs from "../../components/common/RecentBlogs";
 
 
 const Blog = (props) => {
-  const router = useRouter()
-
   useEffect(() => {
     window.scrollTo(0, 0)
   })
@@ -23,19 +22,19 @@ const Blog = (props) => {
           return <BlogBanner key={block.id} data={block} />;
         case "offers.popular-blogs-component":
           return <Blogger key={block.id} data={block} />;
-          case "blocks.recent-blog":
-            return <Blogger key={block.id} data={block} />;  
+        case "blocks.recent-blog":
+          return <RecentBlogs key={block.id} data={block} />;
         case "blocks.blog-contributors-component":
-          return <FeaturedContributors key={block.id} data={block} />
+          return <FeaturedContributors key={block.id} data={block} allBlogs={props.allBlogs} />
         case "blocks.blog-category":
           return <ProductSlider key={block.id} data={block} />;
         case "blocks.blog-list-component":
           return <BlogFilter key={block.id} data={props.allBlogs} blogsFilter={props.blogsFilter} />;
-             
+
       }
     });
   };
-  
+
 
   return (
     <div className={props.pageClasses}>

@@ -10,7 +10,7 @@ const BlogFilter = props => {
    const router = useRouter()
 
    const onOpenBlog = blog => {
-      router.push({ pathname: '/blog/details', query: { id: blog.id } })
+      router.push({ pathname: '/blog/details', query: { slug: blog.id } })
    }
    const onOpenFilter = () => {
       const el = document.getElementsByClassName('filter-option')[0]
