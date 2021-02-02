@@ -288,7 +288,7 @@ class ShortExtendedForm extends React.Component {
 
     handleInputDropdownSelection = (input_id, item) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        updateSelectionFromDropdown(inputs, input_id, item)
+        pdateSelectionFromDropdown(inputs, input_id, item)
         this.setState({ ...this.state, slides: newSlides })
     }
 
