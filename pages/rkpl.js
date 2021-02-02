@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 import LongForm from '../components/common/LongForm'
-import { setPrimaryPath, clearLeadId } from '../utils/localAccess'
+import { setPrimaryPath, setProductType, clearLeadId, clearLeadBank } from '../utils/localAccess'
 
 const RKPLBank = props => {
 

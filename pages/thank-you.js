@@ -72,13 +72,14 @@ export async function getServerSideProps(ctx) {
     console.log('primaryPath before switch: ', primaryPath)
 
     switch (primaryPath) {
-        case null:
-        case undefined:
-        case '':
         case 'rkpl':
             primaryPath = 'credit-cards'
+            break
         case 'talent-edge-form':
             primaryPath = 'personal-loans'
+            break
+        default:
+            primaryPath = 'credit-cards'
 
     }
     console.log('primaryPath after switch: ', primaryPath)
