@@ -57,7 +57,7 @@ const ThankYouPage = props => {
     }
 
     return (
-        <div className={getClassesForPage('credit-cards', 'thank-you')}>
+        <div className={getClassesForPage(props.primaryPath, props.secondaryPath)}>
             {props.data ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
         </div>
     )
@@ -66,13 +66,27 @@ const ThankYouPage = props => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const { query } = ctx
+
     let { primaryPath } = query
-    primaryPath = !primaryPath || primaryPath === 'rkpl' ? 'credit-cards' : primaryPath
     const secondaryPath = 'thank-you'
+    console.log('primaryPath before switch: ', primaryPath)
+
+    switch (primaryPath) {
+        case null:
+        case undefined:
+        case '':
+        case 'rkpl':
+            primaryPath = 'credit-cards'
+        case 'talent-edge-form':
+            primaryPath = 'personal-loans'
+
+    }
+    console.log('primaryPath after switch: ', primaryPath)
+
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const data = pageData[0]
 
-    return { props: { data, primaryPath } }
+    return { props: { data, primaryPath, secondaryPath } }
 }
 
 export default ThankYouPage

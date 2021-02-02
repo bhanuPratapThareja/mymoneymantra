@@ -3,6 +3,8 @@ import { unpackComponents } from '../../services/componentsService'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import ImageComponent from '../../components/ImageComponent/ImageComponent'
 
+const strapi = new Strapi()
+
 class LongFormBanner extends React.Component {
 
     state = {

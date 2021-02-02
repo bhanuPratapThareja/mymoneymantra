@@ -7,6 +7,8 @@ import Blogger from "../../components/common/Blogger"
 import { getClassesForPage } from '../../utils/classesForPage'
 import FeaturedContributors from "../../components/common/FeaturedContributors";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
+import RecentBlogs from "../../components/common/RecentBlogs";
 
 
 const Blog = (props) => {
@@ -20,16 +22,19 @@ const Blog = (props) => {
           return <BlogBanner key={block.id} data={block} />;
         case "offers.popular-blogs-component":
           return <Blogger key={block.id} data={block} />;
+        case "blocks.recent-blog":
+          return <RecentBlogs key={block.id} data={block} />;
         case "blocks.blog-contributors-component":
-          return <FeaturedContributors key={block.id} data={block} />
+          return <FeaturedContributors key={block.id} data={block} allBlogs={props.allBlogs} />
         case "blocks.blog-category":
           return <ProductSlider key={block.id} data={block} />;
         case "blocks.blog-list-component":
-          return <BlogFilter key={block.id} data={block} />;
+          return <BlogFilter key={block.id} data={props.allBlogs} blogsFilter={props.blogsFilter} />;
 
       }
     });
   };
+
 
   return (
     <div className={props.pageClasses}>
@@ -43,14 +48,18 @@ export async function getServerSideProps(ctx) {
   const { query } = ctx;
   const primaryPath = query.primaryPath;
   const pageClasses = getClassesForPage('blog')
-
+  const blogsFilter = await strapi.processReq('GET', `filters?slug=blogs-filter`)
 
   const pageData = await strapi.processReq(
     "GET",
     `pages?slug=blog`
   );
+  const allBlogs = await strapi.processReq(
+    "GET",
+    `quick-blogs`
+  );
   const data = pageData && pageData.length ? pageData[0] : null;
-  return { props: { data, pageClasses } };
+  return { props: { data, pageClasses, blogsFilter, allBlogs } };
 }
 
 export default Blog;
