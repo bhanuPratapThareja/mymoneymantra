@@ -1,8 +1,7 @@
 import '../styles/globals.css'
 import '../styles/custom.css'
 import axios from 'axios'
-import { setAuthToken, getAuthToken, appId } from '../api/headers'
-import { generateCorrelationId } from '../utils/correlationId'
+import { setAuthToken, getAuthToken, appId, generateCorrelationId } from '../api/headers'
 import { getApiData } from '../api/api'
 
 axios.defaults.headers.common['correlationId'] = generateCorrelationId()
