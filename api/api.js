@@ -245,6 +245,12 @@ const api = {
               caseContactEmail: "",
               caseContactMobileNo: "",
             },
+            {
+              caseContactMasterId: "",
+              caseContactName: "",
+              caseContactEmail: "",
+              caseContactMobileNo: "",
+            },
           ],
         },
         work: {

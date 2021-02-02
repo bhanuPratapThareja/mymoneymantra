@@ -122,7 +122,8 @@ export const generateLead = async (data, primaryPath, formType) => {
             officeAddressline1, officeAddressline2, addressline3, officeNearBy, officePincode, officeCity,
             permanentAddressline1, permanentAddressline2, permanentPincode, permannentCity,
             city_location, cost_of_property, propertyPincode, purposeOfLoan,
-            utmCampaign, utmMedium, utmSource, utmRemark
+            utmCampaign, utmMedium, utmSource, utmRemark,
+            referenceType,referenceFirstName,referenceLastName,referenceEmail,referenceMobile
         } = data
 
 
@@ -157,6 +158,18 @@ export const generateLead = async (data, primaryPath, formType) => {
             body.contact.keyContact[1].caseContactMasterId = "";
             body.contact.keyContact[1].caseContactName = "";
         }
+        
+        if (referenceFirstName && referenceLastName) {
+            body.contact.keyContact[2].caseContactMasterId = referenceType;
+            body.contact.keyContact[2].caseContactName = referenceFirstName + " " + referenceLastName;
+            body.contact.keyContact[2].caseContactEmail = referenceEmail;
+            body.contact.keyContact[2].caseContactMobileNo = referenceMobile;
+
+        } else {
+            body.contact.keyContact[2].caseContactMasterId = "";
+            body.contact.keyContact[2].caseContactName = "";
+        }
+
 
         body.work.applicantType = applicantType
         body.work.companyId = companyId ? companyId.caseCompanyId : ''
