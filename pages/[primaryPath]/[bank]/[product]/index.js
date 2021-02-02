@@ -15,7 +15,7 @@ import LearnMore from '../../../../components/common/LearnMore'
 import LongFormBanner from '../../../../components/Banners/LongFormBanner'
 import LongForm from '../../../../components/common/LongForm'
 import { getClassesForPage } from '../../../../utils/classesForPage'
-import { setPrimaryPath, setProductType } from '../../../../utils/localAccess'
+import { setPrimaryPath, setProductType, clearLeadBank } from '../../../../utils/localAccess'
 
 const Details = props => {
     const router = useRouter()
@@ -27,6 +27,7 @@ const Details = props => {
         setPrimaryPath(props.primaryPath)
         setProductType(props.productTypeData)
         setPreviousPath(page)
+        clearLeadBank()
         window.onpopstate = () => {
             if (previousPath !== 'long-form') {
                 setPage(previousPath)
@@ -109,8 +110,7 @@ const Details = props => {
                                 key={block.id}
                                 data={block}
                                 primaryPath={props.primaryPath}
-                                productData={props.productData}
-                                preferredBanks={props.preferredBanks}
+                                preferredSelectionLists={props.preferredSelectionLists}
                             />
             }
         })
@@ -155,8 +155,7 @@ export async function getServerSideProps(ctx) {
 
     const productData = await strapi.processReq('GET', `product-v-2-s?slug=${productSlug}`)
     const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
-    const preferredBanksData = await strapi.processReq("GET", `list-preferences`)
-    const preferredBanks = preferredBanksData[0]
+    const preferredSelectionLists = await strapi.processReq("GET", `list-preferences`)
 
     return {
         props: {

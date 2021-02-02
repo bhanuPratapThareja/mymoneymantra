@@ -145,8 +145,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         if (fathersFirstName && fathersLastName) {
             body.contact.keyContact[0].caseContactMasterId = "5";
             body.contact.keyContact[0].caseContactName = fathersFirstName + " " + fathersLastName;
-        }
-        else {
+        } else {
             body.contact.keyContact[0].caseContactMasterId = "";
             body.contact.keyContact[0].caseContactName = "";
         }
@@ -154,8 +153,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         if (mothersFirstName && mothersLastName) {
             body.contact.keyContact[1].caseContactMasterId = "16";
             body.contact.keyContact[1].caseContactName = mothersFirstName + " " + mothersLastName;
-        }
-        else {
+        } else {
             body.contact.keyContact[1].caseContactMasterId = "";
             body.contact.keyContact[1].caseContactName = "";
         }
@@ -177,7 +175,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.leadId = getLeadId()
         body.productId = '6'
         body.cardType = cardType ? cardType.cardTypeId ? cardType.cardTypeId : '' : ''
-        body.surrogateType = surrogateType ?  surrogateType.surrogateTypeId ? surrogateType.surrogateTypeId : '' : ''
+        body.surrogateType = surrogateType ? surrogateType.surrogateTypeId ? surrogateType.surrogateTypeId : '' : ''
         body.requestedLoanamount = requestedLoanamount
 
         // for facility requested
@@ -234,11 +232,11 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.address[3].city = permanentPincode ? permanentPincode.cityId : ""
         body.address[3].state = permanentPincode ? permanentPincode.stateId : ""
         body.address[3].stdCode = permanentPincode ? permanentPincode.stdCode : ""
-        
+
         let utmCampaignChoice = ''
-        if(primaryPath == 'rkpl') {
+        if (primaryPath == 'rkpl') {
             utmCampaignChoice = utmCampaign ? utmCampaign.includes('offcc') ? utmCampaign : 'offcc-rkpl' : ''
-        }  else {
+        } else {
             utmCampaignChoice = utmCampaign ? utmCampaign : ''
         }
 
@@ -246,7 +244,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.utmMedium = utmMedium ? utmMedium : ''
         body.utmSource = utmSource ? utmSource : ''
         body.utmRemark = utmRemark ? utmRemark : ''
-        
+
         let headers = {}
 
         console.log(body)

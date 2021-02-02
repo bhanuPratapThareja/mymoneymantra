@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 import LongForm from '../components/common/LongForm'
-import { setPrimaryPath, setProductType, clearLeadId, clearLeadBank } from '../utils/localAccess'
+import { setPrimaryPath, setProductType, clearLeadBank } from '../utils/localAccess'
 
 const RKPLBank = props => {
 
@@ -10,7 +10,6 @@ const RKPLBank = props => {
         window.scrollTo(0, 0)
         setPrimaryPath(props.primaryPath)
         setProductType(props.productTypeData)
-        clearLeadId()
         clearLeadBank()
     },[])
 
@@ -20,7 +19,8 @@ const RKPLBank = props => {
                 case 'form-components.long-form-component-new':
                     return <LongForm 
                                 key={block.id} 
-                                data={block} 
+                                data={block}
+                                primaryPath={props.primaryPath}
                                 preferredSelectionLists={props.preferredSelectionLists}
                             />
             }
