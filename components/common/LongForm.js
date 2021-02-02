@@ -26,7 +26,7 @@ import {
 
 
 class LongForm extends React.Component {
-  
+
   state = {
     longFormSections: [],
     submitButtonDisabled: true,
@@ -42,14 +42,15 @@ class LongForm extends React.Component {
     cardType: '',
     submissionError: ''
   };
-  
+
 
   componentDidMount() {
     const primaryPath = this.props.primaryPath
+    let leadBank
 
-    let bank
-    if (this.props.bank) {
-      bank = { bankId: this.props.bank.bank_id, bankName: this.props.bank.bank_name }
+    if (this.props.leadBank) {
+      const { bank_id: bankId, bank_name: bankName } = this.props.bank
+      leadBank = { bankId, bankName }
     }
 
     const { long_form_version_2, always_ask_for_otp } = this.props.data
@@ -124,7 +125,9 @@ class LongForm extends React.Component {
       noOfMandatoryInputs,
       enableCheckboxes,
       primaryPath,
-      bank,
+      leadBank,
+      salaryBank: null,
+      existingFacilityBank: null,
       leadId,
       submitButtonDisabled: enableCheckboxes.length !== 0,
       askForOtp: always_ask_for_otp,
@@ -167,7 +170,7 @@ class LongForm extends React.Component {
     });
 
     this.setState({ longFormSections: newLongFormSections, errors: false }, () => {
-      if (textTypeInputs.includes(field.type)  || field.type === 'input_with_dropdown' || field.type === 'money') {
+      if (textTypeInputs.includes(field.type) || field.type === 'input_with_dropdown' || field.type === 'money') {
         this.checkInputValidity(field, field.focusDropdown)
       }
       const { enableCheckboxes } = this.state;
@@ -215,11 +218,9 @@ class LongForm extends React.Component {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
       long_form_blocks.forEach((long_form_block) => {
         const inputs = long_form_block.blocks;
-        const { bankItem } = updateSelectionFromDropdown(inputs, input_id, item)
-        console.log('bankItem:: ', bankItem)
-        // if (bankItem && bankItem.bankId && this.state.primaryPath === 'rkpl') {
+        const { bankItem, bankType } = updateSelectionFromDropdown(inputs, input_id, item)
         if (bankItem && bankItem.bankId) {
-          this.setState({ bank: bankItem }, () => {
+          this.setState({ [bankType]: bankItem }, () => {
             newLongFormSections.forEach((longFormSectionRkpl) => {
               const rkplBlocks = longFormSectionRkpl.sections[0].long_form_blocks
               rkplBlocks.forEach(rkplBlocks => {
@@ -244,7 +245,7 @@ class LongForm extends React.Component {
     });
     this.updateState(newLongFormSections)
       .then(() => {
-        // console.log(this.state)
+        console.log(this.state)
       })
   };
 
@@ -343,7 +344,7 @@ class LongForm extends React.Component {
       console.log(this.state.leadId)
       console.log(this.state.askForOtp)
       if (!errors) {
-        if (this.state.primaryPath !== 'rkpl' && this.state.primaryPath !== 'talent-edge-form'  && (!this.state.leadId || this.state.askForOtp)) {
+        if (this.state.primaryPath !== 'rkpl' && this.state.primaryPath !== 'talent-edge-form' && (!this.state.leadId || this.state.askForOtp)) {
           let mobileNo = "";
           const newLongFormSections = [...this.state.longFormSections];
           newLongFormSections.forEach((longFormSection) => {
@@ -437,7 +438,9 @@ class LongForm extends React.Component {
       data.utmSource = utmSource
       data.utmRemark = utmRemark
 
-      data.bankId = this.state.bank
+      data.leadBank = this.state.leadBank
+      data.salaryBank = this.state.salaryBank
+      data.existingFacilityBank = this.state.existingFacilityBank
 
     });
 
@@ -471,7 +474,7 @@ class LongForm extends React.Component {
     if (!this.state.longFormSections) {
       return null;
     }
-    const { bank, product } = this.props 
+    const { bank, product } = this.props
 
 
     return (
@@ -548,7 +551,7 @@ class LongForm extends React.Component {
                   />
                   <div className="otp-wrapper login-options">
                     <div className="form__group field">
-                      <Otp  removeSubmissionErrorMsg={this.removeSubmissionErrorMsg} />
+                      <Otp removeSubmissionErrorMsg={this.removeSubmissionErrorMsg} />
                       <label className="form__label" htmlFor="phone">
                         One time password
                       </label>

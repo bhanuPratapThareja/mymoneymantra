@@ -16,11 +16,13 @@ import LongFormBanner from '../../../../components/Banners/LongFormBanner'
 import LongForm from '../../../../components/common/LongForm'
 import { getClassesForPage } from '../../../../utils/classesForPage'
 import { setPrimaryPath, setProductType, clearLeadBank } from '../../../../utils/localAccess'
+import { unpackComponents } from '../../../../services/componentsService'
 
 const Details = props => {
     const router = useRouter()
     const [page, setPage] = useState(props.page)
     const [previousPath, setPreviousPath] = useState('')
+    const [leadBank, setLeadBank] = useState(null)
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -28,6 +30,7 @@ const Details = props => {
         setProductType(props.productTypeData)
         setPreviousPath(page)
         clearLeadBank()
+        getBankData()
         window.onpopstate = () => {
             if (previousPath !== 'long-form') {
                 setPage(previousPath)
@@ -39,6 +42,11 @@ const Details = props => {
         setTimeout(() => {
             setPage(page)
         }, 2500)
+    }
+
+    const getBankData = async () => {
+        const productData = await unpackComponents(props.productData[0])
+        setLeadBank(productData.bank)
     }
 
     if (page === 'long-form' && !props.longFormData) {
@@ -110,6 +118,7 @@ const Details = props => {
                                 key={block.id}
                                 data={block}
                                 primaryPath={props.primaryPath}
+                                leadBank={leadBank}
                                 preferredSelectionLists={props.preferredSelectionLists}
                             />
             }
@@ -159,8 +168,8 @@ export async function getServerSideProps(ctx) {
 
     return {
         props: {
-            detailsData, longFormData, productData,
-            productTypeData, preferredBanks, page, primaryPath
+            detailsData, longFormData, productData, productTypeData, 
+            preferredSelectionLists, page, primaryPath
         }
     }
 }

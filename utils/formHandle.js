@@ -44,16 +44,16 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
 
           let preferredListDataArray = preferredSelectionLists.filter(listItem => inp.list_preference.name === listItem.name)
 
-          
-          if(preferredListDataArray.length) {
+
+          if (preferredListDataArray.length) {
             let preferredListData = preferredListDataArray[0]
-          
-            
+
+
             preferredListData[preferredListData.extract_list].forEach(item => {
               if (item.priority) {
                 isPrioritized = true
               }
-  
+
               const preferredItem = {
                 [inp.select_id]: item[preferredListData.extract_id],
                 [inp.select_name]: item[preferredListData.extract_name],
@@ -63,32 +63,23 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
               }
               prefferedList.push(preferredItem)
             })
-  
+
             if (isPrioritized) {
               prefferedList.sort((a, b) => (a.priority > b.priority) ? 1 : -1)
             }
           }
 
-          if(inp.list_preference.extract_list === 'card_types') {
-            if(selectedBank && selectedBank.bankId) {
+          if (inp.list_preference.extract_list === 'card_types') {
+            if (selectedBank && selectedBank.bankId) {
               prefferedList = prefferedList.filter(listItem => listItem.cardTypeBankId === selectedBank.bankId)
             }
           }
 
-          if(inp.list_preference.extract_list === 'designations') {
-            if(selectedBank && selectedBank.bankId) {
+          if (inp.list_preference.extract_list === 'designations') {
+            if (selectedBank && selectedBank.bankId) {
               prefferedList = prefferedList.filter(listItem => listItem.designationBankId === selectedBank.bankId)
             }
           }
-
-
-          // prefferedList.forEach(item => {
-          //   delete item.cardTypeBankId
-          //   delete item.designationBankId
-          //   if(!isPrioritized) {
-          //     delete item.priority
-          //   }
-          // })
 
           inputDropdown = { listType, masterName, inp, prefferedList }
 
@@ -309,16 +300,16 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
           }
 
         } else if (inp.type === "upload_button") {
-          if(inp.mandatory && !inp.value) {
+          if (inp.mandatory && !inp.value) {
             inp.error = true;
             inp.errorMsg = errorMsgs.mandatory;
-            errors = true 
+            errors = true
           } else {
             inp.error = false;
             inp.errorMsg = "";
             inp.verified = true;
           }
-          
+
 
         } else if (
           textTypeInputs.includes(inp.type) &&
@@ -427,6 +418,7 @@ export const updateDropdownList = (inputs, listType, list, input_id) => {
 
 export const updateSelectionFromDropdown = (inputs, input_id, item) => {
   let bankItem
+  let bankType
   let update_field_with_end_point_name = ""
   inputs.forEach((inp) => {
     if (inp.input_id === input_id && item) {
@@ -437,8 +429,9 @@ export const updateSelectionFromDropdown = (inputs, input_id, item) => {
       inp.selectedItem = item
       inp.error = false
       inp.verified = true
-      if(inp.end_point_name === 'bankId' &&  inp.selectedItem) {
+      if (inp.listType === 'bank' && inp.selectedItem) {
         bankItem = inp.selectedItem
+        bankType = inp.end_point_name
       }
     }
 
@@ -455,7 +448,7 @@ export const updateSelectionFromDropdown = (inputs, input_id, item) => {
       });
     }
   })
-  return {bankItem}
+  return { bankItem, bankType }
 };
 
 export const resetDropdowns = (inputs, errorMsgs) => {

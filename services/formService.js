@@ -113,7 +113,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         body = JSON.parse(JSON.stringify(body))
 
         const { fullName, dob, pan, mobile, email, applicantType, title, officeEmail,
-            companyId, netMonthlyIncome, bankId, totalWorkExp, cardType, surrogateType, designationId, qualificationId,
+            companyId, netMonthlyIncome, leadBank, salaryBank, existingFacilityBank, totalWorkExp, cardType, surrogateType, designationId, qualificationId,
             exisTenorBalMonths, exisLoanAmount, exisEmi, exisRemark,
             requestedLoanamount, requestedTenor, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
@@ -178,12 +178,10 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.work.designation = designationId ? designationId.designationId : ""
         body.work.qualification = qualificationId ? qualificationId.qualificationName : ""
 
-        // body.request.payload.bankId = bankId ? bankId.bankId : "";
-        body.bankId = typeof bankId === 'string' ? bankId : bankId.bankId ? bankId.bankId : salaryBankName.bankId ? salaryBankName.bankId : ''
-
-        // salaryBankName ? salaryBankName.bankId : "";
-        // body.work.otherCompany = otherCompany ? otherCompany.companyName : ""
-
+        // banks
+        body.formBankId = leadBank && leadBank.bankId ? leadBank.bankId : ''
+        body.bankId = salaryBank && salaryBank.bankId ? salaryBank.bankId : ''
+        body.existingFacility[0].exisBankId = existingFacilityBank && existingFacilityBank.bankId ? existingFacilityBank.bankId : ''
 
         body.leadId = getLeadId()
         body.productId = '6'
@@ -194,7 +192,6 @@ export const generateLead = async (data, primaryPath, formType) => {
         // for facility requested
         body.existingFacility[0].exisTenorBalMonths = exisTenorBalMonths
         body.existingFacility[0].exisfacility = localStorage.getItem('productId')
-        body.existingFacility[0].exisBankId = bankId ? bankId.bankId ? bankId.bankId : '' : ''
         body.existingFacility[0].exisLoanAmount = exisLoanAmount
         body.existingFacility[0].exisEmi = exisEmi
         body.existingFacility[0].exisRemark = exisRemark
@@ -260,18 +257,18 @@ export const generateLead = async (data, primaryPath, formType) => {
 
         let headers = {}
 
-        console.log(body)
-
-
-        if (formType === 'lf' && primaryPath !== 'rkpl') {
-            headers = {
-                'sync': 'true',
-                'formBankId': data.bankId.toString()
+        if (formType === 'sf') {
+            headers = { 'sync': false }
+        } else if (formType === 'lf') {
+            if (primaryPath !== 'rkpl') {
+                headers = { 'sync': true }
+            } else {
+                headers = { 'sync': 'HEADER' }
             }
-
         }
 
-        return
+        console.log(body)
+        console.log(headers)
 
         axios.post(url, body, { headers })
             .then(res => {

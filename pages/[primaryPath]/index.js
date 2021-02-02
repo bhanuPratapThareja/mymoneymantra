@@ -81,8 +81,6 @@ export async function getServerSideProps(ctx) {
   const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
   const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)
 
-  console.log('pageData:: ', pageData)
-
   const data = pageData && pageData.length ? pageData[0] : null
   const preferredSelectionLists = await strapi.processReq('GET', `list-preferences`)
   return { props: { data, primaryPath, preferredSelectionLists, productTypeData } }
