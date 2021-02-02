@@ -151,7 +151,7 @@ class LongForm extends React.Component {
             inp.error = false
             setTimeout(() => {
               this.handleInputDropdownChange(listType, prefferedList, inp.input_id, field.focusDropdown)
-            }, 500);
+            }, 500)
 
           } else if (!field.focusDropdown && listType && listType !== 'null') {
             const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
