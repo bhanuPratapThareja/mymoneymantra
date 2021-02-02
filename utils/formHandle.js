@@ -308,6 +308,17 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
             inp.verified = true;
           }
 
+        } else if (inp.type === "upload_button") {
+          if(inp.mandatory && !inp.value) {
+            inp.error = true;
+            inp.errorMsg = errorMsgs.mandatory;
+            errors = true 
+          } else {
+            inp.error = false;
+            inp.errorMsg = "";
+            inp.verified = true;
+          }
+          
 
         } else if (
           textTypeInputs.includes(inp.type) &&
@@ -362,6 +373,10 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
       } else if (inp.type === "money" && !isMonetaryValid(inp)) {
         inp.error = true;
         inp.errorMsg = inp.validation_error;
+        errors = true;
+      } else if (inp.type === "upload_button" && inp.mandatory && !inp.value) {
+        inp.error = true;
+        inp.errorMsg = errorMsgs.mandatory;
         errors = true;
       } else if (inp.type === "input_with_dropdown" && (!inp.value || (inp.value && !inp.selectedId) || (inp.selectedItem && inp.selectedItem[inp.select_name] !== inp.value))) {
         inp.error = true;
