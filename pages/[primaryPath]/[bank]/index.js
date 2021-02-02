@@ -98,20 +98,20 @@ const Details = props => {
                 case 'blocks.learn-more-component':
                     return <LearnMore key={block.id} data={block} />
                 case 'banners.long-form-banners-component':
-                    return <LongFormBanner 
-                                key={block.id} 
-                                data={block}
-                                primaryPath={props.primaryPath} 
-                                productData={props.productData} 
-                            />
+                    return <LongFormBanner
+                        key={block.id}
+                        data={block}
+                        primaryPath={props.primaryPath}
+                        productData={props.productData}
+                    />
                 case 'form-components.long-form-component-new':
-                    return <LongForm 
-                                key={block.id}
-                                data={block}
-                                primaryPath={props.primaryPath}
-                                productData={props.productData}
-                                preferredBanks={props.preferredBanks}
-                            />
+                    return <LongForm
+                        key={block.id}
+                        data={block}
+                        primaryPath={props.primaryPath}
+                        productData={props.productData}
+                        preferredBanks={props.preferredBanks}
+                    />
             }
         })
     }

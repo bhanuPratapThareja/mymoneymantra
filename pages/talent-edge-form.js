@@ -11,18 +11,18 @@ const TalentEdgeForm = props => {
         setPrimaryPath(props.primaryPath)
         setProductType(props.productTypeData)
         clearLeadBank()
-    },[])
+    }, [])
 
     const getComponents = dynamic => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'form-components.long-form-component-new':
-                    return <LongForm 
-                                key={block.id} 
-                                data={block} 
-                                primaryPath={props.primaryPath}
-                                preferredSelectionLists={props.preferredSelectionLists}
-                            />
+                    return <LongForm
+                        key={block.id}
+                        data={block}
+                        primaryPath={props.primaryPath}
+                        preferredSelectionLists={props.preferredSelectionLists}
+                    />
             }
         })
     }
