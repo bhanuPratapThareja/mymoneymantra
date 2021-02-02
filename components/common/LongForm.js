@@ -1,20 +1,13 @@
-import Modal from "../../components/Modal/Modal";
-import Otp from "../Otp/Otp";
-import { withRouter } from "next/router";
-import { uniq, debounce } from "lodash";
-import { generateInputs } from "../../utils/inputGenerator";
-import { getDropdownList } from "../../services/formService";
-import {
-  generateLead,
-  sendNotification,
-  submitOtp,
-  getOtp,
-} from "../../services/formService";
-import { setLeadId, getLeadId, setLeadBank } from "../../utils/localAccess";
-import {
-  getFormattedCurrency,
-  getWholeNumberFromCurrency,
-} from "../../utils/formattedCurrency";
+import Modal from "../../components/Modal/Modal"
+import Otp from "../Otp/Otp"
+import { withRouter } from "next/router"
+import { uniq, debounce } from "lodash"
+import { generateInputs } from "../../utils/inputGenerator"
+import { getDropdownList } from "../../services/formService"
+import { generateLead, sendNotification, submitOtp, getOtp } from "../../services/formService"
+import { setLeadId, getLeadId, setLeadBank } from "../../utils/localAccess"
+import { getFormattedCurrency, getWholeNumberFromCurrency } from "../../utils/formattedCurrency"
+import { unpackComponents } from '../../services/componentsService'
 import {
   textTypeInputs,
   handleChangeInputs,
@@ -22,7 +15,7 @@ import {
   updateDropdownList,
   updateSelectionFromDropdown,
   resetDropdowns,
-} from "../../utils/formHandle";
+} from "../../utils/formHandle"
 
 
 class LongForm extends React.Component {
@@ -41,18 +34,21 @@ class LongForm extends React.Component {
     openOtpModal: false,
     cardType: '',
     submissionError: ''
-  };
+  }
 
-
-  componentDidMount() {
-    const primaryPath = this.props.primaryPath
-    let leadBank
-
-    if (this.props.leadBank) {
-      const { bank_id: bankId, bank_name: bankName } = this.props.bank
-      leadBank = { bankId, bankName }
+  getBankData = async () => {
+    if(!this.props.productData) {
+      return null
     }
+    const productData = await unpackComponents(this.props.productData)
+    const { bank_id: bankId, bank_name: bankName } = productData.bank
+    const leadBank = { bankId, bankName }
+    return leadBank
+  }
 
+  async componentDidMount() {
+    const primaryPath = this.props.primaryPath
+    const leadBank = await this.getBankData()
     const { long_form_version_2, always_ask_for_otp } = this.props.data
     const longFormSections = long_form_version_2.long_form[0].long_form_sections;
     const formData = JSON.parse(localStorage.getItem("formData"));
@@ -134,6 +130,7 @@ class LongForm extends React.Component {
       formType: 'lf'
     }, () => {
       this.handlePercentage()
+      console.log(this.state)
     })
   }
 

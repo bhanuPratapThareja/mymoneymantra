@@ -3,7 +3,7 @@ export const setPrimaryPath = primaryPath => {
 }
 
 export const setProductType = productTypeData => {
-    if(productTypeData.length) {
+    if(productTypeData && productTypeData.length) {
         const {product_type_name: productTypeName, product_type_id: productTypeId, slug } = productTypeData[0]
         const productType = { productTypeName, productTypeId, slug }
         localStorage.setItem('productType', JSON.stringify(productType))

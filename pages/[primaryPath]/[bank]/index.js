@@ -143,17 +143,17 @@ export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const { query } = ctx
 
-    let { primaryPath, bank: productSlug, page } = query
+    let { primaryPath, bank: bankSlug, page } = query
     if (!page) {
         page = 'details'
     }
 
-    const detailsPageData = await strapi.processReq('GET', `${primaryPath}-details-pages?slug=${productSlug}`)
+    const detailsPageData = await strapi.processReq('GET', `${primaryPath}-details-pages?slug=${bankSlug}`)
     const longFormPageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${productSlug}-long-form`)
     const detailsData = detailsPageData ? detailsPageData[0] : null
     const longFormData = longFormPageData ? longFormPageData[0] : null
 
-    const productData = await strapi.processReq('GET', `/product-v-2-s?product-type-v-2.slug=${primaryPath}&bank.slug=${productSlug}`)
+    const productData = await strapi.processReq('GET', `product-v-2-s?product-type-v-2.slug=${primaryPath}&bank.slug=${bankSlug}`)
     const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
     const preferredBanksData = await strapi.processReq("GET", `list-preferences`)
     const preferredBanks = preferredBanksData[0]
