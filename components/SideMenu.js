@@ -131,7 +131,7 @@ const SideMenu = () => {
             </div>
 
             <div className="content-wrapper">
-               <a href="#">
+               <a href="/blog">
                   <div className="data">
                      <img src="/assets/images/menu/blogs.svg" />
                      <h5>Blogs</h5>
