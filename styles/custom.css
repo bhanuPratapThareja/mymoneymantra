@@ -1322,6 +1322,31 @@ section.popular-card-container {
   display: inline-block;
 }
 
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container.long-checkboxes {
+    border: none;
+    display: block;
+}
+
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container.long-checkboxes label {
+  border: none;
+  padding: 15px 19px 15px 42px;
+  text-align: left;
+}
+
+.shortforms-container.long-checkboxes .checkbox {
+  margin: 0;
+}
+
+.shortforms-container.long-checkboxes .checkbox label:before {
+  left: 5px;
+  top: 16px;
+}
+
+.shortforms-container.long-checkboxes .checkbox label:after {
+  top: 23px;
+  left: 11px;
+}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
