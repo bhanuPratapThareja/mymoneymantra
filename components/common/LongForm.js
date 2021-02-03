@@ -7,7 +7,6 @@ import { getDropdownList } from "../../services/formService"
 import { generateLead, sendNotification, submitOtp, getOtp } from "../../services/formService"
 import { setLeadId, getLeadId, setLeadBank } from "../../utils/localAccess"
 import { getFormattedCurrency, getWholeNumberFromCurrency } from "../../utils/formattedCurrency"
-import { unpackComponents } from '../../services/componentsService'
 import {
   textTypeInputs,
   handleChangeInputs,
@@ -16,7 +15,6 @@ import {
   updateSelectionFromDropdown,
   resetDropdowns,
 } from "../../utils/formHandle"
-
 
 class LongForm extends React.Component {
 
@@ -40,7 +38,7 @@ class LongForm extends React.Component {
     if (!this.props.productData) {
       return null
     }
-    const productData = await unpackComponents(this.props.productData[0])
+    const productData = this.props.productData
     const { bank_id: bankId, bank_name: bankName } = productData.bank
     const leadBank = { bankId, bankName }
     return leadBank

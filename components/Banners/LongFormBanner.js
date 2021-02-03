@@ -1,5 +1,4 @@
 import { withRouter } from 'next/router'
-import { unpackComponents } from '../../services/componentsService'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import ImageComponent from '../../components/ImageComponent/ImageComponent'
 
@@ -10,27 +9,24 @@ class LongFormBanner extends React.Component {
     }
 
     componentDidMount() {
-        this.getProductData()
+        this.initializePercentage()
     }
 
-    getProductData = async () => {
-        const productData = await unpackComponents(this.props.productData[0])
-        this.setState({ productData }, () => {
-            document.addEventListener('percentageCalulated', event => {
-                let { percentage } = event.detail
-                percentage = Math.ceil(percentage)
-                this.setState({ percentage })
-            })
+    initializePercentage = async () => {
+        document.addEventListener('percentageCalulated', event => {
+            let { percentage } = event.detail
+            percentage = Math.ceil(percentage)
+            this.setState({ percentage })
         })
     }
 
     render() {
 
-        if (!this.state.productData) {
+        if(!this.props.productData) {
             return null
         }
 
-        const { bank, product } = this.state.productData
+        const { bank, product } = this.props.productData
 
         return (
             <div className="card-info" id="longFormBanner">

@@ -1,31 +1,11 @@
-import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import { getProductDecision } from '../../services/offersService'
-import { unpackComponents } from '../../services/componentsService'
 
 const Offers = props => {
    const router = useRouter()
    const { section_heading } = props.data
-   const [cards, setCards] = useState([])
 
-   useEffect(() => {
-      getProducts()
-   }, [])
-
-   const getProducts = () => {
-      let offers = []
-      let pendingOffers = [...props.data.product_v_2s]
-      pendingOffers.forEach(async product => {
-         const components = await unpackComponents(product)
-         offers.push(components)
-         pendingOffers.shift()
-         if(!pendingOffers.length) {
-            console.log('offers: ',offers)
-            setCards(offers)
-         }
-      })
-   }
 
    const onOfferClick = async offer => {
       const { product, bank } = offer
@@ -38,10 +18,14 @@ const Offers = props => {
       const { slug: bankSlug } = bank
       const { slug: productSlug } = product
       const primaryPath = props.primaryPath
-      router.push(`/${primaryPath}/${bankSlug}/${productSlug}`)
+      if(primaryPath === 'credit-cards') {
+         router.push(`/${primaryPath}/${bankSlug}/${productSlug}`)
+      } else {
+         router.push(`/${primaryPath}/${bankSlug}`)
+      }
    }
 
-   if (!cards || !cards.length) {
+   if (!props.trendingOffers) {
       return null
    }
 
@@ -50,7 +34,7 @@ const Offers = props => {
          <div className="popular-cards">
             <h2>{section_heading}</h2>
             <div className="popular-cards-slider" id="popular-cards-sec">
-               {cards.map(offer => {
+               {props.trendingOffers.map(offer => {
                   const { bank, product } = offer
                   const { product_name, product_feature, product_annual_fee,
                      product_usp_highlight, product_interest_rate } = product

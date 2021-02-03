@@ -10,8 +10,11 @@ export const makeDecision = (buttonText, offer, primaryPath, changePageType) => 
         break;
 
       case "EConnect":
-        console.log('here')
-        pathname = `/${primaryPath}/${bankSlug}/${productSlug}?page=long-form`
+        if(primaryPath === 'credit-cards') {
+          pathname = `/${primaryPath}/${bankSlug}/${productSlug}?page=long-form`
+        } else {
+          pathname = `/${primaryPath}/${bankSlug}?page=long-form`
+        }
         query.page = 'long-form'
         if(changePageType) {
           changePageType('long-form')
@@ -20,7 +23,12 @@ export const makeDecision = (buttonText, offer, primaryPath, changePageType) => 
 
       // view details
       default:
-        pathname = `/${primaryPath}/${bankSlug}/${productSlug}`
+        if(primaryPath === 'credit-cards') {
+          pathname = `/${primaryPath}/${bankSlug}/${productSlug}`
+        } else {
+          pathname = `/${primaryPath}/${bankSlug}`
+        }
+       
         query.page = 'details'
         if(changePageType) {
           changePageType('details')

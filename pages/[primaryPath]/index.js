@@ -17,6 +17,7 @@ import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { setPrimaryPath, setProductType } from '../../utils/localAccess'
+import { extractPopularOffers, extractTrendingOffers } from '../../services/componentsService'
 
 const PrimaryPage = props => {
   useEffect(() => {
@@ -50,7 +51,14 @@ const PrimaryPage = props => {
           return <ShortExtendedForm key={block.id} data={block} preferredSelectionLists={props.preferredSelectionLists} />
         case 'offers.popular-offers-component':
         case 'offers.trending-offers-component':
-          return <Offers key={block.id} data={block} primaryPath={props.primaryPath} goToShortForm={goToShortForm} />
+          return <Offers
+            key={block.id}
+            data={block}
+            popularOffers={props.popularOffers}
+            trendingOffers={props.trendingOffers}
+            primaryPath={props.primaryPath}
+            goToShortForm={goToShortForm}
+          />
         case 'blocks.credit-score-component':
           return <CreditScore key={block.id} data={block} />
         case 'blocks.bank-slider-component':
@@ -83,7 +91,20 @@ export async function getServerSideProps(ctx) {
 
   const data = pageData && pageData.length ? pageData[0] : null
   const preferredSelectionLists = await strapi.processReq('GET', `list-preferences`)
-  return { props: { data, primaryPath, preferredSelectionLists, productTypeData } }
+
+  let popularOffers = []
+  let trendingOffers = []
+  if (data) {
+    popularOffers = await extractPopularOffers(pageData)
+    trendingOffers = await extractTrendingOffers(pageData)
+  }
+
+  return {
+    props: {
+      data, primaryPath, preferredSelectionLists,
+      productTypeData, popularOffers, trendingOffers
+    }
+  }
 }
 
 export default PrimaryPage

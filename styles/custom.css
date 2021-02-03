@@ -2007,3 +2007,7 @@ section.popular-card-container {
   font-size: 14px !important;
   color: grey !important;
 }
+
+.filter-option {
+  cursor: pointer;
+}

@@ -30,7 +30,7 @@ const ListingBanner = props => {
     }
 
     const getCalulatedProductType = () => {
-        const productTypeName = props.numberOfCards == 1 ? props.productTypeName.slice(0, -1) : props.productTypeName
+        const productTypeName = props.numberOfCards == 1 ? props.productTypeData[0].product_type_name.slice(0, -1) : props.productTypeData[0].product_type_name
         return productTypeName.toLowerCase()
     }
 
@@ -61,9 +61,9 @@ const ListingBanner = props => {
                     </div> : null}
                 </div>
                 <div className="bottom">
-                    {props.productTypeName ? <div className="cards">
+                    <div className="cards">
                         <h3><span id="count">{props.numberOfCards}</span> {getCalulatedProductType()}</h3>
-                    </div> : null}
+                    </div>
                     {props.filters ? <div className="filter">
                         <button
                             className="filter-option"

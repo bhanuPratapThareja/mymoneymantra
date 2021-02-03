@@ -16,6 +16,7 @@ import LongFormBanner from '../../../../components/Banners/LongFormBanner'
 import LongForm from '../../../../components/common/LongForm'
 import { getClassesForPage } from '../../../../utils/classesForPage'
 import { setPrimaryPath, setProductType, clearLeadBank } from '../../../../utils/localAccess'
+import { getUnpackedProduct, extractTrendingOffers } from '../../../../services/componentsService'
 
 const Details = props => {
     const router = useRouter()
@@ -24,10 +25,10 @@ const Details = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
+        setPreviousPath(page)
         setPrimaryPath(props.primaryPath)
         setProductType(props.productTypeData)
-        setPreviousPath(page)
-        clearLeadBank()
+
         window.onpopstate = () => {
             if (previousPath !== 'long-form') {
                 setPage(previousPath)
@@ -41,21 +42,21 @@ const Details = props => {
         }, 2500)
     }
 
-    if (page === 'long-form' && !props.longFormData) {
-        if (typeof window !== 'undefined') {
-            const { primaryPath } = props
-            const pathname = `/${primaryPath}`
-            router.push({ pathname })
-            return <div className="interim-class">
-                <div className="page-not-found_center_msg">
-                    <h2>Page Not Found</h2>
-                    <p>redirecting to {primaryPath.split('-').join(' ').slice(0, -1)} page ...</p>
-                </div>
-            </div>
-        }
-    }
+    // if (page === 'long-form' && !props.longFormData) {
+    //     if (typeof window !== 'undefined') {
+    //         const { primaryPath } = props
+    //         const pathname = `/${primaryPath}`
+    //         router.push({ pathname })
+    //         return <div className="interim-class">
+    //             <div className="page-not-found_center_msg">
+    //                 <h2>Page Not Found</h2>
+    //                 <p>redirecting to {primaryPath.split('-').join(' ').slice(0, -1)} page ...</p>
+    //             </div>
+    //         </div>
+    //     }
+    // }
 
-    if (!page && !props.detailsData) {
+    if (!page && !props.detailsData || !props.longFormData  || !props.productData) {
         return null
     }
 
@@ -79,14 +80,19 @@ const Details = props => {
                     return <ProductDetails
                         key={block.id}
                         data={block}
-                        primaryPath={props.primaryPath}
                         productData={props.productData}
+                        primaryPath={props.primaryPath}
                     />
 
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
-                    return <Offers key={block.id} data={block} primaryPath={props.primaryPath} />
+                    return <Offers 
+                        key={block.id} 
+                        data={block}
+                        trendingOffers={props.trendingOffers}
+                        primaryPath={props.primaryPath}
+                    />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.rewards-component':
@@ -108,8 +114,8 @@ const Details = props => {
                     return <LongForm
                         key={block.id}
                         data={block}
-                        primaryPath={props.primaryPath}
                         productData={props.productData}
+                        primaryPath={props.primaryPath}
                         preferredSelectionLists={props.preferredSelectionLists}
                     />
             }
@@ -155,14 +161,24 @@ export async function getServerSideProps(ctx) {
     const detailsData = detailsPageData ? detailsPageData[0] : null
     const longFormData = longFormPageData ? longFormPageData[0] : null
 
-    const productData = await strapi.processReq('GET', `product-v-2-s?slug=${productSlug}`)
+    const productDataPacked = await strapi.processReq('GET', `product-v-2-s?slug=${productSlug}`)
     const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
     const preferredSelectionLists = await strapi.processReq("GET", `list-preferences`)
 
+    let productData = null
+    if(productDataPacked) {
+        productData = await getUnpackedProduct(productDataPacked)
+    }
+
+    let trendingOffers = []
+    if(detailsPageData) {
+        trendingOffers = await extractTrendingOffers(detailsPageData)
+    }
+
     return {
         props: {
-            detailsData, longFormData, productData, productTypeData,
-            preferredSelectionLists, page, primaryPath
+            detailsData, longFormData, productData, productTypeData, 
+            preferredSelectionLists, page, primaryPath, trendingOffers
         }
     }
 }

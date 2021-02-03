@@ -43,12 +43,78 @@ export const unpackComponents = async data => {
     return { bank, product, productType }
 }
 
-export const extractListingOffersComponent = data => {
-    let lsitingOffers
-    data.dynamic.forEach((block) => {
-        if (block.__component === 'blocks.listing-cards') {
-            lsitingOffers = block
-        }
+export const getUnpackedProduct = productData => {
+    return new Promise(async (resolve) => {
+        const product = await unpackComponents(productData[0])
+        resolve(product)
     })
-    return lsitingOffers
+}
+
+export const extractTrendingOffers = data => {
+    return new Promise((resolve) => {
+        const components = data[0].dynamic
+        components.forEach(component => {
+            if(component.__component === 'offers.trending-offers-component') {
+                let trendingOffers = []
+                let pendingComponents = [...component.product_v_2s]
+                if(!pendingComponents.length) {
+                    resolve([])
+                }
+                pendingComponents.forEach(async item => {
+                    const offer = await unpackComponents(item)
+                    trendingOffers.push(offer)
+                    pendingComponents.shift()
+                    if(!pendingComponents.length) {
+                        resolve(trendingOffers)
+                    }
+                })
+            }
+        })
+    })
+}
+
+export const extractPopularOffers = data => {
+    return new Promise((resolve) => {
+        const components = data[0].dynamic
+        components.forEach(component => {
+            if(component.__component === 'offers.popular-offers-component') {
+                let popularOffers = []
+                let pendingComponents = [...component.product_v_2s]
+                if(!pendingComponents.length) {
+                    resolve([])
+                }
+                pendingComponents.forEach(async item => {
+                    const offer = await unpackComponents(item)
+                    popularOffers.push(offer)
+                    pendingComponents.shift()
+                    if(!pendingComponents.length) {
+                        resolve(popularOffers)
+                    }
+                })
+            }
+        })
+    })
+}
+
+export const extractListingOffersComponent = data => {
+    return new Promise((resolve) => {
+        const components = data[0].dynamic
+        components.forEach(component => {
+            if(component.__component === 'blocks.listing-cards') {
+                let listiingOffers = []
+                let pendingComponents = [...component.product_v_2s]
+                if(!pendingComponents.length) {
+                    resolve([])
+                }
+                pendingComponents.forEach(async item => {
+                    const offer = await unpackComponents(item)
+                    listiingOffers.push(offer)
+                    pendingComponents.shift()
+                    if(!pendingComponents.length) {
+                        resolve(listiingOffers)
+                    }
+                })
+            }
+        })
+    })
 }
