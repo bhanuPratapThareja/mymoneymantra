@@ -7,6 +7,7 @@ const classes = {
     'blog-search':['credit-card-flow', 'b2c-flow', 'blogs-flow', 'blogs-search'],
     'contributor-detail':['credit-card-flow', 'b2c-flow', 'blogs-flow', 'blog-details', 'contributor-detail' ],
     'Forms': ['credit-card-flow', 'homepage-flow'],
+    'long-form': ['long-form'],
     'listings': {
         'credit-cards': ['listings'],
         'personal-loans': ['listings', 'personal-loan-listing'],

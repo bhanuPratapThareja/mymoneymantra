@@ -5,6 +5,7 @@ import { getLeadId } from '../utils/localAccess'
 import { getFormattedDate } from '../utils/formatDataForApi'
 const CancelToken = axios.CancelToken
 import { getDocumentIdandTypeId } from '../utils/uploadDocumentHelper'
+import { generateCorrelationId } from '../api/headers'
 let cancel
 let otpId = ''
 
@@ -47,10 +48,12 @@ export const submitOtp = async mobileNo => {
             throw new Error('Something went wrong. Please try again.')
         }
     } catch (err) {
-        if (err.response.status == 400) {
+        if (!err.response) {
+            throw new Error(err.message)
+        } else if (err.response.status == 400) {
             throw new Error('Please enter valid OTP!')
         } else {
-            throw new Error(err.message)
+            throw new Error('Something went wrong. Please try again.')
         }
     }
 }
@@ -74,7 +77,7 @@ export const getDropdownList = async (listType, value, masterName) => {
     } catch (err) { }
 }
 
-export const documentUpload = async (docs, documentName, primaryPath) => {
+export const documentUpload = async (docs, documentName) => {
     const { url, body } = getApiData('documentUpload')
     let documentIds = getDocumentIdandTypeId(documentName);
     const { documentId, documentTypeId } = documentIds[0];
@@ -111,7 +114,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         body = JSON.parse(JSON.stringify(body))
 
         const { fullName, dob, pan, mobile, email, applicantType, title, officeEmail,
-            companyId, netMonthlyIncome, bankId, totalWorkExp, cardType, surrogateType, designationId, qualificationId,
+            companyId, netMonthlyIncome, leadBank, salaryBank, existingFacilityBank, totalWorkExp, cardType, surrogateType, designationId, qualificationId,
             exisTenorBalMonths, exisLoanAmount, exisEmi, exisRemark,
             requestedLoanamount, requestedTenor, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
@@ -120,7 +123,8 @@ export const generateLead = async (data, primaryPath, formType) => {
             officeAddressline1, officeAddressline2, addressline3, officeNearBy, officePincode, officeCity,
             permanentAddressline1, permanentAddressline2, permanentPincode, permannentCity,
             city_location, cost_of_property, propertyPincode, purposeOfLoan,
-            utmCampaign, utmMedium, utmSource, utmRemark
+            utmCampaign, utmMedium, utmSource, utmRemark,
+            referenceType,referenceFirstName,referenceLastName,referenceEmail,referenceMobile
         } = data
 
 
@@ -143,8 +147,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         if (fathersFirstName && fathersLastName) {
             body.contact.keyContact[0].caseContactMasterId = "5";
             body.contact.keyContact[0].caseContactName = fathersFirstName + " " + fathersLastName;
-        }
-        else {
+        } else {
             body.contact.keyContact[0].caseContactMasterId = "";
             body.contact.keyContact[0].caseContactName = "";
         }
@@ -152,11 +155,22 @@ export const generateLead = async (data, primaryPath, formType) => {
         if (mothersFirstName && mothersLastName) {
             body.contact.keyContact[1].caseContactMasterId = "16";
             body.contact.keyContact[1].caseContactName = mothersFirstName + " " + mothersLastName;
-        }
-        else {
+        } else {
             body.contact.keyContact[1].caseContactMasterId = "";
             body.contact.keyContact[1].caseContactName = "";
         }
+        
+        if (referenceFirstName && referenceLastName) {
+            body.contact.keyContact[2].caseContactMasterId = referenceType;
+            body.contact.keyContact[2].caseContactName = referenceFirstName + " " + referenceLastName;
+            body.contact.keyContact[2].caseContactEmail = referenceEmail;
+            body.contact.keyContact[2].caseContactMobileNo = referenceMobile;
+
+        } else {
+            body.contact.keyContact[2].caseContactMasterId = "";
+            body.contact.keyContact[2].caseContactName = "";
+        }
+
 
         body.work.applicantType = applicantType
         body.work.companyId = companyId ? companyId.caseCompanyId : ''
@@ -165,23 +179,20 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.work.designation = designationId ? designationId.designationId : ""
         body.work.qualification = qualificationId ? qualificationId.qualificationName : ""
 
-        // body.request.payload.bankId = bankId ? bankId.bankId : "";
-        body.bankId = typeof bankId === 'string' ? bankId : bankId.bankId ? bankId.bankId : salaryBankName.bankId ? salaryBankName.bankId : ''
-
-        // salaryBankName ? salaryBankName.bankId : "";
-        // body.work.otherCompany = otherCompany ? otherCompany.companyName : ""
-
+        // banks
+        body.formBankId = leadBank && leadBank.bankId ? leadBank.bankId : ''
+        body.bankId = salaryBank && salaryBank.bankId ? salaryBank.bankId : ''
+        body.existingFacility[0].exisBankId = existingFacilityBank && existingFacilityBank.bankId ? existingFacilityBank.bankId : ''
 
         body.leadId = getLeadId()
         body.productId = '6'
         body.cardType = cardType ? cardType.cardTypeId ? cardType.cardTypeId : '' : ''
-        body.surrogateType = surrogateType ?  surrogateType.surrogateTypeId ? surrogateType.surrogateTypeId : '' : ''
+        body.surrogateType = surrogateType ? surrogateType.surrogateTypeId ? surrogateType.surrogateTypeId : '' : ''
         body.requestedLoanamount = requestedLoanamount
 
         // for facility requested
         body.existingFacility[0].exisTenorBalMonths = exisTenorBalMonths
         body.existingFacility[0].exisfacility = localStorage.getItem('productId')
-        body.existingFacility[0].exisBankId = bankId ? bankId.bankId ? bankId.bankId : '' : ''
         body.existingFacility[0].exisLoanAmount = exisLoanAmount
         body.existingFacility[0].exisEmi = exisEmi
         body.existingFacility[0].exisRemark = exisRemark
@@ -197,8 +208,8 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.address[0].addressline2 = addressline2
         body.address[0].addressline3 = addressline3
         body.address[0].landmark = nearByLandmark
-        body.address[0].pincode = pincode ? pincode.pincode : ""
-        body.address[0].city = pincode ? pincode.cityId : ""
+        body.address[0].pincode = pincode ? pincode.pincode : ''
+        body.address[0].city = pincode ? pincode.cityId : ''
         body.address[0].state = pincode ? pincode.stateId : ''
         body.address[0].stdCode = pincode ? pincode.stdCode : ''
 
@@ -232,11 +243,11 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.address[3].city = permanentPincode ? permanentPincode.cityId : ""
         body.address[3].state = permanentPincode ? permanentPincode.stateId : ""
         body.address[3].stdCode = permanentPincode ? permanentPincode.stdCode : ""
-        
+
         let utmCampaignChoice = ''
-        if(primaryPath == 'rkpl') {
+        if (primaryPath == 'rkpl') {
             utmCampaignChoice = utmCampaign ? utmCampaign.includes('offcc') ? utmCampaign : 'offcc-rkpl' : ''
-        }  else {
+        } else {
             utmCampaignChoice = utmCampaign ? utmCampaign : ''
         }
 
@@ -244,19 +255,21 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.utmMedium = utmMedium ? utmMedium : ''
         body.utmSource = utmSource ? utmSource : ''
         body.utmRemark = utmRemark ? utmRemark : ''
-        
-        let headers = {}
+
+        let headers = { }
+
+        if (formType === 'sf') {
+            headers = { 'sync': 'HEADER' }
+        } else if (formType === 'lf') {
+            if (primaryPath !== 'rkpl') {
+                headers = { 'sync': 'HEADER' }
+            } else {
+                headers = { 'sync': 'HEADER' }
+            }
+        }
 
         console.log(body)
-
-
-        if (formType === 'lf' && primaryPath !== 'rkpl') {
-            headers = {
-                'sync': 'true',
-                'formBankId': data.bankId.toString()
-            }
-
-        }
+        console.log(headers)
 
         axios.post(url, body, { headers })
             .then(res => {

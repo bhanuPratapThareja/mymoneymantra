@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 import HomePageBanner from '../components/Banners/HomePageBanner'
@@ -16,6 +17,10 @@ import Blogger from '../components/common/Blogger'
 import { getClassesForPage } from '../utils/classesForPage'
 
 const Home = props => {
+
+    useEffect(() => {
+        localStorage.clear()
+    }, [])
 
     const getComponents = (dynamic) => {
         return dynamic.map(block => {

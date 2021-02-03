@@ -1,14 +1,7 @@
-import Strapi from "../../providers/strapi";
-import { getCityData, getPinCodeData } from '../../services/formService';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import { getFormPercentage } from '../../utils/formPercentage';
-import { validEmailRegex, validMobileRegex, isValidPanNumber } from '../../utils/validator';
-import $ from "jquery";
 import { withRouter } from 'next/router'
-import { updateLongForm } from '../../services/formService';
-import { getBase64, documentUpload } from '../../services/formService';
-
-const strapi = new Strapi()
+import { unpackComponents } from '../../services/componentsService'
+import LinearProgress from '@material-ui/core/LinearProgress'
+import ImageComponent from '../../components/ImageComponent/ImageComponent'
 
 class LongFormBanner extends React.Component {
 
@@ -17,29 +10,37 @@ class LongFormBanner extends React.Component {
     }
 
     componentDidMount() {
-        document.addEventListener('percentageCalulated', event => {
-            let { percentage } = event.detail
-            percentage = Math.ceil(percentage)
-            this.setState({ percentage })
-        })
-        const { primaryPath } = this.props.router.query
-        this.setState({ primaryPath })
+        this.getProductData()
     }
 
-  
-    render() {
-        const { bank, product } = this.props    
+    getProductData = async () => {
+        const productData = await unpackComponents(this.props.productData[0])
+        this.setState({ productData }, () => {
+            document.addEventListener('percentageCalulated', event => {
+                let { percentage } = event.detail
+                percentage = Math.ceil(percentage)
+                this.setState({ percentage })
+            })
+        })
+    }
 
-        if (!bank) {
+    render() {
+
+        if (!this.state.productData) {
             return null
         }
+
+        const { bank, product } = this.state.productData
 
         return (
             <div className="card-info" id="longFormBanner">
                 <h5 className="app-form">Application form</h5>
                 <h3><b>{bank.bank_name}</b><br />{product.product_name}</h3>
-                {this.state.primaryPath === 'credit-cards' ? <img src={`${strapi.baseUrl}${product.product_image.url}`} /> :
-                    <img src={`${strapi.baseUrl}${bank.bank_image.url}`} />}
+
+                {this.props.primaryPath === 'credit-cards' ?
+                    <ImageComponent image={product.product_image.image} /> : <ImageComponent image={bank.bank_image}
+                    />}
+
                 <h4>Application form</h4>
                 <div className="form-range">
                     <h5><b id="long-form-complete">{this.state.percentage}%</b> Complete</h5>

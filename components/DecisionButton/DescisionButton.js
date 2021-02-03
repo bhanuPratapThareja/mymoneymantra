@@ -1,12 +1,18 @@
-const DecisionButton = props => {
-    const { id, buttonText, offer } = props
+import { useRouter } from 'next/router'
+import { makeDecision } from '../../utils/decision'
 
-    const buttonClick = () => {
-        props.onButtonClick(buttonText, offer)
+const DecisionButton = props => {
+    const router = useRouter()
+    const { idForStyle, buttonText, offer, primaryPath, changePageType } = props
+
+    const onButtonClick = () => {
+        const decision = makeDecision(buttonText, offer, primaryPath, changePageType)
+        const { pathname, query } = decision
+        router.push({ pathname, query }, pathname, { shallow: true })
     }
 
     return (
-        <button id={id} onClick={buttonClick}>{buttonText}</button>
+        <button id={idForStyle} onClick={onButtonClick}>{buttonText}</button>
     )
 }
 

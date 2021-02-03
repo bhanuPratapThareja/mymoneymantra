@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import $ from 'jquery'
-import ListingFilter from '../Listings/ListingsFilter'
 import SvgImage from '../ImageComponent/SvgComponents'
+import ListingFilter from '../Listings/ListingsFilter'
 
 const ListingBanner = props => {
-    const router = useRouter()
-    const { primaryPath } = router.query
-    const primaryProduct = primaryPath.split('-').join(' ')
     const { listing_banner_heading, categories } = props.data.listing_banner
     const [selectedOption, setSelectedOption] = useState('all')
 
@@ -34,7 +30,8 @@ const ListingBanner = props => {
     }
 
     const getCalulatedProductType = () => {
-        return props.numberOfCards == 1 ? primaryProduct.slice(0, -1) : primaryProduct
+        const productTypeName = props.numberOfCards == 1 ? props.productTypeName.slice(0, -1) : props.productTypeName
+        return productTypeName.toLowerCase()
     }
 
     return (
@@ -64,14 +61,15 @@ const ListingBanner = props => {
                     </div> : null}
                 </div>
                 <div className="bottom">
-                    <div className="cards">
+                    {props.productTypeName ? <div className="cards">
                         <h3><span id="count">{props.numberOfCards}</span> {getCalulatedProductType()}</h3>
-                    </div>
+                    </div> : null}
                     {props.filters ? <div className="filter">
                         <button
                             className="filter-option"
                             id="listing-filter"
-                            onClick={onOpenFilter}>
+                            onClick={onOpenFilter}
+                            disabled={props.numberOfCards === 0}>
                             Filters
                                 <img src="/assets/images/icons/down-chevron.svg" />
                         </button>
