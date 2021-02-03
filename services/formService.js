@@ -5,6 +5,7 @@ import { getLeadId } from '../utils/localAccess'
 import { getFormattedDate } from '../utils/formatDataForApi'
 const CancelToken = axios.CancelToken
 import { getDocumentIdandTypeId } from '../utils/uploadDocumentHelper'
+import { generateCorrelationId } from '../api/headers'
 let cancel
 let otpId = ''
 
@@ -207,8 +208,8 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.address[0].addressline2 = addressline2
         body.address[0].addressline3 = addressline3
         body.address[0].landmark = nearByLandmark
-        body.address[0].pincode = pincode ? pincode.pincode : ""
-        body.address[0].city = pincode ? pincode.cityId : ""
+        body.address[0].pincode = pincode ? pincode.pincode : ''
+        body.address[0].city = city ? city.cityId : ''
         body.address[0].state = pincode ? pincode.stateId : ''
         body.address[0].stdCode = pincode ? pincode.stdCode : ''
 
@@ -255,13 +256,13 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.utmSource = utmSource ? utmSource : ''
         body.utmRemark = utmRemark ? utmRemark : ''
 
-        let headers = {}
+        let headers = { }
 
         if (formType === 'sf') {
-            headers = { 'sync': false }
+            headers = { 'sync': 'HEADER' }
         } else if (formType === 'lf') {
             if (primaryPath !== 'rkpl') {
-                headers = { 'sync': true }
+                headers = { 'sync': 'true' }
             } else {
                 headers = { 'sync': 'HEADER' }
             }

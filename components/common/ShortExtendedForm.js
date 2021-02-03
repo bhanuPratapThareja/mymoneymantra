@@ -106,6 +106,10 @@ class ShortExtendedForm extends React.Component {
                 slideNo++
             }, 500)
         })
+
+        setTimeout(() => {
+            console.log(this.state.slides)
+        }, 1000);
     }
 
     onGoToLetFindForm = () => {
@@ -147,14 +151,14 @@ class ShortExtendedForm extends React.Component {
     onSubmitLetGoSlide = async () => {
         try {
             const res = await this.onSubmitShortForm()
-            const leadId = res.data.response.payload.leadId
-            setLeadId(this.state.primaryPath, leadId)
+            const leadId = res.data.leadId
+            setLeadId(leadId)
             sendNotification(leadId)
             this.setState({ currentSlide: 'sf-1', slideIndex: 1, slideButtonText: 'Next' }, () => {
                 goToSlides()
             })
         } catch (err) {
-            this.setState({ submissionError: err })
+            this.setState({ submissionError: 'Something Went wrong. Please try again.' })
         }
     }
 
@@ -239,11 +243,11 @@ class ShortExtendedForm extends React.Component {
             }, 500);
             } else {
                 if (!field.focusDropdown && listType && listType !== 'null') {
-                    const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName)
+                    const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName, field)
                         .then(list => {
                             inp.listType = listType
                             inp.list = list
-                            this.handleInputDropdownChange(listType, list, inp.input_id)
+                            this.handleInputDropdownChange(listType, list, inp.input_id, field)
                         }), 500)
                     debouncedSearch(listType, inp.value, masterName)
                 }
@@ -271,12 +275,12 @@ class ShortExtendedForm extends React.Component {
         })
     }
 
-    handleInputDropdownChange = (listType, list, input_id) => {
+    handleInputDropdownChange = (listType, list, input_id, field) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateDropdownList(inputs, listType, list, input_id)
         inputs.forEach(input => {
             if(input.input_id === input_id) {
-                if(list && list.length && field.value){
+                if(list && list.length && field && field.value){
                   let filteredItemList = list.filter(item => item[input.select_name] === field.value.toUpperCase())
                   let filteredItem = filteredItemList.length ? filteredItemList[0] : null
                   this.handleInputDropdownSelection(input_id, filteredItem)
@@ -288,7 +292,7 @@ class ShortExtendedForm extends React.Component {
 
     handleInputDropdownSelection = (input_id, item) => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        pdateSelectionFromDropdown(inputs, input_id, item)
+        updateSelectionFromDropdown(inputs, input_id, item)
         this.setState({ ...this.state, slides: newSlides })
     }
 

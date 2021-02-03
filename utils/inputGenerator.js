@@ -4,34 +4,41 @@ import {
   getWholeNumberFromCurrency,
 } from "./formattedCurrency";
 
-export const generateInputs = (component, handleChange, checkInputValidity, 
+export const generateInputs = (component, handleChange, checkInputValidity,
   handleInputDropdownSelection, formType) => {
+
   const handleInputChange = (e, type, focusDropdown, style_as_dropdown) => {
-    let { name, value, checked } = e.target;
-    let field = {};
+    let { name, value, checked } = e.target
+    let field = {}
 
     if (type === 'money') {
       value = value.toString()
       const numString = getWholeNumberFromCurrency(value);
       if (isNaN(numString)) {
-        return;
+        return
       }
       value = getFormattedCurrency(value)
+      field = { name, value, type }
+      handleChange(field)
     }
-
-    if (type === 'checkbox') {
-      field = { name, checked, type };
-    } else {
-      field = { name, value, type };
-      if (type === "input_with_dropdown") {
-        if (style_as_dropdown) {
-          return
-        }
-        field.focusDropdown = focusDropdown
+    else if (type === 'checkbox') {
+      field = { name, checked, type }
+      handleChange(field)
+    }
+    else if (type === "input_with_dropdown") {
+      field = { name, value, type, focusDropdown }
+      if (style_as_dropdown || focusDropdown) {
+        setTimeout(() => {
+          handleChange(field)
+        }, 350)
+      } else {
+        handleChange(field)
       }
+    } else {
+      field = { name, value, type }
+      handleChange(field)
     }
-    handleChange(field)
-  };
+  }
 
   const validate = (e, type) => {
     const { name, value } = e.target;
@@ -157,7 +164,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
           value={value}
           id={input_id}
           placeholder={placeholder}
-          autoComplete="off"
+          autoComplete='off'
           required={mandatory}
           onBlur={(e) => validate(e, type)}
           onChange={(e) => handleInputChange(e, type)}
@@ -301,7 +308,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
           required={mandatory}
           onBlur={(e) => validate(e, type)}
           onChange={(e) => handleInputChange(e, type, false, style_as_dropdown)}
-          onFocus={e => handleInputChange(e, type, true)}
+          onFocus={e => handleInputChange(e, type, true, style_as_dropdown)}
         />
         <label className="form__label">{label}</label>
 
@@ -311,7 +318,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
 
         {list ? <div className="dropdown-content" style={listStyles}>
           <div className="dropdown-content-links">
-          {style_as_dropdown ? <a className="dropdown-content-links_link-label">Select {label}</a> : null}
+            {style_as_dropdown ? <a className="dropdown-content-links_link-label">Select {label}</a> : null}
             {list.map((item, i) => {
               return (
                 <a key={i} onClick={() => onSelect(input_id, item)} className="dropdown-content-links_link">
@@ -338,7 +345,6 @@ export const generateInputs = (component, handleChange, checkInputValidity,
             name={input_id}
             type="text"
             value={value}
-            readOnly
             autoComplete="off"
             required={mandatory}
             onFocus={() => openDatePicker()}

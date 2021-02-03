@@ -15,18 +15,22 @@ const Offers = props => {
 
    const getProducts = () => {
       let offers = []
-      props.data.product_v_2s.forEach(async product => {
+      let pendingOffers = [...props.data.product_v_2s]
+      pendingOffers.forEach(async product => {
          const components = await unpackComponents(product)
          offers.push(components)
-         setCards(offers)
+         pendingOffers.shift()
+         if(!pendingOffers.length) {
+            setCards(offers)
+         }
       })
    }
 
    const onOfferClick = async offer => {
-      const {  product, bank } = offer
+      const { product, bank } = offer
       const response = await getProductDecision([offer])
       const productDecision = response[0].productDecision
-      if(productDecision === 'Apply Now') {
+      if (productDecision === 'Apply Now') {
          props.goToShortFormPage()
          return
       }
@@ -47,7 +51,7 @@ const Offers = props => {
             <div className="popular-cards-slider" id="popular-cards-sec">
                {cards.map(offer => {
                   const { bank, product } = offer
-                  const { product_name, product_feature, product_annual_fee, 
+                  const { product_name, product_feature, product_annual_fee,
                      product_usp_highlight, product_interest_rate } = product
                   return (
                      <div className="popular-cards-slider-card" key={product.id} onClick={() => onOfferClick(offer)}>
@@ -67,7 +71,7 @@ const Offers = props => {
                            </div> : null}
 
                            {product_interest_rate ? <div className="fee">
-                              <h5>{product_interest_rate.min_value}% - {product_interest_rate.max_value}% 
+                              <h5>{product_interest_rate.min_value}% - {product_interest_rate.max_value}%
                               {product_interest_rate.duration === 'Annually' ? 'p.a.' : 'm.a.'}</h5>
                            </div> : null}
                         </div>

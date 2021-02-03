@@ -37,10 +37,10 @@ class LongForm extends React.Component {
   }
 
   getBankData = async () => {
-    if(!this.props.productData) {
+    if (!this.props.productData) {
       return null
     }
-    const productData = await unpackComponents(this.props.productData)
+    const productData = await unpackComponents(this.props.productData[0])
     const { bank_id: bankId, bank_name: bankName } = productData.bank
     const leadBank = { bankId, bankName }
     return leadBank
@@ -142,7 +142,7 @@ class LongForm extends React.Component {
       long_form_blocks.forEach(long_form_block => {
         const inputs = long_form_block.blocks;
 
-        const inputDropdown = handleChangeInputs(inputs, field, this.props.preferredSelectionLists, this.state.bank)
+        const inputDropdown = handleChangeInputs(inputs, field, this.props.preferredSelectionLists, this.state.leadBank)
         if (inputDropdown && field.type === 'input_with_dropdown') {
           const { listType, masterName, inp, prefferedList } = inputDropdown
           if (field.focusDropdown && prefferedList) {
@@ -197,7 +197,7 @@ class LongForm extends React.Component {
         updateDropdownList(inputs, listType, list, input_id)
         inputs.forEach(input => {
           if (input.input_id === input_id) {
-            if (list && list.length && field.value) {
+            if (list && list.length && field && field.value) {
               let filteredItemList = list.filter(item => item[input.select_name] === field.value.toUpperCase())
               let filteredItem = filteredItemList.length ? filteredItemList[0] : null
               this.handleInputDropdownSelection(input_id, filteredItem)
@@ -324,24 +324,21 @@ class LongForm extends React.Component {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
       long_form_blocks.forEach(async (long_form_block) => {
         const inputs = long_form_block.blocks;
-        const errorsPresent = updateInputsValidity(
-          inputs,
-          null,
-          this.state.errorMsgs
-        );
+        const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
         if (errorsPresent) {
           errors = true
           this.setState({ errors: true })
         }
-      });
-    });
+      })
+    })
 
     this.updateState(newLongFormSections).then(() => {
-      console.log(this.state.primaryPath)
-      console.log(this.state.leadId)
-      console.log(this.state.askForOtp)
+      // console.log(this.state.primaryPath)
+      // console.log(this.state.leadId)
+      // console.log(this.state.askForOtp)
       if (!errors) {
         if (this.state.primaryPath !== 'rkpl' && this.state.primaryPath !== 'talent-edge-form' && (!this.state.leadId || this.state.askForOtp)) {
+          console.log('1')
           let mobileNo = "";
           const newLongFormSections = [...this.state.longFormSections];
           newLongFormSections.forEach((longFormSection) => {
@@ -356,11 +353,11 @@ class LongForm extends React.Component {
               });
             });
           });
-          this.setState({ mobileNo });
-          getOtp(mobileNo);
-          this.setState({ openOtpModal: true });
+          this.setState({ mobileNo })
+          getOtp(mobileNo)
+          this.setState({ openOtpModal: true })
         } else {
-          this.retrieveDataAndSubmit();
+          this.retrieveDataAndSubmit()
         }
       } else {
         this.setState({ submissionError: 'Please correct the fields marked in red' })
@@ -423,35 +420,29 @@ class LongForm extends React.Component {
           }
         }
       })
+    })
 
-      const {
-        utm_campaign: utmCampaign,
-        utm_medium: utmMedium,
-        utm_source: utmSource,
-        utm_remark: utmRemark
-      } = this.props.router.query
-      data.utmCampaign = utmCampaign
-      data.utmMedium = utmMedium
-      data.utmSource = utmSource
-      data.utmRemark = utmRemark
+    const { utm_campaign: utmCampaign, utm_medium: utmMedium,
+      utm_source: utmSource, utm_remark: utmRemark } = this.props.router.query
 
-      data.leadBank = this.state.leadBank
-      data.salaryBank = this.state.salaryBank
-      data.existingFacilityBank = this.state.existingFacilityBank
+    data.utmCampaign = utmCampaign
+    data.utmMedium = utmMedium
+    data.utmSource = utmSource
+    data.utmRemark = utmRemark
 
-    });
+    data.leadBank = this.state.leadBank
+    data.salaryBank = this.state.salaryBank
+    data.existingFacilityBank = this.state.existingFacilityBank
 
-    let { primaryPath, bank } = this.state
-
+    let { primaryPath, leadBank } = this.state
 
     generateLead(data, primaryPath, 'lf')
       .then((res) => {
-        console.log('resres:: ', res)
         const leadId = res.data.leadId
         let actionName = this.state.primaryPath === 'rkpl' ? 'RKPL-CC' : 'Short Form Submit'
         sendNotification(leadId, actionName)
         setLeadId(leadId)
-        setLeadBank(bank)
+        setLeadBank(leadBank)
         const pathname = `/thank-you`
         this.props.router.push(pathname)
         this.setState({ submitButtonDisabled: false })
@@ -476,7 +467,7 @@ class LongForm extends React.Component {
 
     return (
       <div className="form-wrapper" id="longForm">
-        <form onClick={this.handleClickOnSlideBackground} id='long-form_id' noValidate>
+        <form onClick={this.handleClickOnSlideBackground} id='long-form_id' noValidate autoComplete="off">
           {this.state.longFormSections.map((longFormSection) => {
             const long_form_blocks =
               longFormSection.sections[0].long_form_blocks;

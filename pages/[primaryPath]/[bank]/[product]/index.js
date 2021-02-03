@@ -60,7 +60,6 @@ const Details = props => {
     }
 
     const getComponents = dynamic => {
-        console.log(props.productData)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'banners.credit-cards-detail-banner-component':
@@ -143,6 +142,8 @@ const Details = props => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const { query } = ctx
+
+    console.log('query: ', query)
 
     let { primaryPath, bank: bankSlug, product: productSlug, page } = query
     if (!page) {
