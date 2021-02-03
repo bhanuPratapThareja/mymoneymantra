@@ -1346,6 +1346,29 @@ section.popular-card-container {
   top: 23px;
   left: 11px;
 }
+/*-- Long Form Upload Button  --*/
+.long-form .form__group.field.upload_button {
+  margin: 0 0 15px;
+  display: inline-block;
+  max-width: 50%;
+}
+
+.long-form .form__group.field.file-type input[type="file"] {
+  position: relative;
+  top: 15px;
+  visibility: hidden;
+}
+
+.long-form .form__group.field.file-type>img {
+  position: absolute;
+  left: 20px;
+  background: none !important;
+  top: 20px;
+}
+
+.long-form .form__group.field.file-type {
+  position: relative;
+}
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
