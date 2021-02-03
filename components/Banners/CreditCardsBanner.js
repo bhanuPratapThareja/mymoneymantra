@@ -18,7 +18,7 @@ const CreditCardsBanner = props => {
                 </div>
             </section>
         </div>
-    )
+    ) 
 }
 
 export default CreditCardsBanner
