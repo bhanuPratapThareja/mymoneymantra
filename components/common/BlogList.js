@@ -6,19 +6,21 @@ const BlogList = (props) => {
     const router = useRouter()
 
     const onOpenBlog = blog => {
-        router.push({ pathname: '/blog/details', query: { id: blog.id } })
+        router.push({ pathname: '/blog/details', query: { slug: blog.id } })
     }
     return (
         <section className="blogs-filter container">
             <div className="filter-cards">
                 <div className="filter-cards-wrapper" >
                     {data.length ? data.map((blog, i) => {
-                        const { header, short_text, image, read_text, redirect_url, id, createdAt, published_at } = blog
+                        const { header, short_text, image, read_text, redirect_url, id, createdAt, published_at, content } = blog
                         const date = new Date(published_at);
                         const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
                         const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
                         const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
                         const createdDate = `${da} ${mo} ${ye}`;
+                        const readingTime = require('reading-time');
+                        const blogreadTime = readingTime(content);
                         const blogClasses = ['blog-wrapper-card', 'single', `card-1`]
                         return (
                             <div className={blogClasses.join(' ')} id={`blog-card-${i + 1}`} key={id}>
@@ -30,7 +32,7 @@ const BlogList = (props) => {
                                     <span dangerouslySetInnerHTML={{ __html: short_text }}></span>
 
                                     <div className="details">
-                                        <span>{createdDate} </span><span>{read_text}</span>
+                                        <span>{createdDate}//{blogreadTime.text} </span>
                                         <button onClick={() => onOpenBlog(blog)}>Read more</button>
                                     </div>
                                 </div>

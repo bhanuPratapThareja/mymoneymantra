@@ -192,10 +192,11 @@ $(document).ready(function () {
 
   $('#popular-cards-sec, #trending-offers-sec').slick({
     centerMode: true,
-    slidesToShow: 3,
+    slidesToShow: 2,
     cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
     speed: 1000,
     autoplay: true,
+    infinite: true,
     variableWidth: true,
     responsive: [
       {
@@ -236,7 +237,7 @@ $(document).ready(function () {
       },
     ]
 
-  })
+  });
   $('#popular-cards-sec, #trending-offers-sec').slick("refresh");
 
   // }

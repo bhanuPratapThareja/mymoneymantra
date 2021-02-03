@@ -14,7 +14,7 @@ const BlogsDetails = props => {
     const { header, read_text, blog_sub_category, content, display_short_text, blog, blog_categories } = props.data
     const mainCategories = blog_categories ? blog_categories : []
     const readingTime = require('reading-time');
-    const blogreadTime = readingTime(content);
+     const blogreadTime = readingTime(content);
     const { blogId, commentData } = props
     return (
         <section className="blog-head">
@@ -23,7 +23,7 @@ const BlogsDetails = props => {
                     <div className="blog-wrap-top">
                         <h1 dangerouslySetInnerHTML={{ __html: header }}></h1>
                         <span>
-                           {read_text}//{blogreadTime.text}
+                            {blogreadTime.text}
                             {mainCategories.length ? mainCategories.map((category, i) => (
                                 <span onClick={() => goToPage(category.blog_category_name)}>
                                     // {category.blog_category_name}

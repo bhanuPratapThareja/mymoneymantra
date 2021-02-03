@@ -1,17 +1,7 @@
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { useEffect } from 'react';
 
 const Layout = props => {
-
-    useEffect(() => {
-        if (typeof window !== undefined) {
-            const script = document.createElement('script')
-            script.src = '/assets/js/main.js'
-            document.body.append(script)
-        }
-    })
-
     return (
         <>
             <Header />
@@ -22,6 +12,7 @@ const Layout = props => {
             <script src='/assets/js/vendors/aos.js'></script>
             <script src='/assets/js/vendors/noUI.js'></script>
             <script src='/assets/js/vendors/slick.js'></script>
+            <script src='/assets/js/main.js'></script>
         </>
     )
 }
