@@ -337,7 +337,7 @@ class LongForm extends React.Component {
       // console.log(this.state.leadId)
       // console.log(this.state.askForOtp)
       if (!errors) {
-        if (this.state.primaryPath !== 'rkpl' && this.state.primaryPath !== 'talent-edge-form' && (!this.state.leadId || this.state.askForOtp)) {
+        if (this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
           console.log('1')
           let mobileNo = "";
           const newLongFormSections = [...this.state.longFormSections];
@@ -467,7 +467,7 @@ class LongForm extends React.Component {
 
     return (
       <div className="form-wrapper" id="longForm">
-        <form onClick={this.handleClickOnSlideBackground} id='long-form_id' noValidate autoComplete="off">
+        <form onClick={this.handleClickOnSlideBackground} id='long-form_id' noValidate autocomplete="off">
           {this.state.longFormSections.map((longFormSection) => {
             const long_form_blocks =
               longFormSection.sections[0].long_form_blocks;
