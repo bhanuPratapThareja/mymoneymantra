@@ -47,7 +47,7 @@ export async function getServerSideProps(ctx) {
     const { query } = ctx;
     const primaryPath = 'contributor';
     const secondaryPath = 'details';
-    const pageClasses = getClassesForPage('blog', 'details')
+    const pageClasses = getClassesForPage('contributor-detail')
 
 
     const contributorData = await strapi.processReq(

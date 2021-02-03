@@ -1191,7 +1191,8 @@ label {
     .blog-wrapper .card-3 .image_2 {
       max-width: 232px;
       width: 100%;
-      background: url("/assets/images/credit-card-flow/blog-image-2.png");
+      /* background: url("/assets/images/credit-card-flow/blog-image-2.png"); */
+      background: url("http://203.122.46.189:1338/uploads/blog_image_2_34b9ef61f1.png");
       background-size: cover;
       background-repeat: no-repeat; }
       @media (max-width: 768px) {
@@ -1209,6 +1210,7 @@ label {
       max-width: 232px;
       width: 100%;
       background: url("/assets/images/credit-card-flow/blog-image-3.png");
+      background: url("http://203.122.46.189:1338/uploads/blog_image_3_a5b88dca5b.png");
       background-size: cover;
       background-repeat: no-repeat; }
       @media (max-width: 768px) {

@@ -77,7 +77,7 @@ const BlogSearchPage = (props) => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi();
     const { query } = ctx;
-    const pageClasses = getClassesForPage('blog')
+    const pageClasses = getClassesForPage('blog-search')
 
     const blogData = await strapi.processReq(
         "GET",
