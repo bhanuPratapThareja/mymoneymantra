@@ -209,7 +209,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.address[0].addressline3 = addressline3
         body.address[0].landmark = nearByLandmark
         body.address[0].pincode = pincode ? pincode.pincode : ''
-        body.address[0].city = city ? city.cityId : ''
+        body.address[0].city = pincode ? pincode.cityId : ''
         body.address[0].state = pincode ? pincode.stateId : ''
         body.address[0].stdCode = pincode ? pincode.stdCode : ''
 
@@ -262,7 +262,7 @@ export const generateLead = async (data, primaryPath, formType) => {
             headers = { 'sync': 'HEADER' }
         } else if (formType === 'lf') {
             if (primaryPath !== 'rkpl') {
-                headers = { 'sync': 'true' }
+                headers = { 'sync': 'HEADER' }
             } else {
                 headers = { 'sync': 'HEADER' }
             }
