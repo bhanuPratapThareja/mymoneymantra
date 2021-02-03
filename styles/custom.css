@@ -1262,7 +1262,6 @@ section.popular-card-container {
   margin: 40px auto 0;
   padding: 0 24px;
 }
-
 /*-- Fateh Feb work --*/
 
 .long-form .long-form-wrapper .form-wrapper.cstm-margin form .long-forms-wrapper .shortforms-container .form__group.verified-input {
@@ -1309,6 +1308,17 @@ section.popular-card-container {
 }
 
 .blog-details .cstm-head span {
+  display: inline-block;
+}
+
+.blogs-flow .banks-holder .banks-slider .slide_cell,
+.blogs-flow .featured-wrapper .container .people {
+  cursor: pointer;
+}
+
+.blog-wrap-top p > p a {
+  color: #56AB2F;
+  text-decoration: underline;
   display: inline-block;
 }
 
@@ -1646,6 +1656,8 @@ section.popular-card-container {
 
   .blogs-flow .banks-holder .banks-slider .slide_cell{
     max-width: 98px;
+    min-height: auto;
+    padding: 20px 24px;
   }
 
   .cstm-prd{
@@ -1706,6 +1718,31 @@ section.popular-card-container {
   .filter-cards-wrapper .content p {
     font-size: 0.75rem;
     line-height: 1.25rem;
+  }
+
+  .single.card-1 .image_1 {
+    max-height: 180px;
+  }
+
+  .blog-wrap-top p > p {
+    margin-top: 24px;
+    padding: 0 24px;
+  }
+  
+  .contributor-detail.blogs-flow .mobile-background {
+    height: 140px;
+  }
+
+  .contributor-detail.blogs-flow .main-head {
+    padding-top: 30px;
+  }
+
+  .blog-wrap-top p > h2 {
+    padding: 0 24px;
+  }
+
+  .blog-wrap-top p> ul {
+    list-style: inside disc;
   }
 
 }
