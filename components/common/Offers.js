@@ -21,6 +21,7 @@ const Offers = props => {
          offers.push(components)
          pendingOffers.shift()
          if(!pendingOffers.length) {
+            console.log('offers: ',offers)
             setCards(offers)
          }
       })
