@@ -250,6 +250,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.address[3].stdCode = permanentPincode ? permanentPincode.stdCode : ""
 
         let utmCampaignChoice = ''
+        
         if (primaryPath == 'rkpl') {
             utmCampaignChoice = utmCampaign ? utmCampaign.includes('offcc') ? utmCampaign : 'offcc-rkpl' : ''
         } else {
