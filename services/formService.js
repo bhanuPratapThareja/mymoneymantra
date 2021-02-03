@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Strapi from '../providers/strapi'
 import { getApiData } from '../api/api'
-import { getLeadId } from '../utils/localAccess'
+import { getLeadId, getProductType } from '../utils/localAccess'
 import { getFormattedDate } from '../utils/formatDataForApi'
 const CancelToken = axios.CancelToken
 import { getDocumentIdandTypeId } from '../utils/uploadDocumentHelper'
@@ -185,7 +185,12 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.existingFacility[0].exisBankId = existingFacilityBank && existingFacilityBank.bankId ? existingFacilityBank.bankId : ''
 
         body.leadId = getLeadId()
-        body.productId = '6'
+
+        const productTypeData = getProductType()
+        const productTypeId = productTypeData ? productTypeData.productTypeId :  ''
+
+
+        body.productId = productTypeId
         body.cardType = cardType ? cardType.cardTypeId ? cardType.cardTypeId : '' : ''
         body.surrogateType = surrogateType ? surrogateType.surrogateTypeId ? surrogateType.surrogateTypeId : '' : ''
         body.requestedLoanamount = requestedLoanamount
