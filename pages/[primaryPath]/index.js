@@ -51,7 +51,6 @@ const PrimaryPage = props => {
           return <ShortExtendedForm key={block.id} data={block} preferredSelectionLists={props.preferredSelectionLists} />
         case 'offers.popular-offers-component':
         case 'offers.trending-offers-component':
-          console.log('props.popularOffers: ', props.popularOffers)
           return <Offers
             key={block.id}
             data={block}

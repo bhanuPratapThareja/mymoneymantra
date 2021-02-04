@@ -90,7 +90,7 @@ const Listings = props => {
                     return <Offers
                         key={block.id}
                         data={block}
-                        trendingOffers={props.trendingOffers}
+                        offers={props.trendingOffers || []}
                         primaryPath={props.primaryPath}
                     />
 

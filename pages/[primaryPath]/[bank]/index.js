@@ -91,7 +91,7 @@ const Details = props => {
                     return <Offers 
                         key={block.id} 
                         data={block}
-                        trendingOffers={props.trendingOffers}
+                        offers={props.trendingOffers || []}
                         primaryPath={props.primaryPath} 
                     />
                 case 'blocks.bank-slider-component':

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Strapi from '../../../../providers/strapi'
 import Layout from '../../../../components/Layout'
+import PageNotFound from '../../../../components/PageNotFound'
 
 import DetailsBanner from '../../../../components/Banners/DetailsBanner'
 import ProductDetails from '../../../../components/common/ProductDetails'
@@ -57,7 +58,7 @@ const Details = props => {
     // }
 
     if (!page && !props.detailsData || !props.longFormData  || !props.productData) {
-        return null
+        return <PageNotFound />
     }
 
     const getComponents = dynamic => {
@@ -90,7 +91,7 @@ const Details = props => {
                     return <Offers 
                         key={block.id} 
                         data={block}
-                        trendingOffers={props.trendingOffers}
+                        offers={props.trendingOffers || []}
                         primaryPath={props.primaryPath}
                     />
                 case 'blocks.bank-slider-component':

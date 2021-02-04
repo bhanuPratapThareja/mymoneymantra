@@ -24,7 +24,7 @@ const Offers = props => {
       }
    }
 
-   if (!props.offers.length) {
+   if (!props.offers || !props.offers.length) {
       return null
    }
 
