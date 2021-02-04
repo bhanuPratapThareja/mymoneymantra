@@ -27,7 +27,10 @@ const DetailsBanner = props => {
             <section className="banner container">
                 <div className="banner-wrapper">
              
-                    <h1><b>{bank.bank_name}</b><br />{product.product_name}</h1>
+                    <h1><b>{bank.bank_name}</b><br />
+                        {props.primaryPath === 'credit-cards' ? 
+                            product.product_name : productData.productType.product_type_name.slice(0, -1)}
+                    </h1>
                     {product.product_banner_detail ? <div dangerouslySetInnerHTML={{ __html: product.product_banner_detail.content }}></div>: null}
         
 

@@ -60,7 +60,6 @@ const Details = props => {
                         primaryPath={props.primaryPath}
                         changePageType={changePageType}
                     />
-
                 case 'blocks.credit-cards-details-component':
                 case 'blocks.details-component':
                 case 'blocks.home-loans-details':
@@ -70,7 +69,6 @@ const Details = props => {
                         productData={props.productData}
                         primaryPath={props.primaryPath}
                     />
-
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':

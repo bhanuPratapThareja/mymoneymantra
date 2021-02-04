@@ -131,7 +131,6 @@ export async function getServerSideProps(ctx) {
 
     const listingOffers = await extractListingOffersComponent(data)
     const trendingOffers = await extractTrendingOffers(data)
-    
 
     return {
         props: {

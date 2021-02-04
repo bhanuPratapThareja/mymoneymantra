@@ -13,18 +13,19 @@ import LearnMore from '../components/common/LearnMore'
 
 import { getClassesForPage } from '../utils/classesForPage'
 import { getLeadId, getLeadBank, getProductType } from '../utils/localAccess'
+import { extractTrendingOffers } from '../services/componentsService'
 
 const ThankYouPage = props => {
 
     const [leadId, setLeadId] = useState('')
     const [bank, setBank] = useState('')
-    const [productType, setProductType] = useState('')
+    // const [productType, setProductType] = useState('')
 
     useEffect(() => {
         window.scrollTo(0, 0)
         setLeadId(getLeadId())
         setBank(getLeadBank())
-        setProductType(getProductType())
+        // setProductType(getProductType())
     }, [])
 
     const getComponents = dynamic => {
@@ -36,12 +37,16 @@ const ThankYouPage = props => {
                         data={block}
                         leadId={leadId}
                         bank={bank}
-                        productType={productType}
                     />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
-                    return <Offers key={block.id} data={block} primaryPath={props.primaryPath} />
+                    return <Offers 
+                        key={block.id} 
+                        data={block} 
+                        offers={props.trendingOffers || []}
+                        primaryPath={props.primaryPath} 
+                    />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.rewards-component':
@@ -54,6 +59,10 @@ const ThankYouPage = props => {
                     return <LearnMore key={block.id} data={block} />
             }
         })
+    }
+
+    if(!props.data) {
+        return null
     }
 
     return (
@@ -72,6 +81,7 @@ export async function getServerSideProps(ctx) {
     console.log('primaryPath before switch: ', primaryPath)
 
     switch (primaryPath) {
+        case undefined:
         case 'rkpl':
             primaryPath = 'credit-cards'
             break
@@ -83,9 +93,15 @@ export async function getServerSideProps(ctx) {
     console.log('primaryPath after switch: ', primaryPath)
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
-    const data = pageData[0]
+    const data = pageData && pageData.length ? pageData[0] : null
 
-    return { props: { data, primaryPath, secondaryPath } }
+    const trendingOffers = await extractTrendingOffers(data)
+
+    return { 
+        props: { 
+            data, primaryPath, secondaryPath, trendingOffers
+        } 
+    }
 }
 
 export default ThankYouPage
