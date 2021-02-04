@@ -54,6 +54,7 @@ export const extractPopularOffers = data => {
     return new Promise((resolve) => {
         const components = data[0].dynamic
         let componentArray = []
+        let popularOffers = []
         
         components.forEach(component => {
             componentArray.push(component.__component)
@@ -65,7 +66,6 @@ export const extractPopularOffers = data => {
         
         components.forEach(component => {
             if (component.__component === 'offers.popular-offers-component') {
-                let popularOffers = []
                 let pendingComponents = [...component.product_v_2s]
                 console.log('pendingComponentsLLL:: ', pendingComponents)
                 if (!pendingComponents.length) {
@@ -104,7 +104,7 @@ export const extractTrendingOffers = data => {
                 if (!pendingComponents.length) {
                     resolve([])
                 }
-                pendingComponents.forEach(async item => {
+                component.product_v_2s.forEach(async item => {
                     const offer = await unpackComponents(item)
                     trendingOffers.push(offer)
                     pendingComponents.shift()

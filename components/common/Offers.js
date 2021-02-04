@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import { getProductDecision } from '../../services/offersService'
@@ -6,13 +5,6 @@ import { getProductDecision } from '../../services/offersService'
 const Offers = props => {
    const router = useRouter()
    const { section_heading } = props.data
-   const [offers, setOffers] = useState([])
-
-   useEffect(()=> {
-      const offers = props.popularOffers || props.trendingOffers || []
-      setOffers(offers)
-   }, [])
-
 
    const onOfferClick = async offer => {
       const { product, bank } = offer
@@ -32,7 +24,7 @@ const Offers = props => {
       }
    }
 
-   if (!offers.length) {
+   if (!props.offers.length) {
       return null
    }
 
@@ -41,7 +33,7 @@ const Offers = props => {
          <div className="popular-cards">
             <h2>{section_heading}</h2>
             <div className="popular-cards-slider" id="popular-cards-sec">
-               {offers.map(offer => {
+               {props.offers.map(offer => {
                   const { bank, product } = offer
                   const { product_name, product_feature, product_annual_fee,
                      product_usp_highlight, product_interest_rate } = product

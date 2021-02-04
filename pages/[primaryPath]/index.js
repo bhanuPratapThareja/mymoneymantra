@@ -55,8 +55,7 @@ const PrimaryPage = props => {
           return <Offers
             key={block.id}
             data={block}
-            popularOffers={props.popularOffers}
-            trendingOffers={props.trendingOffers}
+            offers={props.popularOffers || props.trendingOffers || []}
             primaryPath={props.primaryPath}
             goToShortForm={goToShortForm}
           />
