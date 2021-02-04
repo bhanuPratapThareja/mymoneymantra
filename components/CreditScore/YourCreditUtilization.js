@@ -1,4 +1,4 @@
-const YourCreditUtilization = () => {
+const YourCreditUtilization = ({ creditUtilization }) => {
   return (
     <section data-aos="fade-up" class="banner container paymentRank aos-init aos-animate">
       <div class="paymentRank-wrapper">
@@ -9,7 +9,7 @@ const YourCreditUtilization = () => {
         <div class="paymentRank-wrapper-content">
           <div class="paymentRank-wrapper-content-left left-mobile-view">
             <div class="value-utilisation">
-              <h1>8</h1>
+              <h1>{creditUtilization}</h1>
             </div>
           </div>
           <div class="paymentRank-wrapper-content-right">
