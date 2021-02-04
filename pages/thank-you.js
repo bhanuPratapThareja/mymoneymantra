@@ -19,13 +19,13 @@ const ThankYouPage = props => {
 
     const [leadId, setLeadId] = useState('')
     const [bank, setBank] = useState('')
-    // const [productType, setProductType] = useState('')
+    const [productType, setProductType] = useState('')
 
     useEffect(() => {
         window.scrollTo(0, 0)
         setLeadId(getLeadId())
         setBank(getLeadBank())
-        // setProductType(getProductType())
+        setProductType(getProductType())
     }, [])
 
     const getComponents = dynamic => {
@@ -37,6 +37,7 @@ const ThankYouPage = props => {
                         data={block}
                         leadId={leadId}
                         bank={bank}
+                        productType={productType}
                     />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
@@ -61,10 +62,6 @@ const ThankYouPage = props => {
         })
     }
 
-    if(!props.data) {
-        return null
-    }
-
     return (
         <div className={getClassesForPage(props.primaryPath, props.secondaryPath)}>
             {props.data ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
@@ -78,19 +75,10 @@ export async function getServerSideProps(ctx) {
 
     let { primaryPath } = query
     const secondaryPath = 'thank-you'
-    console.log('primaryPath before switch: ', primaryPath)
 
-    switch (primaryPath) {
-        case undefined:
-        case 'rkpl':
-            primaryPath = 'credit-cards'
-            break
-        case 'talent-edge-form':
-            primaryPath = 'personal-loans'
-            break
-
+    if(!primaryPath) {
+        primaryPath = 'credit-cards'
     }
-    console.log('primaryPath after switch: ', primaryPath)
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const data = pageData && pageData.length ? pageData[0] : null

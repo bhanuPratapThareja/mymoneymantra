@@ -5,7 +5,7 @@ import { uniq, debounce } from "lodash"
 import { generateInputs } from "../../utils/inputGenerator"
 import { getDropdownList } from "../../services/formService"
 import { generateLead, sendNotification, submitOtp, getOtp } from "../../services/formService"
-import { setLeadId, getLeadId, setLeadBank } from "../../utils/localAccess"
+import { setPrimaryPath, setLeadId, getLeadId, setLeadBank } from "../../utils/localAccess"
 import { getFormattedCurrency, getWholeNumberFromCurrency } from "../../utils/formattedCurrency"
 import {
   textTypeInputs,
@@ -431,10 +431,23 @@ class LongForm extends React.Component {
         const leadId = res.data.leadId
         let actionName = this.state.primaryPath === 'rkpl' ? 'RKPL-CC' : 'Short Form Submit'
         sendNotification(leadId, actionName)
+        let primaryPath = this.state.primaryPath
+
+        if (primaryPath === 'rkpl') {
+          primaryPath = 'credit-cards'
+          setPrimaryPath('credit-cards')
+        }  
+        
+        if (primaryPath === 'talent-edge-form') {
+          primaryPath = 'personal-loans'
+          setPrimaryPath('personal-loans')
+        }
+
         setLeadId(leadId)
         setLeadBank(leadBank)
         const pathname = `/thank-you`
-        this.props.router.push(pathname)
+        const query = { primaryPath }
+        this.props.router.push({ pathname, query }, pathname, { shallow: true })
         this.setState({ submitButtonDisabled: false })
       })
       .catch((err) => {
