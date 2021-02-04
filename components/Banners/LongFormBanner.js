@@ -13,15 +13,20 @@ class LongFormBanner extends React.Component {
     }
 
     initializePercentage = async () => {
-        document.addEventListener('percentageCalulated', event => {
-            let { percentage } = event.detail
-            percentage = Math.ceil(percentage)
-            this.setState({ percentage })
-        })
+        document.addEventListener('percentageCalulated', this.percentageEventListener)
+    }
+
+    percentageEventListener = event => {
+        let { percentage } = event.detail
+        percentage = Math.ceil(percentage)
+        this.setState({ percentage })
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('percentageCalulated', this.percentageEventListener)
     }
 
     render() {
-
         if(!this.props.productData) {
             return null
         }

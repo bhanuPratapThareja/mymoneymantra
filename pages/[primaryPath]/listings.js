@@ -123,18 +123,15 @@ export async function getServerSideProps(ctx) {
     const primaryPath = query.primaryPath
     const secondaryPath = 'listings'
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
-    const data = pageData[0]
+    const data = pageData && pageData.length ? pageData[0] : null
 
     const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
     const listingFilter = await strapi.processReq('GET', `filters?slug=${primaryPath}-filters`)
     const filters = listingFilter && listingFilter.length ? listingFilter[0] : null
 
-    let listingOffers = []
-    let trendingOffers = []
-    if (pageData) {
-        listingOffers = await extractListingOffersComponent(pageData)
-        trendingOffers = await extractTrendingOffers(pageData)
-    }
+    const listingOffers = await extractListingOffersComponent(data)
+    const trendingOffers = await extractTrendingOffers(data)
+    
 
     return {
         props: {

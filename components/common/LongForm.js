@@ -128,7 +128,6 @@ class LongForm extends React.Component {
       formType: 'lf'
     }, () => {
       this.handlePercentage()
-      console.log(this.state)
     })
   }
 
@@ -239,9 +238,6 @@ class LongForm extends React.Component {
       });
     });
     this.updateState(newLongFormSections)
-      .then(() => {
-        console.log(this.state)
-      })
   };
 
   handleClickOnSlideBackground = () => {
@@ -331,12 +327,8 @@ class LongForm extends React.Component {
     })
 
     this.updateState(newLongFormSections).then(() => {
-      // console.log(this.state.primaryPath)
-      // console.log(this.state.leadId)
-      // console.log(this.state.askForOtp)
       if (!errors) {
         if (this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
-          console.log('1')
           let mobileNo = "";
           const newLongFormSections = [...this.state.longFormSections];
           newLongFormSections.forEach((longFormSection) => {
@@ -446,7 +438,6 @@ class LongForm extends React.Component {
         this.setState({ submitButtonDisabled: false })
       })
       .catch((err) => {
-        console.log('leaderr: ', err)
         this.setState({ submitButtonDisabled: false, submissionError: 'Something went wrong. Please try again.' })
       })
   };
@@ -465,7 +456,7 @@ class LongForm extends React.Component {
 
     return (
       <div className="form-wrapper" id="longForm">
-        <form onClick={this.handleClickOnSlideBackground} id='long-form_id' noValidate autocomplete="off">
+        <form onClick={this.handleClickOnSlideBackground} id='long-form_id' noValidate autoComplete="off">
           {this.state.longFormSections.map((longFormSection) => {
             const long_form_blocks =
               longFormSection.sections[0].long_form_blocks;

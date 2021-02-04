@@ -35,7 +35,7 @@ const ListingCards = (props) => {
         const { productDecision, bank, product } = offer
         return (
           <div className="long-cards-wrapper"
-            key={offer.id}
+            key={i}
             onClick={() => onOfferClick(productDecision, offer)}
           >
 
@@ -73,25 +73,20 @@ const ListingCards = (props) => {
                 {product.product_annual_fee ? (
                   <div className="fee">
                     <h5>Annual fee:</h5>
-                    <p>
-                      <b>₹ {product.product_annual_fee.annual_fee_fy}</b> (First Year)
-                    </p>
+                    <p><b>₹ {product.product_annual_fee.annual_fee_fy}</b> (First Year)</p>
                     {product.product_annual_fee.annual_fee_sy ? (
-                      <p>
-                        <b>₹ {product.product_annual_fee.annual_fee_sy}</b> (Second year onwards)
-                      </p>
+                      <p><b>₹ {product.product_annual_fee.annual_fee_sy}</b> (Second year onwards)</p>
                     ) : null}
                   </div>
                 ) : null}
 
-                {/* {offer.intrest_rate ? (
+                {product.product_interest_rate ?
                   <div className="fee">
                     <h5>Interest Rate:</h5>
-                    <p
-                      dangerouslySetInnerHTML={{ __html: offer.intrest_rate }}
-                    ></p>
-                  </div>
-                ) : null} */}
+                    <p><b>{product.product_interest_rate.min_value}% - 
+                    {product.product_interest_rate.max_value}% 
+                    {product.product_interest_rate.duration === 'Annually' ? ' p.a' : ' p.m'}</b></p>
+                  </div> : null}
               </div>
 
               <div className="bottom">

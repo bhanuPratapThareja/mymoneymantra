@@ -78,8 +78,6 @@ export async function getServerSideProps(ctx) {
         case 'talent-edge-form':
             primaryPath = 'personal-loans'
             break
-        default:
-            primaryPath = 'credit-cards'
 
     }
     console.log('primaryPath after switch: ', primaryPath)

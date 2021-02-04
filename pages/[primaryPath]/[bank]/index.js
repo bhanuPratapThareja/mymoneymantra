@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
+import PageNotFound from '../../../components/PageNotFound'
 
 import DetailsBanner from '../../../components/Banners/DetailsBanner'
 import ProductDetails from '../../../components/common/ProductDetails'
@@ -19,7 +19,6 @@ import { setPrimaryPath, setProductType } from '../../../utils/localAccess'
 import { getUnpackedProduct, extractTrendingOffers } from '../../../services/componentsService'
 
 const Details = props => {
-    const router = useRouter()
     const [page, setPage] = useState(props.page)
     const [previousPath, setPreviousPath] = useState('')
 
@@ -30,35 +29,22 @@ const Details = props => {
         setProductType(props.productTypeData)
 
         window.onpopstate = () => {
-            if (previousPath !== 'long-form') {
-                setPage(previousPath)
+            if (previousPath === 'details') {
+                changePageType('details')
             }
         }
     }, [page])
 
 
     const changePageType = page => {
-        setTimeout(() => {
-            setPage(page)
-        }, 2500)
+        setPage(page)
+        if(page === 'long-form') {
+            setPreviousPath('details')
+        }
     }
 
-    // if (page === 'long-form' && !props.longFormData) {
-    //     if (typeof window !== 'undefined') {
-    //         const { primaryPath } = props
-    //         const pathname = `/${primaryPath}`
-    //         router.push({ pathname })
-    //         return <div className="interim-class">
-    //             <div className="page-not-found_center_msg">
-    //                 <h2>Page Not Found</h2>
-    //                 <p>redirecting to {primaryPath.split('-').join(' ').slice(0, -1)} page ...</p>
-    //             </div>
-    //         </div>
-    //     }
-    // }
-
-    if (!page && !props.detailsData || !props.longFormData  || !props.productData) {
-        return null
+    if (!props.productData) {
+        return <PageNotFound />
     }
 
     const getComponents = dynamic => {
@@ -125,6 +111,9 @@ const Details = props => {
 
 
     if (page === 'long-form') {
+        if(!props.longFormData || !props.productData) {
+            return <PageNotFound />
+        }
         return (
             <div className={getClassesForPage('long-form')}>
                 <div className="mobile-background"></div>
@@ -137,6 +126,9 @@ const Details = props => {
             </div>
         )
     } else {
+        if(!props.detailsData || !props.productData) {
+            return <PageNotFound />
+        }
         return (
             <div className={getClassesForPage(props.primaryPath, 'details')}>
                 {props.detailsData ? <Layout>{getComponents(props.detailsData.dynamic)}</Layout> : null}
@@ -157,22 +149,15 @@ export async function getServerSideProps(ctx) {
 
     const detailsPageData = await strapi.processReq('GET', `${primaryPath}-details-pages?slug=${bankSlug}`)
     const longFormPageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${bankSlug}-long-form`)
-    const detailsData = detailsPageData ? detailsPageData[0] : null
-    const longFormData = longFormPageData ? longFormPageData[0] : null
+    const detailsData = detailsPageData && detailsPageData.length ? detailsPageData[0]  : null
+    const longFormData = longFormPageData && longFormPageData.length ? longFormPageData[0] : null
 
     const productDataPacked = await strapi.processReq('GET', `product-v-2-s?product_type_v_2.slug=${primaryPath}&bank.slug=${bankSlug}`)
     const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
     const preferredSelectionLists = await strapi.processReq("GET", `list-preferences`)
 
-    let productData = null
-    if(productDataPacked) {
-        productData = await getUnpackedProduct(productDataPacked)
-    }
-
-    let trendingOffers = []
-    if(detailsPageData) {
-        trendingOffers = await extractTrendingOffers(detailsPageData)
-    }
+    const productData = await getUnpackedProduct(productDataPacked)
+    const trendingOffers = await extractTrendingOffers(detailsData)
 
     return {
         props: {
