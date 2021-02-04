@@ -51,6 +51,7 @@ const PrimaryPage = props => {
           return <ShortExtendedForm key={block.id} data={block} preferredSelectionLists={props.preferredSelectionLists} />
         case 'offers.popular-offers-component':
         case 'offers.trending-offers-component':
+          console.log('props.popularOffers: ', props.popularOffers)
           return <Offers
             key={block.id}
             data={block}
@@ -94,10 +95,13 @@ export async function getServerSideProps(ctx) {
 
   let popularOffers = []
   let trendingOffers = []
+  console.log('data: ', data)
   if (data) {
     popularOffers = await extractPopularOffers(pageData)
     trendingOffers = await extractTrendingOffers(pageData)
   }
+
+  console.log('popularOffers: ', popularOffers)
 
   return {
     props: {

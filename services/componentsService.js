@@ -50,22 +50,33 @@ export const getUnpackedProduct = productData => {
     })
 }
 
-export const extractTrendingOffers = data => {
+export const extractPopularOffers = data => {
     return new Promise((resolve) => {
         const components = data[0].dynamic
+        let componentArray = []
+        
         components.forEach(component => {
-            if(component.__component === 'offers.trending-offers-component') {
-                let trendingOffers = []
+            componentArray.push(component.__component)
+        })
+        
+        if (!componentArray.includes('offers.popular-offers-component')) {
+            resolve([])
+        }
+        
+        components.forEach(component => {
+            if (component.__component === 'offers.popular-offers-component') {
+                let popularOffers = []
                 let pendingComponents = [...component.product_v_2s]
-                if(!pendingComponents.length) {
+                console.log('pendingComponentsLLL:: ', pendingComponents)
+                if (!pendingComponents.length) {
                     resolve([])
                 }
-                pendingComponents.forEach(async item => {
+                component.product_v_2s.forEach(async item => {
                     const offer = await unpackComponents(item)
-                    trendingOffers.push(offer)
+                    popularOffers.push(offer)
                     pendingComponents.shift()
-                    if(!pendingComponents.length) {
-                        resolve(trendingOffers)
+                    if (!pendingComponents.length) {
+                        resolve(popularOffers)
                     }
                 })
             }
@@ -73,22 +84,32 @@ export const extractTrendingOffers = data => {
     })
 }
 
-export const extractPopularOffers = data => {
+export const extractTrendingOffers = data => {
     return new Promise((resolve) => {
         const components = data[0].dynamic
+        let componentArray = []
+        
         components.forEach(component => {
-            if(component.__component === 'offers.popular-offers-component') {
-                let popularOffers = []
+            componentArray.push(component.__component)
+        })
+        
+        if (!componentArray.includes('offers.trending-offers-component')) {
+            resolve([])
+        }
+
+        components.forEach(component => {
+            if (component.__component === 'offers.trending-offers-component') {
+                let trendingOffers = []
                 let pendingComponents = [...component.product_v_2s]
-                if(!pendingComponents.length) {
+                if (!pendingComponents.length) {
                     resolve([])
                 }
                 pendingComponents.forEach(async item => {
                     const offer = await unpackComponents(item)
-                    popularOffers.push(offer)
+                    trendingOffers.push(offer)
                     pendingComponents.shift()
-                    if(!pendingComponents.length) {
-                        resolve(popularOffers)
+                    if (!pendingComponents.length) {
+                        resolve(trendingOffers)
                     }
                 })
             }
@@ -99,18 +120,28 @@ export const extractPopularOffers = data => {
 export const extractListingOffersComponent = data => {
     return new Promise((resolve) => {
         const components = data[0].dynamic
+        let componentArray = []
+
         components.forEach(component => {
-            if(component.__component === 'blocks.listing-cards') {
+            componentArray.push(component.__component)
+        })
+
+        if (!componentArray.includes('blocks.listing-cards')) {
+            resolve([])
+        }
+
+        components.forEach(component => {
+            if (component.__component === 'blocks.listing-cards') {
                 let listiingOffers = []
                 let pendingComponents = [...component.product_v_2s]
-                if(!pendingComponents.length) {
+                if (!pendingComponents.length) {
                     resolve([])
                 }
                 pendingComponents.forEach(async item => {
                     const offer = await unpackComponents(item)
                     listiingOffers.push(offer)
                     pendingComponents.shift()
-                    if(!pendingComponents.length) {
+                    if (!pendingComponents.length) {
                         resolve(listiingOffers)
                     }
                 })
