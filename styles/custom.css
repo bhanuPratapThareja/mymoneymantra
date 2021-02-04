@@ -1857,3 +1857,8 @@ img {
   font-size: 14px !important;
   color: grey !important;
 }
+
+/* Chandrakant css starts */
+.listings .banner-wrapper .top h2, .credit-card-flow .banner h2 {
+  color: #000 !important;
+}
