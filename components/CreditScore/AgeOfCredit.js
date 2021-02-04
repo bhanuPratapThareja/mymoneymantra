@@ -1,4 +1,4 @@
-const AgeOfCredit = () => {
+const AgeOfCredit = ({ creditAge }) => {
   return (
     <section data-aos="fade-up" className="banner container paymentRank aos-init aos-animate">
       <div className="paymentRank-wrapper">
@@ -9,10 +9,7 @@ const AgeOfCredit = () => {
         <div className="paymentRank-wrapper-content">
           <div className="paymentRank-wrapper-content-left left-mobile-view">
             <div className="value-age">
-              <h2>
-                7 Years
-                <br />3 Months
-              </h2>
+              <h2>{creditAge}</h2>
             </div>
           </div>
           <div className="paymentRank-wrapper-content-right">
