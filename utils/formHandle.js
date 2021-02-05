@@ -306,8 +306,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
             errors = true
           } else {
             inp.error = false;
-            inp.errorMsg = "";
-            inp.verified = true;
+            inp.errorMsg = "";     
           }
 
 
