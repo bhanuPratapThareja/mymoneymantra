@@ -162,7 +162,6 @@ export const extractListingOffersComponent = data => {
                 }
                 component.product_v_2s.forEach(async item => {
                     const offer = await unpackComponents(item)
-                    console.log('offer: ', offer)
                     listiingOffers.push(offer)
                     pendingComponents.shift()
                     if (!pendingComponents.length) {
