@@ -382,12 +382,11 @@ export const generateInputs = (component, handleChange, checkInputValidity,
                 <span>
                   {box.checkbox_label.map(label => {
                     return (
-                      <span htmlFor={box.input_id}>
-                        {label.type === 'text' ? <p>{label.label}</p> : null}
-                        {label.type === 'anchor' ?
-                          <a onClick={checkboxAnchorClick(label.on_click_anchor)}>{label.label}</a>
-                          : null}
-                      </span>
+                      <div style={{cursor: 'pointer'}}>
+                        {label.type === 'text' ? 
+                          <p htmlFor={box.input_id} style={{display: 'inline'}}>{label.label}</p> : 
+                          <a style={{display: 'inline'}} onClick={() => checkboxAnchorClick(label.on_click_anchor)}>{label.label}</a>}
+                      </div>
                     )
                   })}
                 </span>

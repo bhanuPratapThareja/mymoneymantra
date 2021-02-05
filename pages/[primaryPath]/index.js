@@ -48,7 +48,12 @@ const PrimaryPage = props => {
         case 'blocks.ups-cards-component':
           return <UspCards key={block.id} data={block} />
         case 'form-components.onboarding-short-form':
-          return <ShortExtendedForm key={block.id} data={block} preferredSelectionLists={props.preferredSelectionLists} />
+          return <ShortExtendedForm
+            key={block.id}
+            data={block}
+            tncsData={props.tncsData}
+            preferredSelectionLists={props.preferredSelectionLists}
+          />
         case 'offers.popular-offers-component':
         case 'offers.trending-offers-component':
           return <Offers
@@ -89,6 +94,7 @@ export async function getServerSideProps(ctx) {
   const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)
   const data = pageData && pageData.length ? pageData[0] : null
   const preferredSelectionLists = await strapi.processReq('GET', `list-preferences`)
+  const tncsData = await strapi.processReq('GET', `terms-and-conditions`)
 
   const popularOffers = await extractPopularOffers(data)
   const trendingOffers = await extractTrendingOffers(data)
@@ -96,7 +102,7 @@ export async function getServerSideProps(ctx) {
   return {
     props: {
       data, primaryPath, preferredSelectionLists,
-      productTypeData, popularOffers, trendingOffers
+      productTypeData, popularOffers, trendingOffers, tncsData
     }
   }
 }

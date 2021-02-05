@@ -1,6 +1,8 @@
 import OnBoardForm from '../ShortForm/OnBoardForm/OnBoardForm'
 import OtpSlide from '../ShortForm/OtpForm/OtpSlide'
 import SFSlides from '../ShortForm/SFSlides/SFSlides'
+import Modal from '../../components/Modal/Modal'
+import TermsAndConditions from '../Tnc'
 import { debounce } from 'lodash'
 import { withRouter } from 'next/router'
 import { getDropdownList } from '../../services/formService'
@@ -40,7 +42,8 @@ class ShortExtendedForm extends React.Component {
             mandatory: 'Required Field'
         },
         slideButtonText: 'Next',
-        enableCheckboxes: []
+        enableCheckboxes: [],
+        showTncModal: false
     }
 
     scrollToTopOfSlide = () => {
@@ -108,8 +111,14 @@ class ShortExtendedForm extends React.Component {
         })
     }
 
-    onShowTnc = on_click_anchor => {
-        console.log('show TNC!: ', on_click_anchor)
+    onShowTncModal = on_click_anchor => {
+        if (on_click_anchor === 'showTnc') {
+            this.setState({ showTncModal: true })
+        }
+    }
+
+    closShowTncModal = () => {
+        this.setState({ showTncModal: false })
     }
 
     onGoToLetFindForm = () => {
@@ -239,8 +248,8 @@ class ShortExtendedForm extends React.Component {
                 inp.list = prefferedList
                 inp.error = false
                 setTimeout(() => {
-                this.handleInputDropdownChange(listType, prefferedList, inp.input_id)
-            }, 500);
+                    this.handleInputDropdownChange(listType, prefferedList, inp.input_id)
+                }, 500);
             } else {
                 if (!field.focusDropdown && listType && listType !== 'null') {
                     const debouncedSearch = debounce(() => getDropdownList(listType, inp.value, masterName, field)
@@ -251,7 +260,7 @@ class ShortExtendedForm extends React.Component {
                         }), 500)
                     debouncedSearch(listType, inp.value, masterName)
                 }
-            } 
+            }
         }
 
         this.setState({ ...this.state, slides: newSlides }, () => {
@@ -279,14 +288,14 @@ class ShortExtendedForm extends React.Component {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         updateDropdownList(inputs, listType, list, input_id)
         inputs.forEach(input => {
-            if(input.input_id === input_id) {
-                if(list && list.length && field && field.value){
-                  let filteredItemList = list.filter(item => item[input.select_name] === field.value.toUpperCase())
-                  let filteredItem = filteredItemList.length ? filteredItemList[0] : null
-                  this.handleInputDropdownSelection(input_id, filteredItem)
+            if (input.input_id === input_id) {
+                if (list && list.length && field && field.value) {
+                    let filteredItemList = list.filter(item => item[input.select_name] === field.value.toUpperCase())
+                    let filteredItem = filteredItemList.length ? filteredItemList[0] : null
+                    this.handleInputDropdownSelection(input_id, filteredItem)
                 }
-              }
-          })
+            }
+        })
         this.setState({ ...this.state, slides: newSlides })
     }
 
@@ -340,6 +349,7 @@ class ShortExtendedForm extends React.Component {
                         checkInputValidity={this.checkInputValidity}
                         onClickLetsGo={this.onClickLetsGo}
                         submitButtonDisabled={this.state.submitButtonDisabled}
+                        checkboxAnchorClick={this.onShowTncModal}
                     />
 
                     <div className="lets-find-forms-container sms-otp" id="sms-otp">
@@ -371,10 +381,17 @@ class ShortExtendedForm extends React.Component {
                             slideButtonText={this.state.slideButtonText}
                             onSubmitShortForm={this.onSubmitShortForm}
                             submissionError={this.state.submissionError}
-                            checkboxAnchorClick={this.onShowTnc}
                         />
                     </div>
                 </div>
+
+                {this.state.showTncModal && this.props.tncsData.length ? (
+                    <Modal openModal={this.state.showTncModal} closeOtpModal={this.closShowTncModal} >
+                        <button onClick={this.closShowTncModal} className="close-btn">Close</button>
+                        <TermsAndConditions tncsData={this.props.tncsData} />
+                    </Modal>
+                ) : null}
+
             </section>
         )
     }
