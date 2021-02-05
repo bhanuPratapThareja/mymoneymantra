@@ -108,6 +108,10 @@ class ShortExtendedForm extends React.Component {
         })
     }
 
+    onShowTnc = on_click_anchor => {
+        console.log('show TNC!: ', on_click_anchor)
+    }
+
     onGoToLetFindForm = () => {
         this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
             this.scrollToTopOfSlide()
@@ -367,6 +371,7 @@ class ShortExtendedForm extends React.Component {
                             slideButtonText={this.state.slideButtonText}
                             onSubmitShortForm={this.onSubmitShortForm}
                             submissionError={this.state.submissionError}
+                            checkboxAnchorClick={this.onShowTnc}
                         />
                     </div>
                 </div>
