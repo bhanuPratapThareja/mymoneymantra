@@ -23,6 +23,8 @@ const classes = {
     'home-loans': ['credit-card-flow', 'c-detail-page', 'personal-detail-flow'],
     blog: ['credit-card-flow', 'b2c-flow', 'blogs-flow', 'blog-details'],
   },
+  'user-profile':['credit-card-flow', 'profile-flow'],
+  'sign-up':['credit-card-flow', 'b2c-flow'],
   'credit-score-profile': ['credit-card-flow', 'credProfile', 'dashboard', 'app-progress', 'app-status', 'creditProfile-score-flow'],
 }
 
