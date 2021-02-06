@@ -34,8 +34,8 @@ export const getProductDecision = offers => {
         pendingOffers.forEach(async offer => {
             const leadId = getLeadId()
 
-            body.request.payload.productId = offer.product.product_id
-            body.request.payload.productTypeId = offer.productType.product_type_id
+            body.request.payload.productId = offer.productType.product_type_id
+            // body.request.payload.productTypeId = offer.productType.product_type_id
             body.request.payload.bankId = offer.bank.bank_id
             body.request.payload.leadId = leadId
 
