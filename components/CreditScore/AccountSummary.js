@@ -25,7 +25,7 @@ const AccountSummary = ({ active, closed, name }) => {
           </div>
           {activeTab === 'accepted' ? (
             <div id="accepted" className="cards-wrapper container tabcontent">
-              {active.map((item, i) => (
+              {active?.map((item, i) => (
                 <div key={i} className="popular-cards-slider-card">
                   <div className="popular-cards-slider-card-top">
                     <div className="head">
@@ -70,7 +70,7 @@ const AccountSummary = ({ active, closed, name }) => {
             </div>
           ) : (
             <div id="rejected" style={{ display: 'grid' }} className="cards-wrapper container tabcontent">
-              {closed.map((item, i) => (
+              {closed?.map((item, i) => (
                 <div key={i} className="popular-cards-slider-card">
                   <div className="popular-cards-slider-card-top">
                     <div className="head">
