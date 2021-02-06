@@ -6598,7 +6598,6 @@ label {
                 padding: 16px; } }
             .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-7-data > .refer-cards-wrapper .refer-card h3 {
               background: linear-gradient(90deg, #3080CF 0%, #356BB5 35.94%, #263A73 100%);
-              -webkit-background-clip: text;
               -webkit-text-fill-color: transparent; }
             .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-7-data > .refer-cards-wrapper .refer-card ul {
               margin-top: 16px;
@@ -6688,7 +6687,6 @@ label {
             .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-5-data > .applications-cards-wrapper .popular-cards-slider-card-top h2 {
               margin-top: 24px;
               background: linear-gradient(90deg, #3080CF 0%, #356BB5 35.94%, #263A73 100%);
-              -webkit-background-clip: text;
               -webkit-text-fill-color: transparent; }
               @media (max-width: 768px) {
                 .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-5-data > .applications-cards-wrapper .popular-cards-slider-card-top h2 {
