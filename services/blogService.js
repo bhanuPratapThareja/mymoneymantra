@@ -1,9 +1,7 @@
 import axios from 'axios'
 import { getApiData } from '../api/api'
 import { getAuthToken, setAuthToken } from '../api/headers'
-import { generateCorrelationId } from '../utils/correlationId'
-
-
+import { generateCorrelationId } from '../api/headers'
 
 export const getBlogComments = async (blogId) => {
 

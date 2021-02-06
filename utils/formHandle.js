@@ -309,7 +309,6 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
             inp.errorMsg = "";     
           }
 
-
         } else if (
           textTypeInputs.includes(inp.type) &&
           inp.input_id === field.currentActiveInput &&
