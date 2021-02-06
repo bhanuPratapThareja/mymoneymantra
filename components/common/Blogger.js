@@ -5,8 +5,7 @@ import Image from '../ImageComponent/ImageComponent'
 const Blogger = props => {
     const router = useRouter()
     let { section_heading, bloggers } = props.data
-    let popularBlogs = [...bloggers.filter(blog => blog.popular)]
-    console.log('popularBlogs: ', popularBlogs)
+    let popularBlogs = bloggers.filter(blog => blog.popular === true)
     
     const onOpenBlog = blog => {
         router.push({ pathname: '/blog/details', query: { slug: blog.id } })

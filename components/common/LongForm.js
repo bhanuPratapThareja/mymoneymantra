@@ -300,13 +300,11 @@ class LongForm extends React.Component {
     }
     const uniqueVerifiedInputsArray = uniq(verifiedInputsArray);
     this.setState({ verifiedInputs: uniqueVerifiedInputsArray }, () => {
-      const percentage =
-        (this.state.verifiedInputs.length / this.state.noOfMandatoryInputs) *
-        100;
-      const event = new CustomEvent("percentageCalulated", {
+      const percentage = (this.state.verifiedInputs.length / this.state.noOfMandatoryInputs) * 100
+      const event = new CustomEvent('percentageCalulated', {
         detail: { percentage },
-      });
-      document.dispatchEvent(event);
+      })
+      document.dispatchEvent(event)
     });
   };
 

@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import { getProductDecision } from '../../services/offersService'
@@ -5,6 +6,10 @@ import { getProductDecision } from '../../services/offersService'
 const Offers = props => {
    const router = useRouter()
    const { section_heading } = props.data
+
+   useEffect(() => {
+      window.initSlickCards()
+   }, [])
 
    const onOfferClick = async offer => {
       const { product, bank } = offer
