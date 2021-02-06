@@ -498,7 +498,44 @@ const api = {
 
 
 
-    }
+    },
+    login:{
+      devUrl: "customer/api/profile/v1/login",
+      uatUrl: "customer/api/profile/v1/login",
+      prodUrl: "customer/api/profile/v1/login",
+      body:{
+        mobileNo: null
+      }
+    },
+
+    signUp:{
+      devUrl: "customer/api/profile/v1/sign-up",
+      uatUrl: "customer/api/profile/v1/sign-up",
+      prodUrl: "customer/api/profile/v1/sign-up",
+      body: {
+        firstName: "",
+        lastName: "",
+        gender: null,
+        martialStatus: null,
+        panNo: "",
+        mobileNo:null,
+        emailId:""
+       
+      },
+
+      
+      			
+    },
+    loginOtpVerify:{
+      devUrl:'customer/api/profile/v1/otp-verify',
+      uatUrl:'customer/api/profile/v1/otp-verify',
+      prodUrl:'customer/api/profile/v1/otp-verify',
+      body:{
+        mobileNo:"",
+          otp:"",
+          otpId:""
+      }
+    },
   },
 
 };
