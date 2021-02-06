@@ -26,6 +26,11 @@ const classes = {
   'user-profile':['credit-card-flow', 'profile-flow'],
   'sign-up':['credit-card-flow', 'b2c-flow'],
   'credit-score-profile': ['credit-card-flow', 'credProfile', 'dashboard', 'app-progress', 'app-status', 'creditProfile-score-flow'],
+  'cp-rank': ['credit-card-flow', 'credProfile', 'dashboard', 'app-progress', 'app-status', 'credit-rank-flow'],
+  'cp-utilization': ['credit-card-flow', 'credProfile', 'dashboard', 'app-progress', 'app-status', 'creditProfile-utilization-flow'],
+  'cp-age': ['credit-card-flow', 'credProfile', 'dashboard', 'app-progress', 'app-status', 'creditProfile-age-flow'],
+  'cp-accounts': ['credit-card-flow', 'credProfile', 'dashboard', 'app-progress', 'app-status', 'creditProfile-account-flow'],
+  'cp-enquiries': ['credit-card-flow', 'credProfile', 'dashboard', 'app-progress', 'app-status', 'creditProfile-enquiries-flow'],
 }
 
 export const getClassesForPage = (primary, secondary) => {

@@ -1,0 +1,265 @@
+import { useState } from 'react'
+
+const TotalEnquiries = () => {
+  const [activeTab, setActiveTab] = useState('accepted')
+
+  return (
+    <section className="product-offer totalEnquiries-section">
+      <div className="container account-summary-head">
+        <h2>Total Enquiries</h2>
+      </div>
+      <div className="product-wrapper">
+        <div className="container head">
+          <div className="switch-tab tab">
+            <button className={activeTab === 'accepted' ? 'tablinks active' : 'tablinks'} onClick={() => setActiveTab('accepted')}>
+              <span></span>
+              <h2>Soft Enquiries</h2>
+            </button>
+            <button className={activeTab === 'rejected' ? 'tablinks active' : 'tablinks'} onClick={() => setActiveTab('rejected')}>
+              <span></span>
+              <h2>Hard Enquiries</h2>
+            </button>
+            <span className="line"></span>
+          </div>
+        </div>
+        {activeTab === 'accepted' ? (
+          <div id="accepted" className="cards-wrapper container tabcontent detailed-cards">
+            <div className="popular-cards-slider-card">
+              <div className="popular-cards-slider-card-top">
+                <div className="head">
+                  <h3>
+                    <b className="card_name">Citi Bank</b>
+                    <br />
+                    Enquiry for Personal Loan
+                  </h3>
+                  <img src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png" alt="citi-logo" />
+                </div>
+                <div className="account-number">
+                  <p>xxxx xxxx xxxx 6338</p>
+                </div>
+                <div className="app_progress_card_content">
+                  <div className="left">
+                    <div className="value">
+                      <span>Loan Amount:</span>
+                      <h5>₹8,00,000</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="popular-cards-slider-card-bottom">
+                <div>
+                  <h5>Approved</h5>
+                </div>
+              </div>
+            </div>
+            <div className="popular-cards-slider-card">
+              <div className="popular-cards-slider-card-top">
+                <div className="head">
+                  <h3>
+                    <b className="card_name">Citi Bank</b>
+                    <br />
+                    Enquiry for Personal Loan
+                  </h3>
+                  <img src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png" alt="citi-logo" />
+                </div>
+                <div className="account-number">
+                  <p>xxxx xxxx xxxx 6338</p>
+                </div>
+                <div className="app_progress_card_content">
+                  <div className="left">
+                    <div className="value">
+                      <span>Loan Amount:</span>
+                      <h5>₹8,00,000</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="popular-cards-slider-card-bottom">
+                <div>
+                  <h5>Approved</h5>
+                </div>
+              </div>
+            </div>
+            <div className="popular-cards-slider-card">
+              <div className="popular-cards-slider-card-top">
+                <div className="head">
+                  <h3>
+                    <b className="card_name">Citi Bank</b>
+                    <br />
+                    Enquiry for Personal Loan
+                  </h3>
+                  <img src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png" alt="citi-logo" />
+                </div>
+                <div className="account-number">
+                  <p>xxxx xxxx xxxx 6338</p>
+                </div>
+                <div className="app_progress_card_content">
+                  <div className="left">
+                    <div className="value">
+                      <span>Loan Amount:</span>
+                      <h5>₹8,00,000</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="popular-cards-slider-card-bottom">
+                <div>
+                  <h5>Approved</h5>
+                </div>
+              </div>
+            </div>
+            <div className="popular-cards-slider-card">
+              <div className="popular-cards-slider-card-top">
+                <div className="head">
+                  <h3>
+                    <b className="card_name">Citi Bank</b>
+                    <br />
+                    Enquiry for Personal Loan
+                  </h3>
+                  <img src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png" alt="citi-logo" />
+                </div>
+                <div className="account-number">
+                  <p>xxxx xxxx xxxx 6338</p>
+                </div>
+                <div className="app_progress_card_content">
+                  <div className="left">
+                    <div className="value">
+                      <span>Loan Amount:</span>
+                      <h5>₹8,00,000</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="popular-cards-slider-card-bottom">
+                <div>
+                  <h5>Approved</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div id="rejected" className="cards-wrapper container tabcontent" style={{ display: 'grid' }}>
+            <div className="popular-cards-slider-card">
+              <div className="popular-cards-slider-card-top">
+                <div className="head">
+                  <h3>
+                    <b className="card_name">Citi Bank</b>
+                    <br />
+                    Enquiry for Personal Loan
+                  </h3>
+                  <img src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png" alt="citi-logo" />
+                </div>
+                <div className="app_progress_card_content">
+                  <div className="left">
+                    <div className="value">
+                      <span>Applicant’s Name:</span>
+                      <h5>Amit Kumar</h5>
+                    </div>
+                    <div className="value">
+                      <span>Product Type:</span>
+                      <h5>Credit Card</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="popular-cards-slider-card-bottom rejected-red">
+                <div>
+                  <h5>Rejected: Due to poor Credit Score</h5>
+                </div>
+              </div>
+            </div>
+            <div className="popular-cards-slider-card">
+              <div className="popular-cards-slider-card-top">
+                <div className="head">
+                  <h3>
+                    <b className="card_name">Citi Bank</b>
+                    <br />
+                    Enquiry for Personal Loan
+                  </h3>
+                  <img src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png" alt="citi-logo" />
+                </div>
+                <div className="app_progress_card_content">
+                  <div className="left">
+                    <div className="value">
+                      <span>Applicant’s Name:</span>
+                      <h5>Amit Kumar</h5>
+                    </div>
+                    <div className="value">
+                      <span>Product Type:</span>
+                      <h5>Credit Card</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="popular-cards-slider-card-bottom rejected-red">
+                <div>
+                  <h5>Rejected: Due to poor Credit Score</h5>
+                </div>
+              </div>
+            </div>
+            <div className="popular-cards-slider-card">
+              <div className="popular-cards-slider-card-top">
+                <div className="head">
+                  <h3>
+                    <b className="card_name">Citi Bank</b>
+                    <br />
+                    Enquiry for Personal Loan
+                  </h3>
+                  <img src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png" alt="citi-logo" />
+                </div>
+                <div className="app_progress_card_content">
+                  <div className="left">
+                    <div className="value">
+                      <span>Applicant’s Name:</span>
+                      <h5>Amit Kumar</h5>
+                    </div>
+                    <div className="value">
+                      <span>Product Type:</span>
+                      <h5>Credit Card</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="popular-cards-slider-card-bottom rejected-red">
+                <div>
+                  <h5>Rejected: Due to poor Credit Score</h5>
+                </div>
+              </div>
+            </div>
+            <div className="popular-cards-slider-card">
+              <div className="popular-cards-slider-card-top">
+                <div className="head">
+                  <h3>
+                    <b className="card_name">Citi Bank</b>
+                    <br />
+                    Enquiry for Personal Loan
+                  </h3>
+                  <img src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png" alt="citi-logo" />
+                </div>
+                <div className="app_progress_card_content">
+                  <div className="left">
+                    <div className="value">
+                      <span>Applicant’s Name:</span>
+                      <h5>Amit Kumar</h5>
+                    </div>
+                    <div className="value">
+                      <span>Product Type:</span>
+                      <h5>Credit Card</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="popular-cards-slider-card-bottom rejected-red">
+                <div>
+                  <h5>Rejected: Due to poor Credit Score</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+export default TotalEnquiries

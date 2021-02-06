@@ -1862,3 +1862,9 @@ img {
 .listings .banner-wrapper .top h2, .credit-card-flow .banner h2 {
   color: #000 !important;
 }
+
+.credit-rank-flow .paymentRank-wrapper-head .underline-img, .creditProfile-age-flow .paymentRank-wrapper-head .underline-img, .creditProfile-utilization-flow .paymentRank-wrapper-head .underline-img, .creditProfile-account-flow .paymentRank-wrapper-head .underline-img, .creditProfile-enquiries-flow .paymentRank-wrapper-head .underline-img {
+  max-width: 80px;
+  margin-top: 8px;
+  display: block;
+}
