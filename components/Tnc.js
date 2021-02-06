@@ -1,7 +1,10 @@
 const TermsAndConditions = props => {
-    const tcns = props.tncsData[0].terms_and_conditions 
+    const tcns = props.tncsData[0].terms_and_conditions
+    console.log('tncs: ', tcns)
     return (
-       <div dangerouslySetInnerHTML={{ __html: tcns }}></div>
+        <div>
+            <span dangerouslySetInnerHTML={{ __html: tcns }}></span>
+        </div>
       )
 }
 
