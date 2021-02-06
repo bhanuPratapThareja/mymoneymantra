@@ -83,7 +83,6 @@ export const extractPopularOffers = data => {
         components.forEach(component => {
             if (component.__component === 'offers.popular-offers-component') {
                 let pendingComponents = [...component.product_v_2s]
-                console.log('pendingComponentsLLL:: ', pendingComponents)
                 if (!pendingComponents.length) {
                     resolve([])
                 }
@@ -163,7 +162,6 @@ export const extractListingOffersComponent = data => {
                 }
                 component.product_v_2s.forEach(async item => {
                     const offer = await unpackComponents(item)
-                    console.log('offer: ', offer)
                     listiingOffers.push(offer)
                     pendingComponents.shift()
                     if (!pendingComponents.length) {

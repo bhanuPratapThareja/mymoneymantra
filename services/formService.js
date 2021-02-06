@@ -274,9 +274,6 @@ export const generateLead = async (data, primaryPath, formType) => {
             }
         }
 
-        // console.log(body)
-        // console.log(headers)
-
         axios.post(url, body, { headers })
             .then(res => {
                 resolve(res)

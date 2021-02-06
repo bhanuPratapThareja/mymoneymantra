@@ -14,7 +14,7 @@ const Rewards = props => {
    }
 
    return (
-      <section data-aos="fade-up" className="container reward-cover aos-init">
+      <section data-aos="fade-up" className="container reward-cover aos-init aos-animate">
          <div className="reward">
             <div className="reward-content">
                <div dangerouslySetInnerHTML={{ __html: rewards_heading }}></div>

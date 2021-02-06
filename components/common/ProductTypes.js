@@ -25,7 +25,7 @@ const ProductType = props => {
     }, [])
 
     return (
-        <section data-aos="fade-up" className="product aos-init">
+        <section data-aos="fade-up" className="product aos-init aos-animate">
             <div className="container product-wrapper" id="pb-section">
 
                 <div className="product-wrapper-left">

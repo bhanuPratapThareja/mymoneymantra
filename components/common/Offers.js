@@ -37,7 +37,7 @@ const Offers = props => {
    }
 
    return (
-      <section data-aos="fade-up" className="container popular-card-container">
+      <section data-aos="fade-up" className="container popular-card-container aos-init aos-animate">
          <div className="popular-cards">
             <h2>{section_heading}</h2>
             <div className="popular-cards-slider" id="popular-cards-sec">
@@ -49,7 +49,7 @@ const Offers = props => {
                      <div className="popular-cards-slider-card" key={product.id} onClick={() => onOfferClick(offer)}>
                         <div className="popular-cards-slider-card-top">
                            <div className="head">
-                              <h3><b className="card_name">{bank.bank_name}</b><br />{product_name}</h3>
+                              <h3 className="card_name"><b>{bank.bank_name}</b><br />{product_name}</h3>
                               <Image image={bank.bank_logo} />
                            </div>
                            <div className="content">

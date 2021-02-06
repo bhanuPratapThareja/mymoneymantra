@@ -246,7 +246,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
     }
 
     return (
-      <div className={fieldClasses.join(" ")} id={fieldId} style={uploadButtonBorderStyles}>
+      <div className={fieldClasses.join(" ")} key={id} id={fieldId} style={uploadButtonBorderStyles}>
         <input
           id={inputFileId}
           type="file"
@@ -295,7 +295,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
       }
     }
     return (
-      <div className={fieldClasses.join(' ')} id={fieldId} key={id}>
+      <div className={fieldClasses.join(' ')} key={id} id={fieldId} key={id}>
         <input
           className="form__field"
           name={input_id}
@@ -335,7 +335,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
   if (type === "input_with_calendar") {
     const fieldId = `${input_id}_${type}`;
     return (
-      <div className="cstm-cal" id={fieldId}>
+      <div className="cstm-cal" id={fieldId} key={id}>
         <div className={fieldClasses.join(" ")} key={id}>
           <label className="form__label">{label}</label>
           <input
@@ -366,7 +366,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
     const { checkbox_input, checkboxes_for } = checkbox;
     const fieldId = `${checkboxes_for}_${type}_container`;
     return (
-      <div id={fieldId} className="agree">
+      <div id={fieldId} className="agree" key={id}>
         <div className="checkbox-container" key={id}>
           {checkbox_input.map((box) => {
             const boxId = `${box.input_id}_${type}`;
@@ -383,10 +383,10 @@ export const generateInputs = (component, handleChange, checkInputValidity,
                 <p>
                   {box.checkbox_label.map(label => {
                     return (
-                      <>
+                      <React.Fragment key={label.id}>
                         {label.type === 'text' ?  <span style={{display: 'inline-block'}} htmlFor={box.input_id}>{label.label}</span> : null} 
                         {label.type === 'anchor' ?  <a style={{display: 'inline-block'}} onClick={() => checkboxAnchorClick(label.on_click_anchor)}>{label.label}</a>:null}
-                      </>
+                      </React.Fragment>
                     )
                   })}
                 </p>

@@ -32,7 +32,7 @@ const SFSlides = props => {
                                             <React.Fragment key={component.id}>
                                                 {generateInputs(component, props.handleChange,
                                                     props.checkInputValidity, props.handleInputDropdownSelection,
-                                                    formType)}
+                                                    formType, null)}
                                             </React.Fragment>
                                         )
                                     })}

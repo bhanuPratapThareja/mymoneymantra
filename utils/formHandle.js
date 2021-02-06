@@ -558,7 +558,6 @@ export const letsFindFormToOtpForm = () => {
 };
 
 export const goToSlides = () => {
-  console.log('check2')
   $(".sms-otp").addClass("moving-out");
   $(".sms-otp").removeClass("moving-in");
   $(".sms-otp").removeClass("moving-out-rev");

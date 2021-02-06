@@ -98,8 +98,6 @@ export async function getServerSideProps(ctx) {
   const preferredSelectionLists = await strapi.processReq('GET', `list-preferences`)
   const tncData = await strapi.processReq('GET', `tnc`)
 
-  console.log('tncData: ', tncData)
-
   const popularOffers = await extractPopularOffers(data)
   const trendingOffers = await extractTrendingOffers(data)
 

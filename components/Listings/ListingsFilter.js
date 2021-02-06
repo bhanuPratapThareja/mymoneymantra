@@ -138,7 +138,7 @@ class ListingFilter extends React.Component {
                                                 {checkboxGroup.values.map((checkbox, i) => {
                                                     if (i + 1 <= checkboxGroup.showCheckboxes) {
                                                         return (
-                                                            <div className="checkbox-container" key={checkbox.id}>
+                                                            <div className="checkbox-container" key={i+1}>
                                                                 <div className="checkbox">
                                                                     <input type="checkbox" id={checkbox.tag} name={checkbox.tag} onChange={e => this.handleCheckbox(e, checkboxGroup.type)} />
                                                                     <label htmlFor={checkbox.tag}>

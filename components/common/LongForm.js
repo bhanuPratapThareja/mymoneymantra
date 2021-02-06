@@ -498,7 +498,7 @@ class LongForm extends React.Component {
                             <React.Fragment key={component.id}>
                               {generateInputs(component, this.handleChange,
                                 this.checkInputValidity, this.handleInputDropdownSelection,
-                                this.state.formType)}
+                                this.state.formType, null)}
                             </React.Fragment>
                           );
                         })}
