@@ -130,6 +130,7 @@ export async function getServerSideProps(ctx) {
     const filters = listingFilter && listingFilter.length ? listingFilter[0] : null
 
     const listingOffers = await extractListingOffersComponent(data)
+    console.log('listingOffers: ', listingOffers)
     const trendingOffers = await extractTrendingOffers(data)
 
     return {
