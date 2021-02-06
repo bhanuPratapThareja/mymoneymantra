@@ -154,10 +154,7 @@ class ShortExtendedForm extends React.Component {
                 goToSlides()
             })
         } catch (err) {
-          //  this.setState({ submissionError: 'Something Went wrong. Please try again.' })
-            this.setState({ currentSlide: 'sf-1', slideIndex: 1, slideButtonText: 'Next' }, () => {
-                goToSlides()
-            })
+           this.setState({ submissionError: 'Something Went wrong. Please try again.' })
         }
     }
 
