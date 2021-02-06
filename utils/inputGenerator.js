@@ -5,7 +5,7 @@ import {
 } from "./formattedCurrency";
 
 export const generateInputs = (component, handleChange, checkInputValidity,
-  handleInputDropdownSelection, formType) => {
+  handleInputDropdownSelection, formType, checkboxAnchorClick) => {
 
   const handleInputChange = (e, type, focusDropdown, style_as_dropdown) => {
     let { name, value, checked } = e.target
@@ -380,7 +380,17 @@ export const generateInputs = (component, handleChange, checkInputValidity,
                   onChange={(e) => handleInputChange(e, type)}
                 />
                 <label htmlFor={box.input_id}>
-                  <span dangerouslySetInnerHTML={{ __html: box.label }}></span></label>
+                <p>
+                  {box.checkbox_label.map(label => {
+                    return (
+                      <>
+                        {label.type === 'text' ?  <span style={{display: 'inline-block'}} htmlFor={box.input_id}>{label.label}</span> : null} 
+                        {label.type === 'anchor' ?  <a style={{display: 'inline-block'}} onClick={() => checkboxAnchorClick(label.on_click_anchor)}>{label.label}</a>:null}
+                      </>
+                    )
+                  })}
+                </p>
+                </label>
               </div>
             );
           })}

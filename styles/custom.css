@@ -1371,7 +1371,9 @@ section.popular-card-container {
   position: relative;
 }
 
-
+.lets-find-form form .checkbox label {
+  z-index: 10;
+}
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
