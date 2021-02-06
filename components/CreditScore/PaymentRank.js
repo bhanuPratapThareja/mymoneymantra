@@ -1,4 +1,4 @@
-const PaymentRank = () => {
+const PaymentRank = ({ rank }) => {
   return (
     <section data-aos="fade-up" className="banner container paymentRank aos-init aos-animate">
       <div className="paymentRank-wrapper">
@@ -9,7 +9,7 @@ const PaymentRank = () => {
         <div className="paymentRank-wrapper-content">
           <div className="paymentRank-wrapper-content-left left-mobile-view">
             <div className="value-rank">
-              <h1>8</h1>
+              <h1>{rank}</h1>
             </div>
           </div>
           <div className="paymentRank-wrapper-content-right">

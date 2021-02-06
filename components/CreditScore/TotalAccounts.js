@@ -1,4 +1,4 @@
-const TotalAccounts = () => {
+const TotalAccounts = ({ totalAccount }) => {
   return (
     <section data-aos="fade-up" className="banner container paymentRank aos-init aos-animate">
       <div className="paymentRank-wrapper">
@@ -10,6 +10,7 @@ const TotalAccounts = () => {
           <div className="paymentRank-wrapper-content-left mobile-view">
             <img className="rank-desktop" src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_accounts/accounts.png" alt="" />
             <img className="rank-mobile" src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_accounts/accounts-mobile.png" alt="" />
+            {/* <h2>{totalAccount}</h2> */}
           </div>
           <div className="paymentRank-wrapper-content-right">
             <p>What does this reflect?</p>

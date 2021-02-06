@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const CreditUtilizationAllAccounts = ({ active, closed }) => {
+const CreditUtilizationAllAccounts = ({ active, closed, name }) => {
   const [activeTab, setActiveTab] = useState('accepted')
 
   return (
@@ -99,8 +99,8 @@ const CreditUtilizationAllAccounts = ({ active, closed }) => {
         ) : (
           <div id="rejected" className="cards-wrapper container tabcontent" style={{ display: 'grid' }}>
             {closed?.map((item, i) => (
-              <div className="popular-cards-slider-card">
-                <div key={i} className="popular-cards-slider-card-top">
+              <div key={i} className="popular-cards-slider-card">
+                <div className="popular-cards-slider-card-top">
                   <div className="head">
                     <h3>
                       <b className="card_name">Citi Bank</b>
@@ -109,182 +109,26 @@ const CreditUtilizationAllAccounts = ({ active, closed }) => {
                     </h3>
                     <img src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png" />
                   </div>
-                  <div className="account-number">
-                    <p>{item.accountNo}</p>
-                  </div>
                   <div className="app_progress_card_content">
-                    <div className="left content-section">
-                      <div className="content-section-left">
-                        <div>
-                          <span>Credit Limit:</span>
-                          <h5>₹{item.creditLimitAmt}</h5>
-                        </div>
-                        <div className="content-section-left-block">
-                          <span>Credit Balance:</span>
-                          <h5>₹{item.currentBalance}</h5>
-                        </div>
+                    <div className="left">
+                      <div className="value">
+                        <span>Applicant’s Name:</span>
+                        <h5>{name}</h5>
                       </div>
-
-                      <div className="content-section-right">
-                        <span>Credit Utilisation:</span>
-                        <div className="content-section-right-percentage">
-                          <div id="cu_percent">
-                            <svg viewBox="0 0 100 100" style={{ display: 'block', width: '100%' }}>
-                              <path d="M 50,50 m 0,-45 a 45,45 0 1 1 0,90 a 45,45 0 1 1 0,-90" stroke="#eee" stroke-width="10" fill-opacity="0"></path>
-                              <path
-                                d="M 50,50 m 0,-45 a 45,45 0 1 1 0,90 a 45,45 0 1 1 0,-90"
-                                stroke="rgb(137,193,66)"
-                                stroke-width="10"
-                                fill-opacity="0"
-                                style={{ strokeDasharray: '282.783, 282.783', strokeDashoffset: '56.5566', strokeLinecap: 'round' }}
-                              ></path>
-                            </svg>
-                            <div
-                              className="progressbar-text"
-                              style={{
-                                position: 'absolute',
-                                left: '50%',
-                                top: '50%',
-                                padding: '0px',
-                                margin: '0px',
-                                transform: 'translate(-50%, -50%)',
-                                color: 'rgb(34, 31, 31)',
-                                fontFamily: 'Avenir-Heavy',
-                                fontSize: '20px',
-                                fontWeight: 'bold',
-                              }}
-                            >
-                              {item.creditUtilization}%
-                            </div>
-                          </div>
-                        </div>
+                      <div className="value">
+                        <span>Product Type:</span>
+                        <h5>{item.accountType}</h5>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="popular-cards-slider-card-bottom">
+                <div className="popular-cards-slider-card-bottom rejected-red">
                   <div>
-                    <h5>{item.paymentStatus} Payment</h5>
+                    <h5>Rejected: Due to poor Credit Score</h5>
                   </div>
                 </div>
               </div>
             ))}
-            <div className="popular-cards-slider-card">
-              <div className="popular-cards-slider-card-top">
-                <div className="head">
-                  <h3>
-                    <b className="card_name">Citi Bank</b>
-                    <br />
-                    Platinum Delight Credit Card
-                  </h3>
-                  <img src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png" />
-                </div>
-                <div className="app_progress_card_content">
-                  <div className="left">
-                    <div className="value">
-                      <span>Applicant’s Name:</span>
-                      <h5>Amit Kumar</h5>
-                    </div>
-                    <div className="value">
-                      <span>Product Type:</span>
-                      <h5>Credit Card</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="popular-cards-slider-card-bottom rejected-red">
-                <div>
-                  <h5>Rejected: Due to poor Credit Score</h5>
-                </div>
-              </div>
-            </div>
-            <div className="popular-cards-slider-card">
-              <div className="popular-cards-slider-card-top">
-                <div className="head">
-                  <h3>
-                    <b className="card_name">Citi Bank</b>
-                    <br />
-                    Platinum Delight Credit Card
-                  </h3>
-                  <img src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png" />
-                </div>
-                <div className="app_progress_card_content">
-                  <div className="left">
-                    <div className="value">
-                      <span>Applicant’s Name:</span>
-                      <h5>Amit Kumar</h5>
-                    </div>
-                    <div className="value">
-                      <span>Product Type:</span>
-                      <h5>Credit Card</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="popular-cards-slider-card-bottom rejected-red">
-                <div>
-                  <h5>Rejected: Due to poor Credit Score</h5>
-                </div>
-              </div>
-            </div>
-            <div className="popular-cards-slider-card">
-              <div className="popular-cards-slider-card-top">
-                <div className="head">
-                  <h3>
-                    <b className="card_name">Citi Bank</b>
-                    <br />
-                    Platinum Delight Credit Card
-                  </h3>
-                  <img src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png" />
-                </div>
-                <div className="app_progress_card_content">
-                  <div className="left">
-                    <div className="value">
-                      <span>Applicant’s Name:</span>
-                      <h5>Amit Kumar</h5>
-                    </div>
-                    <div className="value">
-                      <span>Product Type:</span>
-                      <h5>Credit Card</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="popular-cards-slider-card-bottom rejected-red">
-                <div>
-                  <h5>Rejected: Due to poor Credit Score</h5>
-                </div>
-              </div>
-            </div>
-            <div className="popular-cards-slider-card">
-              <div className="popular-cards-slider-card-top">
-                <div className="head">
-                  <h3>
-                    <b className="card_name">Citi Bank</b>
-                    <br />
-                    Platinum Delight Credit Card
-                  </h3>
-                  <img src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png" />
-                </div>
-                <div className="app_progress_card_content">
-                  <div className="left">
-                    <div className="value">
-                      <span>Applicant’s Name:</span>
-                      <h5>Amit Kumar</h5>
-                    </div>
-                    <div className="value">
-                      <span>Product Type:</span>
-                      <h5>Credit Card</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="popular-cards-slider-card-bottom rejected-red">
-                <div>
-                  <h5>Rejected: Due to poor Credit Score</h5>
-                </div>
-              </div>
-            </div>
           </div>
         )}
       </div>

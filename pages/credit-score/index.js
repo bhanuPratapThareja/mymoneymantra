@@ -19,7 +19,7 @@ const creditScoreProfile = (props) => {
         <TipSection />
         <FactorsAffecting />
         <CreditOverview />
-        <AccountSummary active={active} closed={closed} />
+        <AccountSummary active={active} closed={closed} name={props?.data?.applicantName} />
         <OffersForYou />
       </Layout>
     </div>
@@ -33,7 +33,7 @@ export async function getServerSideProps(ctx) {
     headers: {
       'Content-Type': 'application/json',
       Authorization:
-        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsZWFkZ2VuZXJhdGVhcGkiLCJleHAiOjE2MTI1MTg0NzcsImlhdCI6MTYxMjQzMjA3N30.vJ86_B24wu4sUc7VrH8bQyW6IzgI35D4ammMg0CBrzTnEYktVBUq13k-ZoC5slkP_z26GUfOby2jb-o4whfzyQ',
+        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsZWFkZ2VuZXJhdGVhcGkiLCJleHAiOjE2MTI2MDQ5NTAsImlhdCI6MTYxMjUxODU1MH0.luwSZjFvk-IO3lo6MwdXzPgYrVG3TQvOG3x8uRHjoKvE0Z3oXE-FftfyxQ5E24AxoqSr7rpMOJoY3Pr9hsns5g',
       correlationId: '25478965874',
       appId: 'MMMWEBAPP',
     },
