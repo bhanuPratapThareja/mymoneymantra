@@ -75,11 +75,16 @@ button:disabled {
   color: #89C142;
 }
 
-.lets-find-form .agree .checkbox span p {
+.lets-find-form .agree .checkbox p span {
   font-size: 0.75rem;
   padding-left: 0;
   line-height: 1.25rem;
   font-family: "Avenir-Medium";
+}
+
+.credit-card-flow .lets-find .agree .checkbox-container label a {
+  padding-left: 5px;
+  font-size: 0.75rem;
 }
 
 .lets-find-form .agree .checkbox span p a {
@@ -337,9 +342,9 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   height: 100%;
 }
 
-/* .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group {
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group {
   margin-bottom: 0 !important;
-} */
+}
 
 .form__group span.error {
   text-align: center;
@@ -1368,6 +1373,10 @@ section.popular-card-container {
 
 .long-form .form__group.field.file-type {
   position: relative;
+}
+
+.lets-find-form form .checkbox label {
+  z-index: 10;
 }
 
 @media(max-width: 1199px) {

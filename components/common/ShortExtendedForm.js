@@ -385,10 +385,10 @@ class ShortExtendedForm extends React.Component {
                     </div>
                 </div>
 
-                {this.state.showTncModal && this.props.tncsData.length ? (
-                    <Modal openModal={this.state.showTncModal} closeOtpModal={this.closShowTncModal} >
+                {this.state.showTncModal && this.props.tncData ? (
+                    <Modal openModal={this.state.showTncModal} closeOtpModal={this.closShowTncModal} className="tnc-modal">
                         <button onClick={this.closShowTncModal} className="close-btn">Close</button>
-                        <TermsAndConditions tncsData={this.props.tncsData} />
+                        <TermsAndConditions tncData={this.props.tncData} />
                     </Modal>
                 ) : null}
 

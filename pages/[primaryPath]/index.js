@@ -51,7 +51,7 @@ const PrimaryPage = props => {
           return <ShortExtendedForm
             key={block.id}
             data={block}
-            tncsData={props.tncsData}
+            tncData={props.tncData}
             preferredSelectionLists={props.preferredSelectionLists}
           />
         case 'offers.popular-offers-component':
@@ -94,7 +94,9 @@ export async function getServerSideProps(ctx) {
   const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)
   const data = pageData && pageData.length ? pageData[0] : null
   const preferredSelectionLists = await strapi.processReq('GET', `list-preferences`)
-  const tncsData = await strapi.processReq('GET', `terms-and-conditions`)
+  const tncData = await strapi.processReq('GET', `tnc`)
+
+  console.log('tncData: ', tncData)
 
   const popularOffers = await extractPopularOffers(data)
   const trendingOffers = await extractTrendingOffers(data)
@@ -102,7 +104,7 @@ export async function getServerSideProps(ctx) {
   return {
     props: {
       data, primaryPath, preferredSelectionLists,
-      productTypeData, popularOffers, trendingOffers, tncsData
+      productTypeData, popularOffers, trendingOffers, tncData
     }
   }
 }

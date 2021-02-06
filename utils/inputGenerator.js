@@ -379,17 +379,18 @@ export const generateInputs = (component, handleChange, checkInputValidity,
                   value={box.checked}
                   onChange={(e) => handleInputChange(e, type)}
                 />
-                <span>
+                <label htmlFor={box.input_id}>
+                <p>
                   {box.checkbox_label.map(label => {
                     return (
-                      <div style={{cursor: 'pointer'}}>
-                        {label.type === 'text' ? 
-                          <p htmlFor={box.input_id} style={{display: 'inline'}}>{label.label}</p> : 
-                          <a style={{display: 'inline'}} onClick={() => checkboxAnchorClick(label.on_click_anchor)}>{label.label}</a>}
-                      </div>
+                      <>
+                        {label.type === 'text' ?  <span style={{display: 'inline-block'}} htmlFor={box.input_id}>{label.label}</span> : null} 
+                        {label.type === 'anchor' ?  <a style={{display: 'inline-block'}} onClick={() => checkboxAnchorClick(label.on_click_anchor)}>{label.label}</a>:null}
+                      </>
                     )
                   })}
-                </span>
+                </p>
+                </label>
               </div>
             );
           })}
