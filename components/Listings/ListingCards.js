@@ -83,7 +83,7 @@ const ListingCards = (props) => {
                 {product.product_interest_rate ?
                   <div className="fee">
                     <h5>Interest Rate:</h5>
-                    <p><b>{product.product_interest_rate.min_value}% - 
+                    <p><b>{product.product_interest_rate.min_value}% -
                     {product.product_interest_rate.max_value}% 
                     {product.product_interest_rate.duration === 'Annually' ? ' p.a' : ' p.m'}</b></p>
                   </div> : null}

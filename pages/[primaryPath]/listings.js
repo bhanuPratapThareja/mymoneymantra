@@ -73,6 +73,7 @@ const Listings = props => {
                         filterOfferCards={filterOfferCards}
                         filterCardsFilterComponent={filterCardsFilterComponent}
                         banksList={uniq(banksList)}
+                        allOfferCards={allOfferCards}
                         productTypeData={props.productTypeData}
                     />
 

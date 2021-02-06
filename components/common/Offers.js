@@ -8,7 +8,9 @@ const Offers = props => {
    const { section_heading } = props.data
 
    useEffect(() => {
-      window.initSlickCards()
+      if(window !== undefined && window.initSlickCards) {
+         window.initSlickCards()  
+      }
    }, [])
 
    const onOfferClick = async offer => {
@@ -22,6 +24,7 @@ const Offers = props => {
       const { slug: bankSlug } = bank
       const { slug: productSlug } = product
       const primaryPath = props.primaryPath
+      
       if(primaryPath === 'credit-cards') {
          router.push(`/${primaryPath}/${bankSlug}/${productSlug}`)
       } else {

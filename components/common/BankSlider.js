@@ -4,7 +4,9 @@ import Image from '../ImageComponent/ImageComponent'
 const BankSlider = props => {
 
     useEffect(() => {
-        window.initSlickBanks() 
+        if(window !== undefined && window.initSlickBanks) {
+            window.initSlickBanks() 
+         }
      }, [])
     const { bank_slider_heading, bank_slider_images } = props.data.bank_slider
 

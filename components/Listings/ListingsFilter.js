@@ -1,40 +1,40 @@
 import { closeFilter } from '../../utils/loanListingFilterHandler'
 import { initializeMoneyRange, initializeYearRange, getSliderFilterValues,initializePercentRange } from '../../utils/noUiSliderHandler';
 import DownChevron from '../../public/assets/images/icons/down-chevron.svg'
+import { uniq } from 'lodash'
 
 class ListingFilter extends React.Component {
 
     state = {
         showCheckboxes: 4,
-        filters: {}
+        filters: {},
+        filtersAppliedOnce: false
     }
 
-    componentDidMount() {
-        const { filter_radio_name,
-            filter_fee_annual, filter_emi,
-            filter_tenure, filter_roi, filter_max_loan_amount } = this.props.filters
+    componentDidMount() {  
+        this.loadFilters()
+    }
 
-        const updatedCheckboxes = [...this.props.filters.checkboxes]
-        
+    UNSAFE_componentWillReceiveProps() {
+        if(!this.state.filtersAppliedOnce) {
+        let updatedCheckboxes = [...this.props.filters.checkboxes]
         if (updatedCheckboxes.length) {
+            let banksAlreadyAdded = []
+            let values = []
             updatedCheckboxes.forEach((block, i) => {
                 let blockValues = [...block.values]
-                if (block.type === 'banks') {
-                    let values = []
-                    let tempBanksTags = []
-
-                    blockValues.forEach(value => {
-                        this.props.banksList.forEach(tag => {
-                            if (value.tag === tag) {
-                                if (!tempBanksTags.includes(tag)) {
-                                    tempBanksTags.push(tag)
-                                    values.push(value)
-                                }
-                            }
-                        })
+                if (block.type === 'banks' && this.props.allOfferCards.length) {
+                    updatedCheckboxes[i].values = []
+                    this.props.allOfferCards.forEach(card => {
+                        const bank = { checkbox_name: card.bank.bank_name, tag: card.bank.bank_id, priority: card.bank.priority }
+                        if(!banksAlreadyAdded.includes(bank.tag)) {
+                            values.push(bank)
+                            banksAlreadyAdded.push(bank.tag)
+                        }
                     })
 
                     updatedCheckboxes[i].values = values
+                    updatedCheckboxes[i].values.sort((a, b) => (a.priority > b.priority) ? 1 : -1)
 
                 } else {
                     updatedCheckboxes[i].values = blockValues
@@ -47,6 +47,13 @@ class ListingFilter extends React.Component {
 
             this.setState({ checkboxes: updatedCheckboxes })
         }
+    }
+    }
+
+    loadFilters = () => {
+        const { filter_radio_name,
+            filter_fee_annual, filter_emi,
+            filter_tenure, filter_roi, filter_max_loan_amount } = this.props.filters
 
         if (filter_radio_name.length) {
             this.setState({ filter_radio_name })
@@ -59,12 +66,10 @@ class ListingFilter extends React.Component {
             initializeMoneyRange(filter_max_loan_amount, 'max-loan-amount-range')
             initializeYearRange(filter_tenure, 'tenure-range')
         })
-
     }
 
     handleCheckbox = (e, type) => {
         const { name, checked } = e.target
-        // console.log(e, type)
         const selectedCheckboxes = this.state.filters[type] ? this.state.filters[type] : []
         if (checked) {
             selectedCheckboxes.push(name)
@@ -90,7 +95,7 @@ class ListingFilter extends React.Component {
         const tenure = getSliderFilterValues(filter_tenure, 'tenure-range')
 
         const filters = { ...this.state.filters, annualFees, emi, roi, maxLoanAmount, tenure }
-        this.setState({ ...this.state, filters }, () => {
+        this.setState({ ...this.state, filters, filtersAppliedOnce: true }, () => {
             this.onCloseFilter()
         })
     }

@@ -68,8 +68,7 @@ const ListingBanner = props => {
                         <button
                             className="filter-option"
                             id="listing-filter"
-                            onClick={onOpenFilter}
-                            disabled={props.numberOfCards === 0}>
+                            onClick={onOpenFilter}>
                             Filters
                                 <img src="/assets/images/icons/down-chevron.svg" />
                         </button>
@@ -78,6 +77,7 @@ const ListingBanner = props => {
             </div>
             {props.filters ? <ListingFilter
                 banksList={props.banksList}
+                allOfferCards={props.allOfferCards}
                 filters={props.filters}
                 filterCardsFilterComponent={props.filterCardsFilterComponent}
             /> : null}
