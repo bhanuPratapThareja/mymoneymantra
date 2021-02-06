@@ -109,6 +109,10 @@ class ShortExtendedForm extends React.Component {
                 slideNo++
             }, 500)
         })
+
+        // setTimeout(()  => {
+        //     console.log(this.state.slides)
+        // }, 1000)
     }
 
     onShowTncModal = on_click_anchor => {
@@ -197,9 +201,9 @@ class ShortExtendedForm extends React.Component {
             const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
             this.setState({ ...this.state, slides: newSlides }, async () => {
                 if (!errorsPresent) {
-                    this.onSubmitShortForm()
                     const newSlideId = incrementSlideId(this.state.currentSlide)
                     if (this.state.slideIndex < this.state.slides.length - 1) {
+                        this.onSubmitShortForm()
                         this.setState({ slideIndex: this.state.slideIndex + 1, currentSlide: newSlideId }, () => {
                             if (this.state.slideIndex === this.state.slides.length - 1) {
                                 this.setState({ slideButtonText: 'Submit and view offers' })
@@ -208,7 +212,12 @@ class ShortExtendedForm extends React.Component {
                         })
                     } else {
                         this.onSubmitShortForm()
-                        this.props.router.push(`/${this.state.primaryPath}/listings`)
+                            .then(res => {
+                                this.props.router.push(`/${this.state.primaryPath}/listings`)
+                            })
+                            .catch(() => {
+                                this.setState({ submissionError: 'Something went wrong. Please try again.'})
+                            })
                     }
                 }
             })

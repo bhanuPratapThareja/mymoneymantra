@@ -431,13 +431,13 @@ class LongForm extends React.Component {
         const leadId = res.data.leadId
         let actionName = this.state.primaryPath === 'rkpl' ? 'RKPL-CC' : 'Short Form Submit'
         sendNotification(leadId, actionName)
+        
+        
         let primaryPath = this.state.primaryPath
-
         if (primaryPath === 'rkpl') {
           primaryPath = 'credit-cards'
           setPrimaryPath('credit-cards')
         }  
-        
         if (primaryPath === 'talent-edge-form') {
           primaryPath = 'personal-loans'
           setPrimaryPath('personal-loans')

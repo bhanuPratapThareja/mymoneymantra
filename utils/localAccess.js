@@ -47,9 +47,23 @@ export const getLeadBank = () => {
 }
 
 export const clearLeadId = () => {
-    localStorage.removeItem('leadId')
+    const primaryPath = getPrimaryPath()
+    const leadIdData = JSON.parse(localStorage.getItem('leadId'))
+    if(leadIdData && leadIdData[primaryPath]) {
+        delete leadIdData[primaryPath]
+        localStorage.setItem('leadId', JSON.stringify(leadIdData))
+    }
 }
 
 export const clearLeadBank = () => {
     localStorage.removeItem('leadBank')
+}
+
+export const clearFormData = () => {
+    const primaryPath = getPrimaryPath()
+    const formData = JSON.parse(localStorage.getItem('formData'))
+    if(formData && formData[primaryPath]) {
+        delete formData[primaryPath]
+        localStorage.setItem('formData', JSON.stringify(formData))
+    }
 }

@@ -1,12 +1,16 @@
+import { setLeadBank } from './localAccess.js'
+
 export const makeDecision = (buttonText, offer, primaryPath, changePageType) => {
-    const { bank: { bank_name: bankName, slug: bankSlug }, product: { slug: productSlug } } = offer
+    const { bank: { bank_name: bankName, slug: bankSlug, bank_id: bankId  }, product: { slug: productSlug } } = offer
     let pathname = ''
     let query = { bankName }
 
     switch (buttonText) {
       case "Apply Now":
       case "Instant Approval":
-        pathname = `/${primaryPath}/thank-you`;
+        const leadBank = { bankName, bankId }
+        setLeadBank(leadBank)
+        pathname = `/thank-you`;
         break;
 
       case "EConnect":

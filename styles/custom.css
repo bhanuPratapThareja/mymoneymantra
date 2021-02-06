@@ -75,17 +75,6 @@ button:disabled {
   color: #89C142;
 }
 
-.lets-find-form .agree .checkbox span p {
-  font-size: 0.75rem;
-  padding-left: 0;
-  line-height: 1.25rem;
-  font-family: "Avenir-Medium";
-}
-
-.lets-find-form .agree .checkbox span p a {
-  display: inline-block;
-}
-
 .thankyou-page {
   margin-bottom: 70px;
 }
@@ -692,6 +681,18 @@ div#address_proof_upload_button {
   max-width: 39%;
 }
 
+.credit-card-flow .lets-find-form .agree .checkbox span p {
+  font-size: 0.75rem;
+  padding-left: 0;
+  line-height: 1.25rem;
+  font-family: "Avenir-Medium";
+}
+
+.credit-card-flow .lets-find-form .agree .checkbox span p a {
+  display: inline-block;
+}
+
+
  .shortforms-container .radio-container>div {
   display: inline-block;
   min-width: 48.9%;
@@ -1252,10 +1253,6 @@ section.popular-card-container {
   margin: 0 auto;
   padding: 0 24px;
   width: 100%;
-}
-
-.blog-container .blog .blog-wrapper-card > div > img {
-  display: none;
 }
 
 .blog-wrap-top p> h3, .blog-wrap-top p> ul {

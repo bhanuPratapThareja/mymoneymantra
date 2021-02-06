@@ -16,15 +16,16 @@ import ShortExtendedForm from '../../components/common/ShortExtendedForm'
 import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import { getClassesForPage } from '../../utils/classesForPage'
-import { clearLeadId, setPrimaryPath, setProductType } from '../../utils/localAccess'
+import { clearLeadId, setPrimaryPath, setProductType, clearFormData } from '../../utils/localAccess'
 import { extractPopularOffers, extractTrendingOffers } from '../../services/componentsService'
 
 const PrimaryPage = props => {
   useEffect(() => {
     window.scrollTo(0, 0)
-    clearLeadId()
     setPrimaryPath(props.primaryPath)
     setProductType(props.productTypeData)
+    clearLeadId()
+    clearFormData()
   }, [])
 
   const goToShortForm = () => {

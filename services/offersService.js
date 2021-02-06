@@ -30,11 +30,10 @@ export const getProductDecision = offers => {
             resolve([])
         }
         const { url, body } = getApiData('leadProductDecision')
-
+        const leadId = getLeadId()
         pendingOffers.forEach(async offer => {
-            const leadId = getLeadId()
-
-            body.request.payload.productId = offer.productType.product_type_id
+ 
+            body.request.payload.productId = offer.productType.product_type_id.toString()
             // body.request.payload.productTypeId = offer.productType.product_type_id
             body.request.payload.bankId = offer.bank.bank_id
             body.request.payload.leadId = leadId
