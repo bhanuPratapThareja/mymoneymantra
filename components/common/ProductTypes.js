@@ -25,7 +25,6 @@ const ProductType = props => {
     }, [])
 
     const redirectToProductType = url => {
-        console.log('url: ', url)
         if(!url) {
             router.push('/coming-soon')
             return
