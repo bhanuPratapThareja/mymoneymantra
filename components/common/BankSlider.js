@@ -5,7 +5,9 @@ const BankSlider = props => {
 
     useEffect(() => {
         if(window !== undefined && window.initSlickBanks) {
-            window.initSlickBanks() 
+            setTimeout(() => {
+                window.initSlickBanks() 
+            }, 1000)
          }
      }, [])
     const { bank_slider_heading, bank_slider_images } = props.data.bank_slider

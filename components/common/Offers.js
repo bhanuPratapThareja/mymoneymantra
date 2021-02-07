@@ -9,7 +9,9 @@ const Offers = props => {
 
    useEffect(() => {
       if(window !== undefined && window.initSlickCards) {
-         window.initSlickCards()  
+        setTimeout(() => {
+         window.initSlickCards()
+        }, 1000); 
       }
    }, [])
 
@@ -46,8 +48,8 @@ const Offers = props => {
                   const { product_name, product_feature, product_annual_fee,
                      product_usp_highlight, product_interest_rate } = product
                   return (
-                     <div className="popular-cards-slider-card" key={product.id} onClick={() => onOfferClick(offer)}>
-                        <div className="popular-cards-slider-card-top">
+                     <div className="popular-cards-slider-card" key={product.id}>
+                        <div className="popular-cards-slider-card-top" onClick={() => onOfferClick(offer)}>
                            <div className="head">
                               <h3 className="card_name"><b>{bank.bank_name}</b><br />{product_name}</h3>
                               <Image image={bank.bank_logo} />
