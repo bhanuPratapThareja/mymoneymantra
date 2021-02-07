@@ -2151,3 +2151,12 @@ section.popular-card-container {
 .filter-option {
   cursor: pointer;
 }
+
+.credit-card-flow .banner-card {
+  right: 45px;
+  top: 100px;
+}
+
+.blog_header-custom {
+  text-align: center;
+}

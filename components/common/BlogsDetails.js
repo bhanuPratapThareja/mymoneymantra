@@ -12,6 +12,9 @@ const BlogsDetails = props => {
     }, [props.data])
     // const { header, read_text, blog_sub_category, content, display_short_text } = props.data.blogger
     const { header, read_text, blog_sub_category, content, display_short_text, blog, blog_categories } = props.data
+
+    console.log(props.data)
+
     const mainCategories = blog_categories ? blog_categories : []
     const readingTime = require('reading-time');
      const blogreadTime = readingTime(content);
@@ -21,7 +24,7 @@ const BlogsDetails = props => {
             <div className="blog-detail-wrapper container">
                 <div className="blog-wrapper-content">
                     <div className="blog-wrap-top">
-                        <h1 dangerouslySetInnerHTML={{ __html: header }}></h1>
+                        <div className="blog_header-custom" dangerouslySetInnerHTML={{ __html: header }}></div>
                         <span>
                             {blogreadTime.text}
                             {mainCategories.length ? mainCategories.map((category, i) => (
@@ -30,7 +33,7 @@ const BlogsDetails = props => {
                                 </span>)
                             ) : null}
                         </span>
-                        <p dangerouslySetInnerHTML={{ __html: content }}></p>
+                        <div dangerouslySetInnerHTML={{ __html: content }}></div>
                     </div>
                     <CommentSection blogId={blogId} commentData={commentData} />
                 </div>
