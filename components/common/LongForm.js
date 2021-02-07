@@ -160,8 +160,8 @@ class LongForm extends React.Component {
             debouncedSearch(listType, inp.value, masterName)
           }
         }
-      });
-    });
+      })
+    })
 
     this.setState({ longFormSections: newLongFormSections, errors: false }, () => {
       if (textTypeInputs.includes(field.type) || field.type === 'input_with_dropdown' || field.type === 'money') {
