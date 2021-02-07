@@ -13,7 +13,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
 
     if (type === 'money') {
       value = value.toString()
-      const numString = getWholeNumberFromCurrency(value);
+      const numString = getWholeNumberFromCurrency(value)
       if (isNaN(numString)) {
         return
       }
