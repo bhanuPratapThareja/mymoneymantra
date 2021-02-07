@@ -234,7 +234,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         // body.address[2].purposeOfLoan = purposeOfLoan
 
         body.address[2].propertyValue = cost_of_property
-        body.address[2].city = city_location;
+        body.address[2].city = city_location ? city_location.cityId : "";
         body.address[2].pincode = propertyPincode ? propertyPincode.pincode : "";
         body.address[2].state = propertyPincode ? propertyPincode.stateId : "";
         body.address[2].stdCode = propertyPincode ? propertyPincode.stdCode : "";
