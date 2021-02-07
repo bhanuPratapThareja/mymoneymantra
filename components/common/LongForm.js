@@ -14,6 +14,7 @@ import {
   updateDropdownList,
   updateSelectionFromDropdown,
   resetDropdowns,
+  submitDocument,
 } from "../../utils/formHandle"
 
 class LongForm extends React.Component {
@@ -147,7 +148,7 @@ class LongForm extends React.Component {
             inp.list = prefferedList
             inp.error = false
             setTimeout(() => {
-              this.handleInputDropdownChange(listType, prefferedList, inp.input_id, field.focusDropdown)
+              this.handleInputDropdownChange(listType, prefferedList, inp.input_id)
             }, 500)
 
           } else if (!field.focusDropdown && listType && listType !== 'null') {
@@ -160,8 +161,8 @@ class LongForm extends React.Component {
             debouncedSearch(listType, inp.value, masterName)
           }
         }
-      });
-    });
+      })
+    })
 
     this.setState({ longFormSections: newLongFormSections, errors: false }, () => {
       if (textTypeInputs.includes(field.type) || field.type === 'input_with_dropdown' || field.type === 'money') {
@@ -186,7 +187,7 @@ class LongForm extends React.Component {
   };
 
   handleInputDropdownChange = (listType, list, input_id, field) => {
-    const newLongFormSections = [...this.state.longFormSections];
+    const newLongFormSections = [...this.state.longFormSections]
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
       long_form_blocks.forEach(async (long_form_block) => {
@@ -291,11 +292,11 @@ class LongForm extends React.Component {
   handleVerifiedInputsArray = (input) => {
     const verifiedInputsArray = this.state.verifiedInputs
     if (input.verified) {
-      verifiedInputsArray.push(input.input_id);
+      verifiedInputsArray.push(input.input_id)
     } else {
       if (verifiedInputsArray.includes(input.input_id)) {
         const index = verifiedInputsArray.indexOf(input.input_id);
-        verifiedInputsArray.splice(index, 1);
+        verifiedInputsArray.splice(index, 1)
       }
     }
     const uniqueVerifiedInputsArray = uniq(verifiedInputsArray);
@@ -375,7 +376,13 @@ class LongForm extends React.Component {
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
       long_form_blocks.forEach(async (long_form_block) => {
-        const inputs = long_form_block.blocks;
+        const inputs = long_form_block.blocks
+
+        inputs.forEach(input => {
+          if (input.attachment && input.value && input.value.length) {
+            submitDocument(input.end_point_name, input.value)
+          }
+        })
 
         for (let i = 0; i < inputs.length; i++) {
           const input = inputs[i];
@@ -409,10 +416,10 @@ class LongForm extends React.Component {
         }
       })
     })
+    
 
     const { utm_campaign: utmCampaign, utm_medium: utmMedium,
       utm_source: utmSource, utm_remark: utmRemark } = this.props.router.query
-
     data.utmCampaign = utmCampaign
     data.utmMedium = utmMedium
     data.utmSource = utmSource

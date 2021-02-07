@@ -10,7 +10,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import RecentBlogs from "../../components/common/RecentBlogs";
 
-
 const Blog = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -58,6 +57,7 @@ export async function getServerSideProps(ctx) {
     "GET",
     `quick-blogs`
   );
+
   const data = pageData && pageData.length ? pageData[0] : null;
   return { props: { data, pageClasses, blogsFilter, allBlogs } };
 }

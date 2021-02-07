@@ -13,7 +13,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
 
     if (type === 'money') {
       value = value.toString()
-      const numString = getWholeNumberFromCurrency(value);
+      const numString = getWholeNumberFromCurrency(value)
       if (isNaN(numString)) {
         return
       }
@@ -385,7 +385,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
                       return (
                         <React.Fragment key={label.id}>
                           {label.type === 'text' ? <span style={{ display: 'inline' }} htmlFor={box.input_id}>{label.label}</span> : null}
-                          {label.type === 'anchor' ? <a style={{ display: 'inline' }} onClick={(e) => {
+                          {label.type === 'anchor' ? <a style={{ display: 'inline', marginLeft: '2px' }} onClick={(e) => {
                             e.preventDefault()
                             checkboxAnchorClick(label.on_click_anchor)
                           }}>{label.label}</a> : null}
