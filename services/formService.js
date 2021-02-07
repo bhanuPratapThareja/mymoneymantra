@@ -190,7 +190,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         const productTypeId = productTypeData ? productTypeData.productTypeId :  ''
 
 
-        body.productId = productTypeId
+        body.productId = productTypeId.toString()
         body.cardType = cardType ? cardType.cardTypeId ? cardType.cardTypeId : '' : ''
         body.surrogateType = surrogateType ? surrogateType.surrogateTypeId ? surrogateType.surrogateTypeId : '' : ''
         body.requestedLoanamount = requestedLoanamount
@@ -274,8 +274,8 @@ export const generateLead = async (data, primaryPath, formType) => {
             }
         }
 
-        console.log(body)
-        console.log(headers)
+        // console.log(body)
+        // console.log(headers)
 
         axios.post(url, body, { headers })
             .then(res => {

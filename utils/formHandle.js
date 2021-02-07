@@ -532,9 +532,9 @@ export const submitShortForm = (slides, currentSlide, primaryPath, formType) => 
         data[key] = "";
       }
     }
-    const previouslySavedData = JSON.parse(localStorage.getItem("formData"));
-    const formData = { ...previouslySavedData, [primaryPath]: data };
-    localStorage.setItem("formData", JSON.stringify(formData));
+    const previouslySavedData = JSON.parse(localStorage.getItem('formData'))
+    const formData = { ...previouslySavedData, [primaryPath]: data }
+    localStorage.setItem("formData", JSON.stringify(formData))
     generateLead(data, primaryPath, formType)
       .then((res) => {
         resolve(res);

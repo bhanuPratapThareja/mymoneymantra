@@ -14,7 +14,8 @@ const OnBoardForm = props => {
                 {props.slides.length ? <form>
                     {props.slides[0].inputs.map(component => {
                         return <React.Fragment key={component.id}>
-                            {generateInputs(component, props.handleChange, props.checkInputValidity)}
+                            {generateInputs(component, props.handleChange, props.checkInputValidity,
+                                null, 'sf', props.checkboxAnchorClick)}
                         </React.Fragment>
                     })}
                 </form> : null}
