@@ -537,6 +537,7 @@ export const submitShortForm = (slides, currentSlide, primaryPath, formType) => 
     const previouslySavedData = JSON.parse(localStorage.getItem('formData'))
     const formData = { ...previouslySavedData, [primaryPath]: data }
     localStorage.setItem("formData", JSON.stringify(formData))
+    
     generateLead(data, primaryPath, formType)
       .then((res) => {
         resolve(res);
