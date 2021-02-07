@@ -7765,8 +7765,12 @@ label {
     @media (max-width: 768px) {
       .homepage-flow .banner-content-wrapper p {
         padding-top: 24px; } }
-.homepage-flow .testimonial {
-  margin-top: 199.92px !important; }
+      
+      .homepage-flow .testimonial {
+        /* margin-top: 199.92px !important; */
+        margin-top: 141.92px !important;
+      }
+
   @media (max-width: 768px) {
     .homepage-flow .testimonial {
       padding-top: 0 !important;
