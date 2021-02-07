@@ -10,6 +10,8 @@ import { messgaes } from "../../utils/messages";
 import { useEffect, useState } from "react";
 import { sendLoginOtp, verifyOtp } from "../../utils/otp";
 import Loader from "../../components/common/Loader";
+import SubHeader from "../../components/signup/subheader";
+import CustomImage from "../../components/signup/image";
 const login = (props) => {
   const [counter, setcounter] = useState(0);
   const [phone, setphone] = useState("");
@@ -65,10 +67,13 @@ const login = (props) => {
               <div className="lets-find-stepper-wrapper">
                 <form className="short-forms-wrapper">
                   <div
-                    className="sf-forms opacity-in"
+                    className='sf-forms opacity-in'
                     id="sf-1"
                     style={{ display: counter == 0 ? "block" : "none" }}
                   >
+                    <div className="lets-find-content">
+                      {counter==0?<><SubHeader type={type}></SubHeader>
+                      <CustomImage></CustomImage></>:<></>}
                     <PhoneNumberCustom
                       setNumber={(val) => setphone(val)}
                       phone={phone}
@@ -77,13 +82,22 @@ const login = (props) => {
                       setChecked={() => setisChecked(!isChecked)}
                     ></PhoneNumberCustom>
                   </div>
+                  </div>
                   <div
                     className="sf-forms mobile-otp opacity-in"
                     id="sf-2"
                     style={{ display: counter == 1 ? "block" : "none" }}
-                  >
+                  > <div className="lets-find-content">
+                  <h2>
+                    Verify your mobile
+                    <br />
+                    number
+                  </h2>
+                  <CustomImage></CustomImage>
                     <Otp setotp={(val) => setotp(val)} otp={otp}></Otp>
                   </div>
+                  </div>
+                  
                 </form>
                 <div
                   className="sf-forms mobile-otp opacity-in"

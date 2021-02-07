@@ -2,13 +2,7 @@ import CustomImage from "./image";
 
 // import * as greenUnderline from '../../public/assets/images/credit-card-flow/green-underline.png'
 const Otp=(props)=>{
-    return(  <div className="lets-find-content">
-    <h2>
-      Verify your mobile
-      <br />
-      number
-    </h2>
-    <CustomImage></CustomImage>
+    return( 
     <div className="otp-wrapper login-options">
       <div className="form__group field">
         <input
@@ -25,11 +19,11 @@ const Otp=(props)=>{
         </label>
       </div>
       <span>Haven’t received the OTP yet?</span>
-      {/* <button onC>
+      <button onClick={props.resend}>
         <h6>Resend</h6>
-      </button> */}
+      </button>
     </div>
-  </div>
+  
 )
 }
 
