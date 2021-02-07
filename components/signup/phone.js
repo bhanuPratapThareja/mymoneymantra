@@ -10,9 +10,7 @@ const PhoneNumberCustom=(props)=>{
         }
     }
     return ( 
-        <div className="lets-find-content">
-          <SubHeader type={props.type}></SubHeader>
-          <CustomImage></CustomImage>
+        
           <div className="login-options">
             <div className="login-options-wrapper">
               <div className="form__group field">
@@ -29,7 +27,7 @@ const PhoneNumberCustom=(props)=>{
                   Phone number
                 </label>
               </div>
-            {props.type==='login'?<SocialLogin></SocialLogin>:<></>}
+              <SocialLogin></SocialLogin>
             </div>
             <div className="login-terms">
               <div className="checkbox-container">
@@ -62,7 +60,7 @@ const PhoneNumberCustom=(props)=>{
               </div>
             </div>
           </div>
-        </div>
+        
       
 )
 }

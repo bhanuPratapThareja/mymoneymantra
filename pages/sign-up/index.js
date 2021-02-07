@@ -13,6 +13,9 @@ import CustomLastName from "../../components/signup/lastname";
 import { sendSignUpOtp, verifyOtp } from "../../utils/otp";
 import Loader from "../../components/common/Loader";
 import { messgaes } from "../../utils/messages";
+import SubHeader from "../../components/signup/subheader";
+import CustomImage from "../../components/signup/image";
+import SocialLogin from "../../components/signup/socialLogin";
 
 const signUp = (props) => {
   const [counter, setcounter] = useState(0);
@@ -20,7 +23,6 @@ const signUp = (props) => {
   const [email, setemail] = useState("");
   const [name, setname] = useState("");
   const [pan, setpan] = useState("");
-  const [lastname, setlastname] = useState("");
   const [otp, setotp] = useState("");
   const [isPartner, setisPartner] = useState(false);
   const [type, settype] = useState("sign up");
@@ -41,14 +43,9 @@ const signUp = (props) => {
   const validNext = () => {
     switch (counter) {
       case 0:
-        return name.length > 2 ? false : true;
-      case 1:
-        return lastname.length > 2 ? false : true;
-      case 2:
-        return email.length > 10 ? false : true;
-      
-      case 3:
-        return phone.length == 10 && isChecked == true ? false : true;
+        return name.length > 2 && phone.length == 10 && email.length > 10
+          ? false
+          : true;
       default:
         return false;
     }
@@ -64,14 +61,16 @@ const signUp = (props) => {
       })
       .finally(() => setisLoader(false));
   };
-  const signUpUser = () => {
+  const signUpUser = (resend = null) => {
     setisLoader(true);
     sendSignUpOtp(name, lastname, email, pan, phone)
       .then((res) => {
         const { otpId, customerId, message } = res;
         setOtpId(otpId);
         // localStorage.setItem("customerId", customerId);
-        setcounter(counter + 1);
+        if (resend) {
+          setcounter(counter + 1);
+        }
       })
       .catch((err) => {
         alert(err.message);
@@ -102,54 +101,53 @@ const signUp = (props) => {
                     id="sf-1"
                     style={{ display: counter == 0 ? "block" : "none" }}
                   >
-                    <CustomName
-                      setName={(val) => setname(val)}
-                      name={name}
-                      type={type}
-                    ></CustomName>
-                  </div>
-                  <div
-                    className="sf-forms opacity-in"
-                    id="sf-1"
-                    style={{ display: counter == 1 ? "block" : "none" }}
-                  >
-                    <CustomLastName
-                      setName={(val) => setlastname(val)}
-                      name={lastname}
-                      type={type}
-                    ></CustomLastName>
-                  </div>
-                  <div
-                    className="sf-forms opacity-in"
-                    id="sf-1"
-                    style={{ display: counter == 2 ? "block" : "none" }}
-                  >
-                    <CustomEmail
-                      setEmail={(val) => setemail(val)}
-                      email={email}
-                      type={type}
-                    ></CustomEmail>
-                  </div>
-              
-                  <div
-                    className="sf-forms opacity-in"
-                    id="sf-1"
-                    style={{ display: counter == 3 ? "block" : "none" }}
-                  >
-                    <PhoneNumberCustom
-                      setNumber={(val) => setphone(val)}
-                      phone={phone}
-                      type={type}
-                      isChecked={isChecked}
-                      setChecked={() => setisChecked(!isChecked)}
-                    ></PhoneNumberCustom>
-                  </div>
-                  <div
-                    className="sf-forms mobile-otp opacity-in"
-                    id="sf-2"
-                    style={{ display: counter == 4 ? "block" : "none" }}
-                  >
-                    <Otp setotp={(val) => setotp(val)} otp={otp}></Otp>
+                    <div className="lets-find-content">
+                      {counter == 0 ? (
+                        <>
+                          <SubHeader type={type}></SubHeader>
+                          <CustomImage></CustomImage>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      <CustomName
+                        setName={(val) => setname(val)}
+                        name={name}
+                        type={type}
+                      ></CustomName>
+                      <CustomEmail
+                        setEmail={(val) => setemail(val)}
+                        email={email}
+                        type={type}
+                      ></CustomEmail>
+
+                      <PhoneNumberCustom
+                        setNumber={(val) => setphone(val)}
+                        phone={phone}
+                        type={type}
+                        isChecked={isChecked}
+                        setChecked={() => setisChecked(!isChecked)}
+                      ></PhoneNumberCustom>
+                    </div>
+                    <div
+                      className="sf-forms mobile-otp opacity-in"
+                      id="sf-2"
+                      style={{ display: counter == 1 ? "block" : "none" }}
+                    >
+                      <div className="lets-find-content">
+                        <h2>
+                          Verify your mobile
+                          <br />
+                          number
+                        </h2>
+                        <CustomImage></CustomImage>
+                        <Otp
+                          setotp={(val) => setotp(val)}
+                          otp={otp}
+                          resend={() => signUpUser("val")}
+                        ></Otp>
+                      </div>
+                    </div>
                   </div>
                 </form>
                 <div
@@ -159,10 +157,14 @@ const signUp = (props) => {
                 >
                   <Thanks></Thanks>
                 </div>
-                {counter<6?<CustomButtons
-                  nextValid={validNext()}
-                  counterStep={(i) => counterStep(i)}
-                ></CustomButtons>:<></>}
+                {counter < 6 ? (
+                  <CustomButtons
+                    nextValid={validNext()}
+                    counterStep={(i) => counterStep(i)}
+                  ></CustomButtons>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>
