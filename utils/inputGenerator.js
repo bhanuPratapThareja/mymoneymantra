@@ -380,16 +380,19 @@ export const generateInputs = (component, handleChange, checkInputValidity,
                   onChange={(e) => handleInputChange(e, type)}
                 />
                 <label htmlFor={box.input_id}>
-                <p>
-                  {box.checkbox_label.map(label => {
-                    return (
-                      <React.Fragment key={label.id}>
-                        {label.type === 'text' ?  <span style={{display: 'inline-block'}} htmlFor={box.input_id}>{label.label}</span> : null} 
-                        {label.type === 'anchor' ?  <a style={{display: 'inline-block'}} onClick={() => checkboxAnchorClick(label.on_click_anchor)}>{label.label}</a>:null}
-                      </React.Fragment>
-                    )
-                  })}
-                </p>
+                  <p>
+                    {box.checkbox_label.map(label => {
+                      return (
+                        <React.Fragment key={label.id}>
+                          {label.type === 'text' ? <span style={{ display: 'inline' }} htmlFor={box.input_id}>{label.label}</span> : null}
+                          {label.type === 'anchor' ? <a style={{ display: 'inline' }} onClick={(e) => {
+                            e.preventDefault()
+                            checkboxAnchorClick(label.on_click_anchor)
+                          }}>{label.label}</a> : null}
+                        </React.Fragment>
+                      )
+                    })}
+                  </p>
                 </label>
               </div>
             );
