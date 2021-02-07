@@ -433,15 +433,21 @@ export const updateSelectionFromDropdown = (inputs, input_id, item) => {
       }
     }
 
-    if (inp.end_point_name === update_field_with_end_point_name && inp.dependent) {
+    if (inp.end_point_name === update_field_with_end_point_name) {
       inputs.forEach((dependentInput) => {
         if (dependentInput.end_point_name == update_field_with_end_point_name) {
-          dependentInput.selectedItem = item;
-          dependentInput.value = item[dependentInput.select_name];
-          dependentInput.selectedId = item[dependentInput.select_id];
-          dependentInput.error = false;
-          dependentInput.verified = true;
+          dependentInput.verified = false
+          dependentInput.selectedItem = item
+          dependentInput.value = item[dependentInput.select_name]
+          dependentInput.selectedId = item[dependentInput.select_id]
+          dependentInput.error = false
           update_field_with_end_point_name = dependentInput.update_field_with_end_point_name
+          if(dependentInput.value) {
+            dependentInput.verified = true
+          }
+          if(!dependentInput.mandatory) {
+            dependentInput.verified = false
+          }
         }
       });
     }
@@ -517,10 +523,6 @@ export const submitShortForm = (slides, currentSlide, primaryPath, formType) => 
         slide.inputs.forEach((input) => {
           if (input.attachment && input.value && input.value.length) {
             submitDocument(input.end_point_name, input.value)
-            // for (let i = 0; i < input.value.length; i++) {
-            //   const file = input.value[i];
-            //   submitDocument(file, input.end_point_name, primaryPath, input.value.length);
-            // }
           }
         });
       }

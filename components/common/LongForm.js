@@ -14,6 +14,7 @@ import {
   updateDropdownList,
   updateSelectionFromDropdown,
   resetDropdowns,
+  submitDocument,
 } from "../../utils/formHandle"
 
 class LongForm extends React.Component {
@@ -375,7 +376,13 @@ class LongForm extends React.Component {
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
       long_form_blocks.forEach(async (long_form_block) => {
-        const inputs = long_form_block.blocks;
+        const inputs = long_form_block.blocks
+
+        inputs.forEach(input => {
+          if (input.attachment && input.value && input.value.length) {
+            submitDocument(input.end_point_name, input.value)
+          }
+        })
 
         for (let i = 0; i < inputs.length; i++) {
           const input = inputs[i];
@@ -409,10 +416,10 @@ class LongForm extends React.Component {
         }
       })
     })
+    
 
     const { utm_campaign: utmCampaign, utm_medium: utmMedium,
       utm_source: utmSource, utm_remark: utmRemark } = this.props.router.query
-
     data.utmCampaign = utmCampaign
     data.utmMedium = utmMedium
     data.utmSource = utmSource

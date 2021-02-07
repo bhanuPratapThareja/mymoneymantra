@@ -160,15 +160,11 @@ export const generateLead = async (data, primaryPath, formType) => {
             body.contact.keyContact[1].caseContactName = "";
         }
         
-        if (referenceFirstName && referenceLastName) {
+        if (referenceFirstName && referenceLastName && referenceType && referenceEmail && referenceMobile) {
             body.contact.keyContact[2].caseContactMasterId = referenceType;
             body.contact.keyContact[2].caseContactName = referenceFirstName + " " + referenceLastName;
             body.contact.keyContact[2].caseContactEmail = referenceEmail;
             body.contact.keyContact[2].caseContactMobileNo = referenceMobile;
-
-        } else {
-            body.contact.keyContact[2].caseContactMasterId = "";
-            body.contact.keyContact[2].caseContactName = "";
         }
 
 
