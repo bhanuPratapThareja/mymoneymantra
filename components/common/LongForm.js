@@ -292,11 +292,11 @@ class LongForm extends React.Component {
   handleVerifiedInputsArray = (input) => {
     const verifiedInputsArray = this.state.verifiedInputs
     if (input.verified) {
-      verifiedInputsArray.push(input.input_id);
+      verifiedInputsArray.push(input.input_id)
     } else {
       if (verifiedInputsArray.includes(input.input_id)) {
         const index = verifiedInputsArray.indexOf(input.input_id);
-        verifiedInputsArray.splice(index, 1);
+        verifiedInputsArray.splice(index, 1)
       }
     }
     const uniqueVerifiedInputsArray = uniq(verifiedInputsArray);
@@ -326,7 +326,7 @@ class LongForm extends React.Component {
     })
 
     this.updateState(newLongFormSections).then(() => {
-      if (!errors) {
+      // if (!errors) {
         if (this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
           let mobileNo = "";
           const newLongFormSections = [...this.state.longFormSections];
@@ -348,9 +348,9 @@ class LongForm extends React.Component {
         } else {
           this.retrieveDataAndSubmit()
         }
-      } else {
-        this.setState({ submissionError: 'Please correct the fields marked in red' })
-      }
+      // } else {
+      //   this.setState({ submissionError: 'Please correct the fields marked in red' })
+      // }
     })
   }
 
