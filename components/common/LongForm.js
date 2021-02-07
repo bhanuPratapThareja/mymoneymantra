@@ -147,7 +147,7 @@ class LongForm extends React.Component {
             inp.list = prefferedList
             inp.error = false
             setTimeout(() => {
-              this.handleInputDropdownChange(listType, prefferedList, inp.input_id, field.focusDropdown)
+              this.handleInputDropdownChange(listType, prefferedList, inp.input_id)
             }, 500)
 
           } else if (!field.focusDropdown && listType && listType !== 'null') {
@@ -186,7 +186,7 @@ class LongForm extends React.Component {
   };
 
   handleInputDropdownChange = (listType, list, input_id, field) => {
-    const newLongFormSections = [...this.state.longFormSections];
+    const newLongFormSections = [...this.state.longFormSections]
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
       long_form_blocks.forEach(async (long_form_block) => {

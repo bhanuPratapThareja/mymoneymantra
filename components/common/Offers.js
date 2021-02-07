@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import { getProductDecision } from '../../services/offersService'
@@ -8,10 +8,8 @@ const Offers = props => {
    const { section_heading } = props.data
 
    useEffect(() => {
-      if(window !== undefined && window.initSlickCards) {
-        setTimeout(() => {
+      if(window !== undefined && window.initSlickCards && props.offers.length) {
          window.initSlickCards()
-        }, 1000); 
       }
    }, [])
 
