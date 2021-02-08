@@ -1,5 +1,6 @@
 import Modal from "../../components/Modal/Modal"
 import Otp from "../Otp/Otp"
+import Image from '../../components/ImageComponent/ImageComponent'
 import { withRouter } from "next/router"
 import { uniq, debounce } from "lodash"
 import { generateInputs } from "../../utils/inputGenerator"
@@ -40,8 +41,8 @@ class LongForm extends React.Component {
       return null
     }
     const productData = this.props.productData
-    const { bank_id: bankId, bank_name: bankName } = productData.bank
-    const leadBank = { bankId, bankName }
+    const { bank_id: bankId, bank_name: bankName, bank_image: bankImage } = productData.bank
+    const leadBank = { bankId, bankName, bankImage }
     return leadBank
   }
 
@@ -473,11 +474,15 @@ class LongForm extends React.Component {
     if (!this.state.longFormSections) {
       return null;
     }
-    const { bank, product } = this.props
-
-
+   
     return (
       <div className="form-wrapper" id="longForm">
+
+         
+       {this.state.leadBank && this.state.leadBank.bankImage ? <div className="long-form-img-top-right">
+        <Image className="" image={this.state.leadBank.bankImage} />
+        </div>: null}
+
         <form onClick={this.handleClickOnSlideBackground} id='long-form_id' noValidate autoComplete="off">
           {this.state.longFormSections.map((longFormSection) => {
             const long_form_blocks =
