@@ -2119,6 +2119,7 @@ section.popular-card-container {
   -ms-flex-align: center;
   align-items: center;
   margin-top: 24px;
+  cursor: pointer;
 }
 
 
