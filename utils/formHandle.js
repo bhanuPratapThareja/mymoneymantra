@@ -179,10 +179,10 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
                 }
               }
             }
-          });
+          })
         }
       }
-    });
+    })
   } else {
     inputs.forEach((inp) => {
       if (inp.input_id === field.name) {

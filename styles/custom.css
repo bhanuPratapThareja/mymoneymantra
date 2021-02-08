@@ -2205,3 +2205,9 @@ section.popular-card-container {
 .blog_header-custom {
   text-align: center;
 }
+
+.blog_details-custom a {
+  display: inline;
+  color: green;
+  text-decoration: underline;
+}

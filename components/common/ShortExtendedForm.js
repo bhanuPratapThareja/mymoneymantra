@@ -90,7 +90,9 @@ class ShortExtendedForm extends React.Component {
         })
 
         let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading, slideClass }]
-        this.setState({ ...this.state, slides: [...upDatedSlides], enableCheckboxes: [...this.state.enableCheckboxes, ...enableCheckboxes] })
+        this.setState({ ...this.state, slides: [...upDatedSlides], enableCheckboxes: [...this.state.enableCheckboxes, ...enableCheckboxes] }, () => {
+            this.setState({ backUpSlides: JSON.parse(JSON.stringify(this.state.slides)) })
+        })
     }
 
     componentDidMount() {
@@ -110,9 +112,9 @@ class ShortExtendedForm extends React.Component {
             }, 500)
         })
 
-        // setTimeout(()  => {
-        //     console.log(this.state.slides)
-        // }, 1000)
+        setTimeout(()  => {
+            console.log(this.state.slides)
+        }, 1000)
     }
 
     onShowTncModal = on_click_anchor => {

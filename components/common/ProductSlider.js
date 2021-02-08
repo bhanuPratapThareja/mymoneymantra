@@ -9,7 +9,7 @@ const ProductSlider = props => {
     }
 
     return (
-        <section data-aos="fade-up" className="banks-holder aos-init">
+        <section data-aos="fade-up" className="banks-holder aos-init aos-animate">
             <div className="blue-patch"></div>
             <div className="container banks">
                 <div dangerouslySetInnerHTML={{ __html: product_type_slider_heading }}></div>

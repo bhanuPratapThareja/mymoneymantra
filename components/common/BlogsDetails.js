@@ -33,7 +33,7 @@ const BlogsDetails = props => {
                                 </span>)
                             ) : null}
                         </span>
-                        <div dangerouslySetInnerHTML={{ __html: content }}></div>
+                        <div className="blog_details-custom" dangerouslySetInnerHTML={{ __html: content }}></div>
                     </div>
                     <CommentSection blogId={blogId} commentData={commentData} />
                 </div>
