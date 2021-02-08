@@ -370,6 +370,7 @@ class LongForm extends React.Component {
   }
 
   retrieveDataAndSubmit = () => {
+    let documentsArray = []
     this.setState({ submitButtonDisabled: true, submissionError: '' })
     let data = {};
     const newLongFormSections = [...this.state.longFormSections]
@@ -380,7 +381,7 @@ class LongForm extends React.Component {
 
         inputs.forEach(input => {
           if (input.attachment && input.value && input.value.length) {
-            submitDocument(input.end_point_name, input.value)
+            documentsArray.push(input)
           }
         })
 
@@ -436,7 +437,10 @@ class LongForm extends React.Component {
         const leadId = res.data.leadId
         let actionName = this.state.primaryPath === 'rkpl' ? 'RKPL-CC' : 'Short Form Submit'
         sendNotification(leadId, actionName)
-        
+
+        documentsArray.forEach(input => {
+          submitDocument(input.end_point_name, input.value)
+        })
         
         let primaryPath = this.state.primaryPath
         if (primaryPath === 'rkpl') {
