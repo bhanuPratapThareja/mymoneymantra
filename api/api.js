@@ -233,24 +233,7 @@ const api = {
             },
           ],
           keyContact: [
-            {
-              caseContactMasterId: "6",
-              caseContactName: "",
-              caseContactEmail: "",
-              caseContactMobileNo: "",
-            },
-            {
-              caseContactMasterId: "5",
-              caseContactName: "",
-              caseContactEmail: "",
-              caseContactMobileNo: "",
-            },
-            {
-              caseContactMasterId: "",
-              caseContactName: "",
-              caseContactEmail: "",
-              caseContactMobileNo: "",
-            },
+            
           ],
         },
         work: {
@@ -260,7 +243,7 @@ const api = {
           companyId: "",
           typeOfCompaY: "",
           netMonthlyIncome: "",
-          grossMonthlyIncome: "",
+          grossMonthlyIncome: "100000",
           modeOfSalary: "",
           yearsCurrentJob: "",
           totalWorkExp: "",
@@ -279,8 +262,6 @@ const api = {
         productId: "",
         cardAge: "",
         cardType: "",
-        // exisEmi: "",
-        // exisLoanAmount: "",
         loanStartYear: "",
         totalExisTenor: "",
         offerId: "",

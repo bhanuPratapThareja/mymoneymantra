@@ -114,7 +114,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         body = JSON.parse(JSON.stringify(body))
 
         const { fullName, dob, pan, mobile, email, applicantType, title, officeEmail,
-            companyId, netMonthlyIncome, leadBank, salaryBank, existingFacilityBank, totalWorkExp, cardType, surrogateType, designationId, qualificationId,
+            companyId, netMonthlyIncome, annualIncome, leadBank, salaryBank, existingFacilityBank, totalWorkExp, cardType, surrogateType, designationId, qualificationId,
             exisTenorBalMonths, exisLoanAmount, exisEmi, exisRemark,
             requestedLoanamount, requestedTenor, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
@@ -144,36 +144,44 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.contact.email[0].email = email
         body.contact.email[1].email = officeEmail
 
+        body.contact.keyContact = []
         if (fathersFirstName && fathersLastName) {
-            body.contact.keyContact[0].caseContactMasterId = "5";
-            body.contact.keyContact[0].caseContactName = fathersFirstName + " " + fathersLastName;
-        } else {
-            body.contact.keyContact[0].caseContactMasterId = "";
-            body.contact.keyContact[0].caseContactName = "";
+            let fatherKeyContact = {
+                caseContactMasterId : "5",
+                caseContactName : fathersFirstName + " " + fathersLastName,
+                caseContactEmail : referenceEmail,
+                caseContactMobileNo : referenceMobile
+            }
+            body.contact.keyContact.push(fatherKeyContact)
         }
 
         if (mothersFirstName && mothersLastName) {
-            body.contact.keyContact[1].caseContactMasterId = "16";
-            body.contact.keyContact[1].caseContactName = mothersFirstName + " " + mothersLastName;
-        } else {
-            body.contact.keyContact[1].caseContactMasterId = "";
-            body.contact.keyContact[1].caseContactName = "";
+            let motherKeyContact = {
+                caseContactMasterId : "16",
+                caseContactName : mothersFirstName + " " + mothersLastName,
+                caseContactEmail : referenceEmail,
+                caseContactMobileNo : referenceMobile
+            }
+            body.contact.keyContact.push(motherKeyContact)
         }
         
         if (referenceFirstName && referenceLastName && referenceType && referenceEmail && referenceMobile) {
-            body.contact.keyContact[2].caseContactMasterId = referenceType;
-            body.contact.keyContact[2].caseContactName = referenceFirstName + " " + referenceLastName;
-            body.contact.keyContact[2].caseContactEmail = referenceEmail;
-            body.contact.keyContact[2].caseContactMobileNo = referenceMobile;
-        }
-
+            let referenceKeyContact = {
+                caseContactMasterId : referenceType,
+                caseContactName : referenceFirstName + " " + referenceLastName,
+                caseContactEmail : referenceEmail,
+                caseContactMobileNo : referenceMobile
+            }
+            body.contact.keyContact.push(referenceKeyContact)
+        } 
 
         body.work.applicantType = applicantType
         body.work.companyId = companyId ? companyId.caseCompanyId : ''
         body.work.netMonthlyIncome = netMonthlyIncome
+        body.work.annualIncome = annualIncome
 
         body.work.designation = designationId ? designationId.designationId : ""
-        body.work.qualification = qualificationId ? qualificationId.qualificationName : ""
+        body.work.qualification = qualificationId ? qualificationId.educationId : ""
 
         // banks
         body.formBankId = leadBank && leadBank.bankId ? leadBank.bankId : ''
@@ -261,14 +269,17 @@ export const generateLead = async (data, primaryPath, formType) => {
         let headers = { }
 
         if (formType === 'sf') {
-            headers = { 'sync': 'HEADER' }
+            headers = { 'sync': 'false' }
         } else if (formType === 'lf') {
             if (primaryPath !== 'rkpl') {
-                headers = { 'sync': 'HEADER' }
+                headers = { 'sync': 'true' }
             } else {
                 headers = { 'sync': 'HEADER' }
             }
         }
+
+        console.log(body)
+        // return
 
         axios.post(url, body, { headers })
             .then(res => {
