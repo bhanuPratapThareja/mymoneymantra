@@ -1093,9 +1093,41 @@ button.close-btn:before {content: "";display: block;background: #666;width: 2px;
   position: absolute;
   top: 50%;
   left: 50%;
-  text-align: center;
+  text-align: left;
   transform: translate(-50%);
   font-weight: 900;
+}
+
+.page-not-found_center_msg p {
+  font-weight: normal;
+}
+
+.page-not-found_center_msg.pnf-error:after {
+  background: url("../public/assets/images/error-page/pnf-error.png") no-repeat left center / 220px;
+  content: "";
+  position: absolute;
+  left: -120px;
+  top: -20px;
+  width: 240px;
+  height: 110px;
+  opacity: 0.2;
+}
+
+.page-not-found_center_msg.cmng-soon {
+  text-align: center;
+  min-width: 250px;
+}
+
+.page-not-found_center_msg.cmng-soon:after {
+  background: url("../public/assets/images/error-page/cmng-soon.png") no-repeat center / 250px;
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  opacity: 0.09;
+  bottom: -100px;
+  width: 250px;
+  height: 250px;
 }
 
 .selected-filter {
@@ -1897,6 +1929,18 @@ section.popular-card-container {
     overflow: auto;
     max-height: 300px;
     margin: 20px -10px 0 0;
+  }
+
+  .page-not-found_center_msg {
+    text-align: center;
+  } 
+  .page-not-found_center_msg.pnf-error:after {
+    background-size: 170px;
+    left: 0;
+    top: -110px;
+    width: 170px;
+    right: 0;
+    margin: 0 auto;
   }
   
 }
