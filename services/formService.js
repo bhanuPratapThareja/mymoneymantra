@@ -114,7 +114,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         body = JSON.parse(JSON.stringify(body))
 
         const { fullName, dob, pan, mobile, email, applicantType, title, officeEmail,
-            companyId, netMonthlyIncome, leadBank, salaryBank, existingFacilityBank, totalWorkExp, cardType, surrogateType, designationId, qualificationId,
+            companyId, netMonthlyIncome, annualIncome, leadBank, salaryBank, existingFacilityBank, totalWorkExp, cardType, surrogateType, designationId, qualificationId,
             exisTenorBalMonths, exisLoanAmount, exisEmi, exisRemark,
             requestedLoanamount, requestedTenor, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, salaryBankName, otherCompany,
@@ -178,9 +178,10 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.work.applicantType = applicantType
         body.work.companyId = companyId ? companyId.caseCompanyId : ''
         body.work.netMonthlyIncome = netMonthlyIncome
+        body.work.annualIncome = annualIncome
 
         body.work.designation = designationId ? designationId.designationId : ""
-        body.work.qualification = qualificationId ? qualificationId.qualificationName : ""
+        body.work.qualification = qualificationId ? qualificationId.educationId : ""
 
         // banks
         body.formBankId = leadBank && leadBank.bankId ? leadBank.bankId : ''
@@ -276,6 +277,9 @@ export const generateLead = async (data, primaryPath, formType) => {
                 headers = { 'sync': 'HEADER' }
             }
         }
+
+        console.log(body)
+        // return
 
         axios.post(url, body, { headers })
             .then(res => {
