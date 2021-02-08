@@ -9,7 +9,7 @@ const Image = ({ className, image, onImageClick }) => {
 
     return <img
         className={className}
-        src={`${image.url}`}
+        src={`${strapi.baseUrl}${image.url}`}
         alt={image.name}
         onClick={onImageClick}
     />

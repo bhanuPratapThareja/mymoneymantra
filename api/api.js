@@ -233,24 +233,7 @@ const api = {
             },
           ],
           keyContact: [
-            {
-              caseContactMasterId: "6",
-              caseContactName: "",
-              caseContactEmail: "",
-              caseContactMobileNo: "",
-            },
-            {
-              caseContactMasterId: "5",
-              caseContactName: "",
-              caseContactEmail: "",
-              caseContactMobileNo: "",
-            },
-            {
-              caseContactMasterId: "",
-              caseContactName: "",
-              caseContactEmail: "",
-              caseContactMobileNo: "",
-            },
+            
           ],
         },
         work: {

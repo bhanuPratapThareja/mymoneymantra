@@ -343,9 +343,8 @@ class LongForm extends React.Component {
               });
             });
           });
-          this.setState({ mobileNo })
+          this.setState({ openOtpModal: true, mobileNo, submissionError: '' })
           getOtp(mobileNo)
-          this.setState({ openOtpModal: true })
         } else {
           this.retrieveDataAndSubmit()
         }
@@ -479,9 +478,9 @@ class LongForm extends React.Component {
       <div className="form-wrapper" id="longForm">
 
          
-       {this.state.leadBank && this.state.leadBank.bankImage ? <div className="long-form-img-top-right">
+       {/* {this.state.leadBank && this.state.leadBank.bankImage ? <div className="long-form-img-top-right">
         <Image className="" image={this.state.leadBank.bankImage} />
-        </div>: null}
+        </div>: null} */}
 
         <form onClick={this.handleClickOnSlideBackground} id='long-form_id' noValidate autoComplete="off">
           {this.state.longFormSections.map((longFormSection) => {
