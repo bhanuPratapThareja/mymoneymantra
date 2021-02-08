@@ -14,7 +14,8 @@ const CreditCardsBanner = props => {
                     {product_banner_button_text ?
                         <button onClick={props.goToShortForm}>{product_banner_button_text}</button>
                         : null}
-                    <Image className="banner-card" image={product_banner_image} />
+                    {/* <Image className="banner-card" image={product_banner_image} /> */}
+                    <img className="banner-card" src="/assets/images/credit-card-flow/Credit_Card_1_f9f70fd273_dcd2872201.png" alt="cc_image" />
                 </div>
             </section>
         </div>
