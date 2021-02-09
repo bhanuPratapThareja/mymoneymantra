@@ -52,13 +52,13 @@ class LongForm extends React.Component {
     const { long_form_version_2, always_ask_for_otp } = this.props.data
     const longFormSections = long_form_version_2.long_form[0].long_form_sections;
     const formData = JSON.parse(localStorage.getItem("formData"));
-    let sfData = null;
-    let noOfMandatoryInputs = 0;
-    let leadId = getLeadId();
-    let enableCheckboxes = [];
+    let sfData = null
+    let noOfMandatoryInputs = 0
+    let leadId = getLeadId()
+    let enableCheckboxes = []
 
     if (formData && formData[primaryPath]) {
-      sfData = formData[primaryPath];
+      sfData = formData[primaryPath]
     }
 
     longFormSections.forEach((longFormSection) => {
@@ -114,7 +114,7 @@ class LongForm extends React.Component {
           }
         });
       });
-    });
+    })
 
     this.setState({
       longFormSections,
@@ -125,6 +125,7 @@ class LongForm extends React.Component {
       salaryBank: null,
       existingFacilityBank: null,
       leadId,
+      cardTypeCC: this.props.productData && this.props.productData.product ? this.props.productData.product.cardType : null,
       submitButtonDisabled: enableCheckboxes.length !== 0,
       askForOtp: always_ask_for_otp,
       formType: 'lf'
@@ -327,7 +328,7 @@ class LongForm extends React.Component {
     })
 
     this.updateState(newLongFormSections).then(() => {
-      // if (!errors) {
+      if (!errors) {
         if (this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
           let mobileNo = "";
           const newLongFormSections = [...this.state.longFormSections];
@@ -348,9 +349,9 @@ class LongForm extends React.Component {
         } else {
           this.retrieveDataAndSubmit()
         }
-      // } else {
-      //   this.setState({ submissionError: 'Please correct the fields marked in red' })
-      // }
+      } else {
+        this.setState({ submissionError: 'Please correct the fields marked in red' })
+      }
     })
   }
 
@@ -429,6 +430,7 @@ class LongForm extends React.Component {
     data.leadBank = this.state.leadBank
     data.salaryBank = this.state.salaryBank
     data.existingFacilityBank = this.state.existingFacilityBank
+    data.cardTypeCC = this.state.cardTypeCC
 
     let { primaryPath, leadBank } = this.state
 
