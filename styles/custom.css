@@ -1253,22 +1253,13 @@ section.popular-card-container {
   width: 100%;
 }
 
-.blog-container .blog .blog-wrapper-card > div > img {
-  display: none;
-}
-
-.blog-wrap-top p> h3, .blog-wrap-top p> ul {
-  max-width: 688px;
-  margin: 40px auto 0;
-  padding: 0 24px;
-}
 /*-- Fateh Feb work --*/
 
-.long-form .long-form-wrapper .form-wrapper.cstm-margin form .long-forms-wrapper .shortforms-container .form__group.verified-input {
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.verified-input {
   margin-bottom: 0;
 }
 
-.long-form .long-form-wrapper .form-wrapper.cstm-margin form .long-forms-wrapper .shortforms-container.long-address .form__group.verified-input {
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container.long-address .form__group.verified-input {
   margin-bottom: 16px;
 }
 
@@ -1370,7 +1361,6 @@ section.popular-card-container {
   position: relative;
 }
 
-
 .share_buttons {
   display: flex;
   flex-direction: column;
@@ -1443,6 +1433,26 @@ span.author_bio_detail_page {
   font-size: 1rem;
   font-family: "Avenir-Roman";
   line-height: 1.75rem;
+}
+
+
+.blog-container .blog .blog-wrapper-card > div > img {
+  display: none;
+}
+
+.blog-wrap-top p> h3, .blog-wrap-top p> ul {
+  max-width: 688px;
+  margin: 40px auto 0;
+  padding: 0 24px;
+}
+
+.lets-find-form form .checkbox label {
+  z-index: 10;
+}
+
+.credit-card-flow .lets-find .agree .checkbox-container label a {
+  font-size: 12px;
+  line-height: 20px;
 }
 
 @media(max-width: 1199px) {
