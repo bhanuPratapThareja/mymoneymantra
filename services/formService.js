@@ -114,7 +114,8 @@ export const generateLead = async (data, primaryPath, formType) => {
         body = JSON.parse(JSON.stringify(body))
 
         const { fullName, dob, pan, mobile, email, applicantType, officeEmail,
-            companyId, netMonthlyIncome, annualIncome, leadBank, salaryBank, existingFacilityBank, totalWorkExp, cardType, surrogateType, designationId, qualificationId,
+            companyId, netMonthlyIncome, annualIncome, leadBank, salaryBank, existingFacilityBank, totalWorkExp, 
+            cardType, cardTypeCC, surrogateType, designationId, qualificationId,
             exisTenorBalMonths, exisLoanAmount, exisEmi, exisRemark,
             requestedLoanamount, requestedTenor, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, otherCompany, noOfDependents,
@@ -141,11 +142,10 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.bankId = salaryBank && salaryBank.bankId ? salaryBank.bankId : ''
         body.leadId = getLeadId()
         body.productId = productTypeId.toString()
-        body.cardType = cardType ? cardType.cardTypeId ? cardType.cardTypeId : '' : ''
         body.surrogateType = surrogateType ? surrogateType.surrogateTypeId ? surrogateType.surrogateTypeId : '' : ''
         body.requestedLoanamount = requestedLoanamount
         body.requestedTenor = requestedTenor
-
+        
         body.personal.fullName = fullName
         body.personal.dob = getFormattedDate(dob)
         body.personal.pan = pan
@@ -153,7 +153,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.personal.maritalStatus = maritalStatus
         body.personal.nationality = nationality
         body.personal.dependents = noOfDependents && noOfDependents.noOfDependentsId ? noOfDependents.noOfDependentsId : ''
-
+        
         body.work.preferedComm = preferedComm;
         body.work.director = director;
         body.work.jointAccHolder = jointAccHolder;
@@ -164,7 +164,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.work.annualIncome = annualIncome
         body.work.designation = designationId ? designationId.designationId : ''
         body.work.qualification = qualificationId ? qualificationId.educationId : ''
-
+        
         body.contact.mobile[0].mobile = mobile
         
         body.contact.email = []
@@ -187,7 +187,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         if(body.contact.email.length) {
             body.contact.email[0].isDefault = 'Y'
         }
-
+        
         body.contact.keyContact = []
         if (fathersFirstName && fathersLastName) {
             let fatherKeyContact = {
@@ -198,7 +198,7 @@ export const generateLead = async (data, primaryPath, formType) => {
             }
             body.contact.keyContact.push(fatherKeyContact)
         }
-
+        
         if (mothersFirstName && mothersLastName) {
             let motherKeyContact = {
                 caseContactMasterId: "16",
@@ -208,7 +208,7 @@ export const generateLead = async (data, primaryPath, formType) => {
             }
             body.contact.keyContact.push(motherKeyContact)
         }
-
+        
         if (referenceFirstName && referenceLastName && referenceType && referenceEmail && referenceMobile) {
             let referenceKeyContact = {
                 caseContactMasterId: referenceType,
@@ -218,7 +218,7 @@ export const generateLead = async (data, primaryPath, formType) => {
             }
             body.contact.keyContact.push(referenceKeyContact)
         }
-
+        
         body.existingFacility = []
         // for facility requested
         if(exisTenorBalMonths || exisLoanAmount || exisEmi || exisRemark || (existingFacilityBank && existingFacilityBank.bankId)) {
@@ -232,7 +232,7 @@ export const generateLead = async (data, primaryPath, formType) => {
             }
             body.existingFacility.push(existingFacilityDetails)
         }
-
+        
         body.address = []
         // for residence address
         if (addressline1 || addressline2 || addressline3 || nearByLandmark || (pincode && pincode.pincode) || (city && city.cityId) || state && state.stateId || stdCode) {
@@ -253,7 +253,7 @@ export const generateLead = async (data, primaryPath, formType) => {
             }
             body.address.push(residenceAddress)
         }
-
+        
         // for office address
         if (officeAddressline1 || officeAddressline2 || officeNearBy || (officePincode && officePincode.pincode) || (officeCity && officeCity.cityId) || (officeState && officeState.stateId) || officeStdCode) {
             let officeAddress = {
@@ -269,7 +269,7 @@ export const generateLead = async (data, primaryPath, formType) => {
             }
             body.address.push(officeAddress)
         }
-
+        
         // for permanent address
         if (permanentAddressline1 || permanentAddressline2 || (permanentPincode && permanentPincode.pincode) || (permanentCity && permanentCity.cityId) || permanentStdCode) {
             let permanentAddress = {
@@ -284,9 +284,9 @@ export const generateLead = async (data, primaryPath, formType) => {
             }
             body.address.push(permanentAddress)
         }
-
+        
         // for property address
-        if (purposeOfLoan || propertyValue || propertyPincode || propertyCityRadio || propertyCity || propertyState || stdCode || purposeOfLoan) {
+        if (purposeOfLoan || propertyValue || propertyPincode || propertyCityRadio || propertyCity || propertyState || propertyStdCode || purposeOfLoan) {
             let propertyAddress = {
                 addressTypeMasterId: '1000000004',
                 pincode: propertyPincode && propertyPincode.pincode ? propertyPincode.pincode : '',
@@ -298,31 +298,37 @@ export const generateLead = async (data, primaryPath, formType) => {
             }
             body.address.push(propertyAddress)
         }
-
+        
+        if(primaryPath == 'rkpl') {
+            body.cardType = cardType && cardType.cardTypeId ? cardType.cardTypeId : ''
+        } else {
+            body.cardType = cardTypeCC ? cardTypeCC : ''
+        }
+        
         let utmCampaignChoice = ''
         if (primaryPath == 'rkpl') {
             utmCampaignChoice = utmCampaign ? utmCampaign.includes('offcc') ? utmCampaign : 'offcc-rkpl' : ''
         } else {
             utmCampaignChoice = utmCampaign ? utmCampaign : ''
         }
-
+        
         body.utmCampaign = utmCampaignChoice
         body.utmMedium = utmMedium ? utmMedium : ''
         body.utmSource = utmSource ? utmSource : ''
         body.utmRemark = utmRemark ? utmRemark : ''
-
+        
         let headers = {}
-
+        
         if (formType === 'sf') {
-            headers = { 'sync': 'false' }
+            headers = { 'sync': 'HEADER' }
         } else if (formType === 'lf') {
             if (primaryPath !== 'rkpl') {
-                headers = { 'sync': 'true' }
+                headers = { 'sync': 'HEADER' }
             } else {
                 headers = { 'sync': 'HEADER' }
             }
         }
-
+        
         console.log(body)
         // return
 
