@@ -1,14 +1,10 @@
-import LoadingOverlay from 'react-loading-overlay';
-const Loader = (props)=>{
-return(
-    <LoadingOverlay
-    active={props.isActive}
-    spinner
-    text={props.msg}
-    >
-    {/* <p>Some content or children or something.</p> */}
-  </LoadingOverlay>
-)
+import LoadingOverlay from 'react-loading-overlay'
+const Loader = (props) => {
+  return (
+    <LoadingOverlay active={props.isActive} spinner text={props.msg}>
+      <p>Loading....</p>
+    </LoadingOverlay>
+  )
 }
 
-export default Loader;
+export default Loader
