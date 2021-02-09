@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { setBlogId } from '../../utils/localAccess'
 import Image from '../ImageComponent/ImageComponent'
 
 const BlogList = (props) => {
@@ -6,7 +7,8 @@ const BlogList = (props) => {
     const router = useRouter()
 
     const onOpenBlog = blog => {
-        router.push({ pathname: '/blog/details', query: { slug: blog.id } })
+        setBlogId(blog.id)
+        router.push({ pathname: '/blog/details', query: { slug: blog.slug } })
     }
     return (
         <section className="blogs-filter container">
