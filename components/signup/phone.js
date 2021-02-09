@@ -27,7 +27,7 @@ const PhoneNumberCustom=(props)=>{
                   Phone number
                 </label>
               </div>
-              <SocialLogin></SocialLogin>
+              <SocialLogin social={props.social}></SocialLogin>
             </div>
             <div className="login-terms">
               <div className="checkbox-container">

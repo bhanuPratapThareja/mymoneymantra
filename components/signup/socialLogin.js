@@ -6,6 +6,7 @@ class SocialLogin extends React.Component {
     console.log(success);
     const {profileObj:{email,name,googleId}}={...success}
     console.log(email,name,googleId);
+    this.props.social({email,name,id:googleId,type:'google'})
   };
   handleSocialLoginFailure = (err) => {
     console.log(err);

@@ -1,39 +1,76 @@
-import { useState } from 'react'
 
+import { useState,useEffect } from 'react'
+import {getPersonalInfo, savePersonalInfo} from '../../utils/userProfileService';
 const PersonalInfo = () => {
   const [editing, setEditing] = useState(false)
-  const [firstName, setFirstName] = useState('Venkitaraman')
-  const [lastName, setLastName] = useState('Hariharan')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [dob, setDob] = useState('')
-  const [gender, setGender] = useState('Male')
-  const [maritalStatus, setMaritalStatus] = useState('Single')
-  const [panNumber, setPanNumber] = useState('XXXX728KYZ1')
+  const [gender, setGender] = useState('')
+  const [maritalStatus, setMaritalStatus] = useState('')
+  const [panNumber, setPanNumber] = useState('')
+useEffect(() => {
+  getPersonalInfo().then(res=>{
+    console.log(res);
+    const {firstName,gender,martialStatus,panNo,lastName,dob}=res;
+    if(firstName.split(' ').length>1){
+      setFirstName(firstName.split(' ')[0]);
+      setLastName(firstName.split(' ')[1]);
+    }
+    else{
+      setFirstName(firstName);
+      setLastName(lastName);
+    }
+    setGender(gender);
+    setMaritalStatus(martialStatus);
+    setPanNumber(panNo);
+    setDob(dob?dob:'');
+
+  }).catch(err=>{
+    console.log(err);
+    alert(err.message)
+  })
+}, [])
+
 
   const submitHandler = (e) => {
-    e.preventDefault()
+    // e.preventDefault();
+    savePersonalInfo(firstName,lastName,gender,maritalStatus,panNumber).then(res=>{
+      console.log(res);
+    }).catch(err=>{
+      console.log(err);
+    })
+  }
+ const checkMartialStatus=()=>{
+            if( maritalStatus==0) {return "Single";}
+            else if(maritalStatus==1) {return "Married";}
+            else if(maritalStatus==2){ return "Separated";}
+            else if(martialStatus==3){return "Divorced";}
+            else if(martialStatus==4) {return "Widowed";}
+            else return "";
   }
 
   return (
     <div className="personal-wrapper">
       {editing ? (
-        <form className="personal-forms-wrapper" style={{ display: 'block' }} onSubmit={submitHandler}>
+        <form className="personal-forms-wrapper" style={{ display: 'block' }} onSubmit={(e)=>{e.preventDefault()}}>
           <h5>Full Name</h5>
           <div className="shortforms-container personal-style">
             <div className="form__group field">
               <input value={firstName} className="form__field" type="text" id="mother-f-name" placeholder="First Name" required="" onChange={(e) => setFirstName(e.target.value)} />
-              <label className="form__label" for="mother-f-name">
-                First Name
+              <label className="form__label" htmlFor="mother-f-name">
+                Full Name
               </label>
             </div>
             <div className="form__group field">
               <input value={lastName} className="form__field" type="text" id="mother-l-name" placeholder="Last Name" required="" onChange={(e) => setLastName(e.target.value)} />
-              <label className="form__label" for="mother-l-name">
+              <label className="form__label" htmlFor="mother-l-name">
                 Last Name
               </label>
             </div>
           </div>
           <h5>Date of Birth</h5>
-          <div className="shortforms-container personal-style">
+          {/* <div className="shortforms-container personal-style">
             <div className="form__group field">
               <div role="wrapper" className="gj-datepicker gj-datepicker-md gj-unselectable">
                 <input
@@ -53,92 +90,97 @@ const PersonalInfo = () => {
                   event
                 </i>
               </div>
-              <label className="form__label" for="dob">
+              <label className="form__label" htmlFor="dob">
                 Date of Birth
               </label>
             </div>
-          </div>
+          </div> */}
           <h5>Gender</h5>
           <div className="shortforms-container gender-style">
-            <input value="Female" className="lets-checkbox" type="radio" id="female" name="gender" required="" onChange={(e) => setGender(e.target.value)} checked={gender === 'Female'} />
-            <input value="Male" className="lets-checkbox" type="radio" id="male" name="gender" required="" onChange={(e) => setGender(e.target.value)} checked={gender === 'Male'} />
-            <input value="Other" className="lets-checkbox" type="radio" id="other" name="gender" required="" onChange={(e) => setGender(e.target.value)} checked={gender === 'Other'} />
+            <input value="0" className="lets-checkbox" type="radio" id="female" name="gender" required="" onChange={(e) => setGender(e.target.value)} defaultChecked={gender==0?true:false}/>
+            <input value="1" className="lets-checkbox" type="radio" id="male" name="gender" required="" onChange={(e) => setGender(e.target.value)}  defaultChecked={gender==1?true:false}/>
+            <input value="2" className="lets-checkbox" type="radio" id="other" name="gender" required="" onChange={(e) => setGender(e.target.value)} defaultChecked={gender==2?true:false}/>
 
-            <label for="female">Female</label>
-            <label for="male">Male</label>
-            <label for="other">Other</label>
+            <label htmlFor="female">Female</label>
+            <label htmlFor="male">Male</label>
+            <label htmlFor="other">Other</label>
           </div>
           <h5>Marital Status</h5>
           <div className="shortforms-container marital-style">
             <input
-              value="Single"
+              value="0"
               className="lets-checkbox"
               type="radio"
               id="single"
               name="Marital"
               required=""
+              defaultChecked={maritalStatus==0?true:false}
               onChange={(e) => setMaritalStatus(e.target.value)}
-              checked={maritalStatus === 'Single'}
+              
             />
             <input
-              value="Married"
+              value="1"
               className="lets-checkbox"
               type="radio"
               id="married"
               name="Marital"
               required=""
+              defaultChecked={maritalStatus==1?true:false}
               onChange={(e) => setMaritalStatus(e.target.value)}
-              checked={maritalStatus === 'Married'}
+              
             />
             <input
-              value="Separated"
+              value="2"
               className="lets-checkbox"
               type="radio"
               id="separated"
               name="Marital"
               required=""
+              defaultChecked={maritalStatus==2?true:false}
               onChange={(e) => setMaritalStatus(e.target.value)}
-              checked={maritalStatus === 'Separated'}
+              
             />
             <input
-              value="Divorced"
+              value="3"
               className="lets-checkbox"
               type="radio"
               id="divorced"
               name="Marital"
               required=""
+              defaultChecked={maritalStatus==3?true:false}
               onChange={(e) => setMaritalStatus(e.target.value)}
-              checked={maritalStatus === 'Divorced'}
+              
             />
             <input
-              value="Widowed"
+              value="4"
               className="lets-checkbox"
               type="radio"
               id="widowed"
               name="Marital"
               required=""
+              defaultChecked={maritalStatus==4?true:false}
               onChange={(e) => setMaritalStatus(e.target.value)}
-              checked={maritalStatus === 'Widowed'}
+              
             />
 
-            <label for="single">Single</label>
-            <label for="married">Married</label>
-            <label for="separated">Separated</label>
-            <label for="divorced">Divorced</label>
-            <label for="widowed">Widowed</label>
+            <label htmlFor="single">Single</label>
+            <label htmlFor="married">Married</label>
+            <label htmlFor="separated">Separated</label>
+            <label htmlFor="divorced">Divorced</label>
+            <label htmlFor="widowed">Widowed</label>
           </div>
           <h5>PAN Number</h5>
           <div className="shortforms-container">
             <div className="form__group field">
-              <input value={panNumber} className="form__field" type="text" id="l-pan" placeholder="PAN Number" required="" onChange={(e) => setPanNumber(e.target.value)} />
-              <label className="form__label" for="l-pan">
+              <input value={panNumber} className="form__field" type="text" id="l-pan" placeholder="PAN Number" required="" onChange={(e) => setPanNumber(e.target.value?e.target.value.toUpperCase():e.target.value)} />
+              <label className="form__label" htmlFor="l-pan">
                 PAN Number
               </label>
             </div>
           </div>
 
           <div className="save-options">
-            <button type="submit" className="save-personal" id="save-personal" onClick={() => setEditing(false)}>
+            <button type="submit" className="save-personal" id="save-personal" onClick={() => {submitHandler();setEditing(false)}}>
               Save
             </button>
             <button type="button" className="cancel" id="cancel" onClick={() => setEditing(false)}>
@@ -150,32 +192,32 @@ const PersonalInfo = () => {
         <div className="before-edit">
           <div className="shortforms-container">
             <div className="form__group field">
-              <input readonly className="form__field" type="text" value={`${firstName} ${lastName}`} id="full-name" placeholder="Full Name" required="" />
-              <label className="form__label" for="full-name">
+              <input readOnly ={true} className="form__field" type="text" value={`${firstName} ${lastName}`} id="full-name" placeholder="Full Name" required="" />
+              <label className="form__label" htmlFor="full-name">
                 Full Name
               </label>
             </div>
-            <div className="form__group field">
-              <input readonly className="form__field" type="text" value={'01 / 11 / 2020'} id="dob" placeholder="Date of Birth" required="" />
-              <label className="form__label" for="dob">
+            {/* <div className="form__group field">
+              <input readOnly ={true} className="form__field" type="text" value={dob} id="dob" placeholder="Date of Birth" required="" />
+              <label className="form__label" htmlFor="dob">
                 Date of Birth
               </label>
-            </div>
+            </div> */}
             <div className="form__group field">
-              <input readonly className="form__field" type="text" value={gender} id="gender" placeholder="Gender" required="" />
-              <label className="form__label" for="gender">
+              <input readOnly ={true} className="form__field" type="text" value={gender==0?'Female':gender==1?'Male':'Other'} id="gender" placeholder="Gender" required="" />
+              <label className="form__label" htmlFor="gender">
                 Gender
               </label>
             </div>
             <div className="form__group field">
-              <input readonly className="form__field" type="text" value={maritalStatus} id="marital-Status" placeholder="Marital Status" required="" />
-              <label className="form__label" for="marital-Status">
+              <input readOnly ={true} className="form__field" type="text" value={checkMartialStatus} id="marital-Status" placeholder="Marital Status" required="" />
+              <label className="form__label" htmlFor="marital-Status">
                 Marital Status
               </label>
             </div>
             <div className="form__group field">
-              <input readonly className="form__field" type="text" value={panNumber} id="pan-num" placeholder="PAN Number" required="" />
-              <label className="form__label" for="pan-num">
+              <input readOnly ={true} className="form__field" type="text" value={panNumber} id="pan-num" placeholder="PAN Number" required="" />
+              <label className="form__label" htmlFor="pan-num">
                 PAN Number
               </label>
             </div>

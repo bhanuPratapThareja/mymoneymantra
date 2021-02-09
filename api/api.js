@@ -147,7 +147,6 @@ const api = {
           payload: { name: "" },
         },
       },
-
     },
 
     leadProductDecision: {
@@ -284,19 +283,20 @@ const api = {
         loanStartYear: "",
         totalExisTenor: "",
         offerId: "",
-        utmCampaign: '',
-        utmMedium: '',
-        utmSource: '',
-        utmRemark: '',
+        utmCampaign: "",
+        utmMedium: "",
+        utmSource: "",
+        utmRemark: "",
         existingFacility: [
           {
-            "exisTenorBalMonths": "",
-            "exisfacility": "",
-            "exisBankId": "",
-            "exisLoanAmount": "",
-            "exisEmi": "",
-            "exisRemark": ""
-          }],
+            exisTenorBalMonths: "",
+            exisfacility: "",
+            exisBankId: "",
+            exisLoanAmount: "",
+            exisEmi: "",
+            exisRemark: "",
+          },
+        ],
         address: [
           {
             addressTypeMasterId: "1000000001",
@@ -391,8 +391,7 @@ const api = {
             otherProjectName: "",
             propertyValue: "",
           },
-
-        ]
+        ],
       },
     },
     customerOfferView: {
@@ -449,9 +448,8 @@ const api = {
         // },
         blogId: "3",
         customerId: "3",
-        sentiment: "like"
+        sentiment: "like",
       },
-
     },
     getBlogs: {
       devUrl: "customer/api/blog/v1/blog?blogId=",
@@ -460,12 +458,9 @@ const api = {
       body: {
         request: {
           header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: {
-
-          },
+          payload: {},
         },
       },
-
     },
     commentLikeDislike: {
       devUrl: "customer/api/blog/v1/comment-sentiment",
@@ -475,13 +470,11 @@ const api = {
         // request: {
         //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
         // },
-        "blogId": "3",
-        "customerId": "12345",
-        "commentId": "1",
-        "sentiment": "like"
-
+        blogId: "3",
+        customerId: "12345",
+        commentId: "1",
+        sentiment: "like",
       },
-
     },
     addComment: {
       devUrl: "customer/api/blog/v1/comment",
@@ -493,22 +486,19 @@ const api = {
         // },
         blogId: "3",
         customerId: "12345",
-        comment: "1"
+        comment: "1",
       },
-
-
-
     },
-    login:{
+    login: {
       devUrl: "customer/api/profile/v1/login",
       uatUrl: "customer/api/profile/v1/login",
       prodUrl: "customer/api/profile/v1/login",
-      body:{
-        mobileNo: null
-      }
+      body: {
+        mobileNo: null,
+      },
     },
 
-    signUp:{
+    signUp: {
       devUrl: "customer/api/profile/v1/sign-up",
       uatUrl: "customer/api/profile/v1/sign-up",
       prodUrl: "customer/api/profile/v1/sign-up",
@@ -518,26 +508,64 @@ const api = {
         gender: null,
         martialStatus: null,
         panNo: "",
-        mobileNo:null,
-        emailId:""
-       
+        mobileNo: null,
+        emailId: "",
+        token: "",
+        tokenType: "",
       },
-
-      
-      			
     },
-    loginOtpVerify:{
-      devUrl:'customer/api/profile/v1/otp-verify',
-      uatUrl:'customer/api/profile/v1/otp-verify',
-      prodUrl:'customer/api/profile/v1/otp-verify',
+    socialLogin: {
+      devUrl: "customer/api/profile/v1/social-login",
+      uatUrl: "customer/api/profile/v1/social-login",
+      prodUrl: "customer/api/profile/v1/social-login",
+      body: {
+        emailId: "",
+        token: "",
+        tokenType: "",
+      },
+    },
+    loginOtpVerify: {
+      devUrl: "customer/api/profile/v1/otp-verify",
+      uatUrl: "customer/api/profile/v1/otp-verify",
+      prodUrl: "customer/api/profile/v1/otp-verify",
+      body: {
+        mobileNo: "",
+        otp: "",
+        otpId: "",
+      },
+    },
+    
+    getPersonalInfo:{
+      devUrl:"customer/api/profile/v1/personal-info",
+      uatUrl:"customer/api/profile/v1/personal-info",
+      prodUrl:"customer/api/profile/v1/personal-info",
+      body:{}
+    },
+    contactProfile:{
+      devUrl:"customer/api/profile/v1/contact-Info",
+      uatUrl:"customer/api/profile/v1/contact-Info",
+      prodUrl:"customer/api/profile/v1/contact-Info",
       body:{
-        mobileNo:"",
-          otp:"",
-          otpId:""
+        customerId: null,
+        mobileNo: null,
+        emailId: "",
+        address:null
       }
     },
+    savePersonalInfo:{
+      devUrl:"customer/api/profile/v1/personal-info",
+      uatUrl:"customer/api/profile/v1/personal-info",
+      prodUrl:"customer/api/profile/v1/personal-info",
+      body:{
+        customerId: null,
+        firstName: null,
+        lastName: null,
+        gender: null,
+        martialStatus: null,
+        panNo: null
+      }
+    }
   },
-
 };
 
 const getUrl = (route) => {

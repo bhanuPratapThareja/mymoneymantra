@@ -1,4 +1,12 @@
+
+import { useRouter } from 'next/router'
+
 const Thanks=(props)=>{
+    const router = useRouter();
+    const handleClick = (e,link) => {
+        e.preventDefault()
+        router.push(link)
+      }
     return (
         <div className="combined-wrapper">
     <section className="banner container">
@@ -11,7 +19,7 @@ const Thanks=(props)=>{
         <div className="bottom">
             <h6>Go to your dashboard to start your journey and ease up your application process</h6>
             <div className="track-button">
-                <button ><a href="/">Let’s Go</a></button>
+                <button onClick={(e)=>handleClick(e,'/user-profile')}> Let’s Go</button>
             </div>
         </div>
     </div>

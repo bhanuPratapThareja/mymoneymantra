@@ -19,7 +19,7 @@ const userProfile = (props) => {
               <div className="profile-image">
                 <img src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/people1.png" />
               </div>
-              <h1>Venkitaraman Hariharan</h1>
+              <h1>{"Customer Name"}</h1>
               <div className="profile-progress">
                 <div className="inner">
                   <div className="percent-bar">

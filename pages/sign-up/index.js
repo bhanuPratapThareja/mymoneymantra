@@ -29,17 +29,25 @@ const signUp = (props) => {
   const [isChecked, setisChecked] = useState(false);
   const [otpId, setOtpId] = useState("");
   const [isLoader, setisLoader] = useState(false);
+  const [socialType, setsocialType] = useState('');
+  const [token, settoken] = useState('')
   const counterStep = (i) => {
-    if ((i == 1 && counter < 4) || (i == -1 && counter !== 0)) {
+    if ( (i == -1 && counter !== 0)) {
       setcounter(counter + i);
-    } else if (i == 1 && counter == 3) {
+    } else if (i == 1 && counter == 0) {
       console.log("here");
       signUpUser();
-    } else if (i == 1 && counter == 4) {
+    } else if (i == 1 && counter == 1) {
       verifyOTP();
     }
     console.log(counter);
   };
+  const social =({...val})=>{
+    setname(val.name);
+    setemail(val.email);
+    setsocialType(val.type);
+    settoken(val.id);
+  }
   const validNext = () => {
     switch (counter) {
       case 0:
@@ -63,12 +71,12 @@ const signUp = (props) => {
   };
   const signUpUser = (resend = null) => {
     setisLoader(true);
-    sendSignUpOtp(name, lastname, email, pan, phone)
+    sendSignUpOtp(name, email, phone,token,socialType)
       .then((res) => {
         const { otpId, customerId, message } = res;
         setOtpId(otpId);
-        // localStorage.setItem("customerId", customerId);
-        if (resend) {
+        localStorage.setItem("customerId", customerId);
+        if (!resend) {
           setcounter(counter + 1);
         }
       })
@@ -126,9 +134,11 @@ const signUp = (props) => {
                         phone={phone}
                         type={type}
                         isChecked={isChecked}
+                        social={({...val})=>social({...val})}
                         setChecked={() => setisChecked(!isChecked)}
                       ></PhoneNumberCustom>
                     </div>
+                   </div>
                     <div
                       className="sf-forms mobile-otp opacity-in"
                       id="sf-2"
@@ -148,12 +158,12 @@ const signUp = (props) => {
                         ></Otp>
                       </div>
                     </div>
-                  </div>
+                  
                 </form>
                 <div
                   className="sf-forms mobile-otp opacity-in"
                   id="sf-2"
-                  style={{ display: counter == 5 ? "block" : "none" }}
+                  style={{ display: counter == 2 ? "block" : "none" }}
                 >
                   <Thanks></Thanks>
                 </div>
