@@ -232,9 +232,7 @@ const api = {
               isDefault: "N",
             },
           ],
-          keyContact: [
-            
-          ],
+          keyContact: [],
         },
         work: {
           applicantType: "",
@@ -301,78 +299,7 @@ const api = {
             otherDeveloperName: "",
             otherProjectName: "",
             propertyValue: "",
-          },
-          {
-            addressTypeMasterId: "",
-            addressline1: "",
-            addressline2: "",
-            addressline3: "",
-            city: "",
-            state: "",
-            pincode: "",
-            occupancyStatus: "",
-            livingSince: "",
-            stdCode: "",
-            landline: "",
-            landmark: "",
-            livingSinceMM: "",
-            isMaillingAddress: "",
-            propertyName: "",
-            developerName: "",
-            projectrName: "",
-            remarks: "",
-            otherDeveloperName: "",
-            otherProjectName: "",
-            propertyValue: "",
-          },
-          {
-            addressTypeMasterId: "",
-            addressline1: "",
-            addressline2: "",
-            addressline3: "",
-            city: "",
-            state: "",
-            pincode: "",
-            occupancyStatus: "",
-            livingSince: "",
-            stdCode: "",
-            landline: "",
-            landmark: "",
-            livingSinceMM: "",
-            isMaillingAddress: "",
-            propertyName: "",
-            developerName: "",
-            projectrName: "",
-            remarks: "",
-            otherDeveloperName: "",
-            otherProjectName: "",
-            propertyValue: "",
-            purposeOfLoan: "",
-          },
-          {
-            addressTypeMasterId: "",
-            addressline1: "",
-            addressline2: "",
-            addressline3: "",
-            city: "",
-            state: "",
-            pincode: "",
-            occupancyStatus: "",
-            livingSince: "",
-            stdCode: "",
-            landline: "",
-            landmark: "",
-            livingSinceMM: "",
-            isMaillingAddress: "",
-            propertyName: "",
-            developerName: "",
-            projectrName: "",
-            remarks: "",
-            otherDeveloperName: "",
-            otherProjectName: "",
-            propertyValue: "",
-          },
-
+          }
         ]
       },
     },
@@ -476,12 +403,24 @@ const api = {
         customerId: "12345",
         comment: "1"
       },
+    },
+    shareBlog: {
+      devUrl: 'customer/api/blog/v1/shared',
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        // request: {
+        //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+        // },
 
+        "blogId": "123",
+        "customerId": "12345",
+        "shared": "yes"
 
+      },
 
     }
   },
-
 };
 
 const getUrl = (route) => {
