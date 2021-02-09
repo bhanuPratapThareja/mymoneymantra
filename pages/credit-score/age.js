@@ -37,13 +37,19 @@ const age = (props) => {
   const closed = cpAgeData?.creditAge?.filter(
     (item) => item.accountStatus !== 'ACTIVE'
   )
+  console.log({ cpAgeData })
   return (
     <div className={props.pageClasses}>
       <Layout>
         <Loader active={loading} text="loading" />
         <AgeOfCredit creditAge={cpAgeData?.totalAge} />
         <TipSection />
-        <AgeCreditAllAccounts active={active} closed={closed} />
+        <AgeCreditAllAccounts
+          active={active}
+          closed={closed}
+          name={cpAgeData?.applicantName}
+          banks={props.data}
+        />
         <OffersForYou />
       </Layout>
     </div>
@@ -52,6 +58,8 @@ const age = (props) => {
 export async function getServerSideProps(ctx) {
   const primaryPath = 'cp-age'
   const pageClasses = getClassesForPage(primaryPath)
-  return { props: { pageClasses } }
+  const responseObject = await fetch('http://203.122.46.189:1338/banks')
+  const data = await responseObject.json()
+  return { props: { pageClasses, data } }
 }
 export default age

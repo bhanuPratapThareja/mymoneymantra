@@ -46,9 +46,11 @@ const enquiries = (props) => {
     </div>
   )
 }
-export function getServerSideProps(ctx) {
+export async function getServerSideProps(ctx) {
   const primaryPath = 'cp-enquiries'
   const pageClasses = getClassesForPage(primaryPath)
-  return { props: { pageClasses } }
+  const responseObject = await fetch('http://203.122.46.189:1338/banks')
+  const data = await responseObject.json()
+  return { props: { pageClasses, data } }
 }
 export default enquiries

@@ -31,23 +31,30 @@ const rank = (props) => {
     }
     fetchData()
   }, [])
-  const onTime = cpRankData?.creditRank?.filter((item) => item.paymentStatus === 'On-time')
-  const delayed = cpRankData?.creditRank?.filter((item) => item.paymentStatus !== 'On-time')
+  const onTime = cpRankData?.creditRank?.filter(
+    (item) => item.paymentStatus === 'On-time'
+  )
+  const delayed = cpRankData?.creditRank?.filter(
+    (item) => item.paymentStatus !== 'On-time'
+  )
+  console.log({ cpRankData })
   return (
     <div className={props.pageClasses}>
       <Layout>
         <Loader active={loading} text="loading" />
         <PaymentRank rank={cpRankData?.rank} />
         <TipSection />
-        <PaymentRecord onTime={onTime} delayed={delayed} />
+        <PaymentRecord onTime={onTime} delayed={delayed} banks={props?.data} />
         <OffersForYou />
       </Layout>
     </div>
   )
 }
-export function getServerSideProps(ctx) {
+export async function getServerSideProps(ctx) {
   const primaryPath = 'cp-rank'
   const pageClasses = getClassesForPage(primaryPath)
-  return { props: { pageClasses } }
+  const responseObject = await fetch('http://203.122.46.189:1338/banks')
+  const data = await responseObject.json()
+  return { props: { pageClasses, data } }
 }
 export default rank

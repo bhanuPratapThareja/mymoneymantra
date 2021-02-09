@@ -31,32 +31,37 @@ const utilization = (props) => {
     }
     fetchData()
   }, [])
-  console.log({ props })
   const active = cpUtilizationData?.creditUtilization?.filter(
     (item) => item.accountStatus === 'ACTIVE'
   )
   const closed = cpUtilizationData?.creditUtilization?.filter(
     (item) => item.accountStatus !== 'ACTIVE'
   )
+  console.log({ cpUtilizationData })
   return (
     <div className={props.pageClasses}>
       <Layout>
         <Loader active={loading} text="loading" />
-        <YourCreditUtilization creditUtilization={cpUtilizationData?.totalCreditUtilization} />
+        <YourCreditUtilization
+          creditUtilization={cpUtilizationData?.totalCreditUtilization}
+        />
         <TipSection />
         <CreditUtilizationAllAccounts
           active={active}
           closed={closed}
           name={cpUtilizationData?.applicantName}
+          banks={props?.data}
         />
         <OffersForYou />
       </Layout>
     </div>
   )
 }
-export function getServerSideProps(ctx) {
+export async function getServerSideProps(ctx) {
   const primaryPath = 'cp-utilization'
   const pageClasses = getClassesForPage(primaryPath)
-  return { props: { pageClasses } }
+  const responseObject = await fetch('http://203.122.46.189:1338/banks')
+  const data = await responseObject.json()
+  return { props: { pageClasses, data } }
 }
 export default utilization

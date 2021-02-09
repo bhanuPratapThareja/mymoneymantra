@@ -54,15 +54,18 @@ const creditScoreProfile = (props) => {
           active={active}
           closed={closed}
           name={cpScoreData?.applicantName}
+          banks={props?.data}
         />
         <OffersForYou />
       </Layout>
     </div>
   )
 }
-export function getServerSideProps(ctx) {
+export async function getServerSideProps(ctx) {
   const primaryPath = 'credit-score-profile'
   const pageClasses = getClassesForPage(primaryPath)
-  return { props: { pageClasses } }
+  const responseObject = await fetch('http://203.122.46.189:1338/banks')
+  const data = await responseObject.json()
+  return { props: { pageClasses, data } }
 }
 export default creditScoreProfile
