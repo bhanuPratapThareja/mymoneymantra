@@ -4230,12 +4230,12 @@ label {
         width: 100%; }
         
         @media (max-width: 768px) {
-          .long-form .long-form-wrapper .card-info img {
+          /* .long-form .long-form-wrapper .card-info img {
             margin: 24px auto 0;
             max-width: 40%;
             width: 100%;
             display: block;
-          }
+          } */
         }
 
       .long-form .long-form-wrapper .card-info h4 {
