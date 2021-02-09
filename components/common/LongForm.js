@@ -22,7 +22,7 @@ class LongForm extends React.Component {
 
   state = {
     longFormSections: [],
-    submitButtonDisabled: true,
+    submitButtonDisabled: false,
     submissionError: '',
     errorMsgs: {
       mandatory: "Required Field",
@@ -459,7 +459,6 @@ class LongForm extends React.Component {
         const pathname = `/thank-you`
         const query = { primaryPath }
         this.props.router.push({ pathname, query }, pathname, { shallow: true })
-        this.setState({ submitButtonDisabled: false })
       })
       .catch((err) => {
         this.setState({ submitButtonDisabled: false, submissionError: 'Something went wrong. Please try again.' })
