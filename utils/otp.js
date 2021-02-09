@@ -15,17 +15,36 @@ export const sendLoginOtp= async (number)=>{
     }
 }
 
-export const sendSignUpOtp=async (name,lastname,email,pan,number)=>{
+export const socialLoginAPi= async (email,type,token)=>{
+    try{
+        const {url,body}=getApiData('socialLogin')
+
+        body.emailId=email;
+        body.tokenType=type;
+        body.token=token;
+        let response= await Axios.post(url,body);
+    console.log(response);
+    return response.data
+
+    }
+    catch(err){
+        console.log(err);
+        throw(err);
+    }
+}
+
+export const sendSignUpOtp=async (name,email,number,token,type)=>{
     try{
         const {url,body}=getApiData('signUp');
         
         body.firstName= name;
-        body.lastName= lastname;
-        body.gender=null;
-        body.martialStatus= null;
-        body.panNo=pan;
+        body.lastName= null;
+        body.token=token;
+        body.tokenType=type;
         body.mobileNo=parseInt(number);
         body.emailId=email;
+        body.panNo=null;
+        
           
           console.log(body);
           let response= await Axios.post(url,body);

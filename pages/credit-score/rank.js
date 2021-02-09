@@ -28,7 +28,7 @@ export async function getServerSideProps(ctx) {
     headers: {
       'Content-Type': 'application/json',
       Authorization:
-        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsZWFkZ2VuZXJhdGVhcGkiLCJleHAiOjE2MTI2MDQ5NTAsImlhdCI6MTYxMjUxODU1MH0.luwSZjFvk-IO3lo6MwdXzPgYrVG3TQvOG3x8uRHjoKvE0Z3oXE-FftfyxQ5E24AxoqSr7rpMOJoY3Pr9hsns5g',
+        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsZWFkZ2VuZXJhdGVhcGkiLCJleHAiOjE2MTI3ODU1NDMsImlhdCI6MTYxMjY5OTE0M30.vcmaApFEdaW67MbJOdGu97NjV2YjUdD72nO59Ojjbr9AtCLFIAVL0CJyByNXKjOGBQZtgpsMS5wBARNJPZaGJQ',
       correlationId: '25478965874',
       appId: 'MMMWEBAPP',
     },

@@ -8,7 +8,7 @@ import Otp from "../../components/signup/Otp";
 import Thanks from "../../components/signup/thanks";
 import { messgaes } from "../../utils/messages";
 import { useEffect, useState } from "react";
-import { sendLoginOtp, verifyOtp } from "../../utils/otp";
+import { sendLoginOtp, socialLoginAPi, verifyOtp } from "../../utils/otp";
 import Loader from "../../components/common/Loader";
 import SubHeader from "../../components/signup/subheader";
 import CustomImage from "../../components/signup/image";
@@ -21,6 +21,22 @@ const login = (props) => {
   const [type, settype] = useState("login");
   const [isChecked, setisChecked] = useState(false);
   const [isLoader, setisLoader] = useState(false);
+  const social = ({ ...val }) => {
+    // setname(val.name);
+    // setemail(val.email);
+    // setsocialType(val.type);
+    // settoken(val.id);
+    socialLoginAPi(val.email,val.type,val.id).then(res=>{
+      console.log(res);
+      if(res.message=="Login Successful"){
+        localStorage.setItem("customerId",res.customerId)
+      setcounter(counter + 2);}
+      else{
+      alert(res.message);}
+    }).catch(err=>{
+      console.log(err);
+    })
+  };
   const counterStep = (i) => {
     if (i == 1 && counter == 0) {
       setisLoader(true);
@@ -34,12 +50,16 @@ const login = (props) => {
         .catch((err) => {
           alert(err.message);
         })
-        .finally(() => {setisLoader(false)});
+        .finally(() => {
+          setisLoader(false);
+        });
     } else if (otp.length > 0 && counter == 1 && i == 1) {
       setisLoader(true);
-      console.log('in opt');
-      verifyOtp(phone, otp, otpId).then((res) => {
+      console.log("in opt");
+      verifyOtp(phone, otp, otpId)
+        .then((res) => {
           console.log(res);
+          localStorage.setItem("customerId",res.customerId)
           setcounter(counter + 1);
         })
         .catch((err) => {
@@ -67,37 +87,45 @@ const login = (props) => {
               <div className="lets-find-stepper-wrapper">
                 <form className="short-forms-wrapper">
                   <div
-                    className='sf-forms opacity-in'
+                    className="sf-forms opacity-in"
                     id="sf-1"
                     style={{ display: counter == 0 ? "block" : "none" }}
                   >
                     <div className="lets-find-content">
-                      {counter==0?<><SubHeader type={type}></SubHeader>
-                      <CustomImage></CustomImage></>:<></>}
-                    <PhoneNumberCustom
-                      setNumber={(val) => setphone(val)}
-                      phone={phone}
-                      type={type}
-                      isChecked={isChecked}
-                      setChecked={() => setisChecked(!isChecked)}
-                    ></PhoneNumberCustom>
-                  </div>
+                      {counter == 0 ? (
+                        <>
+                          <SubHeader type={type}></SubHeader>
+                          <CustomImage></CustomImage>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      <PhoneNumberCustom
+                        social={({ ...val }) => social({ ...val })}
+                        setNumber={(val) => setphone(val)}
+                        phone={phone}
+                        type={type}
+                        isChecked={isChecked}
+                        setChecked={() => setisChecked(!isChecked)}
+                      ></PhoneNumberCustom>
+                    </div>
                   </div>
                   <div
                     className="sf-forms mobile-otp opacity-in"
                     id="sf-2"
                     style={{ display: counter == 1 ? "block" : "none" }}
-                  > <div className="lets-find-content">
-                  <h2>
-                    Verify your mobile
-                    <br />
-                    number
-                  </h2>
-                  <CustomImage></CustomImage>
-                    <Otp setotp={(val) => setotp(val)} otp={otp}></Otp>
+                  >
+                    {" "}
+                    <div className="lets-find-content">
+                      <h2>
+                        Verify your mobile
+                        <br />
+                        number
+                      </h2>
+                      <CustomImage></CustomImage>
+                      <Otp setotp={(val) => setotp(val)} otp={otp}></Otp>
+                    </div>
                   </div>
-                  </div>
-                  
                 </form>
                 <div
                   className="sf-forms mobile-otp opacity-in"

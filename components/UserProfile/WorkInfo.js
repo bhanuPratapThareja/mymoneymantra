@@ -3,32 +3,32 @@ const WorkInfo = () => {
     <form className="work-wrapper">
       <div className="shortforms-container">
         <div className="form__group field read-part">
-          <input readonly="" className="form__field" type="text" value="Salaried" id="emp-type" placeholder="Employment Type" required="" />
-          <label className="form__label" for="emp-type">
+          <input readOnly ={true} className="form__field" type="text" value="Salaried" id="emp-type" placeholder="Employment Type" required="" />
+          <label className="form__label" htmlFor="emp-type">
             Employment Type
           </label>
         </div>
         <div className="form__group field read-part">
-          <input readonly="" className="form__field" type="text" value="Earnest &amp; Young Co." id="company-name" placeholder="Company Name" required="" />
-          <label className="form__label" for="company-name">
+          <input readOnly ={true} className="form__field" type="text" value="Earnest &amp; Young Co." id="company-name" placeholder="Company Name" required="" />
+          <label className="form__label" htmlFor="company-name">
             Company Name
           </label>
         </div>
         <div className="form__group field read-part">
-          <input readonly="" className="form__field" type="text" value="₹ 5,00,000" id="monthly-income" placeholder="Net Monthly Income" required="" />
-          <label className="form__label" for="monthly-income">
+          <input readOnly ={true} className="form__field" type="text" value="₹ 5,00,000" id="monthly-income" placeholder="Net Monthly Income" required="" />
+          <label className="form__label" htmlFor="monthly-income">
             Net Monthly Income
           </label>
         </div>
         <div className="form__group field read-part">
-          <input readonly="" className="form__field" type="text" value="HDFC Bank" id="bank-name" placeholder="Bank Name" required="" />
-          <label className="form__label" for="bank-name">
+          <input readOnly ={true} className="form__field" type="text" value="HDFC Bank" id="bank-name" placeholder="Bank Name" required="" />
+          <label className="form__label" htmlFor="bank-name">
             Bank Name
           </label>
         </div>
         <div className="form__group field read-part">
-          <input readonly="" className="form__field" type="text" value="HDFC Bank" id="account-num" placeholder="Account Number" required="" />
-          <label className="form__label" for="account-num">
+          <input readOnly ={true} className="form__field" type="text" value="HDFC Bank" id="account-num" placeholder="Account Number" required="" />
+          <label className="form__label" htmlFor="account-num">
             Account Number
           </label>
         </div>
