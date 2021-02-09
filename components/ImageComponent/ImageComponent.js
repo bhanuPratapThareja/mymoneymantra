@@ -7,9 +7,16 @@ const Image = ({ className, image, onImageClick }) => {
         return null
     }
 
+    let imgSrc = `${strapi.baseUrl}${image.url}`
+
+    if(imgSrc.includes('amazonaws')) {
+        imgSrc = `${image.url}`
+    }
+
+
     return <img
         className={className}
-        src={`${image.url}`}
+        src={imgSrc}
         alt={image.name}
         onClick={onImageClick}
     />

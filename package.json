@@ -23,6 +23,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-maskedinput": "^4.0.1",
+    "react-share": "^4.3.1",
     "react-svg": "^11.2.2",
     "reading-time": "^1.2.1",
     "sass": "^1.29.0",

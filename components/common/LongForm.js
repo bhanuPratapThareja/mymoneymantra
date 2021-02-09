@@ -22,7 +22,7 @@ class LongForm extends React.Component {
 
   state = {
     longFormSections: [],
-    submitButtonDisabled: true,
+    submitButtonDisabled: false,
     submissionError: '',
     errorMsgs: {
       mandatory: "Required Field",
@@ -327,7 +327,7 @@ class LongForm extends React.Component {
     })
 
     this.updateState(newLongFormSections).then(() => {
-      if (!errors) {
+      // if (!errors) {
         if (this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
           let mobileNo = "";
           const newLongFormSections = [...this.state.longFormSections];
@@ -340,18 +340,17 @@ class LongForm extends React.Component {
                 if (inp.end_point_name === "mobile") {
                   mobileNo = inp.value;
                 }
-              });
-            });
-          });
-          this.setState({ mobileNo })
+              })
+            })
+          })
+          this.setState({ openOtpModal: true, mobileNo, submissionError: '' })
           getOtp(mobileNo)
-          this.setState({ openOtpModal: true })
         } else {
           this.retrieveDataAndSubmit()
         }
-      } else {
-        this.setState({ submissionError: 'Please correct the fields marked in red' })
-      }
+      // } else {
+      //   this.setState({ submissionError: 'Please correct the fields marked in red' })
+      // }
     })
   }
 
@@ -360,7 +359,7 @@ class LongForm extends React.Component {
       await submitOtp(this.state.mobileNo);
       this.closeOtpModal()
       this.setState({ submitButtonDisabled: true });
-      this.retrieveDataAndSubmit();
+      this.retrieveDataAndSubmit()
     } catch (err) {
       this.setState({ submissionError: err.message })
     }
@@ -433,6 +432,8 @@ class LongForm extends React.Component {
 
     let { primaryPath, leadBank } = this.state
 
+    console.log(data)
+
     generateLead(data, primaryPath, 'lf')
       .then((res) => {
         const leadId = res.data.leadId
@@ -458,7 +459,6 @@ class LongForm extends React.Component {
         const pathname = `/thank-you`
         const query = { primaryPath }
         this.props.router.push({ pathname, query }, pathname, { shallow: true })
-        this.setState({ submitButtonDisabled: false })
       })
       .catch((err) => {
         this.setState({ submitButtonDisabled: false, submissionError: 'Something went wrong. Please try again.' })
@@ -479,9 +479,9 @@ class LongForm extends React.Component {
       <div className="form-wrapper" id="longForm">
 
          
-       {this.state.leadBank && this.state.leadBank.bankImage ? <div className="long-form-img-top-right">
+       {/* {this.state.leadBank && this.state.leadBank.bankImage ? <div className="long-form-img-top-right">
         <Image className="" image={this.state.leadBank.bankImage} />
-        </div>: null}
+        </div>: null} */}
 
         <form onClick={this.handleClickOnSlideBackground} id='long-form_id' noValidate autoComplete="off">
           {this.state.longFormSections.map((longFormSection) => {

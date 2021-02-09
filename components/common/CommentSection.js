@@ -3,22 +3,23 @@ import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { getApiData } from '../../api/api';
 import { getBlogComments } from '../../services/blogService'
+import BlogMediaLinks from './BlogMediaLinks';
 
 const CommentSection = (props) => {
-    console.log("blog id =", props.blogId)
-    const { blogId } = props
     const [comment, setComment] = useState('')
     const [blogSentiment, setBlogSentiment] = useState('')
     const [commentData, setCommentData] = useState([])
+    const [share, setShare] = useState(false)
+    const { blogId } = props
+    let defaultUserId = '101'
 
     useEffect(() => {
         const data = getBlogComments(props.blogId)
         data.then(res => {
-            // setCommentData(res)
             res.comments.forEach(c => {
-                getCommentSentiment("101", c.commentId, res)
+                getCommentSentiment(defaultUserId, c.commentId, res)
             })
-            getBlogSentiment('101', props.blogId)
+            getBlogSentiment(defaultUserId, props.blogId)
         }
         ).catch(err => console.log(err))
     }, [props.blogId])
@@ -40,11 +41,8 @@ const CommentSection = (props) => {
     }
     const getBlogSentiment = async (customerId, blogId) => {
         const { url } = getApiData('blogLikeDislike')
-        let data = JSON.parse(JSON.stringify(commentData))
         try {
             const response = await axios.get(`${url}?blogId=${blogId}&customerId=${customerId}`)
-            // console.log(response)
-            // data.sentiment = response.data.sentiment
             setBlogSentiment(response.data.sentiment)
         } catch (err) {
             console.log(err)
@@ -54,7 +52,7 @@ const CommentSection = (props) => {
     const blogLikeDislike = (currentSentiment, blogId, likeStatus) => {
         const { url, body } = getApiData('blogLikeDislike')
         body.blogId = blogId
-        body.customerId = '101'
+        body.customerId = defaultUserId
         if (likeStatus) {
             if (currentSentiment == "DISLIKE") {
                 return
@@ -76,9 +74,7 @@ const CommentSection = (props) => {
                 body.sentiment = ""
             }
         }
-        // body.sentiment = sentiment
 
-        console.log(currentSentiment, likeStatus, body)
         axios.post(url, body).then(
             res => {
                 getCommentData(blogId)
@@ -110,9 +106,8 @@ const CommentSection = (props) => {
             }
         }
         body.blogId = blogId
-        body.customerId = '101'
+        body.customerId = defaultUserId
         body.commentId = commentId
-        // console.log(likeStatus, currentSentiment, body)
         axios.post(url, body).then(
             res => {
                 getCommentData(blogId)
@@ -122,15 +117,11 @@ const CommentSection = (props) => {
         )
     }
 
-    const getClassOfSentimentButtons = (currentSentiment) => {
-
-    }
-
     const postComment = (e, comment, blogId) => {
         if (e.keyCode == 13) {
             const { url, body } = getApiData('addComment')
             body.blogId = blogId
-            body.customerId = '101'
+            body.customerId = defaultUserId
             body.comment = comment
             axios.post(url, body).then(
                 response => {
@@ -161,14 +152,33 @@ const CommentSection = (props) => {
         const data = getBlogComments(blogId)
         data.then(res => {
             res.comments.forEach(c => {
-                getCommentSentiment("101", c.commentId, res)
+                getCommentSentiment(defaultUserId, c.commentId, res)
             })
-            getBlogSentiment('101', props.blogId)
+            getBlogSentiment(defaultUserId, props.blogId)
         }).catch(err => console.log("post comment err", err))
+    }
+
+    const shareBlog = async (openPopUp) => {
+        if (openPopUp) {
+            setShare(true)
+            const { url, body } = getApiData('shareBlog')
+            body.blogId = props.blogId
+            body.customerId = defaultUserId
+            body.shared = 'yes'
+            try {
+                const response = await axios.post(url, body)
+                getCommentData(props.blogId)
+            } catch (err) {
+                console.log(err)
+            }
+        } else {
+            setShare(false)
+        }
     }
 
     return (
         <div className="comment-section">
+            {share ? <BlogMediaLinks blogData={props.blogData} blogShareButton={true} openBlogShare={shareBlog} url={props.url} /> : null}
             <div className="comment-section-wrapper">
                 <div className="options">
                     <div className="like-dislike-wrap">
@@ -181,7 +191,7 @@ const CommentSection = (props) => {
                             <h6 id="dislike-count">{commentData.dislikesCount ? commentData.dislikesCount : 0}</h6>
                         </button>
                     </div>
-                    <button className="share-blog">
+                    <button onClick={() => shareBlog(true)} className="share-blog">
                         <img src='/assets/images/icons/share.svg' />
                         <h6 id="share-count">{commentData.sharedCount ? commentData.sharedCount : 0}</h6>
                     </button>

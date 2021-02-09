@@ -1,6 +1,7 @@
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { setBlogId } from '../../utils/localAccess'
 import Image from '../ImageComponent/ImageComponent'
 import BlogFilterOptions from './BlogFilterOptions'
 
@@ -10,7 +11,8 @@ const BlogFilter = props => {
    const router = useRouter()
 
    const onOpenBlog = blog => {
-      router.push({ pathname: '/blog/details', query: { slug: blog.id } })
+      setBlogId(blog.id)
+      router.push({ pathname: '/blog/details', query: { slug: blog.slug } })
    }
    const onOpenFilter = () => {
       const el = document.getElementsByClassName('filter-option')[0]
