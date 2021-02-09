@@ -18,6 +18,7 @@ import LearnMore from '../../components/common/LearnMore'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { clearLeadId, setPrimaryPath, setProductType, clearFormData } from '../../utils/localAccess'
 import { extractPopularOffers, extractTrendingOffers } from '../../services/componentsService'
+import { customerOfferData } from '../../services/offersService'
 
 const PrimaryPage = props => {
   useEffect(() => {
@@ -26,7 +27,16 @@ const PrimaryPage = props => {
     setProductType(props.productTypeData)
     clearLeadId()
     clearFormData()
+    getOffers()
   }, [])
+
+  const getOffers = async () => {
+    try {
+      const offers = await customerOfferData()
+      console.log('offers: ', offers)
+    }
+    catch { }
+  }
 
   const goToShortForm = () => {
     const shortFormEl = document.getElementsByClassName('lets-find-container')

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { getApiData } from '../api/api'
-import { getLeadId, getPrimaryPath } from '../utils/localAccess'
+import { getLeadId } from '../utils/localAccess'
 
 const defaultDecision = 'EConnect'
 

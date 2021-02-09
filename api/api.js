@@ -149,7 +149,6 @@ const api = {
       },
 
     },
-
     leadProductDecision: {
       devUrl: "lead/api/lead/v1/product/decision",
       uatUrl: "api/master/v1/",
@@ -319,7 +318,7 @@ const api = {
       },
     },
     customerOffer: {
-      devUrl: "customer/api/customer/v1/profile/offers",
+      devUrl: "api/customer/v1/profile/offers",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
       body: {
@@ -332,7 +331,6 @@ const api = {
         },
       },
     },
-
     sendNotification: {
       devUrl: "notification/api/notification/v1/sms-email/send",
       uatUrl: "api/master/v1/",
