@@ -40,7 +40,7 @@ class LongFormBanner extends React.Component {
 
                 {this.props.primaryPath === 'credit-cards' ?
                     <ImageComponent image={product.product_image.image} /> : <ImageComponent image={bank.bank_image}
-                    />}
+                />}
 
                 <h4>Application form</h4>
                 <div className="form-range">

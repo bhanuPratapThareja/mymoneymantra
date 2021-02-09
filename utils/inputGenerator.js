@@ -346,6 +346,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
             type="text"
             value={value}
             autoComplete="off"
+            readOnly
             required={mandatory}
             onFocus={() => openDatePicker()}
             onBlur={() => onChangeDate(input_id, type)}

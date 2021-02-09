@@ -9,7 +9,7 @@ const ProductSlider = props => {
     }
 
     return (
-        <section data-aos="fade-up" className="banks-holder aos-init">
+        <section data-aos="fade-up" className="banks-holder aos-init aos-animate">
             <div className="blue-patch"></div>
             <div className="container banks">
                 <div dangerouslySetInnerHTML={{ __html: product_type_slider_heading }}></div>
@@ -17,7 +17,7 @@ const ProductSlider = props => {
                     {Blog_product_card.map(card => {
 
                         return (
-                            <Link href={`/blog/blog-search?category=${card.blog_products_cards_text}`}>
+                            <Link href={`/blog/category/${card.blog_products_cards_text}`}>
                                 <div className="slide_cell cstm-prd" key={card.id} onClick={blogsByCategory(card)} >
                                     <h3>{card.blog_products_cards_text}</h3>
                                 </div>

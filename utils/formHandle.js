@@ -75,11 +75,11 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
             }
           }
 
-          // if (inp.list_preference.extract_list === 'designations') {
-          //   if (selectedBank && selectedBank.bankId) {
-          //     prefferedList = prefferedList.filter(listItem => listItem.designationBankId === selectedBank.bankId)
-          //   }
-          // }
+          if (inp.list_preference.extract_list === 'designations') {
+            if (selectedBank && selectedBank.bankId) {
+              prefferedList = prefferedList.filter(listItem => listItem.designationBankId === selectedBank.bankId)
+            }
+          }
 
           inputDropdown = { listType, masterName, inp, prefferedList }
 
@@ -179,10 +179,10 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
                 }
               }
             }
-          });
+          })
         }
       }
-    });
+    })
   } else {
     inputs.forEach((inp) => {
       if (inp.input_id === field.name) {
