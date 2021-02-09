@@ -12,11 +12,17 @@ const TotalActiveAccounts = ({ active, closed, name }) => {
       <div className="product-wrapper">
         <div className="container head">
           <div className="switch-tab tab">
-            <button className={activeTab === 'accepted' ? 'tablinks active' : 'tablinks'} onClick={() => setActiveTab('accepted')}>
+            <button
+              className={activeTab === 'accepted' ? 'tablinks active' : 'tablinks'}
+              onClick={() => setActiveTab('accepted')}
+            >
               <span></span>
               <h2>Active</h2>
             </button>
-            <button className={activeTab === 'rejected' ? 'tablinks active' : 'tablinks'} onClick={() => setActiveTab('rejected')}>
+            <button
+              className={activeTab === 'rejected' ? 'tablinks active' : 'tablinks'}
+              onClick={() => setActiveTab('rejected')}
+            >
               <span></span>
               <h2>Closed</h2>
             </button>
@@ -24,8 +30,12 @@ const TotalActiveAccounts = ({ active, closed, name }) => {
           </div>
         </div>
         {activeTab === 'accepted' ? (
-          <div id="accepted" className="cards-wrapper container tabcontent" style={{ display: 'grid' }}>
-            {active.map((item, i) => (
+          <div
+            id="accepted"
+            className="cards-wrapper container tabcontent"
+            style={{ display: 'grid' }}
+          >
+            {active?.map((item, i) => (
               <div key={i} className="popular-cards-slider-card">
                 <div className="popular-cards-slider-card-top">
                   <div className="head">
@@ -69,8 +79,12 @@ const TotalActiveAccounts = ({ active, closed, name }) => {
             ))}
           </div>
         ) : (
-          <div id="rejected" style={{ display: 'grid' }} className="cards-wrapper container tabcontent">
-            {closed.map((item, i) => (
+          <div
+            id="rejected"
+            style={{ display: 'grid' }}
+            className="cards-wrapper container tabcontent"
+          >
+            {closed?.map((item, i) => (
               <div key={i} className="popular-cards-slider-card">
                 <div className="popular-cards-slider-card-top">
                   <div className="head">
