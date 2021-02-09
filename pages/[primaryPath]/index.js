@@ -27,7 +27,7 @@ const PrimaryPage = props => {
     setProductType(props.productTypeData)
     clearLeadId()
     clearFormData()
-    getOffers()
+ 
   }, [])
 
   const getOffers = async () => {
