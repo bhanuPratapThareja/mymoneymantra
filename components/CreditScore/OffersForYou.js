@@ -6,7 +6,7 @@ const OffersForYou = () => {
         <div className="popular-cards-slider slick-initialized slick-slider" id="trending-offers-sec">
           <div className="slick-list draggable">
             <div className="slick-track" style={{ opacity: 1, width: '20000px', transform: 'translate3d(0px, 0px, 0px)', transition: 'transform 1000ms cubic-bezier(0.7, 0, 0.3, 1) 0s' }}>
-              <div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabindex="-1">
+              <div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabIndex="-1">
                 <div>
                   <div className="popular-cards-slider-card" style={{ width: '100%', display: 'inline-block' }}>
                     <div className="popular-cards-slider-card-top">
@@ -70,7 +70,7 @@ const OffersForYou = () => {
                   </div>
                 </div>
               </div>
-              <div className="slick-slide" data-slick-index="2" aria-hidden="true" tabindex="-1">
+              <div className="slick-slide" data-slick-index="2" aria-hidden="true" tabIndex="-1">
                 <div>
                   <div className="popular-cards-slider-card" style={{ width: '100%', display: 'inline-block' }}>
                     <div className="popular-cards-slider-card-top">
@@ -102,7 +102,7 @@ const OffersForYou = () => {
                   </div>
                 </div>
               </div>
-              <div className="slick-slide" data-slick-index="3" aria-hidden="true" tabindex="-1">
+              <div className="slick-slide" data-slick-index="3" aria-hidden="true" tabIndex="-1">
                 <div>
                   <div className="popular-cards-slider-card" style={{ width: '100%', display: 'inline-block' }}>
                     <div className="popular-cards-slider-card-top">
