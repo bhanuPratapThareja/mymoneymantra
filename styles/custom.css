@@ -2211,3 +2211,17 @@ section.popular-card-container {
   color: green;
   text-decoration: underline;
 }
+
+.filter-cross {
+  cursor: pointer;
+}
+
+.noUi-handle.noUi-handle-lower,
+.noUi-handle.noUi-handle-upper {
+  cursor: grab;
+}
+
+.noUi-handle.noUi-handle-lower:active,
+.noUi-handle.noUi-handle-upper:active {
+  cursor: grabbing;
+}

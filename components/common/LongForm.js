@@ -327,7 +327,7 @@ class LongForm extends React.Component {
     })
 
     this.updateState(newLongFormSections).then(() => {
-      if (!errors) {
+      // if (!errors) {
         if (this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
           let mobileNo = "";
           const newLongFormSections = [...this.state.longFormSections];
@@ -340,17 +340,17 @@ class LongForm extends React.Component {
                 if (inp.end_point_name === "mobile") {
                   mobileNo = inp.value;
                 }
-              });
-            });
-          });
+              })
+            })
+          })
           this.setState({ openOtpModal: true, mobileNo, submissionError: '' })
           getOtp(mobileNo)
         } else {
           this.retrieveDataAndSubmit()
         }
-      } else {
-        this.setState({ submissionError: 'Please correct the fields marked in red' })
-      }
+      // } else {
+      //   this.setState({ submissionError: 'Please correct the fields marked in red' })
+      // }
     })
   }
 
@@ -359,7 +359,7 @@ class LongForm extends React.Component {
       await submitOtp(this.state.mobileNo);
       this.closeOtpModal()
       this.setState({ submitButtonDisabled: true });
-      this.retrieveDataAndSubmit();
+      this.retrieveDataAndSubmit()
     } catch (err) {
       this.setState({ submissionError: err.message })
     }
@@ -431,6 +431,8 @@ class LongForm extends React.Component {
     data.existingFacilityBank = this.state.existingFacilityBank
 
     let { primaryPath, leadBank } = this.state
+
+    console.log(data)
 
     generateLead(data, primaryPath, 'lf')
       .then((res) => {
