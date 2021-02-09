@@ -1,16 +1,60 @@
 import axios from 'axios'
 import { getApiData } from '../api/api'
+import Strapi from '../providers/strapi'
 import { getLeadId } from '../utils/localAccess'
+import { unpackComponents } from './componentsService'
 
 const defaultDecision = 'EConnect'
 
-export const viewOffer = async () => {
+export const viewOffers = async productTypeId => {
     const { url, body } = getApiData('customerOfferView')
+    body.customerId = ''
+    body.productId = productTypeId ? productTypeId : ''
     try {
         const res = await axios.post(url, body)
+        return res.data
     } catch (error) {
 
     }
+}
+
+export const extractOffers = async (apiOffers, productTypeId) => {
+    return new Promise(async (resolve) => {
+        const strapi = new Strapi()
+        const productIdArray = []
+        if (!apiOffers.length) {
+            resolve([])
+        }
+
+        console.log(apiOffers)
+        apiOffers.forEach(offer => {
+            productIdArray.push(offer.cardType)
+        })
+
+        let requiredProducts = ''
+        productIdArray.forEach(id => requiredProducts += `product_id=${id}&`)
+        requiredProducts = requiredProducts.slice(0, -1)
+        const offersPacked = await strapi.processReq('GET', `product-v-2-s?${requiredProducts}`)
+
+        let offers = []
+        let pendingOffers = [...offersPacked]
+        offersPacked.forEach(async offer => {
+            const unpackedOffer = await unpackComponents(offer)
+            offers.push(unpackedOffer)
+            pendingOffers.shift()
+            if (!pendingOffers.length) {
+                offers.forEach(offer => {
+                    apiOffers.forEach(apiOffer => {
+                        if(offer.product.product_id == apiOffer.cardType) {
+                            offer.productDecision = apiOffer.productDecision
+                        }
+                    })
+                })
+                console.log('final offers: ', offers)
+                resolve(offers)
+            }
+        })
+    })
 }
 
 export const customerOfferData = async () => {
@@ -32,7 +76,7 @@ export const getProductDecision = offers => {
         const { url, body } = getApiData('leadProductDecision')
         const leadId = getLeadId()
         pendingOffers.forEach(async offer => {
- 
+
             body.request.payload.productId = offer.productType.product_type_id.toString()
             // body.request.payload.productTypeId = offer.productType.product_type_id
             body.request.payload.bankId = offer.bank.bank_id

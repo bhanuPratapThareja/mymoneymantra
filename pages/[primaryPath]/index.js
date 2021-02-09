@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 
@@ -16,26 +16,34 @@ import ShortExtendedForm from '../../components/common/ShortExtendedForm'
 import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import { getClassesForPage } from '../../utils/classesForPage'
-import { clearLeadId, setPrimaryPath, setProductType, clearFormData } from '../../utils/localAccess'
+import { clearLeadId, setPrimaryPath, setProductType, clearFormData, getProductType } from '../../utils/localAccess'
 import { extractPopularOffers, extractTrendingOffers } from '../../services/componentsService'
-import { customerOfferData } from '../../services/offersService'
+import { viewOffers, extractOffers } from '../../services/offersService'
 
 const PrimaryPage = props => {
+
+  const [popularOffers, setPopularOffers] = useState([])
+  const [trendingOffers, setTrendingOffers] = useState([])
+
   useEffect(() => {
     window.scrollTo(0, 0)
     setPrimaryPath(props.primaryPath)
     setProductType(props.productTypeData)
     clearLeadId()
     clearFormData()
- 
+    getOffers()
   }, [])
 
   const getOffers = async () => {
-    try {
-      const offers = await customerOfferData()
-      console.log('offers: ', offers)
-    }
-    catch { }
+    const productType = getProductType()
+    const productTypeId = productType.productTypeId
+    const { populars, trendings } = await viewOffers(productTypeId)
+    const popularOffers = await extractOffers(populars, productTypeId)
+    const trendingOffers = await extractOffers(trendings, productTypeId)
+    console.log('popularOffers: ', popularOffers)
+    console.log('trendingOffers: ', trendingOffers)
+    setPopularOffers(popularOffers)
+    setTrendingOffers(trendingOffers)
   }
 
   const goToShortForm = () => {
@@ -71,7 +79,7 @@ const PrimaryPage = props => {
           return <Offers
             key={block.id}
             data={block}
-            offers={props.popularOffers || props.trendingOffers || []}
+            offers={popularOffers || trendingOffers || []}
             primaryPath={props.primaryPath}
             goToShortForm={goToShortForm}
           />

@@ -303,18 +303,12 @@ const api = {
       },
     },
     customerOfferView: {
-      devUrl: "customer/api/customer/v1/view/offers",
+      devUrl: "customer/api/customer/v1/view-offers",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
       body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: {
-            mobileNo: "9999000090",
-            customerId: "9999000090",
-            offerId: "9999000090",
-          },
-        },
+        customerId: "",
+        productId: ""
       },
     },
     customerOffer: {

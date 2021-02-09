@@ -14,19 +14,30 @@ import LearnMore from '../components/common/LearnMore'
 import { getClassesForPage } from '../utils/classesForPage'
 import { getLeadId, getLeadBank, getProductType } from '../utils/localAccess'
 import { extractTrendingOffers } from '../services/componentsService'
+import { viewOffers, extractOffers } from '../services/offersService'
 
 const ThankYouPage = props => {
 
     const [leadId, setLeadId] = useState('')
     const [bank, setBank] = useState('')
     const [productType, setProductType] = useState('')
+    const [trendingOffers, setTrendingOffers] = useState([])
 
     useEffect(() => {
         window.scrollTo(0, 0)
         setLeadId(getLeadId())
         setBank(getLeadBank())
         setProductType(getProductType())
+        getOffers()
     }, [])
+
+    const getOffers = async () => {
+        // const { trendings } = await viewOffers()
+        // console.log('trendings: ', trendings)
+        // const trendingOffers = await extractOffers(trendings, productTypeId)
+        // console.log('trendingOffers: ', trendingOffers)
+        // setTrendingOffers(trendingOffers)
+    }
 
     const getComponents = dynamic => {
         return dynamic.map(block => {

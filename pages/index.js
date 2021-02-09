@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 import HomePageBanner from '../components/Banners/HomePageBanner'
@@ -13,14 +13,25 @@ import AppDownload from '../components/common/AppDownload'
 import Rewards from '../components/common/Rewards'
 import FinancialTools from '../components/common/FinancialTools'
 import Blogger from '../components/common/Blogger'
-
 import { getClassesForPage } from '../utils/classesForPage'
+import { viewOffers, extractOffers } from '../services/offersService'
 
 const Home = props => {
 
+    const [trendingOffers, setTrendingOffers] = useState([])
+
     useEffect(() => {
         localStorage.clear()
+        getOffers()
     }, [])
+
+    const getOffers = async () => {
+        // const { trendings } = await viewOffers()
+        // console.log('trendings: ', trendings)
+        // const trendingOffers = await extractOffers(trendings, productTypeId)
+        // console.log('trendingOffers: ', trendingOffers)
+        // setTrendingOffers(trendingOffers)
+    }
 
     const getComponents = (dynamic) => {
         return dynamic.map(block => {
