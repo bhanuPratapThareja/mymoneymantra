@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import moment from 'moment'
 import BlogBanner from '../../components/Banners/BlogBanner';
 import BlogList from '../../components/common/BlogList';
 import Layout from '../../components/Layout';
@@ -11,10 +12,16 @@ const BlogSearchPage = (props) => {
         let sortedBlogsByKeyword = blogs.sort((a, b) => a.header.indexOf(searchKeyword) < b.header.indexOf(searchKeyword) ? 1 : -1)
         return sortedBlogsByKeyword
     }
+    const sortBlogsByDate = (blogs) => {
+        console.log(blogs)
+        let sortedBlogsByDate = blogs.sort((a, b) => moment(moment(a.publish_at).format('YYYY-MM-DD')).isBefore(moment(b.publish_at).format('YYYY-MM-DD')) ? -1 : 1)
+        console.log(sortedBlogsByDate)
+        return sortedBlogsByDate
+    }
     let searchKey = ''
     useEffect(() => {
-        if (props.query.s) {
-            searchKey = props.query.s
+        if (props.query.q) {
+            searchKey = props.query.q
             // let filteredBlogs = props.blogData.filter(blog => blog.header.toLowerCase().includes(searchKey.toLowerCase()))
             let filteredBlogs = []
             props.blogData.forEach(blog => {
@@ -28,7 +35,8 @@ const BlogSearchPage = (props) => {
                 }
             })
             let blogs = sortBlogs(searchKey, filteredBlogs)
-            setData(blogs)
+            let sortByDate = sortBlogsByDate(blogs)
+            setData(sortByDate)
         }
         if (props.query.subcategory) {
             setData(props.blogData)
@@ -48,7 +56,7 @@ const BlogSearchPage = (props) => {
             let filteredBlogs = []
             props.blogData.forEach(blog => {
                 if (props.query.author.toLowerCase().includes(blog.blog_author.toLowerCase())) {
-                    if (blog.header.toLowerCase().includes(props.query.s.toLowerCase())) {
+                    if (blog.header.toLowerCase().includes(props.query.q.toLowerCase())) {
                         filteredBlogs.push(blog)
                     }
                 }
