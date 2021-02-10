@@ -320,10 +320,10 @@ export const generateLead = async (data, primaryPath, formType) => {
         let headers = {}
         
         if (formType === 'sf') {
-            headers = { 'sync': 'HEADER' }
+            headers = { 'sync': 'false' }
         } else if (formType === 'lf') {
             if (primaryPath !== 'rkpl') {
-                headers = { 'sync': 'HEADER' }
+                headers = { 'sync': 'true' }
             } else {
                 headers = { 'sync': 'HEADER' }
             }
