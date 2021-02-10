@@ -320,10 +320,10 @@ export const generateLead = async (data, primaryPath, formType) => {
         let headers = {}
         
         if (formType === 'sf') {
-            headers = { 'sync': 'HEADER' }
+            headers = { 'sync': 'false' }
         } else if (formType === 'lf') {
             if (primaryPath !== 'rkpl') {
-                headers = { 'sync': 'HEADER' }
+                headers = { 'sync': 'true' }
             } else {
                 headers = { 'sync': 'HEADER' }
             }
@@ -400,5 +400,5 @@ export const sendNotification = async (leadId, action) => {
     try {
         const res = await axios.post(url, body)
         return res;
-    } catch (error) { }
+    } catch {}
 }

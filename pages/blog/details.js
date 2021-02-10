@@ -22,7 +22,6 @@ const BlogDetail = props => {
                 "GET",
                 `quick-blogs/${blogId}`
             );
-            console.log('blog data', blog)
             setBlogData(blog)
         }
         getBlogData()

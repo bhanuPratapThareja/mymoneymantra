@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 
@@ -7,7 +7,6 @@ import PersonalLoansBanner from '../../components/Banners/PersonalLoansBanner'
 import HomeLoansBanner from '../../components/Banners/HomeLoansBanner'
 
 import UspCards from '../../components/common/UspCards'
-import Offers from '../../components/common/Offers'
 import CreditScore from '../../components/common/CreditScore'
 import BankSlider from '../../components/common/BankSlider'
 import Rewards from '../../components/common/Rewards'
@@ -16,11 +15,17 @@ import ShortExtendedForm from '../../components/common/ShortExtendedForm'
 import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import { getClassesForPage } from '../../utils/classesForPage'
-import { clearLeadId, setPrimaryPath, setProductType, clearFormData } from '../../utils/localAccess'
+import { clearLeadId, setPrimaryPath, setProductType, clearFormData, getProductType } from '../../utils/localAccess'
 import { extractPopularOffers, extractTrendingOffers } from '../../services/componentsService'
-import { customerOfferData } from '../../services/offersService'
+import { viewOffers, extractOffers } from '../../services/offersService'
+import PopularOffers from '../../components/common/PopularOffers'
+import TrendingOffers from '../../components/common/TrendingOffers'
 
 const PrimaryPage = props => {
+
+  const [popularOffers, setPopularOffers] = useState([])
+  const [trendingOffers, setTrendingOffers] = useState([])
+
   useEffect(() => {
     window.scrollTo(0, 0)
     setPrimaryPath(props.primaryPath)
@@ -31,11 +36,13 @@ const PrimaryPage = props => {
   }, [])
 
   const getOffers = async () => {
-    try {
-      const offers = await customerOfferData()
-      console.log('offers: ', offers)
-    }
-    catch { }
+    const productType = getProductType()
+    const productTypeId = productType.productTypeId
+    const { populars, trendings } = await viewOffers(productTypeId)
+    const popularOffers = await extractOffers(populars, productTypeId)
+    const trendingOffers = await extractOffers(trendings, productTypeId)
+    setPopularOffers(popularOffers)
+    setTrendingOffers(trendingOffers)
   }
 
   const goToShortForm = () => {
@@ -67,11 +74,18 @@ const PrimaryPage = props => {
             preferredSelectionLists={props.preferredSelectionLists}
           />
         case 'offers.popular-offers-component':
-        case 'offers.trending-offers-component':
-          return <Offers
+          return <PopularOffers
             key={block.id}
             data={block}
-            offers={props.popularOffers || props.trendingOffers || []}
+            offers={popularOffers}
+            primaryPath={props.primaryPath}
+            goToShortForm={goToShortForm}
+          />
+        case 'offers.trending-offers-component':
+          return <TrendingOffers
+            key={block.id}
+            data={block}
+            offers={trendingOffers}
             primaryPath={props.primaryPath}
             goToShortForm={goToShortForm}
           />
@@ -110,6 +124,7 @@ export async function getServerSideProps(ctx) {
 
   const popularOffers = await extractPopularOffers(data)
   const trendingOffers = await extractTrendingOffers(data)
+
 
   return {
     props: {

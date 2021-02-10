@@ -112,9 +112,9 @@ class ShortExtendedForm extends React.Component {
             }, 500)
         })
 
-        setTimeout(()  => {
-            console.log(this.state.slides)
-        }, 1000)
+        // setTimeout(()  => {
+        //     console.log(this.state.slides)
+        // }, 1000)
     }
 
     onShowTncModal = on_click_anchor => {
