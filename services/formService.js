@@ -400,5 +400,5 @@ export const sendNotification = async (leadId, action) => {
     try {
         const res = await axios.post(url, body)
         return res;
-    } catch (error) { }
+    } catch {}
 }
