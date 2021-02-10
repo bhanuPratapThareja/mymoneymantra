@@ -7,10 +7,21 @@ const Blogger = props => {
     const router = useRouter()
     let { section_heading, bloggers } = props.data
     let popularBlogs = bloggers.filter(blog => blog.popular === true)
+    const shuffleArray = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            let temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array
+    }
+    let randomBlogs = shuffleArray(popularBlogs)
+
 
     const onOpenBlog = blog => {
         setBlogId(blog.id)
-        router.push({ pathname: '/blog/details', query: { slug: blog.slug } })
+        router.push(`/blog/${blog.slug}`)
     }
 
     return (
@@ -18,7 +29,7 @@ const Blogger = props => {
             <div className="blog">
                 <div dangerouslySetInnerHTML={{ __html: section_heading }}></div>
                 <div className="blog-wrapper" id="slider_blogs">
-                    {popularBlogs.map((blog, i) => {
+                    {randomBlogs.map((blog, i) => {
                         const { header, short_text, image, read_text, redirect_url, id, createdAt, popular, content, published_at } = blog
                         const date = new Date(published_at);
                         const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);

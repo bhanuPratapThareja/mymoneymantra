@@ -34,7 +34,7 @@ const SimilarArticles = (props) => {
 
     const onOpenBlog = blog => {
         setBlogId(blog.id)
-        router.push({ pathname: '/blog/details', query: { slug: blog.slug } })
+        router.push(`/blog/${blog.slug}`)
     }
 
     return (

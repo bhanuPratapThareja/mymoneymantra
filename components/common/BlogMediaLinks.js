@@ -17,6 +17,7 @@ const BlogMediaLinks = props => {
     const actionAfterShare = (e) => {
         console.log(e)
     }
+    console.log(props.blogData)
     // const { blog_social_media_link_component } = props.data.blog_social_media_link
     return (
         <section id="blog-head">
@@ -28,7 +29,7 @@ const BlogMediaLinks = props => {
                     <FacebookShareButton onShareWindowClose={() => props.openBlogShare(false)} url={props.url}>
                         {props.blogShareButton ? <FacebookIcon size={32} /> : <img src='/assets/images/icons/fb.svg' />}
                     </FacebookShareButton>
-                    {/* <PinterestShareButton media={`${strapi.baseUrl}${props.blogData.image.url}`} url={props.url}>
+                    {/* <PinterestShareButton media={`${props.blogData.image.url}`} url={props.url}>
                         {props.blogShareButton ? <PinterestIcon size={32} /> : <PinterestIcon size={24} />}
                     </PinterestShareButton> */}
                     <LinkedinShareButton url={props.url}>
