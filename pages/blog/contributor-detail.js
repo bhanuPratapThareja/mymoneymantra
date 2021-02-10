@@ -8,16 +8,15 @@ import { useEffect } from "react";
 
 
 const ContributorDetails = (props) => {
-    console.log("all blogs contri detail", props.allBlogs)
     let filteredBlogs = []
     const filteredContributors = props.contributorData.filter(contributor => contributor.id == props.id)
     let name = filteredContributors[0].blog_contributors_name
     props.allBlogs.forEach(blog => {
-        if (blog.blog_author) {
-            if (name.toLowerCase().includes(blog.blog_contributor.blog_contributors_name.toLowerCase())) {
-                filteredBlogs.push(blog)
-            }
+        // if (blog.blog_author) {
+        if (name.toLowerCase().includes(blog.blog_contributor.blog_contributors_name.toLowerCase())) {
+            filteredBlogs.push(blog)
         }
+        // }
     })
     useEffect(() => {
         window.scroll(0, 0)
@@ -63,7 +62,7 @@ export async function getServerSideProps(ctx) {
         `pages?slug=${primaryPath}-${secondaryPath}`
     );
     const data = pageData && pageData.length ? pageData[0] : null;
-    return { props: { allBlogs, contributorData, id: query.slug, data, pageClasses } };
+    return { props: { allBlogs, contributorData, id: query.id, data, pageClasses } };
 }
 
 export default ContributorDetails

@@ -19,7 +19,7 @@ const FeaturedContributors = (props) => {
    const router = useRouter()
    const strapi = new Strapi()
    const goToContributorDetailPage = (contributor) => {
-      router.push({ pathname: "/blog/contributor-detail", query: { slug: contributor.id } })
+      router.push({ pathname: "/blog/contributor-detail", query: { id: contributor.id } })
    }
    useEffect(() => {
       if (blog_contributors.length > 4) {

@@ -10,12 +10,13 @@ const BlogFilter = props => {
    const [blogs, setBlogs] = useState([])
    const router = useRouter()
    const sortBlogsByDate = (blogs) => {
-      let sortedBlogsByDate = blogs.sort((a, b) => moment(moment(a.publish_at).format('YYYY-MM-DD')).isBefore(moment(b.publish_at).format('YYYY-MM-DD')) ? -1 : 1)
+      // let sortedBlogsByDate = blogs.sort((a, b) => moment(moment(a.publish_at).format('YYYY-MM-DD')).isBefore(moment(b.publish_at).format('YYYY-MM-DD')) ? 1 : -1)
+      let sortedBlogsByDate = blogs.sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
       return sortedBlogsByDate
    }
    const onOpenBlog = blog => {
       setBlogId(blog.id)
-      router.push({ pathname: '/blog/details', query: { slug: blog.slug } })
+      router.push(`/blog/${blog.slug}`)
    }
    const onOpenFilter = () => {
       const el = document.getElementsByClassName('filter-option')[0]
@@ -108,7 +109,7 @@ const BlogFilter = props => {
                      const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
                      const createdDate = `${da} ${mo} ${ye}`;
                      const readingTime = require('reading-time');
-                     const blogreadTime = readingTime(content);
+                     const blogreadTime = readingTime(content, { wordsPerMinute: '50' });
                      return (
                         <div key={i} className="blog-wrapper-card  single card-1" id="blog-card-1">
                            <div className="image_1"></div>
