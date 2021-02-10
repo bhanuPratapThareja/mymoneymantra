@@ -355,15 +355,23 @@ class LongForm extends React.Component {
     })
   }
 
-  onSubmitOtp = async () => {
-    try {
-      await submitOtp(this.state.mobileNo);
-      this.closeOtpModal()
-      this.setState({ submitButtonDisabled: true });
-      this.retrieveDataAndSubmit()
-    } catch (err) {
-      this.setState({ submissionError: err.message })
+  onSubmitOtp = e => {
+    e.preventDefault()
+    const inputs = document.getElementsByClassName('input_otp')
+    for (let inp of inputs) {
+      inp.blur()
     }
+    this.removeSubmissionErrorMsg()
+    setTimeout(async () => {
+      try {
+        await submitOtp(this.state.mobileNo)
+        this.closeOtpModal()
+        this.setState({ submitButtonDisabled: true });
+        this.retrieveDataAndSubmit()
+      } catch (err) {
+        this.setState({ submissionError: err.message })
+      }
+    }, 300)
   }
 
   removeSubmissionErrorMsg = () => {
@@ -480,12 +488,7 @@ class LongForm extends React.Component {
     return (
       <div className="form-wrapper" id="longForm">
 
-         
-       {/* {this.state.leadBank && this.state.leadBank.bankImage ? <div className="long-form-img-top-right">
-        <Image className="" image={this.state.leadBank.bankImage} />
-        </div>: null} */}
-
-        <form onClick={this.handleClickOnSlideBackground} id='long-form_id' noValidate autoComplete="off">
+        <form onClick={this.handleClickOnSlideBackground} onSubmit={this.onSubmitLongForm} id='long-form_id' noValidate autoComplete="off">
           {this.state.longFormSections.map((longFormSection) => {
             const long_form_blocks =
               longFormSection.sections[0].long_form_blocks;
@@ -529,21 +532,16 @@ class LongForm extends React.Component {
           })}
           {this.state.submissionError ? <p className="form-invalid-text">{this.state.submissionError}</p> : null}
           <div className="long-form-submit">
-            <button
-              id="long-submit"
-              disabled={this.state.submitButtonDisabled}
-              type="button"
-              onClick={this.onSubmitLongForm}
-            >
+            <button  type="submit" id="long-submit" disabled={this.state.submitButtonDisabled}>
               Submit Application
             </button>
           </div>
         </form>
 
         {this.state.openOtpModal ? (
-          <Modal openModal={this.state.openOtpModal} closeOtpModal={this.closeOtpModal} >
+          <Modal openModal={this.state.openOtpModal} closeOtpModal={this.closeOtpModal}>
             <button onClick={this.closeOtpModal} className="close-btn">Close</button>
-            <form className="otp-modal-form short-forms-wrapper">
+            <form className="otp-modal-form short-forms-wrapper" onSubmit={this.onSubmitOtp} noValidate>
               <div className="mobile-otp">
                 <div className="lets-find-content otp-card_custom">
                   <h2>
@@ -574,9 +572,7 @@ class LongForm extends React.Component {
                   </div>
                 </div>
                 {this.state.submissionError ? <p className="form-invalid-text">{this.state.submissionError}</p> : null}
-                <button type="button" onClick={this.onSubmitOtp}>
-                  Submit OTP
-                </button>
+                <button type="submit">Submit OTP</button>
               </div>
             </form>
           </Modal>
