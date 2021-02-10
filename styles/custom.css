@@ -1337,6 +1337,11 @@ section.popular-card-container {
   top: 23px;
   left: 11px;
 }
+
+.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container.current-address .form__group.verified-input {
+  margin-bottom: 16px;
+}
+
 /*-- Long Form Upload Button  --*/
 .long-form .form__group.field.upload_button {
   margin: 0 0 15px;
@@ -1412,21 +1417,38 @@ section.popular-card-container {
   margin: 0 1rem;
 }
 
-span.author_bio_detail_page {
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top .author_bio_detail_page {
   display: flex;
   align-items: center;
-  margin: 0;
+  margin: 0 0 20px !important;
   padding: 0;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  font-family: "Avenir-Roman";
 }
-.author_bio_detail_page h3 {
+
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top .author_bio_detail_page h3 {
   font-size: 1rem;
   color: rgb(54, 112, 238);
   text-decoration: underline;
 }
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top .author_bio_detail_page span{
+  margin: 0 !important;
+}
 
-.author_bio_detail_page span{
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top .author_bio_detail_page span h3 {
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  padding: 0 4px;
+  display: inline-block;
   margin: 0;
-  padding: 0;
+}
+
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top .author_bio_detail_page p {
+  font-size: 0.75rem;
+  display: inline-block;
+  line-height: 1.25rem;
+
 }
 
 .shortforms-container .checkbox-container label p span {

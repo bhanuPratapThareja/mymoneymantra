@@ -47,8 +47,8 @@ const BlogsDetails = props => {
                             ) : null}
                         </span>
                         <div className='author_bio_detail_page'>Author :
-                        <div onClick={() => goToContributorDetailPage(blog_contributor)} dangerouslySetInnerHTML={{ __html: blog_contributor.blog_contributors_name }}>
-                        </div>
+                        <span onClick={() => goToContributorDetailPage(blog_contributor)} dangerouslySetInnerHTML={{ __html: blog_contributor.blog_contributors_name }}>
+                            </span>
                             <p>({blogCount} {blogCount == 1 ? 'post' : 'posts'},0 comments)</p>
                         </div>
                         <p dangerouslySetInnerHTML={{ __html: content }}></p>
