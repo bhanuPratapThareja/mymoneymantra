@@ -19,15 +19,15 @@ const ContactInfo = () => {
   }, [])
   return (
     <>
-      {editing ? (
         <form className="contact-wrapper" style={{ display: "block" }}>
           <div className="shortforms-container">
-            <div className="form__group field">
-              <input
+            <div className={editing?'form__group field edit-part':'form__group field read-part'}>
+              <input readOnly={!editing}
                 className="form__field"
                 type="text"
                 value={mobile}
                 id="mob-num"
+
                 placeholder="Mobile Number"
                 required=""
               />
@@ -35,8 +35,8 @@ const ContactInfo = () => {
                 Mobile Number
               </label>
             </div>
-            <div className="form__group field">
-              <input
+            <div className={editing?'form__group field edit-part':'form__group field read-part'}>
+              <input readOnly={!editing}
                 className="form__field"
                 type="text"
                 value={email}
@@ -48,8 +48,8 @@ const ContactInfo = () => {
                 Email ID
               </label>
             </div>
-            <div className="form__group field">
-              <input
+            <div className={editing?'form__group field edit-part':'form__group field read-part'}>
+              <input readOnly={!editing}
                 className="form__field"
                 type="text"
                 value={currentAddress}
@@ -61,8 +61,8 @@ const ContactInfo = () => {
                 Current Address
               </label>
             </div>
-            <div className="form__group field">
-              <input
+            <div className={editing?'form__group field edit-part':'form__group field read-part'}>
+              <input readOnly={!editing}
                 className="form__field"
                 type="text"
                 value={permanentAddress}
@@ -75,7 +75,7 @@ const ContactInfo = () => {
               </label>
             </div>
           </div>
-          <div className="save-options">
+          <div className="save-options" style={{display:editing?"flex":"none"}}>
             <button
               type="button"
               className="save-contact"
@@ -93,96 +93,20 @@ const ContactInfo = () => {
               Cancel
             </button>
           </div>
-        </form>
-      ) : (
-        <form className="contact-wrapper">
-          <div className="shortforms-container">
-            <div className="form__group field read-part">
-              <input
-                readOnly={true}
-                className="form__field"
-                type="text"
-                value={mobile}
-                id="mob-num"
-                placeholder="Mobile Number"
-                required=""
-              />
-              <label className="form__label" htmlFor="mob-num">
-                Mobile Number
-              </label>
-            </div>
-            <div className="form__group field read-part">
-              <input
-                readOnly={true}
-                className="form__field"
-                type="text"
-                value={email}
-                id="email"
-                placeholder="Email ID"
-                required=""
-              />
-              <label className="form__label" htmlFor="email">
-                Email ID
-              </label>
-            </div>
-            <div className="form__group field read-part">
-              <input
-                readOnly={true}
-                className="form__field"
-                type="text"
-                value="A-99, Manish Marg, Nemi Nagar, Jaipur, Rajasthan-302021"
-                id="current-address"
-                placeholder="Current Address"
-                required=""
-              />
-              <label className="form__label" htmlFor="current-address">
-                Current Address
-              </label>
-            </div>
-            <div className="form__group field read-part">
-              <input
-                readOnly={true}
-                className="form__field"
-                type="text"
-                value="B-21, Rajouri Garden, New Delhi, Delhi-110021"
-                id="permanent-address"
-                placeholder="Permanent Address"
-                required=""
-              />
-              <label className="form__label" htmlFor="permanent-address">
-                Permanent Address
-              </label>
-            </div>
-          </div>
-          <div className="save-options">
-            <button
-              type="button"
-              className="save-contact"
-              id="save-contact"
-              onClick={() => setEditing(false)}
-            >
-              Save
-            </button>
-            <button
-              type="button"
-              className="cancel"
-              id="cancel"
-              onClick={() => setEditing(false)}
-            >
-              Cancel
-            </button>
-          </div>
-
-          <button
+         {!editing ? (<button
             type="button"
             id="edit-contact"
             className="edit-button"
             onClick={() => setEditing(true)}
           >
             Edit
-          </button>
+          </button>):<></>}
+          
         </form>
-      )}
+      
+          
+        
+          {/* read-part */}
     </>
   );
 };

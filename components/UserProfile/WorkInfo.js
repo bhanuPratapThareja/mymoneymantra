@@ -1,33 +1,41 @@
+
+import { useState,useEffect } from "react"
+
 const WorkInfo = () => {
+  const [isedit, setisedit] = useState(false);
+
+  useEffect(() => {
+    
+  }, [])
   return (
     <form className="work-wrapper">
       <div className="shortforms-container">
-        <div className="form__group field read-part">
-          <input readOnly ={true} className="form__field" type="text" value="Salaried" id="emp-type" placeholder="Employment Type" required="" />
+        <div className={isedit?'form__group field edit-part':'form__group field read-part'}>
+          <input readOnly={!isedit} className="form__field" type="text" value="Salaried" id="emp-type" placeholder="Employment Type" required="" />
           <label className="form__label" htmlFor="emp-type">
             Employment Type
           </label>
         </div>
-        <div className="form__group field read-part">
-          <input readOnly ={true} className="form__field" type="text" value="Earnest &amp; Young Co." id="company-name" placeholder="Company Name" required="" />
+        <div className={isedit?'form__group field edit-part':'form__group field read-part'}>
+          <input readOnly={!isedit} className="form__field" type="text" value="Earnest &amp; Young Co." id="company-name" placeholder="Company Name" required="" />
           <label className="form__label" htmlFor="company-name">
             Company Name
           </label>
         </div>
-        <div className="form__group field read-part">
-          <input readOnly ={true} className="form__field" type="text" value="₹ 5,00,000" id="monthly-income" placeholder="Net Monthly Income" required="" />
+        <div className={isedit?'form__group field edit-part':'form__group field read-part'}>
+          <input readOnly={!isedit} className="form__field" type="text" value="₹ 5,00,000" id="monthly-income" placeholder="Net Monthly Income" required="" />
           <label className="form__label" htmlFor="monthly-income">
             Net Monthly Income
           </label>
         </div>
-        <div className="form__group field read-part">
-          <input readOnly ={true} className="form__field" type="text" value="HDFC Bank" id="bank-name" placeholder="Bank Name" required="" />
+        <div className={isedit?'form__group field edit-part':'form__group field read-part'}>
+          <input readOnly={!isedit} className="form__field" type="text" value="HDFC Bank" id="bank-name" placeholder="Bank Name" required="" />
           <label className="form__label" htmlFor="bank-name">
             Bank Name
           </label>
         </div>
-        <div className="form__group field read-part">
-          <input readOnly ={true} className="form__field" type="text" value="HDFC Bank" id="account-num" placeholder="Account Number" required="" />
+        <div className={isedit?'form__group field edit-part':'form__group field read-part'}>
+          <input readOnly={!isedit} className="form__field" type="text" value="HDFC Bank" id="account-num" placeholder="Account Number" required="" />
           <label className="form__label" htmlFor="account-num">
             Account Number
           </label>
@@ -37,12 +45,12 @@ const WorkInfo = () => {
         <button type="button" className="save-work" id="save-work">
           Save
         </button>
-        <button type="button" className="cancel" id="cancel">
+        <button type="button" className="cancel" id="cancel" onClick={()=>setisedit(!isedit)}>
           Cancel
         </button>
       </div>
 
-      <button type="button" id="edit-work" className="edit-button">
+      <button type="button" id="edit-work" className="edit-button" onClick={()=>setisedit(!isedit)}>
         Edit
       </button>
     </form>

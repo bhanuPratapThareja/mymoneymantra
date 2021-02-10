@@ -1,6 +1,7 @@
 
 import { useState,useEffect } from 'react'
 import {getPersonalInfo, savePersonalInfo} from '../../utils/userProfileService';
+import moment from 'moment';
 const PersonalInfo = () => {
   const [editing, setEditing] = useState(false)
   const [firstName, setFirstName] = useState('')
@@ -9,7 +10,12 @@ const PersonalInfo = () => {
   const [gender, setGender] = useState('')
   const [maritalStatus, setMaritalStatus] = useState('')
   const [panNumber, setPanNumber] = useState('')
+  const [martaialname, setmartaialname] = useState('')
 useEffect(() => {
+  getInfo()
+}, [])
+
+const getInfo=()=>{
   getPersonalInfo().then(res=>{
     console.log(res);
     const {firstName,gender,martialStatus,panNo,lastName,dob}=res;
@@ -23,30 +29,33 @@ useEffect(() => {
     }
     setGender(gender);
     setMaritalStatus(martialStatus);
+
     setPanNumber(panNo);
-    setDob(dob?dob:'');
+    setDob(dob?moment(dob,'DD/MM/YYYYY').format('YYYY-MM-DD'):'');
+    let mName=checkMartialStatus(martialStatus);
+    setmartaialname(mName);
 
   }).catch(err=>{
     console.log(err);
     alert(err.message)
   })
-}, [])
-
-
+}
   const submitHandler = (e) => {
     // e.preventDefault();
-    savePersonalInfo(firstName,lastName,gender,maritalStatus,panNumber).then(res=>{
+    let mName=checkMartialStatus(maritalStatus);
+    setmartaialname(mName);
+    savePersonalInfo(firstName,lastName,gender,maritalStatus,panNumber,dob).then(res=>{
       console.log(res);
     }).catch(err=>{
       console.log(err);
     })
   }
- const checkMartialStatus=()=>{
-            if( maritalStatus==0) {return "Single";}
-            else if(maritalStatus==1) {return "Married";}
-            else if(maritalStatus==2){ return "Separated";}
-            else if(martialStatus==3){return "Divorced";}
-            else if(martialStatus==4) {return "Widowed";}
+ const checkMartialStatus=(martial= -1)=>{
+            if( martial==0) {return "Single";}
+            else if(martial==1) {return "Married";}
+            else if(martial==2){ return "Separated";}
+            else if(martial==3){return "Divorced";}
+            else if(martial==4) {return "Widowed";}
             else return "";
   }
 
@@ -70,15 +79,16 @@ useEffect(() => {
             </div>
           </div>
           <h5>Date of Birth</h5>
-          {/* <div className="shortforms-container personal-style">
+          <div className="shortforms-container personal-style">
             <div className="form__group field">
               <div role="wrapper" className="gj-datepicker gj-datepicker-md gj-unselectable">
                 <input
                   value={dob}
                   className="form__field profile-dob datepicker gj-textbox-md"
-                  type="text"
+                  type="date"
                   id="dob"
-                  placeholder="MM / DD / YYYY"
+                  format="DD/MM/YYYY"
+                  placeholder="DD / MM / YYYY"
                   required=""
                   data-type="datepicker"
                   data-guid="2c92f534-a412-9063-7136-166bf9b6a4d8"
@@ -94,7 +104,7 @@ useEffect(() => {
                 Date of Birth
               </label>
             </div>
-          </div> */}
+          </div>
           <h5>Gender</h5>
           <div className="shortforms-container gender-style">
             <input value="0" className="lets-checkbox" type="radio" id="female" name="gender" required="" onChange={(e) => setGender(e.target.value)} defaultChecked={gender==0?true:false}/>
@@ -183,7 +193,7 @@ useEffect(() => {
             <button type="submit" className="save-personal" id="save-personal" onClick={() => {submitHandler();setEditing(false)}}>
               Save
             </button>
-            <button type="button" className="cancel" id="cancel" onClick={() => setEditing(false)}>
+            <button type="button" className="cancel" id="cancel" onClick={() => {setEditing(false); getInfo()}}>
               Cancel
             </button>
           </div>
@@ -197,12 +207,12 @@ useEffect(() => {
                 Full Name
               </label>
             </div>
-            {/* <div className="form__group field">
-              <input readOnly ={true} className="form__field" type="text" value={dob} id="dob" placeholder="Date of Birth" required="" />
+            <div className="form__group field">
+              <input readOnly ={true} className="form__field" type="text" value={moment(dob,'YYYY-MM-DD').format('DD/MM/YYYY')}  id="dob" placeholder="Date of Birth" required="" />
               <label className="form__label" htmlFor="dob">
                 Date of Birth
               </label>
-            </div> */}
+            </div>
             <div className="form__group field">
               <input readOnly ={true} className="form__field" type="text" value={gender==0?'Female':gender==1?'Male':'Other'} id="gender" placeholder="Gender" required="" />
               <label className="form__label" htmlFor="gender">
@@ -210,7 +220,7 @@ useEffect(() => {
               </label>
             </div>
             <div className="form__group field">
-              <input readOnly ={true} className="form__field" type="text" value={checkMartialStatus} id="marital-Status" placeholder="Marital Status" required="" />
+              <input readOnly ={true} className="form__field" type="text" value={martaialname} id="marital-Status" placeholder="Marital Status" required="" />
               <label className="form__label" htmlFor="marital-Status">
                 Marital Status
               </label>

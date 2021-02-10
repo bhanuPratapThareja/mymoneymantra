@@ -26,6 +26,7 @@
     "react-google-login": "^5.2.2",
     "react-loading-overlay": "^1.0.1",
     "react-maskedinput": "^4.0.1",
+    "react-select-search": "^3.0.1",
     "react-svg": "^11.2.2",
     "reading-time": "^1.2.1",
     "sass": "^1.29.0",

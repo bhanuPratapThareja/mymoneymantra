@@ -552,6 +552,20 @@ const api = {
         address:null
       }
     },
+    workProfile:{
+      devUrl:"customer/api/profile/v1/work-info",
+      uatUrl:"customer/api/profile/v1/work-info",
+      prodUrl:"customer/api/profile/v1/work-info",
+      body:{
+        customerId: null,
+        employedType:null,
+        companyId:null,
+        netMonthlyIncome:null,
+        bankName:null,
+        accountNo:null,
+        ifscCode:null
+    }
+    },
     savePersonalInfo:{
       devUrl:"customer/api/profile/v1/personal-info",
       uatUrl:"customer/api/profile/v1/personal-info",
@@ -562,7 +576,8 @@ const api = {
         lastName: null,
         gender: null,
         martialStatus: null,
-        panNo: null
+        panNo: null,
+        dob:null,
       }
     }
   },
