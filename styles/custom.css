@@ -1337,6 +1337,11 @@ section.popular-card-container {
   top: 23px;
   left: 11px;
 }
+
+.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container.current-address .form__group.verified-input {
+  margin-bottom: 16px;
+}
+
 /*-- Long Form Upload Button  --*/
 .long-form .form__group.field.upload_button {
   margin: 0 0 15px;
@@ -1361,18 +1366,185 @@ section.popular-card-container {
   position: relative;
 }
 
-.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top h3 {
-  font-size: 2.5rem;
-  font-family: "Avenir-Black";
-  text-align: center;
-  line-height: 3rem;
+.share_buttons {
+  display: flex;
+  flex-direction: column;
 }
 
-.cstm-blog-wrapper p {
+#pop_up_container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 9999;
+}
+
+#pop_up_container:after {
+  content: "";
+  min-width: 100%;
+  min-height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+}
+
+.pop_up_share {
+  position: absolute;
+  z-index: 9999;
+  background: #fff;
+  padding: 20px;
+  text-align: center;
+  left: 50%;
+  transform: translate( -50%, -50%);
+  min-width: 300px;
+  border-radius: 5px;
+}
+
+.pop_up_share button:last-child {
+  position: absolute;
+  background: none;
+  box-shadow: none;
+  margin: 0;
+  border: none;
+  top: 5px;
+  right: 10px;
+  font-weight: bold;
+}
+
+.pop_up_share button {
+  margin: 0 1rem;
+}
+
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top .author_bio_detail_page {
+  display: flex;
+  align-items: center;
+  margin: 0 0 20px !important;
+  padding: 0;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  font-family: "Avenir-Roman";
+}
+
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top .author_bio_detail_page h3 {
+  font-size: 1rem;
+  color: rgb(54, 112, 238);
+  text-decoration: underline;
+}
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top .author_bio_detail_page span{
+  margin: 0 !important;
+}
+
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top .author_bio_detail_page span h3 {
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  padding: 0 4px;
+  display: inline-block;
+  margin: 0;
+}
+
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top .author_bio_detail_page p {
+  font-size: 0.75rem;
+  display: inline-block;
+  line-height: 1.25rem;
+
+}
+
+.shortforms-container .checkbox-container label p span {
+  font-size: 1rem;
+  font-family: "Avenir-Roman";
+  line-height: 1.75rem;
+}
+
+
+.blog-container .blog .blog-wrapper-card > div > img {
+  display: none;
+}
+
+.blog-wrap-top p> h3, .blog-wrap-top p> ul {
   max-width: 688px;
-  margin: 0 auto;
-  margin-top: 40px;
+  margin: 40px auto 0;
   padding: 0 24px;
+}
+
+.lets-find-form form .checkbox label {
+  z-index: 10;
+}
+
+.credit-card-flow .lets-find .agree .checkbox-container label a {
+  font-size: 12px;
+  line-height: 20px;
+}
+
+/*-- Tnc Modal --*/
+.modal-body .tnc {
+  max-height: 400px;
+  overflow-y: auto;
+  margin: 30px 0 0;
+  padding: 10px 0 0;
+}
+
+.modal-body .tnc p {
+  font-size: 15px;
+  line-height: 24px;
+  text-align: justify;
+  margin: 0 0 10px;
+}
+.modal-body .tnc h4 {
+  margin: 0 0 10px;
+}
+
+.modal-body .tnc p a {display: inline-block;color: #56AB2F;text-decoration: underline;}
+
+.modal-body .tnc ul li {
+  margin: 5px 0;
+  font-size: 15px;
+  padding: 0 0 0 20px;
+  line-height: 24px;
+  position: relative;
+  font-family: "Avenir-Roman";
+}
+
+.modal-body .tnc ul li:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 8px;
+  border-radius: 50%;
+  height: 8px;
+  background: #333;
+  left: 0;
+  top: 8px;
+}
+
+.modal-body .tnc ul {
+  margin: 15px 0;
+  list-style: none;
+}
+
+/*-- Blog Styling --*/
+.blog-container .blog .blog-wrapper-card > div > img {	
+  display: none;	
+}	
+.blog-wrap-top p> h3, .blog-wrap-top p> ul {	
+  max-width: 688px;	
+  margin: 40px auto 0;	
+  padding: 0 24px;	
+}
+
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top h3 {	
+  font-size: 2.5rem;	
+  font-family: "Avenir-Black";	
+  text-align: center;	
+  line-height: 3rem;	
+}	
+
+.cstm-blog-wrapper p {	
+  max-width: 688px;	
+  margin: 0 auto;	
+  margin-top: 40px;	
+  padding: 0 24px;	
 } 
 
 @media(max-width: 1199px) {
@@ -1798,16 +1970,22 @@ section.popular-card-container {
     list-style: inside disc;
   }
   
+  .blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top h3 {	
+    font-size: 1.25rem;	
+    line-height: 1.75rem;	
+  }
+  
   .shortforms-container .checkbox-container label p span {
     font-size: 0.875rem;
     line-height: 1.5rem;
   }
 
-  .blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top h3 {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
-
+  .modal-body .tnc {
+    max-height: 330px;
+    margin: 30px 0 0 0;
+  }   
+    
+ 
 }
 
 @media(max-width: 767px) {

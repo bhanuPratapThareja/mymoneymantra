@@ -12,7 +12,7 @@ const RecentBlogs = (props) => {
         router.push({ pathname: '/blog/details', query: { slug: blog.id } })
     }
     return (
-        <section data-aos="fade-up" className="popular-card-container aos-init">
+        <section data-aos="fade-up" className="popular-card-container aos-animate aos-init">
             <div className="popular-cards">
                 <h2>Recent Articles</h2>
                 <div className="popular-cards-slider" id="popular-cards-sec" >
