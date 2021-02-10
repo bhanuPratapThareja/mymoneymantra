@@ -1337,6 +1337,11 @@ section.popular-card-container {
   top: 23px;
   left: 11px;
 }
+
+.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container.current-address .form__group.verified-input {
+  margin-bottom: 16px;
+}
+
 /*-- Long Form Upload Button  --*/
 .long-form .form__group.field.upload_button {
   margin: 0 0 15px;
@@ -1412,21 +1417,38 @@ section.popular-card-container {
   margin: 0 1rem;
 }
 
-span.author_bio_detail_page {
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top .author_bio_detail_page {
   display: flex;
   align-items: center;
-  margin: 0;
+  margin: 0 0 20px !important;
   padding: 0;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  font-family: "Avenir-Roman";
 }
-.author_bio_detail_page h3 {
+
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top .author_bio_detail_page h3 {
   font-size: 1rem;
   color: rgb(54, 112, 238);
   text-decoration: underline;
 }
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top .author_bio_detail_page span{
+  margin: 0 !important;
+}
 
-.author_bio_detail_page span{
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top .author_bio_detail_page span h3 {
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  padding: 0 4px;
+  display: inline-block;
   margin: 0;
-  padding: 0;
+}
+
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top .author_bio_detail_page p {
+  font-size: 0.75rem;
+  display: inline-block;
+  line-height: 1.25rem;
+
 }
 
 .shortforms-container .checkbox-container label p span {
@@ -1454,6 +1476,76 @@ span.author_bio_detail_page {
   font-size: 12px;
   line-height: 20px;
 }
+
+/*-- Tnc Modal --*/
+.modal-body .tnc {
+  max-height: 400px;
+  overflow-y: auto;
+  margin: 30px 0 0;
+  padding: 10px 0 0;
+}
+
+.modal-body .tnc p {
+  font-size: 15px;
+  line-height: 24px;
+  text-align: justify;
+  margin: 0 0 10px;
+}
+.modal-body .tnc h4 {
+  margin: 0 0 10px;
+}
+
+.modal-body .tnc p a {display: inline-block;color: #56AB2F;text-decoration: underline;}
+
+.modal-body .tnc ul li {
+  margin: 5px 0;
+  font-size: 15px;
+  padding: 0 0 0 20px;
+  line-height: 24px;
+  position: relative;
+  font-family: "Avenir-Roman";
+}
+
+.modal-body .tnc ul li:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 8px;
+  border-radius: 50%;
+  height: 8px;
+  background: #333;
+  left: 0;
+  top: 8px;
+}
+
+.modal-body .tnc ul {
+  margin: 15px 0;
+  list-style: none;
+}
+
+/*-- Blog Styling --*/
+.blog-container .blog .blog-wrapper-card > div > img {	
+  display: none;	
+}	
+.blog-wrap-top p> h3, .blog-wrap-top p> ul {	
+  max-width: 688px;	
+  margin: 40px auto 0;	
+  padding: 0 24px;	
+}
+
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top h3 {	
+  font-size: 2.5rem;	
+  font-family: "Avenir-Black";	
+  text-align: center;	
+  line-height: 3rem;	
+}	
+
+.cstm-blog-wrapper p {	
+  max-width: 688px;	
+  margin: 0 auto;	
+  margin-top: 40px;	
+  padding: 0 24px;	
+} 
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
@@ -1878,11 +1970,22 @@ span.author_bio_detail_page {
     list-style: inside disc;
   }
   
+  .blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top h3 {	
+    font-size: 1.25rem;	
+    line-height: 1.75rem;	
+  }
+  
   .shortforms-container .checkbox-container label p span {
     font-size: 0.875rem;
     line-height: 1.5rem;
   }
 
+  .modal-body .tnc {
+    max-height: 330px;
+    margin: 30px 0 0 0;
+  }   
+    
+ 
 }
 
 @media(max-width: 767px) {
