@@ -1458,17 +1458,6 @@ section.popular-card-container {
   line-height: 1.75rem;
 }
 
-
-.blog-container .blog .blog-wrapper-card > div > img {
-  display: none;
-}
-
-.blog-wrap-top p> h3, .blog-wrap-top p> ul {
-  max-width: 688px;
-  margin: 40px auto 0;
-  padding: 0 24px;
-}
-
 .lets-find-form form .checkbox label {
   z-index: 10;
 }
@@ -1527,14 +1516,21 @@ section.popular-card-container {
 /*-- Blog Styling --*/
 .blog-container .blog .blog-wrapper-card > div > img {	
   display: none;	
-}	
-.blog-wrap-top p> h3, .blog-wrap-top p> ul {	
-  max-width: 688px;	
-  margin: 40px auto 0;	
-  padding: 0 24px;	
 }
 
-.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top h3 {	
+.blog-wrap-top p> h3 {
+  max-width: 688px;
+  margin: 40px auto 0;
+  padding: 0;
+}
+
+.blog-wrap-top p> ul {
+  max-width: 688px;
+  margin: 40px auto 5px;
+  padding: 0 24px;
+}
+
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top > div > h3 {	
   font-size: 2.5rem;	
   font-family: "Avenir-Black";	
   text-align: center;	
@@ -1972,7 +1968,7 @@ section.popular-card-container {
     list-style: inside disc;
   }
   
-  .blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top h3 {	
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top > div > h3 {	
     font-size: 1.25rem;	
     line-height: 1.75rem;	
   }
