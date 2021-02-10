@@ -14,10 +14,10 @@ const ProductSlider = props => {
             <div className="container banks">
                 <div dangerouslySetInnerHTML={{ __html: product_type_slider_heading }}></div>
                 <div className="banks-slider">
-                    {Blog_product_card.map(card => {
+                    {Blog_product_card.map((card, i) => {
 
                         return (
-                            <Link href={`/blog/category/${card.blog_products_cards_text}`}>
+                            <Link key={i} href={`/blog/category/${card.blog_products_cards_text}`}>
                                 <div className="slide_cell cstm-prd" key={card.id} onClick={blogsByCategory(card)} >
                                     <h3>{card.blog_products_cards_text}</h3>
                                 </div>

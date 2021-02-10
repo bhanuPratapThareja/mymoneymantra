@@ -38,7 +38,8 @@ const FeaturedContributors = (props) => {
                if (index + 1 <= sliceLength) {
                   return <div onClick={() => goToContributorDetailPage(contributor)} className="people" key={index}>
                      <div className="image">
-                        <img src={`${strapi.baseUrl}${contributor.blog_contributors_image.url}`} alt={contributor.blog_contributors_image.name} />
+                        <Image image={contributor.blog_contributors_image} />
+                        {/* <img src={`${contributor.blog_contributors_image.url}`} alt={contributor.blog_contributors_image.name} /> */}
                      </div>
                      <div className="detail">
                         <span dangerouslySetInnerHTML={{ __html: contributor.blog_contributors_name }}></span>

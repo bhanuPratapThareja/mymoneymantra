@@ -1501,6 +1501,30 @@ span.author_bio_detail_page {
   list-style: none;
 }
 
+/*-- Blog Styling --*/
+.blog-container .blog .blog-wrapper-card > div > img {	
+  display: none;	
+}	
+.blog-wrap-top p> h3, .blog-wrap-top p> ul {	
+  max-width: 688px;	
+  margin: 40px auto 0;	
+  padding: 0 24px;	
+}
+
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top h3 {	
+  font-size: 2.5rem;	
+  font-family: "Avenir-Black";	
+  text-align: center;	
+  line-height: 3rem;	
+}	
+
+.cstm-blog-wrapper p {	
+  max-width: 688px;	
+  margin: 0 auto;	
+  margin-top: 40px;	
+  padding: 0 24px;	
+} 
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
@@ -1922,6 +1946,11 @@ span.author_bio_detail_page {
 
   .blog-wrap-top p> ul {
     list-style: inside disc;
+  }
+  
+  .blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top h3 {	
+    font-size: 1.25rem;	
+    line-height: 1.75rem;	
   }
   
   .shortforms-container .checkbox-container label p span {
