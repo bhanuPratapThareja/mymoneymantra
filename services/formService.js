@@ -26,7 +26,7 @@ export const submitOtp = async mobileNo => {
     for (let inp of inps) {
         otp += inp.value
     }
-    console.log('otp: ', otp)
+   
     if (otp.length !== 4) {
         throw new Error('Otp mush have 4 characters')
     }
