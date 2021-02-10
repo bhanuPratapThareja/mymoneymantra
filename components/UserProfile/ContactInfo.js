@@ -143,8 +143,6 @@ const ContactInfo = () => {
           </button>
         )}
       </form>
-
-      {/* read-part */}
     </>
   )
 }
