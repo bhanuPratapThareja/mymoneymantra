@@ -71,7 +71,7 @@ const userProfile = (props) => {
                   </svg>
                 </div>
                 <div className="option-data" id="option-3-data">
-                  <WorkInfo />
+                  <WorkInfo  data={props.data}/>
                 </div>
               </div>
               <div className="option-wrapper">
@@ -153,7 +153,9 @@ const userProfile = (props) => {
 }
 export async function getServerSideProps(ctx) {
   const primaryPath = 'user-profile'
+  const responseObject = await fetch('http://203.122.46.189:1338/banks')
+  const data = await responseObject.json()
   const pageClasses = getClassesForPage(primaryPath)
-  return { props: { pageClasses } }
+  return { props: { pageClasses,data } }
 }
 export default userProfile
