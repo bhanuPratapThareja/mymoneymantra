@@ -21,7 +21,8 @@ export const unpackComponents = data => {
             product_name: data.product_name,
             product_id: data.product_id,
             recommended: data.recommended,
-            slug: data.slug
+            slug: data.slug,
+            cardType: data.card_type ? data.card_type : null
         }
     
         if (typeof bank === 'string') {

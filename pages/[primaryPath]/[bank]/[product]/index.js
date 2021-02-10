@@ -17,14 +17,16 @@ import LongForm from '../../../../components/common/LongForm'
 import { getClassesForPage } from '../../../../utils/classesForPage'
 import { setPrimaryPath, setProductType } from '../../../../utils/localAccess'
 import { getUnpackedProduct, extractTrendingOffers } from '../../../../services/componentsService'
+import { viewOffers, extractOffers } from '../../../../services/offersService'
 
 const Details = props => {
     const [page, setPage] = useState(props.page)
     const [previousPath, setPreviousPath] = useState('')
+    const [trendingOffers, setTrendingOffers] = useState([])
+
 
     useEffect(() => {
         window.scrollTo(0, 0)
-       
         setPrimaryPath(props.primaryPath)
         setProductType(props.productTypeData)
 
@@ -33,6 +35,7 @@ const Details = props => {
                 changePageType('details')
             }
         }
+        getOffers()
     }, [page])
 
     const changePageType = page => {
@@ -40,6 +43,14 @@ const Details = props => {
         if(page === 'long-form') {
             setPreviousPath('details')
         }
+    }
+
+    const getOffers = async () => {
+        // const { trendings } = await viewOffers()
+        // console.log('trendings: ', trendings)
+        // const trendingOffers = await extractOffers(trendings, productTypeId)
+        // console.log('trendingOffers: ', trendingOffers)
+        // setTrendingOffers(trendingOffers)
     }
 
     if (!props.productData) {

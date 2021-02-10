@@ -33,7 +33,7 @@ const BlogBanner = props => {
                 <div className="search-wrap">
                     <input type="text" onKeyUp={handleEnterPress} onChange={(e) => setSearchKey(e.target.value)} value={searchKey} placeholder={blog_banner_label} />
                     <Image image={blog_banner_image} />
-                    <img onClick={handleSearch} src={`${strapi.baseUrl}${blog_banner_arrow_image.url}`} />
+                    <img onClick={handleSearch} src={`${blog_banner_arrow_image.url}`} />
                 </div>
             </div>
         </section>
