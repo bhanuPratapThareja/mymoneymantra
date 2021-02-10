@@ -4,6 +4,11 @@ import axios from 'axios'
 import { setAuthToken, getAuthToken, appId, generateCorrelationId } from '../api/headers'
 import { getApiData } from '../api/api'
 
+export function reportWebVitals(metric) {
+  console.log(metric)
+}
+
+
 axios.defaults.headers.common['correlationId'] = generateCorrelationId()
 axios.defaults.headers.common['appId'] = appId
 
