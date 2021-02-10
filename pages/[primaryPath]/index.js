@@ -125,6 +125,7 @@ export async function getServerSideProps(ctx) {
   const popularOffers = await extractPopularOffers(data)
   const trendingOffers = await extractTrendingOffers(data)
 
+
   return {
     props: {
       data, primaryPath, preferredSelectionLists,
