@@ -25,7 +25,7 @@ const BlogMediaLinks = props => {
                     <TwitterShareButton url={props.url} >
                         {props.blogShareButton ? <TwitterIcon size={32} /> : <img src='/assets/images/icons/twitter.svg' />}
                     </TwitterShareButton>
-                    <FacebookShareButton onShareWindowClose={() => props.openBlogShare(false)} url={'https://www.google.com'}>
+                    <FacebookShareButton onShareWindowClose={() => props.openBlogShare(false)} url={props.url}>
                         {props.blogShareButton ? <FacebookIcon size={32} /> : <img src='/assets/images/icons/fb.svg' />}
                     </FacebookShareButton>
                     {/* <PinterestShareButton media={`${strapi.baseUrl}${props.blogData.image.url}`} url={props.url}>

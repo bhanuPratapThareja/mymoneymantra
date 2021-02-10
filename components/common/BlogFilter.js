@@ -9,7 +9,10 @@ const BlogFilter = props => {
    const { blogsFilter, data } = props
    const [blogs, setBlogs] = useState([])
    const router = useRouter()
-
+   const sortBlogsByDate = (blogs) => {
+      let sortedBlogsByDate = blogs.sort((a, b) => moment(moment(a.publish_at).format('YYYY-MM-DD')).isBefore(moment(b.publish_at).format('YYYY-MM-DD')) ? -1 : 1)
+      return sortedBlogsByDate
+   }
    const onOpenBlog = blog => {
       setBlogId(blog.id)
       router.push({ pathname: '/blog/details', query: { slug: blog.slug } })
@@ -21,7 +24,9 @@ const BlogFilter = props => {
    }
 
    useEffect(() => {
-      setBlogs(data)
+      console.log('in blog filter use effect')
+      let sortedBlogs = sortBlogsByDate(data)
+      setBlogs(sortedBlogs)
    }, [])
 
    const onApplyFilter = (filter) => {
@@ -37,7 +42,8 @@ const BlogFilter = props => {
                   }
                })
             }
-            setBlogs(filteredBlogs)
+            let sortedFilteredBlogs = sortBlogsByDate(filteredBlogs)
+            setBlogs(sortedFilteredBlogs)
          })
          return
       }
@@ -53,7 +59,8 @@ const BlogFilter = props => {
                   }
                })
             }
-            setBlogs(filteredBlogs)
+            let sortedFilteredBlogs = sortBlogsByDate(filteredBlogs)
+            setBlogs(sortedFilteredBlogs)
          })
          return
       }
@@ -68,7 +75,8 @@ const BlogFilter = props => {
             }
          })
 
-         setBlogs(filteredBlogs)
+         let sortedFilteredBlogs = sortBlogsByDate(filteredBlogs)
+         setBlogs(sortedFilteredBlogs)
          return
       }
       setBlogs(data)
