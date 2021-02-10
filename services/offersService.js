@@ -22,18 +22,9 @@ export const extractOffers = async (apiOffers, productTypeId) => {
     return new Promise(async (resolve) => {
         const strapi = new Strapi()
         const productIdArray = []
-        if (!apiOffers.length) {
-            resolve([])
-        }
-
-        console.log(apiOffers)
-        apiOffers.forEach(offer => {
-            productIdArray.push(offer.cardType)
-        })
-
-        let requiredProducts = ''
-        productIdArray.forEach(id => requiredProducts += `product_id=${id}&`)
-        requiredProducts = requiredProducts.slice(0, -1)
+        if (!apiOffers.length) resolve([])
+        apiOffers.forEach(apiOffer => productIdArray.push(`product_id=${apiOffer.cardType}`))
+        const requiredProducts = productIdArray.join('&')
         const offersPacked = await strapi.processReq('GET', `product-v-2-s?${requiredProducts}`)
 
         let offers = []
@@ -50,7 +41,6 @@ export const extractOffers = async (apiOffers, productTypeId) => {
                         }
                     })
                 })
-                console.log('final offers: ', offers)
                 resolve(offers)
             }
         })

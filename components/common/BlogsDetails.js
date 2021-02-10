@@ -32,7 +32,7 @@ const BlogsDetails = props => {
                                 </span>)
                             ) : null}
                         </span>
-                        <div className="blog_details-custom" dangerouslySetInnerHTML={{ __html: content }}></div>
+                        <div className="cstm-blog-wrapper" dangerouslySetInnerHTML={{ __html: content }}></div>
                     </div>
                     <CommentSection blogId={blogId} commentData={commentData} />
                 </div>

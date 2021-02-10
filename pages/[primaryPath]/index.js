@@ -7,7 +7,6 @@ import PersonalLoansBanner from '../../components/Banners/PersonalLoansBanner'
 import HomeLoansBanner from '../../components/Banners/HomeLoansBanner'
 
 import UspCards from '../../components/common/UspCards'
-import Offers from '../../components/common/Offers'
 import CreditScore from '../../components/common/CreditScore'
 import BankSlider from '../../components/common/BankSlider'
 import Rewards from '../../components/common/Rewards'
@@ -19,6 +18,8 @@ import { getClassesForPage } from '../../utils/classesForPage'
 import { clearLeadId, setPrimaryPath, setProductType, clearFormData, getProductType } from '../../utils/localAccess'
 import { extractPopularOffers, extractTrendingOffers } from '../../services/componentsService'
 import { viewOffers, extractOffers } from '../../services/offersService'
+import PopularOffers from '../../components/common/PopularOffers'
+import TrendingOffers from '../../components/common/TrendingOffers'
 
 const PrimaryPage = props => {
 
@@ -40,8 +41,6 @@ const PrimaryPage = props => {
     const { populars, trendings } = await viewOffers(productTypeId)
     const popularOffers = await extractOffers(populars, productTypeId)
     const trendingOffers = await extractOffers(trendings, productTypeId)
-    console.log('popularOffers: ', popularOffers)
-    console.log('trendingOffers: ', trendingOffers)
     setPopularOffers(popularOffers)
     setTrendingOffers(trendingOffers)
   }
@@ -75,11 +74,18 @@ const PrimaryPage = props => {
             preferredSelectionLists={props.preferredSelectionLists}
           />
         case 'offers.popular-offers-component':
-        case 'offers.trending-offers-component':
-          return <Offers
+          return <PopularOffers
             key={block.id}
             data={block}
-            offers={popularOffers || trendingOffers || []}
+            offers={popularOffers}
+            primaryPath={props.primaryPath}
+            goToShortForm={goToShortForm}
+          />
+        case 'offers.trending-offers-component':
+          return <TrendingOffers
+            key={block.id}
+            data={block}
+            offers={trendingOffers}
             primaryPath={props.primaryPath}
             goToShortForm={goToShortForm}
           />
