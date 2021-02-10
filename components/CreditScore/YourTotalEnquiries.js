@@ -1,20 +1,36 @@
-const YourTotalEnquiries = () => {
+const YourTotalEnquiries = ({ totalEnquiries }) => {
   return (
     <section data-aos="fade-up" className="banner container paymentRank aos-init aos-animate">
       <div className="paymentRank-wrapper">
         <div className="paymentRank-wrapper-head">
           <h2>Your Total Enquiries</h2>
-          <img className="underline-img" src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_rank/underline.png" alt="underline" />
+          <img
+            className="underline-img"
+            src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_rank/underline.png"
+            alt="underline"
+          />
         </div>
         <div className="paymentRank-wrapper-content">
           <div className="paymentRank-wrapper-content-left left-mobile-view">
-            <img className="rank-desktop" src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_enquires/enquiries.png" alt="enquiries" />
-            <img className="rank-mobile" src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_enquires/enquiries-mobile.png" alt="enquiries-mobile" />
+            <img
+              className="rank-desktop"
+              src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_enquires/enquiries.png"
+              alt="enquiries"
+            />
+            <img
+              className="rank-mobile"
+              src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_enquires/enquiries-mobile.png"
+              alt="enquiries-mobile"
+            />
+            <h2>{totalEnquiries}</h2>
           </div>
           <div className="paymentRank-wrapper-content-right">
             <p>What does your rank reflect?</p>
             <div className="progress-bar">
-              <img src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_rank/meter.png" alt="enquiry-meter" />
+              <img
+                src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_rank/meter.png"
+                alt="enquiry-meter"
+              />
             </div>
             <div className="grading-section">
               <div className="grading-section-left">

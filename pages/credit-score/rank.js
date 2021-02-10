@@ -1,20 +1,50 @@
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+
 import OffersForYou from '../../components/CreditScore/OffersForYou'
 import PaymentRank from '../../components/CreditScore/PaymentRank'
 import PaymentRecord from '../../components/CreditScore/PaymentRecord'
 import TipSection from '../../components/CreditScore/TipSection'
 import Layout from '../../components/Layout'
 import { getClassesForPage } from '../../utils/classesForPage'
+import Loader from '../../components/common/Loader'
 
 const rank = (props) => {
-  console.log({ props })
-  const onTime = props?.data?.creditRank?.filter((item) => item.paymentStatus === 'On-time')
-  const delayed = props?.data?.creditRank?.filter((item) => item.paymentStatus !== 'On-time')
+  const [loading, setLoading] = useState(true)
+  const [cpRankData, setCpRankData] = useState({})
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responseObject = await axios.post(
+          'http://203.122.46.189:8060/utility/api/credit-profile/v1/credit-rank',
+          {
+            customerId: '2000006836',
+          }
+        )
+        const { data } = responseObject
+        setCpRankData(data)
+        setLoading(false)
+      } catch (error) {
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [])
+  const onTime = cpRankData?.creditRank?.filter(
+    (item) => item.paymentStatus === 'On-time'
+  )
+  const delayed = cpRankData?.creditRank?.filter(
+    (item) => item.paymentStatus !== 'On-time'
+  )
+  console.log({ cpRankData })
   return (
     <div className={props.pageClasses}>
       <Layout>
-        <PaymentRank rank={props?.data?.rank} />
+        <Loader active={loading} text="loading" />
+        <PaymentRank rank={cpRankData?.rank} />
         <TipSection />
-        <PaymentRecord onTime={onTime} delayed={delayed} />
+        <PaymentRecord onTime={onTime} delayed={delayed} banks={props?.data} />
         <OffersForYou />
       </Layout>
     </div>
@@ -23,19 +53,7 @@ const rank = (props) => {
 export async function getServerSideProps(ctx) {
   const primaryPath = 'cp-rank'
   const pageClasses = getClassesForPage(primaryPath)
-  const responseObject = await fetch('http://203.122.46.189:8060/utility/api/credit-profile/v1/credit-rank', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsZWFkZ2VuZXJhdGVhcGkiLCJleHAiOjE2MTI3ODU1NDMsImlhdCI6MTYxMjY5OTE0M30.vcmaApFEdaW67MbJOdGu97NjV2YjUdD72nO59Ojjbr9AtCLFIAVL0CJyByNXKjOGBQZtgpsMS5wBARNJPZaGJQ',
-      correlationId: '25478965874',
-      appId: 'MMMWEBAPP',
-    },
-    body: JSON.stringify({
-      customerId: '2000006836',
-    }),
-  })
+  const responseObject = await fetch('http://203.122.46.189:1338/banks')
   const data = await responseObject.json()
   return { props: { pageClasses, data } }
 }
