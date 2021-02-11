@@ -11,21 +11,21 @@ const OnBoardForm = props => {
 
             <div className="lets-find-form">
 
-                {props.slides.length ? <form>
-                    {props.slides[0].inputs.map(component => {
-                        return <React.Fragment key={component.id}>
-                            {generateInputs(component, props.handleChange, props.checkInputValidity,
-                                null, 'sf', props.checkboxAnchorClick)}
-                        </React.Fragment>
-                    })}
-                </form> : null}
-
-                <div className='lets-go-button'>
-                    <button
-                        onClick={props.onClickLetsGo}
-                        disabled={props.submitButtonDisabled}
-                    >{props.data.button_text}</button>
-                </div>
+                {props.slides.length ?
+                    <form onSubmit={props.onClickLetsGo} noValidate>
+                        {props.slides[0].inputs.map(component => {
+                            return <React.Fragment key={component.id}>
+                                {generateInputs(component, props.handleChange, props.checkInputValidity,
+                                    null, 'sf', props.checkboxAnchorClick)}
+                            </React.Fragment>
+                        })}
+                        <div className='lets-go-button'>
+                            <button
+                                type="submit"
+                                disabled={props.submitButtonDisabled}
+                            >{props.data.button_text}</button>
+                        </div>
+                    </form> : null}
             </div>
         </div>
     )

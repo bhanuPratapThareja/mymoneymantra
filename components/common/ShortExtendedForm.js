@@ -136,7 +136,8 @@ class ShortExtendedForm extends React.Component {
         })
     }
 
-    onClickLetsGo = async () => {
+    onClickLetsGo = async e => {
+        e.preventDefault()
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
         this.setState({ ...this.state, slides: newSlides }, async () => {
@@ -152,15 +153,22 @@ class ShortExtendedForm extends React.Component {
         })
     }
 
-    onSubmitOtp = async () => {
-        try {
-            await submitOtp(this.state.mobileNo)
-            this.onSubmitLetGoSlide()
-        } catch (err) {
-            this.setState({ submissionError: err.message })
-        } finally {
-            this.scrollToTopOfSlide()
+    onSubmitOtp = e => {
+        e.preventDefault()
+        const inputs = document.getElementsByClassName('input_otp')
+        for (let inp of inputs) {
+            inp.blur()
         }
+        setTimeout(async () => {
+            try {
+                await submitOtp(this.state.mobileNo)
+                this.onSubmitLetGoSlide()
+            } catch (err) {
+                this.setState({ submissionError: err.message })
+            } finally {
+                this.scrollToTopOfSlide()
+            }
+        }, 500)
     }
 
     onSubmitLetGoSlide = async () => {
@@ -173,7 +181,7 @@ class ShortExtendedForm extends React.Component {
                 goToSlides()
             })
         } catch (err) {
-           this.setState({ submissionError: 'Something Went wrong. Please try again.' })
+            this.setState({ submissionError: 'Something Went wrong. Please try again.' })
         }
     }
 
@@ -181,7 +189,8 @@ class ShortExtendedForm extends React.Component {
         this.setState({ submissionError: '' })
     }
 
-    onSubmitSlide = () => {
+    onSubmitSlide = e => {
+        e.preventDefault()
         this.plusSlides(1)
     }
 
@@ -218,7 +227,7 @@ class ShortExtendedForm extends React.Component {
                                 this.props.router.push(`/${this.state.primaryPath}/listings`)
                             })
                             .catch(() => {
-                                this.setState({ submissionError: 'Something went wrong. Please try again.'})
+                                this.setState({ submissionError: 'Something went wrong. Please try again.' })
                             })
                     }
                 }

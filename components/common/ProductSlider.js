@@ -1,9 +1,15 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { useEffect } from "react"
 
 const ProductSlider = props => {
     const router = useRouter()
     const { Blog_product_card, product_type_slider_heading } = props.data.product_type_slider
+    useEffect(() => {
+        if (window !== undefined && window.initSlickBanks && props.data.product_type_slider && props.data.product_type_slider.Blog_product_card.length) {
+            window.initSlickBanks()
+        }
+    }, [])
     const blogsByCategory = (card) => {
         // router.push({ pathname: '/blog/blog-search', query: { category: card.id } })
     }

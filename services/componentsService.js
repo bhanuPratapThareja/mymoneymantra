@@ -137,7 +137,7 @@ export const extractTrendingOffers = data => {
     })
 }
 
-export const extractListingOffersComponent = data => {
+export const extractListingOffers = data => {
     return new Promise((resolve) => {
         if(!data) {
             resolve([])

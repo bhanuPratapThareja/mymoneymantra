@@ -16,7 +16,7 @@ import LongFormBanner from '../../../../components/Banners/LongFormBanner'
 import LongForm from '../../../../components/common/LongForm'
 import { getClassesForPage } from '../../../../utils/classesForPage'
 import { setPrimaryPath, setProductType } from '../../../../utils/localAccess'
-import { getUnpackedProduct, extractTrendingOffers } from '../../../../services/componentsService'
+import { getUnpackedProduct } from '../../../../services/componentsService'
 import { viewOffers, extractOffers } from '../../../../services/offersService'
 
 const Details = props => {
@@ -60,9 +60,7 @@ const Details = props => {
     const getComponents = dynamic => {
         return dynamic.map(block => {
             switch (block.__component) {
-                case 'banners.credit-cards-detail-banner-component':
-                case 'banners.personal-loans-details-banner-component':
-                case 'banners.home-loans-details-banner-component':
+                case 'blocks.product-banner-component':
                     return <DetailsBanner
                         key={block.id}
                         data={block}
@@ -70,24 +68,20 @@ const Details = props => {
                         primaryPath={props.primaryPath}
                         changePageType={changePageType}
                     />
-
-                case 'blocks.credit-cards-details-component':
-                case 'blocks.details-component':
-                case 'blocks.home-loans-details':
+                case 'blocks.offers-details-component':
                     return <ProductDetails
                         key={block.id}
                         data={block}
                         productData={props.productData}
                         primaryPath={props.primaryPath}
                     />
-
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
                     return <Offers 
                         key={block.id} 
                         data={block}
-                        offers={props.trendingOffers || []}
+                        offers={[]}
                         primaryPath={props.primaryPath}
                     />
                 case 'blocks.bank-slider-component':
@@ -156,7 +150,7 @@ export async function getServerSideProps(ctx) {
         page = 'details'
     }
 
-    const detailsPageData = await strapi.processReq('GET', `${primaryPath}-details-pages?slug=${productSlug}`)
+    const detailsPageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-details`)
     const longFormPageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${bankSlug}-long-form`)
     const detailsData = detailsPageData && detailsPageData.length ? detailsPageData[0]  : null
     const longFormData = longFormPageData && longFormPageData.length ? longFormPageData[0] : null
@@ -166,12 +160,11 @@ export async function getServerSideProps(ctx) {
     const preferredSelectionLists = await strapi.processReq("GET", `list-preferences`)
 
     const productData = await getUnpackedProduct(productDataPacked)
-    const trendingOffers = await extractTrendingOffers(detailsData)
 
     return {
         props: {
             detailsData, longFormData, productData, productTypeData, 
-            preferredSelectionLists, page, primaryPath, trendingOffers
+            preferredSelectionLists, page, primaryPath
         }
     }
 }

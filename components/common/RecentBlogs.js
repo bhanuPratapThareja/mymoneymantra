@@ -1,15 +1,16 @@
 import moment from "moment"
 import { useRouter } from "next/router"
+import { setBlogId } from "../../utils/localAccess"
 import Image from "../ImageComponent/ImageComponent"
 
 const RecentBlogs = (props) => {
     const router = useRouter()
     const { bloggers } = props.data
-    let recentBlogs = bloggers.sort((a, b) => moment(a.publish_at).isBefore(b.publish_at) ? -1 : 1)
-    // console.log(bloggers)
-    // console.log(recentBlogs)
+    let recentBlogs = bloggers.sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
+
     const onOpenBlog = blog => {
-        router.push({ pathname: '/blog/details', query: { slug: blog.id } })
+        setBlogId(blog.id)
+        router.push(`/blog/details/${blog.slug}`)
     }
     return (
         <section data-aos="fade-up" className="popular-card-container aos-animate aos-init">

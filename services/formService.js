@@ -3,9 +3,8 @@ import Strapi from '../providers/strapi'
 import { getApiData } from '../api/api'
 import { getLeadId, getProductType } from '../utils/localAccess'
 import { getFormattedDate } from '../utils/formatDataForApi'
-const CancelToken = axios.CancelToken
 import { getDocumentIdandTypeId } from '../utils/uploadDocumentHelper'
-import { generateCorrelationId } from '../api/headers'
+const CancelToken = axios.CancelToken
 let cancel
 let otpId = ''
 
@@ -27,6 +26,7 @@ export const submitOtp = async mobileNo => {
     for (let inp of inps) {
         otp += inp.value
     }
+   
     if (otp.length !== 4) {
         throw new Error('Otp mush have 4 characters')
     }
