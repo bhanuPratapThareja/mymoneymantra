@@ -8,6 +8,7 @@ import ProductType from '../components/common/ProductTypes'
 import AboutUs from '../components/common/AboutUs'
 import UspCards from '../components/common/UspCards'
 import CreditScore from '../components/common/CreditScore'
+import TrendingOffers from '../components/common/TrendingOffers'
 import BankSlider from '../components/common/BankSlider'
 import AppDownload from '../components/common/AppDownload'
 import Rewards from '../components/common/Rewards'
@@ -17,21 +18,11 @@ import { getClassesForPage } from '../utils/classesForPage'
 import { viewOffers, extractOffers } from '../services/offersService'
 
 const Home = props => {
-
     const [trendingOffers, setTrendingOffers] = useState([])
 
     useEffect(() => {
         localStorage.clear()
-        getOffers()
     }, [])
-
-    const getOffers = async () => {
-        // const { trendings } = await viewOffers()
-        // console.log('trendings: ', trendings)
-        // const trendingOffers = await extractOffers(trendings, productTypeId)
-        // console.log('trendingOffers: ', trendingOffers)
-        // setTrendingOffers(trendingOffers)
-    }
 
     const getComponents = (dynamic) => {
         return dynamic.map(block => {

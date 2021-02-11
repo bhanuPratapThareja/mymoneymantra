@@ -10,6 +10,7 @@ export const viewOffers = async productTypeId => {
     const { url, body } = getApiData('customerOfferView')
     body.customerId = ''
     body.productId = productTypeId ? productTypeId : ''
+
     try {
         const res = await axios.post(url, body)
         return res.data
@@ -18,7 +19,7 @@ export const viewOffers = async productTypeId => {
     }
 }
 
-export const extractOffers = async (apiOffers, productTypeId) => {
+export const extractOffers = async apiOffers => {
     return new Promise(async (resolve) => {
         const strapi = new Strapi()
         const productIdArray = []
