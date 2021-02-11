@@ -16,7 +16,6 @@ import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { clearLeadId, setPrimaryPath, setProductType, clearFormData, getProductType } from '../../utils/localAccess'
-import { extractPopularOffers, extractTrendingOffers } from '../../services/componentsService'
 import { viewOffers, extractOffers } from '../../services/offersService'
 import PopularOffers from '../../components/common/PopularOffers'
 import TrendingOffers from '../../components/common/TrendingOffers'
@@ -122,14 +121,10 @@ export async function getServerSideProps(ctx) {
   const preferredSelectionLists = await strapi.processReq('GET', `list-preferences`)
   const tncData = await strapi.processReq('GET', `tnc`)
 
-  const popularOffers = await extractPopularOffers(data)
-  const trendingOffers = await extractTrendingOffers(data)
-
-
   return {
     props: {
       data, primaryPath, preferredSelectionLists,
-      productTypeData, popularOffers, trendingOffers, tncData
+      productTypeData, tncData
     }
   }
 }
