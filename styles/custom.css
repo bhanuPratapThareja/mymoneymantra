@@ -399,8 +399,8 @@ div#company_name_input_with_dropdown {
   margin-bottom: 24px;
 }
 
-.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms:last-child {
-  margin-bottom: 89px;
+.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .current-address {
+   margin-bottom: 89px;
 }
 
 div#address_proof_upload_button {
