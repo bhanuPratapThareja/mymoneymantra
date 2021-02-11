@@ -7,10 +7,10 @@ const BlogsDetails = props => {
     const [displayBlog, setDisplayBlog] = useState(false)
     const [blogData, setBlogData] = useState([])
     const goToPage = (name) => {
-        router.push({ pathname: "/blog/blog-search", query: { category: name } })
+        router.push(`/blog/category/${name}`)
     }
     const goToContributorDetailPage = (contributor) => {
-        router.push({ pathname: "/blog/contributor-detail", query: { slug: contributor.id } })
+        router.push({ pathname: "/blog/contributor-detail", query: { id: contributor.id } })
     }
     console.log('detail props', props.data)
     useEffect(() => {

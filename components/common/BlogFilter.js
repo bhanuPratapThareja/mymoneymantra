@@ -16,7 +16,7 @@ const BlogFilter = props => {
    }
    const onOpenBlog = blog => {
       setBlogId(blog.id)
-      router.push(`/blog/${blog.slug}`)
+      router.push(`/blog/details/${blog.slug}`)
    }
    const onOpenFilter = () => {
       const el = document.getElementsByClassName('filter-option')[0]

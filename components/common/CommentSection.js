@@ -23,7 +23,21 @@ const CommentSection = (props) => {
         }
         ).catch(err => console.log(err))
     }, [props.blogId])
-
+    const handleCommentLikeDislike = async (userId, commentId) => {
+        const { url } = getApiData('commentLikeDislike')
+        try {
+            const response = await axios.get(`${url}?customerId=${userId}&commentId=${commentId}`)
+            commentData.comments.forEach(c => {
+                if (c.commentId == commentId) {
+                    c.sentiment = response.data.sentiment
+                    console.log(response)
+                }
+            })
+            setCommentData(commentData)
+        } catch (err) {
+            console.log(err)
+        }
+    }
     const getCommentSentiment = async (userId, commentId, data) => {
         const { url } = getApiData('commentLikeDislike')
 
@@ -94,6 +108,9 @@ const CommentSection = (props) => {
             if (currentSentiment == "" || currentSentiment == null) {
                 body.sentiment = "like"
             }
+            if (currentSentiment == "LIKE") {
+                body.sentiment = ""
+            }
         } else {
             if (currentSentiment == "LIKE") {
                 return
@@ -101,7 +118,7 @@ const CommentSection = (props) => {
             if (currentSentiment == "" || currentSentiment == null) {
                 body.sentiment = "dislike"
             }
-            if (currentSentiment = "DISLIKE") {
+            if (currentSentiment == "DISLIKE") {
                 body.sentiment = ""
             }
         }
@@ -111,6 +128,7 @@ const CommentSection = (props) => {
         axios.post(url, body).then(
             res => {
                 getCommentData(blogId)
+                // handleCommentLikeDislike(defaultUserId, commentId)
             }
         ).catch(
             err => console.log(err)

@@ -34,7 +34,7 @@ const SimilarArticles = (props) => {
 
     const onOpenBlog = blog => {
         setBlogId(blog.id)
-        router.push(`/blog/${blog.slug}`)
+        router.push(`/blog/details/${blog.slug}`)
     }
 
     return (
