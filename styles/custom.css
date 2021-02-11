@@ -2058,22 +2058,22 @@ section.popular-card-container {
   
   }
 
-  .file-type h5 b {
+  /* .file-type h5 b {
     line-height: 17px;
     font-size: 15px; 
-  }
+  } */
 
   .credit-card-flow .sf-forms .form__group.field.file-type>img {
     left: 15px;
   }
 
-  .file-type h5 {
+  /* .file-type h5 {
     white-space: nowrap;
     font-size: 13px;
     left: 47px;
     overflow: hidden;
     max-width: 181px;
-  }
+  } */
 
 }
 
