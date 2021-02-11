@@ -6,15 +6,17 @@ import { getApiData } from '../../api/api'
 
 const WorkInfo = (props) => {
   const [isedit, setIsedit] = useState(false)
-  const [employedType, setEmployedType] = useState(null)
+  const [employedType, setEmployedType] = useState('')
   const [companyQuery, setCompanyQuery] = useState('')
-  const [bankId, setBankId] = useState(null)
-  const [ifscCode, setIfscCode] = useState(null)
-  const [netMonthlyIncome, setNetMonthlyIncome] = useState(null)
-  const [accountNo, setAccountNo] = useState(null)
+  const [bankId, setBankId] = useState('')
+  const [ifscCode, setIfscCode] = useState('')
+  const [netMonthlyIncome, setNetMonthlyIncome] = useState('')
+  const [accountNo, setAccountNo] = useState('')
   const [companyOptions, setCompanyOtions] = useState([])
   const [companyId, setCompanyId] = useState('')
   const [companyName, setCompanyName] = useState('')
+  const [customerId, setCustomerId] = useState('')
+  const [bankName, setBankName] = useState('')
 
   useEffect(() => {
     console.log(props.data)
@@ -52,7 +54,11 @@ const WorkInfo = (props) => {
           accountNo,
           ifscCode,
           companyName,
+          customerId,
+          bankName,
         } = { ...res }
+        setBankName(bankName)
+        setCustomerId(customerId)
         setCompanyId(companyId)
         setEmployedType(employedType)
         setNetMonthlyIncome(netMonthlyIncome)
@@ -68,9 +74,24 @@ const WorkInfo = (props) => {
       .finally(() => {})
   }
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault()
     setIsedit(false)
+    const { url } = getApiData('workProfile')
+    try {
+      const responseObject = await axios.post(url, {
+        bankName,
+        customerId,
+        companyId,
+        bankId,
+        netMonthlyIncome,
+        accountNo,
+        employedType,
+      })
+      console.log(responseObject)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const selectCompanyId = (id, name) => {
@@ -247,7 +268,10 @@ const WorkInfo = (props) => {
           </label>
         </div>
       </div>
-      <div className="save-options">
+      <div
+        className="save-options"
+        style={{ display: isedit ? 'flex' : 'none' }}
+      >
         <button type="submit" className="save-work" id="save-work">
           Save
         </button>
