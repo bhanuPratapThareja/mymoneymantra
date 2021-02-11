@@ -235,7 +235,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         
         body.address = []
         // for residence address
-        if (addressline1 || addressline2 || addressline3 || nearByLandmark || (pincode && pincode.pincode) || (city && city.cityId) || state && state.stateId || stdCode) {
+        if (addressline1 || addressline2 || addressline3 || nearByLandmark || (purposeOfLoan &&  purposeOfLoan.purposeOfLoanId) || (pincode && pincode.pincode) || (city && city.cityId) || state && state.stateId || stdCode) {
             let residenceAddress = {
                 addressTypeMasterId: '1000000001',
                 addressline1: addressline1,
@@ -249,13 +249,13 @@ export const generateLead = async (data, primaryPath, formType) => {
                 city: city && city.cityId ? city.cityId : '',
                 state: state && state.stateId ? state.stateId : '',
                 stdCode: stdCode,
-                purposeOfLoan: purposeOfLoan,
+                purposeOfLoan: purposeOfLoan && purposeOfLoan.purposeOfLoanId ? purposeOfLoan.purposeOfLoanId : "",
             }
             body.address.push(residenceAddress)
         }
         
         // for office address
-        if (officeAddressline1 || officeAddressline2 || officeNearBy || (officePincode && officePincode.pincode) || (officeCity && officeCity.cityId) || (officeState && officeState.stateId) || officeStdCode) {
+        if (officeAddressline1 || officeAddressline2 || officeNearBy || (purposeOfLoan &&  purposeOfLoan.purposeOfLoanId) || (officePincode && officePincode.pincode) || (officeCity && officeCity.cityId) || (officeState && officeState.stateId) || officeStdCode) {
             let officeAddress = {
                 addressTypeMasterId: '1000000002',
                 addressline1: officeAddressline1,
@@ -265,13 +265,13 @@ export const generateLead = async (data, primaryPath, formType) => {
                 city: officeCity && officeCity.cityId ? officeCity.cityId : '',
                 state: officeState && officeState.stateId ? officeState.stateId : '',
                 stdCode: officeStdCode,
-                purposeOfLoan: purposeOfLoan,
+                purposeOfLoan: purposeOfLoan && purposeOfLoan.purposeOfLoanId ? purposeOfLoan.purposeOfLoanId : "",
             }
             body.address.push(officeAddress)
         }
         
         // for permanent address
-        if (permanentAddressline1 || permanentAddressline2 || (permanentPincode && permanentPincode.pincode) || (permanentCity && permanentCity.cityId) || permanentStdCode) {
+        if (permanentAddressline1 || permanentAddressline2 || (purposeOfLoan &&  purposeOfLoan.purposeOfLoanId) || (permanentPincode && permanentPincode.pincode) || (permanentCity && permanentCity.cityId) || permanentStdCode) {
             let permanentAddress = {
                 addressTypeMasterId: '1000000003',
                 addressline1: permanentAddressline1,
@@ -280,13 +280,13 @@ export const generateLead = async (data, primaryPath, formType) => {
                 city: permanentCity && permanentCity.cityId ? permanentCity.cityId : '',
                 state: permanentState && permanentState.stateId ? permanentState.stateId : '',
                 stdCode: permanentStdCode,
-                purposeOfLoan: purposeOfLoan
+                purposeOfLoan: purposeOfLoan && purposeOfLoan.purposeOfLoanId ? purposeOfLoan.purposeOfLoanId : "",
             }
             body.address.push(permanentAddress)
         }
         
         // for property address
-        if (purposeOfLoan || propertyValue || propertyPincode || propertyCityRadio || propertyCity || propertyState || propertyStdCode || purposeOfLoan) {
+        if (purposeOfLoan || propertyValue || propertyPincode || (purposeOfLoan &&  purposeOfLoan.purposeOfLoanId) || propertyCityRadio || propertyCity || propertyState || propertyStdCode || purposeOfLoan) {
             let propertyAddress = {
                 addressTypeMasterId: '1000000004',
                 pincode: propertyPincode && propertyPincode.pincode ? propertyPincode.pincode : '',
@@ -294,7 +294,7 @@ export const generateLead = async (data, primaryPath, formType) => {
                 state: propertyState && propertyState.stateId ? propertyState.stateId : '',
                 stdCode: propertyStdCode,
                 propertyValue: propertyValue,
-                purposeOfLoan: purposeOfLoan
+                purposeOfLoan: purposeOfLoan && purposeOfLoan.purposeOfLoanId ? purposeOfLoan.purposeOfLoanId : "",
             }
             body.address.push(propertyAddress)
         }
