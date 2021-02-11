@@ -13,9 +13,8 @@ const BlogSearchPage = (props) => {
         return sortedBlogsByKeyword
     }
     const sortBlogsByDate = (blogs) => {
-        console.log(blogs)
-        let sortedBlogsByDate = blogs.sort((a, b) => moment(moment(a.publish_at).format('YYYY-MM-DD')).isBefore(moment(b.publish_at).format('YYYY-MM-DD')) ? -1 : 1)
-        console.log(sortedBlogsByDate)
+        // let sortedBlogsByDate = blogs.sort((a, b) => moment(moment(a.publish_at).format('YYYY-MM-DD')).isBefore(moment(b.publish_at).format('YYYY-MM-DD')) ? 1 : -1)
+        let sortedBlogsByDate = blogs.sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
         return sortedBlogsByDate
     }
     let searchKey = ''
@@ -55,7 +54,7 @@ const BlogSearchPage = (props) => {
         if (props.query.author) {
             let filteredBlogs = []
             props.blogData.forEach(blog => {
-                if (props.query.author.toLowerCase().includes(blog.blog_author.toLowerCase())) {
+                if (props.query.author.toLowerCase().includes(blog.blog_contributor.blog_contributors_name.toLowerCase())) {
                     if (blog.header.toLowerCase().includes(props.query.q.toLowerCase())) {
                         filteredBlogs.push(blog)
                     }

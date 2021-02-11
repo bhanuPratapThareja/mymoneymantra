@@ -76,3 +76,11 @@ export const getBlogId = () => {
     let blogId = localStorage.getItem('blogId')
     return blogId
 }
+export const setContributorId = (contributorId) => {
+    localStorage.setItem('contributorId', contributorId)
+}
+
+export const getContributorId = () => {
+    let contributorId = localStorage.getItem('contributorId')
+    return contributorId
+}

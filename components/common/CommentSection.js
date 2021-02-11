@@ -9,7 +9,11 @@ const CommentSection = (props) => {
     const [comment, setComment] = useState('')
     const [blogSentiment, setBlogSentiment] = useState('')
     const [commentData, setCommentData] = useState([])
+    const [comments, setComments] = useState([])
     const [share, setShare] = useState(false)
+    const [dislikeCount, setDislikeCount] = useState(null)
+    const [likeCount, setLikeCount] = useState(null)
+    const [shareCount, setShareCount] = useState(null)
     const { blogId } = props
     let defaultUserId = '101'
 
@@ -23,6 +27,19 @@ const CommentSection = (props) => {
         }
         ).catch(err => console.log(err))
     }, [props.blogId])
+    const handleCommentLikeDislikeStatus = async (userId, commentId) => {
+        const { url } = getApiData('commentLikeDislike')
+        try {
+            const response = await axios.get(`${url}?customerId=${userId}&commentId=${commentId}`)
+            let allComments = JSON.parse(JSON.stringify(commentData.comments))
+            let comment = allComments.find(c => c.commentId == commentId)
+            let index = allComments.indexOf(comment)
+            allComments[index].sentiment = response.data.sentiment
+            setComments(allComments)
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     const getCommentSentiment = async (userId, commentId, data) => {
         const { url } = getApiData('commentLikeDislike')
@@ -35,6 +52,7 @@ const CommentSection = (props) => {
                 }
             })
             setCommentData(data)
+            setComments(data.comments)
         } catch (err) {
             console.log(err)
         }
@@ -43,6 +61,11 @@ const CommentSection = (props) => {
         const { url } = getApiData('blogLikeDislike')
         try {
             const response = await axios.get(`${url}?blogId=${blogId}&customerId=${customerId}`)
+            const data = await getBlogComments(blogId)
+            console.log(data)
+            setLikeCount(data.likesCount)
+            setDislikeCount(data.dislikesCount)
+            setShareCount(data.sharedCount)
             setBlogSentiment(response.data.sentiment)
         } catch (err) {
             console.log(err)
@@ -77,7 +100,8 @@ const CommentSection = (props) => {
 
         axios.post(url, body).then(
             res => {
-                getCommentData(blogId)
+                // getCommentData(blogId)
+                getBlogSentiment(defaultUserId, blogId)
             }
         ).catch(
             err => {
@@ -94,6 +118,9 @@ const CommentSection = (props) => {
             if (currentSentiment == "" || currentSentiment == null) {
                 body.sentiment = "like"
             }
+            if (currentSentiment == "LIKE") {
+                body.sentiment = ""
+            }
         } else {
             if (currentSentiment == "LIKE") {
                 return
@@ -101,7 +128,7 @@ const CommentSection = (props) => {
             if (currentSentiment == "" || currentSentiment == null) {
                 body.sentiment = "dislike"
             }
-            if (currentSentiment = "DISLIKE") {
+            if (currentSentiment == "DISLIKE") {
                 body.sentiment = ""
             }
         }
@@ -110,7 +137,8 @@ const CommentSection = (props) => {
         body.commentId = commentId
         axios.post(url, body).then(
             res => {
-                getCommentData(blogId)
+                // getCommentData(blogId)
+                handleCommentLikeDislikeStatus(defaultUserId, commentId)
             }
         ).catch(
             err => console.log(err)
@@ -167,7 +195,7 @@ const CommentSection = (props) => {
             body.shared = 'yes'
             try {
                 const response = await axios.post(url, body)
-                getCommentData(props.blogId)
+                getBlogSentiment(defaultUserId, props.blogId)
             } catch (err) {
                 console.log(err)
             }
@@ -184,23 +212,23 @@ const CommentSection = (props) => {
                     <div className="like-dislike-wrap">
                         <button onClick={() => blogLikeDislike(blogSentiment, blogId, true)} className="like-dislike">
                             <img src={`/assets/images/icons/${blogSentiment == 'LIKE' ? 'like_active' : 'like'}.svg`} />
-                            <h6 id="like-count">{commentData.likesCount ? commentData.likesCount : 0}</h6>
+                            <h6 id="like-count">{likeCount ? likeCount : 0}</h6>
                         </button>
                         <button onClick={() => blogLikeDislike(blogSentiment, blogId, false)} className="like-dislike">
                             <img src={`/assets/images/icons/${blogSentiment == 'DISLIKE' ? 'dislike_active' : 'dislike'}.svg`} />
-                            <h6 id="dislike-count">{commentData.dislikesCount ? commentData.dislikesCount : 0}</h6>
+                            <h6 id="dislike-count">{dislikeCount ? dislikeCount : 0}</h6>
                         </button>
                     </div>
                     <button onClick={() => shareBlog(true)} className="share-blog">
                         <img src='/assets/images/icons/share.svg' />
-                        <h6 id="share-count">{commentData.sharedCount ? commentData.sharedCount : 0}</h6>
+                        <h6 id="share-count">{shareCount ? shareCount : 0}</h6>
                     </button>
                 </div>
                 <div className="comment-wrap">
                     <input id="user-comment" type="text" value={comment} onChange={(e) => setComment(e.target.value)} onKeyUp={(e) => postComment(e, comment, blogId)} name="comment" placeholder="Add a comment..." />
                     <div className="added-comments">
                         {
-                            commentData.comments ? commentData.comments.map((comment, i) => {
+                            comments ? comments.map((comment, i) => {
                                 return (
                                     <div key={i} className="user">
                                         <div className="image"></div>
