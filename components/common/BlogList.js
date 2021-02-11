@@ -8,7 +8,7 @@ const BlogList = (props) => {
     let sortedBlogs = data.sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
     const onOpenBlog = blog => {
         setBlogId(blog.id)
-        router.push(`/blog/${blog.slug}`)
+        router.push(`/blog/details/${blog.slug}`)
     }
     return (
         <section className="blogs-filter container">

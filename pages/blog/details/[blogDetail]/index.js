@@ -1,15 +1,12 @@
-import Strapi from '../../providers/strapi'
-import { getClassesForPage } from '../../utils/classesForPage'
-import Layout from '../../components/Layout'
-import BlogDetails from '../../components/common/BlogsDetails'
-import BlogMediaLinks from '../../components/common/BlogMediaLinks'
-import ProductSlider from '../../components/common/ProductSlider'
-import Offers from '../../components/common/Offers'
-import Blogger from '../../components/common/Blogger'
-import { useEffect, useState } from 'react'
-import { getBlogId } from '../../utils/localAccess'
-import { get } from 'jquery'
-import SimilarArticles from '../../components/common/SimilarArticles'
+import { useEffect, useState } from "react"
+import BlogMediaLinks from "../../../../components/common/BlogMediaLinks"
+import BlogsDetails from "../../../../components/common/BlogsDetails"
+import ProductSlider from "../../../../components/common/ProductSlider"
+import SimilarArticles from "../../../../components/common/SimilarArticles"
+import Layout from "../../../../components/Layout"
+import Strapi from "../../../../providers/strapi"
+import { getClassesForPage } from "../../../../utils/classesForPage"
+import { getBlogId } from "../../../../utils/localAccess"
 
 const BlogDetail = props => {
     const [currentUrl, setCurrentUrl] = useState()
@@ -32,7 +29,7 @@ const BlogDetail = props => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.blog-texts-component':
-                    return <BlogDetails key={block.id} data={blogData} blogId={blogData.id} url={currentUrl} allBlogs={props.allBlogs} />
+                    return <BlogsDetails key={block.id} data={blogData} blogId={blogData.id} url={currentUrl} allBlogs={props.allBlogs} />
                 // return <BlogDetails key={block.id} data={blogData} blogId={blogData.id} commentData={commentData} />
                 case 'blocks.blog-social-media-links-component':
                     return <BlogMediaLinks key={block.id} data={block} url={currentUrl} blogData={blogData} />

@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { cleanAuthorName } from '../../utils/formatDataForBlogs'
+import { setContributorId } from '../../utils/localAccess'
 import CommentSection from './CommentSection'
 
 const BlogsDetails = props => {
@@ -7,12 +9,13 @@ const BlogsDetails = props => {
     const [displayBlog, setDisplayBlog] = useState(false)
     const [blogData, setBlogData] = useState([])
     const goToPage = (name) => {
-        router.push({ pathname: "/blog/blog-search", query: { category: name } })
+        router.push(`/blog/category/${name}`)
     }
     const goToContributorDetailPage = (contributor) => {
-        router.push({ pathname: "/blog/contributor-detail", query: { slug: contributor.id } })
+        let name = cleanAuthorName(contributor.blog_contributors_name)
+        setContributorId(contributor.id)
+        router.push(`/blog/contributor-detail/${name}`)
     }
-    console.log('detail props', props.data)
     useEffect(() => {
         if (props.data.length != 0) {
             setDisplayBlog(true)

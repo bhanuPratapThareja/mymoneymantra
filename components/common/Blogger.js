@@ -1,10 +1,16 @@
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import { setBlogId } from '../../utils/localAccess'
 import Image from '../ImageComponent/ImageComponent'
 
 
 const Blogger = props => {
     const router = useRouter()
+    useEffect(() => {
+        if (window !== undefined && window.initSlickBlogs && props.data.blogger && props.data.blogger.image.length) {
+            window.initSlickBlogs()
+        }
+    }, [])
     let { section_heading, bloggers } = props.data
     let popularBlogs = bloggers.filter(blog => blog.popular === true)
     const shuffleArray = (array) => {
@@ -21,7 +27,7 @@ const Blogger = props => {
 
     const onOpenBlog = blog => {
         setBlogId(blog.id)
-        router.push(`/blog/${blog.slug}`)
+        router.push(`/blog/details/${blog.slug}`)
     }
 
     return (
