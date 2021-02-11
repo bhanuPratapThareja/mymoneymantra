@@ -25,7 +25,6 @@ const BlogFilter = props => {
    }
 
    useEffect(() => {
-      console.log('in blog filter use effect')
       let sortedBlogs = sortBlogsByDate(data)
       setBlogs(sortedBlogs)
    }, [])
