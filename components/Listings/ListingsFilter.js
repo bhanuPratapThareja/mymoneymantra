@@ -15,8 +15,8 @@ class ListingFilter extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log('prevProps: ', prevProps)
-        console.log('prevState: ', prevState)
+        // console.log('prevProps: ', prevProps)
+        // console.log('prevState: ', prevState)
         // let bankCheckBoxes = []
         // if(this.props.allOfferCards.length) {
         //     this.props.allOfferCards.forEach(card => {
