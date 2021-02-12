@@ -2,7 +2,7 @@ import $ from "jquery"
 import { isInputValid, isMonetaryValid } from "./formValidations"
 import { getBase64, documentUpload, generateLead } from "../services/formService"
 import { getFormattedName } from "./formatDataForApi"
-import { getWholeNumberFromCurrency } from "./formattedCurrency"
+import { getWholeNumberFromCurrency, getFormattedCurrency } from "./formattedCurrency"
 export const textTypeInputs = [
   "text",
   "number",
@@ -23,6 +23,7 @@ export const getCurrentSlideInputs = (state) => {
 
 export const handleChangeInputs = (inputs, field, preferredSelectionLists, selectedBank) => {
   let inputDropdown = null
+  let propertyValue = 0
   if (field.type === "checkbox") {
     inputs.forEach((inp) => {
       if (inp.type === "checkbox") {
@@ -193,14 +194,17 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
           inp.errorMsg = ""
           inp.verified = false
         }
+        if(inp.end_point_name === 'propertyValue' && inp.value) {
+          propertyValue = Number(getWholeNumberFromCurrency(inp.value))
+        }
       }
     })
   }
 
-  return inputDropdown
+  return {inputDropdown, propertyValue}
 }
 
-export const updateInputsValidity = (inputs, field, errorMsgs) => {
+export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) => {
   let errors = false
 
   // check on input
@@ -218,7 +222,25 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
       // check on blur
 
       if (field.blur) {
-        if (inp.type === "email" && inp.input_id === field.currentActiveInput) {
+        if(inp.end_point_name === 'requestedLoanamount' && inp.value && inp.input_id === field.currentActiveInput && propertyValue){
+
+          errors = true
+          inp.error = true
+          inp.verified = false
+          if(!inp.value) {
+            inp.errorMsg = errorMsgs.mandatory
+          } else if(Number(getWholeNumberFromCurrency(inp.value)) > propertyValue) {
+            inp.errorMsg = `The value cannot be more than Property Value of ${getFormattedCurrency(propertyValue.toString())}`
+          } else if(!isMonetaryValid(inp)) {
+            inp.errorMsg = inp.validation_error
+          } else {
+            inp.error = false
+            inp.errorMsg = ""
+            inp.verified = true
+          }
+          // console.log(inp)
+        }
+        else if (inp.type === "email" && inp.input_id === field.currentActiveInput) {
           if (!isInputValid(inp)) {
             errors = true
             inp.error = true
@@ -335,7 +357,23 @@ export const updateInputsValidity = (inputs, field, errorMsgs) => {
     // check on slide or form submit
   } else {
     inputs.forEach((inp) => {
-      if (inp.selectedId && inp.selectedId === "*" || !inp.mandatory) {
+      if(inp.end_point_name === 'requestedLoanamount' && inp.value && propertyValue){
+        if(!inp.value) {
+          errors = true
+          inp.error = true
+          inp.errorMsg = errorMsgs.mandatory
+        }else if(!isMonetaryValid(inp)) {
+          errors = true
+          inp.error = true         
+          inp.errorMsg = inp.validation_error
+        } else if(Number(getWholeNumberFromCurrency(inp.value)) > propertyValue) {
+          errors = true
+          inp.error = true
+          inp.errorMsg = `The value cannot be more than Property Value of ${getFormattedCurrency(propertyValue.toString())}`
+        }
+
+      }
+      else if (inp.selectedId && inp.selectedId === "*" || !inp.mandatory) {
         inp.verified = false
       } else if ((textTypeInputs.includes(inp.type) || inp.type === "radio")) {
         if ((inp.mandatory && !inp.value) || !isInputValid(inp)) {

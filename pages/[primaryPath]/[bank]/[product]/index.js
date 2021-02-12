@@ -6,7 +6,7 @@ import PageNotFound from '../../../../components/PageNotFound'
 import DetailsBanner from '../../../../components/Banners/DetailsBanner'
 import ProductDetails from '../../../../components/common/ProductDetails'
 import CreditScore from '../../../../components/common/CreditScore'
-import Offers from '../../../../components/common/Offers'
+import TrendingOffers from '../../../../components/common/trendingOffers'
 import BankSlider from '../../../../components/common/BankSlider'
 import Rewards from '../../../../components/common/Rewards'
 import FinancialTools from '../../../../components/common/FinancialTools'
@@ -15,7 +15,7 @@ import LearnMore from '../../../../components/common/LearnMore'
 import LongFormBanner from '../../../../components/Banners/LongFormBanner'
 import LongForm from '../../../../components/common/LongForm'
 import { getClassesForPage } from '../../../../utils/classesForPage'
-import { setPrimaryPath, setProductType } from '../../../../utils/localAccess'
+import { setPrimaryPath, setProductType, getProductType } from '../../../../utils/localAccess'
 import { getUnpackedProduct } from '../../../../services/componentsService'
 import { viewOffers, extractOffers } from '../../../../services/offersService'
 
@@ -23,7 +23,6 @@ const Details = props => {
     const [page, setPage] = useState(props.page)
     const [previousPath, setPreviousPath] = useState('')
     const [trendingOffers, setTrendingOffers] = useState([])
-
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -46,11 +45,10 @@ const Details = props => {
     }
 
     const getOffers = async () => {
-        // const { trendings } = await viewOffers()
-        // console.log('trendings: ', trendings)
-        // const trendingOffers = await extractOffers(trendings, productTypeId)
-        // console.log('trendingOffers: ', trendingOffers)
-        // setTrendingOffers(trendingOffers)
+        const productType = getProductType()
+        const { trendings } = await viewOffers(productType.productTypeId)
+        const trendingOffers = await extractOffers(trendings)
+        setTrendingOffers(trendingOffers)
     }
 
     if (!props.productData) {
@@ -78,10 +76,10 @@ const Details = props => {
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
-                    return <Offers 
+                    return <TrendingOffers 
                         key={block.id} 
                         data={block}
-                        offers={[]}
+                        offers={trendingOffers}
                         primaryPath={props.primaryPath}
                     />
                 case 'blocks.bank-slider-component':

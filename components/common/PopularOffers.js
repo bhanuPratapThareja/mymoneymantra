@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
-import { getProductDecision } from '../../services/offersService'
+import { makeDecision } from '../../utils/decision'
 
 const popularOffers = props => {
    const router = useRouter()
@@ -14,22 +14,10 @@ const popularOffers = props => {
    })
 
    const onOfferClick = async offer => {
-      const { product, bank } = offer
-      const response = await getProductDecision([offer])
-      const productDecision = response[0].productDecision
-      if (productDecision === 'Apply Now') {
-         props.goToShortFormPage()
-         return
-      }
-      const { slug: bankSlug } = bank
-      const { slug: productSlug } = product
-      const primaryPath = props.primaryPath
-      
-      if(primaryPath === 'credit-cards') {
-         router.push(`/${primaryPath}/${bankSlug}/${productSlug}`)
-      } else {
-         router.push(`/${primaryPath}/${bankSlug}`)
-      }
+      const { productDecision } = offer
+      const decision = makeDecision(productDecision, offer, props.primaryPath, null)
+      const { pathname, query } = decision
+      router.push({ pathname, query }, pathname, { shallow: true })
    }
 
    if (!props.offers || !props.offers.length) {

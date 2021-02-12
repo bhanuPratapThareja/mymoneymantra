@@ -4,7 +4,7 @@ import Layout from '../components/Layout'
 
 import ThankYouBanner from '../components/Banners/ThankYouBanner'
 import CreditScore from '../components/common/CreditScore'
-import Offers from '../components/common/Offers'
+import TrendingOffers from '../components/common/TrendingOffers'
 import BankSlider from '../components/common/BankSlider'
 import Rewards from '../components/common/Rewards'
 import FinancialTools from '../components/common/FinancialTools'
@@ -31,11 +31,10 @@ const ThankYouPage = props => {
     }, [])
 
     const getOffers = async () => {
-        // const { trendings } = await viewOffers()
-        // console.log('trendings: ', trendings)
-        // const trendingOffers = await extractOffers(trendings, productTypeId)
-        // console.log('trendingOffers: ', trendingOffers)
-        // setTrendingOffers(trendingOffers)
+        const productType = getProductType()
+        const { trendings } = await viewOffers(productType.productTypeId)
+        const trendingOffers = await extractOffers(trendings)
+        setTrendingOffers(trendingOffers)
     }
 
     const getComponents = dynamic => {
@@ -52,10 +51,10 @@ const ThankYouPage = props => {
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
-                    return <Offers 
+                    return <TrendingOffers 
                         key={block.id} 
                         data={block} 
-                        offers={[]}
+                        offers={trendingOffers}
                         primaryPath={props.primaryPath} 
                     />
                 case 'blocks.bank-slider-component':
