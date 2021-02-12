@@ -3,6 +3,14 @@ import '../styles/custom.css'
 import axios from 'axios'
 import { setAuthToken, getAuthToken, appId, generateCorrelationId } from '../api/headers'
 import { getApiData } from '../api/api'
+import LogRocket from 'logrocket';
+
+// export function reportWebVitals(metric) {
+//   console.log(metric)
+// }
+
+// LogRocket.init('osylff/mmm');
+
 
 axios.defaults.headers.common['correlationId'] = generateCorrelationId()
 axios.defaults.headers.common['appId'] = appId

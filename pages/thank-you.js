@@ -13,7 +13,6 @@ import LearnMore from '../components/common/LearnMore'
 
 import { getClassesForPage } from '../utils/classesForPage'
 import { getLeadId, getLeadBank, getProductType } from '../utils/localAccess'
-import { extractTrendingOffers } from '../services/componentsService'
 import { viewOffers, extractOffers } from '../services/offersService'
 
 const ThankYouPage = props => {
@@ -56,7 +55,7 @@ const ThankYouPage = props => {
                     return <Offers 
                         key={block.id} 
                         data={block} 
-                        offers={props.trendingOffers || []}
+                        offers={[]}
                         primaryPath={props.primaryPath} 
                     />
                 case 'blocks.bank-slider-component':
@@ -94,11 +93,9 @@ export async function getServerSideProps(ctx) {
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const data = pageData && pageData.length ? pageData[0] : null
 
-    const trendingOffers = await extractTrendingOffers(data)
-
     return { 
         props: { 
-            data, primaryPath, secondaryPath, trendingOffers
+            data, primaryPath, secondaryPath
         } 
     }
 }

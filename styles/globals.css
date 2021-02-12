@@ -618,7 +618,7 @@ label {
       padding: 20px 0px 12px 32px;
       border-bottom-left-radius: 6px;
       width: 100%;
-      background: url(/assets/images/listings/blue-gradient.svg);
+      background: url("../public/assets/images/listings/blue-gradient.svg");
       background-repeat: no-repeat;
       background-position: left bottom; }
       @media (min-width: 769px) and (max-width: 1023px) {
@@ -1192,7 +1192,7 @@ label {
       max-width: 232px;
       width: 100%;
       /* background: url("/assets/images/credit-card-flow/blog-image-2.png"); */
-      background: url("http://203.122.46.189:1338/uploads/blog_image_2_34b9ef61f1.png");
+      /* background: url("http://203.122.46.189:1338/uploads/blog_image_2_34b9ef61f1.png"); */
       background-size: cover;
       background-repeat: no-repeat; }
       @media (max-width: 768px) {
@@ -1209,8 +1209,8 @@ label {
     .blog-wrapper .card-3 .image_3 {
       max-width: 232px;
       width: 100%;
-      background: url("/assets/images/credit-card-flow/blog-image-3.png");
-      background: url("http://203.122.46.189:1338/uploads/blog_image_3_a5b88dca5b.png");
+      /* background: url("/assets/images/credit-card-flow/blog-image-3.png");
+      background: url("http://203.122.46.189:1338/uploads/blog_image_3_a5b88dca5b.png"); */
       background-size: cover;
       background-repeat: no-repeat; }
       @media (max-width: 768px) {

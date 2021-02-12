@@ -13,7 +13,7 @@ import FinancialTools from '../../components/common/FinancialTools'
 import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 
-import { extractListingOffersComponent, extractTrendingOffers } from '../../services/componentsService'
+import { extractListingOffers } from '../../services/componentsService'
 import { getProductDecision } from '../../services/offersService'
 import { filterOfferCardsInFilterComponent } from '../../utils/loanListingFilterHandler'
 import { getClassesForPage } from '../../utils/classesForPage'
@@ -28,8 +28,15 @@ const Listings = props => {
         window.scrollTo(0, 0)
         setPrimaryPath(props.primaryPath)
         setProductType(props.productTypeData)
-        getCardsWithButtonText(props.listingOffers)
+        getListingOffers()
     }, [])
+
+    const getListingOffers = async () => {
+        if(props.data) {
+            const listingOffers = await extractListingOffers(props.data)
+            getCardsWithButtonText(listingOffers)
+        }
+    }
 
     const getCardsWithButtonText = async cards => {
         const newCards = await getProductDecision(cards, props.primaryPath)
@@ -91,7 +98,7 @@ const Listings = props => {
                     return <Offers
                         key={block.id}
                         data={block}
-                        offers={props.trendingOffers || []}
+                        offers={[]}
                         primaryPath={props.primaryPath}
                     />
 
@@ -130,13 +137,9 @@ export async function getServerSideProps(ctx) {
     const listingFilter = await strapi.processReq('GET', `filters?slug=${primaryPath}-filters`)
     const filters = listingFilter && listingFilter.length ? listingFilter[0] : null
 
-    const listingOffers = await extractListingOffersComponent(data)
-    const trendingOffers = await extractTrendingOffers(data)
-
     return {
         props: {
-            data, filters, primaryPath, productTypeData,
-            listingOffers, trendingOffers
+            data, filters, primaryPath, productTypeData
         }
     }
 }
