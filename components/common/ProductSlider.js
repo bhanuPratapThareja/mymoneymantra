@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
+import { formatCategoryForUrl } from "../../utils/formatDataForBlogs"
 
 const ProductSlider = props => {
     const router = useRouter()
@@ -23,7 +24,7 @@ const ProductSlider = props => {
                     {Blog_product_card.map((card, i) => {
 
                         return (
-                            <Link key={i} href={`/blog/category/${card.blog_products_cards_text}`}>
+                            <Link key={i} href={`/blog/category/${formatCategoryForUrl(card.blog_products_cards_text)}`}>
                                 <div className="slide_cell cstm-prd" key={card.id} onClick={blogsByCategory(card)} >
                                     <h3>{card.blog_products_cards_text}</h3>
                                 </div>

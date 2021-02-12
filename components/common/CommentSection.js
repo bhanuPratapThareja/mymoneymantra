@@ -14,6 +14,7 @@ const CommentSection = (props) => {
     const [dislikeCount, setDislikeCount] = useState(null)
     const [likeCount, setLikeCount] = useState(null)
     const [shareCount, setShareCount] = useState(null)
+    const [sliceLength, setSliceLength] = useState(4)
     const { blogId } = props
     let defaultUserId = '101'
 
@@ -62,7 +63,6 @@ const CommentSection = (props) => {
         try {
             const response = await axios.get(`${url}?blogId=${blogId}&customerId=${customerId}`)
             const data = await getBlogComments(blogId)
-            console.log(data)
             setLikeCount(data.likesCount)
             setDislikeCount(data.dislikesCount)
             setShareCount(data.sharedCount)

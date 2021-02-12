@@ -311,7 +311,7 @@ $(document).ready(function () {
           }
         ]
       });
-      $('.slider_blogs').slick("refresh")
+      $('#slider_blogs').slick("refresh")
     }
   }
 
