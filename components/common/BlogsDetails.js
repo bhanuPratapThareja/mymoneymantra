@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { cleanAuthorName } from '../../utils/formatDataForBlogs'
+import { cleanAuthorName, formatCategoryForUrl } from '../../utils/formatDataForBlogs'
 import { setContributorId } from '../../utils/localAccess'
 import CommentSection from './CommentSection'
 
@@ -9,7 +9,8 @@ const BlogsDetails = props => {
     const [displayBlog, setDisplayBlog] = useState(false)
     const [blogData, setBlogData] = useState([])
     const goToPage = (name) => {
-        router.push(`/blog/category/${name}`)
+        let formattedCategoryName = formatCategoryForUrl(name)
+        router.push(`/blog/category/${formattedCategoryName}`)
     }
     const goToContributorDetailPage = (contributor) => {
         let name = cleanAuthorName(contributor.blog_contributors_name)
@@ -20,7 +21,8 @@ const BlogsDetails = props => {
         if (props.data.length != 0) {
             setDisplayBlog(true)
             setBlogData(props.data)
-            console.log(typeof props.data)
+
+            console.log(props.data)
         } else {
             setDisplayBlog(false)
             console.log(typeof props.data)
@@ -49,7 +51,7 @@ const BlogsDetails = props => {
                         <span>
                             {createdDate} // {blogreadTime.text}
                             {mainCategories.length ? mainCategories.map((category, i) => (
-                                <span onClick={() => goToPage(category.blog_category_name)}>
+                                <span key={i} onClick={() => goToPage(category.blog_category_name)}>
                                     // {category.blog_category_name}
                                 </span>)
                             ) : null}

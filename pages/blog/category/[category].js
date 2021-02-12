@@ -4,15 +4,17 @@ import BlogList from "../../../components/common/BlogList";
 import Layout from "../../../components/Layout";
 import Strapi from "../../../providers/strapi";
 import { getClassesForPage } from "../../../utils/classesForPage";
+import { unformatCategoryName } from "../../../utils/formatDataForBlogs";
 
 const BlogsByCategory = (props) => {
     const [BlogsByCategory, setBlogsByCategory] = useState([])
     useEffect(() => {
         if (props.query.category) {
             let filteredBlogs = []
+            let categoryName = unformatCategoryName(props.query.category)
             props.blogData.forEach((blog) => {
                 blog.blog_categories.forEach(category => {
-                    if (category.blog_category_name.toLowerCase().includes(props.query.category.toLowerCase())) {
+                    if (category.blog_category_name.toLowerCase().includes(categoryName.toLowerCase())) {
                         filteredBlogs.push(blog)
                     }
                 })
