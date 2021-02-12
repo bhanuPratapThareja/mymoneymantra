@@ -142,7 +142,7 @@ class LongForm extends React.Component {
       long_form_blocks.forEach(long_form_block => {
         const inputs = long_form_block.blocks;
 
-        const inputDropdown = handleChangeInputs(inputs, field, this.props.preferredSelectionLists, this.state.leadBank)
+        const {inputDropdown} = handleChangeInputs(inputs, field, this.props.preferredSelectionLists, this.state.leadBank)
         if (inputDropdown && field.type === 'input_with_dropdown') {
           const { listType, masterName, inp, prefferedList } = inputDropdown
           if (field.focusDropdown && prefferedList) {

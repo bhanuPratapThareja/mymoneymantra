@@ -259,7 +259,7 @@ class ShortExtendedForm extends React.Component {
 
     handleChange = async field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const {inputDropdown, propertyValue} = await handleChangeInputs(inputs, field, this.props.preferredSelectionLists)
+        const {inputDropdown, propertyValue} = await handleChangeInputs(inputs, field, this.props.preferredSelectionLists, null)
         if(propertyValue) {
             this.setState({ propertyValue })
         }
