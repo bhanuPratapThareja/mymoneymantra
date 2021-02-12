@@ -1,10 +1,17 @@
 import moment from "moment"
 import { useRouter } from "next/router"
+import { useEffect } from "react"
 import { setBlogId } from "../../utils/localAccess"
 import Image from "../ImageComponent/ImageComponent"
 
 const RecentBlogs = (props) => {
     const router = useRouter()
+    useEffect(() => {
+        if (window !== undefined && window.initSlickCards && props.data.bloggers && props.data.bloggers.length) {
+            console.log('recent slic intialized')
+            window.initSlickCards()
+        }
+    }, [])
     const { bloggers } = props.data
     let recentBlogs = bloggers.sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
 

@@ -25,6 +25,15 @@ const BlogDetail = props => {
         let url = window.location.href
         setCurrentUrl(url)
     }, [])
+    const getOffers = async () => {
+        // const productType = getProductType()
+        // const productTypeId = productType.productTypeId
+        // const { populars, trendings } = await viewOffers(productTypeId)
+        // const popularOffers = await extractOffers(populars, productTypeId)
+        // const trendingOffers = await extractOffers(trendings, productTypeId)
+        // setPopularOffers(popularOffers)
+        // setTrendingOffers(trendingOffers)
+    }
     const getComponents = (dynamic) => {
         return dynamic.map(block => {
             switch (block.__component) {
@@ -35,8 +44,12 @@ const BlogDetail = props => {
                     return <BlogMediaLinks key={block.id} data={block} url={currentUrl} blogData={blogData} />
                 case "blocks.blog-category":
                     return <ProductSlider key={block.id} data={block} />;
-                // case "offers.popular-offers-personal-loans-component":
-                //     return <Offers key={block.id} data={block} />
+                // case 'offers.trending-offers-component':
+                //     return <TrendingOffers
+                //       key={block.id}
+                //       data={block}
+                //       offers={trendingOffers}
+                //     />
                 case 'blocks.similar-blogs-component':
                     return <SimilarArticles key={block.id} data={props.allBlogs} categories={blogData.blog_categories} subCategories={blogData.blog_sub_categories} />
             }
