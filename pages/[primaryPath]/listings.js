@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { uniq } from 'lodash'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 

@@ -4,7 +4,7 @@ import Layout from '../components/Layout'
 
 import ThankYouBanner from '../components/Banners/ThankYouBanner'
 import CreditScore from '../components/common/CreditScore'
-import TrendingOffers from '../components/common/trendingOffers'
+import TrendingOffers from '../components/common/TrendingOffers'
 import BankSlider from '../components/common/BankSlider'
 import Rewards from '../components/common/Rewards'
 import FinancialTools from '../components/common/FinancialTools'

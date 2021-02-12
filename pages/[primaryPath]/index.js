@@ -19,6 +19,7 @@ import LearnMore from '../../components/common/LearnMore'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { clearLeadId, setPrimaryPath, setProductType, clearFormData, getProductType } from '../../utils/localAccess'
 import { viewOffers, extractOffers } from '../../services/offersService'
+import PageNotFound from '../../components/PageNotFound'
 
 const PrimaryPage = props => {
 
@@ -101,6 +102,10 @@ const PrimaryPage = props => {
           return <LearnMore key={block.id} data={block} />
       }
     })
+  }
+
+  if(!props.data) {
+    return <PageNotFound />
   }
 
   return (

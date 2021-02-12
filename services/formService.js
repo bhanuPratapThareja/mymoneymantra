@@ -329,7 +329,7 @@ export const generateLead = async (data, primaryPath, formType) => {
             }
         }
         
-        console.log(body)
+        // console.log(body)
         // return
 
         axios.post(url, body, { headers })
