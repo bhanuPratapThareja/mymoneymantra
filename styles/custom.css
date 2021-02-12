@@ -177,16 +177,17 @@ button:disabled {
   font-size: 12px;
   font-weight: normal;
   margin: 0;
-  line-height: 20px;
+  line-height: 15px;
 }
 
 .form__group .input-error {
-  bottom: -24px;
+  /* bottom: -24px; */
   float: none;
   display: block;
-  text-align: right;
   position: absolute;
+  text-align: right;
   right: 0;
+  top: 105%;
 }
 
 .checkbox input[type="checkbox"]:checked~label:before {
@@ -1029,13 +1030,21 @@ button.close-btn:after {
   height: 20px;
   position: absolute;
 }
-button.close-btn:before {content: "";display: block;background: #666;width: 2px;transform: rotate(-45deg);height: 20px;position: absolute;top: 6px;}
 
-/* .checkbox label {
+button.close-btn:before {
+  content: "";
+  display: block;
+  background: #666;
+  width: 2px;
+  transform: rotate(-45deg);
+  height: 20px;
   position: absolute;
-  left: 0;
-  top: 5px;
-} */
+  top: 6px;
+}
+
+button.close-btn:focus {
+  outline: none;
+}
 
 .checkbox {
   position: relative;
