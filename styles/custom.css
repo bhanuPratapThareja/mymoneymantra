@@ -1696,10 +1696,16 @@ section.popular-card-container {
   }
   .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container .form__group.verified-input, 
   .sf-forms .shortforms-container.pan-card-cont .form__group.field, .sf-forms .shortforms-container .form__group.field.file-type {
-    max-width: 100%;
+    /* max-width: 100%; */
     margin-bottom: 8px;
   }
-  .sf-forms .shortforms-container.current-address .form__group.field {
+
+  .sf-forms .shortforms-container.pan-card-cont .form__group.field {
+    max-width: 100%;
+  }
+
+  .sf-forms .shortforms-container.current-address .form__group.field,
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container.current-address .form__group.verified-input {
     margin-bottom: 8px;
   }
   .sf-forms .shortforms-container.current-address .form__group.field:first-child {
@@ -2265,7 +2271,3 @@ section.popular-card-container {
 .noUi-handle.noUi-handle-upper:active {
   cursor: grabbing;
 }
-
-/* .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms:last-child {
-  margin-bottom: 89px;
-} */

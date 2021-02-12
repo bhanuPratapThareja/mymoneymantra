@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
-import { uniq } from 'lodash'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 
 import ListingsBanner from '../../components/Banners/ListingsBanner'
 import ListingCards from '../../components/Listings/ListingCards'
 import CreditScore from '../../components/common/CreditScore'
-import Offers from '../../components/common/Offers'
+import TrendingOffers from '../../components/common/trendingOffers'
 import BankSlider from '../../components/common/BankSlider'
 import Rewards from '../../components/common/Rewards'
 import FinancialTools from '../../components/common/FinancialTools'
@@ -17,19 +16,28 @@ import { extractListingOffers } from '../../services/componentsService'
 import { getProductDecision } from '../../services/offersService'
 import { filterOfferCardsInFilterComponent } from '../../utils/loanListingFilterHandler'
 import { getClassesForPage } from '../../utils/classesForPage'
-import { setPrimaryPath, setProductType } from '../../utils/localAccess'
+import { setPrimaryPath, setProductType, getProductType } from '../../utils/localAccess'
+import { viewOffers, extractOffers } from '../../services/offersService'
 
 const Listings = props => {
+    const [trendingOffers, setTrendingOffers] = useState([])
     const [allOfferCards, setAllOfferCards] = useState([])
     const [offerCards, setOfferCards] = useState([])
-    const [banksList, setBanksList] = useState([])
 
     useEffect(() => {
         window.scrollTo(0, 0)
         setPrimaryPath(props.primaryPath)
         setProductType(props.productTypeData)
-        getListingOffers()
+        getOffers()
     }, [])
+
+    const getOffers = async () => {
+        const productType = getProductType()
+        const { trendings } = await viewOffers(productType.productTypeId)
+        const trendingOffers = await extractOffers(trendings)
+        setTrendingOffers(trendingOffers)
+        getListingOffers()
+    }
 
     const getListingOffers = async () => {
         if(props.data) {
@@ -42,14 +50,6 @@ const Listings = props => {
         const newCards = await getProductDecision(cards, props.primaryPath)
         setOfferCards(newCards)
         setAllOfferCards(newCards)
-
-        let banksList = []
-        if (newCards.length) {
-            newCards.forEach(card => {
-                banksList.push(card.bank.slug)
-            })
-            setBanksList(banksList)
-        }
     }
 
     const filterOfferCards = category => {
@@ -79,7 +79,6 @@ const Listings = props => {
                         numberOfCards={offerCards.length}
                         filterOfferCards={filterOfferCards}
                         filterCardsFilterComponent={filterCardsFilterComponent}
-                        banksList={uniq(banksList)}
                         allOfferCards={allOfferCards}
                         productTypeData={props.productTypeData}
                     />
@@ -95,10 +94,10 @@ const Listings = props => {
                     return <CreditScore key={block.id} data={block} />
 
                 case 'offers.trending-offers-component':
-                    return <Offers
+                    return <TrendingOffers
                         key={block.id}
                         data={block}
-                        offers={[]}
+                        offers={trendingOffers}
                         primaryPath={props.primaryPath}
                     />
 

@@ -112,9 +112,9 @@ class ShortExtendedForm extends React.Component {
             }, 500)
         })
 
-        // setTimeout(()  => {
-        //     console.log(this.state.slides)
-        // }, 1000)
+        setTimeout(()  => {
+            console.log(this.state.slides)
+        }, 1000)
     }
 
     onShowTncModal = on_click_anchor => {
@@ -209,7 +209,7 @@ class ShortExtendedForm extends React.Component {
     plusSlides = (n) => {
         if (n >= 1) {
             const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-            const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
+            const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs, this.state.propertyValue)
             this.setState({ ...this.state, slides: newSlides }, async () => {
                 if (!errorsPresent) {
                     const newSlideId = incrementSlideId(this.state.currentSlide)
@@ -259,8 +259,10 @@ class ShortExtendedForm extends React.Component {
 
     handleChange = async field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const inputDropdown = await handleChangeInputs(inputs, field, this.props.preferredSelectionLists)
-
+        const {inputDropdown, propertyValue} = await handleChangeInputs(inputs, field, this.props.preferredSelectionLists, null)
+        if(propertyValue) {
+            this.setState({ propertyValue })
+        }
         if (inputDropdown && field.type === 'input_with_dropdown') {
             const { listType, masterName, inp, prefferedList } = inputDropdown
             if (prefferedList) {
@@ -302,6 +304,8 @@ class ShortExtendedForm extends React.Component {
                 this.setState({ submitButtonDisabled: true })
             }
         })
+
+        // console.log(this.state)
     }
 
     handleInputDropdownChange = (listType, list, input_id, field) => {
@@ -327,7 +331,7 @@ class ShortExtendedForm extends React.Component {
 
     checkInputValidity = field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        updateInputsValidity(inputs, field, this.state.errorMsgs)
+        updateInputsValidity(inputs, field, this.state.errorMsgs, this.state.propertyValue)
         this.setState({ ...this.state, slides: newSlides }, () => {
             if (field.type === 'radio') {
                 let mandatoryInputsHaveValues = true

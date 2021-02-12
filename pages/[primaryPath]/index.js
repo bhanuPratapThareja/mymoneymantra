@@ -7,7 +7,9 @@ import PersonalLoansBanner from '../../components/Banners/PersonalLoansBanner'
 import HomeLoansBanner from '../../components/Banners/HomeLoansBanner'
 
 import UspCards from '../../components/common/UspCards'
+import PopularOffers from '../../components/common/PopularOffers'
 import CreditScore from '../../components/common/CreditScore'
+import TrendingOffers from '../../components/common/TrendingOffers'
 import BankSlider from '../../components/common/BankSlider'
 import Rewards from '../../components/common/Rewards'
 import FinancialTools from '../../components/common/FinancialTools'
@@ -17,8 +19,7 @@ import LearnMore from '../../components/common/LearnMore'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { clearLeadId, setPrimaryPath, setProductType, clearFormData, getProductType } from '../../utils/localAccess'
 import { viewOffers, extractOffers } from '../../services/offersService'
-import PopularOffers from '../../components/common/PopularOffers'
-import TrendingOffers from '../../components/common/TrendingOffers'
+import PageNotFound from '../../components/PageNotFound'
 
 const PrimaryPage = props => {
 
@@ -36,10 +37,9 @@ const PrimaryPage = props => {
 
   const getOffers = async () => {
     const productType = getProductType()
-    const productTypeId = productType.productTypeId
-    const { populars, trendings } = await viewOffers(productTypeId)
-    const popularOffers = await extractOffers(populars, productTypeId)
-    const trendingOffers = await extractOffers(trendings, productTypeId)
+    const { populars, trendings } = await viewOffers(productType.productTypeId)
+    const popularOffers = await extractOffers(populars)
+    const trendingOffers = await extractOffers(trendings)
     setPopularOffers(popularOffers)
     setTrendingOffers(trendingOffers)
   }
@@ -80,6 +80,8 @@ const PrimaryPage = props => {
             primaryPath={props.primaryPath}
             goToShortForm={goToShortForm}
           />
+        case 'blocks.credit-score-component':
+          return <CreditScore key={block.id} data={block} />
         case 'offers.trending-offers-component':
           return <TrendingOffers
             key={block.id}
@@ -88,8 +90,6 @@ const PrimaryPage = props => {
             primaryPath={props.primaryPath}
             goToShortForm={goToShortForm}
           />
-        case 'blocks.credit-score-component':
-          return <CreditScore key={block.id} data={block} />
         case 'blocks.bank-slider-component':
           return <BankSlider key={block.id} data={block} />
         case 'blocks.rewards-component':
@@ -102,6 +102,10 @@ const PrimaryPage = props => {
           return <LearnMore key={block.id} data={block} />
       }
     })
+  }
+
+  if(!props.data) {
+    return <PageNotFound />
   }
 
   return (
