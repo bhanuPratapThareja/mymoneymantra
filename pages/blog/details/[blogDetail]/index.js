@@ -35,14 +35,13 @@ const BlogDetail = props => {
         getBlogData()
         let url = window.location.href
         setCurrentUrl(url)
-    }, [])
+    }, [props.query])
 
     const getComponents = (dynamic) => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.blog-texts-component':
                     return <BlogsDetails key={block.id} data={blogData} blogId={blogData.id} url={currentUrl} allBlogs={props.allBlogs} />
-                // return <BlogDetails key={block.id} data={blogData} blogId={blogData.id} commentData={commentData} />
                 case 'blocks.blog-social-media-links-component':
                     return <BlogMediaLinks key={block.id} data={block} url={currentUrl} blogData={blogData} />
                 case "blocks.blog-category":
@@ -85,6 +84,6 @@ export async function getServerSideProps(ctx) {
         `pages?slug=${primaryPath}-${secondaryPath}`
     );
     const data = pageData && pageData.length ? pageData[0] : null;
-    return { props: { data, pageClasses, blogData, allBlogs } };
+    return { props: { data, pageClasses, blogData, allBlogs ,query } };
 }
 export default BlogDetail
