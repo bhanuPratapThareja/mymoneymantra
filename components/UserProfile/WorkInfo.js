@@ -88,7 +88,9 @@ const WorkInfo = (props) => {
         accountNo,
         employedType,
       })
-      console.log(responseObject)
+      if (responseObject.status === 200) {
+        getWork()
+      }
     } catch (err) {
       console.log(err)
     }
