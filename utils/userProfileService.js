@@ -6,7 +6,9 @@ export const getPersonalInfo = async () => {
   try {
     let customerId = await localStorage.getItem('customerId')
     let { url } = getApiData('getPersonalInfo')
-    let response = await Axios.get(url, { params: { customerId } })
+    let response = await Axios.get(
+      `${url}?customerId=${customerId ? customerId : 206}`
+    )
     return response.data
   } catch (err) {
     throw err.response.data
@@ -55,7 +57,9 @@ export const getContactInfo = async () => {
   try {
     let customerId = await localStorage.getItem('customerId')
     const { url } = getApiData('contactProfile')
-    let response = await Axios.get(url, { params: { customerId } })
+    let response = await Axios.get(
+      `${url}?customerId=${customerId ? customerId : 206}`
+    )
     return response.data
   } catch (err) {
     console.log(err)
