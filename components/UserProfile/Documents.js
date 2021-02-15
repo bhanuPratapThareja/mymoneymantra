@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 
 const Documents = () => {
   const [aadhaar, setAadhaar] = useState(null)
@@ -8,6 +9,24 @@ const Documents = () => {
   const [form16, setForm16] = useState(null)
   const [rentAgreement, setRentAgreement] = useState(null)
   const [bill, setBill] = useState(null)
+
+  useEffect(() => {
+    getAllDocuments()
+  }, [])
+
+  const getAllDocuments = async () => {
+    try {
+      const customerId = localStorage.getItem('customerId')
+      const responseObject = await axios.get(
+        `http://203.122.46.189:8060/customer/api/profile/v1/all-docs?customerId=${
+          customerId ? customerId : 101
+        }`
+      )
+      console.log(responseObject)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   const submitHandler = (e) => {
     e.preventDefault()
