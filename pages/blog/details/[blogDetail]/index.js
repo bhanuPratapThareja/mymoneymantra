@@ -3,14 +3,17 @@ import BlogMediaLinks from "../../../../components/common/BlogMediaLinks"
 import BlogsDetails from "../../../../components/common/BlogsDetails"
 import ProductSlider from "../../../../components/common/ProductSlider"
 import SimilarArticles from "../../../../components/common/SimilarArticles"
+import TrendingOffers from "../../../../components/common/TrendingOffers"
 import Layout from "../../../../components/Layout"
 import Strapi from "../../../../providers/strapi"
+import { extractOffers, viewOffers } from "../../../../services/offersService"
 import { getClassesForPage } from "../../../../utils/classesForPage"
-import { getBlogId } from "../../../../utils/localAccess"
+import { getBlogId, getProductType, setProductType } from "../../../../utils/localAccess"
 
 const BlogDetail = props => {
     const [currentUrl, setCurrentUrl] = useState()
     const [blogData, setBlogData] = useState([])
+    const [trendingOffers, setTrendingOffers] = useState([])
     let strapi = new Strapi()
     useEffect(() => {
         let blogId = getBlogId('blogId')
@@ -19,21 +22,21 @@ const BlogDetail = props => {
                 "GET",
                 `quick-blogs/${blogId}`
             );
+            let slugForProductTypeData = blog.blog_categories[0].slug ? blog.blog_categories[0].slug : 'credit-cards'
+            const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${slugForProductTypeData}`)
+            setProductType(productTypeData)
+            const productType = getProductType()
+            let productTypeId = productType.productTypeId
+            const { trendings } = await viewOffers(productTypeId)
+            const trendingOffers = await extractOffers(trendings, productTypeId)
+            setTrendingOffers(trendingOffers)
             setBlogData(blog)
         }
         getBlogData()
         let url = window.location.href
         setCurrentUrl(url)
     }, [])
-    const getOffers = async () => {
-        // const productType = getProductType()
-        // const productTypeId = productType.productTypeId
-        // const { populars, trendings } = await viewOffers(productTypeId)
-        // const popularOffers = await extractOffers(populars, productTypeId)
-        // const trendingOffers = await extractOffers(trendings, productTypeId)
-        // setPopularOffers(popularOffers)
-        // setTrendingOffers(trendingOffers)
-    }
+
     const getComponents = (dynamic) => {
         return dynamic.map(block => {
             switch (block.__component) {
@@ -44,12 +47,12 @@ const BlogDetail = props => {
                     return <BlogMediaLinks key={block.id} data={block} url={currentUrl} blogData={blogData} />
                 case "blocks.blog-category":
                     return <ProductSlider key={block.id} data={block} />;
-                // case 'offers.trending-offers-component':
-                //     return <TrendingOffers
-                //       key={block.id}
-                //       data={block}
-                //       offers={trendingOffers}
-                //     />
+                case 'offers.trending-offers-component':
+                    return <TrendingOffers
+                        key={block.id}
+                        data={block}
+                        offers={trendingOffers}
+                    />
                 case 'blocks.similar-blogs-component':
                     return <SimilarArticles key={block.id} data={props.allBlogs} categories={blogData.blog_categories} subCategories={blogData.blog_sub_categories} />
             }
