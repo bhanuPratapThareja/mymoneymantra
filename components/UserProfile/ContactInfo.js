@@ -1,28 +1,58 @@
+import axios from 'axios'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { getContactInfo } from '../../utils/userProfileService'
 const ContactInfo = () => {
   const [editing, setEditing] = useState(false)
-  const [mobile, setMobile] = useState('')
-  const [email, setEmail] = useState('')
+  const [mobileNo, setMobileNo] = useState('')
+  const [emailId, setEmailId] = useState('')
   const [currentAddress, setCurrentAddress] = useState('')
   const [permanentAddress, setPermanentAddress] = useState('')
   useEffect(() => {
+    getContact()
+  }, [])
+
+  const getContact = () => {
     getContactInfo()
       .then((res) => {
-        console.log(res)
+        console.log({ res })
         const { customerId, emailId, mobileNo, address } = res
-        setemail(emailId)
-        setmobile(mobileNo)
+        setEmailId(emailId)
+        setMobileNo(mobileNo)
+        // setCurrentAddress(address)
       })
       .catch((err) => {
         console.log(err)
       })
-  }, [])
-  const submitHandler = (e) => {
+  }
+
+  const submitHandler = async (e) => {
     e.preventDefault()
     setEditing(false)
+    try {
+      const customerId = localStorage.getItem('customerId')
+      const responseObject = await axios.post(
+        'http://203.122.46.189:8060/customer/api/profile/v1/contact-Info',
+        {
+          customerId,
+          mobileNo,
+          emailId,
+          address: [],
+        }
+      )
+      if (responseObject.status === 200) {
+        getContact()
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
+
+  const cancleHandler = () => {
+    setEditing(false)
+    getContact()
+  }
+
   return (
     <>
       <form
@@ -42,9 +72,9 @@ const ContactInfo = () => {
               readOnly={!editing}
               className="form__field"
               type="text"
-              value={mobile}
+              value={mobileNo}
               id="mob-num"
-              onChange={(e) => setMobile(e.target.value)}
+              onChange={(e) => setMobileNo(e.target.value)}
               placeholder="Mobile Number"
               required=""
             />
@@ -63,10 +93,10 @@ const ContactInfo = () => {
               readOnly={!editing}
               className="form__field"
               type="text"
-              value={email}
+              value={emailId}
               id="email"
               placeholder="Email ID"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmailId(e.target.value)}
               required=""
             />
             <label className="form__label" htmlFor="email">
@@ -127,7 +157,7 @@ const ContactInfo = () => {
             type="button"
             className="cancel"
             id="cancel"
-            onClick={() => setEditing(false)}
+            onClick={cancleHandler}
           >
             Cancel
           </button>
