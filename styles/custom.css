@@ -1553,7 +1553,6 @@ section.popular-card-container {
   padding: 0 24px;	
 } 
 
-
 #blog-socials button svg rect {
   fill: none;
 }
@@ -1564,6 +1563,16 @@ section.popular-card-container {
 
 .blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top > span > span {
   cursor: pointer;
+}
+
+.long-form .long-form-wrapper .form-wrapper {
+  position: relative;
+}
+
+.long-form .long-form-wrapper .form-wrapper .cstm-lf-img {
+  position: absolute;
+  right: 20px;
+  top: 30px;
 }
 
 @media(max-width: 1199px) {
