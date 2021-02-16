@@ -27,15 +27,7 @@ const ThankYouPage = props => {
         setLeadId(getLeadId())
         setBank(getLeadBank())
         setProductType(getProductType())
-        getOffers()
     }, [])
-
-    const getOffers = async () => {
-        const productType = getProductType()
-        const { trendings } = await viewOffers(productType.productTypeId)
-        const trendingOffers = await extractOffers(trendings)
-        setTrendingOffers(trendingOffers)
-    }
 
     const getComponents = dynamic => {
         return dynamic.map(block => {
@@ -53,8 +45,7 @@ const ThankYouPage = props => {
                 case 'offers.trending-offers-component':
                     return <TrendingOffers 
                         key={block.id} 
-                        data={block} 
-                        offers={trendingOffers}
+                        data={block}
                         primaryPath={props.primaryPath} 
                     />
                 case 'blocks.bank-slider-component':

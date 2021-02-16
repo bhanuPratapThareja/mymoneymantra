@@ -5,7 +5,7 @@ import Layout from '../../components/Layout'
 import ListingsBanner from '../../components/Banners/ListingsBanner'
 import ListingCards from '../../components/Listings/ListingCards'
 import CreditScore from '../../components/common/CreditScore'
-import TrendingOffers from '../../components/common/Offers'
+import TrendingOffers from '../../components/common/TrendingOffers'
 import BankSlider from '../../components/common/BankSlider'
 import Rewards from '../../components/common/Rewards'
 import FinancialTools from '../../components/common/FinancialTools'
@@ -20,7 +20,6 @@ import { setPrimaryPath, setProductType, getProductType } from '../../utils/loca
 import { viewOffers, extractOffers } from '../../services/offersService'
 
 const Listings = props => {
-    const [trendingOffers, setTrendingOffers] = useState([])
     const [allOfferCards, setAllOfferCards] = useState([])
     const [offerCards, setOfferCards] = useState([])
 
@@ -28,19 +27,11 @@ const Listings = props => {
         window.scrollTo(0, 0)
         setPrimaryPath(props.primaryPath)
         setProductType(props.productTypeData)
-        getOffers()
+        getListingOffers()
     }, [])
 
-    const getOffers = async () => {
-        const productType = getProductType()
-        const { trendings } = await viewOffers(productType.productTypeId)
-        const trendingOffers = await extractOffers(trendings)
-        setTrendingOffers(trendingOffers)
-        getListingOffers()
-    }
-
     const getListingOffers = async () => {
-        if(props.data) {
+        if (props.data) {
             const listingOffers = await extractListingOffers(props.data)
             getCardsWithButtonText(listingOffers)
         }
@@ -92,13 +83,12 @@ const Listings = props => {
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
 
-                case 'offers.trending-offers-component':
-                    return <TrendingOffers 
-                        key={block.id} 
-                        data={block}
-                        offers={trendingOffers}
-                        primaryPath={props.primaryPath} 
-                    />
+                    case 'offers.trending-offers-component':
+                        return <TrendingOffers 
+                            key={block.id} 
+                            data={block}
+                            primaryPath={props.primaryPath}
+                        />
 
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />

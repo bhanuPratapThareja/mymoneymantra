@@ -284,7 +284,7 @@ $(document).ready(function () {
     $('.banks-slider').slick("refresh")
   }
 
-  initSlickCards()
+  // initSlickCards()
   initSlickBanks()
 
   initSlickBlogs = function () {
@@ -316,6 +316,6 @@ $(document).ready(function () {
   }
 
   $('#datepickerr').datepicker();
-  initSlickBlogs();
+  initSlickBlogs()
 
 });

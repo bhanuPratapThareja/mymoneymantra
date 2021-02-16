@@ -22,35 +22,13 @@ import { viewOffers, extractOffers } from '../../services/offersService'
 
 const PrimaryPage = props => {
 
-  const [popularOffers, setPopularOffers] = useState([])
-  const [trendingOffers, setTrendingOffers] = useState([])
-
   useEffect(() => {
     window.scrollTo(0, 0)
     setPrimaryPath(props.primaryPath)
     setProductType(props.productTypeData)
     clearLeadId()
     clearFormData()
-    getOffers()
   }, [])
-
-  const getOffers = async () => {
-    const productType = getProductType()
-
-    const apiOffers = await viewOffers(productType.productTypeId)
-    let populars = []
-    let trendings = []
-
-    if (apiOffers) {
-      populars = apiOffers.populars
-      trendings = apiOffers.trendings
-      const popularOffers = await extractOffers(populars)
-      const trendingOffers = await extractOffers(trendings)
-      setPopularOffers(popularOffers)
-      setTrendingOffers(trendingOffers)
-    }
-
-  }
 
   const goToShortForm = () => {
     const shortFormEl = document.getElementsByClassName('lets-find-container')
@@ -84,7 +62,6 @@ const PrimaryPage = props => {
           return <PopularOffers
             key={block.id}
             data={block}
-            offers={popularOffers}
             primaryPath={props.primaryPath}
             goToShortForm={goToShortForm}
           />
@@ -94,7 +71,6 @@ const PrimaryPage = props => {
           return <TrendingOffers
             key={block.id}
             data={block}
-            offers={trendingOffers}
             primaryPath={props.primaryPath}
             goToShortForm={goToShortForm}
           />

@@ -7,11 +7,11 @@ const PopularOffers = props => {
    const router = useRouter()
    const { section_heading } = props.data
 
-   useEffect(() => {
-      if(window !== undefined && window.initSlickCards && props.offers.length) {
-         window.initSlickCards()
-      }
-   })
+   // useEffect(() => {
+   //    if(window !== undefined && window.initSlickCards && props.offers.length) {
+   //       window.initSlickCards()
+   //    }
+   // })
 
    const onOfferClick = async offer => {
       const { productDecision } = offer
