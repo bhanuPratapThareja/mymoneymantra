@@ -4,7 +4,6 @@ import Layout from '../../components/Layout'
 
 import ListingsBanner from '../../components/Banners/ListingsBanner'
 import ListingCards from '../../components/Listings/ListingCards'
-import TrendingOffers from '../../components/common/TrendingOffers'
 import CreditScore from '../../components/common/CreditScore'
 import BankSlider from '../../components/common/BankSlider'
 import Rewards from '../../components/common/Rewards'

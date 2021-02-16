@@ -8,7 +8,6 @@ import ProductType from '../components/common/ProductTypes'
 import AboutUs from '../components/common/AboutUs'
 import UspCards from '../components/common/UspCards'
 import CreditScore from '../components/common/CreditScore'
-import TrendingOffers from '../components/common/TrendingOffers'
 import BankSlider from '../components/common/BankSlider'
 import AppDownload from '../components/common/AppDownload'
 import Rewards from '../components/common/Rewards'
@@ -18,7 +17,6 @@ import { getClassesForPage } from '../utils/classesForPage'
 import { viewOffers, extractOffers } from '../services/offersService'
 
 const Home = props => {
-    const [trendingOffers, setTrendingOffers] = useState([])
 
     useEffect(() => {
         localStorage.clear()
@@ -65,10 +63,8 @@ export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const primaryPath = 'home-page'
     const pageClasses = getClassesForPage(primaryPath)
-
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)
     const data = pageData[0]
-
     return { props: { data, pageClasses } }
 }
 
