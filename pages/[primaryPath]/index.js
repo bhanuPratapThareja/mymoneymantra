@@ -5,10 +5,10 @@ import Layout from '../../components/Layout'
 import CreditCardsBanner from '../../components/Banners/CreditCardsBanner'
 import PersonalLoansBanner from '../../components/Banners/PersonalLoansBanner'
 import HomeLoansBanner from '../../components/Banners/HomeLoansBanner'
-
 import UspCards from '../../components/common/UspCards'
 import CreditScore from '../../components/common/CreditScore'
-
+import PopularOffers from '../../components/common/PopularOffers'
+import TrendingOffers from '../../components/common/TrendingOffers'
 import BankSlider from '../../components/common/BankSlider'
 import Rewards from '../../components/common/Rewards'
 import FinancialTools from '../../components/common/FinancialTools'

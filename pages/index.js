@@ -16,6 +16,7 @@ import Blogger from '../components/common/Blogger'
 import { getClassesForPage } from '../utils/classesForPage'
 import { viewOffers, extractOffers } from '../services/offersService'
 
+
 const Home = props => {
 
     useEffect(() => {
