@@ -8,6 +8,8 @@ const ContactInfo = () => {
   const [emailId, setEmailId] = useState('')
   const [currentAddress, setCurrentAddress] = useState('')
   const [permanentAddress, setPermanentAddress] = useState('')
+  const [address, setAddress] = useState([])
+
   useEffect(() => {
     getContact()
   }, [])
@@ -19,7 +21,7 @@ const ContactInfo = () => {
         const { customerId, emailId, mobileNo, address } = res
         setEmailId(emailId)
         setMobileNo(mobileNo)
-        // setCurrentAddress(address)
+        setAddress(address)
       })
       .catch((err) => {
         console.log(err)
@@ -37,7 +39,7 @@ const ContactInfo = () => {
           customerId,
           mobileNo,
           emailId,
-          address: [],
+          address,
         }
       )
       if (responseObject.status === 200) {
