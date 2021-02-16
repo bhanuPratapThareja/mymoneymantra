@@ -1,86 +1,98 @@
-import { closeFilter } from '../../utils/loanListingFilterHandler'
-import { initializeMoneyRange, initializeYearRange, getSliderFilterValues,initializePercentRange } from '../../utils/noUiSliderHandler';
 import DownChevron from '../../public/assets/images/icons/down-chevron.svg'
+import { closeFilter } from '../../utils/listingsFilterHandler'
+import { initializeMoneyRange, initializeYearRange, getSliderFilterValues, initializePercentRange } from '../../utils/noUiSliderHandler';
+import { 
+    generateBanksCheckboxes, 
+    generateCategoriesCheckboxes,
+    generatePromotionCheckboxes,
+    generateAnnualFeeBlock 
+} from '../../utils/listingsFilterGenerator'
 
 class ListingFilter extends React.Component {
 
     state = {
-        showCheckboxes: 4,
+        gotOfferCards: false,
         filters: {},
-        filtersAppliedOnce: false
+        showCheckboxes: 4,
+        checkboxes: [],
+        radios:[]
     }
 
-    componentDidMount() {  
-        this.loadFilters()
+    componentDidMount() {
+        // this.updateBanksBlock()
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        // console.log('prevProps: ', prevProps)
-        // console.log('prevState: ', prevState)
-        // let bankCheckBoxes = []
-        // if(this.props.allOfferCards.length) {
-        //     this.props.allOfferCards.forEach(card => {
-
-        //     })
-        // }
+    shouldComponentUpdate(nextProps) {
+        if (!nextProps.allOfferCards.length) {
+            return false
+        }
+        return true
     }
 
-    UNSAFE_componentWillReceiveProps() {
-        if(!this.state.filtersAppliedOnce) {
-            let updatedCheckboxes = [...this.props.filters.checkboxes]
-            if (updatedCheckboxes.length) {
-                let banksAlreadyAdded = []
-                let values = []
-                updatedCheckboxes.forEach((block, i) => {
-                    let blockValues = [...block.values]
-                    if (block.type === 'banks' && this.props.allOfferCards.length) {
-                        updatedCheckboxes[i].values = []
-                        this.props.allOfferCards.forEach(card => {
-                            const bank = { checkbox_name: card.bank.bank_name, tag: card.bank.bank_id, priority: card.bank.priority }
-                            if(!banksAlreadyAdded.includes(bank.tag)) {
-                                values.push(bank)
-                                banksAlreadyAdded.push(bank.tag)
-                            }
-                        })
-    
-                        updatedCheckboxes[i].values = values
-                        updatedCheckboxes[i].values.sort((a, b) => (a.priority > b.priority) ? 1 : -1)
-    
-                    } else {
-                        updatedCheckboxes[i].values = blockValues
-                    }
-    
-                    block.showCheckboxes = this.state.showCheckboxes
-                    block.totalCheckboxes = block.values.length
-                    block.veiwAll = block.values.length > this.state.showCheckboxes
+    componentDidUpdate() {
+        this.updateBanksBlock()
+    }
+
+    updateBanksBlock = () => {
+        if (!this.state.gotOfferCards) {
+            const bankBlock = generateBanksCheckboxes(this.props.allOfferCards, this.state.showCheckboxes)
+            if(bankBlock) {
+                this.setState({ checkboxes: [...this.state.checkboxes, bankBlock], gotOfferCards: true }, () => {
+                    this.updateCategoriesBlock()
                 })
-    
-                this.setState({ checkboxes: updatedCheckboxes }, () => {
-                    console.log(this.state.checkboxes)
-                })
+            } else {
+                this.updateCategoriesBlock()
             }
         }
-
     }
 
-    loadFilters = () => {
-
-        const { filter_radio_name,
-            filter_fee_annual, filter_emi,
-            filter_tenure, filter_roi, filter_max_loan_amount } = this.props.filters
-
-        if (filter_radio_name.length) {
-            this.setState({ filter_radio_name })
+    updateCategoriesBlock = () => {
+        const categoryBlock = generateCategoriesCheckboxes(this.props.allOfferCards, this.state.showCheckboxes)
+        if(categoryBlock) {
+            this.setState({ checkboxes: [...this.state.checkboxes, categoryBlock] }, () => {
+                this.updatePromotionsBlock()
+            })
+        } else {
+            this.updatePromotionsBlock()
         }
+    }
 
-        this.setState({ filter_fee_annual, filter_emi, filter_tenure, filter_roi, filter_max_loan_amount }, () => {
-            initializeMoneyRange(filter_fee_annual, 'annual-fees-range')
-            initializeMoneyRange(filter_emi, 'emi-range')
-            initializePercentRange(filter_roi, 'roi-range')
-            initializeMoneyRange(filter_max_loan_amount, 'max-loan-amount-range')
-            initializeYearRange(filter_tenure, 'tenure-range')
+    updatePromotionsBlock = () => {
+        const promotionBlock = generatePromotionCheckboxes(this.props.allOfferCards, this.state.showCheckboxes)
+        if(promotionBlock) {
+            this.setState({ checkboxes: [...this.state.checkboxes, promotionBlock] }, () => {
+                this.updateAnnualFeesBlock()
+            })
+        } else {
+            this.updateAnnualFeesBlock()
+        }
+    }
+    
+    updateAnnualFeesBlock = () => {
+        const annualFeesSlider = generateAnnualFeeBlock(this.props.allOfferCards)
+        this.setState({ annualFeesSlider }, () => {
+            initializeMoneyRange(annualFeesSlider, 'annual-fees-range')
+            this.props.setFiltersReady(true)
         })
     }
+
+    // loadFilters = () => {
+
+    //     const { filter_name, filter_emi,
+    //         filter_tenure, filter_roi, filter_max_loan_amount } = this.props.filters
+
+    //     if (filter_name.length) {
+    //         this.setState({ filter_name })
+    //     }
+
+    //     this.setState({ filter_emi, filter_tenure, filter_roi, filter_max_loan_amount }, () => {
+            
+    //         initializeMoneyRange(filter_emi, 'emi-range')
+    //         initializePercentRange(filter_roi, 'roi-range')
+    //         initializeMoneyRange(filter_max_loan_amount, 'max-loan-amount-range')
+    //         initializeYearRange(filter_tenure, 'tenure-range')
+    //     })
+    // }
 
     handleCheckbox = (e, type) => {
         const { name, checked } = e.target
@@ -101,15 +113,15 @@ class ListingFilter extends React.Component {
     }
 
     onApplyFilter = () => {
-        const { filter_fee_annual, filter_emi, filter_roi, filter_max_loan_amount, filter_tenure } = this.state
-        const annualFees = getSliderFilterValues(filter_fee_annual, 'annual-fees-range')
+        const { annualFeesSlider, filter_emi, filter_roi, filter_max_loan_amount, filter_tenure } = this.state
+        const annualFees = getSliderFilterValues(annualFeesSlider, 'annual-fees-range')
         const emi = getSliderFilterValues(filter_emi, 'emi-range')
         const roi = getSliderFilterValues(filter_roi, 'roi-range')
         const maxLoanAmount = getSliderFilterValues(filter_max_loan_amount, 'max-loan-amount-range')
         const tenure = getSliderFilterValues(filter_tenure, 'tenure-range')
 
         const filters = { ...this.state.filters, annualFees, emi, roi, maxLoanAmount, tenure }
-        this.setState({ ...this.state, filters, filtersAppliedOnce: true }, () => {
+        this.setState({ ...this.state, filters }, () => {
             this.onCloseFilter()
         })
     }
@@ -130,7 +142,7 @@ class ListingFilter extends React.Component {
     }
 
     render() {
-        const { checkboxes, filter_fee_annual, filter_radio_name,
+        const { checkboxes, radios, annualFeesSlider,
             filter_emi, filter_tenure, filter_roi, filter_max_loan_amount } = this.state
         return (
             <section className="listing-modal mm-modal" id="listing-filter-show">
@@ -144,19 +156,19 @@ class ListingFilter extends React.Component {
 
                         <form>
                             {checkboxes && checkboxes.length ? <>
-                                {checkboxes.map(checkboxGroup => {
+                                {checkboxes.map((checkboxGroup, i) => {
                                     return (
-                                        <div className="content-one" key={checkboxGroup.id}>
-                                            <h5>{checkboxGroup.name}</h5>
+                                        <div className="content-one" key={i}>
+                                            <h5>{checkboxGroup.heading}</h5>
                                             <div className="fields-wrapper">
                                                 {checkboxGroup.values.map((checkbox, i) => {
                                                     if (i + 1 <= checkboxGroup.showCheckboxes) {
                                                         return (
-                                                            <div className="checkbox-container" key={i+1}>
+                                                            <div className="checkbox-container" key={i + 1}>
                                                                 <div className="checkbox">
                                                                     <input type="checkbox" id={checkbox.tag} name={checkbox.tag} onChange={e => this.handleCheckbox(e, checkboxGroup.type)} />
                                                                     <label htmlFor={checkbox.tag}>
-                                                                    <span>{checkbox.checkbox_name}</span>
+                                                                        <span>{checkbox.name}</span>
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -177,8 +189,8 @@ class ListingFilter extends React.Component {
                                 })}
                             </> : null}
 
-                            {filter_fee_annual && filter_fee_annual.enable ? <div className="content-one">
-                                <h5>{filter_fee_annual.heading}</h5>
+                            {annualFeesSlider ? <div className="content-one">
+                                <h5>{annualFeesSlider.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">
                                         <div className="row">
@@ -191,8 +203,8 @@ class ListingFilter extends React.Component {
                                                     <input type="hidden" name="max-value" value="" readOnly />
                                                 </div>
                                             </div>
-                                            <span className="min-max left">₹{filter_fee_annual.min}</span>
-                                            <span className="min-max right">₹{filter_fee_annual.max}+</span>
+                                            <span className="min-max left">₹{annualFeesSlider.min}</span>
+                                            <span className="min-max right">₹{annualFeesSlider.max}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -282,21 +294,21 @@ class ListingFilter extends React.Component {
                                 </div>
                             </div> : null}
 
-                            {filter_radio_name ? <>
-                                {filter_radio_name.map(radio => {
+                            {radios && radios.length ? <>
+                                {radios.map((radio, i) => {
                                     return (
-                                        <div className="content-one" key={radio.id}>
-                                            <h5>{radio.name}</h5>
+                                        <div className="content-one" key={i}>
+                                            <h5>{radio.heading}</h5>
                                             <div className="shortforms-container">
-                                                {radio.filter_radio_options.map(radio_button => {
+                                                {radio.values.map((radio_button, i) => {
                                                     const labelStyles = this.state.filters[radio.type] ? this.state.filters[radio.type][0] === radio_button.tag ? { border: '1px solid green' } : null : null
                                                     return (
-                                                        <React.Fragment key={radio_button.id}>
+                                                        <React.Fragment key={i}>
                                                             <label htmlFor={radio_button.tag} style={labelStyles} onClick={() => this.handleRadio(radio_button.tag, radio.type)}>{radio_button.name}</label>
                                                             <input
                                                                 className="lets-checkbox"
                                                                 type="radio"
-                                                                name={radio.name}
+                                                                name={radio_button.name}
                                                                 value={radio_button.tag}
                                                             />
                                                         </React.Fragment>

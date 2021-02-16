@@ -14,9 +14,7 @@ export const viewOffers = async productTypeId => {
     try {
         const res = await axios.post(url, body)
         return res.data
-    } catch (error) {
-
-    }
+    } catch { }
 }
 
 export const extractOffers = async apiOffers => {

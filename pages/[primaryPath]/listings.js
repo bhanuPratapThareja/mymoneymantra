@@ -14,7 +14,7 @@ import LearnMore from '../../components/common/LearnMore'
 
 import { extractListingOffers } from '../../services/componentsService'
 import { getProductDecision } from '../../services/offersService'
-import { filterOfferCardsInFilterComponent } from '../../utils/loanListingFilterHandler'
+import { filterOfferCardsInFilterComponent } from '../../utils/listingsFilterHandler'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { setPrimaryPath, setProductType, getProductType } from '../../utils/localAccess'
 import { viewOffers, extractOffers } from '../../services/offersService'
@@ -75,7 +75,6 @@ const Listings = props => {
                     return <ListingsBanner
                         key={block.id}
                         data={block}
-                        filters={props.filters}
                         numberOfCards={offerCards.length}
                         filterOfferCards={filterOfferCards}
                         filterCardsFilterComponent={filterCardsFilterComponent}
@@ -131,14 +130,11 @@ export async function getServerSideProps(ctx) {
     const secondaryPath = 'listings'
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const data = pageData && pageData.length ? pageData[0] : null
-
     const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
-    const listingFilter = await strapi.processReq('GET', `filters?slug=${primaryPath}-filters`)
-    const filters = listingFilter && listingFilter.length ? listingFilter[0] : null
 
     return {
         props: {
-            data, filters, primaryPath, productTypeData
+            data, primaryPath, productTypeData
         }
     }
 }

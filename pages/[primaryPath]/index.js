@@ -16,10 +16,10 @@ import FinancialTools from '../../components/common/FinancialTools'
 import ShortExtendedForm from '../../components/common/ShortExtendedForm'
 import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
+import PageNotFound from '../../components/PageNotFound'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { clearLeadId, setPrimaryPath, setProductType, clearFormData, getProductType } from '../../utils/localAccess'
 import { viewOffers, extractOffers } from '../../services/offersService'
-import PageNotFound from '../../components/PageNotFound'
 
 const PrimaryPage = props => {
 
@@ -37,11 +37,20 @@ const PrimaryPage = props => {
 
   const getOffers = async () => {
     const productType = getProductType()
-    const { populars, trendings } = await viewOffers(productType.productTypeId)
-    const popularOffers = await extractOffers(populars)
-    const trendingOffers = await extractOffers(trendings)
-    setPopularOffers(popularOffers)
-    setTrendingOffers(trendingOffers)
+
+    const apiOffers = await viewOffers(productType.productTypeId)
+    let populars = []
+    let trendings = []
+
+    if (apiOffers) {
+      populars = apiOffers.populars
+      trendings = apiOffers.trendings
+      const popularOffers = await extractOffers(populars)
+      const trendingOffers = await extractOffers(trendings)
+      setPopularOffers(popularOffers)
+      setTrendingOffers(trendingOffers)
+    }
+
   }
 
   const goToShortForm = () => {
@@ -104,7 +113,7 @@ const PrimaryPage = props => {
     })
   }
 
-  if(!props.data) {
+  if (!props.data) {
     return <PageNotFound />
   }
 
