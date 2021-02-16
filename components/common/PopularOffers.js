@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import { makeDecision } from '../../utils/decision'
 
-const popularOffers = props => {
+const PopularOffers = props => {
    const router = useRouter()
    const { section_heading } = props.data
 
@@ -68,4 +68,4 @@ const popularOffers = props => {
    )
 }
 
-export default popularOffers
+export default PopularOffers

@@ -6,6 +6,7 @@ import ListingFilter from '../Listings/ListingsFilter'
 const ListingBanner = props => {
     const { listing_banner_heading, categories } = props.data.listing_banner
     const [selectedOption, setSelectedOption] = useState('all')
+    const [filtersReady, setFiltersReady] = useState(false)
 
     useEffect(() => {
         onBannerCategoryChange(selectedOption)
@@ -64,7 +65,7 @@ const ListingBanner = props => {
                     <div className="cards">
                         <h3><span id="count">{props.numberOfCards}</span> {getCalulatedProductType()}</h3>
                     </div>
-                    {props.filters ? <div className="filter">
+                    {filtersReady ? <div className="filter">
                         <button
                             className="filter-option"
                             id="listing-filter"
@@ -75,12 +76,12 @@ const ListingBanner = props => {
                     </div> : null}
                 </div>
             </div>
-            {props.filters ? <ListingFilter
-                banksList={props.banksList}
+            <ListingFilter
+                setFiltersReady={setFiltersReady}
                 allOfferCards={props.allOfferCards}
                 filters={props.filters}
                 filterCardsFilterComponent={props.filterCardsFilterComponent}
-            /> : null}
+            />
             <hr className="divider" />
         </section>
     )
