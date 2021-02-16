@@ -1,14 +1,50 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { fileToByteArray } from '../../utils/byteArray'
 
 const Documents = () => {
-  const [aadhaar, setAadhaar] = useState(null)
-  const [pan, setPan] = useState(null)
-  const [bankStatement, setBankStatement] = useState(null)
-  const [salarySlips, setSalarySlips] = useState(null)
-  const [form16, setForm16] = useState(null)
-  const [rentAgreement, setRentAgreement] = useState(null)
-  const [bill, setBill] = useState(null)
+  const [aadhaar, setAadhaar] = useState({
+    documentName: '',
+    documentNo: '',
+    documentTypeId: '',
+    uploadStatus: '',
+  })
+  const [pan, setPan] = useState({
+    documentName: '',
+    documentNo: '1000000290',
+    documentTypeId: '1000000036',
+    uploadStatus: '',
+  })
+  const [bankStatement, setBankStatement] = useState({
+    documentName: '',
+    documentNo: '1000000308',
+    documentTypeId: '1000000044',
+    uploadStatus: '',
+  })
+  const [salarySlips, setSalarySlips] = useState({
+    documentName: '',
+    documentNo: '1000000307',
+    documentTypeId: '1000000043',
+    uploadStatus: '',
+  })
+  const [form16, setForm16] = useState({
+    documentName: '',
+    documentNo: '',
+    documentTypeId: '',
+    uploadStatus: '',
+  })
+  const [rentAgreement, setRentAgreement] = useState({
+    documentName: '',
+    documentNo: '',
+    documentTypeId: '',
+    uploadStatus: '',
+  })
+  const [bill, setBill] = useState({
+    documentName: '',
+    documentNo: '1000000321',
+    documentTypeId: '1000000037',
+    uploadStatus: '',
+  })
 
   useEffect(() => {
     getAllDocuments()
@@ -22,20 +58,197 @@ const Documents = () => {
           customerId ? customerId : 101
         }`
       )
-      console.log(responseObject)
+      responseObject.data.docList.map((doc) => {
+        switch (doc.documentTypeId) {
+          case '1000000036':
+            setPan((prevState) => ({ ...prevState, doc }))
+            break
+          case '1000000044':
+            setBankStatement((prevState) => ({ ...prevState, doc }))
+            break
+          case '1000000043':
+            setSalarySlips((prevState) => ({ ...prevState, doc }))
+            break
+          case '1000000037':
+            setBill((prevState) => ({ ...prevState, doc }))
+            break
+          default:
+            break
+        }
+      })
     } catch (err) {
       console.log(err)
     }
   }
 
-  const submitHandler = (e) => {
-    e.preventDefault()
+  const aadhaarChangeHandler = async (event) => {
+    const file = event.target.files[0]
+    console.log({ file })
+    const docBytes = await fileToByteArray(file)
+    const requestBody = {
+      documentNo: aadhaar.documentNo,
+      documentTypeId: aadhaar.documentTypeId,
+      docBytes,
+      documentName: file.name,
+      documentExtension: file.type,
+    }
+    const uploadStatus = await uploadDocument(requestBody)
+    setAadhaar((prevState) => ({
+      ...prevState,
+      uploadStatus,
+      documentName: file.name,
+    }))
   }
 
-  console.log({ aadhaar })
+  const panChangeHandler = async (event) => {
+    const file = event.target.files[0]
+    const docBytes = await fileToByteArray(file)
+    const requestBody = {
+      documentNo: pan.documentNo,
+      documentTypeId: pan.documentTypeId,
+      docBytes,
+      documentName: file.name,
+      documentExtension: file.type,
+    }
+    const uploadStatus = await uploadDocument(requestBody)
+    setPan((prevState) => ({
+      ...prevState,
+      uploadStatus,
+      documentName: file.name,
+    }))
+  }
+
+  const bankStatementChangeHandler = async (event) => {
+    const file = event.target.files[0]
+    const docBytes = await fileToByteArray(file)
+    const requestBody = {
+      documentNo: bankStatement.documentNo,
+      documentTypeId: bankStatement.documentTypeId,
+      docBytes,
+      documentName: file.name,
+      documentExtension: file.type,
+    }
+    const uploadStatus = await uploadDocument(requestBody)
+    setBankStatement((prevState) => ({
+      ...prevState,
+      uploadStatus,
+      documentName: file.name,
+    }))
+  }
+
+  const salarySlipChangeHandler = async (event) => {
+    const file = event.target.files[0]
+    const docBytes = await fileToByteArray(file)
+    const requestBody = {
+      documentNo: salarySlips.documentNo,
+      documentTypeId: salarySlips.documentTypeId,
+      docBytes,
+      documentName: file.name,
+      documentExtension: file.type,
+    }
+    const uploadStatus = await uploadDocument(requestBody)
+    setSalarySlips((prevState) => ({
+      ...prevState,
+      uploadStatus,
+      documentName: file.name,
+    }))
+  }
+
+  const form16ChangeHandler = async (event) => {
+    const file = event.target.files[0]
+    const docBytes = await fileToByteArray(file)
+    const requestBody = {
+      documentNo: form16.documentNo,
+      documentTypeId: form16.documentTypeId,
+      docBytes,
+      documentName: file.name,
+      documentExtension: file.type,
+    }
+    const uploadStatus = await uploadDocument(requestBody)
+    setForm16((prevState) => ({
+      ...prevState,
+      uploadStatus,
+      documentName: file.name,
+    }))
+  }
+
+  const rentAgreementChangeHandler = async (event) => {
+    const file = event.target.files[0]
+    const docBytes = await fileToByteArray(file)
+    const requestBody = {
+      documentNo: rentAgreement.documentNo,
+      documentTypeId: rentAgreement.documentTypeId,
+      docBytes,
+      documentName: file.name,
+      documentExtension: file.type,
+    }
+    const uploadStatus = await uploadDocument(requestBody)
+    setRentAgreement((prevState) => ({
+      ...prevState,
+      uploadStatus,
+      documentName: file.name,
+    }))
+  }
+
+  const billChangeHandler = async (event) => {
+    const file = event.target.files[0]
+    const docBytes = await fileToByteArray(file)
+
+    // setBill((prevState) => ({
+    //   ...prevState,
+    //   docBytes,
+    //   documentName: file.name,
+    //   documentExtension: file.type,
+    // }))
+
+    const requestBody = {
+      documentNo: bill.documentNo,
+      documentTypeId: bill.documentTypeId,
+      docBytes,
+      documentName: file.name,
+      documentExtension: file.type,
+    }
+    const uploadStatus = await uploadDocument(requestBody)
+    setBil((prevState) => ({
+      ...prevState,
+      uploadStatus,
+      documentName: file.name,
+    }))
+  }
+
+  const uploadDocument = async (body) => {
+    try {
+      const customerId = localStorage.getItem('customerId')
+      const responseObject = await axios.post(
+        'http://203.122.46.189:8060/customer/api/profile/v1/doc-upload',
+        {
+          ...body,
+          customerId: customerId ? customerId : '101',
+        }
+      )
+      console.log(responseObject)
+      if (responseObject.status === 200) {
+        return responseObject.data.message
+      } else {
+        return 'Something went wrong'
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  console.log({
+    aadhaar,
+    pan,
+    bankStatement,
+    salarySlips,
+    form16,
+    rentAgreement,
+    bill,
+  })
 
   return (
-    <form onSubmit={submitHandler}>
+    <form>
       <div className="documents-wrapper">
         <div className="docs-container">
           <span>Identity Proof</span>
@@ -57,13 +270,13 @@ const Documents = () => {
                   </svg>
                   <input
                     type="file"
-                    onChange={(e) => setAadhaar(e.target.files[0])}
+                    onChange={aadhaarChangeHandler}
                     style={{ display: 'none' }}
                   />
                 </label>
-                <h6>{aadhaar?.name}</h6>
+                <h6>{aadhaar?.documentName}</h6>
               </div>
-              <span>uploaded successfully</span>
+              <span>{aadhaar.uploadStatus}</span>
             </div>
           </div>
           <div className="identity-options">
@@ -84,13 +297,13 @@ const Documents = () => {
                   </svg>
                   <input
                     type="file"
-                    onChange={(e) => setPan(e.target.files[0])}
+                    onChange={panChangeHandler}
                     style={{ display: 'none' }}
                   />
                 </label>
-                <h6>{pan?.name}</h6>
+                <h6>{pan?.documentName}</h6>
               </div>
-              <span className="error">please upload a .jpeg/pdf file</span>
+              <span>{pan.uploadStatus}</span>
             </div>
           </div>
         </div>
@@ -115,13 +328,13 @@ const Documents = () => {
                   </svg>
                   <input
                     type="file"
-                    onChange={(e) => setBankStatement(e.target.files[0])}
+                    onChange={bankStatementChangeHandler}
                     style={{ display: 'none' }}
                   />
                 </label>
-                <h6>{bankStatement?.name}</h6>
+                <h6>{bankStatement?.documentName}</h6>
               </div>
-              <span>uploaded successfully</span>
+              <span>{bankStatement.uploadStatus}</span>
             </div>
           </div>
           <div className="identity-options">
@@ -142,14 +355,13 @@ const Documents = () => {
                   </svg>
                   <input
                     type="file"
-                    name={salarySlips?.filename}
-                    onChange={(e) => setSalarySlips(e.target.files[0])}
+                    onChange={salarySlipChangeHandler}
                     style={{ display: 'none' }}
                   />
                 </label>
-                <h6>{salarySlips?.name}</h6>
+                <h6>{salarySlips?.documentName}</h6>
               </div>
-              <span>uploaded successfully</span>
+              <span>{salarySlips.uploadStatus}</span>
             </div>
           </div>
           <div className="identity-options">
@@ -170,14 +382,13 @@ const Documents = () => {
                   </svg>
                   <input
                     type="file"
-                    name={form16?.filename}
-                    onChange={(e) => setForm16(e.target.files[0])}
+                    onChange={form16ChangeHandler}
                     style={{ display: 'none' }}
                   />
                 </label>
-                <h6>{form16?.name}</h6>
+                <h6>{form16?.documentName}</h6>
               </div>
-              <span>uploaded successfully</span>
+              <span>{form16.uploadStatus}</span>
             </div>
           </div>
         </div>
@@ -202,14 +413,13 @@ const Documents = () => {
                   </svg>
                   <input
                     type="file"
-                    name={rentAgreement?.filename}
-                    onChange={(e) => setRentAgreement(e.target.files[0])}
+                    onChange={rentAgreementChangeHandler}
                     style={{ display: 'none' }}
                   />
                 </label>
-                <h6>{rentAgreement?.name}</h6>
+                <h6>{rentAgreement?.documentName}</h6>
               </div>
-              <span>uploaded successfully</span>
+              <span>{rentAgreement.uploadStatus}</span>
             </div>
           </div>
           <div className="identity-options">
@@ -230,14 +440,13 @@ const Documents = () => {
                   </svg>
                   <input
                     type="file"
-                    name={bill?.filename}
-                    onChange={(e) => setBill(e.target.files[0])}
+                    onChange={billChangeHandler}
                     style={{ display: 'none' }}
                   />
                 </label>
-                <h6>{bill?.name}</h6>
+                <h6>{bill?.documentName}</h6>
               </div>
-              <span>uploaded successfully</span>
+              <span>{bill.uploadStatus}</span>
             </div>
           </div>
         </div>
