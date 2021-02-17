@@ -9,7 +9,8 @@ import {
     generateEmiBlock,
     generateLoanAmountBlock,
     generateRoiBlock,
-    generateTenureBlock
+    generateTenureBlock,
+    generateInterestRateBlock
 } from '../../utils/listingsFilterGenerator'
 
 class ListingFilter extends React.Component {
@@ -101,18 +102,18 @@ class ListingFilter extends React.Component {
         if(loanAmountSlider) {
             this.setState({ loanAmountSlider }, () => {
                 initializeMoneyRange(loanAmountSlider, 'max-loan-amount-range')
-                this.updateRoiBlock()
+                this.updateInterestRatesBlock()
             })
         } else {
-            this.updateRoiBlock()
+            this.updateInterestRatesBlock()
         }
     }
 
-    updateRoiBlock = () => {
-        const roiSlider = generateRoiBlock(this.props.allOfferCards)
-        if(roiSlider) {
-            this.setState({ roiSlider }, () => {
-                initializePercentRange(roiSlider, 'roi-range')
+    updateInterestRatesBlock = () => {
+        const interestRatesSlider = generateInterestRateBlock(this.props.allOfferCards)
+        if(interestRatesSlider) {
+            this.setState({ interestRatesSlider }, () => {
+                initializePercentRange(interestRatesSlider, 'interest-rate-range')
                 this.updateTenureBlock()
             })
         } else {
@@ -138,24 +139,6 @@ class ListingFilter extends React.Component {
         }, 1000)
     }
 
-    // loadFilters = () => {
-
-    //     const { filter_name, filter_emi,
-    //         filter_tenure, filter_roi, filter_max_loan_amount } = this.props.filters
-
-    //     if (filter_name.length) {
-    //         this.setState({ filter_name })
-    //     }
-
-    //     this.setState({ filter_emi, filter_tenure, filter_roi, filter_max_loan_amount }, () => {
-            
-    //         initializeMoneyRange(filter_emi, 'emi-range')
-    //         initializePercentRange(filter_roi, 'roi-range')
-    //         initializeMoneyRange(filter_max_loan_amount, 'max-loan-amount-range')
-    //         initializeYearRange(filter_tenure, 'tenure-range')
-    //     })
-    // }
-
     handleCheckbox = (e, type) => {
         const { name, checked } = e.target
         const selectedCheckboxes = this.state.filters[type] ? this.state.filters[type] : []
@@ -175,14 +158,14 @@ class ListingFilter extends React.Component {
     }
 
     onApplyFilter = () => {
-        const { annualFeesSlider, emiSlider, loanAmountSlider, roiSlider, tenureSlider } = this.state
+        const { annualFeesSlider, emiSlider, loanAmountSlider, interestRatesSlider, tenureSlider } = this.state
         const annualFees = getSliderFilterValues(annualFeesSlider, 'annual-fees-range')
         const emi = getSliderFilterValues(emiSlider, 'emi-range')
-        const roi = getSliderFilterValues(roiSlider, 'roi-range')
+        const interestRate = getSliderFilterValues(interestRatesSlider, 'interest-rate-range')
         const maxLoanAmount = getSliderFilterValues(loanAmountSlider, 'max-loan-amount-range')
         const tenure = getSliderFilterValues(tenureSlider, 'tenure-range')
 
-        const filters = { ...this.state.filters, annualFees, emi, roi, maxLoanAmount, tenure }
+        const filters = { ...this.state.filters, annualFees, emi, interestRate, maxLoanAmount, tenure }
         this.setState({ ...this.state, filters }, () => {
             this.onCloseFilter()
         })
@@ -205,7 +188,7 @@ class ListingFilter extends React.Component {
 
     render() {
         const { checkboxes, radios, annualFeesSlider, emiSlider,
-            loanAmountSlider, roiSlider, tenureSlider } = this.state
+            loanAmountSlider, interestRatesSlider, tenureSlider } = this.state
         return (
             <section className="listing-modal mm-modal" id="listing-filter-show">
                 <div className="overlay"></div>
@@ -314,13 +297,13 @@ class ListingFilter extends React.Component {
                                 </div>
                             </div> : null}
 
-                            {roiSlider ? <div className="content-one">
-                                <h5>{roiSlider.heading}</h5>
+                            {interestRatesSlider ? <div className="content-one">
+                                <h5>{interestRatesSlider.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">
                                         <div className="row">
                                             <div className="col-sm-12">
-                                                <div id="roi-range"></div>
+                                                <div id="interest-rate-range"></div>
                                             </div>
                                         </div>
                                         <div className="row">
@@ -329,8 +312,8 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" />
                                             </div>
                                         </div>
-                                        <span className="min-max left">{roiSlider.min}%</span>
-                                        <span className="min-max right">{roiSlider.max}%</span>
+                                        <span className="min-max left">{interestRatesSlider.min}%</span>
+                                        <span className="min-max right">{interestRatesSlider.max}%</span>
                                     </div>
                                 </div>
                             </div> : null}

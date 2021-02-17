@@ -16,8 +16,8 @@ export const filterOfferCardsInFilterComponent = (unFilteredCards, filters) => {
     const filteredByPromotions = filterByPromotions(filteredByCategories, filters)
     const filteredByAnnualFees = filterByAnnualFees(filteredByPromotions, filters)
     const filteredByEmi = filterByEmi(filteredByAnnualFees, filters)
-    const filteredByRoi = filterByRoi(filteredByEmi, filters)
-    const filteredMaxLoanAmount = filterByMaxLoanAmount(filteredByRoi, filters)
+    const filteredByInterestRate = filterByInterestRate(filteredByEmi, filters)
+    const filteredMaxLoanAmount = filterByMaxLoanAmount(filteredByInterestRate, filters)
     const filteredByTenure = filterByTenure(filteredMaxLoanAmount, filters)
     return filteredByTenure
 }
@@ -114,33 +114,33 @@ const filterByEmi = (filteredByAnnualFees, filters) => {
     return [...filteredByEmi]
 }
 
-const filterByRoi = (filteredByEmi, filters) => {
-    const filteredByRoi = filteredByEmi.filter(card => {
-        if (!filters.roi || !filters.roi.length) {
+const filterByInterestRate = (filteredByEmi, filters) => {
+    const filteredByInterestRate = filteredByEmi.filter(card => {
+        if (!filters.interestRate || !filters.interestRate.length) {
             return card
         }
-        if(!card.product.product_return_on_investment) {
+        if(!card.product.product_interest_rate) {
             return card
         }
-        const roi = Number(card.product.product_return_on_investment.roi)
-        const minSelected = Number(filters.roi[0])
-        const maxSelected = Number(filters.roi[1])
-        const max = Number(filters.roi[2])
+        const interestRate = Number(card.product.product_interest_rate.min_value)
+        const minSelected = Number(filters.interestRate[0])
+        const maxSelected = Number(filters.interestRate[1])
+        const max = Number(filters.interestRate[2])
 
         if(maxSelected === max) {
-            if(roi >= minSelected) {
+            if(interestRate >= minSelected) {
                 return card
             }
 
-        } else if (roi >= minSelected && roi <= maxSelected) {
+        } else if (interestRate >= minSelected && interestRate <= maxSelected) {
             return card
         }
     })
-    return [...filteredByRoi]
+    return [...filteredByInterestRate]
 }
 
-const filterByMaxLoanAmount = (filteredByRoi, filters) => {
-    const filteredByMaxLoanAmount = filteredByRoi.filter(card => {
+const filterByMaxLoanAmount = (filteredByInterestRate, filters) => {
+    const filteredByMaxLoanAmount = filteredByInterestRate.filter(card => {
         if (!filters.maxLoanAmount || !filters.maxLoanAmount.length) {
             return card
         }
