@@ -524,8 +524,9 @@ class LongForm extends React.Component {
   render() {
     let index = 0;
     if (!this.state.longFormSections) {
-      return null;
+      return null
     }
+
     const { bank, product } = this.props.productData
     
     return (
