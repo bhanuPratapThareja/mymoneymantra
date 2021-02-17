@@ -289,7 +289,7 @@ const CommentSection = (props) => {
                             }) : null
                         }
                     </div>
-                    {loadMore && <button onClick={loadMoreCommnets}> Load More </button>}
+                    {loadMore && <button onClick={loadMoreCommnets} className="cstm-load-btn"> Load More </button>}
                 </div>
             </div>
         </div>

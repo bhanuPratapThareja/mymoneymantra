@@ -123,13 +123,13 @@ const BlogFilter = props => {
             </div>
          </div>
          <div className="filter-cards">
+            <InfiniteScroll
+               dataLength={blogsToDisplay.length}
+               hasMore={hasMore}
+               loader={blogsToDisplay.length ? <h2>Loading...</h2> : ''}
+               next={fetchMoreData}
+            >
             <div className="filter-cards-wrapper">
-               <InfiniteScroll
-                  dataLength={blogsToDisplay.length}
-                  hasMore={hasMore}
-                  loader={blogsToDisplay.length ? <h2>Loading...</h2> : ''}
-                  next={fetchMoreData}
-               >
                   {
                      blogsToDisplay.length ? blogsToDisplay.map((blog, i) => {
                         const { header, short_text, image, read_text, redirect_url, id, createdAt, popular, published_at, content } = blog
@@ -156,8 +156,7 @@ const BlogFilter = props => {
                         )
                      }) : null
                   }
-               </InfiniteScroll>
-            </div>
+            </div></InfiniteScroll>
             <div>
                <BlogFilterOptions filters={blogsFilter} applyFilter={onApplyFilter} />
             </div>
