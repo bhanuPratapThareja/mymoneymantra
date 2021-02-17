@@ -1,9 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { findBank } from '../../utils/findBank'
 
-const TotalEnquiries = () => {
+const TotalEnquiries = ({ enquiries, banks }) => {
   const [activeTab, setActiveTab] = useState('accepted')
   const [open, setOpen] = useState(false)
   const [modalData, setModalData] = useState({})
+  const [modalBankData, setmodalBankData] = useState({})
+
+  useEffect(() => {
+    const bank = findBank(banks, modalData.bankId)
+    setmodalBankData(bank)
+  }, [modalData])
 
   const modalOpenHandle = (data) => {
     setModalData(data)
@@ -17,7 +24,7 @@ const TotalEnquiries = () => {
           <h2>Total Enquiries</h2>
         </div>
         <div className="product-wrapper">
-          <div className="container head">
+          {/* <div className="container head">
             <div className="switch-tab tab">
               <button
                 className={activeTab === 'accepted' ? 'tablinks active' : 'tablinks'}
@@ -35,133 +42,57 @@ const TotalEnquiries = () => {
               </button>
               <span className="line"></span>
             </div>
-          </div>
+          </div> */}
           {activeTab === 'accepted' ? (
-            <div id="accepted" className="cards-wrapper container tabcontent detailed-cards">
-              <div className="popular-cards-slider-card">
-                <div className="popular-cards-slider-card-top">
-                  <div className="head">
-                    <h3>
-                      <b className="card_name">Citi Bank</b>
-                      <br />
-                      Enquiry for Personal Loan
-                    </h3>
-                    <img
-                      src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png"
-                      alt="citi-logo"
-                    />
-                  </div>
-                  <div className="account-number">
-                    <p>xxxx xxxx xxxx 6338</p>
-                  </div>
-                  <div className="app_progress_card_content">
-                    <div className="left">
-                      <div className="value">
-                        <span>Loan Amount:</span>
-                        <h5>₹8,00,000</h5>
+            <div
+              id="accepted"
+              className="cards-wrapper container tabcontent detailed-cards"
+            >
+              {enquiries?.map((item, i) => {
+                const bank = findBank(banks, item.bankId)
+                return (
+                  <div
+                    key={i}
+                    className="popular-cards-slider-card"
+                    onClick={() => modalOpenHandle(item)}
+                  >
+                    <div className="popular-cards-slider-card-top">
+                      <div className="head">
+                        <h3>
+                          <b className="card_name">{bank?.bank_name}</b>
+                          <br />
+                          Enquiry for Personal Loan
+                        </h3>
+                        <img
+                          src={`http://203.122.46.189:1338${bank?.bank_logo?.url}`}
+                          alt="citi-logo"
+                        />
+                      </div>
+                      <div className="account-number">
+                        <p>{item.accountNumber}</p>
+                      </div>
+                      <div className="app_progress_card_content">
+                        <div className="left">
+                          <div className="value">
+                            <span>
+                              {item.productType === 'PERSONAL LOAN'
+                                ? 'Loan Amount'
+                                : 'Credit Limit'}
+                              :
+                            </span>
+                            <h5>₹{item.loanAmount}</h5>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="popular-cards-slider-card-bottom">
+                      <div>
+                        <h5>{/* Approved */}</h5>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="popular-cards-slider-card-bottom">
-                  <div>
-                    <h5>Approved</h5>
-                  </div>
-                </div>
-              </div>
-              <div className="popular-cards-slider-card">
-                <div className="popular-cards-slider-card-top">
-                  <div className="head">
-                    <h3>
-                      <b className="card_name">Citi Bank</b>
-                      <br />
-                      Enquiry for Personal Loan
-                    </h3>
-                    <img
-                      src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png"
-                      alt="citi-logo"
-                    />
-                  </div>
-                  <div className="account-number">
-                    <p>xxxx xxxx xxxx 6338</p>
-                  </div>
-                  <div className="app_progress_card_content">
-                    <div className="left">
-                      <div className="value">
-                        <span>Loan Amount:</span>
-                        <h5>₹8,00,000</h5>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="popular-cards-slider-card-bottom">
-                  <div>
-                    <h5>Approved</h5>
-                  </div>
-                </div>
-              </div>
-              <div className="popular-cards-slider-card">
-                <div className="popular-cards-slider-card-top">
-                  <div className="head">
-                    <h3>
-                      <b className="card_name">Citi Bank</b>
-                      <br />
-                      Enquiry for Personal Loan
-                    </h3>
-                    <img
-                      src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png"
-                      alt="citi-logo"
-                    />
-                  </div>
-                  <div className="account-number">
-                    <p>xxxx xxxx xxxx 6338</p>
-                  </div>
-                  <div className="app_progress_card_content">
-                    <div className="left">
-                      <div className="value">
-                        <span>Loan Amount:</span>
-                        <h5>₹8,00,000</h5>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="popular-cards-slider-card-bottom">
-                  <div>
-                    <h5>Approved</h5>
-                  </div>
-                </div>
-              </div>
-              <div className="popular-cards-slider-card">
-                <div className="popular-cards-slider-card-top">
-                  <div className="head">
-                    <h3>
-                      <b className="card_name">Citi Bank</b>
-                      <br />
-                      Enquiry for Personal Loan
-                    </h3>
-                    <img
-                      src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png"
-                      alt="citi-logo"
-                    />
-                  </div>
-                  <div className="account-number">
-                    <p>xxxx xxxx xxxx 6338</p>
-                  </div>
-                  <div className="app_progress_card_content">
-                    <div className="left">
-                      <div className="value">
-                        <span>Loan Amount:</span>
-                        <h5>₹8,00,000</h5>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="popular-cards-slider-card-bottom">
-                  <div>
-                    <h5>Approved</h5>
-                  </div>
-                </div>
-              </div>
+                )
+              })}
             </div>
           ) : (
             <div
@@ -330,33 +261,35 @@ const TotalEnquiries = () => {
               <div class="card-details">
                 <div class="head">
                   <h3>
-                    <span>Citi Bank</span>
+                    <span>{modalBankData?.bank_name}</span>
                     <br />
                     Credit Enquiry Details
                   </h3>
-                  <img src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/citi-logo.png" />
+                  <img
+                    src={`http://203.122.46.189:1338${modalBankData?.bank_logo?.url}`}
+                  />
                 </div>
                 <h5 class="card-num">xxxx xxxx xxxx 6338</h5>
                 <div class="values-wrap">
                   <div class="values">
                     <span>Bank Name:</span>
-                    <h5>Citi Bank</h5>
+                    <h5>{modalBankData?.bank_name}</h5>
                   </div>
                   <div class="values">
                     <span>Product Type:</span>
-                    <h5>Personal Loan</h5>
+                    <h5>{modalData?.productType}</h5>
                   </div>
                   <div class="values">
                     <span>Date of Enquiry:</span>
-                    <h5>21 Mar 2018</h5>
+                    <h5>{modalData?.dateOfEnquiry}</h5>
                   </div>
-                  <div class="values">
+                  {/* <div class="values">
                     <span>Status of Enquiry:</span>
                     <h5 class="status">Approved</h5>
-                  </div>
+                  </div> */}
                   <div class="values">
                     <span>Enquiry For:</span>
-                    <h5>Loan Amount</h5>
+                    <h5>{modalData?.enquiryFor}</h5>
                   </div>
                 </div>
               </div>
