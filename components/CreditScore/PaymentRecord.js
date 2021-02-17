@@ -66,7 +66,7 @@ const PaymentRecord = ({ onTime, delayed, banks }) => {
                     </div>
                     <div className="popular-cards-slider-card-bottom delayed-bottom">
                       <div>
-                        <h5>Due on: {item.dueDate}</h5>
+                        <h5>{item.dueDate}</h5>
                       </div>
                     </div>
                   </div>
@@ -101,15 +101,15 @@ const PaymentRecord = ({ onTime, delayed, banks }) => {
                         <div className="left">
                           <div className="value">
                             <h6 className="delayed-days">
-                              Delayed by {item.delayedDays} Days
+                              {/* Delayed by {item.delayedDays} Days */}
                             </h6>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="popular-cards-slider-card-bottom rejected-red">
+                    <div className="popular-cards-slider-card-bottom">
                       <div>
-                        <h5>Rejected: Due to poor Credit Score</h5>
+                        <h5>{/* Rejected: Due to poor Credit Score */}</h5>
                       </div>
                     </div>
                   </div>
