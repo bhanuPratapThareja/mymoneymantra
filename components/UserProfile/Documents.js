@@ -29,14 +29,14 @@ const Documents = () => {
   })
   const [form16, setForm16] = useState({
     documentName: '',
-    documentNo: '',
-    documentTypeId: '',
+    documentNo: '1000000305',
+    documentTypeId: '1000000043',
     uploadStatus: '',
   })
   const [rentAgreement, setRentAgreement] = useState({
     documentName: '',
-    documentNo: '',
-    documentTypeId: '',
+    documentNo: '1000000299',
+    documentTypeId: '1000000037',
     uploadStatus: '',
   })
   const [bill, setBill] = useState({
@@ -209,7 +209,7 @@ const Documents = () => {
       documentExtension: file.type,
     }
     const uploadStatus = await uploadDocument(requestBody)
-    setBil((prevState) => ({
+    setBill((prevState) => ({
       ...prevState,
       uploadStatus,
       documentName: file.name,
