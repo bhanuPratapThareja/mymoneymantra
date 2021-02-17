@@ -229,7 +229,7 @@ class LongForm extends React.Component {
         const long_form_blocks = newLongFormSections[i].sections[0].long_form_blocks
         for(let j = 0; j < long_form_blocks.length; j++) {
             const inputs = long_form_blocks[j].blocks
-            for(let k = 0; k  < inputs.length; k++) {
+            for(let k = 0; k < inputs.length; k++) {
               if(inputs[k].type === 'checkbox' && inputs[k].tnc && !this.state.fulfillTnc) {
                 newLongFormSections.splice(i, 1)
                 this.setState({ enableCheckboxes: [], submitButtonDisabled: false })
