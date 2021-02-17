@@ -1575,6 +1575,11 @@ section.popular-card-container {
   top: 30px;
 }
 
+.long-form .long-form-wrapper .form-wrapper .cstm-lf-img img {
+  max-width: 100px;
+}
+
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
@@ -2056,6 +2061,10 @@ section.popular-card-container {
   
   .learn-more-wrapper-content .question svg {
     min-width: 24px;
+  }
+
+  .long-form .long-form-wrapper .form-wrapper .cstm-lf-img {
+    top: -70px;
   }
 
 }
