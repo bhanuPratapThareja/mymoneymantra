@@ -2054,6 +2054,9 @@ section.popular-card-container {
     padding: 0 24px;
   }
   
+  .learn-more-wrapper-content .question svg {
+    min-width: 24px;
+  }
 
 }
 
