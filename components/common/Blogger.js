@@ -10,7 +10,8 @@ const Blogger = props => {
         if (window !== undefined && window.initSlickBlogs && props.data.blogger && props.data.blogger.image.length) {
             window.initSlickBlogs()
         }
-    }, [])
+    })
+    
     let { section_heading, bloggers } = props.data
     let popularBlogs = bloggers.filter(blog => blog.popular === true)
     const shuffleArray = (array) => {

@@ -2113,7 +2113,7 @@ section.popular-card-container {
 
 }
 
-@media(max-width: 330px) {
+@media(max-width: 375px) {
   .credit-card-flow .lets-find-container .shortforms-container .form__group.field.file-type {
     padding: 0px 10px 10px !important;
   }
@@ -2314,6 +2314,10 @@ section.popular-card-container {
 }
 
 .filter-cross {
+  cursor: pointer;
+}
+
+.noUi-origin.noUi-connect {
   cursor: pointer;
 }
 

@@ -1,39 +1,23 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
-import { getProductDecision } from '../../services/offersService'
 import { makeDecision } from '../../utils/decision'
 
-const Offers = props => {
+const PopularOffers = props => {
    const router = useRouter()
    const { section_heading } = props.data
 
-   useEffect(() => {
-      if (window !== undefined && window.initSlickCards && props.offers.length) {
-         window.initSlickCards()
-      }
-   })
+   // useEffect(() => {
+   //    if(window !== undefined && window.initSlickCards && props.offers.length) {
+   //       window.initSlickCards()
+   //    }
+   // })
 
    const onOfferClick = async offer => {
       const { productDecision } = offer
       const decision = makeDecision(productDecision, offer, props.primaryPath, null)
       const { pathname, query } = decision
       router.push({ pathname, query }, pathname, { shallow: true })
-      // const response = await getProductDecision([offer])
-      // const productDecision = response[0].productDecision
-      // if (productDecision === 'Apply Now') {
-      //    props.goToShortFormPage()
-      //    return
-      // }
-      // const { slug: bankSlug } = bank
-      // const { slug: productSlug } = product
-      // const primaryPath = props.primaryPath
-
-      // if(primaryPath === 'credit-cards') {
-      //    router.push(`/${primaryPath}/${bankSlug}/${productSlug}`)
-      // } else {
-      //    router.push(`/${primaryPath}/${bankSlug}`)
-      // }
    }
 
    if (!props.offers || !props.offers.length) {
@@ -84,4 +68,4 @@ const Offers = props => {
    )
 }
 
-export default Offers
+export default PopularOffers

@@ -14,17 +14,23 @@ export const viewOffers = async productTypeId => {
     try {
         const res = await axios.post(url, body)
         return res.data
-    } catch (error) {
-
-    }
+    } catch { }
 }
 
 export const extractOffers = async apiOffers => {
+    // console.log('apiOffers: ', apiOffers)
     return new Promise(async (resolve) => {
         const strapi = new Strapi()
         const productIdArray = []
         if (!apiOffers.length) resolve([])
-        apiOffers.forEach(apiOffer => productIdArray.push(`product_id=${apiOffer.cardType}`))
+
+        for(let i = 0; i < apiOffers.length; i++) {
+            if(!apiOffers[i].cardType) {
+                continue
+            }
+            productIdArray.push(`product_id=${apiOffers[i].cardType}`)
+        }
+
         const requiredProducts = productIdArray.join('&')
         const offersPacked = await strapi.processReq('GET', `product-v-2-s?${requiredProducts}`)
 

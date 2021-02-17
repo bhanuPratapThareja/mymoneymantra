@@ -5,7 +5,7 @@ import Layout from '../../components/Layout'
 import ListingsBanner from '../../components/Banners/ListingsBanner'
 import ListingCards from '../../components/Listings/ListingCards'
 import CreditScore from '../../components/common/CreditScore'
-import TrendingOffers from '../../components/common/trendingOffers'
+import TrendingOffers from '../../components/common/TrendingOffers'
 import BankSlider from '../../components/common/BankSlider'
 import Rewards from '../../components/common/Rewards'
 import FinancialTools from '../../components/common/FinancialTools'
@@ -14,13 +14,12 @@ import LearnMore from '../../components/common/LearnMore'
 
 import { extractListingOffers } from '../../services/componentsService'
 import { getProductDecision } from '../../services/offersService'
-import { filterOfferCardsInFilterComponent } from '../../utils/loanListingFilterHandler'
+import { filterOfferCardsInFilterComponent } from '../../utils/listingsFilterHandler'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { setPrimaryPath, setProductType, getProductType } from '../../utils/localAccess'
 import { viewOffers, extractOffers } from '../../services/offersService'
 
 const Listings = props => {
-    const [trendingOffers, setTrendingOffers] = useState([])
     const [allOfferCards, setAllOfferCards] = useState([])
     const [offerCards, setOfferCards] = useState([])
 
@@ -28,19 +27,11 @@ const Listings = props => {
         window.scrollTo(0, 0)
         setPrimaryPath(props.primaryPath)
         setProductType(props.productTypeData)
-        getOffers()
+        getListingOffers()
     }, [])
 
-    const getOffers = async () => {
-        const productType = getProductType()
-        const { trendings } = await viewOffers(productType.productTypeId)
-        const trendingOffers = await extractOffers(trendings)
-        setTrendingOffers(trendingOffers)
-        getListingOffers()
-    }
-
     const getListingOffers = async () => {
-        if(props.data) {
+        if (props.data) {
             const listingOffers = await extractListingOffers(props.data)
             getCardsWithButtonText(listingOffers)
         }
@@ -75,7 +66,6 @@ const Listings = props => {
                     return <ListingsBanner
                         key={block.id}
                         data={block}
-                        filters={props.filters}
                         numberOfCards={offerCards.length}
                         filterOfferCards={filterOfferCards}
                         filterCardsFilterComponent={filterCardsFilterComponent}
@@ -93,13 +83,12 @@ const Listings = props => {
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
 
-                case 'offers.trending-offers-component':
-                    return <TrendingOffers
-                        key={block.id}
-                        data={block}
-                        offers={trendingOffers}
-                        primaryPath={props.primaryPath}
-                    />
+                    case 'offers.trending-offers-component':
+                        return <TrendingOffers 
+                            key={block.id} 
+                            data={block}
+                            primaryPath={props.primaryPath}
+                        />
 
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
@@ -131,14 +120,11 @@ export async function getServerSideProps(ctx) {
     const secondaryPath = 'listings'
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const data = pageData && pageData.length ? pageData[0] : null
-
     const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
-    const listingFilter = await strapi.processReq('GET', `filters?slug=${primaryPath}-filters`)
-    const filters = listingFilter && listingFilter.length ? listingFilter[0] : null
 
     return {
         props: {
-            data, filters, primaryPath, productTypeData
+            data, primaryPath, productTypeData
         }
     }
 }
