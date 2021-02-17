@@ -21,11 +21,8 @@ const BlogsDetails = props => {
         if (props.data.length != 0) {
             setDisplayBlog(true)
             setBlogData(props.data)
-
-            console.log(props.data)
         } else {
             setDisplayBlog(false)
-            console.log(typeof props.data)
         }
         window.scroll(0, 0)
     }, [props.data])

@@ -15,15 +15,25 @@ import FinancialTools from '../components/common/FinancialTools'
 import Blogger from '../components/common/Blogger'
 import { getClassesForPage } from '../utils/classesForPage'
 import { viewOffers, extractOffers } from '../services/offersService'
+import { get } from 'jquery'
 
 
 const Home = props => {
 
     useEffect(() => {
+        getOffers()
         localStorage.clear()
     }, [])
 
+    const getOffers = async () => {
+        const { trendings } = await viewOffers()
+        console.log(trendings)
+        const trendingOffers = await extractOffers(trendings)
+        setTrendingOffers(trendingOffers)
+    }
+
     const getComponents = (dynamic) => {
+        console.log(dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner-component':
@@ -40,6 +50,8 @@ const Home = props => {
                     return <UspCards key={block.id} data={block} />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
+                case 'offers.trending-offers-component':
+                    return <TrendingOffers key={block.id} data={block} offers={trendingOffers} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.app-download-component':

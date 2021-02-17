@@ -47,7 +47,7 @@ const Blogger = props => {
                         const blogreadTime = readingTime(content);
                         const blogClasses = ['blog-wrapper-card', `card-${i + 1}`]
                         return (
-                            (i < 3) ? <div className={blogClasses.join(' ')} id={`blog-card-${i + 1}`} key={id}>
+                            (i < 3) ? <div className={blogClasses.join(' ')} id={`blog-card-${i + 1}`} key={i}>
                                 <div className={`image_${i + 1}`}>
                                     <Image image={image} />
                                 </div>
