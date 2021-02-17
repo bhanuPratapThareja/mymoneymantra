@@ -33,7 +33,7 @@ const ListingCards = (props) => {
 
       {offers.map((offer, i) => {
         const { productDecision, bank, product } = offer
-        console.log('offer--in Listingards', offer)
+    
         return (
           <div className="long-cards-wrapper"
             key={i}
