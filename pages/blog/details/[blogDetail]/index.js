@@ -26,7 +26,7 @@ const BlogDetail = props => {
             const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${slugForProductTypeData}`)
             setProductType(productTypeData)
             const productType = getProductType()
-            let productTypeId = productType.productTypeId
+            let productTypeId = productType.productTypeId ? productType.productTypeId : ''
             const { trendings } = await viewOffers(productTypeId)
             const trendingOffers = await extractOffers(trendings, productTypeId)
             setTrendingOffers(trendingOffers)
@@ -84,6 +84,6 @@ export async function getServerSideProps(ctx) {
         `pages?slug=${primaryPath}-${secondaryPath}`
     );
     const data = pageData && pageData.length ? pageData[0] : null;
-    return { props: { data, pageClasses, blogData, allBlogs ,query } };
+    return { props: { data, pageClasses, blogData, allBlogs, query } };
 }
 export default BlogDetail
