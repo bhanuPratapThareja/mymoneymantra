@@ -5,7 +5,7 @@ import {
 } from "./formattedCurrency";
 
 export const generateInputs = (component, handleChange, checkInputValidity,
-  handleInputDropdownSelection, formType, checkboxAnchorClick) => {
+  handleInputDropdownSelection, formType, checkboxAnchorClick, skipOtp) => {
 
   const handleInputChange = (e, type, focusDropdown, style_as_dropdown) => {
     let { name, value, checked } = e.target
@@ -364,6 +364,11 @@ export const generateInputs = (component, handleChange, checkInputValidity,
   }
 
   if (type === "checkbox") {
+    
+    if(formType === 'lf' && skipOtp) {
+      return null
+    }
+
     const { checkbox_input, checkboxes_for } = checkbox;
     const fieldId = `${checkboxes_for}_${type}_container`;
     return (

@@ -34,7 +34,8 @@ class LongForm extends React.Component {
     enableCheckboxes: [],
     openOtpModal: false,
     cardType: '',
-    submissionError: ''
+    submissionError: '',
+    skipOtp: false
   }
 
   getBankData = async () => {
@@ -51,8 +52,8 @@ class LongForm extends React.Component {
     const primaryPath = this.props.primaryPath
     const leadBank = await this.getBankData()
     const { long_form_version_2, always_ask_for_otp } = this.props.data
-    const longFormSections = long_form_version_2.long_form[0].long_form_sections;
-    const formData = JSON.parse(localStorage.getItem("formData"));
+    const longFormSections = long_form_version_2.long_form[0].long_form_sections
+    const formData = JSON.parse(localStorage.getItem("formData"))
     let sfData = null
     let noOfMandatoryInputs = 0
     let leadId = getLeadId()
@@ -63,58 +64,96 @@ class LongForm extends React.Component {
     }
 
     longFormSections.forEach((longFormSection) => {
-      const long_form_blocks = longFormSection.sections[0].long_form_blocks;
+      const long_form_blocks = longFormSection.sections[0].long_form_blocks
       long_form_blocks.forEach((long_form_block) => {
-        const inputs = long_form_block.blocks;
-        inputs.forEach((item) => {
-          item.error = false;
-          item.verified = false;
+        const inputs = long_form_block.blocks
+        // inputs.forEach((item) => {
+        //   item.error = false;
+        //   item.verified = false;
 
-          if (item.mandatory) {
+        //   if (item.mandatory) {
+        //     noOfMandatoryInputs++;
+        //   }
+
+        //   if (item.type === "checkbox") {
+        //     item.checkbox.checkbox_input.forEach((box) => {
+        //       if (box.enable_submit) {
+        //         enableCheckboxes.push(box)
+        //       }
+        //     })
+        //   }
+
+        //   if (sfData) {
+        //     loop: for (let key in sfData) {
+        //       if (!sfData[key]) {
+        //         continue loop;
+        //       }
+
+        //       if (typeof sfData[key] === "object" && key === item.end_point_name) {
+        //         item.value = sfData[key][item.select_name];
+        //         item.selectedId = sfData[key][item.select_id];
+        //         item.selectedItem = sfData[key];
+        //         item.verified = true;
+        //         item.error = false;
+        //         continue loop;
+        //       }
+
+        //       if (typeof sfData[key] === "string" && key === item.end_point_name) {
+        //         item.value = sfData[key];
+        //         item.verified = true;
+        //         item.error = false;
+        //         if (item.type === "money") {
+        //           item.value = getFormattedCurrency(sfData[key]);
+        //         }
+        //       }
+        //     }
+        //   }
+        // })
+
+        for(let i = 0; i < inputs.length; i++) {
+          inputs[i].error = false;
+          inputs[i].verified = false;
+
+          if (inputs[i].mandatory) {
             noOfMandatoryInputs++;
           }
 
-          if (item.type === "checkbox") {
-            item.checkbox.checkbox_input.forEach((box) => {
+          if (inputs[i].type === "checkbox") {
+            inputs[i].checkbox.checkbox_input.forEach((box) => {
               if (box.enable_submit) {
-                enableCheckboxes.push(box);
+                enableCheckboxes.push(box)
               }
-            });
+            })
           }
 
           if (sfData) {
             loop: for (let key in sfData) {
               if (!sfData[key]) {
+                continue loop
+              }
+
+              if (typeof sfData[key] === "object" && key === inputs[i].end_point_name) {
+                inputs[i].value = sfData[key][item.select_name];
+                inputs[i].selectedId = sfData[key][item.select_id];
+                inputs[i].selectedItem = sfData[key];
+                inputs[i].verified = true;
+                inputs[i].error = false;
                 continue loop;
               }
 
-              if (
-                typeof sfData[key] === "object" &&
-                key === item.end_point_name
-              ) {
-                item.value = sfData[key][item.select_name];
-                item.selectedId = sfData[key][item.select_id];
-                item.selectedItem = sfData[key];
-                item.verified = true;
-                item.error = false;
-                continue loop;
-              }
-
-              if (
-                typeof sfData[key] === "string" &&
-                key === item.end_point_name
-              ) {
-                item.value = sfData[key];
-                item.verified = true;
-                item.error = false;
-                if (item.type === "money") {
-                  item.value = getFormattedCurrency(sfData[key]);
+              if (typeof sfData[key] === "string" && key === inputs[i].end_point_name) {
+                inputs[i].value = sfData[key];
+                inputs[i].verified = true;
+                inputs[i].error = false;
+                if (inputs[i].type === "money") {
+                  inputs[i].value = getFormattedCurrency(sfData[key]);
                 }
               }
             }
           }
-        });
-      });
+        }
+
+      })
     })
 
     this.setState({
@@ -129,7 +168,8 @@ class LongForm extends React.Component {
       cardTypeCC: this.props.productData && this.props.productData.product ? this.props.productData.product.cardType : null,
       submitButtonDisabled: enableCheckboxes.length !== 0,
       askForOtp: always_ask_for_otp,
-      formType: 'lf'
+      formType: 'lf',
+      skipOtp: primaryPath !== 'rkpl' && (!leadId || always_ask_for_otp)
     }, () => {
       this.handlePercentage()
     })
@@ -330,14 +370,15 @@ class LongForm extends React.Component {
 
     this.updateState(newLongFormSections).then(() => {
       if (!errors) {
-        if (this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
+        // if (this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
+        if(!this.state.skipOtp) {
           let mobileNo = "";
-          const newLongFormSections = [...this.state.longFormSections];
+          const newLongFormSections = [...this.state.longFormSections]
           newLongFormSections.forEach((longFormSection) => {
             const long_form_blocks =
               longFormSection.sections[0].long_form_blocks;
             long_form_blocks.forEach(async (long_form_block) => {
-              const inputs = long_form_block.blocks;
+              const inputs = long_form_block.blocks
               inputs.forEach((inp) => {
                 if (inp.end_point_name === "mobile") {
                   mobileNo = inp.value;
@@ -511,8 +552,8 @@ class LongForm extends React.Component {
                 {long_form_blocks.map((long_form_block) => {
                   const inputs = long_form_block.blocks;
                   ++index;
-                  const blockClasses = ["shortforms-container"];
-                  blockClasses.push(long_form_block.block_class);
+                  const blockClasses = ["shortforms-container"]
+                  blockClasses.push(long_form_block.block_class)
                   return (
                     <div
                       className="long-forms-wrapper"
@@ -528,7 +569,7 @@ class LongForm extends React.Component {
                             <React.Fragment key={component.id}>
                               {generateInputs(component, this.handleChange,
                                 this.checkInputValidity, this.handleInputDropdownSelection,
-                                this.state.formType, null)}
+                                this.state.formType, null, this.state.skipOtp)}
                             </React.Fragment>
                           );
                         })}
@@ -591,4 +632,4 @@ class LongForm extends React.Component {
   }
 }
 
-export default withRouter(LongForm);
+export default withRouter(LongForm)
