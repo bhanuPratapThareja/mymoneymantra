@@ -57,7 +57,12 @@ const AccountSummary = ({ active, closed, name, banks }) => {
                       <div className="app_progress_card_content">
                         <div className="left">
                           <div className="value">
-                            <span>Issued On:</span>
+                            <span>
+                              {item.productType === 'CREDIT CARD'
+                                ? 'Issued On'
+                                : 'Opened On'}
+                              :
+                            </span>
                             <h5>
                               {moment(item.issuedOn).format('DD MMM YYYY')}
                             </h5>
@@ -71,7 +76,12 @@ const AccountSummary = ({ active, closed, name, banks }) => {
                             <h5>₹{item.currentBalance}</h5>
                           </div>
                           <div className="value">
-                            <span>Credit Limit:</span>
+                            <span>
+                              {item.productType === 'CREDIT CARD'
+                                ? 'Credit Limit'
+                                : 'Loan Amount'}
+                              :
+                            </span>
                             <h5>₹{item.creditLimit}</h5>
                           </div>
                         </div>
@@ -107,22 +117,31 @@ const AccountSummary = ({ active, closed, name, banks }) => {
                           src={`http://203.122.46.189:1338${bank?.bank_logo?.url}`}
                         />
                       </div>
+                      <div className="account-number">
+                        <p>{item.accountNo}</p>
+                      </div>
                       <div className="app_progress_card_content">
                         <div className="left">
                           <div className="value">
-                            <span>Applicant’s Name:</span>
-                            <h5>{name}</h5>
+                            <span>Closed On:</span>
+                            <h5>
+                              {moment(item.issuedOn).format('DD MMM YYYY')}
+                            </h5>
                           </div>
                           <div className="value">
-                            <span>Product Type:</span>
-                            <h5>{item.productType}</h5>
+                            <span>Last Payment Date:</span>
+                            <h5>{item.lastPaymentDate}</h5>
+                          </div>
+                          <div className="value">
+                            <span>Credit Limit:</span>
+                            <h5>₹{item.creditLimit}</h5>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="popular-cards-slider-card-bottom rejected-red">
+                    <div className="popular-cards-slider-card-bottom">
                       <div>
-                        <h5>Rejected: Due to poor Credit Score</h5>
+                        <h5>Account Closed</h5>
                       </div>
                     </div>
                   </div>
