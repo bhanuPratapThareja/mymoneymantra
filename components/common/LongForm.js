@@ -485,15 +485,18 @@ class LongForm extends React.Component {
     if (!this.state.longFormSections) {
       return null;
     }
-    const { bank, product } = this.props.productData
-    
-    return (
 
+
+    const bank = this.props.productData && this.props.productData.bank ? this.props.productData.bank : null;
+
+    console.log('bank--',bank)
+
+    return (
       <div className="form-wrapper" id="longForm">
 
         <div className="cstm-lf-img">
-          {this.props.primaryPath === 'credit-cards' ?
-            "" : <ImageComponent image={bank.bank_image}
+          {this.props.primaryPath === 'credit-cards' || !bank ?
+            null : <ImageComponent image={bank.bank_image}
             />}
         </div>
 
