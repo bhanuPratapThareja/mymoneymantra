@@ -1,7 +1,5 @@
 const SideMenu = (props) => {
 
-   console.log('side menu data', props)
-
    const onCloseSideMenu = () => {
       $(".menu-login").hide("slide");
       $('body', "html").css("overflow", "scroll")
