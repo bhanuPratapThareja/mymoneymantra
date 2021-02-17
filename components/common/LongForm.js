@@ -8,6 +8,7 @@ import { getDropdownList } from "../../services/formService"
 import { generateLead, sendNotification, submitOtp, getOtp } from "../../services/formService"
 import { setPrimaryPath, setLeadId, getLeadId, setLeadBank } from "../../utils/localAccess"
 import { getFormattedCurrency, getWholeNumberFromCurrency } from "../../utils/formattedCurrency"
+import ImageComponent from '../../components/ImageComponent/ImageComponent'
 import {
   textTypeInputs,
   handleChangeInputs,
@@ -142,7 +143,7 @@ class LongForm extends React.Component {
       long_form_blocks.forEach(long_form_block => {
         const inputs = long_form_block.blocks;
 
-        const {inputDropdown} = handleChangeInputs(inputs, field, this.props.preferredSelectionLists, this.state.leadBank)
+        const { inputDropdown } = handleChangeInputs(inputs, field, this.props.preferredSelectionLists, this.state.leadBank)
         if (inputDropdown && field.type === 'input_with_dropdown') {
           const { listType, masterName, inp, prefferedList } = inputDropdown
           if (field.focusDropdown && prefferedList) {
@@ -426,7 +427,7 @@ class LongForm extends React.Component {
         }
       })
     })
-    
+
 
     const { utm_campaign: utmCampaign, utm_medium: utmMedium,
       utm_source: utmSource, utm_remark: utmRemark } = this.props.router.query
@@ -453,12 +454,12 @@ class LongForm extends React.Component {
         documentsArray.forEach(input => {
           submitDocument(input.end_point_name, input.value)
         })
-        
+
         let primaryPath = this.state.primaryPath
         if (primaryPath === 'rkpl') {
           primaryPath = 'credit-cards'
           setPrimaryPath('credit-cards')
-        }  
+        }
         if (primaryPath === 'talent-edge-form') {
           primaryPath = 'personal-loans'
           setPrimaryPath('personal-loans')
@@ -484,9 +485,17 @@ class LongForm extends React.Component {
     if (!this.state.longFormSections) {
       return null;
     }
-   
+    const { bank, product } = this.props.productData
+    
     return (
+
       <div className="form-wrapper" id="longForm">
+
+        <div className="cstm-lf-img">
+          {this.props.primaryPath === 'credit-cards' ?
+            "" : <ImageComponent image={bank.bank_image}
+            />}
+        </div>
 
         <form onClick={this.handleClickOnSlideBackground} onSubmit={this.onSubmitLongForm} id='long-form_id' noValidate autoComplete="off">
           {this.state.longFormSections.map((longFormSection) => {
@@ -532,7 +541,7 @@ class LongForm extends React.Component {
           })}
           {this.state.submissionError ? <p className="form-invalid-text">{this.state.submissionError}</p> : null}
           <div className="long-form-submit">
-            <button  type="submit" id="long-submit" disabled={this.state.submitButtonDisabled}>
+            <button type="submit" id="long-submit" disabled={this.state.submitButtonDisabled}>
               Submit Application
             </button>
           </div>
