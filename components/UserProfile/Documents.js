@@ -81,16 +81,22 @@ const Documents = () => {
     }
   }
 
+  const fileExtention = (fileType) => {
+    const fileTypeArray = fileType.split('/')
+    return fileTypeArray[1]
+  }
+
   const aadhaarChangeHandler = async (event) => {
     const file = event.target.files[0]
-    console.log({ file })
+    if (!file) return
     const docBytes = await fileToByteArray(file)
+    const documentExtension = fileExtention(file.type)
     const requestBody = {
       documentNo: aadhaar.documentNo,
       documentTypeId: aadhaar.documentTypeId,
       docBytes,
       documentName: file.name,
-      documentExtension: file.type,
+      documentExtension,
     }
     const uploadStatus = await uploadDocument(requestBody)
     setAadhaar((prevState) => ({
@@ -102,14 +108,17 @@ const Documents = () => {
 
   const panChangeHandler = async (event) => {
     const file = event.target.files[0]
+    if (!file) return
     const docBytes = await fileToByteArray(file)
+    const documentExtension = fileExtention(file.type)
     const requestBody = {
       documentNo: pan.documentNo,
       documentTypeId: pan.documentTypeId,
       docBytes,
       documentName: file.name,
-      documentExtension: file.type,
+      documentExtension,
     }
+    console.log(requestBody)
     const uploadStatus = await uploadDocument(requestBody)
     setPan((prevState) => ({
       ...prevState,
@@ -120,13 +129,15 @@ const Documents = () => {
 
   const bankStatementChangeHandler = async (event) => {
     const file = event.target.files[0]
+    if (!file) return
     const docBytes = await fileToByteArray(file)
+    const documentExtension = fileExtention(file.type)
     const requestBody = {
       documentNo: bankStatement.documentNo,
       documentTypeId: bankStatement.documentTypeId,
       docBytes,
       documentName: file.name,
-      documentExtension: file.type,
+      documentExtension,
     }
     const uploadStatus = await uploadDocument(requestBody)
     setBankStatement((prevState) => ({
@@ -138,13 +149,15 @@ const Documents = () => {
 
   const salarySlipChangeHandler = async (event) => {
     const file = event.target.files[0]
+    if (!file) return
     const docBytes = await fileToByteArray(file)
+    const documentExtension = fileExtention(file.type)
     const requestBody = {
       documentNo: salarySlips.documentNo,
       documentTypeId: salarySlips.documentTypeId,
       docBytes,
       documentName: file.name,
-      documentExtension: file.type,
+      documentExtension,
     }
     const uploadStatus = await uploadDocument(requestBody)
     setSalarySlips((prevState) => ({
@@ -156,13 +169,15 @@ const Documents = () => {
 
   const form16ChangeHandler = async (event) => {
     const file = event.target.files[0]
+    if (!file) return
     const docBytes = await fileToByteArray(file)
+    const documentExtension = fileExtention(file.type)
     const requestBody = {
       documentNo: form16.documentNo,
       documentTypeId: form16.documentTypeId,
       docBytes,
       documentName: file.name,
-      documentExtension: file.type,
+      documentExtension,
     }
     const uploadStatus = await uploadDocument(requestBody)
     setForm16((prevState) => ({
@@ -174,13 +189,15 @@ const Documents = () => {
 
   const rentAgreementChangeHandler = async (event) => {
     const file = event.target.files[0]
+    if (!file) return
     const docBytes = await fileToByteArray(file)
+    const documentExtension = fileExtention(file.type)
     const requestBody = {
       documentNo: rentAgreement.documentNo,
       documentTypeId: rentAgreement.documentTypeId,
       docBytes,
       documentName: file.name,
-      documentExtension: file.type,
+      documentExtension,
     }
     const uploadStatus = await uploadDocument(requestBody)
     setRentAgreement((prevState) => ({
@@ -192,7 +209,9 @@ const Documents = () => {
 
   const billChangeHandler = async (event) => {
     const file = event.target.files[0]
+    if (!file) return
     const docBytes = await fileToByteArray(file)
+    const documentExtension = fileExtention(file.type)
 
     // setBill((prevState) => ({
     //   ...prevState,
@@ -206,7 +225,7 @@ const Documents = () => {
       documentTypeId: bill.documentTypeId,
       docBytes,
       documentName: file.name,
-      documentExtension: file.type,
+      documentExtension,
     }
     const uploadStatus = await uploadDocument(requestBody)
     setBill((prevState) => ({
