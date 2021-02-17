@@ -63,54 +63,13 @@ class LongForm extends React.Component {
       sfData = formData[primaryPath]
     }
 
-    longFormSections.forEach((longFormSection) => {
-      const long_form_blocks = longFormSection.sections[0].long_form_blocks
+    for (let i = 0; i < longFormSections.length; i++) {
+      const long_form_blocks = longFormSections[i].sections[0].long_form_blocks
       long_form_blocks.forEach((long_form_block) => {
         const inputs = long_form_block.blocks
-        // inputs.forEach((item) => {
-        //   item.error = false;
-        //   item.verified = false;
 
-        //   if (item.mandatory) {
-        //     noOfMandatoryInputs++;
-        //   }
+        for (let i = 0; i < inputs.length; i++) {
 
-        //   if (item.type === "checkbox") {
-        //     item.checkbox.checkbox_input.forEach((box) => {
-        //       if (box.enable_submit) {
-        //         enableCheckboxes.push(box)
-        //       }
-        //     })
-        //   }
-
-        //   if (sfData) {
-        //     loop: for (let key in sfData) {
-        //       if (!sfData[key]) {
-        //         continue loop;
-        //       }
-
-        //       if (typeof sfData[key] === "object" && key === item.end_point_name) {
-        //         item.value = sfData[key][item.select_name];
-        //         item.selectedId = sfData[key][item.select_id];
-        //         item.selectedItem = sfData[key];
-        //         item.verified = true;
-        //         item.error = false;
-        //         continue loop;
-        //       }
-
-        //       if (typeof sfData[key] === "string" && key === item.end_point_name) {
-        //         item.value = sfData[key];
-        //         item.verified = true;
-        //         item.error = false;
-        //         if (item.type === "money") {
-        //           item.value = getFormattedCurrency(sfData[key]);
-        //         }
-        //       }
-        //     }
-        //   }
-        // })
-
-        for(let i = 0; i < inputs.length; i++) {
           inputs[i].error = false;
           inputs[i].verified = false;
 
@@ -133,8 +92,8 @@ class LongForm extends React.Component {
               }
 
               if (typeof sfData[key] === "object" && key === inputs[i].end_point_name) {
-                inputs[i].value = sfData[key][item.select_name];
-                inputs[i].selectedId = sfData[key][item.select_id];
+                inputs[i].value = sfData[key][inputs[i].select_name];
+                inputs[i].selectedId = sfData[key][inputs[i].select_id];
                 inputs[i].selectedItem = sfData[key];
                 inputs[i].verified = true;
                 inputs[i].error = false;
@@ -154,7 +113,101 @@ class LongForm extends React.Component {
         }
 
       })
-    })
+    }
+
+    // longFormSections.forEach((longFormSection) => {
+    //   const long_form_blocks = longFormSection.sections[0].long_form_blocks
+    //   long_form_blocks.forEach((long_form_block) => {
+    //     const inputs = long_form_block.blocks
+    //     // inputs.forEach((item) => {
+    //     //   item.error = false;
+    //     //   item.verified = false;
+
+    //     //   if (item.mandatory) {
+    //     //     noOfMandatoryInputs++;
+    //     //   }
+
+    //     //   if (item.type === "checkbox") {
+    //     //     item.checkbox.checkbox_input.forEach((box) => {
+    //     //       if (box.enable_submit) {
+    //     //         enableCheckboxes.push(box)
+    //     //       }
+    //     //     })
+    //     //   }
+
+    //     //   if (sfData) {
+    //     //     loop: for (let key in sfData) {
+    //     //       if (!sfData[key]) {
+    //     //         continue loop;
+    //     //       }
+
+    //     //       if (typeof sfData[key] === "object" && key === item.end_point_name) {
+    //     //         item.value = sfData[key][item.select_name];
+    //     //         item.selectedId = sfData[key][item.select_id];
+    //     //         item.selectedItem = sfData[key];
+    //     //         item.verified = true;
+    //     //         item.error = false;
+    //     //         continue loop;
+    //     //       }
+
+    //     //       if (typeof sfData[key] === "string" && key === item.end_point_name) {
+    //     //         item.value = sfData[key];
+    //     //         item.verified = true;
+    //     //         item.error = false;
+    //     //         if (item.type === "money") {
+    //     //           item.value = getFormattedCurrency(sfData[key]);
+    //     //         }
+    //     //       }
+    //     //     }
+    //     //   }
+    //     // })
+
+    //     for(let i = 0; i < inputs.length; i++) {
+
+    //       inputs[i].error = false;
+    //       inputs[i].verified = false;
+
+    //       if (inputs[i].mandatory) {
+    //         noOfMandatoryInputs++;
+    //       }
+
+    //       if (inputs[i].type === "checkbox") {
+    //         inputs[i].checkbox.checkbox_input.forEach((box) => {
+    //           if (box.enable_submit) {
+    //             enableCheckboxes.push(box)
+    //           }
+    //         })
+    //       }
+
+    //       if (sfData) {
+    //         loop: for (let key in sfData) {
+    //           if (!sfData[key]) {
+    //             continue loop
+    //           }
+
+    //           if (typeof sfData[key] === "object" && key === inputs[i].end_point_name) {
+    //             inputs[i].value = sfData[key][inputs[i].select_name];
+    //             inputs[i].selectedId = sfData[key][inputs[i].select_id];
+    //             inputs[i].selectedItem = sfData[key];
+    //             inputs[i].verified = true;
+    //             inputs[i].error = false;
+    //             continue loop;
+    //           }
+
+    //           if (typeof sfData[key] === "string" && key === inputs[i].end_point_name) {
+    //             inputs[i].value = sfData[key];
+    //             inputs[i].verified = true;
+    //             inputs[i].error = false;
+    //             if (inputs[i].type === "money") {
+    //               inputs[i].value = getFormattedCurrency(sfData[key]);
+    //             }
+    //           }
+    //         }
+    //       }
+    //     }
+
+    //   })
+    // })
 
     this.setState({
       longFormSections,
@@ -169,8 +222,22 @@ class LongForm extends React.Component {
       submitButtonDisabled: enableCheckboxes.length !== 0,
       askForOtp: always_ask_for_otp,
       formType: 'lf',
-      skipOtp: primaryPath !== 'rkpl' && (!leadId || always_ask_for_otp)
+      fulfillTnc: primaryPath !== 'rkpl' && (!leadId || always_ask_for_otp)
     }, () => {
+      const newLongFormSections = this.state.longFormSections
+      for(let i = 0; i < newLongFormSections.length; i++) {
+        const long_form_blocks = newLongFormSections[i].sections[0].long_form_blocks
+        for(let j = 0; j < long_form_blocks.length; j++) {
+            const inputs = long_form_blocks[j].blocks
+            for(let k = 0; k  < inputs.length; k++) {
+              if(inputs[k].type === 'checkbox' && inputs[k].tnc && !this.state.fulfillTnc) {
+                newLongFormSections.splice(i, 1)
+                this.setState({ enableCheckboxes: [], submitButtonDisabled: false })
+              }
+            }
+          }
+        
+      }
       this.handlePercentage()
     })
   }
@@ -211,15 +278,22 @@ class LongForm extends React.Component {
       if (textTypeInputs.includes(field.type) || field.type === 'input_with_dropdown' || field.type === 'money') {
         this.checkInputValidity(field, field.focusDropdown)
       }
+      
+      if(!this.state.fulfillTnc) {
+        this.setState({ submitButtonDisabled: false })
+        this.updateState(newLongFormSections)
+        return
+      }
       const { enableCheckboxes } = this.state;
       let trueEnableCheckboxes = [];
       if (enableCheckboxes.length) {
         enableCheckboxes.forEach((box) => {
           if (box.value) {
-            trueEnableCheckboxes.push(true);
+            trueEnableCheckboxes.push(true)
           }
         });
       }
+
       if (enableCheckboxes.length === trueEnableCheckboxes.length) {
         this.setState({ submitButtonDisabled: false });
       } else {
@@ -293,7 +367,7 @@ class LongForm extends React.Component {
         resetDropdowns(inputs, this.state.errorMsgs);
       });
     });
-    this.updateState(newLongFormSections);
+    this.updateState(newLongFormSections)
   }
 
   checkInputValidity = (field) => {
@@ -305,27 +379,27 @@ class LongForm extends React.Component {
         updateInputsValidity(inputs, field, this.state.errorMsgs);
       });
     });
-    this.updateState(newLongFormSections);
+    this.updateState(newLongFormSections)
   };
 
   updateState = (longFormSections) => {
     return new Promise((resolve) => {
       this.setState({ longFormSections }, () => {
-        this.handlePercentage();
-        resolve(true);
+        this.handlePercentage()
+        resolve(true)
       });
     });
   };
 
   handlePercentage = () => {
-    const newLongFormSections = [...this.state.longFormSections];
+    const newLongFormSections = [...this.state.longFormSections]
     newLongFormSections.forEach((longFormSection) => {
-      const long_form_blocks = longFormSection.sections[0].long_form_blocks;
+      const long_form_blocks = longFormSection.sections[0].long_form_blocks
       long_form_blocks.forEach(async (long_form_block) => {
-        const inputs = long_form_block.blocks;
+        const inputs = long_form_block.blocks
         inputs.forEach((input) => {
           if (input.mandatory) {
-            this.handleVerifiedInputsArray(input);
+            this.handleVerifiedInputsArray(input)
           }
         });
       });
@@ -338,7 +412,7 @@ class LongForm extends React.Component {
       verifiedInputsArray.push(input.input_id)
     } else {
       if (verifiedInputsArray.includes(input.input_id)) {
-        const index = verifiedInputsArray.indexOf(input.input_id);
+        const index = verifiedInputsArray.indexOf(input.input_id)
         verifiedInputsArray.splice(index, 1)
       }
     }
@@ -371,7 +445,7 @@ class LongForm extends React.Component {
     this.updateState(newLongFormSections).then(() => {
       if (!errors) {
         // if (this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
-        if(!this.state.skipOtp) {
+        if (this.state.fulfillTnc) {
           let mobileNo = "";
           const newLongFormSections = [...this.state.longFormSections]
           newLongFormSections.forEach((longFormSection) => {
@@ -527,15 +601,14 @@ class LongForm extends React.Component {
       return null
     }
 
-    const { bank, product } = this.props.productData
-    
-    return (
+    const bank = this.props.productData && this.props.productData.bank ? this.props.productData.bank : null;
 
+    return (
       <div className="form-wrapper" id="longForm">
 
         <div className="cstm-lf-img">
-          {this.props.primaryPath === 'credit-cards' ?
-            "" : <ImageComponent image={bank.bank_image}
+          {this.props.primaryPath === 'credit-cards' || !bank ?
+            null : <ImageComponent image={bank.bank_image}
             />}
         </div>
 
@@ -570,7 +643,7 @@ class LongForm extends React.Component {
                             <React.Fragment key={component.id}>
                               {generateInputs(component, this.handleChange,
                                 this.checkInputValidity, this.handleInputDropdownSelection,
-                                this.state.formType, null, this.state.skipOtp)}
+                                this.state.formType, null)}
                             </React.Fragment>
                           );
                         })}
