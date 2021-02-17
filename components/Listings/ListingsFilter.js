@@ -1,11 +1,15 @@
 import DownChevron from '../../public/assets/images/icons/down-chevron.svg'
 import { closeFilter } from '../../utils/listingsFilterHandler'
-import { initializeMoneyRange, initializeYearRange, getSliderFilterValues, initializePercentRange } from '../../utils/noUiSliderHandler';
+import { initializeMoneyRange, initializePercentRange, initializeYearRange, getSliderFilterValues } from '../../utils/noUiSliderHandler';
 import { 
     generateBanksCheckboxes, 
     generateCategoriesCheckboxes,
     generatePromotionCheckboxes,
-    generateAnnualFeeBlock 
+    generateAnnualFeesBlock,
+    generateEmiBlock,
+    generateLoanAmountBlock,
+    generateRoiBlock,
+    generateTenureBlock
 } from '../../utils/listingsFilterGenerator'
 
 class ListingFilter extends React.Component {
@@ -69,11 +73,69 @@ class ListingFilter extends React.Component {
     }
     
     updateAnnualFeesBlock = () => {
-        const annualFeesSlider = generateAnnualFeeBlock(this.props.allOfferCards)
-        this.setState({ annualFeesSlider }, () => {
-            initializeMoneyRange(annualFeesSlider, 'annual-fees-range')
+        const annualFeesSlider = generateAnnualFeesBlock(this.props.allOfferCards)
+        if(annualFeesSlider) {
+            this.setState({ annualFeesSlider }, () => {
+                initializeMoneyRange(annualFeesSlider, 'annual-fees-range')
+                this.updateEmiBlock()
+            })
+        } else {
+            this.updateEmiBlock()
+        }
+    }
+
+    updateEmiBlock = () => {
+        const emiSlider = generateEmiBlock(this.props.allOfferCards)
+        if(emiSlider) {
+            this.setState({ emiSlider }, () => {
+                initializeMoneyRange(emiSlider, 'emi-range')
+                this.updateLoanAmountBlock()
+            })
+        } else {
+            this.updateLoanAmountBlock()
+        }
+    }
+
+    updateLoanAmountBlock = () => {
+        const loanAmountSlider = generateLoanAmountBlock(this.props.allOfferCards)
+        if(loanAmountSlider) {
+            this.setState({ loanAmountSlider }, () => {
+                initializeMoneyRange(loanAmountSlider, 'max-loan-amount-range')
+                this.updateRoiBlock()
+            })
+        } else {
+            this.updateRoiBlock()
+        }
+    }
+
+    updateRoiBlock = () => {
+        const roiSlider = generateRoiBlock(this.props.allOfferCards)
+        if(roiSlider) {
+            this.setState({ roiSlider }, () => {
+                initializePercentRange(roiSlider, 'roi-range')
+                this.updateTenureBlock()
+            })
+        } else {
+            this.updateTenureBlock()
+        }
+    }
+
+    updateTenureBlock = () => {
+        const tenureSlider = generateTenureBlock(this.props.allOfferCards)
+        if(tenureSlider) {
+            this.setState({ tenureSlider }, () => {
+                initializeYearRange(tenureSlider, 'tenure-range')
+                this.readyFilters()
+            })
+        } else {
+            this.readyFilters()
+        }
+    }
+
+    readyFilters = () => {
+        setTimeout(() => {
             this.props.setFiltersReady(true)
-        })
+        }, 1000)
     }
 
     // loadFilters = () => {
@@ -113,12 +175,12 @@ class ListingFilter extends React.Component {
     }
 
     onApplyFilter = () => {
-        const { annualFeesSlider, filter_emi, filter_roi, filter_max_loan_amount, filter_tenure } = this.state
+        const { annualFeesSlider, emiSlider, loanAmountSlider, roiSlider, tenureSlider } = this.state
         const annualFees = getSliderFilterValues(annualFeesSlider, 'annual-fees-range')
-        const emi = getSliderFilterValues(filter_emi, 'emi-range')
-        const roi = getSliderFilterValues(filter_roi, 'roi-range')
-        const maxLoanAmount = getSliderFilterValues(filter_max_loan_amount, 'max-loan-amount-range')
-        const tenure = getSliderFilterValues(filter_tenure, 'tenure-range')
+        const emi = getSliderFilterValues(emiSlider, 'emi-range')
+        const roi = getSliderFilterValues(roiSlider, 'roi-range')
+        const maxLoanAmount = getSliderFilterValues(loanAmountSlider, 'max-loan-amount-range')
+        const tenure = getSliderFilterValues(tenureSlider, 'tenure-range')
 
         const filters = { ...this.state.filters, annualFees, emi, roi, maxLoanAmount, tenure }
         this.setState({ ...this.state, filters }, () => {
@@ -142,8 +204,8 @@ class ListingFilter extends React.Component {
     }
 
     render() {
-        const { checkboxes, radios, annualFeesSlider,
-            filter_emi, filter_tenure, filter_roi, filter_max_loan_amount } = this.state
+        const { checkboxes, radios, annualFeesSlider, emiSlider,
+            loanAmountSlider, roiSlider, tenureSlider } = this.state
         return (
             <section className="listing-modal mm-modal" id="listing-filter-show">
                 <div className="overlay"></div>
@@ -210,8 +272,8 @@ class ListingFilter extends React.Component {
                                 </div>
                             </div> : null}
 
-                            {filter_emi && filter_emi.enable ? <div className="content-one">
-                                <h5>{filter_emi.heading}</h5>
+                            {emiSlider ? <div className="content-one">
+                                <h5>{emiSlider.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">
                                         <div className="row">
@@ -225,14 +287,14 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" readOnly />
                                             </div>
                                         </div>
-                                        <span className="min-max left">₹{filter_emi.min}</span>
-                                        <span className="min-max right">₹{filter_emi.max}+</span>
+                                        <span className="min-max left">₹{emiSlider.min}</span>
+                                        <span className="min-max right">₹{emiSlider.max}</span>
                                     </div>
                                 </div>
                             </div> : null}
 
-                            {filter_tenure && filter_tenure.enable ? <div className="content-one">
-                                <h5>{filter_tenure.heading}</h5>
+                            {tenureSlider? <div className="content-one">
+                                <h5>{tenureSlider.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">
                                         <div className="row">
@@ -246,14 +308,14 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" />
                                             </div>
                                         </div>
-                                        <span className="min-max left">{filter_tenure.min} years</span>
-                                        <span className="min-max right">{filter_tenure.max} years +</span>
+                                        <span className="min-max left">{tenureSlider.min} years</span>
+                                        <span className="min-max right">{tenureSlider.max} years</span>
                                     </div>
                                 </div>
                             </div> : null}
 
-                            {filter_roi && filter_roi.enable ? <div className="content-one">
-                                <h5>Rate Of Interest</h5>
+                            {roiSlider ? <div className="content-one">
+                                <h5>{roiSlider.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">
                                         <div className="row">
@@ -267,14 +329,14 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" />
                                             </div>
                                         </div>
-                                        <span className="min-max left">{filter_roi.min}%</span>
-                                        <span className="min-max right">{filter_roi.max}% +</span>
+                                        <span className="min-max left">{roiSlider.min}%</span>
+                                        <span className="min-max right">{roiSlider.max}%</span>
                                     </div>
                                 </div>
                             </div> : null}
 
-                            {filter_max_loan_amount && filter_max_loan_amount.enable ? <div className="content-one">
-                                <h5>Maximum Loan Amount</h5>
+                            {loanAmountSlider ? <div className="content-one">
+                                <h5>{loanAmountSlider.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">
                                         <div className="row">
@@ -288,8 +350,8 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" />
                                             </div>
                                         </div>
-                                        <span className="min-max left">{filter_max_loan_amount.min}</span>
-                                        <span className="min-max right">{filter_max_loan_amount.max}</span>
+                                        <span className="min-max left">₹{loanAmountSlider.min}</span>
+                                        <span className="min-max right">₹{loanAmountSlider.max}</span>
                                     </div>
                                 </div>
                             </div> : null}

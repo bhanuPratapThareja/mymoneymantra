@@ -1,17 +1,35 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import { makeDecision } from '../../utils/decision'
+import { getProductType } from '../../utils/localAccess'
+import { extractOffers, viewOffers } from '../../services/offersService'
 
 const PopularOffers = props => {
    const router = useRouter()
+   const [popularOffers, setPopularOffers] = useState([])
    const { section_heading } = props.data
 
    useEffect(() => {
-      if(window !== undefined && window.initSlickCards && props.offers.length) {
-         window.initSlickCards()
+      if (!popularOffers.length) {
+         getOffers()
       }
-   })
+   }, [popularOffers])
+
+   const getOffers = async () => {
+      const productType = getProductType()
+      const apiOffers = await viewOffers(productType.productTypeId)
+      if (apiOffers) {
+         let populars = apiOffers.populars
+         const popularOffers = await extractOffers(populars)
+         setPopularOffers(popularOffers)
+         if (window !== undefined && window.initSlickCards && popularOffers.length) {
+            console.log('here')
+            window.initSlickCards()
+            console.log('here')
+         }
+      }
+   }
 
    const onOfferClick = async offer => {
       const { productDecision } = offer
@@ -20,7 +38,7 @@ const PopularOffers = props => {
       router.push({ pathname, query }, pathname, { shallow: true })
    }
 
-   if (!props.offers || !props.offers.length) {
+   if (!popularOffers.length) {
       return null
    }
 
@@ -29,7 +47,7 @@ const PopularOffers = props => {
          <div className="popular-cards">
             <h2>{section_heading}</h2>
             <div className="popular-cards-slider" id="popular-cards-sec">
-               {props.offers.map(offer => {
+               {popularOffers.map(offer => {
                   const { bank, product } = offer
                   const { product_name, product_feature, product_annual_fee,
                      product_usp_highlight, product_interest_rate } = product

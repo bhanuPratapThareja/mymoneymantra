@@ -22,7 +22,6 @@ import { viewOffers, extractOffers } from '../../../../services/offersService'
 const Details = props => {
     const [page, setPage] = useState(props.page)
     const [previousPath, setPreviousPath] = useState('')
-    const [trendingOffers, setTrendingOffers] = useState([])
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -34,7 +33,6 @@ const Details = props => {
                 changePageType('details')
             }
         }
-        getOffers()
     }, [page])
 
     const changePageType = page => {
@@ -42,13 +40,6 @@ const Details = props => {
         if(page === 'long-form') {
             setPreviousPath('details')
         }
-    }
-
-    const getOffers = async () => {
-        const productType = getProductType()
-        const { trendings } = await viewOffers(productType.productTypeId)
-        const trendingOffers = await extractOffers(trendings)
-        setTrendingOffers(trendingOffers)
     }
 
     if (!props.productData) {
@@ -79,7 +70,6 @@ const Details = props => {
                     return <TrendingOffers 
                         key={block.id} 
                         data={block}
-                        offers={trendingOffers}
                         primaryPath={props.primaryPath}
                     />
                 case 'blocks.bank-slider-component':

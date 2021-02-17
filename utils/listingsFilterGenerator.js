@@ -3,13 +3,13 @@ export const generateBanksCheckboxes = (allOfferCards, showCheckboxes) => {
     let bankCheckBoxes = []
     let banksAlreadyAdded = []
 
-    allOfferCards.forEach(card => {
-        const bankObj = { name: card.bank.bank_name, tag: card.bank.bank_id, priority: card.bank.priority }
+    for(let i = 0; i < allOfferCards.length; i++) {
+        const bankObj = { name: allOfferCards[i].bank.bank_name, tag: allOfferCards[i].bank.bank_id, priority: allOfferCards[i].bank.priority }
         if (!banksAlreadyAdded.includes(bankObj.tag)) {
             bankCheckBoxes.push(bankObj)
             banksAlreadyAdded.push(bankObj.tag)
         }
-    })
+    }
 
     if(!bankCheckBoxes.length) {
         return null
@@ -30,13 +30,17 @@ export const generateCategoriesCheckboxes = (allOfferCards, showCheckboxes) => {
     let categoryCheckBoxes = []
     let categoriesAlreadyAdded = []
 
-    allOfferCards.forEach(card => {
-        const categoryObj = { name: card.product.product_category.name, tag: card.product.product_category.tag }
+    for(let i = 0; i < allOfferCards.length; i++) {
+        if(!allOfferCards[i].product.product_category) {
+            continue
+        }
+
+        const categoryObj = { name: allOfferCards[i].product.product_category.name, tag: allOfferCards[i].product.product_category.tag }
         if (!categoriesAlreadyAdded.includes(categoryObj.tag)) {
             categoryCheckBoxes.push(categoryObj)
             categoriesAlreadyAdded.push(categoryObj.tag)
         }
-    })
+    }
 
     if(!categoryCheckBoxes.length) {
         return null
@@ -57,13 +61,17 @@ export const generatePromotionCheckboxes = (allOfferCards, showCheckboxes) => {
     let promotionCheckboxes = []
     let promotionsAlreadyAdded = []
 
-    allOfferCards.forEach(card => {
-        const promotionObj = { name: card.product.product_promotion.name, tag: card.product.product_promotion.tag }
+    for(let i = 0; i < allOfferCards.length; i++) {
+        if(!allOfferCards[i].product.product_promotion) {
+            continue
+        }
+
+        const promotionObj = { name: allOfferCards[i].product.product_promotion.name, tag: allOfferCards[i].product.product_promotion.tag }
         if (!promotionsAlreadyAdded.includes(promotionObj.tag)) {
             promotionCheckboxes.push(promotionObj)
             promotionsAlreadyAdded.push(promotionObj.tag)
         }
-    })
+    }
 
     if(!promotionCheckboxes.length) {
         return null
@@ -84,13 +92,17 @@ export const generatePromotionRadios = allOfferCards => {
     let promotionRadios = []
     let promotionsAlreadyAdded = []
 
-    allOfferCards.forEach(card => {
-        const promotionObj = { name: card.product.product_promotion.name, tag: card.product.product_promotion.tag }
+    for(let i = 0; i < allOfferCards.length; i++) {
+        if(!allOfferCards[i].product.product_promotion) {
+            continue
+        }
+
+        const promotionObj = { name: allOfferCards[i].product.product_promotion.name, tag: allOfferCards[i].product.product_promotion.tag }
         if (!promotionsAlreadyAdded.includes(promotionObj.tag)) {
             promotionRadios.push(promotionObj)
             promotionsAlreadyAdded.push(promotionObj.tag)
         }
-    })
+    }
 
     promotionRadios.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
     promotionBlock.type = 'promotions'
@@ -99,18 +111,102 @@ export const generatePromotionRadios = allOfferCards => {
     return promotionBlock
 }
 
-export const generateAnnualFeeBlock = allOfferCards => {
+export const generateAnnualFeesBlock = allOfferCards => {
     let annualFees = []
-    allOfferCards.forEach(card => {
-        const { product_annual_fee } = card.product
+    for(let i = 0; i < allOfferCards.length; i++) {
+        if(!allOfferCards[i].product.product_annual_fee) {
+            continue
+        }
+        const { product_annual_fee } = allOfferCards[i].product
         if(product_annual_fee && product_annual_fee.annual_fee_fy) {
             annualFees.push(product_annual_fee.annual_fee_fy)
         }
-    })
+    }
+
     if(annualFees.length) {
         const max = Math.max(...annualFees)
         const min = Math.min(...annualFees)
         const annualFeesSlider = { heading: 'By Annual Fees', max, min }
         return annualFeesSlider
+    }
+}
+
+export const generateEmiBlock = allOfferCards => {
+    let emis = []
+    for(let i = 0; i < allOfferCards.length; i++) {
+        if(!allOfferCards[i].product.product_emi) {
+            continue
+        }
+        const { product_emi } = allOfferCards[i].product
+        if(product_emi && product_emi.emi) {
+            emis.push(product_emi.emi)
+        }
+    }
+
+    if(emis.length) {
+        const max = Math.max(...emis)
+        const min = Math.min(...emis)
+        const emiSlider = { heading: 'By EMI', max, min }
+        return emiSlider
+    }
+}
+
+export const generateLoanAmountBlock = allOfferCards => {
+    let loanAmounts = []
+    for(let i = 0; i < allOfferCards.length; i++) {
+        if(!allOfferCards[i].product.product_loan_amount) {
+            continue
+        }
+        const { product_loan_amount } = allOfferCards[i].product
+        if(product_loan_amount && product_loan_amount.amount) {
+            loanAmounts.push(product_loan_amount.amount)
+        }
+    }
+
+    if(loanAmounts.length) {
+        const max = Math.max(...loanAmounts)
+        const min = Math.min(...loanAmounts)
+        const loanAmountSlider = { heading: 'By Loan Amount', max, min }
+        return loanAmountSlider
+    }
+}
+
+export const generateRoiBlock = allOfferCards => {
+    let rois = []
+    for(let i = 0; i < allOfferCards.length; i++) {
+        if(!allOfferCards[i].product.product_return_on_investment) {
+            continue
+        }
+        const { product_return_on_investment } = allOfferCards[i].product
+        if(product_return_on_investment && product_return_on_investment.roi) {
+            rois.push(product_return_on_investment.roi)
+        }
+    }
+
+    if(rois.length) {
+        const max = Math.max(...rois)
+        const min = Math.min(...rois)
+        const roiSlider = { heading: 'By Return On Investment', max, min }
+        return roiSlider
+    }
+}
+
+export const generateTenureBlock = allOfferCards => {
+    let tenures = []
+    for(let i = 0; i < allOfferCards.length; i++) {
+        if(!allOfferCards[i].product.product_tenure) {
+            continue
+        }
+        const { product_tenure } = allOfferCards[i].product
+        if(product_tenure && product_tenure.tenure) {
+            tenures.push(product_tenure.tenure)
+        }
+    }
+
+    if(tenures.length) {
+        const max = Math.max(...tenures)
+        const min = Math.min(...tenures)
+        const tenureSlider = { heading: 'By Tenure', max, min }
+        return tenureSlider
     }
 }
