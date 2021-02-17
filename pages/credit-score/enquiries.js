@@ -40,7 +40,10 @@ const enquiries = (props) => {
         <Loader active={loading} text="loading" />
         <YourTotalEnquiries totalEnquiries={cpEnquiriesData?.totalEnquiries} />
         <TipSection />
-        <TotalEnquiries />
+        <TotalEnquiries
+          enquiries={cpEnquiriesData?.paymentRecord}
+          banks={props.data}
+        />
         <OffersForYou />
       </Layout>
     </div>
