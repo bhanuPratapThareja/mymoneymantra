@@ -2317,6 +2317,10 @@ section.popular-card-container {
   cursor: pointer;
 }
 
+.noUi-origin.noUi-connect {
+  cursor: pointer;
+}
+
 .noUi-handle.noUi-handle-lower,
 .noUi-handle.noUi-handle-upper {
   cursor: grab;

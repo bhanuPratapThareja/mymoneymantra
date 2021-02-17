@@ -5,10 +5,9 @@ import Layout from '../../components/Layout'
 import CreditCardsBanner from '../../components/Banners/CreditCardsBanner'
 import PersonalLoansBanner from '../../components/Banners/PersonalLoansBanner'
 import HomeLoansBanner from '../../components/Banners/HomeLoansBanner'
-
 import UspCards from '../../components/common/UspCards'
-import PopularOffers from '../../components/common/PopularOffers'
 import CreditScore from '../../components/common/CreditScore'
+import PopularOffers from '../../components/common/PopularOffers'
 import TrendingOffers from '../../components/common/TrendingOffers'
 import BankSlider from '../../components/common/BankSlider'
 import Rewards from '../../components/common/Rewards'
@@ -16,15 +15,12 @@ import FinancialTools from '../../components/common/FinancialTools'
 import ShortExtendedForm from '../../components/common/ShortExtendedForm'
 import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
+import PageNotFound from '../../components/PageNotFound'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { clearLeadId, setPrimaryPath, setProductType, clearFormData, getProductType } from '../../utils/localAccess'
 import { viewOffers, extractOffers } from '../../services/offersService'
-import PageNotFound from '../../components/PageNotFound'
 
 const PrimaryPage = props => {
-
-  const [popularOffers, setPopularOffers] = useState([])
-  const [trendingOffers, setTrendingOffers] = useState([])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -32,17 +28,7 @@ const PrimaryPage = props => {
     setProductType(props.productTypeData)
     clearLeadId()
     clearFormData()
-    getOffers()
   }, [])
-
-  const getOffers = async () => {
-    const productType = getProductType()
-    const { populars, trendings } = await viewOffers(productType.productTypeId)
-    const popularOffers = await extractOffers(populars)
-    const trendingOffers = await extractOffers(trendings)
-    setPopularOffers(popularOffers)
-    setTrendingOffers(trendingOffers)
-  }
 
   const goToShortForm = () => {
     const shortFormEl = document.getElementsByClassName('lets-find-container')
@@ -76,7 +62,6 @@ const PrimaryPage = props => {
           return <PopularOffers
             key={block.id}
             data={block}
-            offers={popularOffers}
             primaryPath={props.primaryPath}
             goToShortForm={goToShortForm}
           />
@@ -86,7 +71,6 @@ const PrimaryPage = props => {
           return <TrendingOffers
             key={block.id}
             data={block}
-            offers={trendingOffers}
             primaryPath={props.primaryPath}
             goToShortForm={goToShortForm}
           />
@@ -104,7 +88,7 @@ const PrimaryPage = props => {
     })
   }
 
-  if(!props.data) {
+  if (!props.data) {
     return <PageNotFound />
   }
 
