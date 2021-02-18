@@ -201,7 +201,7 @@ const api = {
       prodUrl: "api/master/v1/",
       body: {
         personal: {
-          title: "1000000002",
+          title: "",
           fullName: "",
           middleName: "",
           dob: "",

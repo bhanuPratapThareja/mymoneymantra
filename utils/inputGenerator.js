@@ -364,6 +364,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
   }
 
   if (type === "checkbox") {
+
     const { checkbox_input, checkboxes_for } = checkbox;
     const fieldId = `${checkboxes_for}_${type}_container`;
     return (
