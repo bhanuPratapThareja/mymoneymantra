@@ -6,7 +6,7 @@ const componentsToUnpack = ['product_image', 'product_banner_detail',
     'product_category', 'product_promotion', 'product_annual_fee',
     'product_usp_highlight', 'product_feature', 'product_listing_feature',
     'product_detail', 'product_learn_more', 'product_interest_rate',
-    'product_emi', 'product_tenure', 'product_loan_amount', 'product_return_on_investment']
+    'product_emi', 'product_tenure', 'product_loan_amount', 'product_return_on_investment','product_processing_fee',]
 
 export const unpackComponents = data => {
     return new Promise(async (resolve) => {
