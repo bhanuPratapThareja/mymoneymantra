@@ -1,25 +1,27 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 
 import CreditCardsBanner from '../../components/Banners/CreditCardsBanner'
 import PersonalLoansBanner from '../../components/Banners/PersonalLoansBanner'
 import HomeLoansBanner from '../../components/Banners/HomeLoansBanner'
-
 import UspCards from '../../components/common/UspCards'
-import Offers from '../../components/common/Offers'
 import CreditScore from '../../components/common/CreditScore'
+import PopularOffers from '../../components/common/PopularOffers'
+import TrendingOffers from '../../components/common/TrendingOffers'
 import BankSlider from '../../components/common/BankSlider'
 import Rewards from '../../components/common/Rewards'
 import FinancialTools from '../../components/common/FinancialTools'
 import ShortExtendedForm from '../../components/common/ShortExtendedForm'
 import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
+import PageNotFound from '../../components/PageNotFound'
 import { getClassesForPage } from '../../utils/classesForPage'
-import { clearLeadId, setPrimaryPath, setProductType, clearFormData } from '../../utils/localAccess'
-import { extractPopularOffers, extractTrendingOffers } from '../../services/componentsService'
+import { clearLeadId, setPrimaryPath, setProductType, clearFormData, getProductType } from '../../utils/localAccess'
+import { viewOffers, extractOffers } from '../../services/offersService'
 
 const PrimaryPage = props => {
+
   useEffect(() => {
     window.scrollTo(0, 0)
     setPrimaryPath(props.primaryPath)
@@ -57,16 +59,21 @@ const PrimaryPage = props => {
             preferredSelectionLists={props.preferredSelectionLists}
           />
         case 'offers.popular-offers-component':
-        case 'offers.trending-offers-component':
-          return <Offers
+          return <PopularOffers
             key={block.id}
             data={block}
-            offers={props.popularOffers || props.trendingOffers || []}
             primaryPath={props.primaryPath}
             goToShortForm={goToShortForm}
           />
         case 'blocks.credit-score-component':
           return <CreditScore key={block.id} data={block} />
+        case 'offers.trending-offers-component':
+          return <TrendingOffers
+            key={block.id}
+            data={block}
+            primaryPath={props.primaryPath}
+            goToShortForm={goToShortForm}
+          />
         case 'blocks.bank-slider-component':
           return <BankSlider key={block.id} data={block} />
         case 'blocks.rewards-component':
@@ -79,6 +86,10 @@ const PrimaryPage = props => {
           return <LearnMore key={block.id} data={block} />
       }
     })
+  }
+
+  if (!props.data) {
+    return <PageNotFound />
   }
 
   return (
@@ -98,13 +109,10 @@ export async function getServerSideProps(ctx) {
   const preferredSelectionLists = await strapi.processReq('GET', `list-preferences`)
   const tncData = await strapi.processReq('GET', `tnc`)
 
-  const popularOffers = await extractPopularOffers(data)
-  const trendingOffers = await extractTrendingOffers(data)
-
   return {
     props: {
       data, primaryPath, preferredSelectionLists,
-      productTypeData, popularOffers, trendingOffers, tncData
+      productTypeData, tncData
     }
   }
 }

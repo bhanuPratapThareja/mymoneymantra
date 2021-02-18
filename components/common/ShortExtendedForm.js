@@ -90,7 +90,9 @@ class ShortExtendedForm extends React.Component {
         })
 
         let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading, slideClass }]
-        this.setState({ ...this.state, slides: [...upDatedSlides], enableCheckboxes: [...this.state.enableCheckboxes, ...enableCheckboxes] })
+        this.setState({ ...this.state, slides: [...upDatedSlides], enableCheckboxes: [...this.state.enableCheckboxes, ...enableCheckboxes] }, () => {
+            this.setState({ backUpSlides: JSON.parse(JSON.stringify(this.state.slides)) })
+        })
     }
 
     componentDidMount() {
@@ -134,7 +136,8 @@ class ShortExtendedForm extends React.Component {
         })
     }
 
-    onClickLetsGo = async () => {
+    onClickLetsGo = async e => {
+        e.preventDefault()
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
         const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
         this.setState({ ...this.state, slides: newSlides }, async () => {
@@ -150,15 +153,22 @@ class ShortExtendedForm extends React.Component {
         })
     }
 
-    onSubmitOtp = async () => {
-        try {
-            await submitOtp(this.state.mobileNo)
-            this.onSubmitLetGoSlide()
-        } catch (err) {
-            this.setState({ submissionError: err.message })
-        } finally {
-            this.scrollToTopOfSlide()
+    onSubmitOtp = e => {
+        e.preventDefault()
+        const inputs = document.getElementsByClassName('input_otp')
+        for (let inp of inputs) {
+            inp.blur()
         }
+        setTimeout(async () => {
+            try {
+                await submitOtp(this.state.mobileNo)
+                this.onSubmitLetGoSlide()
+            } catch (err) {
+                this.setState({ submissionError: err.message })
+            } finally {
+                this.scrollToTopOfSlide()
+            }
+        }, 500)
     }
 
     onSubmitLetGoSlide = async () => {
@@ -171,7 +181,7 @@ class ShortExtendedForm extends React.Component {
                 goToSlides()
             })
         } catch (err) {
-           this.setState({ submissionError: 'Something Went wrong. Please try again.' })
+            this.setState({ submissionError: 'Something Went wrong. Please try again.' })
         }
     }
 
@@ -179,7 +189,8 @@ class ShortExtendedForm extends React.Component {
         this.setState({ submissionError: '' })
     }
 
-    onSubmitSlide = () => {
+    onSubmitSlide = e => {
+        e.preventDefault()
         this.plusSlides(1)
     }
 
@@ -198,7 +209,7 @@ class ShortExtendedForm extends React.Component {
     plusSlides = (n) => {
         if (n >= 1) {
             const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-            const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
+            const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs, this.state.propertyValue)
             this.setState({ ...this.state, slides: newSlides }, async () => {
                 if (!errorsPresent) {
                     const newSlideId = incrementSlideId(this.state.currentSlide)
@@ -216,7 +227,7 @@ class ShortExtendedForm extends React.Component {
                                 this.props.router.push(`/${this.state.primaryPath}/listings`)
                             })
                             .catch(() => {
-                                this.setState({ submissionError: 'Something went wrong. Please try again.'})
+                                this.setState({ submissionError: 'Something went wrong. Please try again.' })
                             })
                     }
                 }
@@ -248,8 +259,10 @@ class ShortExtendedForm extends React.Component {
 
     handleChange = async field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const inputDropdown = await handleChangeInputs(inputs, field, this.props.preferredSelectionLists)
-
+        const {inputDropdown, propertyValue} = await handleChangeInputs(inputs, field, this.props.preferredSelectionLists, null)
+        if(propertyValue) {
+            this.setState({ propertyValue })
+        }
         if (inputDropdown && field.type === 'input_with_dropdown') {
             const { listType, masterName, inp, prefferedList } = inputDropdown
             if (prefferedList) {
@@ -291,6 +304,8 @@ class ShortExtendedForm extends React.Component {
                 this.setState({ submitButtonDisabled: true })
             }
         })
+
+        // console.log(this.state)
     }
 
     handleInputDropdownChange = (listType, list, input_id, field) => {
@@ -316,7 +331,7 @@ class ShortExtendedForm extends React.Component {
 
     checkInputValidity = field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        updateInputsValidity(inputs, field, this.state.errorMsgs)
+        updateInputsValidity(inputs, field, this.state.errorMsgs, this.state.propertyValue)
         this.setState({ ...this.state, slides: newSlides }, () => {
             if (field.type === 'radio') {
                 let mandatoryInputsHaveValues = true

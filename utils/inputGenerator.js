@@ -346,6 +346,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
             type="text"
             value={value}
             autoComplete="off"
+            readOnly
             required={mandatory}
             onFocus={() => openDatePicker()}
             onBlur={() => onChangeDate(input_id, type)}
@@ -363,6 +364,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
   }
 
   if (type === "checkbox") {
+
     const { checkbox_input, checkboxes_for } = checkbox;
     const fieldId = `${checkboxes_for}_${type}_container`;
     return (

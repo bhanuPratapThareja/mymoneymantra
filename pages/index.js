@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 import HomePageBanner from '../components/Banners/HomePageBanner'
@@ -13,8 +13,9 @@ import AppDownload from '../components/common/AppDownload'
 import Rewards from '../components/common/Rewards'
 import FinancialTools from '../components/common/FinancialTools'
 import Blogger from '../components/common/Blogger'
-
 import { getClassesForPage } from '../utils/classesForPage'
+import { viewOffers, extractOffers } from '../services/offersService'
+
 
 const Home = props => {
 
@@ -63,10 +64,8 @@ export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const primaryPath = 'home-page'
     const pageClasses = getClassesForPage(primaryPath)
-
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)
     const data = pageData[0]
-
     return { props: { data, pageClasses } }
 }
 

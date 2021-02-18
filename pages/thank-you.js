@@ -4,7 +4,7 @@ import Layout from '../components/Layout'
 
 import ThankYouBanner from '../components/Banners/ThankYouBanner'
 import CreditScore from '../components/common/CreditScore'
-import Offers from '../components/common/Offers'
+import TrendingOffers from '../components/common/TrendingOffers'
 import BankSlider from '../components/common/BankSlider'
 import Rewards from '../components/common/Rewards'
 import FinancialTools from '../components/common/FinancialTools'
@@ -13,13 +13,14 @@ import LearnMore from '../components/common/LearnMore'
 
 import { getClassesForPage } from '../utils/classesForPage'
 import { getLeadId, getLeadBank, getProductType } from '../utils/localAccess'
-import { extractTrendingOffers } from '../services/componentsService'
+import { viewOffers, extractOffers } from '../services/offersService'
 
 const ThankYouPage = props => {
 
     const [leadId, setLeadId] = useState('')
     const [bank, setBank] = useState('')
     const [productType, setProductType] = useState('')
+    const [trendingOffers, setTrendingOffers] = useState([])
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -42,10 +43,9 @@ const ThankYouPage = props => {
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
-                    return <Offers 
+                    return <TrendingOffers 
                         key={block.id} 
-                        data={block} 
-                        offers={props.trendingOffers || []}
+                        data={block}
                         primaryPath={props.primaryPath} 
                     />
                 case 'blocks.bank-slider-component':
@@ -83,11 +83,9 @@ export async function getServerSideProps(ctx) {
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const data = pageData && pageData.length ? pageData[0] : null
 
-    const trendingOffers = await extractTrendingOffers(data)
-
     return { 
         props: { 
-            data, primaryPath, secondaryPath, trendingOffers
+            data, primaryPath, secondaryPath
         } 
     }
 }

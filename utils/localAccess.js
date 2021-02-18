@@ -3,8 +3,8 @@ export const setPrimaryPath = primaryPath => {
 }
 
 export const setProductType = productTypeData => {
-    if(productTypeData && productTypeData.length) {
-        const {product_type_name: productTypeName, product_type_id: productTypeId, slug } = productTypeData[0]
+    if (productTypeData && productTypeData.length) {
+        const { product_type_name: productTypeName, product_type_id: productTypeId, slug } = productTypeData[0]
         const productType = { productTypeName, productTypeId, slug }
         localStorage.setItem('productType', JSON.stringify(productType))
     }
@@ -49,7 +49,7 @@ export const getLeadBank = () => {
 export const clearLeadId = () => {
     const primaryPath = getPrimaryPath()
     const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-    if(leadIdData && leadIdData[primaryPath]) {
+    if (leadIdData && leadIdData[primaryPath]) {
         delete leadIdData[primaryPath]
         localStorage.setItem('leadId', JSON.stringify(leadIdData))
     }
@@ -62,8 +62,25 @@ export const clearLeadBank = () => {
 export const clearFormData = () => {
     const primaryPath = getPrimaryPath()
     const formData = JSON.parse(localStorage.getItem('formData'))
-    if(formData && formData[primaryPath]) {
+    if (formData && formData[primaryPath]) {
         delete formData[primaryPath]
         localStorage.setItem('formData', JSON.stringify(formData))
     }
+}
+
+export const setBlogId = (blogId) => {
+    localStorage.setItem('blogId', blogId)
+}
+
+export const getBlogId = () => {
+    let blogId = localStorage.getItem('blogId')
+    return blogId
+}
+export const setContributorId = (contributorId) => {
+    localStorage.setItem('contributorId', contributorId)
+}
+
+export const getContributorId = () => {
+    let contributorId = localStorage.getItem('contributorId')
+    return contributorId
 }

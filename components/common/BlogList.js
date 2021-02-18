@@ -1,18 +1,20 @@
 import { useRouter } from 'next/router'
+import { setBlogId } from '../../utils/localAccess'
 import Image from '../ImageComponent/ImageComponent'
 
 const BlogList = (props) => {
     const { data } = props
     const router = useRouter()
-
+    let sortedBlogs = data.sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
     const onOpenBlog = blog => {
-        router.push({ pathname: '/blog/details', query: { slug: blog.id } })
+        setBlogId(blog.id)
+        router.push(`/blog/details/${blog.slug}`)
     }
     return (
         <section className="blogs-filter container">
             <div className="filter-cards">
                 <div className="filter-cards-wrapper" >
-                    {data.length ? data.map((blog, i) => {
+                    {sortedBlogs.length ? sortedBlogs.map((blog, i) => {
                         const { header, short_text, image, read_text, redirect_url, id, createdAt, published_at, content } = blog
                         const date = new Date(published_at);
                         const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);

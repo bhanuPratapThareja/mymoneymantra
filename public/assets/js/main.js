@@ -1,4 +1,3 @@
-
 AOS.init({
   offset: 80, // offset (in px) from the original trigger point
   delay: 0, // values from 0 to 3000, with step 50ms
@@ -114,7 +113,7 @@ $(document).ready(function () {
     }
   }
 
-  
+
   //file upload
   function fileInfo(id) {
     var fileName = document.getElementById(id).files[0].name;
@@ -187,7 +186,7 @@ $(document).ready(function () {
   })
 
 
-  initSlickCards = function() {
+  initSlickCards = function () {
     $('#popular-cards-sec, #trending-offers-sec').not('.slick-initialized').slick({
       centerMode: true,
       slidesToShow: 2,
@@ -234,13 +233,13 @@ $(document).ready(function () {
           },
         },
       ]
-  
+
     })
     $('#popular-cards-sec, #trending-offers-sec').slick("refresh")
   }
 
 
-  initSlickBanks = function() {
+  initSlickBanks = function () {
     $('.banks-slider').not('.slick-initialized').slick({
       infinite: false,
       slidesToShow: 4,
@@ -260,7 +259,7 @@ $(document).ready(function () {
             arrows: false
           }
         },
-  
+
         {
           breakpoint: 768,
           settings: {
@@ -285,40 +284,38 @@ $(document).ready(function () {
     $('.banks-slider').slick("refresh")
   }
 
-  initSlickCards()
+  // initSlickCards()
   initSlickBanks()
 
-
-  if($(window).width() < 1200) {
-    // alert("responsive");
-    $('#slider_blogs').slick({
-      dots: false,
-      arrows: false,
-      infinite: true,
-      autoplay: false,
-      slidesToShow: 2,
-      slidesToScroll: 1,
-      pauseOnHover: true,
-      responsive: [
-        {
-          breakpoint: 1186,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            variableWidth: true,
-            infinite: true,
-            autoplay: true,
+  initSlickBlogs = function () {
+    if ($(window).width() < 1200) {
+      // alert("responsive");
+      $('#slider_blogs').slick({
+        dots: false,
+        arrows: false,
+        infinite: true,
+        autoplay: false,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        pauseOnHover: true,
+        responsive: [
+          {
+            breakpoint: 1186,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              variableWidth: true,
+              infinite: true,
+              autoplay: true,
+            }
           }
-        }
-      ]
-    });
+        ]
+      });
+      $('#slider_blogs').slick("refresh")
+    }
   }
 
   $('#datepickerr').datepicker();
+  initSlickBlogs()
 
 });
-
-
-
-
-

@@ -1,17 +1,33 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import { makeDecision } from '../../utils/decision'
+import { getProductType } from '../../utils/localAccess'
+import { extractOffers, viewOffers } from '../../services/offersService'
 
-const PopularOffers = props => {
+const trendingOffers = props => {
    const router = useRouter()
+   const [trendingOffers, setTrendingOffers] = useState([])
    const { section_heading } = props.data
 
-   // useEffect(() => {
-   //    if(window !== undefined && window.initSlickCards && props.offers.length) {
-   //       window.initSlickCards()
-   //    }
-   // })
+   useEffect(() => {
+      if (!trendingOffers.length) {
+         getOffers()
+      }
+   }, [trendingOffers])
+
+   const getOffers = async () => {
+      const productType = getProductType()
+      const apiOffers = await viewOffers(productType.productTypeId)
+      if (apiOffers) {
+         let trendings = apiOffers.trendings
+         const trendingOffers = await extractOffers(trendings)
+         setTrendingOffers(trendingOffers)
+         if (window !== undefined && window.initSlickCards && trendingOffers.length) {
+            window.initSlickCards()
+         }
+      }
+   }
 
    const onOfferClick = async offer => {
       const { productDecision } = offer
@@ -20,7 +36,7 @@ const PopularOffers = props => {
       router.push({ pathname, query }, pathname, { shallow: true })
    }
 
-   if (!props.offers || !props.offers.length) {
+   if (!trendingOffers.length) {
       return null
    }
 
@@ -28,8 +44,8 @@ const PopularOffers = props => {
       <section data-aos="fade-up" className="container popular-card-container aos-init aos-animate">
          <div className="popular-cards">
             <h2>{section_heading}</h2>
-            <div className="popular-cards-slider" id="popular-cards-sec">
-               {props.offers.map(offer => {
+            <div className="popular-cards-slider" id="trending-offers-sec">
+               {trendingOffers.map(offer => {
                   const { bank, product } = offer
                   const { product_name, product_feature, product_annual_fee,
                      product_usp_highlight, product_interest_rate } = product
@@ -68,4 +84,4 @@ const PopularOffers = props => {
    )
 }
 
-export default PopularOffers
+export default trendingOffers
