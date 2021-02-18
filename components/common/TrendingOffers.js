@@ -24,7 +24,9 @@ const trendingOffers = props => {
          const trendingOffers = await extractOffers(trendings)
          setTrendingOffers(trendingOffers)
          if (window !== undefined && window.initSlickCards && trendingOffers.length) {
+           setTimeout(() => {
             window.initSlickCards()
+           }, 1000)
          }
       }
    }
