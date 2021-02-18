@@ -238,8 +238,7 @@ $(document).ready(function () {
     $('#popular-cards-sec, #trending-offers-sec').slick("refresh")
   }
 
-    // initSlickCards()
-
+  initSlickCards()
   initSlickBanks = function () {
     $('.banks-slider').not('.slick-initialized').slick({
       infinite: false,
