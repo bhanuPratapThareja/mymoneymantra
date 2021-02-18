@@ -16,7 +16,7 @@ const CommentSection = (props) => {
     const [dislikeCount, setDislikeCount] = useState(null)
     const [likeCount, setLikeCount] = useState(null)
     const [shareCount, setShareCount] = useState(null)
-    const [loadMore, setLoadMore] = useState(true);
+    const [loadMore, setLoadMore] = useState(limit < comments.length);
     const [list, setList] = useState(slice(comments, 0, limit))
     const [index, setIndex] = useState(limit);
     const { blogId } = props

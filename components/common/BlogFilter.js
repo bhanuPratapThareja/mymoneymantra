@@ -48,7 +48,7 @@ const BlogFilter = props => {
       }
       setTimeout(() => {
          setBlogsToDispaly(finalList)
-      }, 1500)
+      }, 1000)
    }
 
    const onApplyFilter = (filter) => {
@@ -129,7 +129,7 @@ const BlogFilter = props => {
                loader={blogsToDisplay.length ? <h2>Loading...</h2> : ''}
                next={fetchMoreData}
             >
-            <div className="filter-cards-wrapper">
+               <div className="filter-cards-wrapper">
                   {
                      blogsToDisplay.length ? blogsToDisplay.map((blog, i) => {
                         const { header, short_text, image, read_text, redirect_url, id, createdAt, popular, published_at, content } = blog
@@ -156,7 +156,7 @@ const BlogFilter = props => {
                         )
                      }) : null
                   }
-            </div></InfiniteScroll>
+               </div></InfiniteScroll>
             <div>
                <BlogFilterOptions filters={blogsFilter} applyFilter={onApplyFilter} />
             </div>

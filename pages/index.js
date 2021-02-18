@@ -13,12 +13,14 @@ import AppDownload from '../components/common/AppDownload'
 import Rewards from '../components/common/Rewards'
 import FinancialTools from '../components/common/FinancialTools'
 import Blogger from '../components/common/Blogger'
+import TrendingOffers from '../components/common/TrendingOffers'
 import { getClassesForPage } from '../utils/classesForPage'
 import { viewOffers, extractOffers } from '../services/offersService'
 import { get } from 'jquery'
 
 
 const Home = props => {
+    const [trendingOffers, setTrendingOffers] = useState([])
 
     useEffect(() => {
         getOffers()
@@ -51,7 +53,7 @@ const Home = props => {
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
-                    return <TrendingOffers key={block.id} data={block} offers={trendingOffers} />
+                    return <TrendingOffers key={block.id} data={block} blogTrendingOffers={trendingOffers} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.app-download-component':
