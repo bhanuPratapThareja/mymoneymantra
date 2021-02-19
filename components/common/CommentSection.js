@@ -16,7 +16,7 @@ const CommentSection = (props) => {
     const [dislikeCount, setDislikeCount] = useState(null)
     const [likeCount, setLikeCount] = useState(null)
     const [shareCount, setShareCount] = useState(null)
-    const [loadMore, setLoadMore] = useState(true);
+    const [loadMore, setLoadMore] = useState(limit < comments.length);
     const [list, setList] = useState(slice(comments, 0, limit))
     const [index, setIndex] = useState(limit);
     const { blogId } = props
@@ -217,13 +217,14 @@ const CommentSection = (props) => {
     }
 
     const getCommentData = (blogId) => {
+        const data = getBlogComments(props.blogId)
         data.then(res => {
             setComments(res.comments)
             let newList = slice(res.comments, 0, limit)
             let newLoadMore = index < res.comments.length - 1
             newList.forEach(c => {
                 getSentimentOnLoadmore([], newList, c.commentId, defaultUserId, newLoadMore)
-                // getCommentSentiment(defaultUserId, c.commentId, newList)
+
             })
             getBlogSentiment(defaultUserId, props.blogId)
         }).catch(err => console.log("post comment err", err))

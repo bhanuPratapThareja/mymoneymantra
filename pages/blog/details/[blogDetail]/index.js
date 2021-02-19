@@ -26,7 +26,7 @@ const BlogDetail = props => {
             const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${slugForProductTypeData}`)
             setProductType(productTypeData)
             const productType = getProductType()
-            let productTypeId = productType.productTypeId ? productType.productTypeId : ''
+            let productTypeId = productType.productTypeId
             const { trendings } = await viewOffers(productTypeId)
             const trendingOffers = await extractOffers(trendings, productTypeId)
             setTrendingOffers(trendingOffers)
@@ -38,6 +38,7 @@ const BlogDetail = props => {
     }, [props.query])
 
     const getComponents = (dynamic) => {
+        console.log(dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.blog-texts-component':
@@ -50,7 +51,7 @@ const BlogDetail = props => {
                     return <TrendingOffers
                         key={block.id}
                         data={block}
-                        offers={trendingOffers}
+                        blogTrendingOffers={trendingOffers}
                     />
                 case 'blocks.similar-blogs-component':
                     return <SimilarArticles key={block.id} data={props.allBlogs} categories={blogData.blog_categories} subCategories={blogData.blog_sub_categories} />
