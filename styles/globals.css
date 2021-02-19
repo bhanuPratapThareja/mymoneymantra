@@ -618,7 +618,7 @@ label {
       padding: 20px 0px 12px 32px;
       border-bottom-left-radius: 6px;
       width: 100%;
-      /* background: url(/assets/images/listings/blue-gradient.svg); */
+      background: url("../public/assets/images/listings/blue-gradient.svg");
       background-repeat: no-repeat;
       background-position: left bottom; }
       @media (min-width: 769px) and (max-width: 1023px) {
@@ -1079,7 +1079,7 @@ label {
         max-width: 327px; } }
     .blog-wrapper .card-1 .image_1 {
       height: 240px;
-      /* background: url("/assets/images/credit-card-flow/blog-image-1.png"); */
+      background: url("/assets/images/credit-card-flow/blog-image-1.png");
       background-size: cover;
       background-repeat: no-repeat; }
       @media (max-width: 768px) {
@@ -1209,8 +1209,8 @@ label {
     .blog-wrapper .card-3 .image_3 {
       max-width: 232px;
       width: 100%;
-      /* background: url("/assets/images/credit-card-flow/blog-image-3.png"); */
-      /* background: url("http://203.122.46.189:1338/uploads/blog_image_3_a5b88dca5b.png"); */
+      /* background: url("/assets/images/credit-card-flow/blog-image-3.png");
+      background: url("http://203.122.46.189:1338/uploads/blog_image_3_a5b88dca5b.png"); */
       background-size: cover;
       background-repeat: no-repeat; }
       @media (max-width: 768px) {
@@ -1913,8 +1913,10 @@ label {
   right: 0;
   top: 50%;
   -ms-flex-pack: start;
-      justify-content: flex-start;
-  padding: 12px 40px 12px 12px; }
+  justify-content: flex-start;
+  padding: 12px 40px 12px 12px
+}
+
   @media (max-width: 768px) {
     #blog-socials {
       background: #ffffff;
@@ -2686,7 +2688,7 @@ label {
               position: absolute;
               top: 42px;
               left: 0;
-              z-index: 99;
+              z-index: 100;
               box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.08), 0px 4px 16px rgba(0, 0, 0, 0.08);
               display: none;
               overflow: hidden;
@@ -3015,7 +3017,7 @@ label {
         background: #ffffff;
         border-radius: 6px;
         position: absolute;
-        top: 40px;
+        top: 42px;
         left: 0;
         z-index: 99;
         box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.08), 0px 4px 16px rgba(0, 0, 0, 0.08);
@@ -4230,12 +4232,12 @@ label {
         width: 100%; }
         
         @media (max-width: 768px) {
-          .long-form .long-form-wrapper .card-info img {
+          /* .long-form .long-form-wrapper .card-info img {
             margin: 24px auto 0;
             max-width: 40%;
             width: 100%;
             display: block;
-          }
+          } */
         }
 
       .long-form .long-form-wrapper .card-info h4 {
@@ -6598,6 +6600,7 @@ label {
                 padding: 16px; } }
             .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-7-data > .refer-cards-wrapper .refer-card h3 {
               background: linear-gradient(90deg, #3080CF 0%, #356BB5 35.94%, #263A73 100%);
+              -webkit-background-clip: text;
               -webkit-text-fill-color: transparent; }
             .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-7-data > .refer-cards-wrapper .refer-card ul {
               margin-top: 16px;
@@ -6687,6 +6690,7 @@ label {
             .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-5-data > .applications-cards-wrapper .popular-cards-slider-card-top h2 {
               margin-top: 24px;
               background: linear-gradient(90deg, #3080CF 0%, #356BB5 35.94%, #263A73 100%);
+              -webkit-background-clip: text;
               -webkit-text-fill-color: transparent; }
               @media (max-width: 768px) {
                 .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-5-data > .applications-cards-wrapper .popular-cards-slider-card-top h2 {
@@ -7765,12 +7769,8 @@ label {
     @media (max-width: 768px) {
       .homepage-flow .banner-content-wrapper p {
         padding-top: 24px; } }
-      
-      .homepage-flow .testimonial {
-        /* margin-top: 199.92px !important; */
-        margin-top: 141.92px !important;
-      }
-
+.homepage-flow .testimonial {
+  margin-top: 199.92px !important; }
   @media (max-width: 768px) {
     .homepage-flow .testimonial {
       padding-top: 0 !important;

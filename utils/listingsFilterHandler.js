@@ -51,13 +51,13 @@ const filterByCategories = (filteredByBanks, filters) => {
 
 const filterByPromotions = (filteredByCategories, filters) => {
     const filteredByPromotions = filteredByCategories.filter(card => {
-        if (!filters.promotion || !filters.promotion.length) {
+        if (!filters.promotions || !filters.promotions.length) {
             return card
         }
         if(!card.product.product_promotion) {
             return card
         }
-        if (filters.promotion.includes(card.product.product_promotion.tag)) {
+        if (filters.promotions.includes(card.product.product_promotion.tag)) {
             return card
         }
     })

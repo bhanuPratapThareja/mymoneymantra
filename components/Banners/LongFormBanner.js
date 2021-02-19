@@ -31,16 +31,17 @@ class LongFormBanner extends React.Component {
             return null
         }
 
-        const { bank, product } = this.props.productData
+        const {bank} = this.props.productData;
+        const product = this.props.productData && this.props.productData.product ? this.props.productData.product : null;
 
         return (
             <div className="card-info" id="longFormBanner">
                 <h5 className="app-form">Application form</h5>
                 <h3><b>{bank.bank_name}</b><br />{product.product_name}</h3>
 
-                {this.props.primaryPath === 'credit-cards' ?
-                    <ImageComponent image={product.product_image.image} /> : <ImageComponent image={bank.bank_image}
-                    />}
+                {this.props.primaryPath == 'credit-cards' && product ?
+                     <ImageComponent image={product.product_image.image} /> : null 
+                }
 
                 <h4>Application form</h4>
                 <div className="form-range">

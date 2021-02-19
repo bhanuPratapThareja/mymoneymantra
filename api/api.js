@@ -149,7 +149,6 @@ const api = {
       },
 
     },
-
     leadProductDecision: {
       devUrl: "lead/api/lead/v1/product/decision",
       uatUrl: "api/master/v1/",
@@ -202,7 +201,7 @@ const api = {
       prodUrl: "api/master/v1/",
       body: {
         personal: {
-          title: "1000000002",
+          title: "",
           fullName: "",
           middleName: "",
           dob: "",
@@ -232,26 +231,7 @@ const api = {
               isDefault: "N",
             },
           ],
-          keyContact: [
-            {
-              caseContactMasterId: "6",
-              caseContactName: "",
-              caseContactEmail: "",
-              caseContactMobileNo: "",
-            },
-            {
-              caseContactMasterId: "5",
-              caseContactName: "",
-              caseContactEmail: "",
-              caseContactMobileNo: "",
-            },
-            {
-              caseContactMasterId: "",
-              caseContactName: "",
-              caseContactEmail: "",
-              caseContactMobileNo: "",
-            },
-          ],
+          keyContact: [],
         },
         work: {
           applicantType: "",
@@ -260,7 +240,7 @@ const api = {
           companyId: "",
           typeOfCompaY: "",
           netMonthlyIncome: "",
-          grossMonthlyIncome: "",
+          grossMonthlyIncome: "100000",
           modeOfSalary: "",
           yearsCurrentJob: "",
           totalWorkExp: "",
@@ -279,8 +259,6 @@ const api = {
         productId: "",
         cardAge: "",
         cardType: "",
-        // exisEmi: "",
-        // exisLoanAmount: "",
         loanStartYear: "",
         totalExisTenor: "",
         offerId: "",
@@ -320,98 +298,21 @@ const api = {
             otherDeveloperName: "",
             otherProjectName: "",
             propertyValue: "",
-          },
-          {
-            addressTypeMasterId: "",
-            addressline1: "",
-            addressline2: "",
-            addressline3: "",
-            city: "",
-            state: "",
-            pincode: "",
-            occupancyStatus: "",
-            livingSince: "",
-            stdCode: "",
-            landline: "",
-            landmark: "",
-            livingSinceMM: "",
-            isMaillingAddress: "",
-            propertyName: "",
-            developerName: "",
-            projectrName: "",
-            remarks: "",
-            otherDeveloperName: "",
-            otherProjectName: "",
-            propertyValue: "",
-          },
-          {
-            addressTypeMasterId: "",
-            addressline1: "",
-            addressline2: "",
-            addressline3: "",
-            city: "",
-            state: "",
-            pincode: "",
-            occupancyStatus: "",
-            livingSince: "",
-            stdCode: "",
-            landline: "",
-            landmark: "",
-            livingSinceMM: "",
-            isMaillingAddress: "",
-            propertyName: "",
-            developerName: "",
-            projectrName: "",
-            remarks: "",
-            otherDeveloperName: "",
-            otherProjectName: "",
-            propertyValue: "",
-            purposeOfLoan: "",
-          },
-          {
-            addressTypeMasterId: "",
-            addressline1: "",
-            addressline2: "",
-            addressline3: "",
-            city: "",
-            state: "",
-            pincode: "",
-            occupancyStatus: "",
-            livingSince: "",
-            stdCode: "",
-            landline: "",
-            landmark: "",
-            livingSinceMM: "",
-            isMaillingAddress: "",
-            propertyName: "",
-            developerName: "",
-            projectrName: "",
-            remarks: "",
-            otherDeveloperName: "",
-            otherProjectName: "",
-            propertyValue: "",
-          },
-
+          }
         ]
       },
     },
     customerOfferView: {
-      devUrl: "customer/api/customer/v1/view/offers",
+      devUrl: "customer/api/customer/v1/view-offers",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
       body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: {
-            mobileNo: "9999000090",
-            customerId: "9999000090",
-            offerId: "9999000090",
-          },
-        },
+        customerId: "",
+        productId: ""
       },
     },
     customerOffer: {
-      devUrl: "customer/api/customer/v1/profile/offers",
+      devUrl: "api/customer/v1/profile/offers",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
       body: {
@@ -424,7 +325,6 @@ const api = {
         },
       },
     },
-
     sendNotification: {
       devUrl: "notification/api/notification/v1/sms-email/send",
       uatUrl: "api/master/v1/",
@@ -495,12 +395,24 @@ const api = {
         customerId: "12345",
         comment: "1"
       },
+    },
+    shareBlog: {
+      devUrl: 'customer/api/blog/v1/shared',
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: {
+        // request: {
+        //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
+        // },
 
+        "blogId": "123",
+        "customerId": "12345",
+        "shared": "yes"
 
+      },
 
     }
   },
-
 };
 
 const getUrl = (route) => {

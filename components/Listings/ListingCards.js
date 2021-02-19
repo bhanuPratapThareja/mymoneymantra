@@ -33,6 +33,7 @@ const ListingCards = (props) => {
 
       {offers.map((offer, i) => {
         const { productDecision, bank, product } = offer
+
         return (
           <div className="long-cards-wrapper"
             key={i}
@@ -80,15 +81,24 @@ const ListingCards = (props) => {
                   </div>
                 ) : null}
 
-                {product.product_interest_rate ?
-                  <div className="fee">
-                    <h5>Interest Rate:</h5>
-                    <p><b>{product.product_interest_rate.min_value}% -
-                    {product.product_interest_rate.max_value}% 
-                    {product.product_interest_rate.duration === 'Annually' ? ' p.a' : ' p.m'}</b></p>
-                  </div> : null}
-              </div>
+                <div className="fee">
+                  {product.product_interest_rate ?
+                    <h5>Interest Rate:
+                      <span><b>&nbsp; {product.product_interest_rate.min_value}% -
+                      {product.product_interest_rate.max_value}%
+                      {product.product_interest_rate.duration === 'Annually' ? ' p.a' : ' p.m'}</b></span>
+                    </h5> : null}
 
+                  {product.product_emi ?
+                    <h5>EMI/month: <span><b>&nbsp; {product.product_emi.emi}</b></span></h5> : null}
+
+                  {product.product_processing_fee?
+                    <h5>Processing Fee: <span><b>&nbsp; {product.product_processing_fee.processing_fees_from} - {product.product_processing_fee.processing_fees_upto}</b></span></h5> : null}
+
+                  {product.product_tenure ?
+                    <h5>Tenor: <span><b>&nbsp; {product.product_tenure.tenure}</b></span></h5> : null}
+                </div>
+              </div>
               <div className="bottom">
                 <div className="lifetime">
                   <h5>{product.product_usp_highlight.highlight}</h5>

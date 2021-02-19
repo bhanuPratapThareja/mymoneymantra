@@ -1,38 +1,44 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
-import { getProductDecision } from '../../services/offersService'
+import { makeDecision } from '../../utils/decision'
+import { getProductType } from '../../utils/localAccess'
+import { extractOffers, viewOffers } from '../../services/offersService'
 
-const Offers = props => {
+const PopularOffers = props => {
    const router = useRouter()
+   const [popularOffers, setPopularOffers] = useState([])
    const { section_heading } = props.data
 
    useEffect(() => {
-      if(window !== undefined && window.initSlickCards && props.offers.length) {
-         window.initSlickCards()
+      if (!popularOffers.length) {
+         getOffers()
       }
-   }, [])
+   }, [popularOffers])
 
-   const onOfferClick = async offer => {
-      const { product, bank } = offer
-      const response = await getProductDecision([offer])
-      const productDecision = response[0].productDecision
-      if (productDecision === 'Apply Now') {
-         props.goToShortFormPage()
-         return
-      }
-      const { slug: bankSlug } = bank
-      const { slug: productSlug } = product
-      const primaryPath = props.primaryPath
-      
-      if(primaryPath === 'credit-cards') {
-         router.push(`/${primaryPath}/${bankSlug}/${productSlug}`)
-      } else {
-         router.push(`/${primaryPath}/${bankSlug}`)
+   const getOffers = async () => {
+      const productType = getProductType()
+      const apiOffers = await viewOffers(productType.productTypeId)
+      if (apiOffers) {
+         let populars = apiOffers.populars
+         const popularOffers = await extractOffers(populars)
+         setPopularOffers(popularOffers)
+         if (window !== undefined && window.initSlickCards && popularOffers.length) {
+            console.log('here')
+            window.initSlickCards()
+            console.log('here')
+         }
       }
    }
 
-   if (!props.offers || !props.offers.length) {
+   const onOfferClick = async offer => {
+      const { productDecision } = offer
+      const decision = makeDecision(productDecision, offer, props.primaryPath, null)
+      const { pathname, query } = decision
+      router.push({ pathname, query }, pathname, { shallow: true })
+   }
+
+   if (!popularOffers.length) {
       return null
    }
 
@@ -41,7 +47,7 @@ const Offers = props => {
          <div className="popular-cards">
             <h2>{section_heading}</h2>
             <div className="popular-cards-slider" id="popular-cards-sec">
-               {props.offers.map(offer => {
+               {popularOffers.map(offer => {
                   const { bank, product } = offer
                   const { product_name, product_feature, product_annual_fee,
                      product_usp_highlight, product_interest_rate } = product
@@ -80,4 +86,4 @@ const Offers = props => {
    )
 }
 
-export default Offers
+export default PopularOffers

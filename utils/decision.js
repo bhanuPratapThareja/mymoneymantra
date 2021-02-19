@@ -4,10 +4,12 @@ export const makeDecision = (buttonText, offer, primaryPath, changePageType) => 
     const { bank: { bank_name: bankName, slug: bankSlug, bank_id: bankId  }, product: { slug: productSlug } } = offer
     let pathname = ''
     let query = { bankName }
+    console.log(buttonText)
 
     switch (buttonText) {
       case "Apply Now":
       case "Instant Approval":
+      case "Instant Approve":
         const leadBank = { bankName, bankId }
         setLeadBank(leadBank)
         pathname = `/thank-you`;
