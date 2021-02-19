@@ -106,8 +106,8 @@ export const generateLead = async (data, primaryPath, formType) => {
         let { url, body } = getApiData('orchestration')
         body = JSON.parse(JSON.stringify(body))
 
-        const { fullName, dob, pan, mobile, email, applicantType, officeEmail,
-            companyId, netMonthlyIncome, annualIncome, leadBank, salaryBank, existingFacilityBank, totalWorkExp,
+        const { fullName, dob, pan, mobile, email, applicantType, officeEmail,title,
+            companyId, netMonthlyIncome, annualIncome, leadBank, salaryBank, existingFacilityBank, totalWorkExp, 
             cardType, cardTypeCC, surrogateType, designationId, qualificationId,
             exisTenorBalMonths, exisLoanAmount, exisEmi, exisRemark,
             requestedLoanamount, requestedTenor, propertyType, other_city_property_location,
@@ -145,6 +145,9 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.personal.dob = getFormattedDate(dob)
         body.personal.pan = pan
         body.personal.gender = gender
+        if(gender == "1000000002"){
+            body.personal.title = "1000000003"
+        }
         body.personal.maritalStatus = maritalStatus
         body.personal.nationality = nationality
         body.personal.dependents = noOfDependents && noOfDependents.noOfDependentsId ? noOfDependents.noOfDependentsId : ''

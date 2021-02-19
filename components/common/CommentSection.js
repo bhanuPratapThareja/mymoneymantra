@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { concat, slice } from 'lodash';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { getApiData } from '../../api/api';
@@ -6,58 +7,94 @@ import { getBlogComments } from '../../services/blogService'
 import BlogMediaLinks from './BlogMediaLinks';
 
 const CommentSection = (props) => {
+    let limit = 3
     const [comment, setComment] = useState('')
     const [blogSentiment, setBlogSentiment] = useState('')
-    const [commentData, setCommentData] = useState([])
     const [comments, setComments] = useState([])
     const [share, setShare] = useState(false)
     const [dislikeCount, setDislikeCount] = useState(null)
     const [likeCount, setLikeCount] = useState(null)
     const [shareCount, setShareCount] = useState(null)
-    const [sliceLength, setSliceLength] = useState(4)
+    const [loadMore, setLoadMore] = useState(limit < comments.length);
+    const [list, setList] = useState(slice(comments, 0, limit))
+    const [index, setIndex] = useState(limit);
     const { blogId } = props
     let defaultUserId = '101'
 
     useEffect(() => {
         const data = getBlogComments(props.blogId)
         data.then(res => {
-            res.comments.forEach(c => {
-                getCommentSentiment(defaultUserId, c.commentId, res)
+            let newList = slice(res.comments, 0, limit)
+            let newLoadMore = index < res.comments.length - 1
+            setComments(res.comments)
+            newList.forEach(c => {
+                getSentimentOnLoadmore([], newList, c.commentId, defaultUserId, newLoadMore)
             })
             getBlogSentiment(defaultUserId, props.blogId)
         }
         ).catch(err => console.log(err))
     }, [props.blogId])
+
     const handleCommentLikeDislikeStatus = async (userId, commentId) => {
         const { url } = getApiData('commentLikeDislike')
         try {
             const response = await axios.get(`${url}?customerId=${userId}&commentId=${commentId}`)
-            let allComments = JSON.parse(JSON.stringify(commentData.comments))
+            let allComments = JSON.parse(JSON.stringify(list))
             let comment = allComments.find(c => c.commentId == commentId)
             let index = allComments.indexOf(comment)
             allComments[index].sentiment = response.data.sentiment
-            setComments(allComments)
+            setList(allComments)
         } catch (err) {
             console.log(err)
         }
     }
 
-    const getCommentSentiment = async (userId, commentId, data) => {
-        const { url } = getApiData('commentLikeDislike')
+    const loadMoreCommnets = () => {
+        const newIndex = index + limit;
+        let slicedList = slice(comments, index, newIndex)
+        const newLoadMore = newIndex < (comments.length - 1);
+        slicedList.forEach(item => {
+            getSentimentOnLoadmore(list, slicedList, item.commentId, defaultUserId, newLoadMore)
+        })
+    }
 
+    const getSentimentOnLoadmore = async (list, slicedList, commentId, userId, loadMoreStatus) => {
+        const { url } = getApiData('commentLikeDislike')
         try {
             const response = await axios.get(`${url}?customerId=${userId}&commentId=${commentId}`)
-            data.comments.forEach(c => {
+            slicedList.forEach(c => {
                 if (c.commentId == commentId) {
                     c.sentiment = response.data.sentiment
                 }
             })
-            setCommentData(data)
-            setComments(data.comments)
+            let newList = [...list, ...slicedList]
+            const newIndex = index + limit;
+            setIndex(newIndex);
+            setLoadMore(loadMoreStatus);
+            setList(newList)
         } catch (err) {
             console.log(err)
         }
     }
+
+    // const getCommentSentiment = async (userId, commentId, data) => {
+    //     const { url } = getApiData('commentLikeDislike')
+
+    //     try {
+    //         const response = await axios.get(`${url}?customerId=${userId}&commentId=${commentId}`)
+    //         data.forEach(c => {
+    //             if (c.commentId == commentId) {
+    //                 c.sentiment = response.data.sentiment
+    //             }
+    //         })
+    //         setCommentData(data)
+    //         setComments(data.comments)
+    //         setList(data)
+    //         setLoadMore(true)
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
     const getBlogSentiment = async (customerId, blogId) => {
         const { url } = getApiData('blogLikeDislike')
         try {
@@ -137,7 +174,6 @@ const CommentSection = (props) => {
         body.commentId = commentId
         axios.post(url, body).then(
             res => {
-                // getCommentData(blogId)
                 handleCommentLikeDislikeStatus(defaultUserId, commentId)
             }
         ).catch(
@@ -177,10 +213,13 @@ const CommentSection = (props) => {
     }
 
     const getCommentData = (blogId) => {
-        const data = getBlogComments(blogId)
+        const data = getBlogComments(props.blogId)
         data.then(res => {
-            res.comments.forEach(c => {
-                getCommentSentiment(defaultUserId, c.commentId, res)
+            setComments(res.comments)
+            let newList = slice(res.comments, 0, limit)
+            let newLoadMore = index < res.comments.length - 1
+            newList.forEach(c => {
+                getSentimentOnLoadmore([], newList, c.commentId, defaultUserId, newLoadMore)
             })
             getBlogSentiment(defaultUserId, props.blogId)
         }).catch(err => console.log("post comment err", err))
@@ -228,7 +267,7 @@ const CommentSection = (props) => {
                     <input id="user-comment" type="text" value={comment} onChange={(e) => setComment(e.target.value)} onKeyUp={(e) => postComment(e, comment, blogId)} name="comment" placeholder="Add a comment..." />
                     <div className="added-comments">
                         {
-                            comments ? comments.map((comment, i) => {
+                            list ? list.map((comment, i) => {
                                 return (
                                     <div key={i} className="user">
                                         <div className="image"></div>
@@ -246,6 +285,7 @@ const CommentSection = (props) => {
                             }) : null
                         }
                     </div>
+                    {loadMore && <button onClick={loadMoreCommnets} className="cstm-load-btn"> Load More </button>}
                 </div>
             </div>
         </div>

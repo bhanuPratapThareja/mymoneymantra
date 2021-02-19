@@ -1,17 +1,19 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { setBlogId } from '../../utils/localAccess'
+import Strapi from '../../providers/strapi'
+import { setBlogId, setProductType } from '../../utils/localAccess'
 import Image from '../ImageComponent/ImageComponent'
 
 
 const Blogger = props => {
     const router = useRouter()
+    const strapi = new Strapi()
     useEffect(() => {
         if (window !== undefined && window.initSlickBlogs && props.data.blogger && props.data.blogger.image.length) {
             window.initSlickBlogs()
         }
     })
-    
+
     let { section_heading, bloggers } = props.data
     let popularBlogs = bloggers.filter(blog => blog.popular === true)
     const shuffleArray = (array) => {
@@ -47,7 +49,7 @@ const Blogger = props => {
                         const blogreadTime = readingTime(content);
                         const blogClasses = ['blog-wrapper-card', `card-${i + 1}`]
                         return (
-                            (i < 3) ? <div className={blogClasses.join(' ')} id={`blog-card-${i + 1}`} key={id}>
+                            (i < 3) ? <div className={blogClasses.join(' ')} id={`blog-card-${i + 1}`} key={i}>
                                 <div className={`image_${i + 1}`}>
                                     <Image image={image} />
                                 </div>

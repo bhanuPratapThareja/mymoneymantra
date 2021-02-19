@@ -88,15 +88,14 @@ const ListingCards = (props) => {
                       {product.product_interest_rate.duration === 'Annually' ? ' p.a' : ' p.m'}</b></span>
                     </h5> : null}
 
+                  {product.product_emi ?
+                    <h5>EMI/month: <span><b>&nbsp; {product.product_emi.emi}</b></span></h5> : null}
+
+                  {product.product_processing_fee?
+                    <h5>Processing Fee: <span><b>&nbsp; {product.product_processing_fee.processing_fees_from} % - {product.product_processing_fee.processing_fees_upto} %</b></span></h5> : null}
+
                   {product.product_tenure ?
                     <h5>Tenor: <span><b>&nbsp; {product.product_tenure.tenure}</b></span></h5> : null}
-
-                  {product.product_loan_amount ?
-                    <h5>Loan Amount: <span><b>&nbsp; {product.product_loan_amount.amount}</b></span></h5> : null}
-                
-                {product.product_emi ?
-                    <h5>Lowest EMI per 10 Lakh: <span><b>&nbsp; {product.product_emi.emi}</b></span></h5> : null}
-
                 </div>
               </div>
               <div className="bottom">
