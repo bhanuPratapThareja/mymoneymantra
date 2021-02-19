@@ -20,7 +20,10 @@ const FactorsAffecting = () => {
           >
             Previous
           </button>
-          <div className="slick-list draggable">
+          <div
+            className="slick-list draggable scroll"
+            style={{ overflowX: 'scroll', overflowY: 'hidden' }}
+          >
             <div
               className="slick-track"
               style={{
