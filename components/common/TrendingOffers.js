@@ -84,20 +84,20 @@ const trendingOffers = props => {
 
                            <div className="fee">
                               {product_interest_rate ?
-                                 <h5>Interest Rates <span><b>&nbsp; :{product_interest_rate.min_value}% - {product_interest_rate.max_value}%
+                                 <h5>Int Rates : <span><b>&nbsp; {product_interest_rate.min_value}% - {product_interest_rate.max_value}%
                               {product_interest_rate.duration === 'Annually' ? 'p.a.' : 'm.a.'}</b></span></h5>
                                  : null}
 
                               {product_tenure ?
-                                 <h5>Max Tenure <span><b>&nbsp; : {product_tenure.tenure}</b></span></h5>
+                                 <h5>Max Tenure : <span><b>&nbsp; {product_tenure.tenure}</b></span></h5>
                                  : null}
 
                               {product_loan_amount ?
-                                 <h5>Loan Amount : {product_loan_amount.amount}</h5>
+                                 <h5>Loan Amt : <span><b>&nbsp; {product_loan_amount.amount}</b></span></h5>
                                  : null}
 
                               {product_emi ?
-                                 <h5>Lowest EMI : {product_emi.emi}</h5> : null}
+                                 <h5>Lowest EMI : <span><b>&nbsp; {product_emi.emi}</b></span> </h5> : null}
 
                            </div>
                         </div>
