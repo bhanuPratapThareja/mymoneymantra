@@ -217,13 +217,14 @@ const CommentSection = (props) => {
     }
 
     const getCommentData = (blogId) => {
+        const data = getBlogComments(props.blogId)
         data.then(res => {
             setComments(res.comments)
             let newList = slice(res.comments, 0, limit)
             let newLoadMore = index < res.comments.length - 1
             newList.forEach(c => {
                 getSentimentOnLoadmore([], newList, c.commentId, defaultUserId, newLoadMore)
-                // getCommentSentiment(defaultUserId, c.commentId, newList)
+
             })
             getBlogSentiment(defaultUserId, props.blogId)
         }).catch(err => console.log("post comment err", err))
