@@ -129,7 +129,7 @@ const Header = () => {
                <img src="/assets/images/icons/menu.svg" alt="menu" onClick={onOpenSideMenu} />
             </a>
 
-            <SideMenu />
+            <SideMenu menuData={headerData} />
 
             <Link href="/">
                <a>

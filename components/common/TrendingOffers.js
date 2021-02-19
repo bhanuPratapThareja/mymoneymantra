@@ -12,9 +12,17 @@ const trendingOffers = props => {
 
    useEffect(() => {
       if (!trendingOffers.length) {
-         getOffers()
+         if (props.blogTrendingOffers) {
+            setTrendingOffers(props.blogTrendingOffers)
+            if (window !== undefined && window.initSlickCards && trendingOffers.length) {
+               console.log('slick initialized')
+               window.initSlickCards()
+            }
+         } else {
+            getOffers()
+         }
       }
-   }, [trendingOffers])
+   })
 
    const getOffers = async () => {
       const productType = getProductType()
@@ -27,6 +35,8 @@ const trendingOffers = props => {
             window.initSlickCards()
          }
       }
+
+
    }
 
    const onOfferClick = async offer => {
