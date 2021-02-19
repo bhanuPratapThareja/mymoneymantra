@@ -183,14 +183,7 @@ const api = {
             channelName: "MOBILEAPP",
             caseId: "1001013258",
             insertFlag: "Y",
-            docList: [
-              // {
-              //   documentId: "1000000290",
-              //   documentTypeId: "1000000036",
-              //   documentExtension: "",
-              //   docBytes: "",
-              // },
-            ],
+            docList: [],
           },
         },
       },
@@ -343,74 +336,31 @@ const api = {
       devUrl: "customer/api/blog/v1/blog-sentiment",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        // request: {
-        //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-        // },
-        blogId: "3",
-        customerId: "3",
-        sentiment: "like"
-      },
-
+      body: { blogId: "", customerId: "", sentiment: "" },
     },
     getBlogs: {
-      devUrl: "customer/api/blog/v1/blog?blogId=",
+      devUrl: "customer/api/blog/v1/blog",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: {
-
-          },
-        },
-      },
-
+      body: {},
     },
     commentLikeDislike: {
       devUrl: "customer/api/blog/v1/comment-sentiment",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        // request: {
-        //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-        // },
-        "blogId": "3",
-        "customerId": "12345",
-        "commentId": "1",
-        "sentiment": "like"
-
-      },
-
+      body: { blogId: "", customerId: "", commentId: "", sentiment: "" },
     },
     addComment: {
       devUrl: "customer/api/blog/v1/comment",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        // request: {
-        //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-        // },
-        blogId: "3",
-        customerId: "12345",
-        comment: "1"
-      },
+      body: { blogId: "", customerId: "", comment: "" },
     },
     shareBlog: {
       devUrl: 'customer/api/blog/v1/shared',
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        // request: {
-        //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-        // },
-
-        "blogId": "123",
-        "customerId": "12345",
-        "shared": "yes"
-
-      },
-
+      body: { blogId: "", customerId: "", shared: "" },
     }
   },
 };
