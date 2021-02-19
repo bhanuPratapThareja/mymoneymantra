@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { getContactInfo } from '../../utils/userProfileService'
+import { getContactInfo, saveContactInfo } from '../../utils/userProfileService'
 const ContactInfo = () => {
   const [editing, setEditing] = useState(false)
   const [mobileNo, setMobileNo] = useState('')
@@ -32,16 +32,8 @@ const ContactInfo = () => {
     e.preventDefault()
     setEditing(false)
     try {
-      const customerId = localStorage.getItem('customerId')
-      const responseObject = await axios.post(
-        'http://203.122.46.189:8060/customer/api/profile/v1/contact-Info',
-        {
-          customerId,
-          mobileNo,
-          emailId,
-          address,
-        }
-      )
+      // const customerId = localStorage.getItem('customerId')
+      const responseObject = await saveContactInfo()
       if (responseObject.status === 200) {
         getContact()
       }
