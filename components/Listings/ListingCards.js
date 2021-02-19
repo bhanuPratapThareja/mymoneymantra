@@ -93,7 +93,7 @@ const ListingCards = (props) => {
                     <h5>EMI/month: <span><b>&nbsp; {product.product_emi.emi}</b></span></h5> : null}
 
                   {product.product_processing_fee?
-                    <h5>Processing Fee: <span><b>&nbsp; {product.product_processing_fee.processing_fees_from} - {product.product_processing_fee.processing_fees_upto}</b></span></h5> : null}
+                    <h5>Processing Fee: <span><b>&nbsp; {product.product_processing_fee.processing_fees_from} % - {product.product_processing_fee.processing_fees_upto} %</b></span></h5> : null}
 
                   {product.product_tenure ?
                     <h5>Tenor: <span><b>&nbsp; {product.product_tenure.tenure}</b></span></h5> : null}
