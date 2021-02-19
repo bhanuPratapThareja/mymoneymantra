@@ -6,32 +6,28 @@ import OffersForYou from '../../components/CreditScore/OffersForYou'
 import TipSection from '../../components/CreditScore/TipSection'
 import Layout from '../../components/Layout'
 import { getClassesForPage } from '../../utils/classesForPage'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Loader from '../../components/common/Loader'
+import { getCreditScore } from '../../utils/creditProfileService'
 
 const creditScoreProfile = (props) => {
   const [loading, setLoading] = useState(true)
   const [cpScoreData, setCpScoreData] = useState({})
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responseObject = await axios.post(
-          'http://203.122.46.189:8060/utility/api/credit-profile/v1/score',
-          {
-            customerId: '2000006836',
-          }
-        )
-        const { data } = responseObject
-        setCpScoreData(data)
-        setLoading(false)
-      } catch (error) {
-        setLoading(false)
-      }
-    }
     fetchData()
   }, [])
+
+  const fetchData = async () => {
+    try {
+      const data = await getCreditScore()
+      setCpScoreData(data)
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
+  }
 
   const active = cpScoreData?.accountSummary?.filter(
     (item) => item.accountStatus === 'ACTIVE'

@@ -8,29 +8,26 @@ import TipSection from '../../components/CreditScore/TipSection'
 import Layout from '../../components/Layout'
 import { getClassesForPage } from '../../utils/classesForPage'
 import Loader from '../../components/common/Loader'
+import { getCreditRank } from '../../utils/creditProfileService'
 
 const rank = (props) => {
   const [loading, setLoading] = useState(true)
   const [cpRankData, setCpRankData] = useState({})
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responseObject = await axios.post(
-          'http://203.122.46.189:8060/utility/api/credit-profile/v1/credit-rank',
-          {
-            customerId: '2000006836',
-          }
-        )
-        const { data } = responseObject
-        setCpRankData(data)
-        setLoading(false)
-      } catch (error) {
-        setLoading(false)
-      }
-    }
     fetchData()
   }, [])
+
+  const fetchData = async () => {
+    try {
+      const data = await getCreditRank()
+      setCpRankData(data)
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+    }
+  }
+
   const onTime = cpRankData?.creditRank?.filter(
     (item) => item.paymentStatus === 'On-time'
   )

@@ -8,29 +8,25 @@ import { getClassesForPage } from '../../utils/classesForPage'
 import YourTotalEnquiries from '../../components/CreditScore/YourTotalEnquiries'
 import TotalEnquiries from '../../components/CreditScore/TotalEnquiries'
 import Loader from '../../components/common/Loader'
+import { getCreditEnquiries } from '../../utils/creditProfileService'
 
 const enquiries = (props) => {
   const [loading, setLoading] = useState(true)
   const [cpEnquiriesData, setCpEnquiriesData] = useState({})
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responseObject = await axios.post(
-          'http://203.122.46.189:8060/utility/api/credit-profile/v1/credit-enquiries',
-          {
-            customerId: '2000006836',
-          }
-        )
-        const { data } = responseObject
-        setCpEnquiriesData(data)
-        setLoading(false)
-      } catch (error) {
-        setLoading(false)
-      }
-    }
     fetchData()
   }, [])
+
+  const fetchData = async () => {
+    try {
+      const data = await getCreditEnquiries()
+      setCpEnquiriesData(data)
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+    }
+  }
 
   console.log({ cpEnquiriesData })
 

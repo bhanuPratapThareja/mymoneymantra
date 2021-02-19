@@ -8,29 +8,26 @@ import AgeOfCredit from '../../components/CreditScore/AgeOfCredit'
 import AgeCreditAllAccounts from '../../components/CreditScore/AgeCreditAllAccounts'
 import { getClassesForPage } from '../../utils/classesForPage'
 import Loader from '../../components/common/Loader'
+import { getCreditAge } from '../../utils/creditProfileService'
 
 const age = (props) => {
   const [loading, setLoading] = useState(true)
   const [cpAgeData, setCpAgeData] = useState({})
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responseObject = await axios.post(
-          'http://203.122.46.189:8060/utility/api/credit-profile/v1/credit-age',
-          {
-            customerId: '2000006836',
-          }
-        )
-        const { data } = responseObject
-        setCpAgeData(data)
-        setLoading(false)
-      } catch (error) {
-        setLoading(false)
-      }
-    }
     fetchData()
   }, [])
+
+  const fetchData = async () => {
+    try {
+      const data = await getCreditAge()
+      setCpAgeData(data)
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+    }
+  }
+
   const active = cpAgeData?.creditAge?.filter(
     (item) => item.accountStatus === 'ACTIVE'
   )

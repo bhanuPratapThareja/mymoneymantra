@@ -8,30 +8,27 @@ import TotalAccounts from '../../components/CreditScore/TotalAccounts'
 import TotalActiveAccounts from '../../components/CreditScore/TotalActiveAccounts'
 import { getClassesForPage } from '../../utils/classesForPage'
 import Loader from '../../components/common/Loader'
+import { getCreditAccounts } from '../../utils/creditProfileService'
 
 const accounts = (props) => {
   const [loading, setLoading] = useState(true)
   const [cpAccountsData, setCpAccountsData] = useState({})
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responseObject = await axios.post(
-          'http://203.122.46.189:8060/utility/api/credit-profile/v1/credit-account',
-          {
-            customerId: '2000006836',
-          }
-        )
-        const { data } = responseObject
-        setCpAccountsData(data)
-        setLoading(false)
-      } catch (error) {
-        setLoading(false)
-      }
-    }
     fetchData()
   }, [])
-  // console.log({ cpAccountsData })
+
+  const fetchData = async () => {
+    try {
+      const data = await getCreditAccounts()
+      setCpAccountsData(data)
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+    }
+  }
+
+  console.log({ cpAccountsData })
   const active = cpAccountsData?.paymentRecord?.filter(
     (item) => item.accountStatus === 'ACTIVE'
   )
