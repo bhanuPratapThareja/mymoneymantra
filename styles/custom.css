@@ -17,9 +17,9 @@
   box-shadow: 0 0 0 2px #DC3737;
 } */
 
-.credit-card-flow .lets-find-form form .form__group.verified-input {
+/* .credit-card-flow .lets-find-form form .form__group.verified-input {
   margin-bottom: 0;
-}
+} */
 
 .disabled-input {
   pointer-events: none;
@@ -1602,9 +1602,11 @@ button.cstm-load-btn {
     top: 0;
     width: 100%;
   }
+
   .banner-sticky_bottom {
     margin-top: 0;
   }
+  
   .long-form .long-form-wrapper .banner-sticky+.form-wrapper {
     max-width: 100%;
     left: 0;
@@ -1657,6 +1659,11 @@ button.cstm-load-btn {
 }
 
 @media(max-width: 767px) {
+  
+  .credit-card-flow .lets-find {
+    padding: 24px 15px;
+  }
+
   .banks-slider {
     overflow-x: hidden;
   }
@@ -1969,10 +1976,10 @@ button.cstm-load-btn {
   .blog-wrapper-card>div>img{
     height: 180px;
   }
+
   .filter-content>form>.content-one>input {
     width: 100%;
   }
-
   
   #popular-cards-sec .slick-list.draggable {
     margin: 0;
@@ -2087,7 +2094,7 @@ button.cstm-load-btn {
     top: 0 !important;
   }
   .banner-features-container-switch {
-    margin-top: 780px;
+    margin-top: 820px;
   }
   .details-button-div {
     position: fixed;
