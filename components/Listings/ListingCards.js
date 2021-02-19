@@ -1,24 +1,21 @@
 import { useEffect, useState } from "react"
 import { useRouter } from 'next/router'
-import Image from "../ImageComponent/ImageComponent";
-import DecisionButton from "../DecisionButton/DescisionButton";
-import { getDevice } from "../../utils/getDevice";
+import Image from "../ImageComponent/ImageComponent"
+import DecisionButton from "../DecisionButton/DescisionButton"
+import { getDevice } from "../../utils/getDevice"
 import { makeDecision } from '../../utils/decision'
-import { getPrimaryPath } from "../../utils/localAccess"
 
 const ListingCards = (props) => {
   const router = useRouter()
   const [offers, setOffers] = useState([])
-  const [primaryPath, setPrimaryPath] = useState([])
 
   useEffect(() => {
     setOffers(props.offerCards)
-    setPrimaryPath(getPrimaryPath())
   })
 
   const onOfferClick = (buttonText, offer) => {
     if (getDevice() !== "desktop") {
-      const decision = makeDecision(buttonText, offer, primaryPath)
+      const decision = makeDecision(buttonText, offer, props.primaryPath)
       const { pathname, query } = decision
       router.push({ pathname, query }, pathname, { shallow: true })
     }
@@ -48,11 +45,11 @@ const ListingCards = (props) => {
                   <Image className="mob-logo" image={bank.bank_logo} />
                   <h3><span>{bank.bank_name}</span> {product.product_name}</h3>
 
-                  {primaryPath === "credit-cards" ?
+                  {props.primaryPath === "credit-cards" ?
                     <div> <Image image={product.product_image.image} /></div>
                     : null}
 
-                  {primaryPath !== "credit-cards" ?
+                  {props.primaryPath !== "credit-cards" ?
                     <div>
                       <Image image={bank.bank_image} />
                     </div>
@@ -106,13 +103,13 @@ const ListingCards = (props) => {
                   <DecisionButton
                     idForStyle="view-details"
                     buttonText="View Details"
-                    primaryPath={primaryPath}
+                    primaryPath={props.primaryPath}
                     offer={offer}
                   />
                   <DecisionButton
                     idForStyle="apply-now"
                     buttonText={offer.productDecision}
-                    primaryPath={primaryPath}
+                    primaryPath={props.primaryPath}
                     offer={offer}
                   />
                 </div>
