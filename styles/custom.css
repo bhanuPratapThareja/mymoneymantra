@@ -1868,3 +1868,137 @@ img {
   margin-top: 8px;
   display: block;
 }
+.value-accounts {
+  max-width: 260px;
+  height: 100%;
+  background-color: #ffffff !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center !important;
+}
+
+.value-accounts h2 {
+  color: #ffffff;
+  text-align: center;
+}
+
+.red-circle{
+  background: url("/assets/images/icons/redc.png") !important;
+  max-width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  background-repeat: no-repeat !important;
+  background-size: contain;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center !important;
+}
+
+.orange-circle{
+  background: url("/assets/images/icons/orangec.png") !important;
+  max-width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  background-repeat: no-repeat !important;
+  background-size: contain;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center !important;
+}
+
+.yellow-circle{
+  background: url("/assets/images/icons/yellowc.png") !important;
+  max-width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  background-repeat: no-repeat !important;
+  background-size: contain;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center !important;
+}
+
+.green-circle{
+  background: url("/assets/images/icons/greenc.png") !important;
+  max-width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  background-repeat: no-repeat !important;
+  background-size: contain;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center !important;
+}
+
+.red-square{
+  background: url("/assets/images/icons/reds.png") !important;
+  max-width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  background-repeat: no-repeat !important;
+  background-size: contain;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center !important;
+}
+
+.orange-square{
+  background: url("/assets/images/icons/oranges.png") !important;
+  max-width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  background-repeat: no-repeat !important;
+  background-size: contain;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center !important;
+}
+
+.yellow-square{
+  background: url("/assets/images/icons/yellows.png") !important;
+  max-width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  background-repeat: no-repeat !important;
+  background-size: contain;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center !important;
+}
+
+.green-square{
+  background: url("/assets/images/icons/greens.png") !important;
+  max-width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  background-repeat: no-repeat !important;
+  background-size: contain;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center !important;
+}
+
+
+.scroll::-webkit-scrollbar {
+  display: none !important;
+}
