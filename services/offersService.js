@@ -7,7 +7,7 @@ import { unpackComponents } from './componentsService'
 const defaultDecision = 'EConnect'
 
 export const viewOffers = async productTypeId => {
-    const { url, body } = getApiData('customerOfferView')
+    const { url, body } = getApiData('viewOffers')
     body.customerId = ''
     body.productId = productTypeId ? productTypeId : ''
 
@@ -54,8 +54,8 @@ export const extractOffers = async apiOffers => {
     })
 }
 
-export const customerOfferData = async () => {
-    const { url, body } = getApiData('customerOffer')
+export const saveOffers = async () => {
+    const { url, body } = getApiData('saveOffers')
     try {
         const res = await axios.post(url, body)
         return res.data.response.payload
@@ -74,15 +74,14 @@ export const getProductDecision = offers => {
         const leadId = getLeadId()
         pendingOffers.forEach(async offer => {
 
-            body.request.payload.productId = offer.productType.product_type_id.toString()
-            // body.request.payload.productTypeId = offer.productType.product_type_id
-            body.request.payload.bankId = offer.bank.bank_id
-            body.request.payload.leadId = leadId
+            body.productId = offer.productType.product_type_id.toString()
+            body.bankId = offer.bank.bank_id
+            body.leadId = leadId
 
             let productDecision = ''
             try {
                 const res = await axios.post(url, body)
-                productDecision = res.data.response.payload.productDecision
+                productDecision = res.data.productDecision
             } catch {
                 productDecision = defaultDecision
             }

@@ -64,7 +64,7 @@ export const initializePercentRange = (slider, rangeId) => {
         setTimeout(() => {
             noUiSlider.create(rangeSlider, {
                 start: [start, stop],
-                step: 1,
+                step: 0.01,
                 range: {
                     'min': [min],
                     'max': [max]
@@ -73,7 +73,7 @@ export const initializePercentRange = (slider, rangeId) => {
                 format: {
                     from: Number,
                     to: function (value) {
-                        return (parseInt(value) + "%");
+                        return (value + "%");
                     }
                 },
                 connect: true
