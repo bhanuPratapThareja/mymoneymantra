@@ -48,7 +48,8 @@ const trendingOffers = props => {
                {trendingOffers.map(offer => {
                   const { bank, product } = offer
                   const { product_name, product_feature, product_annual_fee,
-                     product_usp_highlight, product_interest_rate } = product
+                     product_usp_highlight, product_interest_rate,product_tenure,
+                     product_loan_amount, product_emi} = product
                   return (
                      <div className="popular-cards-slider-card" key={product.id}>
                         <div className="popular-cards-slider-card-top" onClick={() => onOfferClick(offer)}>
@@ -66,10 +67,29 @@ const trendingOffers = props => {
                               <h5><b>₹{product_annual_fee.annual_fee_fy}</b> Annual fee</h5>
                            </div> : null}
 
-                           {product_interest_rate ? <div className="fee">
+                           {/* {product_interest_rate ? <div className="fee">
                               <h5>{product_interest_rate.min_value}% - {product_interest_rate.max_value}%
                               {product_interest_rate.duration === 'Annually' ? 'p.a.' : 'm.a.'}</h5>
-                           </div> : null}
+                           </div> : null} */}
+
+                           <div className="fee">
+                              {product_interest_rate ?
+                                 <h5>Interest Rates <span><b>&nbsp; :{product_interest_rate.min_value}% - {product_interest_rate.max_value}%
+                              {product_interest_rate.duration === 'Annually' ? 'p.a.' : 'm.a.'}</b></span></h5>
+                                 : null}
+
+                              {product_tenure ?
+                                 <h5>Max Tenure <span><b>&nbsp; : {product_tenure.tenure}</b></span></h5>
+                                 : null}
+
+                              {product_loan_amount ?
+                                 <h5>Loan Amount : {product_loan_amount.amount}</h5>
+                                 : null}
+
+                              {product_emi ?
+                                 <h5>Lowest EMI : {product_emi.emi}</h5> : null}
+
+                           </div>
                         </div>
                         <div className="popular-cards-slider-card-bottom">
                            <div dangerouslySetInnerHTML={{ __html: product_usp_highlight.highlight }}></div>
