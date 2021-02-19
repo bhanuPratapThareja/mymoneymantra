@@ -1,21 +1,41 @@
+import classNames from 'classnames'
+
 const PaymentRank = ({ rank }) => {
   return (
-    <section data-aos="fade-up" className="banner container paymentRank aos-init aos-animate">
+    <section
+      data-aos="fade-up"
+      className="banner container paymentRank aos-init aos-animate"
+    >
       <div className="paymentRank-wrapper">
         <div className="paymentRank-wrapper-head">
           <h2>Your Payment Rank</h2>
-          <img className="underline-img" src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_rank/underline.png" alt="" />
+          <img
+            className="underline-img"
+            src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_rank/underline.png"
+            alt=""
+          />
         </div>
         <div className="paymentRank-wrapper-content">
           <div className="paymentRank-wrapper-content-left left-mobile-view">
-            <div className="value-rank">
+            <div
+              className={classNames('value-rank', {
+                'red-circle': parseFloat(rank) < 5,
+                'orange-circle': parseFloat(rank) < 9 && parseFloat(rank) >= 5,
+                'yellow-circle':
+                  parseFloat(rank) < 9.9 && parseFloat(rank) >= 9,
+                'green-circle': parseFloat(rank) === 10,
+              })}
+            >
               <h1>{rank}</h1>
             </div>
           </div>
           <div className="paymentRank-wrapper-content-right">
             <p>What does your rank reflect?</p>
             <div className="progress-bar">
-              <img src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_rank/meter.png" alt="" />
+              <img
+                src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_rank/meter.png"
+                alt=""
+              />
             </div>
             <div className="grading-section">
               <div className="grading-section-left">

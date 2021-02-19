@@ -8,29 +8,26 @@ import Layout from '../../components/Layout'
 import { getClassesForPage } from '../../utils/classesForPage'
 import CreditUtilizationAllAccounts from '../../components/CreditScore/CreditUtilizationAllAccounts'
 import Loader from '../../components/common/Loader'
+import { getCreditUtilization } from '../../utils/creditProfileService'
 
 const utilization = (props) => {
   const [loading, setLoading] = useState(true)
   const [cpUtilizationData, setCpUtilizationData] = useState({})
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responseObject = await axios.post(
-          'http://203.122.46.189:8060/utility/api/credit-profile/v1/utilization',
-          {
-            customerId: '2000006836',
-          }
-        )
-        const { data } = responseObject
-        setCpUtilizationData(data)
-        setLoading(false)
-      } catch (error) {
-        setLoading(false)
-      }
-    }
     fetchData()
   }, [])
+
+  const fetchData = async () => {
+    try {
+      const data = await getCreditUtilization()
+      setCpUtilizationData(data)
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+    }
+  }
+
   const active = cpUtilizationData?.creditUtilization?.filter(
     (item) => item.accountStatus === 'ACTIVE'
   )
