@@ -1,6 +1,11 @@
+import classNames from 'classnames'
+
 const YourTotalEnquiries = ({ totalEnquiries }) => {
   return (
-    <section data-aos="fade-up" className="banner container paymentRank aos-init aos-animate">
+    <section
+      data-aos="fade-up"
+      className="banner container paymentRank aos-init aos-animate"
+    >
       <div className="paymentRank-wrapper">
         <div className="paymentRank-wrapper-head">
           <h2>Your Total Enquiries</h2>
@@ -12,7 +17,7 @@ const YourTotalEnquiries = ({ totalEnquiries }) => {
         </div>
         <div className="paymentRank-wrapper-content">
           <div className="paymentRank-wrapper-content-left left-mobile-view">
-            <img
+            {/* <img
               className="rank-desktop"
               src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_enquires/enquiries.png"
               alt="enquiries"
@@ -21,8 +26,17 @@ const YourTotalEnquiries = ({ totalEnquiries }) => {
               className="rank-mobile"
               src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_enquires/enquiries-mobile.png"
               alt="enquiries-mobile"
-            />
-            <h2>{totalEnquiries}</h2>
+            /> */}
+            <div
+              className={classNames('value-enquiries', {
+                'green-circle': totalEnquiries < 3,
+                'yellow-circle': totalEnquiries >= 4 && totalEnquiries <= 6,
+                'orange-circle': totalEnquiries >= 7 && totalEnquiries <= 10,
+                'red-circle': totalEnquiries > 10,
+              })}
+            >
+              <h2>{totalEnquiries}</h2>
+            </div>
           </div>
           <div className="paymentRank-wrapper-content-right">
             <p>What does your rank reflect?</p>
