@@ -24,7 +24,7 @@ axios.interceptors.request.use(async config => {
           body: JSON.stringify(body)
         })
         const json = await res.json()
-        setAuthToken(json.response.payload)
+        setAuthToken(json)
       }catch(err) {
         throw new Error(err.message)
       }

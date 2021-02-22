@@ -11,10 +11,11 @@ const PopularOffers = props => {
    const { section_heading } = props.data
 
    useEffect(() => {
+      console.log('check')
       if (!popularOffers.length) {
          getOffers()
       }
-   }, [popularOffers])
+   })
 
    const getOffers = async () => {
       const productType = getProductType()
