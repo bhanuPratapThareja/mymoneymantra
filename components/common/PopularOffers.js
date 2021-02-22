@@ -4,6 +4,7 @@ import Image from '../ImageComponent/ImageComponent'
 import { makeDecision } from '../../utils/decision'
 import { getProductType } from '../../utils/localAccess'
 import { extractOffers, viewOffers } from '../../services/offersService'
+import { getFormattedCurrency, getWholeNumberFromCurrency } from "../../utils/formattedCurrency"
 
 const PopularOffers = props => {
    const router = useRouter()
@@ -53,8 +54,6 @@ const PopularOffers = props => {
                      product_usp_highlight, product_interest_rate, 
                      product_tenure, product_loan_amount,product_emi } = product
 
-                  console.log('inside popular offers.js product', product);
-
                   return (
                      <div className="popular-cards-slider-card" key={product.id}>
                         <div className="popular-cards-slider-card-top" onClick={() => onOfferClick(offer)}>
@@ -83,18 +82,15 @@ const PopularOffers = props => {
                               : null}
 
                                {product_loan_amount ? 
-                              <h5>Loan Amt : <span><b>&nbsp; {product_loan_amount.amount}</b></span></h5>
+                              <h5>Loan Amt : <span><b>&nbsp;{
+                                 Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(product_loan_amount.amount)}</b></span></h5>
                               : null}
 
                               {product_emi ? 
-                              <h5>Lowest EMI : <span><b>&nbsp;{product_emi.emi}</b></span></h5> :null}
+                              <h5>Lowest EMI : <span><b>&nbsp; {
+                                 Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(product_emi.emi)}</b></span></h5> :null}
 
                            </div>
-                            {/* {product_interest_rate ? <div className="fee">
-                              <h5>{product_interest_rate.min_value}% - {product_interest_rate.max_value}%
-                              {product_interest_rate.duration === 'Annually' ? 'p.a.' : 'm.a.'}</h5>
-                           </div> : null} */}
-
                         </div>
                         <div className="popular-cards-slider-card-bottom">
                            <div dangerouslySetInnerHTML={{ __html: product_usp_highlight.highlight }}></div>

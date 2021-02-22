@@ -53,7 +53,7 @@ const Blogger = props => {
                                 <div className={`image_${i + 1}`}>
                                     <Image image={image} />
                                 </div>
-                                <div className="content">
+                                <div className="content" onClick={() => onOpenBlog(blog)}>
                                     <span dangerouslySetInnerHTML={{ __html: header }}></span>
                                     <span dangerouslySetInnerHTML={{ __html: short_text }}></span>
                                     <div className="details">

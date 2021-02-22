@@ -299,8 +299,9 @@ export const generateLead = async (data, primaryPath, formType) => {
         }
         
         // for property address
-        if (purposeOfLoan || propertyValue || propertyPincode || projectrName ||
-            (purposeOfLoan &&  purposeOfLoan.purposeOfLoanId) || propertyCityRadio || propertyCity || propertyState || propertyStdCode || purposeOfLoan) {
+        if (propertyType || propertyValue || propertyPincode || projectrName ||
+            //(purposeOfLoan &&  purposeOfLoan.purposeOfLoanId)
+              propertyCityRadio || propertyCity || propertyState || propertyStdCode || purposeOfLoan) {
             let propertyAddress = {
                 addressTypeMasterId: '1000000004',
                 pincode: propertyPincode && propertyPincode.pincode ? propertyPincode.pincode : '',
@@ -308,7 +309,7 @@ export const generateLead = async (data, primaryPath, formType) => {
                 state: propertyState && propertyState.stateId ? propertyState.stateId : '',
                 stdCode: propertyStdCode,
                 propertyValue: propertyValue,
-                purposeOfLoan: purposeOfLoan && purposeOfLoan.purposeOfLoanId ? purposeOfLoan.purposeOfLoanId : "",
+                purposeOfLoan: propertyType,
                 projectrName : projectrName
             }
             body.address.push(propertyAddress)
