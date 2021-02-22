@@ -16,8 +16,6 @@ import { extractListingOffers } from '../../services/componentsService'
 import { getProductDecision } from '../../services/offersService'
 import { filterOfferCardsInFilterComponent } from '../../utils/listingsFilterHandler'
 import { getClassesForPage } from '../../utils/classesForPage'
-import { setPrimaryPath, setProductType, getProductType } from '../../utils/localAccess'
-import { viewOffers, extractOffers } from '../../services/offersService'
 
 const Listings = props => {
     const [allOfferCards, setAllOfferCards] = useState([])
@@ -25,8 +23,6 @@ const Listings = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        setPrimaryPath(props.primaryPath)
-        setProductType(props.productTypeData)
         getListingOffers()
     }, [])
 
@@ -38,7 +34,7 @@ const Listings = props => {
     }
 
     const getCardsWithButtonText = async cards => {
-        const newCards = await getProductDecision(cards, props.primaryPath)
+        const newCards = await getProductDecision(cards, props.primaryPath, props.productType)
         setOfferCards(newCards)
         setAllOfferCards(newCards)
     }
@@ -70,7 +66,7 @@ const Listings = props => {
                         filterOfferCards={filterOfferCards}
                         filterCardsFilterComponent={filterCardsFilterComponent}
                         allOfferCards={allOfferCards}
-                        productTypeData={props.productTypeData}
+                        productType={props.productType}
                     />
 
                 case 'blocks.listing-cards':
@@ -79,16 +75,18 @@ const Listings = props => {
                         data={block}
                         offerCards={offerCards}
                         primaryPath={props.primaryPath}
+                        productType={props.productType}
                     />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
 
-                    case 'offers.trending-offers-component':
-                        return <TrendingOffers 
-                            key={block.id} 
-                            data={block}
-                            primaryPath={props.primaryPath}
-                        />
+                case 'offers.trending-offers-component':
+                    return <TrendingOffers
+                        key={block.id}
+                        data={block}
+                        primaryPath={props.primaryPath}
+                        productType={props.productType}
+                    />
 
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
@@ -121,10 +119,11 @@ export async function getServerSideProps(ctx) {
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const data = pageData && pageData.length ? pageData[0] : null
     const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
+    const productType = productTypeData[0]
 
     return {
         props: {
-            data, primaryPath, productTypeData
+            data, primaryPath, productType
         }
     }
 }

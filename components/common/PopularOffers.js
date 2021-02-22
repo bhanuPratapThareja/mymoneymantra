@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import { makeDecision } from '../../utils/decision'
-import { getProductType } from '../../utils/localAccess'
 import { extractOffers, viewOffers } from '../../services/offersService'
 import { getFormattedCurrency, getWholeNumberFromCurrency } from "../../utils/formattedCurrency"
 
@@ -12,14 +11,14 @@ const PopularOffers = props => {
    const { section_heading } = props.data
 
    useEffect(() => {
+      console.log('check')
       if (!popularOffers.length) {
          getOffers()
       }
-   }, [popularOffers])
+   })
 
    const getOffers = async () => {
-      const productType = getProductType()
-      const apiOffers = await viewOffers(productType.productTypeId)
+      const apiOffers = await viewOffers(props.productType.productTypeId)
       if (apiOffers) {
          let populars = apiOffers.populars
          const popularOffers = await extractOffers(populars)
@@ -53,7 +52,6 @@ const PopularOffers = props => {
                   const { product_name, product_feature, product_annual_fee,
                      product_usp_highlight, product_interest_rate, 
                      product_tenure, product_loan_amount,product_emi } = product
-
                   return (
                      <div className="popular-cards-slider-card" key={product.id}>
                         <div className="popular-cards-slider-card-top" onClick={() => onOfferClick(offer)}>

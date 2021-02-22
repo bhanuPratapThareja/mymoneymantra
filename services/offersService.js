@@ -18,7 +18,6 @@ export const viewOffers = async productTypeId => {
 }
 
 export const extractOffers = async apiOffers => {
-    // console.log('apiOffers: ', apiOffers)
     return new Promise(async (resolve) => {
         const strapi = new Strapi()
         const productIdArray = []
@@ -64,17 +63,17 @@ export const saveOffers = async () => {
     }
 }
 
-export const getProductDecision = offers => {
+export const getProductDecision = (offers, primaryPath, productType) => {
     const promise = new Promise((resolve) => {
         const pendingOffers = [...offers]
         if (!pendingOffers.length) {
             resolve([])
         }
         const { url, body } = getApiData('leadProductDecision')
-        const leadId = getLeadId()
+        const leadId = getLeadId(primaryPath)
         pendingOffers.forEach(async offer => {
 
-            body.productId = offer.productType.product_type_id.toString()
+            body.productId = productType ? productType.product_type_id.toString() : ''
             body.bankId = offer.bank.bank_id
             body.leadId = leadId
 

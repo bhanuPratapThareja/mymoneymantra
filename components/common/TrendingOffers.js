@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import { makeDecision } from '../../utils/decision'
-import { getProductType } from '../../utils/localAccess'
 import { extractOffers, viewOffers } from '../../services/offersService'
 
 const trendingOffers = props => {
@@ -25,8 +24,7 @@ const trendingOffers = props => {
    })
 
    const getOffers = async () => {
-      const productType = getProductType()
-      const apiOffers = await viewOffers(productType.productTypeId)
+      const apiOffers = await viewOffers(props.productType.productTypeId)
       if (apiOffers) {
          let trendings = apiOffers.trendings
          const trendingOffers = await extractOffers(trendings)
