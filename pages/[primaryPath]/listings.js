@@ -16,8 +16,7 @@ import { extractListingOffers } from '../../services/componentsService'
 import { getProductDecision } from '../../services/offersService'
 import { filterOfferCardsInFilterComponent } from '../../utils/listingsFilterHandler'
 import { getClassesForPage } from '../../utils/classesForPage'
-import { setPrimaryPath, setProductType, getProductType } from '../../utils/localAccess'
-import { viewOffers, extractOffers } from '../../services/offersService'
+import { setProductType } from '../../utils/localAccess'
 
 const Listings = props => {
     const [allOfferCards, setAllOfferCards] = useState([])
@@ -25,7 +24,6 @@ const Listings = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        setPrimaryPath(props.primaryPath)
         setProductType(props.productTypeData)
         getListingOffers()
     }, [])
@@ -83,12 +81,12 @@ const Listings = props => {
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
 
-                    case 'offers.trending-offers-component':
-                        return <TrendingOffers 
-                            key={block.id} 
-                            data={block}
-                            primaryPath={props.primaryPath}
-                        />
+                case 'offers.trending-offers-component':
+                    return <TrendingOffers
+                        key={block.id}
+                        data={block}
+                        primaryPath={props.primaryPath}
+                    />
 
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />

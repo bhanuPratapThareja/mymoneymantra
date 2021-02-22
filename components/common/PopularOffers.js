@@ -52,9 +52,6 @@ const PopularOffers = props => {
                   const { product_name, product_feature, product_annual_fee,
                      product_usp_highlight, product_interest_rate, 
                      product_tenure, product_loan_amount,product_emi } = product
-
-                  console.log('inside popular offers.js product', product);
-
                   return (
                      <div className="popular-cards-slider-card" key={product.id}>
                         <div className="popular-cards-slider-card-top" onClick={() => onOfferClick(offer)}>

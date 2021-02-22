@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 
@@ -17,17 +17,16 @@ import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import PageNotFound from '../../components/PageNotFound'
 import { getClassesForPage } from '../../utils/classesForPage'
-import { clearLeadId, setPrimaryPath, setProductType, clearFormData, getProductType } from '../../utils/localAccess'
-import { viewOffers, extractOffers } from '../../services/offersService'
+import { clearLeadId, clearLeadBank, clearFormData, setProductType } from '../../utils/localAccess'
 
 const PrimaryPage = props => {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    setPrimaryPath(props.primaryPath)
     setProductType(props.productTypeData)
-    clearLeadId()
-    clearFormData()
+    clearLeadBank()
+    clearLeadId(props.primaryPath)
+    clearFormData(props.primaryPath)
   }, [])
 
   const goToShortForm = () => {
@@ -56,6 +55,7 @@ const PrimaryPage = props => {
             key={block.id}
             data={block}
             tncData={props.tncData}
+            primaryPath={props.primaryPath}
             preferredSelectionLists={props.preferredSelectionLists}
           />
         case 'offers.popular-offers-component':

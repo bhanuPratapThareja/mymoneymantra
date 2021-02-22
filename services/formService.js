@@ -70,12 +70,12 @@ export const getDropdownList = async (listType, value, masterName) => {
     } catch (err) { }
 }
 
-export const documentUpload = async (docs, documentName) => {
+export const documentUpload = async (docs, documentName, primaryPath) => {
     const { url, body } = getApiData('documentUpload')
-    let documentIds = getDocumentIdandTypeId(documentName);
-    const { documentId, documentTypeId } = documentIds[0];
+    let documentIds = getDocumentIdandTypeId(documentName)
+    const { documentId, documentTypeId } = documentIds[0]
     let docList = []
-    body.caseId = getLeadId()
+    body.caseId = getLeadId(primaryPath)
     for (let i = 0; i < docs.length; i++) {
         const { type, base64 } = docs[i]
         let doc = {
@@ -135,7 +135,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         const productTypeId = productTypeData ? productTypeData.productTypeId : ''
         body.formBankId = leadBank && leadBank.bankId ? leadBank.bankId : ''
         body.bankId = salaryBank && salaryBank.bankId ? salaryBank.bankId : ''
-        body.leadId = getLeadId()
+        body.leadId = getLeadId(primaryPath)
         body.productId = productTypeId.toString()
         body.surrogateType = surrogateType ? surrogateType.surrogateTypeId ? surrogateType.surrogateTypeId : '' : ''
         body.requestedLoanamount = requestedLoanamount

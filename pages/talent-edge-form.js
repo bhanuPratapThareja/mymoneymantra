@@ -2,15 +2,14 @@ import { useEffect } from 'react'
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 import LongForm from '../components/common/LongForm'
-import { setPrimaryPath, setProductType, clearLeadBank, clearLeadId } from '../utils/localAccess'
+import { setProductType, clearLeadBank, clearLeadId } from '../utils/localAccess'
 
 const TalentEdgeForm = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        setPrimaryPath(props.primaryPath)
         setProductType(props.productTypeData)
-        clearLeadId()
+        clearLeadId(props.primaryPath)
         clearLeadBank()
     }, [])
 

@@ -15,9 +15,8 @@ import LearnMore from '../../../../components/common/LearnMore'
 import LongFormBanner from '../../../../components/Banners/LongFormBanner'
 import LongForm from '../../../../components/common/LongForm'
 import { getClassesForPage } from '../../../../utils/classesForPage'
-import { setPrimaryPath, setProductType, getProductType } from '../../../../utils/localAccess'
+import { setProductType } from '../../../../utils/localAccess'
 import { getUnpackedProduct } from '../../../../services/componentsService'
-import { viewOffers, extractOffers } from '../../../../services/offersService'
 
 const Details = props => {
     const [page, setPage] = useState(props.page)
@@ -25,7 +24,6 @@ const Details = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        setPrimaryPath(props.primaryPath)
         setProductType(props.productTypeData)
 
         window.onpopstate = () => {

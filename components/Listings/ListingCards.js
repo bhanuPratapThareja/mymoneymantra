@@ -45,15 +45,10 @@ const ListingCards = (props) => {
                   <Image className="mob-logo" image={bank.bank_logo} />
                   <h3><span>{bank.bank_name}</span> {product.product_name}</h3>
 
-                  {props.primaryPath === "credit-cards" ?
-                    <div> <Image image={product.product_image.image} /></div>
-                    : null}
-
-                  {props.primaryPath !== "credit-cards" ?
-                    <div>
-                      <Image image={bank.bank_image} />
-                    </div>
-                    : null}
+                  <div>
+                    {props.primaryPath === "credit-cards" ?
+                      <Image image={product.product_image.image} /> : <Image image={bank.bank_image} />}
+                  </div>
                 </div>
 
                 <div className="content">
@@ -88,7 +83,7 @@ const ListingCards = (props) => {
                   {product.product_emi ?
                     <h5>EMI/month: <span><b>&nbsp; {product.product_emi.emi}</b></span></h5> : null}
 
-                  {product.product_processing_fee?
+                  {product.product_processing_fee ?
                     <h5>Processing Fee: <span><b>&nbsp; {product.product_processing_fee.processing_fees_from} % - {product.product_processing_fee.processing_fees_upto} %</b></span></h5> : null}
 
                   {product.product_tenure ?

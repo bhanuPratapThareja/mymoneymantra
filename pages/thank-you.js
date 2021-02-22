@@ -13,18 +13,15 @@ import LearnMore from '../components/common/LearnMore'
 
 import { getClassesForPage } from '../utils/classesForPage'
 import { getLeadId, getLeadBank, getProductType } from '../utils/localAccess'
-import { viewOffers, extractOffers } from '../services/offersService'
 
 const ThankYouPage = props => {
-
     const [leadId, setLeadId] = useState('')
     const [bank, setBank] = useState('')
     const [productType, setProductType] = useState('')
-    const [trendingOffers, setTrendingOffers] = useState([])
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        setLeadId(getLeadId())
+        setLeadId(getLeadId(props.primaryPath))
         setBank(getLeadBank())
         setProductType(getProductType())
     }, [])
@@ -36,9 +33,10 @@ const ThankYouPage = props => {
                     return <ThankYouBanner
                         key={block.id}
                         data={block}
-                        leadId={leadId}
-                        bank={bank}
-                        productType={productType}
+                        leadId={getLeadId(props.primaryPath)}
+                        bank={getLeadBank()}
+                        productType={getProductType()}
+                        primaryPath={props.primaryPath}
                     />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
