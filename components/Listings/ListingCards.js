@@ -41,26 +41,26 @@ const ListingCards = (props) => {
         // pv =  loan amount
 
 
-        function PMT (ir, np, pv ) {
-          let pmt = ( ir * ( pv * Math.pow ( (ir+1), np ) ) ) / ( ( ir + 1 ) * ( Math.pow ( (ir+1), np) -1 ) );
-          console.log('PMT returned',pmt)
-          return pmt;
-         }
+        // function PMT (ir, np, pv ) {
+        //   let pmt = ( ir * ( pv * Math.pow ( (ir+1), np ) ) ) / ( ( ir + 1 ) * ( Math.pow ( (ir+1), np) -1 ) );
+        //   console.log('PMT returned',pmt)
+        //   return pmt;
+        //  }
 
-        let ir = product_interest_rate.max_value;
-        let np = product_tenure.tenure;
-        let pv;
-        console.log('ir',ir);
-        console.log('np',np)
-        const formData = JSON.parse(localStorage.getItem("formData"))
-        //console.log('formData--', formData)
+        // let ir = product_interest_rate.max_value;
+        // let np = product_tenure.tenure;
+        // let pv;
+        // console.log('ir',ir);
+        // console.log('np',np)
+        // const formData = JSON.parse(localStorage.getItem("formData"))
+        // //console.log('formData--', formData)
 
-        if (formData && formData[primaryPath]) {
-          let data = formData[primaryPath]
-           pv = data.requestedLoanamount;
-          console.log('pv.requestedLoanamount',pv)
-          PMT(ir,np,pv)
-        }
+        // if (formData && formData[primaryPath]) {
+        //   let data = formData[primaryPath]
+        //    pv = data.requestedLoanamount;
+        //   console.log('pv.requestedLoanamount',pv)
+        //   PMT(ir,np,pv)
+        // }
 
         // console.log('interestRate',interestRate)
 
@@ -123,7 +123,7 @@ const ListingCards = (props) => {
                     </h5> : null}
 
                   {product.product_emi ?
-                    <h5>EMI/month: <span><b>&nbsp; ₹ {PMT(ir,np,pv)}</b></span></h5> : null}
+                    <h5>EMI/month: <span><b>&nbsp; ₹ 1000</b></span></h5> : null}
 
                   {product.product_processing_fee ?
                     <h5>Processing Fee: <span><b>&nbsp; {product.product_processing_fee.processing_fees_from} % - {product.product_processing_fee.processing_fees_upto} %</b></span></h5> : null}
