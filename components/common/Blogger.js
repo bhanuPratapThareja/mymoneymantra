@@ -1,13 +1,11 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import Strapi from '../../providers/strapi'
-import { setBlogId, setProductType } from '../../utils/localAccess'
+import { setBlogId } from '../../utils/localAccess'
 import Image from '../ImageComponent/ImageComponent'
 
 
 const Blogger = props => {
     const router = useRouter()
-    const strapi = new Strapi()
     useEffect(() => {
         if (window !== undefined && window.initSlickBlogs && props.data.blogger && props.data.blogger.image.length) {
             window.initSlickBlogs()

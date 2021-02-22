@@ -1,13 +1,5 @@
 import { isEmpty } from 'lodash'
 
-export const setProductType = productTypeData => {
-    if (productTypeData && productTypeData.length) {
-        const { product_type_name: productTypeName, product_type_id: productTypeId, slug } = productTypeData[0]
-        const productType = { productTypeName, productTypeId, slug }
-        localStorage.setItem('productType', JSON.stringify(productType))
-    }
-}
-
 export const setLeadId = (newLeadId, primaryPath) => {
     const leadIdData = JSON.parse(localStorage.getItem('leadId'))
     const leadId = { ...leadIdData, [primaryPath]: newLeadId }
@@ -16,10 +8,6 @@ export const setLeadId = (newLeadId, primaryPath) => {
 
 export const setLeadBank = leadBank => {
     localStorage.setItem('leadBank', JSON.stringify(leadBank))
-}
-
-export const getProductType = () => {
-    return JSON.parse(localStorage.getItem('productType'))
 }
 
 export const getLeadId = primaryPath => {

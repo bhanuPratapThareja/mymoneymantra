@@ -63,7 +63,7 @@ export const saveOffers = async () => {
     }
 }
 
-export const getProductDecision = (offers, primaryPath) => {
+export const getProductDecision = (offers, primaryPath, productType) => {
     const promise = new Promise((resolve) => {
         const pendingOffers = [...offers]
         if (!pendingOffers.length) {
@@ -73,7 +73,7 @@ export const getProductDecision = (offers, primaryPath) => {
         const leadId = getLeadId(primaryPath)
         pendingOffers.forEach(async offer => {
 
-            body.productId = offer.productType.product_type_id.toString()
+            body.productId = productType ? productType.product_type_id.toString() : ''
             body.bankId = offer.bank.bank_id
             body.leadId = leadId
 

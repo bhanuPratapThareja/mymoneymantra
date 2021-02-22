@@ -11,7 +11,7 @@ const DetailsBanner = props => {
     }, [])
 
     const getProductData = async () => {
-        const productWithDesicion = await getProductDecision([props.productData], props.primaryPath)
+        const productWithDesicion = await getProductDecision([props.productData], props.primaryPath, props.productType)
         setProductData(productWithDesicion[0])
     }
 

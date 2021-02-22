@@ -15,7 +15,6 @@ import LearnMore from '../../../../components/common/LearnMore'
 import LongFormBanner from '../../../../components/Banners/LongFormBanner'
 import LongForm from '../../../../components/common/LongForm'
 import { getClassesForPage } from '../../../../utils/classesForPage'
-import { setProductType } from '../../../../utils/localAccess'
 import { getUnpackedProduct } from '../../../../services/componentsService'
 
 const Details = props => {
@@ -24,7 +23,6 @@ const Details = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        setProductType(props.productTypeData)
 
         window.onpopstate = () => {
             if (previousPath === 'details') {
@@ -53,6 +51,7 @@ const Details = props => {
                         data={block}
                         productData={props.productData}
                         primaryPath={props.primaryPath}
+                        productType={props.productType}
                         changePageType={changePageType}
                     />
                 case 'blocks.offers-details-component':
@@ -69,6 +68,7 @@ const Details = props => {
                         key={block.id} 
                         data={block}
                         primaryPath={props.primaryPath}
+                        productType={props.productType}
                     />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
@@ -93,6 +93,7 @@ const Details = props => {
                         data={block}
                         productData={props.productData}
                         primaryPath={props.primaryPath}
+                        productType={props.productType}
                         preferredSelectionLists={props.preferredSelectionLists}
                     />
             }
@@ -143,13 +144,14 @@ export async function getServerSideProps(ctx) {
 
     const productDataPacked = await strapi.processReq('GET', `product-v-2-s?slug=${productSlug}`)
     const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
-    const preferredSelectionLists = await strapi.processReq("GET", `list-preferences`)
+    const productType = productTypeData[0]
 
+    const preferredSelectionLists = await strapi.processReq("GET", `list-preferences`)
     const productData = await getUnpackedProduct(productDataPacked)
 
     return {
         props: {
-            detailsData, longFormData, productData, productTypeData, 
+            detailsData, longFormData, productData, productType, 
             preferredSelectionLists, page, primaryPath
         }
     }

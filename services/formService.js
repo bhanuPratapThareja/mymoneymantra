@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Strapi from '../providers/strapi'
 import { getApiData } from '../api/api'
-import { getLeadId, getProductType } from '../utils/localAccess'
+import { getLeadId } from '../utils/localAccess'
 import { getFormattedDate } from '../utils/formatDataForApi'
 import { getDocumentIdandTypeId } from '../utils/uploadDocumentHelper'
 const CancelToken = axios.CancelToken
@@ -101,7 +101,7 @@ export const getBase64 = file => {
     })
 }
 
-export const generateLead = async (data, primaryPath, formType) => {
+export const generateLead = async (data, primaryPath, formType, productType) => {
     const promise = new Promise((resolve, reject) => {
         let { url, body } = getApiData('orchestration')
         body = JSON.parse(JSON.stringify(body))
@@ -131,8 +131,7 @@ export const generateLead = async (data, primaryPath, formType) => {
             yearsCurrentJob, projectrName,
         } = data
 
-        const productTypeData = getProductType()
-        const productTypeId = productTypeData ? productTypeData.productTypeId : ''
+        const productTypeId = productType ? productType.productTypeId : ''
         body.formBankId = leadBank && leadBank.bankId ? leadBank.bankId : ''
         body.bankId = salaryBank && salaryBank.bankId ? salaryBank.bankId : ''
         body.leadId = getLeadId(primaryPath)

@@ -17,13 +17,12 @@ import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import PageNotFound from '../../components/PageNotFound'
 import { getClassesForPage } from '../../utils/classesForPage'
-import { clearLeadId, clearLeadBank, clearFormData, setProductType } from '../../utils/localAccess'
+import { clearLeadId, clearLeadBank, clearFormData } from '../../utils/localAccess'
 
 const PrimaryPage = props => {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    setProductType(props.productTypeData)
     clearLeadBank()
     clearLeadId(props.primaryPath)
     clearFormData(props.primaryPath)
@@ -56,6 +55,7 @@ const PrimaryPage = props => {
             data={block}
             tncData={props.tncData}
             primaryPath={props.primaryPath}
+            productType={props.productType}
             preferredSelectionLists={props.preferredSelectionLists}
           />
         case 'offers.popular-offers-component':
@@ -63,6 +63,7 @@ const PrimaryPage = props => {
             key={block.id}
             data={block}
             primaryPath={props.primaryPath}
+            productType={props.productType}
             goToShortForm={goToShortForm}
           />
         case 'blocks.credit-score-component':
@@ -72,6 +73,7 @@ const PrimaryPage = props => {
             key={block.id}
             data={block}
             primaryPath={props.primaryPath}
+            productType={props.productType}
             goToShortForm={goToShortForm}
           />
         case 'blocks.bank-slider-component':
@@ -104,6 +106,7 @@ export async function getServerSideProps(ctx) {
   const { query } = ctx
   const primaryPath = query.primaryPath
   const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
+  const productType = productTypeData[0]
   const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)
   const data = pageData && pageData.length ? pageData[0] : null
   const preferredSelectionLists = await strapi.processReq('GET', `list-preferences`)
@@ -112,7 +115,7 @@ export async function getServerSideProps(ctx) {
   return {
     props: {
       data, primaryPath, preferredSelectionLists,
-      productTypeData, tncData
+      productType, tncData
     }
   }
 }

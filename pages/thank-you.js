@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 
@@ -12,18 +12,12 @@ import Blogger from '../components/common/Blogger'
 import LearnMore from '../components/common/LearnMore'
 
 import { getClassesForPage } from '../utils/classesForPage'
-import { getLeadId, getLeadBank, getProductType } from '../utils/localAccess'
+import { getLeadId, getLeadBank } from '../utils/localAccess'
 
 const ThankYouPage = props => {
-    const [leadId, setLeadId] = useState('')
-    const [bank, setBank] = useState('')
-    const [productType, setProductType] = useState('')
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        setLeadId(getLeadId(props.primaryPath))
-        setBank(getLeadBank())
-        setProductType(getProductType())
     }, [])
 
     const getComponents = dynamic => {
@@ -35,7 +29,7 @@ const ThankYouPage = props => {
                         data={block}
                         leadId={getLeadId(props.primaryPath)}
                         bank={getLeadBank()}
-                        productType={getProductType()}
+                        productType={props.productTypeData}
                         primaryPath={props.primaryPath}
                     />
                 case 'blocks.credit-score-component':
@@ -44,7 +38,8 @@ const ThankYouPage = props => {
                     return <TrendingOffers 
                         key={block.id} 
                         data={block}
-                        primaryPath={props.primaryPath} 
+                        primaryPath={props.primaryPath}
+                        productType={props.productTypeData}
                     />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />

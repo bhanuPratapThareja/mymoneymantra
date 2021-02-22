@@ -556,7 +556,7 @@ export const submitDocument = async (documentName, files, primaryPath) => {
   documentUpload(docs, documentName, primaryPath)
 }
 
-export const submitShortForm = (slides, currentSlide, primaryPath, formType) => {
+export const submitShortForm = (slides, currentSlide, primaryPath, formType, productType) => {
   return new Promise((resolve, reject) => {
     slides.forEach((slide) => {
       if (slide.slideId === currentSlide) {
@@ -576,7 +576,7 @@ export const submitShortForm = (slides, currentSlide, primaryPath, formType) => 
     }
    
     setFormData(data, primaryPath)
-    generateLead(data, primaryPath, formType)
+    generateLead(data, primaryPath, formType, productType)
       .then((res) => {
         resolve(res)
       })
