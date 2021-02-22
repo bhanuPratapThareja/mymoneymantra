@@ -1601,6 +1601,32 @@ button.cstm-load-btn {
   font-weight: bold;
 }
 
+/*-- Learn More about cc --*/
+
+.learn-more-wrapper-content .table table td {
+  border: 1px solid #666;
+  padding: 0 10px 10px 10px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: "Avenir-Roman";
+  font-size: 16px;
+  line-height: 28px;
+}
+
+.learn-more-wrapper-content .table table {
+  margin: 20px auto;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.learn-more-wrapper-content .answer table td p, .learn-more-wrapper-content .answer table td  ul {
+  padding: 10px 20px 0;
+  margin: 0;
+}
+
+.learn-more-wrapper-content .answer table td ul li {
+  margin: 0;
+}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
