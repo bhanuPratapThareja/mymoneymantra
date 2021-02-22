@@ -1,4 +1,6 @@
 import Image from '../ImageComponent/ImageComponent'
+import { useEffect } from 'react'
+import { clearLeadBank } from '../../utils/localAccess'
 
 const ThankYouBanner = props => {
 

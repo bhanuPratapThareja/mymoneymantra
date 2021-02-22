@@ -80,6 +80,12 @@ const api = {
       prodUrl: "api/master/v1/",
       body: { name: "" }
     },
+    project : {
+      devUrl: "masters/api/master/v1/project",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: { name: "" }
+    },
     occupancyStatus: {
       devUrl: "masters/api/master/v1/occupancyStatus",
       uatUrl: "api/master/v1/",
