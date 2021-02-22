@@ -11,11 +11,12 @@ let otpId = ''
 const strapi = new Strapi()
 
 export const getOtp = mobileNo => {
-    const { url, body } = getApiData('otp')
-    body.request.payload.mobileNo = mobileNo
+    const { url, body } = getApiData('generateOtp')
+    body.mobileNo = mobileNo
     axios.post(url, body)
         .then(res => {
-            otpId = res.data.response.payload.otpId
+            console.log(res)
+            otpId = res.data.otpId
         })
         .catch(() => { })
 }
@@ -26,32 +27,24 @@ export const submitOtp = async mobileNo => {
     for (let inp of inps) {
         otp += inp.value
     }
-   
+
     if (otp.length !== 4) {
         throw new Error('Otp mush have 4 characters')
     }
     if (otp === '0000') {
         return true
     }
-    const { url, body } = getApiData('otpverify')
-    body.request.payload.mobileNo = mobileNo
-    body.request.payload.otp = otp
-    body.request.payload.otpId = otpId
+    const { url, body } = getApiData('verifyOtp')
+    body.mobileNo = mobileNo
+    body.otp = otp
+    body.otpId = otpId
 
     try {
-        const res = await axios.post(url, body)
-        if (res.data.response.msgInfo.code == 200) {
-            return true
-        } else if (res.data.response.msgInfo.code == 500) {
-            throw new Error(res.data.response.msgInfo.message)
-        } else {
-            throw new Error('Something went wrong. Please try again.')
-        }
+        await axios.post(url, body)
+        return true
     } catch (err) {
-        if (!err.response) {
-            throw new Error(err.message)
-        } else if (err.response.status == 400) {
-            throw new Error('Please enter valid OTP!')
+        if (err.response.data && err.response.data.message) {
+            throw new Error(err.response.data.message)
         } else {
             throw new Error('Something went wrong. Please try again.')
         }
@@ -60,7 +53,7 @@ export const submitOtp = async mobileNo => {
 
 export const getDropdownList = async (listType, value, masterName) => {
     const { url, body } = getApiData(listType)
-    body.request.payload.name = value
+    body.name = value
     if (cancel != undefined) cancel()
 
     try {
@@ -72,7 +65,7 @@ export const getDropdownList = async (listType, value, masterName) => {
                 cancel = c
             })
         })
-        return (res.data.response.payload[masterName])
+        return (res.data[masterName])
 
     } catch (err) { }
 }
@@ -82,7 +75,7 @@ export const documentUpload = async (docs, documentName) => {
     let documentIds = getDocumentIdandTypeId(documentName);
     const { documentId, documentTypeId } = documentIds[0];
     let docList = []
-    body.request.payload.caseId = getLeadId()
+    body.caseId = getLeadId()
     for (let i = 0; i < docs.length; i++) {
         const { type, base64 } = docs[i]
         let doc = {
@@ -93,7 +86,7 @@ export const documentUpload = async (docs, documentName) => {
         }
         docList.push(doc)
     }
-    body.request.payload.docList = docList
+    body.docList = docList
     axios.post(url, body)
         .catch(() => { })
 }
@@ -120,22 +113,22 @@ export const generateLead = async (data, primaryPath, formType) => {
             requestedLoanamount, requestedTenor, propertyType, other_city_property_location,
             gender, maritalStatus, nationality, otherCompany, noOfDependents,
             fathersFirstName, fathersLastName, mothersFirstName, mothersLastName, preferedComm, director, jointAccHolder,
-            
+
             addressline1, addressline2, pincode, city, state, nearByLandmark, stdCode, livingSince, livingSinceMM,
             occupancyStatus,
-            
+
             officeAddressline1, officeAddressline2, addressline3, officeNearBy, officePincode, officeCity, officeState,
-            officeStdCode, 
-            
+            officeStdCode,
+
             permanentAddressline1, permanentAddressline2, permanentPincode, permanentCity, permanentState,
-            permanentStdCode, 
-            
+            permanentStdCode,
+
             propertyPincode, propertyCity, propertyCityRadio, propertyState, propertyStdCode, purposeOfLoan, propertyValue,
 
             utmCampaign, utmMedium, utmSource, utmRemark,
             referenceType, referenceFirstName, referenceLastName, referenceEmail, referenceMobile,
 
-            yearsCurrentJob,projectrName,
+            yearsCurrentJob, projectrName,
         } = data
 
         const productTypeData = getProductType()
@@ -147,7 +140,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.surrogateType = surrogateType ? surrogateType.surrogateTypeId ? surrogateType.surrogateTypeId : '' : ''
         body.requestedLoanamount = requestedLoanamount
         body.requestedTenor = requestedTenor
-        
+
         body.personal.fullName = fullName
         body.personal.dob = getFormattedDate(dob)
         body.personal.pan = pan
@@ -158,7 +151,7 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.personal.maritalStatus = maritalStatus
         body.personal.nationality = nationality
         body.personal.dependents = noOfDependents && noOfDependents.noOfDependentsId ? noOfDependents.noOfDependentsId : ''
-        
+
         body.work.preferedComm = preferedComm;
         body.work.director = director;
         body.work.jointAccHolder = jointAccHolder;
@@ -170,9 +163,9 @@ export const generateLead = async (data, primaryPath, formType) => {
         body.work.designation = designationId ? designationId.designationId : ''
         body.work.qualification = qualificationId ? qualificationId.educationId : ''
         body.work.yearsCurrentJob = yearsCurrentJob
-        
+
         body.contact.mobile[0].mobile = mobile
-        
+
         body.contact.email = []
         if (email) {
             let emailAddress = {
@@ -190,10 +183,10 @@ export const generateLead = async (data, primaryPath, formType) => {
             }
             body.contact.email.push(officeEmailAddress)
         }
-        if(body.contact.email.length) {
+        if (body.contact.email.length) {
             body.contact.email[0].isDefault = 'Y'
         }
-        
+
         body.contact.keyContact = []
         if (fathersFirstName && fathersLastName) {
             let fatherKeyContact = {
@@ -204,7 +197,7 @@ export const generateLead = async (data, primaryPath, formType) => {
             }
             body.contact.keyContact.push(fatherKeyContact)
         }
-        
+
         if (mothersFirstName && mothersLastName) {
             let motherKeyContact = {
                 caseContactMasterId: "16",
@@ -214,7 +207,7 @@ export const generateLead = async (data, primaryPath, formType) => {
             }
             body.contact.keyContact.push(motherKeyContact)
         }
-        
+
         if (referenceFirstName && referenceLastName && referenceType && referenceEmail && referenceMobile) {
             let referenceKeyContact = {
                 caseContactMasterId: referenceType,
@@ -224,25 +217,25 @@ export const generateLead = async (data, primaryPath, formType) => {
             }
             body.contact.keyContact.push(referenceKeyContact)
         }
-        
+
         body.existingFacility = []
         // for facility requested
-        if(exisTenorBalMonths || exisLoanAmount || exisEmi || exisRemark || (existingFacilityBank && existingFacilityBank.bankId)) {
+        if (exisTenorBalMonths || exisLoanAmount || exisEmi || exisRemark || (existingFacilityBank && existingFacilityBank.bankId)) {
             let existingFacilityDetails = {
                 exisTenorBalMonths: exisTenorBalMonths,
                 exisfacility: '',
                 exisLoanAmount: exisLoanAmount,
                 exisEmi: exisEmi,
                 exisRemark: exisRemark,
-                exisBankId: existingFacilityBank && existingFacilityBank.bankId ? existingFacilityBank.bankId : '' 
+                exisBankId: existingFacilityBank && existingFacilityBank.bankId ? existingFacilityBank.bankId : ''
             }
             body.existingFacility.push(existingFacilityDetails)
         }
-        
+
         body.address = []
         // for residence address
         if (addressline1 || addressline2 || addressline3 || nearByLandmark ||
-            (purposeOfLoan &&  purposeOfLoan.purposeOfLoanId) || (pincode && pincode.pincode) || (city && city.cityId) || state && state.stateId || stdCode) {
+            (purposeOfLoan && purposeOfLoan.purposeOfLoanId) || (pincode && pincode.pincode) || (city && city.cityId) || state && state.stateId || stdCode) {
             let residenceAddress = {
                 addressTypeMasterId: '1000000001',
                 addressline1: addressline1,
@@ -251,21 +244,21 @@ export const generateLead = async (data, primaryPath, formType) => {
                 landmark: nearByLandmark,
                 livingSince: livingSince,
                 livingSinceMM: livingSinceMM,
-                occupancyStatus: occupancyStatus && occupancyStatus.occupancyStId ? occupancyStatus.occupancyStId : '' ,
+                occupancyStatus: occupancyStatus && occupancyStatus.occupancyStId ? occupancyStatus.occupancyStId : '',
                 pincode: pincode && pincode.pincode ? pincode.pincode : '',
                 city: city && city.cityId ? city.cityId : '',
                 state: state && state.stateId ? state.stateId : '',
                 stdCode: stdCode,
                 purposeOfLoan: purposeOfLoan && purposeOfLoan.purposeOfLoanId ? purposeOfLoan.purposeOfLoanId : "",
-                
+
             }
             body.address.push(residenceAddress)
         }
-        
+
         // for office address
-        if (officeAddressline1 || officeAddressline2 || officeNearBy || 
-            (purposeOfLoan &&  purposeOfLoan.purposeOfLoanId) ||  
-        (officePincode && officePincode.pincode) || (officeCity && officeCity.cityId) || (officeState && officeState.stateId) || officeStdCode) {
+        if (officeAddressline1 || officeAddressline2 || officeNearBy ||
+            (purposeOfLoan && purposeOfLoan.purposeOfLoanId) ||
+            (officePincode && officePincode.pincode) || (officeCity && officeCity.cityId) || (officeState && officeState.stateId) || officeStdCode) {
             let officeAddress = {
                 addressTypeMasterId: '1000000002',
                 addressline1: officeAddressline1,
@@ -276,14 +269,14 @@ export const generateLead = async (data, primaryPath, formType) => {
                 state: officeState && officeState.stateId ? officeState.stateId : '',
                 stdCode: officeStdCode,
                 purposeOfLoan: purposeOfLoan && purposeOfLoan.purposeOfLoanId ? purposeOfLoan.purposeOfLoanId : "",
-               
+
             }
             body.address.push(officeAddress)
         }
-        
+
         // for permanent address
         if (permanentAddressline1 || permanentAddressline2 ||
-            (purposeOfLoan &&  purposeOfLoan.purposeOfLoanId) || (permanentPincode && permanentPincode.pincode) || (permanentCity && permanentCity.cityId) || permanentStdCode) {
+            (purposeOfLoan && purposeOfLoan.purposeOfLoanId) || (permanentPincode && permanentPincode.pincode) || (permanentCity && permanentCity.cityId) || permanentStdCode) {
             let permanentAddress = {
                 addressTypeMasterId: '1000000003',
                 addressline1: permanentAddressline1,
@@ -293,11 +286,11 @@ export const generateLead = async (data, primaryPath, formType) => {
                 state: permanentState && permanentState.stateId ? permanentState.stateId : '',
                 stdCode: permanentStdCode,
                 purposeOfLoan: purposeOfLoan && purposeOfLoan.purposeOfLoanId ? purposeOfLoan.purposeOfLoanId : "",
-    
+
             }
             body.address.push(permanentAddress)
         }
-        
+
         // for property address
         if (propertyType || propertyValue || propertyPincode || projectrName ||
             //(purposeOfLoan &&  purposeOfLoan.purposeOfLoanId)
@@ -305,36 +298,41 @@ export const generateLead = async (data, primaryPath, formType) => {
             let propertyAddress = {
                 addressTypeMasterId: '1000000004',
                 pincode: propertyPincode && propertyPincode.pincode ? propertyPincode.pincode : '',
-                city:  propertyCity && propertyCity.cityId ? propertyCity.cityId : propertyCityRadio,
+                city: propertyCity && propertyCity.cityId ? propertyCity.cityId : propertyCityRadio,
                 state: propertyState && propertyState.stateId ? propertyState.stateId : '',
                 stdCode: propertyStdCode,
                 propertyValue: propertyValue,
                 purposeOfLoan: propertyType,
-                projectrName : projectrName
+                projectrName : projectrName && projectrName.projectId ? projectrName.projectId : ""
             }
             body.address.push(propertyAddress)
         }
-        
-        if(primaryPath == 'rkpl') {
+
+        if (primaryPath == 'rkpl') {
             body.cardType = cardType && cardType.cardTypeId ? cardType.cardTypeId : ''
         } else {
             body.cardType = cardTypeCC ? cardTypeCC : ''
         }
-        
+
         let utmCampaignChoice = ''
         if (primaryPath == 'rkpl') {
             utmCampaignChoice = utmCampaign ? utmCampaign.includes('offcc') ? utmCampaign : 'offcc-rkpl' : ''
         } else {
             utmCampaignChoice = utmCampaign ? utmCampaign : ''
         }
-        
+
         body.utmCampaign = utmCampaignChoice
         body.utmMedium = utmMedium ? utmMedium : ''
         body.utmSource = utmSource ? utmSource : ''
         body.utmRemark = utmRemark ? utmRemark : ''
-        
+
+        if (primaryPath === 'talent-edge-form') {
+            body.subQueue = '2'
+            body.source = '1000000013'
+        }
+
         let headers = {}
-        
+
         if (formType === 'sf') {
             headers = { 'sync': 'false' }
         } else if (formType === 'lf') {
@@ -344,7 +342,7 @@ export const generateLead = async (data, primaryPath, formType) => {
                 headers = { 'sync': 'HEADER' }
             }
         }
-        
+
         // console.log(body)
         // return
 
@@ -411,10 +409,10 @@ export const getProductAndBank = async (data, primaryPath, longFormProduct) => {
 
 export const sendNotification = async (leadId, action) => {
     const { url, body } = getApiData('sendNotification')
-    body.request.payload.leadId = leadId
-    body.request.payload.actionName = action
+    body.leadId = leadId
+    body.actionName = action
     try {
         const res = await axios.post(url, body)
-        return res;
-    } catch {}
+        return res
+    } catch { }
 }

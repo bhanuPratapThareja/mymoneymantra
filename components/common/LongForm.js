@@ -492,7 +492,7 @@ class LongForm extends React.Component {
         const query = { primaryPath }
         this.props.router.push({ pathname, query }, pathname, { shallow: true })
       })
-      .catch((err) => {
+      .catch(err => {
         this.setState({ submitButtonDisabled: false, submissionError: 'Something went wrong. Please try again.' })
       })
   };

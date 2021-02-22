@@ -210,3 +210,24 @@ export const generateTenureBlock = allOfferCards => {
         return tenureSlider
     }
 }
+
+export const generateInterestRateBlock = allOfferCards => {
+    let interestRates = []
+    console.log(allOfferCards)
+    for(let i = 0; i < allOfferCards.length; i++) {
+        if(!allOfferCards[i].product.product_interest_rate) {
+            continue
+        }
+        const { product_interest_rate } = allOfferCards[i].product
+        if(product_interest_rate && product_interest_rate.min_value) {
+            interestRates.push(product_interest_rate.min_value)
+        }
+    }
+
+    if(interestRates.length) {
+        const max = Math.max(...interestRates)
+        const min = Math.min(...interestRates)
+        const interestRatesSlider = { heading: 'By Interest Rate', max, min }
+        return interestRatesSlider
+    }
+}

@@ -1,53 +1,37 @@
 import { env } from "./../env/env";
 
 const api = {
-  devBaseUrl: "http://203.122.46.189:8060/",
-  uatBaseUrl: "http://203.122.46.189:8060/masters/",
-  prodBaseUrl: "http://203.122.46.189:8060/masters/",
+  devBaseUrl: "http://203.122.46.189:8061/",
   routes: {
     authenticate: {
       devUrl: "api/jwt/v1/authenticate",
       uatUrl: "api/customer/v1/profile/",
       prodUrl: "api/customer/v1/profile/",
-      body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: { clientId: "leadgenerateapi", clientSecret: "mmm@2O!9" },
-        },
-      },
+      body: { clientId: "leadgenerateapi", clientSecret: "mmm@2O!9" }
     },
     masters: {
       devUrl: "masters/api/master/v1/masters",
       uatUrl: "api/customer/v1/profile/",
       prodUrl: "api/customer/v1/profile/",
-      body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: {},
-        },
-      },
+      body: { }
     },
-    otp: {
+    generateOtp: {
       devUrl: "notification/api/notification/v1/sms/otp",
       uatUrl: "api/customer/v1/profile/",
       prodUrl: "api/customer/v1/profile/",
-      body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: { mobileNo: "" },
-        },
-      },
+      body: { mobileNo: '' },
     },
-    otpverify: {
+    verifyOtp: {
       devUrl: "notification/api/notification/v1/sms/otp/verify",
       uatUrl: "api/customer/v1/profile/",
       prodUrl: "api/customer/v1/profile/",
-      body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: { mobileNo: "" },
-        },
-      },
+      body: { mobileNo: '', otp: '', otpId: '' }
+    },
+    sendNotification: {
+      devUrl: "notification/api/notification/v1/sms-email/send",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: { actionName: '', leadId: '' }
     },
     offers: {
       devUrl: "api/customer/v1/profile/",
@@ -61,142 +45,78 @@ const api = {
       },
     },
     bank: {
-      devUrl: "masters/api/master/v1/bank			",
+      devUrl: "masters/api/master/v1/bank",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: { name: "" },
-        },
-      },
+      body: { name: "" }
     },
     company: {
       devUrl: "masters/api/master/v1/company",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: { name: "" },
-        },
-      },
+      body: { name: "" }
     },
     cities: {
       devUrl: "masters/api/master/v1/cities",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: { name: "" },
-        },
-      },
+      body: { name: "" }
     },
     pincode: {
       devUrl: "masters/api/master/v2/pincode",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: { name: "" },
-        },
-      },
+      body: { name: "" }
     },
     designation: {
       devUrl: "masters/api/master/v1/designation",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: { name: "" },
-        },
-      },
+      body: { name: "" }
     },
     qualification: {
       devUrl: "masters/api/master/v1/qualification",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: { name: "" },
-        },
-      },
+      body: { name: "" }
+    },
+    project : {
+      devUrl: "masters/api/master/v1/project",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: { name: "" }
     },
     occupancyStatus: {
       devUrl: "masters/api/master/v1/occupancyStatus",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: { name: "" },
-        },
-      },
+      body: { name: "" }
     },
     purposeOfLoan: {
       devUrl: "masters/api/master/v1/purpose-of-loan",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: { name: "" },
-        },
-      },
-
+      body: { name: "" }
     },
     leadProductDecision: {
       devUrl: "lead/api/lead/v1/product/decision",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        request: {
-          header: {
-            correlationId: "NgZ2aK9emd",
-            appId: "MMMWEBAPP",
-          },
-          payload: {
-            leadId: "",
-            bankId: "",
-            productId: "",
-            productTypeId: "",
-          },
-        },
-      },
+      body: { leadId: '', bankId: '', productId: '', productTypeId: '' }
     },
     documentUpload: {
       devUrl: "utility/api/utility/document/v1/savedocument",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
       body: {
-        request: {
-          header: {
-            correlationId: "NgZ2aK9emd",
-            appId: "MMMWEBAPP",
-            msgVersion: "1.0",
-          },
-          payload: {
-            channelName: "MOBILEAPP",
-            caseId: "1001013258",
-            insertFlag: "Y",
-            docList: [
-              // {
-              //   documentId: "1000000290",
-              //   documentTypeId: "1000000036",
-              //   documentExtension: "",
-              //   docBytes: "",
-              // },
-            ],
-          },
-        },
-      },
+        channelName: "MOBILEAPP",
+        caseId: "1001013258",
+        insertFlag: "Y",
+        docList: [],
+      }
     },
     orchestration: {
-      devUrl: "orchestration/api/lead/v1/generate",
+      devUrl: "lead/api/lead/v1/generate",
       uatUrl: "api/lead/v1/",
       prodUrl: "api/master/v1/",
       body: {
@@ -266,6 +186,8 @@ const api = {
         utmMedium: '',
         utmSource: '',
         utmRemark: '',
+        subQueue: '',
+        source: '',
         existingFacility: [
           {
             "exisTenorBalMonths": "",
@@ -302,115 +224,47 @@ const api = {
         ]
       },
     },
-    customerOfferView: {
+    viewOffers: {
       devUrl: "customer/api/customer/v1/view-offers",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        customerId: "",
-        productId: ""
-      },
+      body: {  customerId: '', productId: '' }
     },
-    customerOffer: {
-      devUrl: "api/customer/v1/profile/offers",
+    saveOffers: {
+      devUrl: "customer/api/customer/v1/profile/save-offers",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: {
-            mobileNo: "",
-            customerId: "",
-          },
-        },
-      },
-    },
-    sendNotification: {
-      devUrl: "notification/api/notification/v1/sms-email/send",
-      uatUrl: "api/master/v1/",
-      prodUrl: "api/master/v1/",
-      body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: {
-            actionName: "",
-            leadId: "PR01019897",
-          },
-        },
-      },
+      body: { customerId: '', offerId: '' }
     },
     blogLikeDislike: {
       devUrl: "customer/api/blog/v1/blog-sentiment",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        // request: {
-        //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-        // },
-        blogId: "3",
-        customerId: "3",
-        sentiment: "like"
-      },
-
+      body: { blogId: "", customerId: "", sentiment: "" },
     },
     getBlogs: {
-      devUrl: "customer/api/blog/v1/blog?blogId=",
+      devUrl: "customer/api/blog/v1/blog",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: {
-
-          },
-        },
-      },
-
+      body: {},
     },
     commentLikeDislike: {
       devUrl: "customer/api/blog/v1/comment-sentiment",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        // request: {
-        //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-        // },
-        "blogId": "3",
-        "customerId": "12345",
-        "commentId": "1",
-        "sentiment": "like"
-
-      },
-
+      body: { blogId: "", customerId: "", commentId: "", sentiment: "" },
     },
     addComment: {
       devUrl: "customer/api/blog/v1/comment",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        // request: {
-        //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-        // },
-        blogId: "3",
-        customerId: "12345",
-        comment: "1"
-      },
+      body: { blogId: "", customerId: "", comment: "" },
     },
     shareBlog: {
       devUrl: 'customer/api/blog/v1/shared',
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {
-        // request: {
-        //   header: { correlationId: "25478965874", appId: "MMMWEBAPP" },
-        // },
-
-        "blogId": "123",
-        "customerId": "12345",
-        "shared": "yes"
-
-      },
-
+      body: { blogId: "", customerId: "", shared: "" },
     }
   },
 };

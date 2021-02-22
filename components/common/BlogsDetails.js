@@ -49,7 +49,7 @@ const BlogsDetails = props => {
                             {createdDate} // {blogreadTime.text}
                             {mainCategories.length ? mainCategories.map((category, i) => (
                                 <span key={i} onClick={() => goToPage(category.blog_category_name)}>
-                                    // {category.blog_category_name}
+                                     // {category.blog_category_name}
                                 </span>)
                             ) : null}
                         </span>

@@ -25,9 +25,9 @@ const PopularOffers = props => {
          const popularOffers = await extractOffers(populars)
          setPopularOffers(popularOffers)
          if (window !== undefined && window.initSlickCards && popularOffers.length) {
-            console.log('here')
-            window.initSlickCards()
-            console.log('here')
+            setTimeout(() => {
+               window.initSlickCards()
+            }, 1000)
          }
       }
    }

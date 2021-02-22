@@ -3,7 +3,6 @@ import SFButtons from '../SFButtons/SFButtons'
 import { getOtp } from '../../../services/formService'
 
 const OtpSlide = props => {
-
     return (
         <form className="short-forms-wrapper" onSubmit={props.onSubmitOtp} noValidate>
             <div className="mobile-otp">

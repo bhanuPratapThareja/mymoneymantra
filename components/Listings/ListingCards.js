@@ -25,7 +25,7 @@ const ListingCards = (props) => {
   };
 
   if (!offers) {
-    return null;
+    return null
   }
 
   return (

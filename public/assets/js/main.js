@@ -238,7 +238,7 @@ $(document).ready(function () {
     $('#popular-cards-sec, #trending-offers-sec').slick("refresh")
   }
 
-
+  initSlickCards()
   initSlickBanks = function () {
     $('.banks-slider').not('.slick-initialized').slick({
       infinite: false,
@@ -284,7 +284,6 @@ $(document).ready(function () {
     $('.banks-slider').slick("refresh")
   }
 
-  // initSlickCards()
   initSlickBanks()
 
   initSlickBlogs = function () {

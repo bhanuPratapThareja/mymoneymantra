@@ -164,7 +164,9 @@ class ShortExtendedForm extends React.Component {
                 await submitOtp(this.state.mobileNo)
                 this.onSubmitLetGoSlide()
             } catch (err) {
-                this.setState({ submissionError: err.message })
+                this.setState({ submissionError: err.message }, () => {
+                    console.log(this.state)
+                })
             } finally {
                 this.scrollToTopOfSlide()
             }

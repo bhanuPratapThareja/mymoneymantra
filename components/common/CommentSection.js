@@ -10,7 +10,6 @@ const CommentSection = (props) => {
     let limit = 3
     const [comment, setComment] = useState('')
     const [blogSentiment, setBlogSentiment] = useState('')
-    // const [commentData, setCommentData] = useState([])
     const [comments, setComments] = useState([])
     const [share, setShare] = useState(false)
     const [dislikeCount, setDislikeCount] = useState(null)
@@ -29,10 +28,8 @@ const CommentSection = (props) => {
             let newLoadMore = index < res.comments.length - 1
             setComments(res.comments)
             newList.forEach(c => {
-                // getCommentSentiment(defaultUserId, c.commentId, newList)
                 getSentimentOnLoadmore([], newList, c.commentId, defaultUserId, newLoadMore)
             })
-            // setLoadMore(newLoadMore)
             getBlogSentiment(defaultUserId, props.blogId)
         }
         ).catch(err => console.log(err))
@@ -177,7 +174,6 @@ const CommentSection = (props) => {
         body.commentId = commentId
         axios.post(url, body).then(
             res => {
-                // getCommentData(blogId)
                 handleCommentLikeDislikeStatus(defaultUserId, commentId)
             }
         ).catch(
@@ -224,7 +220,6 @@ const CommentSection = (props) => {
             let newLoadMore = index < res.comments.length - 1
             newList.forEach(c => {
                 getSentimentOnLoadmore([], newList, c.commentId, defaultUserId, newLoadMore)
-
             })
             getBlogSentiment(defaultUserId, props.blogId)
         }).catch(err => console.log("post comment err", err))
