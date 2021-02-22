@@ -1859,8 +1859,13 @@ img {
 }
 
 /* Chandrakant css starts */
-.listings .banner-wrapper .top h2, .credit-card-flow .banner h2 {
+/* .listings .banner-wrapper .top h2, .credit-card-flow .banner h2 {
   color: #000 !important;
+} */
+
+.creditProfile-age-flow .paymentRank-wrapper .paymentRank-wrapper-head h2,
+.paymentRank .paymentRank-wrapper .paymentRank-wrapper-head h2 {
+  color: #000;
 }
 
 .credit-rank-flow .paymentRank-wrapper-head .underline-img, .creditProfile-age-flow .paymentRank-wrapper-head .underline-img, .creditProfile-utilization-flow .paymentRank-wrapper-head .underline-img, .creditProfile-account-flow .paymentRank-wrapper-head .underline-img, .creditProfile-enquiries-flow .paymentRank-wrapper-head .underline-img {
@@ -1881,9 +1886,14 @@ img {
   background-position: center !important;
 }
 
-.value-accounts h2 {
+.value-accounts h2,
+.value-enquiries h2 {
   color: #ffffff;
   text-align: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .red-circle{
@@ -1929,18 +1939,20 @@ img {
 }
 
 .green-circle{
-  background: url("/assets/images/icons/greenc.png") !important;
+  background: url("/assets/images/icons/greenc.png") no-repeat center / contain;
   max-width: 240px;
   height: 100%;
   background-color: #ffffff;
-  background-repeat: no-repeat !important;
-  background-size: contain;
   -ms-flex-pack: center;
   justify-content: center;
   -ms-flex-align: center;
   align-items: center;
-  background-position: center !important;
+  min-width: 240px;
+  position: relative;
+  border-radius: 50%;
 }
+
+
 
 .red-square{
   background: url("/assets/images/icons/reds.png") !important;
@@ -1957,17 +1969,16 @@ img {
 }
 
 .orange-square{
-  background: url("/assets/images/icons/oranges.png") !important;
+  background: url("/assets/images/icons/oranges.png") no-repeat center / contain;
   max-width: 240px;
   height: 100%;
   background-color: #ffffff;
-  background-repeat: no-repeat !important;
-  background-size: contain;
   -ms-flex-pack: center;
   justify-content: center;
   -ms-flex-align: center;
   align-items: center;
-  background-position: center !important;
+  min-width: 240px;
+  position: relative;
 }
 
 .yellow-square{
@@ -2001,4 +2012,18 @@ img {
 
 .scroll::-webkit-scrollbar {
   display: none !important;
+}
+
+.creditProfile-age-flow .paymentRank-wrapper-content .left-mobile-view .value-age h2 {
+  font-size: 1.75rem;
+  line-height: 2.5rem;
+  max-width: 100px;
+}
+
+.popular-cards-slider-card-top {
+  min-height: 252px;
+}
+
+.popular-cards-slider-card-bottom {
+  min-height: 48px;
 }
