@@ -1917,15 +1917,6 @@ button.cstm-load-btn {
     font-size: 1.25rem;
     line-height: 1.75rem;
   }
-
-  /* .blogs-flow .mobile-background {
-    margin: 64px 0 0;
-  }
-
-  .blogs-flow .main-head {
-    padding-top: 40px;
-  } */
-
  
   .cstm-desig {
     float: none;
@@ -2147,6 +2138,10 @@ button.cstm-load-btn {
     min-width: 49%;
     margin: 0 0 6px;
     font-size: 13px;
+  }
+
+  .cstm-dsktxt {
+    display: none;
   }
 
 }

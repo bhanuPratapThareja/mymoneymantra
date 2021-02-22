@@ -6,7 +6,7 @@ const OnBoardForm = props => {
             <div className="lets-find-content">
                 <h2>{props.data.heading}</h2>
                 <img className="green-underline" src="/assets/images/credit-card-flow/green-underline.png" />
-                <div dangerouslySetInnerHTML={{ __html: props.data.description }}></div>
+                <div className="cstm-dsktxt" dangerouslySetInnerHTML={{ __html: props.data.description }}></div>
             </div>
 
             <div className="lets-find-form">
