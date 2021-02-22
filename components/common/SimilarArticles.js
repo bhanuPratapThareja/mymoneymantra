@@ -15,10 +15,11 @@ const SimilarArticles = (props) => {
     useEffect(() => {
         let blogs = []
         if (props.categories && props.categories.length) {
+
             data.forEach(blog => {
-                blog.blog_categories.forEach(blogCategory => {
+                blog.post_categories.forEach(blogCategory => {
                     props.categories.forEach(category => {
-                        if (blogCategory.blog_category_name.includes(category.blog_category_name)) {
+                        if (blogCategory.post_category_name.includes(category.post_category_name)) {
                             blogs.push(blog)
                         }
                     })

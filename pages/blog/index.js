@@ -15,6 +15,7 @@ const Blog = (props) => {
     window.scrollTo(0, 0)
   })
   const getComponents = (dynamic) => {
+    console.log('blog index dynamic', dynamic)
     return dynamic.map((block) => {
       switch (block.__component) {
         case "banners.blog-banners-component":
@@ -55,7 +56,7 @@ export async function getServerSideProps(ctx) {
   );
   const allBlogs = await strapi.processReq(
     "GET",
-    `quick-blogs`
+    `posts`
   );
 
   const data = pageData && pageData.length ? pageData[0] : null;

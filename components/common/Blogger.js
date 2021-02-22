@@ -14,8 +14,8 @@ const Blogger = props => {
         }
     })
 
-    let { section_heading, bloggers } = props.data
-    let popularBlogs = bloggers.filter(blog => blog.popular === true)
+    let { section_heading, posts } = props.data
+    let popularBlogs = posts.filter(blog => blog.popular === true)
     const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
             let j = Math.floor(Math.random() * (i + 1));
@@ -26,7 +26,6 @@ const Blogger = props => {
         return array
     }
     let randomBlogs = shuffleArray(popularBlogs)
-
 
     const onOpenBlog = blog => {
         setBlogId(blog.id)

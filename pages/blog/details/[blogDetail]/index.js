@@ -20,9 +20,9 @@ const BlogDetail = props => {
         const getBlogData = async () => {
             const blog = await strapi.processReq(
                 "GET",
-                `quick-blogs/${blogId}`
+                `posts/${blogId}`
             );
-            let slugForProductTypeData = blog.blog_categories[0].slug ? blog.blog_categories[0].slug : 'credit-cards'
+            let slugForProductTypeData = blog.post_categories[0].slug ? blog.post_categories[0].slug : 'credit-cards'
             const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${slugForProductTypeData}`)
             setProductType(productTypeData)
             const productType = getProductType()
@@ -47,12 +47,12 @@ const BlogDetail = props => {
                     return <BlogMediaLinks key={block.id} data={block} url={currentUrl} blogData={blogData} />
                 case "blocks.blog-category":
                     return <ProductSlider key={block.id} data={block} />;
-                case 'offers.trending-offers-component':
-                    return <TrendingOffers
-                        key={block.id}
-                        data={block}
-                        blogTrendingOffers={trendingOffers}
-                    />
+                // case 'offers.trending-offers-component':
+                //     return <TrendingOffers
+                //         key={block.id}
+                //         data={block}
+                //         blogTrendingOffers={trendingOffers}
+                //          />
                 case 'blocks.similar-blogs-component':
                     return <SimilarArticles key={block.id} data={props.allBlogs} categories={blogData.blog_categories} subCategories={blogData.blog_sub_categories} />
             }
@@ -73,12 +73,12 @@ export async function getServerSideProps(ctx) {
 
     const allBlogs = await strapi.processReq(
         "GET",
-        `quick-blogs`
+        `posts`
     );
 
     const blogData = await strapi.processReq(
         "GET",
-        `quick-blogs/${query.slug}`
+        `posts/${query.slug}`
     );
     const pageData = await strapi.processReq(
         "GET",

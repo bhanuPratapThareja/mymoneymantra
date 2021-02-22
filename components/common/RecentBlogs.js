@@ -6,11 +6,11 @@ import Image from "../ImageComponent/ImageComponent"
 
 const RecentBlogs = (props) => {
     const router = useRouter()
-    const { bloggers } = props.data
-    let recentBlogs = bloggers.sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
+    const { posts } = props.data
+    let recentBlogs = posts.sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
 
     useEffect(() => {
-        if (window !== undefined && window.initSlickCards && bloggers && bloggers.length) {
+        if (window !== undefined && window.initSlickCards && posts && posts.length) {
             console.log('recent slic intialized')
             window.initSlickCards()
         }
