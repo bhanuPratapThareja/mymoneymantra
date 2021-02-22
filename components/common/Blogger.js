@@ -7,7 +7,7 @@ import Image from '../ImageComponent/ImageComponent'
 const Blogger = props => {
     const router = useRouter()
     useEffect(() => {
-        if (window !== undefined && window.initSlickBlogs && props.data.blogger && props.data.blogger.image.length) {
+        if (window !== undefined && window.initSlickBlogs && props.data.posts && props.data.posts.image.length) {
             window.initSlickBlogs()
         }
     })
