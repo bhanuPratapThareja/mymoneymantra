@@ -8,28 +8,31 @@ import Layout from "../../../../components/Layout"
 import Strapi from "../../../../providers/strapi"
 import { extractOffers, viewOffers } from "../../../../services/offersService"
 import { getClassesForPage } from "../../../../utils/classesForPage"
-import { getBlogId, getProductType, setProductType } from "../../../../utils/localAccess"
+import { getBlogId } from "../../../../utils/localAccess"
 
 const BlogDetail = props => {
     const [currentUrl, setCurrentUrl] = useState()
     const [blogData, setBlogData] = useState([])
     const [trendingOffers, setTrendingOffers] = useState([])
+    const [productType, setProductType] = useState()
     let strapi = new Strapi()
     useEffect(() => {
         let blogId = getBlogId('blogId')
         const getBlogData = async () => {
             const blog = await strapi.processReq(
                 "GET",
-                `quick-blogs/${blogId}`
+                `posts/${blogId}`
             );
-            let slugForProductTypeData = blog.blog_categories[0].slug ? blog.blog_categories[0].slug : 'credit-cards'
+            let slugForProductTypeData = blog.post_categories[0].slug ? blog.post_categories[0].slug : 'credit-cards'
             const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${slugForProductTypeData}`)
-            setProductType(productTypeData)
-            const productType = getProductType()
-            let productTypeId = productType.productTypeId
-            const { trendings } = await viewOffers(productTypeId)
-            const trendingOffers = await extractOffers(trendings, productTypeId)
-            setTrendingOffers(trendingOffers)
+            let productTypeId = productTypeData[0].product_type_id
+            const apiOffers = await viewOffers(productTypeId)
+            if (apiOffers) {
+                const { trendings } = apiOffers
+                const trendingOffers = await extractOffers(trendings, productTypeId)
+                setTrendingOffers(trendingOffers)
+            }
+            setProductType(productTypeData[0])
             setBlogData(blog)
         }
         getBlogData()
@@ -38,7 +41,6 @@ const BlogDetail = props => {
     }, [props.query])
 
     const getComponents = (dynamic) => {
-        console.log(dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.blog-texts-component':
@@ -51,6 +53,7 @@ const BlogDetail = props => {
                     return <TrendingOffers
                         key={block.id}
                         data={block}
+                        // productType={productType}
                         blogTrendingOffers={trendingOffers}
                     />
                 case 'blocks.similar-blogs-component':
@@ -73,12 +76,12 @@ export async function getServerSideProps(ctx) {
 
     const allBlogs = await strapi.processReq(
         "GET",
-        `quick-blogs`
+        `posts`
     );
 
     const blogData = await strapi.processReq(
         "GET",
-        `quick-blogs/${query.slug}`
+        `posts/${query.slug}`
     );
     const pageData = await strapi.processReq(
         "GET",

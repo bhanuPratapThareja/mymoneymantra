@@ -37,24 +37,21 @@ const BlogSearchPage = (props) => {
             let sortByDate = sortBlogsByDate(blogs)
             setData(sortByDate)
         }
-        if (props.query.subcategory) {
-            setData(props.blogData)
-        }
-        if (props.query.category) {
-            let filteredBlogs = []
-            props.blogData.forEach((blog) => {
-                blog.blog_categories.forEach(category => {
-                    if (category.blog_category_name.toLowerCase().includes(props.query.category.toLowerCase())) {
-                        filteredBlogs.push(blog)
-                    }
-                })
-            })
-            setData(filteredBlogs)
-        }
+        // if (props.query.category) {
+        //     let filteredBlogs = []
+        //     props.blogData.forEach((blog) => {
+        //         blog.blog_categories.forEach(category => {
+        //             if (category.blog_category_name.toLowerCase().includes(props.query.category.toLowerCase())) {
+        //                 filteredBlogs.push(blog)
+        //             }
+        //         })
+        //     })
+        //     setData(filteredBlogs)
+        // }
         if (props.query.author) {
             let filteredBlogs = []
             props.blogData.forEach(blog => {
-                if (props.query.author.toLowerCase().includes(blog.blog_contributor.blog_contributors_name.toLowerCase())) {
+                if (props.query.author.toLowerCase().includes(blog.post_contributors.post_contributors_name.toLowerCase())) {
                     if (blog.header.toLowerCase().includes(props.query.q.toLowerCase())) {
                         filteredBlogs.push(blog)
                     }
@@ -88,7 +85,7 @@ export async function getServerSideProps(ctx) {
 
     const blogData = await strapi.processReq(
         "GET",
-        `quick-blogs`
+        `posts`
     );
     const pageData = await strapi.processReq(
         "GET",

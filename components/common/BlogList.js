@@ -7,6 +7,7 @@ import Image from '../ImageComponent/ImageComponent'
 
 const BlogList = (props) => {
     const { data } = props
+    console.log('blog list', data)
     let sortedBlogs = data.sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
     let limit = 3
     const [allBlogs, setAllBlogs] = useState([])
@@ -35,7 +36,7 @@ const BlogList = (props) => {
         setTimeout(() => {
             setBlogsToDispaly(finalList)
         }, 1000)
-        console.log("finalList",finalList)
+        console.log("finalList", finalList)
     }
     return (
         <section className="blogs-filter container">

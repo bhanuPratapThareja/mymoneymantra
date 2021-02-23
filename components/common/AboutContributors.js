@@ -6,7 +6,7 @@ const AboutContributors = (props) => {
         <div className="container cstm-space">
             {props.data.length ? <section className="cstm-post">
                 <div className="cstm-pic">
-                    <Image image={props.data[0].blog_contributors_image} />
+                    <Image image={props.data[0].post_contributors_image} />
                 </div>
                 <div className="cstm-content">
                     <div className="content-heading">

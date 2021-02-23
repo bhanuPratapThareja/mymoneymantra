@@ -4676,7 +4676,7 @@ label {
     margin: 0 auto;
     text-align: center; }
 .personal-loan-listing .long-cards-wrapper-card .top .name div > img {
-  margin-left: -20px;
+  /* margin-left: -20px; */
   max-width: 120px; }
 .personal-loan-listing .long-cards-wrapper-card .top .name h3 {
   margin-top: 0; }

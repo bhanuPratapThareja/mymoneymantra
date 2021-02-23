@@ -13,8 +13,8 @@ const BlogsByCategory = (props) => {
             let filteredBlogs = []
             let categoryName = unformatCategoryName(props.query.category)
             props.blogData.forEach((blog) => {
-                blog.blog_categories.forEach(category => {
-                    if (category.blog_category_name.toLowerCase().includes(categoryName.toLowerCase())) {
+                blog.post_categories.forEach(category => {
+                    if (category.post_category_name.toLowerCase().includes(categoryName.toLowerCase())) {
                         filteredBlogs.push(blog)
                     }
                 })
@@ -46,7 +46,7 @@ export async function getServerSideProps(ctx) {
 
     const blogData = await strapi.processReq(
         "GET",
-        `quick-blogs`
+        `posts`
     );
     const pageData = await strapi.processReq(
         "GET",
