@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import moment from 'moment'
 import BlogBanner from '../../components/Banners/BlogBanner';
 import BlogList from '../../components/common/BlogList';
 import Layout from '../../components/Layout';
@@ -11,10 +12,15 @@ const BlogSearchPage = (props) => {
         let sortedBlogsByKeyword = blogs.sort((a, b) => a.header.indexOf(searchKeyword) < b.header.indexOf(searchKeyword) ? 1 : -1)
         return sortedBlogsByKeyword
     }
+    const sortBlogsByDate = (blogs) => {
+        // let sortedBlogsByDate = blogs.sort((a, b) => moment(moment(a.publish_at).format('YYYY-MM-DD')).isBefore(moment(b.publish_at).format('YYYY-MM-DD')) ? 1 : -1)
+        let sortedBlogsByDate = blogs.sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
+        return sortedBlogsByDate
+    }
     let searchKey = ''
     useEffect(() => {
-        if (props.query.s) {
-            searchKey = props.query.s
+        if (props.query.q) {
+            searchKey = props.query.q
             // let filteredBlogs = props.blogData.filter(blog => blog.header.toLowerCase().includes(searchKey.toLowerCase()))
             let filteredBlogs = []
             props.blogData.forEach(blog => {
@@ -28,27 +34,25 @@ const BlogSearchPage = (props) => {
                 }
             })
             let blogs = sortBlogs(searchKey, filteredBlogs)
-            setData(blogs)
+            let sortByDate = sortBlogsByDate(blogs)
+            setData(sortByDate)
         }
-        if (props.query.subcategory) {
-            setData(props.blogData)
-        }
-        if (props.query.category) {
-            let filteredBlogs = []
-            props.blogData.forEach((blog) => {
-                blog.blog_categories.forEach(category => {
-                    if (category.blog_category_name.toLowerCase().includes(props.query.category.toLowerCase())) {
-                        filteredBlogs.push(blog)
-                    }
-                })
-            })
-            setData(filteredBlogs)
-        }
+        // if (props.query.category) {
+        //     let filteredBlogs = []
+        //     props.blogData.forEach((blog) => {
+        //         blog.blog_categories.forEach(category => {
+        //             if (category.blog_category_name.toLowerCase().includes(props.query.category.toLowerCase())) {
+        //                 filteredBlogs.push(blog)
+        //             }
+        //         })
+        //     })
+        //     setData(filteredBlogs)
+        // }
         if (props.query.author) {
             let filteredBlogs = []
             props.blogData.forEach(blog => {
-                if (props.query.author.toLowerCase().includes(blog.blog_author.toLowerCase())) {
-                    if (blog.header.toLowerCase().includes(props.query.s.toLowerCase())) {
+                if (props.query.author.toLowerCase().includes(blog.post_contributors.post_contributors_name.toLowerCase())) {
+                    if (blog.header.toLowerCase().includes(props.query.q.toLowerCase())) {
                         filteredBlogs.push(blog)
                     }
                 }
@@ -77,11 +81,11 @@ const BlogSearchPage = (props) => {
 export async function getServerSideProps(ctx) {
     const strapi = new Strapi();
     const { query } = ctx;
-    const pageClasses = getClassesForPage('blog')
+    const pageClasses = getClassesForPage('blog-search')
 
     const blogData = await strapi.processReq(
         "GET",
-        `quick-blogs`
+        `posts`
     );
     const pageData = await strapi.processReq(
         "GET",

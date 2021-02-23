@@ -12,18 +12,19 @@ axios.interceptors.request.use(async config => {
   if (!accessToken) {
     try {
       const { url, body } = getApiData('authenticate')
-      body.request.header.correlationId = generateCorrelationId()
       try {
         const res = await fetch(url, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'correlationId': generateCorrelationId(),
+            'appId': appId
           },
           body: JSON.stringify(body)
         })
         const json = await res.json()
-        setAuthToken(json.response.payload)
+        setAuthToken(json)
       }catch(err) {
         throw new Error(err.message)
       }

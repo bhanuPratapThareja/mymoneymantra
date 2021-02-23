@@ -1,4 +1,6 @@
 import Image from '../ImageComponent/ImageComponent'
+import { useEffect } from 'react'
+import { clearLeadBank } from '../../utils/localAccess'
 
 const ThankYouBanner = props => {
 
@@ -16,7 +18,7 @@ const ThankYouBanner = props => {
                         <div className="top" style={{ textAlign: 'center' }}>
                             <Image image={thank_you_icon} />
                             <div style={{ marginBottom: '10px' }} dangerouslySetInnerHTML={{ __html: thank_you_text }}></div>
-                            <p>{`for applying for a ${productType.productTypeName}`}</p>
+                            <p>{`for applying for a ${productType.product_type_name.slice(0, -1)}`}</p>
                             <p>{` with ${bank.bankName}.`}</p>
                         </div>
                         <div className="bottom">

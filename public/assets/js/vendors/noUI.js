@@ -78,41 +78,50 @@ $(document).ready(function() {
   });
   
   // Set visual min and max values and also update value hidden form inputs
-  rangeSlider.noUiSlider.on('update', function(values, handle) {
-    document.getElementsByClassName('slider-range-value1').innerHTML = values[0];
-    document.getElementById('slider-range-value2').innerHTML = values[1];
-    document.getElementsByName('min-value').value = moneyFormat.from(
-      values[0]);
-    document.getElementsByName('max-value').value = moneyFormat.from(
-      values[1]);
-  });
+  if(rangeSlider && rangeSlider.noUiSlider) {
+    rangeSlider.noUiSlider.on('update', function(values, handle) {
+      document.getElementsByClassName('slider-range-value1').innerHTML = values[0];
+      document.getElementById('slider-range-value2').innerHTML = values[1];
+      document.getElementsByName('min-value').value = moneyFormat.from(
+        values[0]);
+      document.getElementsByName('max-value').value = moneyFormat.from(
+        values[1]);
+    });
+  }
 
-  tenure.noUiSlider.on('update', function(values, handle) {
-    document.getElementsByClassName('slider-range-value1').innerHTML = values[0];
-    document.getElementById('slider-range-value2').innerHTML = values[1];
-    document.getElementsByName('min-value').value = moneyFormat.from(
-      values[0]);
-    document.getElementsByName('max-value').value = moneyFormat.from(
-      values[1]);
-  });
+  if(tenure && tenure.noUiSlider) {
+    tenure.noUiSlider.on('update', function(values, handle) {
+      document.getElementsByClassName('slider-range-value1').innerHTML = values[0];
+      document.getElementById('slider-range-value2').innerHTML = values[1];
+      document.getElementsByName('min-value').value = moneyFormat.from(
+        values[0]);
+      document.getElementsByName('max-value').value = moneyFormat.from(
+        values[1]);
+    });
+  }
 
-  invest.noUiSlider.on('update', function(values, handle) {
-    document.getElementsByClassName('slider-range-value1').innerHTML = values[0];
-    document.getElementById('slider-range-value2').innerHTML = values[1];
-    document.getElementsByName('min-value').value = moneyFormat.from(
-      values[0]);
-    document.getElementsByName('max-value').value = moneyFormat.from(
-      values[1]);
-  });
+  if(invest && invest.noUiSlider) {
+    invest.noUiSlider.on('update', function(values, handle) {
+      document.getElementsByClassName('slider-range-value1').innerHTML = values[0];
+      document.getElementById('slider-range-value2').innerHTML = values[1];
+      document.getElementsByName('min-value').value = moneyFormat.from(
+        values[0]);
+      document.getElementsByName('max-value').value = moneyFormat.from(
+        values[1]);
+    });
+  
+  }
 
-  loan.noUiSlider.on('update', function(values, handle) {
-    document.getElementsByClassName('slider-range-value1').innerHTML = values[0];
-    document.getElementById('slider-range-value2').innerHTML = values[1];
-    document.getElementsByName('min-value').value = moneyFormat.from(
-      values[0]);
-    document.getElementsByName('max-value').value = moneyFormat.from(
-      values[1]);
-  });
+  if(loan && loan.noUiSlider) {
+    loan.noUiSlider.on('update', function(values, handle) {
+      document.getElementsByClassName('slider-range-value1').innerHTML = values[0];
+      document.getElementById('slider-range-value2').innerHTML = values[1];
+      document.getElementsByName('min-value').value = moneyFormat.from(
+        values[0]);
+      document.getElementsByName('max-value').value = moneyFormat.from(
+        values[1]);
+    });
+  }
 });
 
 
@@ -1773,7 +1782,8 @@ $(document).ready(function() {
     // Run the standard initializer
 
   function initialize(target, originalOptions) {
-      if (!target.nodeName) {
+      if (!target || !target.nodeName) {
+        return
         throw new Error('noUiSlider.create requires a single element.');
       }
       // Test the options and create the slider environment;

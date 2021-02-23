@@ -21,18 +21,74 @@ export const getSliderFilterValues = (slider, rangeId) => {
     return null
 }
 
+export const initializeMoneyRange = (slider, rangeId) => {
+    if (slider) {
+        const wNumb = window.wNumb
+        var moneyFormat = wNumb({
+            decimals: 0,
+            thousand: ',',
+            prefix: '₹',
+            tooltips: true,
+        })
+
+        var rangeSlider = document.getElementById(rangeId)
+        if (rangeSlider) {
+            const { max, min } = slider
+            const start = min
+            const stop = max
+
+            // setTimeout(() => {
+            noUiSlider.create(rangeSlider, {
+                start: [start, stop],
+                step: 1,
+                range: {
+                    'min': [min],
+                    'max': [max]
+                },
+                tooltips: true,
+                format: moneyFormat,
+                connect: true
+            });
+            // }, 1000)
+        }
+    }
+}
+
+export const initializePercentRange = (slider, rangeId) => {
+    var rangeSlider = document.getElementById(rangeId)
+    if (rangeSlider) {
+        const { max, min } = slider
+        const start = min
+        const stop = max
+
+        setTimeout(() => {
+            noUiSlider.create(rangeSlider, {
+                start: [start, stop],
+                step: 0.01,
+                range: {
+                    'min': [min],
+                    'max': [max]
+                },
+                tooltips: true,
+                format: {
+                    from: Number,
+                    to: function (value) {
+                        return (value + "%");
+                    }
+                },
+                connect: true
+            });
+        }, 1000)
+    }
+}
+
 
 export const initializeYearRange = (slider, rangeId) => {
     var rangeSlider = document.getElementById(rangeId)
     if (rangeSlider) {
-
-        let { max, min, start, stop } = slider
-        if (!start || start < min) {
-            start = min
-        }
-        if (!stop || stop > max) {
-            stop = max
-        }
+        const { max, min } = slider
+        const start = min
+        const stop = max
 
         setTimeout(() => {
             noUiSlider.create(rangeSlider, {
@@ -52,43 +108,6 @@ export const initializeYearRange = (slider, rangeId) => {
                 connect: true
             });
         }, 1000)
-    }
-}
-
-export const initializeMoneyRange = (slider, rangeId) => {
-    if (slider) {
-        const wNumb = window.wNumb
-        var moneyFormat = wNumb({
-            decimals: 0,
-            thousand: ',',
-            prefix: '₹',
-            tooltips: true,
-        })
-
-        var rangeSlider = document.getElementById(rangeId)
-        if (rangeSlider) {
-            let { max, min, start, stop } = slider
-            if (start < min) {
-                start = min
-            }
-            if (stop > max) {
-                stop = max
-            }
-
-            setTimeout(() => {
-                noUiSlider.create(rangeSlider, {
-                    start: [start, stop],
-                    step: 1,
-                    range: {
-                        'min': [min],
-                        'max': [max]
-                    },
-                    tooltips: true,
-                    format: moneyFormat,
-                    connect: true
-                });
-            }, 1000)
-        }
     }
 }
 
@@ -127,37 +146,4 @@ export const initializeLoan = (el, min, max, start, stop) => {
             connect: true
         });
     }, 500);
-}
-
-export const initializePercentRange = (slider, rangeId) => {
-    var rangeSlider = document.getElementById(rangeId)
-    if (rangeSlider) {
-
-        let { max, min, start, stop } = slider
-        if (!start || start < min) {
-            start = min
-        }
-        if (!stop || stop > max) {
-            stop = max
-        }
-
-        setTimeout(() => {
-            noUiSlider.create(rangeSlider, {
-                start: [start, stop],
-                step: 1,
-                range: {
-                    'min': [min],
-                    'max': [max]
-                },
-                tooltips: true,
-                format: {
-                    from: Number,
-                    to: function (value) {
-                        return (parseInt(value) + "%");
-                    }
-                },
-                connect: true
-            });
-        }, 1000)
-    }
 }

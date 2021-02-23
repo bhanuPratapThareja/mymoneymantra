@@ -1,24 +1,21 @@
 import { useEffect, useState } from 'react'
 import Image from '../ImageComponent/ImageComponent'
 import DecisionButton from '../DecisionButton/DescisionButton'
-
 import { getProductDecision } from '../../services/offersService'
-import { unpackComponents } from '../../services/componentsService'
 
 const DetailsBanner = props => {
-    const [productData, setproductData] = useState(null)
+    const [productData, setProductData] = useState(null)
 
     useEffect(() => {
         getProductData()
     }, [])
 
     const getProductData = async () => {
-        const productData = await unpackComponents(props.productData[0])
-        await getProductDecision([productData])
-        setproductData(productData)
+        const productWithDesicion = await getProductDecision([props.productData], props.primaryPath, props.productType)
+        setProductData(productWithDesicion[0])
     }
 
-    if (!productData) {
+    if(!productData) {
         return null
     }
 
@@ -29,9 +26,13 @@ const DetailsBanner = props => {
             <div className="mobile-background"></div>
             <section className="banner container">
                 <div className="banner-wrapper">
+             
                     <h1><b>{bank.bank_name}</b><br />
-                        {product.product_name}</h1>
-                    <div dangerouslySetInnerHTML={{ __html: product.product_banner_detail.content }}></div>
+                        {props.primaryPath === 'credit-cards' ? 
+                            product.product_name : props.productType.product_type_name.slice(0, -1)}
+                    </h1>
+                    {product.product_banner_detail ? <div dangerouslySetInnerHTML={{ __html: product.product_banner_detail.content }}></div>: null}
+        
 
                     {productDecision ?
                         <span className="details-button-div">
@@ -45,7 +46,8 @@ const DetailsBanner = props => {
                 </div>
 
                 <div>
-                    <Image className="banner-card" image={product.product_image.image} />
+                    {productData.product.product_image ? <Image className="banner-card" image={productData.product.product_image.image} /> : null}
+                    {productData.bank ? <Image className="banner-card" image={productData.bank.image} /> : null}
                 </div>
             </section>
         </div>

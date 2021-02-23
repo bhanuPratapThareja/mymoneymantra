@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import Strapi from '../../../providers/strapi'
 import Layout from '../../../components/Layout'
+import PageNotFound from '../../../components/PageNotFound'
 
 import DetailsBanner from '../../../components/Banners/DetailsBanner'
 import ProductDetails from '../../../components/common/ProductDetails'
 import CreditScore from '../../../components/common/CreditScore'
-import Offers from '../../../components/common/Offers'
+import TrendingOffers from '../../../components/common/TrendingOffers'
 import BankSlider from '../../../components/common/BankSlider'
 import Rewards from '../../../components/common/Rewards'
 import FinancialTools from '../../../components/common/FinancialTools'
@@ -15,78 +15,63 @@ import LearnMore from '../../../components/common/LearnMore'
 import LongFormBanner from '../../../components/Banners/LongFormBanner'
 import LongForm from '../../../components/common/LongForm'
 import { getClassesForPage } from '../../../utils/classesForPage'
-import { setPrimaryPath, setProductType } from '../../../utils/localAccess'
+import { getUnpackedProduct } from '../../../services/componentsService'
 
 const Details = props => {
-    const router = useRouter()
     const [page, setPage] = useState(props.page)
     const [previousPath, setPreviousPath] = useState('')
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        setPrimaryPath(props.primaryPath)
-        setProductType(props.productTypeData)
         setPreviousPath(page)
+
         window.onpopstate = () => {
-            if (previousPath !== 'long-form') {
-                setPage(previousPath)
+            if (previousPath === 'details') {
+                changePageType('details')
             }
         }
     }, [page])
 
-    const changePageType = page => {
-        setTimeout(() => {
-            setPage(page)
-        }, 2500)
-    }
 
-    if (page === 'long-form' && !props.longFormData) {
-        if (typeof window !== 'undefined') {
-            const { primaryPath } = props
-            const pathname = `/${primaryPath}`
-            router.push({ pathname })
-            return <div className="interim-class">
-                <div className="page-not-found_center_msg">
-                    <h2>Page Not Found</h2>
-                    <p>redirecting to {primaryPath.split('-').join(' ').slice(0, -1)} page ...</p>
-                </div>
-            </div>
+    const changePageType = page => {
+        setPage(page)
+        if(page === 'long-form') {
+            setPreviousPath('details')
         }
     }
 
-    if (!page && !props.detailsData) {
-        return null
+    if (!props.productData) {
+        return <PageNotFound />
     }
 
     const getComponents = dynamic => {
-        console.log(props.productData)
         return dynamic.map(block => {
             switch (block.__component) {
-                case 'banners.credit-cards-detail-banner-component':
-                case 'banners.personal-loans-details-banner-component':
-                case 'banners.home-loans-details-banner-component':
+                case 'blocks.product-banner-component':
                     return <DetailsBanner
                         key={block.id}
                         data={block}
                         productData={props.productData}
                         primaryPath={props.primaryPath}
+                        productType={props.productType}
                         changePageType={changePageType}
                     />
-
-                case 'blocks.credit-cards-details-component':
-                case 'blocks.details-component':
-                case 'blocks.home-loans-details':
+                case 'blocks.offers-details-component':
                     return <ProductDetails
                         key={block.id}
                         data={block}
-                        primaryPath={props.primaryPath}
                         productData={props.productData}
+                        primaryPath={props.primaryPath}
                     />
-
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
-                    return <Offers key={block.id} data={block} primaryPath={props.primaryPath} />
+                    return <TrendingOffers 
+                        key={block.id} 
+                        data={block}
+                        primaryPath={props.primaryPath}
+                        productType={props.productType}
+                    />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.rewards-component':
@@ -101,16 +86,17 @@ const Details = props => {
                     return <LongFormBanner
                         key={block.id}
                         data={block}
-                        primaryPath={props.primaryPath}
                         productData={props.productData}
+                        primaryPath={props.primaryPath}
                     />
                 case 'form-components.long-form-component-new':
                     return <LongForm
                         key={block.id}
                         data={block}
-                        primaryPath={props.primaryPath}
                         productData={props.productData}
-                        preferredBanks={props.preferredBanks}
+                        primaryPath={props.primaryPath}
+                        productType={props.productType}
+                        preferredSelectionLists={props.preferredSelectionLists}
                     />
             }
         })
@@ -118,6 +104,9 @@ const Details = props => {
 
 
     if (page === 'long-form') {
+        if(!props.longFormData || !props.productData) {
+            return <PageNotFound />
+        }
         return (
             <div className={getClassesForPage('long-form')}>
                 <div className="mobile-background"></div>
@@ -130,6 +119,9 @@ const Details = props => {
             </div>
         )
     } else {
+        if(!props.detailsData || !props.productData) {
+            return <PageNotFound />
+        }
         return (
             <div className={getClassesForPage(props.primaryPath, 'details')}>
                 {props.detailsData ? <Layout>{getComponents(props.detailsData.dynamic)}</Layout> : null}
@@ -148,20 +140,22 @@ export async function getServerSideProps(ctx) {
         page = 'details'
     }
 
-    const detailsPageData = await strapi.processReq('GET', `${primaryPath}-details-pages?slug=${bankSlug}`)
-    const longFormPageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${productSlug}-long-form`)
-    const detailsData = detailsPageData ? detailsPageData[0] : null
-    const longFormData = longFormPageData ? longFormPageData[0] : null
+    const detailsPageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-details`)
+    const longFormPageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${bankSlug}-long-form`)
+    const detailsData = detailsPageData && detailsPageData.length ? detailsPageData[0]  : null
+    const longFormData = longFormPageData && longFormPageData.length ? longFormPageData[0] : null
 
-    const productData = await strapi.processReq('GET', `product-v-2-s?product-type-v-2.slug=${primaryPath}&bank.slug=${bankSlug}`)
+    const productDataPacked = await strapi.processReq('GET', `product-v-2-s?product_type_v_2.slug=${primaryPath}&bank.slug=${bankSlug}`)
     const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
-    const preferredBanksData = await strapi.processReq("GET", `list-preferences`)
-    const preferredBanks = preferredBanksData[0]
+    const productType = productTypeData[0]
+
+    const preferredSelectionLists = await strapi.processReq("GET", `list-preferences`)
+    const productData = await getUnpackedProduct(productDataPacked)
 
     return {
         props: {
-            detailsData, longFormData, productData,
-            productTypeData, preferredBanks, page, primaryPath
+            detailsData, longFormData, productData, productType, 
+            preferredSelectionLists, page, primaryPath
         }
     }
 }

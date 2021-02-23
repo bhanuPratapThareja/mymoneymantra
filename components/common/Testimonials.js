@@ -2,7 +2,7 @@ import Image from '../ImageComponent/ImageComponent'
 
 const Testimonials = props => {
     return (
-        <section data-aos="fade-up" className="testimonial aos-init">
+        <section data-aos="fade-up" className="testimonial aos-init aos-animate">
             <div className="container testimonial-wrapper">
                 {props.data.statistics.map(testimonial => {
                     const { id, image, stats, sub_text } = testimonial

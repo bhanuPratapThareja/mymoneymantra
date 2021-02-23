@@ -618,7 +618,7 @@ label {
       padding: 20px 0px 12px 32px;
       border-bottom-left-radius: 6px;
       width: 100%;
-      background: url(/assets/images/listings/blue-gradient.svg);
+      background: url("../public/assets/images/listings/blue-gradient.svg");
       background-repeat: no-repeat;
       background-position: left bottom; }
       @media (min-width: 769px) and (max-width: 1023px) {
@@ -1191,7 +1191,8 @@ label {
     .blog-wrapper .card-3 .image_2 {
       max-width: 232px;
       width: 100%;
-      background: url("/assets/images/credit-card-flow/blog-image-2.png");
+      /* background: url("/assets/images/credit-card-flow/blog-image-2.png"); */
+      /* background: url("http://203.122.46.189:1338/uploads/blog_image_2_34b9ef61f1.png"); */
       background-size: cover;
       background-repeat: no-repeat; }
       @media (max-width: 768px) {
@@ -1208,7 +1209,8 @@ label {
     .blog-wrapper .card-3 .image_3 {
       max-width: 232px;
       width: 100%;
-      background: url("/assets/images/credit-card-flow/blog-image-3.png");
+      /* background: url("/assets/images/credit-card-flow/blog-image-3.png");
+      background: url("http://203.122.46.189:1338/uploads/blog_image_3_a5b88dca5b.png"); */
       background-size: cover;
       background-repeat: no-repeat; }
       @media (max-width: 768px) {
@@ -1911,8 +1913,10 @@ label {
   right: 0;
   top: 50%;
   -ms-flex-pack: start;
-      justify-content: flex-start;
-  padding: 12px 40px 12px 12px; }
+  justify-content: flex-start;
+  padding: 12px 40px 12px 12px
+}
+
   @media (max-width: 768px) {
     #blog-socials {
       background: #ffffff;
@@ -2099,7 +2103,9 @@ label {
         color: rgba(34, 31, 31, 0.6); }
         @media (max-width: 768px) {
           .credit-card-flow .lets-find-content p {
-            display: none; } }
+            /* display: none;  */
+          
+          } }
     .credit-card-flow .lets-find-form {
       max-width: 360px;
       width: 360px; }
@@ -2110,6 +2116,7 @@ label {
           margin-top: 24px; } }
       .credit-card-flow .lets-find-form form .form__group {
         position: relative;
+        margin-bottom:16px;
         padding: 0px 20px 10px 20px;
         border-radius: 6px;
         border: 1px solid rgba(34, 31, 31, 0.2);
@@ -2143,7 +2150,7 @@ label {
         background-repeat: no-repeat;
         background-position: 97% 80%;
         position: relative;
-        margin-bottom: 24px;
+        /* margin-bottom: 24px; */
         border: 1px solid rgba(34, 31, 31, 0.6); }
         .credit-card-flow .lets-find-form form .form__group.verified-input span {
           position: absolute;
@@ -2237,8 +2244,11 @@ label {
             line-height: 1.5rem; } }
       .credit-card-flow .lets-find-form form .filled-input {
         border: 2px solid rgba(34, 31, 31, 0.6) !important; }
+      
       .credit-card-flow .lets-find-form form .form__group:not(:first-child) {
-        margin-top: 16px; }
+        /* margin-top: 16px; */
+        margin-top: 0;
+      }
     .credit-card-flow .lets-find .lets-go-button {
       margin-top: 32px;
       width: 100%;
@@ -2684,7 +2694,7 @@ label {
               position: absolute;
               top: 42px;
               left: 0;
-              z-index: 99;
+              z-index: 100;
               box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.08), 0px 4px 16px rgba(0, 0, 0, 0.08);
               display: none;
               overflow: hidden;
@@ -4228,12 +4238,12 @@ label {
         width: 100%; }
         
         @media (max-width: 768px) {
-          .long-form .long-form-wrapper .card-info img {
+          /* .long-form .long-form-wrapper .card-info img {
             margin: 24px auto 0;
             max-width: 40%;
             width: 100%;
             display: block;
-          }
+          } */
         }
 
       .long-form .long-form-wrapper .card-info h4 {
@@ -4666,7 +4676,7 @@ label {
     margin: 0 auto;
     text-align: center; }
 .personal-loan-listing .long-cards-wrapper-card .top .name div > img {
-  margin-left: -20px;
+  /* margin-left: -20px; */
   max-width: 120px; }
 .personal-loan-listing .long-cards-wrapper-card .top .name h3 {
   margin-top: 0; }

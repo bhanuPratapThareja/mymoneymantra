@@ -12,7 +12,7 @@ const AppDownload = props => {
     }
 
     return (
-        <section data-aos="fade-up" className="app-download aos-init">
+        <section data-aos="fade-up" className="app-download aos-init aos-animate">
             <div className="app-bg">
                 <div className="container app-download-wrapper">
                     <div className="app-download-wrapper-left">

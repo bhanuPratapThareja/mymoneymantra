@@ -1,21 +1,41 @@
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { setBlogId } from '../../utils/localAccess'
 import Image from '../ImageComponent/ImageComponent'
 
 
 const Blogger = props => {
     const router = useRouter()
-    let { section_heading, bloggers } = props.data
-    let popularBlogs = bloggers.filter(blog => blog.popular === true)
+    useEffect(() => {
+        if (window !== undefined && window.initSlickBlogs && props.data.posts && props.data.posts.image.length) {
+            window.initSlickBlogs()
+        }
+    })
+
+    let { section_heading, bloggers: posts } = props.data
+    let popularBlogs = posts.filter(blog => blog.popular === true)
+    const shuffleArray = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            let temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array
+    }
+    let randomBlogs = shuffleArray(popularBlogs)
+
     const onOpenBlog = blog => {
-        router.push({ pathname: '/blog/details', query: { slug: blog.id } })
+        setBlogId(blog.id)
+        router.push(`/blog/details/${blog.slug}`)
     }
 
     return (
-        <section data-aos="fade-up" className="container blog-container aos-init">
+        <section data-aos="fade-up" className="container blog-container aos-init aos-animate">
             <div className="blog">
                 <div dangerouslySetInnerHTML={{ __html: section_heading }}></div>
                 <div className="blog-wrapper" id="slider_blogs">
-                    {popularBlogs.map((blog, i) => {
+                    {randomBlogs.map((blog, i) => {
                         const { header, short_text, image, read_text, redirect_url, id, createdAt, popular, content, published_at } = blog
                         const date = new Date(published_at);
                         const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
@@ -26,11 +46,11 @@ const Blogger = props => {
                         const blogreadTime = readingTime(content);
                         const blogClasses = ['blog-wrapper-card', `card-${i + 1}`]
                         return (
-                            (i < 3) ? <div className={blogClasses.join(' ')} id={`blog-card-${i + 1}`} key={id}>
+                            (i < 3) ? <div className={blogClasses.join(' ')} id={`blog-card-${i + 1}`} key={i}>
                                 <div className={`image_${i + 1}`}>
                                     <Image image={image} />
                                 </div>
-                                <div className="content">
+                                <div className="content" onClick={() => onOpenBlog(blog)}>
                                     <span dangerouslySetInnerHTML={{ __html: header }}></span>
                                     <span dangerouslySetInnerHTML={{ __html: short_text }}></span>
                                     <div className="details">

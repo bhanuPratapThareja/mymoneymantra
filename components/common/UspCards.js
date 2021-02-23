@@ -17,7 +17,7 @@ const UspCards = props => {
 
     return (
         <div className="combined-wrapper">
-            <div data-aos="fade-up" className="features container banner-features-container aos-init">
+            <div data-aos="fade-up" className="features container banner-features-container aos-init aos-animate">
                 <div className="banner-features">
                     {renderUspCards(props.data.usp_cards)}
                 </div>

@@ -7,7 +7,7 @@ const CreditScore = props => {
      }
     
     return (
-        <section data-aos="fade-up" className="container score-container aos-init">
+        <section data-aos="fade-up" className="container score-container aos-init aos-animate">
             <div className="score score-cotent-cover">
                 <div className="score-content">
                     <div dangerouslySetInnerHTML={{ __html: credit_score_heading }}></div>

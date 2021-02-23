@@ -3,9 +3,8 @@ import SFButtons from '../SFButtons/SFButtons'
 import { getOtp } from '../../../services/formService'
 
 const OtpSlide = props => {
-
     return (
-        <form className="short-forms-wrapper">
+        <form className="short-forms-wrapper" onSubmit={props.onSubmitOtp} noValidate>
             <div className="mobile-otp">
                 <div className="lets-find-content otp-card_custom">
                     <h2>Verify your mobile<br />number</h2>
@@ -29,7 +28,6 @@ const OtpSlide = props => {
             </div>
             <SFButtons
                 onClickPrevious={props.onGoToLetFindForm}
-                onClickNext={props.onSubmitOtp}
                 slideButtonText={props.slideButtonText}
             />
         </form>

@@ -6,6 +6,7 @@ import ListingFilter from '../Listings/ListingsFilter'
 const ListingBanner = props => {
     const { listing_banner_heading, categories } = props.data.listing_banner
     const [selectedOption, setSelectedOption] = useState('all')
+    const [filtersReady, setFiltersReady] = useState(false)
 
     useEffect(() => {
         onBannerCategoryChange(selectedOption)
@@ -30,7 +31,7 @@ const ListingBanner = props => {
     }
 
     const getCalulatedProductType = () => {
-        const productTypeName = props.numberOfCards == 1 ? props.productTypeName.slice(0, -1) : props.productTypeName
+        const productTypeName = props.numberOfCards == 1 ? props.productType.product_type_name.slice(0, -1) : props.productType.product_type_name
         return productTypeName.toLowerCase()
     }
 
@@ -61,26 +62,26 @@ const ListingBanner = props => {
                     </div> : null}
                 </div>
                 <div className="bottom">
-                    {props.productTypeName ? <div className="cards">
+                    <div className="cards">
                         <h3><span id="count">{props.numberOfCards}</span> {getCalulatedProductType()}</h3>
-                    </div> : null}
-                    {props.filters ? <div className="filter">
+                    </div>
+                    {filtersReady ? <div className="filter">
                         <button
                             className="filter-option"
                             id="listing-filter"
-                            onClick={onOpenFilter}
-                            disabled={props.numberOfCards === 0}>
+                            onClick={onOpenFilter}>
                             Filters
                                 <img src="/assets/images/icons/down-chevron.svg" />
                         </button>
                     </div> : null}
                 </div>
             </div>
-            {props.filters ? <ListingFilter
-                banksList={props.banksList}
+            <ListingFilter
+                setFiltersReady={setFiltersReady}
+                allOfferCards={props.allOfferCards}
                 filters={props.filters}
                 filterCardsFilterComponent={props.filterCardsFilterComponent}
-            /> : null}
+            />
             <hr className="divider" />
         </section>
     )

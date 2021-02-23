@@ -1,31 +1,28 @@
 import { useEffect, useState } from "react"
 import { useRouter } from 'next/router'
-import Image from "../ImageComponent/ImageComponent";
-import DecisionButton from "../DecisionButton/DescisionButton";
-import { getDevice } from "../../utils/getDevice";
+import Image from "../ImageComponent/ImageComponent"
+import DecisionButton from "../DecisionButton/DescisionButton"
+import { getDevice } from "../../utils/getDevice"
 import { makeDecision } from '../../utils/decision'
-import { getPrimaryPath } from "../../utils/localAccess"
 
 const ListingCards = (props) => {
   const router = useRouter()
   const [offers, setOffers] = useState([])
-  const [primaryPath, setPrimaryPath] = useState([])
 
   useEffect(() => {
     setOffers(props.offerCards)
-    setPrimaryPath(getPrimaryPath())
   })
 
   const onOfferClick = (buttonText, offer) => {
     if (getDevice() !== "desktop") {
-      const decision = makeDecision(buttonText, offer, primaryPath)
+      const decision = makeDecision(buttonText, offer, props.primaryPath)
       const { pathname, query } = decision
       router.push({ pathname, query }, pathname, { shallow: true })
     }
   };
 
   if (!offers) {
-    return null;
+    return null
   }
 
   return (
@@ -33,9 +30,43 @@ const ListingCards = (props) => {
 
       {offers.map((offer, i) => {
         const { productDecision, bank, product } = offer
+        // console.log('inside ListingCards product', product);
+        const { product_interest_rate, product_tenure } = product
+
+        // ir = interest rate
+        // np = no of period(month)
+        // pv =  loan amount
+
+
+        // function PMT (ir, np, pv ) {
+        //   let pmt = ( ir * ( pv * Math.pow ( (ir+1), np ) ) ) / ( ( ir + 1 ) * ( Math.pow ( (ir+1), np) -1 ) );
+        //   console.log('PMT returned',pmt)
+        //   return pmt;
+        //  }
+
+        // let ir = product_interest_rate.max_value;
+        // let np = product_tenure.tenure;
+        // let pv;
+        // console.log('ir',ir);
+        // console.log('np',np)
+        // const formData = JSON.parse(localStorage.getItem("formData"))
+        // //console.log('formData--', formData)
+
+        // if (formData && formData[primaryPath]) {
+        //   let data = formData[primaryPath]
+        //    pv = data.requestedLoanamount;
+        //   console.log('pv.requestedLoanamount',pv)
+        //   PMT(ir,np,pv)
+        // }
+
+        // console.log('interestRate',interestRate)
+
+
+
+
         return (
           <div className="long-cards-wrapper"
-            key={offer.id}
+            key={i}
             onClick={() => onOfferClick(productDecision, offer)}
           >
 
@@ -48,15 +79,10 @@ const ListingCards = (props) => {
                   <Image className="mob-logo" image={bank.bank_logo} />
                   <h3><span>{bank.bank_name}</span> {product.product_name}</h3>
 
-                  {primaryPath === "credit-cards" ?
-                    <div> <Image image={product.product_image.image} /></div>
-                    : null}
-
-                  {primaryPath !== "credit-cards" ?
-                    <div>
-                      <Image image={bank.bank_image} />
-                    </div>
-                    : null}
+                  <div>
+                    {props.primaryPath === "credit-cards" ?
+                      <Image image={product.product_image.image} /> : <Image image={bank.bank_image} />}
+                  </div>
                 </div>
 
                 <div className="content">
@@ -73,27 +99,31 @@ const ListingCards = (props) => {
                 {product.product_annual_fee ? (
                   <div className="fee">
                     <h5>Annual fee:</h5>
-                    <p>
-                      <b>₹ {product.product_annual_fee.annual_fee_fy}</b> (First Year)
-                    </p>
+                    <p><b>₹ {product.product_annual_fee.annual_fee_fy}</b> (First Year)</p>
                     {product.product_annual_fee.annual_fee_sy ? (
-                      <p>
-                        <b>₹ {product.product_annual_fee.annual_fee_sy}</b> (Second year onwards)
-                      </p>
+                      <p><b>₹ {product.product_annual_fee.annual_fee_sy}</b> (Second year onwards)</p>
                     ) : null}
                   </div>
                 ) : null}
 
-                {/* {offer.intrest_rate ? (
-                  <div className="fee">
-                    <h5>Interest Rate:</h5>
-                    <p
-                      dangerouslySetInnerHTML={{ __html: offer.intrest_rate }}
-                    ></p>
-                  </div>
-                ) : null} */}
-              </div>
+                <div className="fee">
+                  {product.product_interest_rate ?
+                    <h5>Interest Rate:
+                      <span><b>&nbsp; {product.product_interest_rate.min_value}% -
+                      {product.product_interest_rate.max_value}%
+                      {product.product_interest_rate.duration === 'Annually' ? ' p.a' : ' p.m'}</b></span>
+                    </h5> : null}
 
+                  {product.product_emi ?
+                    <h5>EMI/month: <span><b>&nbsp; ₹ 1000</b></span></h5> : null}
+
+                  {product.product_processing_fee ?
+                    <h5>Processing Fee: <span><b>&nbsp; {product.product_processing_fee.processing_fees_from} % - {product.product_processing_fee.processing_fees_upto} %</b></span></h5> : null}
+
+                  {product.product_tenure ?
+                    <h5>Tenure: <span><b>&nbsp; {product.product_tenure.tenure}</b></span></h5> : null}
+                </div>
+              </div>
               <div className="bottom">
                 <div className="lifetime">
                   <h5>{product.product_usp_highlight.highlight}</h5>
@@ -102,13 +132,13 @@ const ListingCards = (props) => {
                   <DecisionButton
                     idForStyle="view-details"
                     buttonText="View Details"
-                    primaryPath={primaryPath}
+                    primaryPath={props.primaryPath}
                     offer={offer}
                   />
                   <DecisionButton
                     idForStyle="apply-now"
                     buttonText={offer.productDecision}
-                    primaryPath={primaryPath}
+                    primaryPath={props.primaryPath}
                     offer={offer}
                   />
                 </div>

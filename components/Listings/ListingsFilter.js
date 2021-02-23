@@ -1,70 +1,146 @@
-import { closeFilter } from '../../utils/loanListingFilterHandler'
-import { initializeMoneyRange, initializeYearRange, getSliderFilterValues,initializePercentRange } from '../../utils/noUiSliderHandler';
 import DownChevron from '../../public/assets/images/icons/down-chevron.svg'
+import { closeFilter } from '../../utils/listingsFilterHandler'
+import { initializeMoneyRange, initializePercentRange, initializeYearRange, getSliderFilterValues } from '../../utils/noUiSliderHandler';
+import { 
+    generateBanksCheckboxes, 
+    generateCategoriesCheckboxes,
+    generatePromotionCheckboxes,
+    generateAnnualFeesBlock,
+    generateEmiBlock,
+    generateLoanAmountBlock,
+    generateRoiBlock,
+    generateTenureBlock,
+    generateInterestRateBlock
+} from '../../utils/listingsFilterGenerator'
 
 class ListingFilter extends React.Component {
 
     state = {
+        gotOfferCards: false,
+        filters: {},
         showCheckboxes: 4,
-        filters: {}
+        checkboxes: [],
+        radios:[]
     }
 
     componentDidMount() {
-        const { filter_radio_name,
-            filter_fee_annual, filter_emi,
-            filter_tenure, filter_roi, filter_max_loan_amount } = this.props.filters
+        // this.updateBanksBlock()
+    }
 
-        const updatedCheckboxes = [...this.props.filters.checkboxes]
-        
-        if (updatedCheckboxes.length) {
-            updatedCheckboxes.forEach((block, i) => {
-                let blockValues = [...block.values]
-                if (block.type === 'banks') {
-                    let values = []
-                    let tempBanksTags = []
+    shouldComponentUpdate(nextProps) {
+        if (!nextProps.allOfferCards.length) {
+            return false
+        }
+        return true
+    }
 
-                    blockValues.forEach(value => {
-                        this.props.banksList.forEach(tag => {
-                            if (value.tag === tag) {
-                                if (!tempBanksTags.includes(tag)) {
-                                    tempBanksTags.push(tag)
-                                    values.push(value)
-                                }
-                            }
-                        })
-                    })
+    componentDidUpdate() {
+        this.updateBanksBlock()
+    }
 
-                    updatedCheckboxes[i].values = values
+    updateBanksBlock = () => {
+        if (!this.state.gotOfferCards) {
+            const bankBlock = generateBanksCheckboxes(this.props.allOfferCards, this.state.showCheckboxes)
+            if(bankBlock) {
+                this.setState({ checkboxes: [...this.state.checkboxes, bankBlock], gotOfferCards: true }, () => {
+                    this.updateCategoriesBlock()
+                })
+            } else {
+                this.updateCategoriesBlock()
+            }
+        }
+    }
 
-                } else {
-                    updatedCheckboxes[i].values = blockValues
-                }
-
-                block.showCheckboxes = this.state.showCheckboxes
-                block.totalCheckboxes = block.values.length
-                block.veiwAll = block.values.length > this.state.showCheckboxes
+    updateCategoriesBlock = () => {
+        const categoryBlock = generateCategoriesCheckboxes(this.props.allOfferCards, this.state.showCheckboxes)
+        if(categoryBlock) {
+            this.setState({ checkboxes: [...this.state.checkboxes, categoryBlock] }, () => {
+                this.updatePromotionsBlock()
             })
-
-            this.setState({ checkboxes: updatedCheckboxes })
+        } else {
+            this.updatePromotionsBlock()
         }
+    }
 
-        if (filter_radio_name.length) {
-            this.setState({ filter_radio_name })
+    updatePromotionsBlock = () => {
+        const promotionBlock = generatePromotionCheckboxes(this.props.allOfferCards, this.state.showCheckboxes)
+        if(promotionBlock) {
+            this.setState({ checkboxes: [...this.state.checkboxes, promotionBlock] }, () => {
+                this.updateAnnualFeesBlock()
+            })
+        } else {
+            this.updateAnnualFeesBlock()
         }
+    }
+    
+    updateAnnualFeesBlock = () => {
+        const annualFeesSlider = generateAnnualFeesBlock(this.props.allOfferCards)
+        if(annualFeesSlider) {
+            this.setState({ annualFeesSlider }, () => {
+                initializeMoneyRange(annualFeesSlider, 'annual-fees-range')
+                this.updateEmiBlock()
+            })
+        } else {
+            this.updateEmiBlock()
+        }
+    }
 
-        this.setState({ filter_fee_annual, filter_emi, filter_tenure, filter_roi, filter_max_loan_amount }, () => {
-            initializeMoneyRange(filter_fee_annual, 'annual-fees-range')
-            initializeMoneyRange(filter_emi, 'emi-range')
-            initializePercentRange(filter_roi, 'roi-range')
-            initializeMoneyRange(filter_max_loan_amount, 'max-loan-amount-range')
-            initializeYearRange(filter_tenure, 'tenure-range')
-        })
+    updateEmiBlock = () => {
+        const emiSlider = generateEmiBlock(this.props.allOfferCards)
+        if(emiSlider) {
+            this.setState({ emiSlider }, () => {
+                initializeMoneyRange(emiSlider, 'emi-range')
+                this.updateLoanAmountBlock()
+            })
+        } else {
+            this.updateLoanAmountBlock()
+        }
+    }
 
+    updateLoanAmountBlock = () => {
+        const loanAmountSlider = generateLoanAmountBlock(this.props.allOfferCards)
+        if(loanAmountSlider) {
+            this.setState({ loanAmountSlider }, () => {
+                initializeMoneyRange(loanAmountSlider, 'max-loan-amount-range')
+                this.updateInterestRatesBlock()
+            })
+        } else {
+            this.updateInterestRatesBlock()
+        }
+    }
+
+    updateInterestRatesBlock = () => {
+        const interestRatesSlider = generateInterestRateBlock(this.props.allOfferCards)
+        if(interestRatesSlider) {
+            this.setState({ interestRatesSlider }, () => {
+                initializePercentRange(interestRatesSlider, 'interest-rate-range')
+                this.updateTenureBlock()
+            })
+        } else {
+            this.updateTenureBlock()
+        }
+    }
+
+    updateTenureBlock = () => {
+        const tenureSlider = generateTenureBlock(this.props.allOfferCards)
+        if(tenureSlider) {
+            this.setState({ tenureSlider }, () => {
+                initializeYearRange(tenureSlider, 'tenure-range')
+                this.readyFilters()
+            })
+        } else {
+            this.readyFilters()
+        }
+    }
+
+    readyFilters = () => {
+        setTimeout(() => {
+            this.props.setFiltersReady(true)
+        }, 1000)
     }
 
     handleCheckbox = (e, type) => {
         const { name, checked } = e.target
-        // console.log(e, type)
         const selectedCheckboxes = this.state.filters[type] ? this.state.filters[type] : []
         if (checked) {
             selectedCheckboxes.push(name)
@@ -82,14 +158,14 @@ class ListingFilter extends React.Component {
     }
 
     onApplyFilter = () => {
-        const { filter_fee_annual, filter_emi, filter_roi, filter_max_loan_amount, filter_tenure } = this.state
-        const annualFees = getSliderFilterValues(filter_fee_annual, 'annual-fees-range')
-        const emi = getSliderFilterValues(filter_emi, 'emi-range')
-        const roi = getSliderFilterValues(filter_roi, 'roi-range')
-        const maxLoanAmount = getSliderFilterValues(filter_max_loan_amount, 'max-loan-amount-range')
-        const tenure = getSliderFilterValues(filter_tenure, 'tenure-range')
+        const { annualFeesSlider, emiSlider, loanAmountSlider, interestRatesSlider, tenureSlider } = this.state
+        const annualFees = getSliderFilterValues(annualFeesSlider, 'annual-fees-range')
+        const emi = getSliderFilterValues(emiSlider, 'emi-range')
+        const interestRate = getSliderFilterValues(interestRatesSlider, 'interest-rate-range')
+        const maxLoanAmount = getSliderFilterValues(loanAmountSlider, 'max-loan-amount-range')
+        const tenure = getSliderFilterValues(tenureSlider, 'tenure-range')
 
-        const filters = { ...this.state.filters, annualFees, emi, roi, maxLoanAmount, tenure }
+        const filters = { ...this.state.filters, annualFees, emi, interestRate, maxLoanAmount, tenure }
         this.setState({ ...this.state, filters }, () => {
             this.onCloseFilter()
         })
@@ -111,8 +187,8 @@ class ListingFilter extends React.Component {
     }
 
     render() {
-        const { checkboxes, filter_fee_annual, filter_radio_name,
-            filter_emi, filter_tenure, filter_roi, filter_max_loan_amount } = this.state
+        const { checkboxes, radios, annualFeesSlider, emiSlider,
+            loanAmountSlider, interestRatesSlider, tenureSlider } = this.state
         return (
             <section className="listing-modal mm-modal" id="listing-filter-show">
                 <div className="overlay"></div>
@@ -125,19 +201,19 @@ class ListingFilter extends React.Component {
 
                         <form>
                             {checkboxes && checkboxes.length ? <>
-                                {checkboxes.map(checkboxGroup => {
+                                {checkboxes.map((checkboxGroup, i) => {
                                     return (
-                                        <div className="content-one" key={checkboxGroup.id}>
-                                            <h5>{checkboxGroup.name}</h5>
+                                        <div className="content-one" key={i}>
+                                            <h5>{checkboxGroup.heading}</h5>
                                             <div className="fields-wrapper">
                                                 {checkboxGroup.values.map((checkbox, i) => {
                                                     if (i + 1 <= checkboxGroup.showCheckboxes) {
                                                         return (
-                                                            <div className="checkbox-container" key={checkbox.id}>
+                                                            <div className="checkbox-container" key={i + 1}>
                                                                 <div className="checkbox">
                                                                     <input type="checkbox" id={checkbox.tag} name={checkbox.tag} onChange={e => this.handleCheckbox(e, checkboxGroup.type)} />
                                                                     <label htmlFor={checkbox.tag}>
-                                                                    <span>{checkbox.checkbox_name}</span>
+                                                                        <span>{checkbox.name}</span>
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -158,8 +234,8 @@ class ListingFilter extends React.Component {
                                 })}
                             </> : null}
 
-                            {filter_fee_annual && filter_fee_annual.enable ? <div className="content-one">
-                                <h5>{filter_fee_annual.heading}</h5>
+                            {annualFeesSlider ? <div className="content-one">
+                                <h5>{annualFeesSlider.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">
                                         <div className="row">
@@ -172,15 +248,15 @@ class ListingFilter extends React.Component {
                                                     <input type="hidden" name="max-value" value="" readOnly />
                                                 </div>
                                             </div>
-                                            <span className="min-max left">₹{filter_fee_annual.min}</span>
-                                            <span className="min-max right">₹{filter_fee_annual.max}+</span>
+                                            <span className="min-max left">₹{annualFeesSlider.min}</span>
+                                            <span className="min-max right">₹{annualFeesSlider.max}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div> : null}
 
-                            {filter_emi && filter_emi.enable ? <div className="content-one">
-                                <h5>{filter_emi.heading}</h5>
+                            {emiSlider ? <div className="content-one">
+                                <h5>{emiSlider.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">
                                         <div className="row">
@@ -194,14 +270,14 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" readOnly />
                                             </div>
                                         </div>
-                                        <span className="min-max left">₹{filter_emi.min}</span>
-                                        <span className="min-max right">₹{filter_emi.max}+</span>
+                                        <span className="min-max left">₹{emiSlider.min}</span>
+                                        <span className="min-max right">₹{emiSlider.max}</span>
                                     </div>
                                 </div>
                             </div> : null}
 
-                            {filter_tenure && filter_tenure.enable ? <div className="content-one">
-                                <h5>{filter_tenure.heading}</h5>
+                            {tenureSlider? <div className="content-one">
+                                <h5>{tenureSlider.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">
                                         <div className="row">
@@ -215,19 +291,19 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" />
                                             </div>
                                         </div>
-                                        <span className="min-max left">{filter_tenure.min} years</span>
-                                        <span className="min-max right">{filter_tenure.max} years +</span>
+                                        <span className="min-max left">{tenureSlider.min} years</span>
+                                        <span className="min-max right">{tenureSlider.max} years</span>
                                     </div>
                                 </div>
                             </div> : null}
 
-                            {filter_roi && filter_roi.enable ? <div className="content-one">
-                                <h5>Rate Of Interest</h5>
+                            {interestRatesSlider ? <div className="content-one">
+                                <h5>{interestRatesSlider.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">
                                         <div className="row">
                                             <div className="col-sm-12">
-                                                <div id="roi-range"></div>
+                                                <div id="interest-rate-range"></div>
                                             </div>
                                         </div>
                                         <div className="row">
@@ -236,14 +312,14 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" />
                                             </div>
                                         </div>
-                                        <span className="min-max left">{filter_roi.min}%</span>
-                                        <span className="min-max right">{filter_roi.max}% +</span>
+                                        <span className="min-max left">{interestRatesSlider.min}%</span>
+                                        <span className="min-max right">{interestRatesSlider.max}%</span>
                                     </div>
                                 </div>
                             </div> : null}
 
-                            {filter_max_loan_amount && filter_max_loan_amount.enable ? <div className="content-one">
-                                <h5>Maximum Loan Amount</h5>
+                            {loanAmountSlider ? <div className="content-one">
+                                <h5>{loanAmountSlider.heading}</h5>
                                 <div className="range__slider">
                                     <div className="container">
                                         <div className="row">
@@ -257,27 +333,27 @@ class ListingFilter extends React.Component {
                                                 <input type="hidden" name="max-value" value="" />
                                             </div>
                                         </div>
-                                        <span className="min-max left">{filter_max_loan_amount.min}</span>
-                                        <span className="min-max right">{filter_max_loan_amount.max}</span>
+                                        <span className="min-max left">₹{loanAmountSlider.min}</span>
+                                        <span className="min-max right">₹{loanAmountSlider.max}</span>
                                     </div>
                                 </div>
                             </div> : null}
 
-                            {filter_radio_name ? <>
-                                {filter_radio_name.map(radio => {
+                            {radios && radios.length ? <>
+                                {radios.map((radio, i) => {
                                     return (
-                                        <div className="content-one" key={radio.id}>
-                                            <h5>{radio.name}</h5>
+                                        <div className="content-one" key={i}>
+                                            <h5>{radio.heading}</h5>
                                             <div className="shortforms-container">
-                                                {radio.filter_radio_options.map(radio_button => {
+                                                {radio.values.map((radio_button, i) => {
                                                     const labelStyles = this.state.filters[radio.type] ? this.state.filters[radio.type][0] === radio_button.tag ? { border: '1px solid green' } : null : null
                                                     return (
-                                                        <React.Fragment key={radio_button.id}>
+                                                        <React.Fragment key={i}>
                                                             <label htmlFor={radio_button.tag} style={labelStyles} onClick={() => this.handleRadio(radio_button.tag, radio.type)}>{radio_button.name}</label>
                                                             <input
                                                                 className="lets-checkbox"
                                                                 type="radio"
-                                                                name={radio.name}
+                                                                name={radio_button.name}
                                                                 value={radio_button.tag}
                                                             />
                                                         </React.Fragment>

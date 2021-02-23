@@ -1,4 +1,3 @@
-
 AOS.init({
   offset: 80, // offset (in px) from the original trigger point
   delay: 0, // values from 0 to 3000, with step 50ms
@@ -114,7 +113,7 @@ $(document).ready(function () {
     }
   }
 
-  
+
   //file upload
   function fileInfo(id) {
     var fileName = document.getElementById(id).files[0].name;
@@ -187,181 +186,135 @@ $(document).ready(function () {
   })
 
 
-
-  // function initTendingOffers() {
-
-  $('#popular-cards-sec, #trending-offers-sec').slick({
-    centerMode: true,
-    slidesToShow: 2,
-    cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
-    speed: 1000,
-    autoplay: true,
-    infinite: true,
-    variableWidth: true,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          autoplay: true,
-          dots: false,
-          variableWidth: true,
-          arrows: false
-        }
-      },
-      {
-        breakpoint: 1023,
-        settings: {
-          arrows: false,
-          centerMode: false,
-          autoplay: true,
-          centerPadding: '0px',
-          slidesToShow: 1,
-          variableWidth: true,
-          infinite: true,
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          arrows: false,
-          centerMode: false,
-          autoplay: true,
-          centerPadding: '0px',
-          slidesToShow: 1,
-          variableWidth: true,
-          infinite: true,
-        },
-      },
-    ]
-
-  });
-  $('#popular-cards-sec, #trending-offers-sec').slick("refresh");
-
-  // }
-
-
-  $('.banks-slider').slick({
-    infinite: false,
-    slidesToShow: 4,
-    dots: false,
-    slidesToScroll: 1,
-    cssEase: 'linear',
-    pauseOnHover: true,
-    focusOnSelect: true,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 5,
-          infinite: false,
-          variableWidth: true,
-          dots: false,
-          arrows: false
-        }
-      },
-
-      {
-        breakpoint: 768,
-        settings: {
-          arrows: false,
-          slidesToShow: 3,
-          variableWidth: true,
-          infinite: false,
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          arrows: false,
-          slidesToShow: 3,
-          infinite: false,
-          variableWidth: true,
-          cellPadding: '12px'
-        }
-      }
-    ]
-  });
-
-  $('.banks-slider').slick("refresh");
-
-  $('.bank-slider').slick({
-    infinite: false,
-    slidesToShow: 4,
-    dots: false,
-    slidesToScroll: 1,
-    cssEase: 'linear',
-    pauseOnHover: true,
-    focusOnSelect: true,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 5,
-          infinite: false,
-          variableWidth: true,
-          dots: false,
-          arrows: false
-        }
-      },
-
-      {
-        breakpoint: 768,
-        settings: {
-          arrows: false,
-          slidesToShow: 3,
-          variableWidth: true,
-          infinite: false,
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          arrows: false,
-          slidesToShow: 3,
-          infinite: false,
-          variableWidth: true,
-          cellPadding: '12px'
-        }
-      }
-    ]
-  });
-
-  $('.bank-slider').slick("refresh");
-
-
-  if($(window).width() < 1200) {
-    // alert("responsive");
-    $('#slider_blogs').slick({
-      dots: false,
-      arrows: false,
-      infinite: true,
-      autoplay: false,
+  initSlickCards = function () {
+    $('#popular-cards-sec, #trending-offers-sec').not('.slick-initialized').slick({
+      centerMode: true,
       slidesToShow: 2,
-      slidesToScroll: 1,
-      pauseOnHover: true,
+      cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
+      speed: 1000,
+      autoplay: true,
+      infinite: true,
+      variableWidth: true,
       responsive: [
         {
-          breakpoint: 1186,
+          breakpoint: 1024,
           settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            variableWidth: true,
+            slidesToShow: 3,
+            slidesToScroll: 3,
             infinite: true,
             autoplay: true,
+            dots: false,
+            variableWidth: true,
+            arrows: false
+          }
+        },
+        {
+          breakpoint: 1023,
+          settings: {
+            arrows: false,
+            centerMode: false,
+            autoplay: true,
+            centerPadding: '0px',
+            slidesToShow: 1,
+            variableWidth: true,
+            infinite: true,
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            arrows: false,
+            centerMode: false,
+            autoplay: true,
+            centerPadding: '0px',
+            slidesToShow: 1,
+            variableWidth: true,
+            infinite: true,
+          },
+        },
+      ]
+
+    })
+    $('#popular-cards-sec, #trending-offers-sec').slick("refresh")
+  }
+
+  initSlickCards()
+  initSlickBanks = function () {
+    $('.banks-slider').not('.slick-initialized').slick({
+      infinite: false,
+      slidesToShow: 4,
+      dots: false,
+      slidesToScroll: 1,
+      cssEase: 'linear',
+      pauseOnHover: true,
+      focusOnSelect: true,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 5,
+            infinite: false,
+            variableWidth: true,
+            dots: false,
+            arrows: false
+          }
+        },
+
+        {
+          breakpoint: 768,
+          settings: {
+            arrows: false,
+            slidesToShow: 3,
+            variableWidth: true,
+            infinite: false,
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            arrows: false,
+            slidesToShow: 3,
+            infinite: false,
+            variableWidth: true,
+            cellPadding: '12px'
           }
         }
       ]
-    });
+    })
+    $('.banks-slider').slick("refresh")
+  }
+
+  initSlickBanks()
+
+  initSlickBlogs = function () {
+    if ($(window).width() < 1200) {
+      // alert("responsive");
+      $('#slider_blogs').slick({
+        dots: false,
+        arrows: false,
+        infinite: true,
+        autoplay: false,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        pauseOnHover: true,
+        responsive: [
+          {
+            breakpoint: 1186,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              variableWidth: true,
+              infinite: true,
+              autoplay: true,
+            }
+          }
+        ]
+      });
+      $('#slider_blogs').slick("refresh")
+    }
   }
 
   $('#datepickerr').datepicker();
+  initSlickBlogs()
 
 });
-
-
-
-
-

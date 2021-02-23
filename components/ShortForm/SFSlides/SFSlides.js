@@ -16,39 +16,37 @@ const SFSlides = props => {
 
             <h5 className="pages"><span id="pages-count">{slideNumber} of {totalSlides}</span></h5>
 
-            {sfSlides && sfSlides.length ? <form className="short-forms-wrapper">
-                {sfSlides.map(slide => {
-                    const slideStyles = props.currentSlide == slide.slideId ? { display: 'block' } : { display: 'none' }
-                    const slideClass = slide.slideClass
-                    const shortFromContainerClasses = ['shortforms-container']
-                    shortFromContainerClasses.push(slideClass)
-                    return (
-                        <div className="sf-forms opacity-in" id={slide.slideId} style={slideStyles} key={slide.slideId}>
-                            <h2>{slide.heading}</h2>
-                            <div className={shortFromContainerClasses.join(' ')}>
-                                <div className="form__group-wrapper grid-span">
-                                    {slide.inputs.map(component => {
-                                        return (
-                                            <React.Fragment key={component.id}>
-                                                {generateInputs(component, props.handleChange,
-                                                    props.checkInputValidity, props.handleInputDropdownSelection,
-                                                    formType)}
-                                            </React.Fragment>
-                                        )
-                                    })}
+            {sfSlides && sfSlides.length ?
+                <form className="short-forms-wrapper" onSubmit={props.onSubmitSlide} noValidate>
+                    {sfSlides.map(slide => {
+                        const slideStyles = props.currentSlide == slide.slideId ? { display: 'block' } : { display: 'none' }
+                        const slideClass = slide.slideClass
+                        const shortFromContainerClasses = ['shortforms-container']
+                        shortFromContainerClasses.push(slideClass)
+                        return (
+                            <div className="sf-forms opacity-in" id={slide.slideId} style={slideStyles} key={slide.slideId}>
+                                <h2>{slide.heading}</h2>
+                                <div className={shortFromContainerClasses.join(' ')}>
+                                    <div className="form__group-wrapper grid-span">
+                                        {slide.inputs.map(component => {
+                                            return (
+                                                <React.Fragment key={component.id}>
+                                                    {generateInputs(component, props.handleChange,
+                                                        props.checkInputValidity, props.handleInputDropdownSelection,
+                                                        formType, null)}
+                                                </React.Fragment>
+                                            )
+                                        })}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    )
-                })}
-            </form> : null}
-
-            <SFButtons
-                onClickPrevious={props.onGoToPrevious}
-                onClickNext={props.onSubmitSlide}
-                slideButtonText={props.slideButtonText}
-            />
-
+                        )
+                    })}
+                    <SFButtons
+                        onClickPrevious={props.onGoToPrevious}
+                        slideButtonText={props.slideButtonText}
+                    />
+                </form> : null}
         </div>
     )
 }

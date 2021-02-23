@@ -5,7 +5,6 @@ export const closeFilter = (filters, filterFunction) => {
     $('body', "html").css("overflow", "scroll")
     if (filterFunction) {
         setTimeout(() => {
-            console.log('filters: ', filters)
             filterFunction(filters)
         }, 1000)
     }
@@ -17,8 +16,8 @@ export const filterOfferCardsInFilterComponent = (unFilteredCards, filters) => {
     const filteredByPromotions = filterByPromotions(filteredByCategories, filters)
     const filteredByAnnualFees = filterByAnnualFees(filteredByPromotions, filters)
     const filteredByEmi = filterByEmi(filteredByAnnualFees, filters)
-    const filteredByRoi = filterByRoi(filteredByEmi, filters)
-    const filteredMaxLoanAmount = filterByMaxLoanAmount(filteredByRoi, filters)
+    const filteredByInterestRate = filterByInterestRate(filteredByEmi, filters)
+    const filteredMaxLoanAmount = filterByMaxLoanAmount(filteredByInterestRate, filters)
     const filteredByTenure = filterByTenure(filteredMaxLoanAmount, filters)
     return filteredByTenure
 }
@@ -28,7 +27,7 @@ const filterByBanks = (unFilteredCards, filters) => {
         if (!filters.banks || !filters.banks.length) {
             return card
         }
-        if (filters.banks.includes(card.bank.slug)) {
+        if (filters.banks.includes(card.bank.bank_id)) {
             return card
         }
     })
@@ -40,7 +39,10 @@ const filterByCategories = (filteredByBanks, filters) => {
         if (!filters.categories || !filters.categories.length) {
             return card
         }
-        if (filters.categories.includes(card.category)) {
+        if(!card.product.product_category) {
+            return card
+        }
+        if (filters.categories.includes(card.product.product_category.tag)) {
             return card
         }
     })
@@ -49,10 +51,13 @@ const filterByCategories = (filteredByBanks, filters) => {
 
 const filterByPromotions = (filteredByCategories, filters) => {
     const filteredByPromotions = filteredByCategories.filter(card => {
-        if (!filters.promotion || !filters.promotion.length) {
+        if (!filters.promotions || !filters.promotions.length) {
             return card
         }
-        if (filters.promotion.includes(card.promotion)) {
+        if(!card.product.product_promotion) {
+            return card
+        }
+        if (filters.promotions.includes(card.product.product_promotion.tag)) {
             return card
         }
     })
@@ -64,7 +69,10 @@ const filterByAnnualFees = (filteredByPromotions, filters) => {
         if (!filters.annualFees || !filters.annualFees.length) {
             return card
         }
-        const annualFee = Number(card.annual_fee_fy)
+        if(!card.product.product_annual_fee) {
+            return card
+        }
+        const annualFee = Number(card.product.product_annual_fee.annual_fee_fy)
         const minSelected = Number(filters.annualFees[0])
         const maxSelected = Number(filters.annualFees[1])
         const max = Number(filters.annualFees[2])
@@ -86,7 +94,10 @@ const filterByEmi = (filteredByAnnualFees, filters) => {
         if (!filters.emi || !filters.emi.length) {
             return card
         }
-        const emi = Number(card.lowest_emi)
+        if(!card.product.product_emi) {
+            return card
+        }
+        const emi = Number(card.product.product_emi.emi)
         const minSelected = Number(filters.emi[0])
         const maxSelected = Number(filters.emi[1])
         const max = Number(filters.emi[2])
@@ -103,34 +114,40 @@ const filterByEmi = (filteredByAnnualFees, filters) => {
     return [...filteredByEmi]
 }
 
-const filterByRoi = (filteredByEmi, filters) => {
-    const filteredByRoi = filteredByEmi.filter(card => {
-        if (!filters.roi || !filters.roi.length) {
+const filterByInterestRate = (filteredByEmi, filters) => {
+    const filteredByInterestRate = filteredByEmi.filter(card => {
+        if (!filters.interestRate || !filters.interestRate.length) {
             return card
         }
-        const roi = Number(card.return_on_Investment)
-        const minSelected = Number(filters.roi[0])
-        const maxSelected = Number(filters.roi[1])
-        const max = Number(filters.roi[2])
+        if(!card.product.product_interest_rate) {
+            return card
+        }
+        const interestRate = Number(card.product.product_interest_rate.min_value)
+        const minSelected = Number(filters.interestRate[0])
+        const maxSelected = Number(filters.interestRate[1])
+        const max = Number(filters.interestRate[2])
 
         if(maxSelected === max) {
-            if(roi >= minSelected) {
+            if(interestRate >= minSelected) {
                 return card
             }
 
-        } else if (roi >= minSelected && roi <= maxSelected) {
+        } else if (interestRate >= minSelected && interestRate <= maxSelected) {
             return card
         }
     })
-    return [...filteredByRoi]
+    return [...filteredByInterestRate]
 }
 
-const filterByMaxLoanAmount = (filteredByRoi, filters) => {
-    const filteredByMaxLoanAmount = filteredByRoi.filter(card => {
+const filterByMaxLoanAmount = (filteredByInterestRate, filters) => {
+    const filteredByMaxLoanAmount = filteredByInterestRate.filter(card => {
         if (!filters.maxLoanAmount || !filters.maxLoanAmount.length) {
             return card
         }
-        const maxLoanAmount = Number(card.loan_amount)
+        if(!card.product.product_loan_amount) {
+            return card
+        }
+        const maxLoanAmount = Number(card.product.product_loan_amount.amount)
         const minSelected = Number(filters.maxLoanAmount[0])
         const maxSelected = Number(filters.maxLoanAmount[1])
         const max = Number(filters.maxLoanAmount[2])
@@ -152,7 +169,10 @@ const filterByTenure = (filteredByMaxLoanAmount, filters) => {
         if (!filters.tenure || !filters.tenure.length) {
             return card
         }
-        const tenure = Number(card.tenure)
+        if(!card.product.product_tenure) {
+            return card
+        }
+        const tenure = Number(card.product.product_tenure.tenure)
         const minSelected = Number(filters.tenure[0])
         const maxSelected = Number(filters.tenure[1])
         const max = Number(filters.tenure[2])

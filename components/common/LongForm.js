@@ -7,7 +7,7 @@ import { getDropdownList } from "../../services/formService"
 import { generateLead, sendNotification, submitOtp, getOtp } from "../../services/formService"
 import { setLeadId, getLeadId, setLeadBank } from "../../utils/localAccess"
 import { getFormattedCurrency, getWholeNumberFromCurrency } from "../../utils/formattedCurrency"
-import { unpackComponents } from '../../services/componentsService'
+import ImageComponent from '../../components/ImageComponent/ImageComponent'
 import {
   textTypeInputs,
   handleChangeInputs,
@@ -15,14 +15,14 @@ import {
   updateDropdownList,
   updateSelectionFromDropdown,
   resetDropdowns,
+  submitDocument,
 } from "../../utils/formHandle"
-
 
 class LongForm extends React.Component {
 
   state = {
     longFormSections: [],
-    submitButtonDisabled: true,
+    submitButtonDisabled: false,
     submissionError: '',
     errorMsgs: {
       mandatory: "Required Field",
@@ -33,16 +33,17 @@ class LongForm extends React.Component {
     enableCheckboxes: [],
     openOtpModal: false,
     cardType: '',
-    submissionError: ''
+    submissionError: '',
+    skipOtp: false
   }
 
   getBankData = async () => {
     if (!this.props.productData) {
       return null
     }
-    const productData = await unpackComponents(this.props.productData[0])
-    const { bank_id: bankId, bank_name: bankName } = productData.bank
-    const leadBank = { bankId, bankName }
+    const productData = this.props.productData
+    const { bank_id: bankId, bank_name: bankName, bank_image: bankImage } = productData.bank
+    const leadBank = { bankId, bankName, bankImage }
     return leadBank
   }
 
@@ -50,71 +51,68 @@ class LongForm extends React.Component {
     const primaryPath = this.props.primaryPath
     const leadBank = await this.getBankData()
     const { long_form_version_2, always_ask_for_otp } = this.props.data
-    const longFormSections = long_form_version_2.long_form[0].long_form_sections;
-    const formData = JSON.parse(localStorage.getItem("formData"));
-    let sfData = null;
-    let noOfMandatoryInputs = 0;
-    let leadId = getLeadId();
-    let enableCheckboxes = [];
+    const longFormSections = long_form_version_2.long_form[0].long_form_sections
+    const formData = JSON.parse(localStorage.getItem("formData"))
+    let sfData = null
+    let noOfMandatoryInputs = 0
+    let leadId = getLeadId(primaryPath)
+    let enableCheckboxes = []
 
     if (formData && formData[primaryPath]) {
-      sfData = formData[primaryPath];
+      sfData = formData[primaryPath]
     }
 
-    longFormSections.forEach((longFormSection) => {
-      const long_form_blocks = longFormSection.sections[0].long_form_blocks;
+    for (let i = 0; i < longFormSections.length; i++) {
+      const long_form_blocks = longFormSections[i].sections[0].long_form_blocks
       long_form_blocks.forEach((long_form_block) => {
-        const inputs = long_form_block.blocks;
-        inputs.forEach((item) => {
-          item.error = false;
-          item.verified = false;
+        const inputs = long_form_block.blocks
 
-          if (item.mandatory) {
+        for (let i = 0; i < inputs.length; i++) {
+
+          inputs[i].error = false;
+          inputs[i].verified = false;
+
+          if (inputs[i].mandatory) {
             noOfMandatoryInputs++;
           }
 
-          if (item.type === "checkbox") {
-            item.checkbox.checkbox_input.forEach((box) => {
+          if (inputs[i].type === "checkbox") {
+            inputs[i].checkbox.checkbox_input.forEach((box) => {
               if (box.enable_submit) {
-                enableCheckboxes.push(box);
+                enableCheckboxes.push(box)
               }
-            });
+            })
           }
 
           if (sfData) {
             loop: for (let key in sfData) {
               if (!sfData[key]) {
+                continue loop
+              }
+
+              if (typeof sfData[key] === "object" && key === inputs[i].end_point_name) {
+                inputs[i].value = sfData[key][inputs[i].select_name];
+                inputs[i].selectedId = sfData[key][inputs[i].select_id];
+                inputs[i].selectedItem = sfData[key];
+                inputs[i].verified = true;
+                inputs[i].error = false;
                 continue loop;
               }
 
-              if (
-                typeof sfData[key] === "object" &&
-                key === item.end_point_name
-              ) {
-                item.value = sfData[key][item.select_name];
-                item.selectedId = sfData[key][item.select_id];
-                item.selectedItem = sfData[key];
-                item.verified = true;
-                item.error = false;
-                continue loop;
-              }
-
-              if (
-                typeof sfData[key] === "string" &&
-                key === item.end_point_name
-              ) {
-                item.value = sfData[key];
-                item.verified = true;
-                item.error = false;
-                if (item.type === "money") {
-                  item.value = getFormattedCurrency(sfData[key]);
+              if (typeof sfData[key] === "string" && key === inputs[i].end_point_name) {
+                inputs[i].value = sfData[key];
+                inputs[i].verified = true;
+                inputs[i].error = false;
+                if (inputs[i].type === "money") {
+                  inputs[i].value = getFormattedCurrency(sfData[key]);
                 }
               }
             }
           }
-        });
-      });
-    });
+        }
+
+      })
+    }
 
     this.setState({
       longFormSections,
@@ -125,12 +123,27 @@ class LongForm extends React.Component {
       salaryBank: null,
       existingFacilityBank: null,
       leadId,
+      cardTypeCC: this.props.productData && this.props.productData.product ? this.props.productData.product.cardType : null,
       submitButtonDisabled: enableCheckboxes.length !== 0,
       askForOtp: always_ask_for_otp,
-      formType: 'lf'
+      formType: 'lf',
+      fulfillTnc: primaryPath !== 'rkpl' && (!leadId || always_ask_for_otp)
     }, () => {
+      const newLongFormSections = this.state.longFormSections
+      for(let i = 0; i < newLongFormSections.length; i++) {
+        const long_form_blocks = newLongFormSections[i].sections[0].long_form_blocks
+        for(let j = 0; j < long_form_blocks.length; j++) {
+            const inputs = long_form_blocks[j].blocks
+            for(let k = 0; k < inputs.length; k++) {
+              if(inputs[k].type === 'checkbox' && inputs[k].tnc && !this.state.fulfillTnc) {
+                newLongFormSections.splice(i, 1)
+                this.setState({ enableCheckboxes: [], submitButtonDisabled: false })
+              }
+            }
+          }
+        
+      }
       this.handlePercentage()
-      console.log(this.state)
     })
   }
 
@@ -142,7 +155,7 @@ class LongForm extends React.Component {
       long_form_blocks.forEach(long_form_block => {
         const inputs = long_form_block.blocks;
 
-        const inputDropdown = handleChangeInputs(inputs, field, this.props.preferredSelectionLists, this.state.leadBank)
+        const { inputDropdown } = handleChangeInputs(inputs, field, this.props.preferredSelectionLists, this.state.leadBank)
         if (inputDropdown && field.type === 'input_with_dropdown') {
           const { listType, masterName, inp, prefferedList } = inputDropdown
           if (field.focusDropdown && prefferedList) {
@@ -150,7 +163,7 @@ class LongForm extends React.Component {
             inp.list = prefferedList
             inp.error = false
             setTimeout(() => {
-              this.handleInputDropdownChange(listType, prefferedList, inp.input_id, field.focusDropdown)
+              this.handleInputDropdownChange(listType, prefferedList, inp.input_id)
             }, 500)
 
           } else if (!field.focusDropdown && listType && listType !== 'null') {
@@ -163,22 +176,29 @@ class LongForm extends React.Component {
             debouncedSearch(listType, inp.value, masterName)
           }
         }
-      });
-    });
+      })
+    })
 
     this.setState({ longFormSections: newLongFormSections, errors: false }, () => {
       if (textTypeInputs.includes(field.type) || field.type === 'input_with_dropdown' || field.type === 'money') {
         this.checkInputValidity(field, field.focusDropdown)
+      }
+      
+      if(!this.state.fulfillTnc) {
+        this.setState({ submitButtonDisabled: false })
+        this.updateState(newLongFormSections)
+        return
       }
       const { enableCheckboxes } = this.state;
       let trueEnableCheckboxes = [];
       if (enableCheckboxes.length) {
         enableCheckboxes.forEach((box) => {
           if (box.value) {
-            trueEnableCheckboxes.push(true);
+            trueEnableCheckboxes.push(true)
           }
         });
       }
+
       if (enableCheckboxes.length === trueEnableCheckboxes.length) {
         this.setState({ submitButtonDisabled: false });
       } else {
@@ -189,7 +209,7 @@ class LongForm extends React.Component {
   };
 
   handleInputDropdownChange = (listType, list, input_id, field) => {
-    const newLongFormSections = [...this.state.longFormSections];
+    const newLongFormSections = [...this.state.longFormSections]
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
       long_form_blocks.forEach(async (long_form_block) => {
@@ -241,9 +261,6 @@ class LongForm extends React.Component {
       });
     });
     this.updateState(newLongFormSections)
-      .then(() => {
-        console.log(this.state)
-      })
   };
 
   handleClickOnSlideBackground = () => {
@@ -255,7 +272,7 @@ class LongForm extends React.Component {
         resetDropdowns(inputs, this.state.errorMsgs);
       });
     });
-    this.updateState(newLongFormSections);
+    this.updateState(newLongFormSections)
   }
 
   checkInputValidity = (field) => {
@@ -267,27 +284,27 @@ class LongForm extends React.Component {
         updateInputsValidity(inputs, field, this.state.errorMsgs);
       });
     });
-    this.updateState(newLongFormSections);
+    this.updateState(newLongFormSections)
   };
 
   updateState = (longFormSections) => {
     return new Promise((resolve) => {
       this.setState({ longFormSections }, () => {
-        this.handlePercentage();
-        resolve(true);
+        this.handlePercentage()
+        resolve(true)
       });
     });
   };
 
   handlePercentage = () => {
-    const newLongFormSections = [...this.state.longFormSections];
+    const newLongFormSections = [...this.state.longFormSections]
     newLongFormSections.forEach((longFormSection) => {
-      const long_form_blocks = longFormSection.sections[0].long_form_blocks;
+      const long_form_blocks = longFormSection.sections[0].long_form_blocks
       long_form_blocks.forEach(async (long_form_block) => {
-        const inputs = long_form_block.blocks;
+        const inputs = long_form_block.blocks
         inputs.forEach((input) => {
           if (input.mandatory) {
-            this.handleVerifiedInputsArray(input);
+            this.handleVerifiedInputsArray(input)
           }
         });
       });
@@ -297,22 +314,20 @@ class LongForm extends React.Component {
   handleVerifiedInputsArray = (input) => {
     const verifiedInputsArray = this.state.verifiedInputs
     if (input.verified) {
-      verifiedInputsArray.push(input.input_id);
+      verifiedInputsArray.push(input.input_id)
     } else {
       if (verifiedInputsArray.includes(input.input_id)) {
-        const index = verifiedInputsArray.indexOf(input.input_id);
-        verifiedInputsArray.splice(index, 1);
+        const index = verifiedInputsArray.indexOf(input.input_id)
+        verifiedInputsArray.splice(index, 1)
       }
     }
     const uniqueVerifiedInputsArray = uniq(verifiedInputsArray);
     this.setState({ verifiedInputs: uniqueVerifiedInputsArray }, () => {
-      const percentage =
-        (this.state.verifiedInputs.length / this.state.noOfMandatoryInputs) *
-        100;
-      const event = new CustomEvent("percentageCalulated", {
+      const percentage = (this.state.verifiedInputs.length / this.state.noOfMandatoryInputs) * 100
+      const event = new CustomEvent('percentageCalulated', {
         detail: { percentage },
-      });
-      document.dispatchEvent(event);
+      })
+      document.dispatchEvent(event)
     });
   };
 
@@ -333,29 +348,24 @@ class LongForm extends React.Component {
     })
 
     this.updateState(newLongFormSections).then(() => {
-      // console.log(this.state.primaryPath)
-      // console.log(this.state.leadId)
-      // console.log(this.state.askForOtp)
       if (!errors) {
-        if (this.state.primaryPath !== 'rkpl' && this.state.primaryPath !== 'talent-edge-form' && (!this.state.leadId || this.state.askForOtp)) {
-          console.log('1')
+        if (this.state.fulfillTnc) {
           let mobileNo = "";
-          const newLongFormSections = [...this.state.longFormSections];
+          const newLongFormSections = [...this.state.longFormSections]
           newLongFormSections.forEach((longFormSection) => {
             const long_form_blocks =
               longFormSection.sections[0].long_form_blocks;
             long_form_blocks.forEach(async (long_form_block) => {
-              const inputs = long_form_block.blocks;
+              const inputs = long_form_block.blocks
               inputs.forEach((inp) => {
                 if (inp.end_point_name === "mobile") {
                   mobileNo = inp.value;
                 }
-              });
-            });
-          });
-          this.setState({ mobileNo })
+              })
+            })
+          })
+          this.setState({ openOtpModal: true, mobileNo, submissionError: '' })
           getOtp(mobileNo)
-          this.setState({ openOtpModal: true })
         } else {
           this.retrieveDataAndSubmit()
         }
@@ -365,15 +375,23 @@ class LongForm extends React.Component {
     })
   }
 
-  onSubmitOtp = async () => {
-    try {
-      await submitOtp(this.state.mobileNo);
-      this.closeOtpModal()
-      this.setState({ submitButtonDisabled: true });
-      this.retrieveDataAndSubmit();
-    } catch (err) {
-      this.setState({ submissionError: err.message })
+  onSubmitOtp = e => {
+    e.preventDefault()
+    const inputs = document.getElementsByClassName('input_otp')
+    for (let inp of inputs) {
+      inp.blur()
     }
+    this.removeSubmissionErrorMsg()
+    setTimeout(async () => {
+      try {
+        await submitOtp(this.state.mobileNo)
+        this.closeOtpModal()
+        this.setState({ submitButtonDisabled: true });
+        this.retrieveDataAndSubmit()
+      } catch (err) {
+        this.setState({ submissionError: err.message })
+      }
+    }, 300)
   }
 
   removeSubmissionErrorMsg = () => {
@@ -381,13 +399,20 @@ class LongForm extends React.Component {
   }
 
   retrieveDataAndSubmit = () => {
+    let documentsArray = []
     this.setState({ submitButtonDisabled: true, submissionError: '' })
     let data = {};
     const newLongFormSections = [...this.state.longFormSections]
     newLongFormSections.forEach((longFormSection) => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
       long_form_blocks.forEach(async (long_form_block) => {
-        const inputs = long_form_block.blocks;
+        const inputs = long_form_block.blocks
+
+        inputs.forEach(input => {
+          if (input.attachment && input.value && input.value.length) {
+            documentsArray.push(input)
+          }
+        })
 
         for (let i = 0; i < inputs.length; i++) {
           const input = inputs[i];
@@ -422,9 +447,9 @@ class LongForm extends React.Component {
       })
     })
 
+
     const { utm_campaign: utmCampaign, utm_medium: utmMedium,
       utm_source: utmSource, utm_remark: utmRemark } = this.props.router.query
-
     data.utmCampaign = utmCampaign
     data.utmMedium = utmMedium
     data.utmSource = utmSource
@@ -433,22 +458,36 @@ class LongForm extends React.Component {
     data.leadBank = this.state.leadBank
     data.salaryBank = this.state.salaryBank
     data.existingFacilityBank = this.state.existingFacilityBank
+    data.cardTypeCC = this.state.cardTypeCC
 
     let { primaryPath, leadBank } = this.state
 
-    generateLead(data, primaryPath, 'lf')
+
+    generateLead(data, primaryPath, 'lf', this.props.productType)
       .then((res) => {
         const leadId = res.data.leadId
         let actionName = this.state.primaryPath === 'rkpl' ? 'RKPL-CC' : 'Short Form Submit'
         sendNotification(leadId, actionName)
-        setLeadId(leadId)
+
+        documentsArray.forEach(input => {
+          submitDocument(input.end_point_name, input.value)
+        })
+
+        let primaryPath = this.state.primaryPath
+        if (primaryPath === 'rkpl') {
+          primaryPath = 'credit-cards'
+        }
+        if (primaryPath === 'talent-edge-form') {
+          primaryPath = 'personal-loans'
+        }
+
+        setLeadId(leadId, primaryPath)
         setLeadBank(leadBank)
         const pathname = `/thank-you`
-        this.props.router.push(pathname)
-        this.setState({ submitButtonDisabled: false })
+        const query = { primaryPath }
+        this.props.router.push({ pathname, query }, pathname, { shallow: true })
       })
-      .catch((err) => {
-        console.log('leaderr: ', err)
+      .catch(err => {
         this.setState({ submitButtonDisabled: false, submissionError: 'Something went wrong. Please try again.' })
       })
   };
@@ -460,14 +499,21 @@ class LongForm extends React.Component {
   render() {
     let index = 0;
     if (!this.state.longFormSections) {
-      return null;
+      return null
     }
-    const { bank, product } = this.props
 
+    const bank = this.props.productData && this.props.productData.bank ? this.props.productData.bank : null;
 
     return (
       <div className="form-wrapper" id="longForm">
-        <form onClick={this.handleClickOnSlideBackground} id='long-form_id' noValidate autoComplete="off">
+
+        <div className="cstm-lf-img">
+          {this.props.primaryPath === 'credit-cards' || !bank ?
+            null : <ImageComponent image={bank.bank_image}
+            />}
+        </div>
+
+        <form onClick={this.handleClickOnSlideBackground} onSubmit={this.onSubmitLongForm} id='long-form_id' noValidate autoComplete="off">
           {this.state.longFormSections.map((longFormSection) => {
             const long_form_blocks =
               longFormSection.sections[0].long_form_blocks;
@@ -481,8 +527,8 @@ class LongForm extends React.Component {
                 {long_form_blocks.map((long_form_block) => {
                   const inputs = long_form_block.blocks;
                   ++index;
-                  const blockClasses = ["shortforms-container"];
-                  blockClasses.push(long_form_block.block_class);
+                  const blockClasses = ["shortforms-container"]
+                  blockClasses.push(long_form_block.block_class)
                   return (
                     <div
                       className="long-forms-wrapper"
@@ -498,7 +544,7 @@ class LongForm extends React.Component {
                             <React.Fragment key={component.id}>
                               {generateInputs(component, this.handleChange,
                                 this.checkInputValidity, this.handleInputDropdownSelection,
-                                this.state.formType)}
+                                this.state.formType, null)}
                             </React.Fragment>
                           );
                         })}
@@ -511,21 +557,16 @@ class LongForm extends React.Component {
           })}
           {this.state.submissionError ? <p className="form-invalid-text">{this.state.submissionError}</p> : null}
           <div className="long-form-submit">
-            <button
-              id="long-submit"
-              disabled={this.state.submitButtonDisabled}
-              type="button"
-              onClick={this.onSubmitLongForm}
-            >
+            <button type="submit" id="long-submit" disabled={this.state.submitButtonDisabled}>
               Submit Application
             </button>
           </div>
         </form>
 
         {this.state.openOtpModal ? (
-          <Modal openModal={this.state.openOtpModal} closeOtpModal={this.closeOtpModal} >
+          <Modal openModal={this.state.openOtpModal} closeOtpModal={this.closeOtpModal}>
             <button onClick={this.closeOtpModal} className="close-btn">Close</button>
-            <form className="otp-modal-form short-forms-wrapper">
+            <form className="otp-modal-form short-forms-wrapper" onSubmit={this.onSubmitOtp} noValidate>
               <div className="mobile-otp">
                 <div className="lets-find-content otp-card_custom">
                   <h2>
@@ -556,9 +597,7 @@ class LongForm extends React.Component {
                   </div>
                 </div>
                 {this.state.submissionError ? <p className="form-invalid-text">{this.state.submissionError}</p> : null}
-                <button type="button" onClick={this.onSubmitOtp}>
-                  Submit OTP
-                </button>
+                <button type="submit">Submit OTP</button>
               </div>
             </form>
           </Modal>
@@ -568,4 +607,4 @@ class LongForm extends React.Component {
   }
 }
 
-export default withRouter(LongForm);
+export default withRouter(LongForm)

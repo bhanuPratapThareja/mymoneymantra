@@ -1,4 +1,4 @@
-const SideMenu = () => {
+const SideMenu = (props) => {
 
    const onCloseSideMenu = () => {
       $(".menu-login").hide("slide");
@@ -6,10 +6,10 @@ const SideMenu = () => {
    }
 
    const onDataExpand = (i) => {
-     const els = document.getElementsByClassName('data-expand')
-     const el = els[i]
-     $(el).find(".sub-data").slideToggle("slow");
-     $(el).find("svg").toggleClass("rotate-menu-icons")
+      const els = document.getElementsByClassName('data-expand')
+      const el = els[i]
+      $(el).find(".sub-data").slideToggle("slow");
+      $(el).find("svg").toggleClass("rotate-menu-icons")
    }
 
    return (
@@ -34,7 +34,7 @@ const SideMenu = () => {
                      <h5>My Profile</h5>
                   </div>
                </a>
-               <a href="#">
+               <a href="/credit-score">
                   <div className="data">
                      <img src="/assets/images/menu/credit.svg" />
                      <h5>My Credit Score</h5>
@@ -43,7 +43,7 @@ const SideMenu = () => {
 
             </div>
             <div className="content-wrapper">
-               <a href="#">
+               <a href="/credit-score">
                   <div className="data">
                      <img src="/assets/images/menu/credit.svg" />
                      <h5>My Credit Score</h5>
@@ -61,16 +61,40 @@ const SideMenu = () => {
                            fill="#fff" /></svg>
                   </div>
                   <div className="sub-data">
-                     <a href="https://www.google.com">
+                     <a href="/personal-loans">
                         <div className="data">
                            <img src="/assets/images/menu/credit.svg" />
-                           <h5>Sub data 1</h5>
+                           <h5>Personal Loan</h5>
                         </div>
                      </a>
-                     <a href="#">
+                     <a href="/business-loans">
                         <div className="data">
                            <img src="/assets/images/menu/credit.svg" />
-                           <h5>Sub data 2</h5>
+                           <h5>Business Loan</h5>
+                        </div>
+                     </a>
+                     <a href="/home-loans">
+                        <div className="data">
+                           <img src="/assets/images/menu/credit.svg" />
+                           <h5>Home Loan</h5>
+                        </div>
+                     </a>
+                     <a href="/home-loan-balance-transfer">
+                        <div className="data">
+                           <img src="/assets/images/menu/credit.svg" />
+                           <h5>Home Loan Balance Transfer</h5>
+                        </div>
+                     </a>
+                     <a href="/loan-against-property">
+                        <div className="data">
+                           <img src="/assets/images/menu/credit.svg" />
+                           <h5>Loan Against Property</h5>
+                        </div>
+                     </a>
+                     <a href="/gold-loans">
+                        <div className="data">
+                           <img src="/assets/images/menu/credit.svg" />
+                           <h5>Gold Loan</h5>
                         </div>
                      </a>
                   </div>
@@ -87,16 +111,16 @@ const SideMenu = () => {
                            fill="#fff" /></svg>
                   </div>
                   <div className="sub-data">
-                     <a href="#">
+                     <a href="/insurance/health-insurance">
                         <div className="data">
                            <img src="/assets/images/menu/credit.svg" />
-                           <h5>Sub data 3</h5>
+                           <h5>Health Insurance</h5>
                         </div>
                      </a>
-                     <a href="#">
+                     <a href="/insurance/life-insurance">
                         <div className="data">
                            <img src="/assets/images/menu/credit.svg" />
-                           <h5>Sub data 4</h5>
+                           <h5>Life Insurance</h5>
                         </div>
                      </a>
                   </div>
@@ -114,16 +138,52 @@ const SideMenu = () => {
                            fill="#fff" /></svg>
                   </div>
                   <div className="sub-data">
-                     <a href="#">
+                     <a href="/financialTool/emi-calculator">
                         <div className="data">
                            <img src="/assets/images/menu/credit.svg" />
-                           <h5>Sub data 3</h5>
+                           <h5>EMI Calculator</h5>
                         </div>
                      </a>
-                     <a href="#">
+                     <a href="/financialTool/home-loan-emi-calculator">
                         <div className="data">
                            <img src="/assets/images/menu/credit.svg" />
-                           <h5>Sub data 4</h5>
+                           <h5>Home Loan EMI Calculator</h5>
+                        </div>
+                     </a>
+                     <a href="/financialTool/personal-loan-emi-calculator">
+                        <div className="data">
+                           <img src="/assets/images/menu/credit.svg" />
+                           <h5>Peronal Loan EMI Calculator</h5>
+                        </div>
+                     </a>
+                     <a href="/financialTool/business-loan-emi-calculator">
+                        <div className="data">
+                           <img src="/assets/images/menu/credit.svg" />
+                           <h5>Business Loan EMI Calculator</h5>
+                        </div>
+                     </a>
+                     <a href="/financialTool/compound-interest-calculator">
+                        <div className="data">
+                           <img src="/assets/images/menu/credit.svg" />
+                           <h5>Compound Interest Calculator</h5>
+                        </div>
+                     </a>
+                     <a href="/financialTool/loan-prepayment-calculator">
+                        <div className="data">
+                           <img src="/assets/images/menu/credit.svg" />
+                           <h5>Loan Prepayment Calculator</h5>
+                        </div>
+                     </a>
+                     <a href="/financialTool/rd-calculator">
+                        <div className="data">
+                           <img src="/assets/images/menu/credit.svg" />
+                           <h5>RD Calculator</h5>
+                        </div>
+                     </a>
+                     <a href="/financialTool/fd-calculator">
+                        <div className="data">
+                           <img src="/assets/images/menu/credit.svg" />
+                           <h5>FD Calculator</h5>
                         </div>
                      </a>
                   </div>

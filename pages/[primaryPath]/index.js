@@ -5,24 +5,27 @@ import Layout from '../../components/Layout'
 import CreditCardsBanner from '../../components/Banners/CreditCardsBanner'
 import PersonalLoansBanner from '../../components/Banners/PersonalLoansBanner'
 import HomeLoansBanner from '../../components/Banners/HomeLoansBanner'
-
 import UspCards from '../../components/common/UspCards'
-import Offers from '../../components/common/Offers'
 import CreditScore from '../../components/common/CreditScore'
+import PopularOffers from '../../components/common/PopularOffers'
+import TrendingOffers from '../../components/common/TrendingOffers'
 import BankSlider from '../../components/common/BankSlider'
 import Rewards from '../../components/common/Rewards'
 import FinancialTools from '../../components/common/FinancialTools'
 import ShortExtendedForm from '../../components/common/ShortExtendedForm'
 import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
+import PageNotFound from '../../components/PageNotFound'
 import { getClassesForPage } from '../../utils/classesForPage'
-import { setPrimaryPath, setProductType } from '../../utils/localAccess'
+import { clearLeadId, clearLeadBank, clearFormData } from '../../utils/localAccess'
 
 const PrimaryPage = props => {
+
   useEffect(() => {
     window.scrollTo(0, 0)
-    setPrimaryPath(props.primaryPath)
-    setProductType(props.productTypeData)
+    clearLeadBank()
+    clearLeadId(props.primaryPath)
+    clearFormData(props.primaryPath)
   }, [])
 
   const goToShortForm = () => {
@@ -47,12 +50,32 @@ const PrimaryPage = props => {
         case 'blocks.ups-cards-component':
           return <UspCards key={block.id} data={block} />
         case 'form-components.onboarding-short-form':
-          return <ShortExtendedForm key={block.id} data={block} preferredSelectionLists={props.preferredSelectionLists} />
+          return <ShortExtendedForm
+            key={block.id}
+            data={block}
+            tncData={props.tncData}
+            primaryPath={props.primaryPath}
+            productType={props.productType}
+            preferredSelectionLists={props.preferredSelectionLists}
+          />
         case 'offers.popular-offers-component':
-        case 'offers.trending-offers-component':
-          return <Offers key={block.id} data={block} primaryPath={props.primaryPath} goToShortForm={goToShortForm} />
+          return <PopularOffers
+            key={block.id}
+            data={block}
+            primaryPath={props.primaryPath}
+            productType={props.productType}
+            goToShortForm={goToShortForm}
+          />
         case 'blocks.credit-score-component':
           return <CreditScore key={block.id} data={block} />
+        case 'offers.trending-offers-component':
+          return <TrendingOffers
+            key={block.id}
+            data={block}
+            primaryPath={props.primaryPath}
+            productType={props.productType}
+            goToShortForm={goToShortForm}
+          />
         case 'blocks.bank-slider-component':
           return <BankSlider key={block.id} data={block} />
         case 'blocks.rewards-component':
@@ -67,6 +90,10 @@ const PrimaryPage = props => {
     })
   }
 
+  if (!props.data) {
+    return <PageNotFound />
+  }
+
   return (
     <div className={getClassesForPage(props.primaryPath)}>
       {props.data ? <Layout>{getComponents(props.data.dynamic)}</Layout> : null}
@@ -79,11 +106,18 @@ export async function getServerSideProps(ctx) {
   const { query } = ctx
   const primaryPath = query.primaryPath
   const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
+  const productType = productTypeData[0]
   const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)
-
   const data = pageData && pageData.length ? pageData[0] : null
   const preferredSelectionLists = await strapi.processReq('GET', `list-preferences`)
-  return { props: { data, primaryPath, preferredSelectionLists, productTypeData } }
+  const tncData = await strapi.processReq('GET', `tnc`)
+
+  return {
+    props: {
+      data, primaryPath, preferredSelectionLists,
+      productType, tncData
+    }
+  }
 }
 
 export default PrimaryPage

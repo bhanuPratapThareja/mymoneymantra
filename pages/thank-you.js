@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 
 import ThankYouBanner from '../components/Banners/ThankYouBanner'
 import CreditScore from '../components/common/CreditScore'
-import Offers from '../components/common/Offers'
+import TrendingOffers from '../components/common/TrendingOffers'
 import BankSlider from '../components/common/BankSlider'
 import Rewards from '../components/common/Rewards'
 import FinancialTools from '../components/common/FinancialTools'
@@ -12,19 +12,12 @@ import Blogger from '../components/common/Blogger'
 import LearnMore from '../components/common/LearnMore'
 
 import { getClassesForPage } from '../utils/classesForPage'
-import { getLeadId, getLeadBank, getProductType } from '../utils/localAccess'
+import { getLeadId, getLeadBank } from '../utils/localAccess'
 
 const ThankYouPage = props => {
 
-    const [leadId, setLeadId] = useState('')
-    const [bank, setBank] = useState('')
-    const [productType, setProductType] = useState('')
-
     useEffect(() => {
         window.scrollTo(0, 0)
-        setLeadId(getLeadId())
-        setBank(getLeadBank())
-        setProductType(getProductType())
     }, [])
 
     const getComponents = dynamic => {
@@ -34,14 +27,20 @@ const ThankYouPage = props => {
                     return <ThankYouBanner
                         key={block.id}
                         data={block}
-                        leadId={leadId}
-                        bank={bank}
-                        productType={productType}
+                        leadId={getLeadId(props.primaryPath)}
+                        bank={getLeadBank()}
+                        productType={props.productType}
+                        primaryPath={props.primaryPath}
                     />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
-                    return <Offers key={block.id} data={block} primaryPath={props.primaryPath} />
+                    return <TrendingOffers 
+                        key={block.id} 
+                        data={block}
+                        primaryPath={props.primaryPath}
+                        productType={props.productType}
+                    />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.rewards-component':
@@ -69,25 +68,24 @@ export async function getServerSideProps(ctx) {
 
     let { primaryPath } = query
     const secondaryPath = 'thank-you'
-    console.log('primaryPath before switch: ', primaryPath)
 
-    switch (primaryPath) {
-        case 'rkpl':
-            primaryPath = 'credit-cards'
-            break
-        case 'talent-edge-form':
-            primaryPath = 'personal-loans'
-            break
-        default:
-            primaryPath = 'credit-cards'
-
+    if(!primaryPath) {
+        primaryPath = 'credit-cards'
     }
-    console.log('primaryPath after switch: ', primaryPath)
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
-    const data = pageData[0]
+    const data = pageData && pageData.length ? pageData[0] : null
+    console.log('primaryPath: ', primaryPath)
+    const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
+    const productType = productTypeData[0]
+    console.log('productTypeDataLL ', productTypeData)
+    console.log('productType ', productType)
 
-    return { props: { data, primaryPath, secondaryPath } }
+    return { 
+        props: { 
+            data, primaryPath, secondaryPath, productType
+        } 
+    }
 }
 
 export default ThankYouPage

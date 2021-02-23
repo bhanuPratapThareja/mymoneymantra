@@ -1,17 +1,26 @@
+import { setLeadBank } from './localAccess.js'
+
 export const makeDecision = (buttonText, offer, primaryPath, changePageType) => {
-    const { bank: { bank_name: bankName, slug: bankSlug }, product: { slug: productSlug } } = offer
+    const { bank: { bank_name: bankName, slug: bankSlug, bank_id: bankId  }, product: { slug: productSlug } } = offer
     let pathname = ''
     let query = { bankName }
+    console.log(buttonText)
 
     switch (buttonText) {
       case "Apply Now":
       case "Instant Approval":
-        pathname = `/${primaryPath}/thank-you`;
+      case "Instant Approve":
+        const leadBank = { bankName, bankId }
+        setLeadBank(leadBank)
+        pathname = `/thank-you`;
         break;
 
       case "EConnect":
-        console.log('here')
-        pathname = `/${primaryPath}/${bankSlug}/${productSlug}?page=long-form`
+        if(primaryPath === 'credit-cards') {
+          pathname = `/${primaryPath}/${bankSlug}/${productSlug}?page=long-form`
+        } else {
+          pathname = `/${primaryPath}/${bankSlug}?page=long-form`
+        }
         query.page = 'long-form'
         if(changePageType) {
           changePageType('long-form')
@@ -20,7 +29,12 @@ export const makeDecision = (buttonText, offer, primaryPath, changePageType) => 
 
       // view details
       default:
-        pathname = `/${primaryPath}/${bankSlug}/${productSlug}`
+        if(primaryPath === 'credit-cards') {
+          pathname = `/${primaryPath}/${bankSlug}/${productSlug}`
+        } else {
+          pathname = `/${primaryPath}/${bankSlug}`
+        }
+       
         query.page = 'details'
         if(changePageType) {
           changePageType('details')

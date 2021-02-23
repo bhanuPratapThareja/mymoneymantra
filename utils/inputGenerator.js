@@ -5,7 +5,7 @@ import {
 } from "./formattedCurrency";
 
 export const generateInputs = (component, handleChange, checkInputValidity,
-  handleInputDropdownSelection, formType) => {
+  handleInputDropdownSelection, formType, checkboxAnchorClick) => {
 
   const handleInputChange = (e, type, focusDropdown, style_as_dropdown) => {
     let { name, value, checked } = e.target
@@ -13,7 +13,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
 
     if (type === 'money') {
       value = value.toString()
-      const numString = getWholeNumberFromCurrency(value);
+      const numString = getWholeNumberFromCurrency(value)
       if (isNaN(numString)) {
         return
       }
@@ -246,7 +246,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
     }
 
     return (
-      <div className={fieldClasses.join(" ")} id={fieldId} style={uploadButtonBorderStyles}>
+      <div className={fieldClasses.join(" ")} key={id} id={fieldId} style={uploadButtonBorderStyles}>
         <input
           id={inputFileId}
           type="file"
@@ -295,7 +295,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
       }
     }
     return (
-      <div className={fieldClasses.join(' ')} id={fieldId} key={id}>
+      <div className={fieldClasses.join(' ')} key={id} id={fieldId} key={id}>
         <input
           className="form__field"
           name={input_id}
@@ -335,7 +335,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
   if (type === "input_with_calendar") {
     const fieldId = `${input_id}_${type}`;
     return (
-      <div className="cstm-cal" id={fieldId}>
+      <div className="cstm-cal" id={fieldId} key={id}>
         <div className={fieldClasses.join(" ")} key={id}>
           <label className="form__label">{label}</label>
           <input
@@ -346,6 +346,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
             type="text"
             value={value}
             autoComplete="off"
+            readOnly
             required={mandatory}
             onFocus={() => openDatePicker()}
             onBlur={() => onChangeDate(input_id, type)}
@@ -363,10 +364,11 @@ export const generateInputs = (component, handleChange, checkInputValidity,
   }
 
   if (type === "checkbox") {
+
     const { checkbox_input, checkboxes_for } = checkbox;
     const fieldId = `${checkboxes_for}_${type}_container`;
     return (
-      <div id={fieldId} className="agree">
+      <div id={fieldId} className="agree" key={id}>
         <div className="checkbox-container" key={id}>
           {checkbox_input.map((box) => {
             const boxId = `${box.input_id}_${type}`;
@@ -380,7 +382,20 @@ export const generateInputs = (component, handleChange, checkInputValidity,
                   onChange={(e) => handleInputChange(e, type)}
                 />
                 <label htmlFor={box.input_id}>
-                  <span dangerouslySetInnerHTML={{ __html: box.label }}></span></label>
+                  <p>
+                    {box.checkbox_label.map(label => {
+                      return (
+                        <React.Fragment key={label.id}>
+                          {label.type === 'text' ? <span style={{ display: 'inline' }} htmlFor={box.input_id}>{label.label}</span> : null}
+                          {label.type === 'anchor' ? <a style={{ display: 'inline', marginLeft: '2px' }} onClick={(e) => {
+                            e.preventDefault()
+                            checkboxAnchorClick(label.on_click_anchor)
+                          }}>{label.label}</a> : null}
+                        </React.Fragment>
+                      )
+                    })}
+                  </p>
+                </label>
               </div>
             );
           })}
