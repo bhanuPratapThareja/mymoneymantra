@@ -17,7 +17,7 @@ const PopularOffers = props => {
    })
 
    const getOffers = async () => {
-      const apiOffers = await viewOffers(props.productType.productTypeId)
+      const apiOffers = await viewOffers(props.productType.product_type_id)
       if (apiOffers) {
          let populars = apiOffers.populars
          const popularOffers = await extractOffers(populars)

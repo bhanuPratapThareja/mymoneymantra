@@ -462,9 +462,8 @@ class LongForm extends React.Component {
 
     let { primaryPath, leadBank } = this.state
 
-    console.log(data)
 
-    generateLead(data, primaryPath, 'lf', productType)
+    generateLead(data, primaryPath, 'lf', this.props.productType)
       .then((res) => {
         const leadId = res.data.leadId
         let actionName = this.state.primaryPath === 'rkpl' ? 'RKPL-CC' : 'Short Form Submit'

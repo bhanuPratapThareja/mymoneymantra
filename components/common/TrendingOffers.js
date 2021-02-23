@@ -24,7 +24,7 @@ const trendingOffers = props => {
    })
 
    const getOffers = async () => {
-      const apiOffers = await viewOffers(props.productType.productTypeId)
+      const apiOffers = await viewOffers(props.productType.product_type_id)
       if (apiOffers) {
          let trendings = apiOffers.trendings
          const trendingOffers = await extractOffers(trendings)
