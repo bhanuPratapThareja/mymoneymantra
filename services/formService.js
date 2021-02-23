@@ -15,7 +15,6 @@ export const getOtp = mobileNo => {
     body.mobileNo = mobileNo
     axios.post(url, body)
         .then(res => {
-            console.log(res)
             otpId = res.data.otpId
         })
         .catch(() => { })
@@ -28,6 +27,7 @@ export const submitOtp = async mobileNo => {
         otp += inp.value
     }
 
+
     if (otp.length !== 4) {
         throw new Error('Otp mush have 4 characters')
     }
@@ -38,15 +38,14 @@ export const submitOtp = async mobileNo => {
     body.mobileNo = mobileNo
     body.otp = otp
     body.otpId = otpId
-
     try {
-        await axios.post(url, body)
+        const res = await axios.post(url, body)
         return true
     } catch (err) {
         if (err.response.data && err.response.data.message) {
             throw new Error(err.response.data.message)
         } else {
-            throw new Error('Something went wrong. Please try again.')
+            throw new Error('Something went wrong. Please try again.!!')
         }
     }
 }

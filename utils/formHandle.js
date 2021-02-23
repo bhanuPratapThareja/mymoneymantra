@@ -240,7 +240,6 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
             inp.errorMsg = ""
             inp.verified = true
           }
-          // console.log(inp)
         }
         else if (inp.type === "email" && inp.input_id === field.currentActiveInput) {
           if (!isInputValid(inp)) {
@@ -581,7 +580,7 @@ export const submitShortForm = (slides, currentSlide, primaryPath, formType, pro
         resolve(res)
       })
       .catch((err) => {
-        reject("Error while Submitting. Please try again.")
+        reject("Error while Submitting. Please try again.!!!")
       })
   })
 }
