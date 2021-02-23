@@ -71,7 +71,7 @@ const WorkInfo = (props) => {
       .catch((err) => {
         console.log(err)
       })
-      .finally(() => {})
+      .finally(() => { })
   }
 
   const submitHandler = async (e) => {
@@ -110,8 +110,10 @@ const WorkInfo = (props) => {
 
   return (
     <form className="work-wrapper" onSubmit={submitHandler}>
+      {/* <div className="shortforms-container"> */}
+      <h5>Employment Type</h5>
       <div className="shortforms-container">
-        <div
+        {/* <div
           className={
             isedit
               ? 'form__group field edit-part'
@@ -136,7 +138,67 @@ const WorkInfo = (props) => {
               Employment Type
             </label>
           </select>
-        </div>
+        </div> */}
+        {isedit ? <div className="shortforms-container gender-style" >
+          <input
+            value="1000000001"
+            className="lets-checkbox"
+            type="radio"
+            id="self-employed"
+            name="emp-type"
+            required=""
+            onChange={(e) => setEmployedType(e.target.value)}
+            defaultChecked={employedType == 1000000001 ? true : false}
+          />
+          <input
+            value="1000000002"
+            className="lets-checkbox"
+            type="radio"
+            id="self-employed-professional"
+            name="emp-type"
+            required=""
+            onChange={(e) => setEmployedType(e.target.value)}
+            defaultChecked={employedType == 1000000002 ? true : false}
+          />
+          <input
+            value="1000000004"
+            className="lets-checkbox"
+            type="radio"
+            id="salaried"
+            name="emp-type"
+            required=""
+            onChange={(e) => setEmployedType(e.target.value)}
+            defaultChecked={employedType == 1000000004 ? true : false}
+          />
+          <input
+            value="1000000008"
+            className="lets-checkbox"
+            type="radio"
+            id="defense"
+            name="emp-type"
+            required=""
+            onChange={(e) => setEmployedType(e.target.value)}
+            defaultChecked={employedType == 1000000008 ? true : false}
+          />
+          <label htmlFor="self-employed">Self Employed</label>
+          <label htmlFor="self-employed-professional">Self Employed Professional</label>
+          <label htmlFor="salaried">Salaried</label>
+          <label htmlFor="defense">Defense</label>
+
+        </div> :
+          <div className="form__group field">
+            <input
+              readOnly={true}
+              value={employedType == 1000000001 ? 'Self Employed' : employedType == 1000000002 ? 'Self Employed Professional' : employedType == 1000000004 ? 'Salaried' : 'Defense'}
+              className="form__field"
+              type="text"
+              id="emp-type"
+              name="emp-type"
+              required=""
+            />
+            <label className="form__label" htmlFor="emp-type" >Employment Type</label>
+          </div>}
+        {/* <div className="shortforms-container"> */}
         <div
           className={
             isedit
@@ -269,7 +331,9 @@ const WorkInfo = (props) => {
             IFSC Code
           </label>
         </div>
+        {/* </div> */}
       </div>
+
       <div
         className="save-options"
         style={{ display: isedit ? 'flex' : 'none' }}
