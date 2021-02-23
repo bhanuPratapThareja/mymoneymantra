@@ -18,6 +18,7 @@ import LearnMore from '../../components/common/LearnMore'
 import PageNotFound from '../../components/PageNotFound'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { clearLeadId, clearLeadBank, clearFormData } from '../../utils/localAccess'
+import { addSchemaScript,removeSchemaScript } from '../../utils/handleSchema';
 
 const PrimaryPage = props => {
 
@@ -26,6 +27,13 @@ const PrimaryPage = props => {
     clearLeadBank()
     clearLeadId(props.primaryPath)
     clearFormData(props.primaryPath)
+    const id = addSchemaScript(props.data.page_schema,props.data.id)
+    return () => {
+      if (props.data.id) {
+           removeSchemaScript(id)
+      }
+  }
+   
   }, [])
 
   const goToShortForm = () => {
