@@ -1603,29 +1603,101 @@ button.cstm-load-btn {
 
 /*-- Learn More about cc --*/
 
-.learn-more-wrapper-content .table table td {
+.learn-more-wrapper-content .answer .table {
   border: 1px solid #666;
-  padding: 0 10px 10px 10px;
-  color: rgba(255, 255, 255, 0.7);
-  font-family: "Avenir-Roman";
-  font-size: 16px;
-  line-height: 28px;
+  overflow: hidden;
+  margin: 20px auto;
+  max-width: 776px;
+  border-radius: 20px;
 }
 
-.learn-more-wrapper-content .table table {
-  margin: 20px auto;
+.learn-more-wrapper-content .answer .table table {
   border-spacing: 0;
   border-collapse: collapse;
 }
 
-.learn-more-wrapper-content .answer table td p, .learn-more-wrapper-content .answer table td  ul {
+.learn-more-wrapper-content .answer .table table td {
+  padding: 0 10px 10px 10px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: "Avenir-Roman";
+  font-size: 16px;
+  width: 50%;
+  line-height: 28px;
+}
+
+.learn-more-wrapper-content .answer table td p,
+.learn-more-wrapper-content .answer table td  ul {
   padding: 10px 20px 0;
   margin: 0;
 }
 
 .learn-more-wrapper-content .answer table td ul li {
   margin: 0;
+  list-style: none;
+  position: relative;
 }
+
+.learn-more-wrapper-content .answer table td ul li:after {
+  content: "";
+  background: #89c142;
+  position: absolute;
+  left: -17px;
+  top: 9px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.learn-more-wrapper-content .answer .table table tr:nth-child(even) {
+  background: #38454f;
+}
+
+.learn-more-wrapper-content .answer .table table tr td:first-child {
+  font-weight: 500;
+  color: #fff;
+  font-family: 'Avenir-Medium';
+  border-right: 1px solid #666;
+  text-align: center;
+}
+
+.learn-more-wrapper-content .answer .table table tr {
+  border-bottom: 1px solid #666;
+}
+
+.learn-more-wrapper-content .answer .table table tr:last-child {
+  border: none;
+}
+
+/*-- Blog Cards Height Fix --*/
+.infinite-scroll-component .filter-cards-wrapper .single.card-1 .content .details {
+  padding-top: 0;
+  position: absolute;
+  bottom: 15px;
+  width: 82%;
+}
+
+.filter-cards-wrapper .blog-wrapper-card .content p {
+  padding-bottom: 64px;
+}
+
+.infinite-scroll-component .filter-cards-wrapper .single.card-1 .content {
+  -moz-box-flex: 1;
+  flex: 1 1;
+  position: relative;
+}
+
+.cstm-load-btn {
+  border: 1px solid #89c142;
+  margin: 30px 0 0;
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 16px;
+  line-height: 25px;
+  border-radius: 3px;
+  background: #89c142;
+  color: #fff;
+  cursor: pointer;
+} 
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
