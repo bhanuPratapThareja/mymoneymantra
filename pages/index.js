@@ -28,10 +28,13 @@ const Home = props => {
     }, [])
 
     const getOffers = async () => {
-       // const { trendings } = await viewOffers()
-        console.log(trendings)
-        const trendingOffers = await extractOffers(trendings)
-        setTrendingOffers(trendingOffers)
+        const apiOffers = await viewOffers()
+        if (apiOffers) {
+            const { trendings } = apiOffers
+            console.log(trendings)
+            const trendingOffers = await extractOffers(trendings)
+            setTrendingOffers(trendingOffers)
+        }
     }
 
     const getComponents = (dynamic) => {

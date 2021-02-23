@@ -55,11 +55,11 @@ const BlogFilter = props => {
       if (filter.categories.length) {
          let filteredBlogs = []
          data.forEach(blog => {
-            const { blog_categories } = blog
-            if (blog_categories.length) {
-               blog_categories.forEach(category => {
-                  console.log(category.blog_category_name)
-                  if (filter.categories.includes(category.blog_category_name)) {
+            const { post_categories } = blog
+            if (post_categories.length) {
+               post_categories.forEach(category => {
+                  console.log(category.post_category_name)
+                  if (filter.categories.includes(category.post_category_name)) {
                      filteredBlogs.push(blog)
                   }
                })
@@ -73,11 +73,11 @@ const BlogFilter = props => {
       if (filter.subCategories.length) {
          let filteredBlogs = []
          data.forEach(blog => {
-            const { blog_sub_categories } = blog
-            if (blog_sub_categories.length) {
-               blog_sub_categories.forEach(category => {
-                  console.log(category.blog_sub_category)
-                  if (filter.subCategories.includes(category.blog_sub_category)) {
+            const { post_sub_categories } = blog
+            if (post_sub_categories.length) {
+               post_sub_categories.forEach(category => {
+                  console.log(category.post_sub_category)
+                  if (filter.subCategories.includes(category.post_sub_category)) {
                      filteredBlogs.push(blog)
                   }
                })

@@ -13,7 +13,7 @@ const api = {
       devUrl: "masters/api/master/v1/masters",
       uatUrl: "api/customer/v1/profile/",
       prodUrl: "api/customer/v1/profile/",
-      body: { }
+      body: {}
     },
     generateOtp: {
       devUrl: "notification/api/notification/v1/sms/otp",
@@ -80,7 +80,7 @@ const api = {
       prodUrl: "api/master/v1/",
       body: { name: "" }
     },
-    project : {
+    project: {
       devUrl: "masters/api/master/v1/project",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
@@ -228,13 +228,13 @@ const api = {
       devUrl: "customer/api/customer/v1/view-offers",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: {  customerId: '', productId: '' }
+      body: { customerId: '9999000090', productId: '' }
     },
     saveOffers: {
       devUrl: "customer/api/customer/v1/profile/save-offers",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: { customerId: '', offerId: '' }
+      body: { customerId: '9999000090', offerId: '' }
     },
     blogLikeDislike: {
       devUrl: "customer/api/blog/v1/blog-sentiment",

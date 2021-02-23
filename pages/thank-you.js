@@ -29,7 +29,7 @@ const ThankYouPage = props => {
                         data={block}
                         leadId={getLeadId(props.primaryPath)}
                         bank={getLeadBank()}
-                        productType={props.productTypeData}
+                        productType={props.productType}
                         primaryPath={props.primaryPath}
                     />
                 case 'blocks.credit-score-component':
@@ -39,7 +39,7 @@ const ThankYouPage = props => {
                         key={block.id} 
                         data={block}
                         primaryPath={props.primaryPath}
-                        productType={props.productTypeData}
+                        productType={props.productType}
                     />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
@@ -75,10 +75,15 @@ export async function getServerSideProps(ctx) {
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const data = pageData && pageData.length ? pageData[0] : null
+    console.log('primaryPath: ', primaryPath)
+    const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
+    const productType = productTypeData[0]
+    console.log('productTypeDataLL ', productTypeData)
+    console.log('productType ', productType)
 
     return { 
         props: { 
-            data, primaryPath, secondaryPath
+            data, primaryPath, secondaryPath, productType
         } 
     }
 }
