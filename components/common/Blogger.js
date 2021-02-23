@@ -12,7 +12,7 @@ const Blogger = props => {
         }
     })
 
-    let { section_heading, posts } = props.data
+    let { section_heading, bloggers: posts } = props.data
     let popularBlogs = posts.filter(blog => blog.popular === true)
     const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
