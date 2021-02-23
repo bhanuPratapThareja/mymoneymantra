@@ -23,12 +23,12 @@ const Home = props => {
     const [trendingOffers, setTrendingOffers] = useState([])
 
     useEffect(() => {
-        getOffers()
+        //getOffers()
         localStorage.clear()
     }, [])
 
     const getOffers = async () => {
-        const { trendings } = await viewOffers()
+       // const { trendings } = await viewOffers()
         console.log(trendings)
         const trendingOffers = await extractOffers(trendings)
         setTrendingOffers(trendingOffers)
