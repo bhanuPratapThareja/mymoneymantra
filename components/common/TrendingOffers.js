@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import { makeDecision } from '../../utils/decision'
-import { getProductType } from '../../utils/localAccess'
 import { extractOffers, viewOffers } from '../../services/offersService'
 
 const trendingOffers = props => {
@@ -25,14 +24,15 @@ const trendingOffers = props => {
    })
 
    const getOffers = async () => {
-      const productType = getProductType()
-      const apiOffers = await viewOffers(productType.productTypeId)
+      const apiOffers = await viewOffers(props.productType.product_type_id)
       if (apiOffers) {
          let trendings = apiOffers.trendings
          const trendingOffers = await extractOffers(trendings)
          setTrendingOffers(trendingOffers)
          if (window !== undefined && window.initSlickCards && trendingOffers.length) {
+           setTimeout(() => {
             window.initSlickCards()
+           }, 1000)
          }
       }
 
@@ -58,8 +58,8 @@ const trendingOffers = props => {
                {trendingOffers.map(offer => {
                   const { bank, product } = offer
                   const { product_name, product_feature, product_annual_fee,
-                     product_usp_highlight, product_interest_rate,product_tenure,
-                     product_loan_amount, product_emi} = product
+                     product_usp_highlight, product_interest_rate, product_tenure,
+                     product_loan_amount, product_emi } = product
                   return (
                      <div className="popular-cards-slider-card" key={product.id}>
                         <div className="popular-cards-slider-card-top" onClick={() => onOfferClick(offer)}>
@@ -93,11 +93,13 @@ const trendingOffers = props => {
                                  : null}
 
                               {product_loan_amount ?
-                                 <h5>Loan Amt : <span><b>&nbsp; {product_loan_amount.amount}</b></span></h5>
+                                 <h5>Loan Amt : <span><b>&nbsp;{
+                                    Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(product_loan_amount.amount)}</b></span></h5>
                                  : null}
 
                               {product_emi ?
-                                 <h5>Lowest EMI : <span><b>&nbsp; {product_emi.emi}</b></span> </h5> : null}
+                                 <h5>Lowest EMI : <span><b>&nbsp; {
+                                    Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(product_emi.emi)}</b></span></h5> : null}
 
                            </div>
                         </div>

@@ -27,12 +27,12 @@ const BlogsDetails = props => {
         window.scroll(0, 0)
     }, [props.data])
     // const { header, read_text, blog_sub_category, content, display_short_text } = props.data.blogger
-    const { header, blog_contributor, published_at, read_text, blog_sub_category, content, display_short_text, blog, blog_categories } = blogData
-    const mainCategories = blog_categories ? blog_categories : []
+    const { header, post_contributor, published_at, read_text, post_sub_category, content, display_short_text, blog, post_categories } = blogData
+    const mainCategories = post_categories ? post_categories : []
     const readingTime = require('reading-time');
     const blogreadTime = displayBlog ? readingTime(content, { wordsPerMinute: '50' }) : null;
     const { blogId, allBlogs } = props
-    const authorBlogs = displayBlog ? allBlogs.filter(blog => blog.blog_contributor.blog_contributors_name == blog_contributor.blog_contributors_name) : []
+    const authorBlogs = displayBlog ? allBlogs.filter(blog => blog.post_contributor.post_contributors_name == post_contributor.post_contributors_name) : []
     const blogCount = authorBlogs.length ? authorBlogs.length : 0
     const date = displayBlog ? new Date(published_at) : null;
     const ye = displayBlog ? new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date) : null;
@@ -48,13 +48,13 @@ const BlogsDetails = props => {
                         <span>
                             {createdDate} // {blogreadTime.text}
                             {mainCategories.length ? mainCategories.map((category, i) => (
-                                <span key={i} onClick={() => goToPage(category.blog_category_name)}>
-                                    // {category.blog_category_name}
+                                <span key={i} onClick={() => goToPage(category.post_category_name)}>
+                                    // {category.post_category_name}
                                 </span>)
                             ) : null}
                         </span>
                         <div className='author_bio_detail_page'>Author :
-                        <span onClick={() => goToContributorDetailPage(blog_contributor)} dangerouslySetInnerHTML={{ __html: blog_contributor.blog_contributors_name }}>
+                        <span onClick={() => goToContributorDetailPage(post_contributor)} dangerouslySetInnerHTML={{ __html: post_contributor.post_contributors_name }}>
                             </span>
                             <p>({blogCount} {blogCount == 1 ? 'post' : 'posts'},0 comments)</p>
                         </div>

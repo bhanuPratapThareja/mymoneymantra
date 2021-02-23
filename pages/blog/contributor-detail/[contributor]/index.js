@@ -7,8 +7,6 @@ import AboutContributors from '../../../../components/common/AboutContributors'
 import { useEffect, useState } from "react";
 import { getContributorId } from "../../../../utils/localAccess";
 
-
-
 const ContributorDetails = (props) => {
     const [name, setName] = useState('')
     const [author, setAuthor] = useState([])
@@ -21,7 +19,10 @@ const ContributorDetails = (props) => {
         const filteredContributors = props.contributorData.filter(contributor => contributor.id == id)
         let name = filteredContributors[0].blog_contributors_name
         props.allBlogs.forEach(blog => {
-            if (name.toLowerCase().includes(blog.blog_contributor.blog_contributors_name.toLowerCase())) {
+            // console.log(blog)
+            console.log(blog.post_contributor)
+            let blogFound = name.toLowerCase().includes(blog.post_contributor.post_contributors_name.toLowerCase())
+            if (blogFound) {
                 filteredBlogs.push(blog)
             }
         })
@@ -64,7 +65,7 @@ export async function getServerSideProps(ctx) {
     );
     const allBlogs = await strapi.processReq(
         "GET",
-        `quick-blogs`
+        `posts`
     );
     const pageData = await strapi.processReq(
         "GET",

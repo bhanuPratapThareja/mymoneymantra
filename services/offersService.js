@@ -7,7 +7,7 @@ import { unpackComponents } from './componentsService'
 const defaultDecision = 'EConnect'
 
 export const viewOffers = async productTypeId => {
-    const { url, body } = getApiData('customerOfferView')
+    const { url, body } = getApiData('viewOffers')
     body.customerId = ''
     body.productId = productTypeId ? productTypeId : ''
 
@@ -18,7 +18,6 @@ export const viewOffers = async productTypeId => {
 }
 
 export const extractOffers = async apiOffers => {
-    // console.log('apiOffers: ', apiOffers)
     return new Promise(async (resolve) => {
         const strapi = new Strapi()
         const productIdArray = []
@@ -54,8 +53,8 @@ export const extractOffers = async apiOffers => {
     })
 }
 
-export const customerOfferData = async () => {
-    const { url, body } = getApiData('customerOffer')
+export const saveOffers = async () => {
+    const { url, body } = getApiData('saveOffers')
     try {
         const res = await axios.post(url, body)
         return res.data.response.payload
@@ -64,25 +63,24 @@ export const customerOfferData = async () => {
     }
 }
 
-export const getProductDecision = offers => {
+export const getProductDecision = (offers, primaryPath, productType) => {
     const promise = new Promise((resolve) => {
         const pendingOffers = [...offers]
         if (!pendingOffers.length) {
             resolve([])
         }
         const { url, body } = getApiData('leadProductDecision')
-        const leadId = getLeadId()
+        const leadId = getLeadId(primaryPath)
         pendingOffers.forEach(async offer => {
 
-            body.request.payload.productId = offer.productType.product_type_id.toString()
-            // body.request.payload.productTypeId = offer.productType.product_type_id
-            body.request.payload.bankId = offer.bank.bank_id
-            body.request.payload.leadId = leadId
+            body.productId = productType ? productType.product_type_id.toString() : ''
+            body.bankId = offer.bank.bank_id
+            body.leadId = leadId
 
             let productDecision = ''
             try {
                 const res = await axios.post(url, body)
-                productDecision = res.data.response.payload.productDecision
+                productDecision = res.data.productDecision
             } catch {
                 productDecision = defaultDecision
             }

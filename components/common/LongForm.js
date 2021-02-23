@@ -1,12 +1,11 @@
 import Modal from "../../components/Modal/Modal"
 import Otp from "../Otp/Otp"
-import Image from '../../components/ImageComponent/ImageComponent'
 import { withRouter } from "next/router"
 import { uniq, debounce } from "lodash"
 import { generateInputs } from "../../utils/inputGenerator"
 import { getDropdownList } from "../../services/formService"
 import { generateLead, sendNotification, submitOtp, getOtp } from "../../services/formService"
-import { setPrimaryPath, setLeadId, getLeadId, setLeadBank } from "../../utils/localAccess"
+import { setLeadId, getLeadId, setLeadBank } from "../../utils/localAccess"
 import { getFormattedCurrency, getWholeNumberFromCurrency } from "../../utils/formattedCurrency"
 import ImageComponent from '../../components/ImageComponent/ImageComponent'
 import {
@@ -56,7 +55,7 @@ class LongForm extends React.Component {
     const formData = JSON.parse(localStorage.getItem("formData"))
     let sfData = null
     let noOfMandatoryInputs = 0
-    let leadId = getLeadId()
+    let leadId = getLeadId(primaryPath)
     let enableCheckboxes = []
 
     if (formData && formData[primaryPath]) {
@@ -350,7 +349,6 @@ class LongForm extends React.Component {
 
     this.updateState(newLongFormSections).then(() => {
       if (!errors) {
-        // if (this.state.primaryPath !== 'rkpl' && (!this.state.leadId || this.state.askForOtp)) {
         if (this.state.fulfillTnc) {
           let mobileNo = "";
           const newLongFormSections = [...this.state.longFormSections]
@@ -464,9 +462,8 @@ class LongForm extends React.Component {
 
     let { primaryPath, leadBank } = this.state
 
-    console.log(data)
 
-    generateLead(data, primaryPath, 'lf')
+    generateLead(data, primaryPath, 'lf', this.props.productType)
       .then((res) => {
         const leadId = res.data.leadId
         let actionName = this.state.primaryPath === 'rkpl' ? 'RKPL-CC' : 'Short Form Submit'
@@ -479,20 +476,18 @@ class LongForm extends React.Component {
         let primaryPath = this.state.primaryPath
         if (primaryPath === 'rkpl') {
           primaryPath = 'credit-cards'
-          setPrimaryPath('credit-cards')
         }
         if (primaryPath === 'talent-edge-form') {
           primaryPath = 'personal-loans'
-          setPrimaryPath('personal-loans')
         }
 
-        setLeadId(leadId)
+        setLeadId(leadId, primaryPath)
         setLeadBank(leadBank)
         const pathname = `/thank-you`
         const query = { primaryPath }
         this.props.router.push({ pathname, query }, pathname, { shallow: true })
       })
-      .catch((err) => {
+      .catch(err => {
         this.setState({ submitButtonDisabled: false, submissionError: 'Something went wrong. Please try again.' })
       })
   };

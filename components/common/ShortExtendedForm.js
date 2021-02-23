@@ -31,6 +31,7 @@ import {
 class ShortExtendedForm extends React.Component {
     otpInterval = null;
     state = {
+        formType: 'sf',
         slideIndex: 0,
         currentSlide: 'onboard',
         submitButtonDisabled: true,
@@ -96,14 +97,12 @@ class ShortExtendedForm extends React.Component {
     }
 
     componentDidMount() {
-        const primaryPath = this.props.router.query.primaryPath
-        this.setState({ primaryPath })
         let slideNo = 1
         const { side_form, form_slide } = this.props.data.onboard_short_form
         this.setInputsInState(side_form, 'onboard')
         form_slide.forEach(slide => {
             setTimeout(() => {
-                let slideId = `sf-${slideNo}`
+                let slideId = `${this.state.formType}-${slideNo}`
                 const fields = slide.onboard_form_slide.fields
                 const heading = slide.onboard_form_slide.heading
                 const slideClass = slide.onboard_form_slide.slide_class
@@ -153,7 +152,7 @@ class ShortExtendedForm extends React.Component {
         })
     }
 
-    onSubmitOtp = e => {
+    onSubmitOtp = async e => {
         e.preventDefault()
         const inputs = document.getElementsByClassName('input_otp')
         for (let inp of inputs) {
@@ -175,9 +174,9 @@ class ShortExtendedForm extends React.Component {
         try {
             const res = await this.onSubmitShortForm()
             const leadId = res.data.leadId
-            setLeadId(leadId)
+            setLeadId(leadId, this.props.primaryPath)
             sendNotification(leadId)
-            this.setState({ currentSlide: 'sf-1', slideIndex: 1, slideButtonText: 'Next' }, () => {
+            this.setState({ currentSlide: `${this.state.formType}-1`, slideIndex: 1, slideButtonText: 'Next' }, () => {
                 goToSlides()
             })
         } catch (err) {
@@ -224,7 +223,7 @@ class ShortExtendedForm extends React.Component {
                     } else {
                         this.onSubmitShortForm()
                             .then(res => {
-                                this.props.router.push(`/${this.state.primaryPath}/listings`)
+                                this.props.router.push(`/${this.props.primaryPath}/listings`)
                             })
                             .catch(() => {
                                 this.setState({ submissionError: 'Something went wrong. Please try again.' })
@@ -247,7 +246,7 @@ class ShortExtendedForm extends React.Component {
 
     onSubmitShortForm = () => {
         return new Promise((resolve, reject) => {
-            submitShortForm([...this.state.slides], this.state.currentSlide, this.state.primaryPath, 'sf')
+            submitShortForm([...this.state.slides], this.state.currentSlide, this.props.primaryPath, this.state.formType, this.props.productType)
                 .then(res => {
                     resolve(res)
                 })
@@ -303,6 +302,7 @@ class ShortExtendedForm extends React.Component {
             } else {
                 this.setState({ submitButtonDisabled: true })
             }
+
         })
 
         // console.log(this.state)
@@ -343,6 +343,15 @@ class ShortExtendedForm extends React.Component {
                 if (mandatoryInputsHaveValues) {
                     setTimeout(() => {
                         this.plusSlides(1)
+                         // console.log(this.state.slides)
+                            // const copySlides = [...this.state.slides]
+                            // console.log('copySlides: ', copySlides)
+                            // const splicedSlides = copySlides.splice(4,2)
+                            // console.log('splicedSlides: ', splicedSlides)
+                            // this.setState({ ...this.state, slides: splicedSlides, currentSlide: 'sf-4', slideIndex: 0 }, () => {
+                            //     console.log(this.state)
+                            // })
+                        
                     }, 125)
                 }
             }

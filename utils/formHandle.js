@@ -3,6 +3,8 @@ import { isInputValid, isMonetaryValid } from "./formValidations"
 import { getBase64, documentUpload, generateLead } from "../services/formService"
 import { getFormattedName } from "./formatDataForApi"
 import { getWholeNumberFromCurrency, getFormattedCurrency } from "./formattedCurrency"
+import { setFormData } from "./localAccess"
+
 export const textTypeInputs = [
   "text",
   "number",
@@ -238,7 +240,6 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
             inp.errorMsg = ""
             inp.verified = true
           }
-          // console.log(inp)
         }
         else if (inp.type === "email" && inp.input_id === field.currentActiveInput) {
           if (!isInputValid(inp)) {
@@ -544,23 +545,23 @@ export const getSfData = (slides) => {
   return data
 }
 
-export const submitDocument = async (documentName = "", files) => {
+export const submitDocument = async (documentName, files, primaryPath) => {
   let docs = []
   for (let i = 0; i < files.length; i++) {
     const { type, name } = files[i]
     const base64 = await getBase64(files[i])
     docs.push({ name, base64, type })
   }
-  documentUpload(docs, documentName)
+  documentUpload(docs, documentName, primaryPath)
 }
 
-export const submitShortForm = (slides, currentSlide, primaryPath, formType) => {
+export const submitShortForm = (slides, currentSlide, primaryPath, formType, productType) => {
   return new Promise((resolve, reject) => {
     slides.forEach((slide) => {
       if (slide.slideId === currentSlide) {
         slide.inputs.forEach((input) => {
           if (input.attachment && input.value && input.value.length) {
-            submitDocument(input.end_point_name, input.value)
+            submitDocument(input.end_point_name, input.value, primaryPath)
           }
         })
       }
@@ -572,16 +573,14 @@ export const submitShortForm = (slides, currentSlide, primaryPath, formType) => 
         data[key] = ""
       }
     }
-    const previouslySavedData = JSON.parse(localStorage.getItem('formData'))
-    const formData = { ...previouslySavedData, [primaryPath]: data }
-    localStorage.setItem("formData", JSON.stringify(formData))
-    
-    generateLead(data, primaryPath, formType)
+   
+    setFormData(data, primaryPath)
+    generateLead(data, primaryPath, formType, productType)
       .then((res) => {
         resolve(res)
       })
       .catch((err) => {
-        reject("Error while Submitting. Please try again.")
+        reject("Error while Submitting. Please try again.!!!")
       })
   })
 }

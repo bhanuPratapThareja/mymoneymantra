@@ -31,7 +31,7 @@ const ListingBanner = props => {
     }
 
     const getCalulatedProductType = () => {
-        const productTypeName = props.numberOfCards == 1 ? props.productTypeData[0].product_type_name.slice(0, -1) : props.productTypeData[0].product_type_name
+        const productTypeName = props.numberOfCards == 1 ? props.productType.product_type_name.slice(0, -1) : props.productType.product_type_name
         return productTypeName.toLowerCase()
     }
 

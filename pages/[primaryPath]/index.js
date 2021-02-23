@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 
@@ -17,17 +17,23 @@ import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import PageNotFound from '../../components/PageNotFound'
 import { getClassesForPage } from '../../utils/classesForPage'
-import { clearLeadId, setPrimaryPath, setProductType, clearFormData, getProductType } from '../../utils/localAccess'
-import { viewOffers, extractOffers } from '../../services/offersService'
+import { clearLeadId, clearLeadBank, clearFormData } from '../../utils/localAccess'
+import { addSchemaScript,removeSchemaScript } from '../../utils/handleSchema';
 
 const PrimaryPage = props => {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    setPrimaryPath(props.primaryPath)
-    setProductType(props.productTypeData)
-    clearLeadId()
-    clearFormData()
+    clearLeadBank()
+    clearLeadId(props.primaryPath)
+    clearFormData(props.primaryPath)
+    const scriptId = addSchemaScript(props.data.page_schema, props.data.id)
+    return () => {
+        if (scriptId) {
+            removeSchemaScript(scriptId)
+        }
+    }
+   
   }, [])
 
   const goToShortForm = () => {
@@ -56,6 +62,8 @@ const PrimaryPage = props => {
             key={block.id}
             data={block}
             tncData={props.tncData}
+            primaryPath={props.primaryPath}
+            productType={props.productType}
             preferredSelectionLists={props.preferredSelectionLists}
           />
         case 'offers.popular-offers-component':
@@ -63,6 +71,7 @@ const PrimaryPage = props => {
             key={block.id}
             data={block}
             primaryPath={props.primaryPath}
+            productType={props.productType}
             goToShortForm={goToShortForm}
           />
         case 'blocks.credit-score-component':
@@ -72,6 +81,7 @@ const PrimaryPage = props => {
             key={block.id}
             data={block}
             primaryPath={props.primaryPath}
+            productType={props.productType}
             goToShortForm={goToShortForm}
           />
         case 'blocks.bank-slider-component':
@@ -104,6 +114,7 @@ export async function getServerSideProps(ctx) {
   const { query } = ctx
   const primaryPath = query.primaryPath
   const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
+  const productType = productTypeData[0]
   const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}`)
   const data = pageData && pageData.length ? pageData[0] : null
   const preferredSelectionLists = await strapi.processReq('GET', `list-preferences`)
@@ -112,7 +123,7 @@ export async function getServerSideProps(ctx) {
   return {
     props: {
       data, primaryPath, preferredSelectionLists,
-      productTypeData, tncData
+      productType, tncData
     }
   }
 }

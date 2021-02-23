@@ -17,21 +17,31 @@ import TrendingOffers from '../components/common/TrendingOffers'
 import { getClassesForPage } from '../utils/classesForPage'
 import { viewOffers, extractOffers } from '../services/offersService'
 import { get } from 'jquery'
-
+import { addSchemaScript, removeSchemaScript } from '../utils/handleSchema'
 
 const Home = props => {
     const [trendingOffers, setTrendingOffers] = useState([])
 
+
     useEffect(() => {
-        getOffers()
+        //getOffers()
         localStorage.clear()
+        const scriptId = addSchemaScript(props.data.page_schema, props.data.id)
+        return () => {
+            if (scriptId) {
+                removeSchemaScript(scriptId)
+            }
+        }
     }, [])
 
     const getOffers = async () => {
-        const { trendings } = await viewOffers()
-        console.log(trendings)
-        const trendingOffers = await extractOffers(trendings)
-        setTrendingOffers(trendingOffers)
+        const apiOffers = await viewOffers()
+        if (apiOffers) {
+            const { trendings } = apiOffers
+            console.log(trendings)
+            const trendingOffers = await extractOffers(trendings)
+            setTrendingOffers(trendingOffers)
+        }
     }
 
     const getComponents = (dynamic) => {

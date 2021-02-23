@@ -7,12 +7,13 @@ import Image from '../ImageComponent/ImageComponent'
 
 const BlogList = (props) => {
     const { data } = props
+    console.log('blog list', data)
     let sortedBlogs = data.sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
     let limit = 3
     const [allBlogs, setAllBlogs] = useState([])
     const [blogsToDisplay, setBlogsToDispaly] = useState([])
     const [sliceIndex, setSliceIndex] = useState(limit);
-    const [hasMore, setHasMore] = useState(true)
+    const [hasMore, setHasMore] = useState(limit < allBlogs.length)
     const router = useRouter()
     const onOpenBlog = blog => {
         setBlogId(blog.id)
@@ -35,7 +36,7 @@ const BlogList = (props) => {
         setTimeout(() => {
             setBlogsToDispaly(finalList)
         }, 1000)
-        // console.log(allBlogs.length - 1, newIndex, allBlogs.length - 1 < newIndex, allBlogs)
+        console.log("finalList", finalList)
     }
     return (
         <section className="blogs-filter container">
@@ -47,7 +48,6 @@ const BlogList = (props) => {
                     next={fetchMoreData}
                 >
                     <div className="filter-cards-wrapper" >
-                        {/* {allBlogs.length ? */}
                         {blogsToDisplay.length ? blogsToDisplay.map((blog, i) => {
                             const { header, short_text, image, read_text, redirect_url, id, createdAt, published_at, content } = blog
                             const date = new Date(published_at);
@@ -75,8 +75,6 @@ const BlogList = (props) => {
                                 </div>
                             )
                         }) : <div>No Result Found</div>}
-                        {/* :<div>No Result Found</div>} */}
-
                     </div>
                 </InfiniteScroll>
             </div>

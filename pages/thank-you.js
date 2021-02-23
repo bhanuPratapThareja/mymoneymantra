@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 
@@ -12,21 +12,12 @@ import Blogger from '../components/common/Blogger'
 import LearnMore from '../components/common/LearnMore'
 
 import { getClassesForPage } from '../utils/classesForPage'
-import { getLeadId, getLeadBank, getProductType } from '../utils/localAccess'
-import { viewOffers, extractOffers } from '../services/offersService'
+import { getLeadId, getLeadBank } from '../utils/localAccess'
 
 const ThankYouPage = props => {
 
-    const [leadId, setLeadId] = useState('')
-    const [bank, setBank] = useState('')
-    const [productType, setProductType] = useState('')
-    const [trendingOffers, setTrendingOffers] = useState([])
-
     useEffect(() => {
         window.scrollTo(0, 0)
-        setLeadId(getLeadId())
-        setBank(getLeadBank())
-        setProductType(getProductType())
     }, [])
 
     const getComponents = dynamic => {
@@ -36,9 +27,10 @@ const ThankYouPage = props => {
                     return <ThankYouBanner
                         key={block.id}
                         data={block}
-                        leadId={leadId}
-                        bank={bank}
-                        productType={productType}
+                        leadId={getLeadId(props.primaryPath)}
+                        bank={getLeadBank()}
+                        productType={props.productType}
+                        primaryPath={props.primaryPath}
                     />
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
@@ -46,7 +38,8 @@ const ThankYouPage = props => {
                     return <TrendingOffers 
                         key={block.id} 
                         data={block}
-                        primaryPath={props.primaryPath} 
+                        primaryPath={props.primaryPath}
+                        productType={props.productType}
                     />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
@@ -82,10 +75,15 @@ export async function getServerSideProps(ctx) {
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const data = pageData && pageData.length ? pageData[0] : null
+    console.log('primaryPath: ', primaryPath)
+    const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
+    const productType = productTypeData[0]
+    console.log('productTypeDataLL ', productTypeData)
+    console.log('productType ', productType)
 
     return { 
         props: { 
-            data, primaryPath, secondaryPath
+            data, primaryPath, secondaryPath, productType
         } 
     }
 }
