@@ -131,7 +131,7 @@ export const generateLead = async (data, primaryPath, formType, productType) => 
             yearsCurrentJob, projectrName,
         } = data
 
-        const productTypeId = productType ? productType.productTypeId : ''
+        const productTypeId = productType ? productType.product_type_id : ''
         body.formBankId = leadBank && leadBank.bankId ? leadBank.bankId : ''
         body.bankId = salaryBank && salaryBank.bankId ? salaryBank.bankId : ''
         body.leadId = getLeadId(primaryPath)
