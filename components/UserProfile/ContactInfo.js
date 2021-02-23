@@ -1,0 +1,174 @@
+import axios from 'axios'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import { getContactInfo, saveContactInfo } from '../../utils/userProfileService'
+const ContactInfo = () => {
+  const [editing, setEditing] = useState(false)
+  const [mobileNo, setMobileNo] = useState('')
+  const [emailId, setEmailId] = useState('')
+  const [currentAddress, setCurrentAddress] = useState('')
+  const [permanentAddress, setPermanentAddress] = useState('')
+  const [address, setAddress] = useState([])
+
+  useEffect(() => {
+    getContact()
+  }, [])
+
+  const getContact = () => {
+    getContactInfo()
+      .then((res) => {
+        console.log({ res })
+        const { customerId, emailId, mobileNo, address } = res
+        setEmailId(emailId)
+        setMobileNo(mobileNo)
+        setAddress(address)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const submitHandler = async (e) => {
+    e.preventDefault()
+    setEditing(false)
+    try {
+      // const customerId = localStorage.getItem('customerId')
+      const responseObject = await saveContactInfo()
+      if (responseObject.status === 200) {
+        getContact()
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const cancleHandler = () => {
+    setEditing(false)
+    getContact()
+  }
+
+  return (
+    <>
+      <form
+        className="contact-wrapper"
+        style={{ display: 'block' }}
+        onSubmit={submitHandler}
+      >
+        <div className="shortforms-container">
+          <div
+            className={
+              editing
+                ? 'form__group field edit-part'
+                : 'form__group field read-part'
+            }
+          >
+            <input
+              readOnly={!editing}
+              className="form__field"
+              type="text"
+              value={mobileNo}
+              id="mob-num"
+              onChange={(e) => setMobileNo(e.target.value)}
+              placeholder="Mobile Number"
+              required=""
+            />
+            <label className="form__label" htmlFor="mob-num">
+              Mobile Number
+            </label>
+          </div>
+          <div
+            className={
+              editing
+                ? 'form__group field edit-part'
+                : 'form__group field read-part'
+            }
+          >
+            <input
+              readOnly={!editing}
+              className="form__field"
+              type="text"
+              value={emailId}
+              id="email"
+              placeholder="Email ID"
+              onChange={(e) => setEmailId(e.target.value)}
+              required=""
+            />
+            <label className="form__label" htmlFor="email">
+              Email ID
+            </label>
+          </div>
+          <div
+            className={
+              editing
+                ? 'form__group field edit-part'
+                : 'form__group field read-part'
+            }
+          >
+            <input
+              readOnly={!editing}
+              className="form__field"
+              type="text"
+              value={currentAddress}
+              id="current-address"
+              placeholder="Current Address"
+              onChange={(e) => setCurrentAddress(e.target.value)}
+              required=""
+            />
+            <label className="form__label" htmlFor="current-address">
+              Current Address
+            </label>
+          </div>
+          <div
+            className={
+              editing
+                ? 'form__group field edit-part'
+                : 'form__group field read-part'
+            }
+          >
+            <input
+              readOnly={!editing}
+              className="form__field"
+              type="text"
+              value={permanentAddress}
+              id="permanent-address"
+              placeholder="Permanent Address"
+              onChange={(e) => setPermanentAddress(e.target.value)}
+              required=""
+            />
+            <label className="form__label" htmlFor="permanent-address">
+              Permanent Address
+            </label>
+          </div>
+        </div>
+        <div
+          className="save-options"
+          style={{ display: editing ? 'flex' : 'none' }}
+        >
+          <button type="submit" className="save-contact" id="save-contact">
+            Save
+          </button>
+          <button
+            type="button"
+            className="cancel"
+            id="cancel"
+            onClick={cancleHandler}
+          >
+            Cancel
+          </button>
+        </div>
+        {!editing && (
+          <button
+            type="button"
+            id="edit-contact"
+            className="edit-button"
+            onClick={() => setEditing(true)}
+          >
+            Edit
+          </button>
+        )}
+      </form>
+    </>
+  )
+}
+
+export default ContactInfo

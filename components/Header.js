@@ -14,12 +14,20 @@ const Header = () => {
    const headerRef = useRef()
    const [headerData, setHeaderData] = useState(null)
    const [headerClasses, setHeaderClasses] = useState('header')
-
+const [isLoggedId, setisLoggedId] = useState(false)
    let longFormBanner = null
    let longForm = null
 
    useEffect(() => {
+      let customerId=localStorage.getItem('customerId');
+      console.log(customerId)
+      if(customerId&&customerId!==''){
+         setisLoggedId(true);
+      }
+      else{
+         setisLoggedId(false);
 
+      }
       if (router.pathname === '/' && getDevice() !== 'desktop') {
          setHeaderClasses('header mobile-header')
       }
@@ -116,7 +124,10 @@ const Header = () => {
       $(".menu-login").show("slide");
       $('body', "html").css("overflow", "hidden")
    }
-
+const logout=()=>{
+   localStorage.setItem('customerId','');
+   setisLoggedId(false);
+}
    return (
       <>
          <Head>
@@ -144,13 +155,20 @@ const Header = () => {
             <div className="header-links">{renderMenu()}</div>
 
             <div className="header-access">
-               <div className="login-cta">
-                  <button id="log_in">{headerData.login.label}</button>
+               
+               {!isLoggedId?<><div className="login-cta">
+                  <button id="log_in"><a href="/login">{headerData.login.label}</a></button>
                </div>
                <div className="signup-cta secondary-cta">
                   <div className="border"></div>
-                  <button id="sign_up">{headerData.signup.label}</button>
+                  <button id="sign_up"><a href="/sign-up">{headerData.signup.label}</a></button>
+               </div></>:<>
+               <div className="signup-cta secondary-cta">
+                  <div className="border"></div>
+                  <button id="sign_up" onClick={()=>{logout()}}>Logout</button>
                </div>
+               </>
+               }
             </div>
          </header> : null}
       </>
