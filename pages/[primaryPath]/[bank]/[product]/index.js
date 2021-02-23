@@ -76,8 +76,8 @@ const Details = props => {
                     return <Rewards key={block.id} data={block} />
                 case 'blocks.quick-financial-tools-component':
                     return <FinancialTools key={block.id} data={block} />
-                case 'blocks.blogger':
-                    return <Blogger key={block.id} data={block} />
+                // case 'blocks.blogger':
+                //     return <Blogger key={block.id} data={block} />
                 case 'blocks.learn-more-component':
                     return <LearnMore key={block.id} data={block} />
                 case 'banners.long-form-banners-component':
