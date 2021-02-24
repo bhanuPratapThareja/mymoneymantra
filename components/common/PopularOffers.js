@@ -62,12 +62,13 @@ const PopularOffers = props => {
                                  {product_feature.product_feature.map(feature => <li key={feature.id}><span dangerouslySetInnerHTML={{ __html: feature.description }}></span></li>)}
                               </ul>
                            </div>
-
-                           {product_annual_fee ? <div className="fee">
-                              <h5><b>₹{product_annual_fee.annual_fee_fy}</b> Annual fee</h5>
-                           </div> : null}
-
+                           
                            <div className="fee">
+                           {product_annual_fee ? 
+                              <h5><b>₹{product_annual_fee.annual_fee_fy}</b> Annual fee</h5>
+                            : null}
+
+                           
                               {product_interest_rate ?
                                  <h5>Int Rates :<span><b>&nbsp; {product_interest_rate.min_value}% - {product_interest_rate.max_value}%
                               {product_interest_rate.duration === 'Annually' ? 'p.a.' : 'm.a.'}</b></span></h5>
