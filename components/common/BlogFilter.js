@@ -8,6 +8,7 @@ import Image from '../ImageComponent/ImageComponent'
 import BlogFilterOptions from './BlogFilterOptions'
 
 const BlogFilter = props => {
+   console.log(props)
    const { blogsFilter, data } = props
    let limit = 3
    const [blogs, setBlogs] = useState([])

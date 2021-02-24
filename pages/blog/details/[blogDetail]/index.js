@@ -21,11 +21,11 @@ const BlogDetail = props => {
         const getBlogData = async () => {
             const blog = await strapi.processReq(
                 "GET",
-                `posts/${blogId}`
+                `quick-blogs/${blogId}`
             );
-            let slugForProductTypeData = blog.post_categories[0].slug ? blog.post_categories[0].slug : 'credit-cards'
+           let slugForProductTypeData = blog.post_categories[0].slug ? blog.post_categories[0].slug : 'credit-cards'
             const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${slugForProductTypeData}`)
-            let productTypeId = productTypeData[0].product_type_id
+           let productTypeId = productTypeData[0].product_type_id
             const apiOffers = await viewOffers(productTypeId)
             if (apiOffers) {
                 const { trendings } = apiOffers
@@ -41,6 +41,7 @@ const BlogDetail = props => {
     }, [props.query])
 
     const getComponents = (dynamic) => {
+        console.log("dynamic-------",dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.blog-texts-component':
@@ -57,7 +58,7 @@ const BlogDetail = props => {
                         blogTrendingOffers={trendingOffers}
                     />
                 case 'blocks.similar-blogs-component':
-                    return <SimilarArticles key={block.id} data={props.allBlogs} categories={blogData.blog_categories} subCategories={blogData.blog_sub_categories} />
+                    return <SimilarArticles key={block.id} data={props.allBlogs} categories={blogData.post_categories} subCategories={blogData.post_sub_categories} />
             }
         })
     }
@@ -76,7 +77,7 @@ export async function getServerSideProps(ctx) {
 
     const allBlogs = await strapi.processReq(
         "GET",
-        `posts`
+        `quick-blogs`
     );
 
     const blogData = await strapi.processReq(

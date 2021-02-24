@@ -56,7 +56,7 @@ export async function getServerSideProps(ctx) {
   );
   const allBlogs = await strapi.processReq(
     "GET",
-    `posts`
+    `quick-blogs`
   );
 
   const data = pageData && pageData.length ? pageData[0] : null;

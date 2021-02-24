@@ -7,23 +7,27 @@ import Image from '../ImageComponent/ImageComponent'
 
 const BlogList = (props) => {
     const { data } = props
-    console.log('blog list', data)
     let sortedBlogs = data.sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
     let limit = 3
     const [allBlogs, setAllBlogs] = useState([])
     const [blogsToDisplay, setBlogsToDispaly] = useState([])
     const [sliceIndex, setSliceIndex] = useState(limit);
     const [hasMore, setHasMore] = useState(limit < allBlogs.length)
+    console.log('blog list', allBlogs.length)
+
     const router = useRouter()
     const onOpenBlog = blog => {
         setBlogId(blog.id)
         router.push(`/blog/details/${blog.slug}`)
     }
     useEffect(() => {
+        let newHasMore = limit < sortedBlogs.length
+        setHasMore(newHasMore)
         setAllBlogs(sortedBlogs)
         setBlogsToDispaly(slice(sortedBlogs, 0, limit))
     }, [props.data])
     const fetchMoreData = () => {
+        console.log("i am here")
         let newIndex = sliceIndex + limit
         let newList = slice(allBlogs, sliceIndex, newIndex)
         let finalList = [...blogsToDisplay, ...newList]
