@@ -35,6 +35,7 @@ const RecentBlogs = (props) => {
                             const readingTime = require('reading-time');
                             const blogreadTime = readingTime(content);
                             return (
+                                <a onClick={() => onOpenBlog(blog)}>
                                 <div key={i} className="blog-wrapper-card single card-1 slide_cell cstm-prd" id="blog-card-1">
                                     <div className='image_1'>
                                         <Image image={image} />
@@ -48,6 +49,7 @@ const RecentBlogs = (props) => {
                                         </div>
                                     </div>
                                 </div>
+                                </a>
                             )
                         })
                     }

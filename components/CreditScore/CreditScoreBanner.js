@@ -1,32 +1,20 @@
+import { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 
-const data = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-  datasets: [
-    {
-      fill: false,
-      lineTension: 0.1,
-      backgroundColor: 'rgba(75,192,192,0.4)',
-      borderColor: 'rgba(75,192,192,1)',
-      borderCapStyle: 'butt',
-      borderDash: [],
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'miter',
-      pointBorderColor: 'rgba(75,192,192,1)',
-      pointBackgroundColor: '#fff',
-      pointBorderWidth: 1,
-      pointHoverRadius: 5,
-      pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-      pointHoverBorderColor: 'rgba(220,220,220,1)',
-      pointHoverBorderWidth: 2,
-      pointRadius: 1,
-      pointHitRadius: 10,
-      data: [65, 59, 80, 81, 56, 55, 40],
-    },
-  ],
-}
-
 const CreditScoreBanner = ({ accountHistory }) => {
+  const [data, setData] = useState([])
+  const [label, setLabel] = useState([])
+
+  useEffect(() => {
+    const chartData = []
+    const chartLabel = []
+    accountHistory?.forEach((item) => {
+      chartData.push(item.score)
+      chartLabel.push(item.date)
+    })
+    setData(chartData)
+    setLabel(chartLabel)
+  }, [accountHistory])
   return (
     <section
       data-aos="fade-up"
@@ -59,51 +47,54 @@ const CreditScoreBanner = ({ accountHistory }) => {
             />
           </div>
           <div className="score-graph-img">
-            <Line
-              data={{
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                datasets: [
-                  {
-                    fill: false,
-                    lineTension: 0.1,
-                    backgroundColor: 'rgba(75,192,192,0.4)',
-                    borderColor: 'rgba(75,192,192,1)',
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: 'rgba(75,192,192,1)',
-                    pointBackgroundColor: '#fff',
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-                    pointHoverBorderColor: 'rgba(220,220,220,1)',
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: [65, 59, 80, 81, 56, 55, 40],
+            {accountHistory && data.length > 0 && label.length > 0 && (
+              <Line
+                data={{
+                  labels: label,
+                  datasets: [
+                    {
+                      label: 'Credit Score History',
+                      fill: false,
+                      lineTension: 0.1,
+                      backgroundColor: 'rgba(75,192,192,0.4)',
+                      borderColor: 'rgba(75,192,192,1)',
+                      borderCapStyle: 'butt',
+                      borderDash: [],
+                      borderDashOffset: 0.0,
+                      borderJoinStyle: 'miter',
+                      pointBorderColor: 'rgba(75,192,192,1)',
+                      pointBackgroundColor: '#fff',
+                      pointBorderWidth: 1,
+                      pointHoverRadius: 5,
+                      pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                      pointHoverBorderColor: 'rgba(220,220,220,1)',
+                      pointHoverBorderWidth: 2,
+                      pointRadius: 1,
+                      pointHitRadius: 10,
+                      data: data,
+                    },
+                  ],
+                }}
+                width={478}
+                height={239}
+                options={{
+                  maintainAspectRatio: false,
+                  responsive: true,
+                  scales: {
+                    yAxes: [
+                      {
+                        stacked: true,
+                      },
+                    ],
+                    xAxes: [
+                      {
+                        stacked: true,
+                      },
+                    ],
                   },
-                ],
-              }}
-              width={478}
-              height={239}
-              options={{
-                maintainAspectRatio: false,
-                responsive: true,
-                scales: {
-                  yAxes: [
-                    {
-                      stacked: true,
-                    },
-                  ],
-                  xAxes: [
-                    {
-                      stacked: true,
-                    },
-                  ],
-                },
-              }}
-            />
+                }}
+              />
+            )}
           </div>
         </div>
       </div>

@@ -1,5 +1,4 @@
 import CustomImage from "./image";
-import SocialLogin from "./socialLogin";
 import SubHeader from "./subheader";
 
 const CustomName=(props)=>{
