@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import CustomName from "../../components/signup/name";
 import CustomEmail from "../../components/signup/email";
 import CustomLastName from "../../components/signup/lastname";
-import { sendSignUpOtp, verifyOtp } from "../../utils/otp";
+import { sendSignUpOtp,sendSignUpData, verifyOtp } from "../../utils/otp";
 import Loader from "../../components/common/Loader";
 import { messgaes } from "../../utils/messages";
 import SubHeader from "../../components/signup/subheader";
@@ -53,7 +53,20 @@ const signUp = (props) => {
     setisLoader(true);
     verifyOtp(phone, otp, otpId)
       .then((res) => {
+        sendSignUpData(name, email, phone, token, null)
+      .then((res) => {
+        const { customerId, message } = res;
+        // setOtpId(otpId);
+        localStorage.setItem("customerId", customerId);
         setcounter(counter + 1);
+      })
+      .catch((err) => {
+        alert(err.message);
+      })
+      .finally(() => {
+        setisLoader(false);
+      });
+        
       })
       .catch((err) => {
         alert(err.message);
@@ -62,11 +75,10 @@ const signUp = (props) => {
   };
   const signUpUser = (resend = null) => {
     setisLoader(true);
-    sendSignUpOtp(name, email, phone, token, null)
+    sendSignUpOtp(phone)
       .then((res) => {
-        const { otpId, customerId, message } = res;
+        const { otpId} = res;
         setOtpId(otpId);
-        localStorage.setItem("customerId", customerId);
         if (!resend) {
           setcounter(counter + 1);
         }
