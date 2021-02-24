@@ -8,7 +8,7 @@ const Blogger = props => {
     console.log(props)
     const router = useRouter()
     useEffect(() => {
-        if (window !== undefined && window.initSlickBlogs && props.data.posts && props.data.posts.image.length) {
+        if (window !== undefined && window.initSlickBlogs && props.data.posts && props.data.posts.length) {
             window.initSlickBlogs()
         }
     })

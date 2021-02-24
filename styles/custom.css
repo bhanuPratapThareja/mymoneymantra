@@ -1603,29 +1603,101 @@ button.cstm-load-btn {
 
 /*-- Learn More about cc --*/
 
-.learn-more-wrapper-content .table table td {
+.learn-more-wrapper-content .answer .table {
   border: 1px solid #666;
-  padding: 0 10px 10px 10px;
-  color: rgba(255, 255, 255, 0.7);
-  font-family: "Avenir-Roman";
-  font-size: 16px;
-  line-height: 28px;
+  overflow: hidden;
+  margin: 20px auto;
+  max-width: 776px;
+  border-radius: 20px;
 }
 
-.learn-more-wrapper-content .table table {
-  margin: 20px auto;
+.learn-more-wrapper-content .answer .table table {
   border-spacing: 0;
   border-collapse: collapse;
 }
 
-.learn-more-wrapper-content .answer table td p, .learn-more-wrapper-content .answer table td  ul {
+.learn-more-wrapper-content .answer .table table td {
+  padding: 0 10px 10px 10px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: "Avenir-Roman";
+  font-size: 16px;
+  width: 50%;
+  line-height: 28px;
+}
+
+.learn-more-wrapper-content .answer table td p,
+.learn-more-wrapper-content .answer table td  ul {
   padding: 10px 20px 0;
   margin: 0;
 }
 
 .learn-more-wrapper-content .answer table td ul li {
   margin: 0;
+  list-style: none;
+  position: relative;
 }
+
+.learn-more-wrapper-content .answer table td ul li:after {
+  content: "";
+  background: #89c142;
+  position: absolute;
+  left: -17px;
+  top: 9px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.learn-more-wrapper-content .answer .table table tr:nth-child(even) {
+  background: #38454f;
+}
+
+.learn-more-wrapper-content .answer .table table tr td:first-child {
+  font-weight: 500;
+  color: #fff;
+  font-family: 'Avenir-Medium';
+  border-right: 1px solid #666;
+  text-align: center;
+}
+
+.learn-more-wrapper-content .answer .table table tr {
+  border-bottom: 1px solid #666;
+}
+
+.learn-more-wrapper-content .answer .table table tr:last-child {
+  border: none;
+}
+
+/*-- Blog Cards Height Fix --*/
+.infinite-scroll-component .filter-cards-wrapper .single.card-1 .content .details {
+  padding-top: 0;
+  position: absolute;
+  bottom: 15px;
+  width: 82%;
+}
+
+.filter-cards-wrapper .blog-wrapper-card .content p {
+  padding-bottom: 64px;
+}
+
+.infinite-scroll-component .filter-cards-wrapper .single.card-1 .content {
+  -moz-box-flex: 1;
+  flex: 1 1;
+  position: relative;
+}
+
+.cstm-load-btn {
+  border: 1px solid #89c142;
+  margin: 30px 0 0;
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 16px;
+  line-height: 25px;
+  border-radius: 3px;
+  background: #89c142;
+  color: #fff;
+  cursor: pointer;
+} 
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
@@ -2406,4 +2478,266 @@ button.cstm-load-btn {
 .noUi-handle.noUi-handle-lower:active,
 .noUi-handle.noUi-handle-upper:active {
   cursor: grabbing;
+}
+
+/* Chandrakant css starts */
+/* .listings .banner-wrapper .top h2, .credit-card-flow .banner h2 {
+  color: #000 !important;
+} */
+
+.creditProfile-age-flow .paymentRank-wrapper .paymentRank-wrapper-head h2,
+.paymentRank .paymentRank-wrapper .paymentRank-wrapper-head h2 {
+  color: #000;
+}
+
+.credit-rank-flow .paymentRank-wrapper-head .underline-img, .creditProfile-age-flow .paymentRank-wrapper-head .underline-img, .creditProfile-utilization-flow .paymentRank-wrapper-head .underline-img, .creditProfile-account-flow .paymentRank-wrapper-head .underline-img, .creditProfile-enquiries-flow .paymentRank-wrapper-head .underline-img {
+  max-width: 80px;
+  margin-top: 8px;
+  display: block;
+}
+.value-accounts {
+  max-width: 260px;
+  height: 100%;
+  background-color: #ffffff !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center !important;
+}
+
+.value-accounts h2,
+.value-enquiries h2 {
+  color: #ffffff;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.red-circle{
+  background: url("/assets/images/icons/redc.png") !important;
+  max-width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  background-repeat: no-repeat !important;
+  background-size: contain;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center !important;
+}
+
+.orange-circle{
+  background: url("/assets/images/icons/orangec.png") !important;
+  max-width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  background-repeat: no-repeat !important;
+  background-size: contain;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center !important;
+}
+
+.yellow-circle{
+  background: url("/assets/images/icons/yellowc.png") !important;
+  max-width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  background-repeat: no-repeat !important;
+  background-size: contain;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center !important;
+}
+
+.green-circle{
+  background: url("/assets/images/icons/greenc.png") no-repeat center / contain;
+  max-width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  min-width: 240px;
+  position: relative;
+  border-radius: 50%;
+}
+
+
+
+.red-square{
+  background: url("/assets/images/icons/reds.png") !important;
+  max-width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  background-repeat: no-repeat !important;
+  background-size: contain;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center !important;
+}
+
+.orange-square{
+  background: url("/assets/images/icons/oranges.png") no-repeat center / contain;
+  max-width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  min-width: 240px;
+  position: relative;
+}
+
+.yellow-square{
+  background: url("/assets/images/icons/yellows.png") !important;
+  max-width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  background-repeat: no-repeat !important;
+  background-size: contain;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center !important;
+}
+
+.green-square{
+  background: url("/assets/images/icons/greens.png") !important;
+  max-width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  background-repeat: no-repeat !important;
+  background-size: contain;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center !important;
+}
+
+
+.scroll::-webkit-scrollbar {
+  display: none !important;
+}
+
+.creditProfile-age-flow .paymentRank-wrapper-content .left-mobile-view .value-age h2 {
+  font-size: 1.75rem;
+  line-height: 2.5rem;
+  max-width: 100px;
+}
+
+.popular-cards-slider-card-top {
+  min-height: 252px;
+}
+
+.popular-cards-slider-card-bottom {
+  min-height: 48px;
+}
+
+/*-- Fateh's css for User Profile Radio styling --*/
+.option-wrapper #option-3-data .work-wrapper .shortforms-container.gender-style input.lets-checkbox {
+  display: none;
+}
+
+.option-wrapper #option-3-data .work-wrapper .shortforms-container.gender-style label {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+}
+
+.option-wrapper #option-3-data .work-wrapper .shortforms-container.gender-style label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 19px;
+  text-align: center;
+  border: 1px solid rgba(255,255, 255, 0.5);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: "Avenir-Heavy";
+  line-height: 1.5rem;
+}
+
+.option-wrapper #option-3-data .work-wrapper .shortforms-container.gender-style #self-employed:checked ~ label[for="self-employed"],
+.option-wrapper #option-3-data .work-wrapper .shortforms-container.gender-style #self-employed-professional:checked ~ label[for="self-employed-professional"],
+.option-wrapper #option-3-data .work-wrapper .shortforms-container.gender-style #salaried:checked ~ label[for="salaried"],
+.option-wrapper #option-3-data .work-wrapper .shortforms-container.gender-style #defense:checked ~ label[for="defense"] {
+  background: transparent;
+  color: #89C142;
+  -webkit-box-shadow: 0 0 0 2px #89c142;
+  box-shadow: 0 0 0 2px #89c142;
+  border: none;
+}
+
+.option-wrapper #option-3-data .work-wrapper > h5 {
+  color: #fff;
+  margin: 0 0 20px;
+}
+
+.option-wrapper #option-3-data .work-wrapper .shortforms-container.gender-style {
+  grid-template-columns: auto auto auto auto;
+  margin: 0;
+}
+
+.option-wrapper #option-3-data .work-wrapper > .shortforms-container :first-child {
+  grid-column: 1 / -1;
+}
+
+.option-wrapper #option-3-data .work-wrapper .shortforms-container .form__group label {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.option-wrapper #option-3-data .work-wrapper .shortforms-container .form__group input{
+  color: #fff;
+}
+
+.shortforms-container .form__group.field datalist {
+  padding: 12px;
+  width: 360px;
+  position: relative;
+  border-radius: 5px;
+  z-index: 999;
+  top: 10px;
+}
+
+.shortforms-container .form__group.field datalist option {
+  border-radius: 6px;
+  color: #221F1F;
+  font-size: 1rem;
+  font-family: "Avenir-Heavy";
+  line-height: 1.5rem;
+  padding: 8px 12px;
+}
+
+.option-wrapper .shortforms-container .form__group.field select.form__field {
+  color: #fff;
+}
+
+.option-wrapper .shortforms-container .form__group.field select.form__field option {
+  color: #333;
+}
+
+.credit-card-flow .banner .creditScore-wrapper h2 {
+  color: #000;
+  font-size: 1.75rem;
+  font-family: "Avenir-Heavy";
+  line-height: 2.5rem;
+  display: block;
 }

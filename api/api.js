@@ -1,4 +1,4 @@
-import { env } from "./../env/env";
+import { env } from './../env/env'
 
 const api = {
   devBaseUrl: "http://203.122.46.189:8061/",
@@ -34,13 +34,13 @@ const api = {
       body: { actionName: '', leadId: '' }
     },
     offers: {
-      devUrl: "api/customer/v1/profile/",
-      uatUrl: "api/customer/v1/profile/",
-      prodUrl: "api/customer/v1/profile/",
+      devUrl: 'api/customer/v1/profile/',
+      uatUrl: 'api/customer/v1/profile/',
+      prodUrl: 'api/customer/v1/profile/',
       body: {
         request: {
-          header: { correlationId: "NgZ2aK9emd", appId: "MMMWEBAPP" },
-          payload: { mobileNo: "9999000090", customerId: "9999000090" },
+          header: { correlationId: 'NgZ2aK9emd', appId: 'MMMWEBAPP' },
+          payload: { mobileNo: '9999000090', customerId: '9999000090' },
         },
       },
     },
@@ -105,9 +105,9 @@ const api = {
       body: { leadId: '', bankId: '', productId: '', productTypeId: '' }
     },
     documentUpload: {
-      devUrl: "utility/api/utility/document/v1/savedocument",
-      uatUrl: "api/master/v1/",
-      prodUrl: "api/master/v1/",
+      devUrl: 'utility/api/utility/document/v1/savedocument',
+      uatUrl: 'api/master/v1/',
+      prodUrl: 'api/master/v1/',
       body: {
         channelName: "MOBILEAPP",
         caseId: "1001013258",
@@ -134,21 +134,21 @@ const api = {
         contact: {
           mobile: [
             {
-              addressTypeMasterId: "1",
-              mobile: "",
-              isDefault: "Y",
+              addressTypeMasterId: '1',
+              mobile: '',
+              isDefault: 'Y',
             },
           ],
           email: [
             {
-              addressTypeMasterId: "5",
-              email: "",
-              isDefault: "Y",
+              addressTypeMasterId: '5',
+              email: '',
+              isDefault: 'Y',
             },
             {
-              addressTypeMasterId: "6",
-              email: "",
-              isDefault: "N",
+              addressTypeMasterId: '6',
+              email: '',
+              isDefault: 'N',
             },
           ],
           keyContact: [],
@@ -190,13 +190,14 @@ const api = {
         source: '',
         existingFacility: [
           {
-            "exisTenorBalMonths": "",
-            "exisfacility": "",
-            "exisBankId": "",
-            "exisLoanAmount": "",
-            "exisEmi": "",
-            "exisRemark": ""
-          }],
+            exisTenorBalMonths: '',
+            exisfacility: '',
+            exisBankId: '',
+            exisLoanAmount: '',
+            exisEmi: '',
+            exisRemark: '',
+          },
+        ],
         address: [
           {
             addressTypeMasterId: "1000000001",
@@ -265,22 +266,166 @@ const api = {
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
       body: { blogId: "", customerId: "", shared: "" },
-    }
+    },
+    login: {
+      devUrl: 'customer/api/profile/v1/login',
+      uatUrl: 'customer/api/profile/v1/login',
+      prodUrl: 'customer/api/profile/v1/login',
+      body: {
+        mobileNo: null,
+      },
+    },
+
+    signUp: {
+      devUrl: 'customer/api/profile/v1/sign-up',
+      uatUrl: 'customer/api/profile/v1/sign-up',
+      prodUrl: 'customer/api/profile/v1/sign-up',
+      body: {
+        firstName: '',
+        lastName: '',
+        gender: null,
+        martialStatus: null,
+        panNo: '',
+        mobileNo: null,
+        emailId: '',
+        token: '',
+        tokenType: '',
+      },
+    },
+    socialLogin: {
+      devUrl: 'customer/api/profile/v1/social-login',
+      uatUrl: 'customer/api/profile/v1/social-login',
+      prodUrl: 'customer/api/profile/v1/social-login',
+      body: {
+        emailId: '',
+        token: '',
+        tokenType: '',
+      },
+    },
+    loginOtpVerify: {
+      devUrl: 'customer/api/profile/v1/otp-verify',
+      uatUrl: 'customer/api/profile/v1/otp-verify',
+      prodUrl: 'customer/api/profile/v1/otp-verify',
+      body: {
+        mobileNo: '',
+        otp: '',
+        otpId: '',
+      },
+    },
+
+    getPersonalInfo: {
+      devUrl: 'customer/api/profile/v1/personal-info',
+      uatUrl: 'customer/api/profile/v1/personal-info',
+      prodUrl: 'customer/api/profile/v1/personal-info',
+      body: {},
+    },
+    contactProfile: {
+      devUrl: 'customer/api/profile/v1/contact-Info',
+      uatUrl: 'customer/api/profile/v1/contact-Info',
+      prodUrl: 'customer/api/profile/v1/contact-Info',
+      body: {
+        customerId: null,
+        mobileNo: null,
+        emailId: '',
+        address: null,
+      },
+    },
+    workProfile: {
+      devUrl: 'customer/api/profile/v1/work-info',
+      uatUrl: 'customer/api/profile/v1/work-info',
+      prodUrl: 'customer/api/profile/v1/work-info',
+      body: {
+        customerId: null,
+        employedType: null,
+        companyId: null,
+        netMonthlyIncome: null,
+        bankName: null,
+        accountNo: null,
+        ifscCode: null,
+      },
+    },
+    savePersonalInfo: {
+      devUrl: 'customer/api/profile/v1/personal-info',
+      uatUrl: 'customer/api/profile/v1/personal-info',
+      prodUrl: 'customer/api/profile/v1/personal-info',
+      body: {
+        customerId: null,
+        firstName: null,
+        lastName: null,
+        gender: null,
+        martialStatus: null,
+        panNo: null,
+        dob: null,
+      },
+    },
+    creditProfileScore: {
+      devUrl: 'utility/api/credit-profile/v1/score',
+      uatUrl: 'utility/api/credit-profile/v1/score',
+      prodUrl: 'utility/api/credit-profile/v1/score',
+      body: {
+        customerId: null,
+      },
+    },
+    creditProfileAccounts: {
+      devUrl: 'utility/api/credit-profile/v1/credit-account',
+      uatUrl: 'utility/api/credit-profile/v1/credit-account',
+      prodUrl: 'utility/api/credit-profile/v1/credit-account',
+      body: {
+        customerId: null,
+      },
+    },
+    creditProfileAge: {
+      devUrl: 'utility/api/credit-profile/v1/credit-age',
+      uatUrl: 'utility/api/credit-profile/v1/credit-age',
+      prodUrl: 'utility/api/credit-profile/v1/credit-age',
+      body: {
+        customerId: null,
+      },
+    },
+    creditProfileEnquiries: {
+      devUrl: 'utility/api/credit-profile/v1/credit-enquiries',
+      uatUrl: 'utility/api/credit-profile/v1/credit-enquiries',
+      prodUrl: 'utility/api/credit-profile/v1/credit-enquiries',
+      body: {
+        customerId: null,
+      },
+    },
+    creditProfileRank: {
+      devUrl: 'utility/api/credit-profile/v1/credit-rank',
+      uatUrl: 'utility/api/credit-profile/v1/credit-rank',
+      prodUrl: 'utility/api/credit-profile/v1/credit-rank',
+      body: {
+        customerId: null,
+      },
+    },
+    creditProfileUtilization: {
+      devUrl: 'utility/api/credit-profile/v1/utilization',
+      uatUrl: 'utility/api/credit-profile/v1/utilization',
+      prodUrl: 'utility/api/credit-profile/v1/utilization',
+      body: {
+        customerId: null,
+      },
+    },
+    allDocument: {
+      devUrl: '/customer/api/profile/v1/all-docs',
+      uatUrl: '/customer/api/profile/v1/all-docs',
+      prodUrl: '/customer/api/profile/v1/all-docs',
+    },
   },
 };
 
 const getUrl = (route) => {
-  const baseUrl = api[`${env}BaseUrl`];
-  const pathUrl = `${env}Url`;
-  return `${baseUrl}${api["routes"][route][pathUrl]}`;
-};
+  const baseUrl = api[`${env}BaseUrl`]
+  const pathUrl = `${env}Url`
+  return `${baseUrl}${api['routes'][route][pathUrl]}`
+}
 
 const getBody = (route) => {
-  return api["routes"][route]["body"];
-};
+  return api['routes'][route]['body']
+}
 
 export const getApiData = (route) => {
-  const url = getUrl(route);
-  const body = getBody(route);
-  return { url, body };
-};
+  const url = getUrl(route)
+  const body = getBody(route)
+  return { url, body }
+}
