@@ -1,3 +1,5 @@
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
 import Application from '../../components/UserProfile/Application'
 import ContactInfo from '../../components/UserProfile/ContactInfo'
@@ -7,9 +9,103 @@ import Offers from '../../components/UserProfile/Offers'
 import PersonalInfo from '../../components/UserProfile/PersonalInfo'
 import ReferEarn from '../../components/UserProfile/ReferEarn'
 import WorkInfo from '../../components/UserProfile/WorkInfo'
+import { fileToByteArray } from '../../utils/byteArray'
 import { getClassesForPage } from '../../utils/classesForPage'
 
 const userProfile = (props) => {
+  const [picture, setPicture] = useState('')
+  const [pictureType, setPictureType] = useState('')
+
+  useEffect(() => {
+    getPicture().then(res=>{
+      
+      
+
+      
+  })
+}, [])
+  const fileExtention = (fileType) => {
+    const fileTypeArray = fileType.split('/')
+    return fileTypeArray[1]
+  }
+  const pictureUpload = async e => {
+    console.log(e.target.files[0])
+    const file = e.target.files[0]
+    if (!file) return
+    const docBytes = await fileToByteArray(file)
+    const documentExtension = fileExtention(file.type)
+    let body = {
+      docBytes,
+      documentName: file.name,
+      documentExtension,
+      documentNo: '2130000043',
+      documentTypeId: '2130000043',
+    }
+    const uploadStatus = await uploadPicture(body)
+    if (uploadStatus) {
+      setPicture(docBytes)
+      setPictureType(documentExtension)
+    }
+
+  }
+  const getPictureByte=async(id)=>{
+    try{
+      const responseObject = await axios.get(
+        'http://203.122.46.189:8061/customer/api/profile/v1/doc',{params:{documentId:id}} 
+      )
+      console.log(responseObject.data)
+      setPicture(responseObject.data.docByte)
+    }
+    catch(err){
+
+    }
+  }
+  const getPicture=async ()=>{
+    try{
+      const customerId = await localStorage.getItem('customerId')
+      const responseObject = await axios.get(
+        'http://203.122.46.189:8061/customer/api/profile/v1/all-docs',{params:{customerId}} 
+      )
+      if (responseObject.status === 200) {
+        console.log(responseObject.data)
+        console.log('responseObject')
+        let res = responseObject.data.docList
+        let i=-1;
+        res.forEach((item,index)=>{
+          console.log(item)
+          if(item.documentTypeId == 2130000043)i=item.documentId
+        })
+        console.log(i);
+        if(i>0){
+          getPictureByte(i)
+        }
+      }
+    }
+    catch(err){
+
+    }
+  }
+  const uploadPicture = async (body) => {
+    try {
+      const customerId = localStorage.getItem('customerId')
+      const responseObject = await axios.post(
+        'http://203.122.46.189:8061/customer/api/profile/v1/doc-upload',
+        {
+          ...body,
+          customerId: customerId ? customerId : '101',
+        }
+      )
+      console.log(responseObject)
+      if (responseObject.status === 200) {
+        return responseObject.data.message
+      } else {
+        return 'Something went wrong'
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  
   return (
     <div className={props.pageClasses}>
       <Layout>
@@ -17,7 +113,21 @@ const userProfile = (props) => {
           <div className="profile-container container">
             <div className="profile-head-wrapper">
               <div className="profile-image">
-                <img src="https://the1thing.github.io/MyMoneyMantra/build/images/icons/people1.png" />
+                <img src={picture.length ? `data:image/${pictureType};base64,${picture}` : "https://the1thing.github.io/MyMoneyMantra/build/images/icons/people1.png"} />
+                <input
+                  type="file"
+                  onChange={pictureUpload}
+                  style={{ display: 'none' }}
+                  id='profile-picture'
+                />
+                <label
+                  id="edit-personal"
+                  className="edit-button"
+                  htmlFor='profile-picture'
+                  style={{color:"white"}}
+                >
+                  Edit
+          </label>
               </div>
               <h1>{'Customer Name'}</h1>
               <div className="profile-progress">

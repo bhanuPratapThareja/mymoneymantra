@@ -33,7 +33,25 @@ export const socialLoginAPi= async (email,type,token)=>{
     }
 }
 
-export const sendSignUpOtp=async (name,email,number,token,type)=>{
+
+export const sendSignUpOtp=async (number)=>{
+    try{
+        const {url,body}=getApiData('generateOtp');
+        body.mobileNo=parseInt(number);
+        
+        
+          
+          console.log(body);
+          let response= await Axios.post(url,body);
+          console.log(response);
+          return response.data
+          }
+          catch(err){
+              console.log(err.response);
+              throw err.response.data
+          }
+}
+export const sendSignUpData=async (name,email,number,token,type)=>{
     try{
         const {url,body}=getApiData('signUp');
         
