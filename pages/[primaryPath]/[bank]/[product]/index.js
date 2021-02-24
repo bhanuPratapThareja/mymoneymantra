@@ -16,11 +16,12 @@ import LongFormBanner from '../../../../components/Banners/LongFormBanner'
 import LongForm from '../../../../components/common/LongForm'
 import { getClassesForPage } from '../../../../utils/classesForPage'
 import { getUnpackedProduct } from '../../../../services/componentsService'
-//import { addSchemaScript, removeSchemaScript } from '../../../../utils/handleSchema'
+import { addSchemaScript, removeSchemaScript } from '../../../../utils/handleSchema'
 
 const Details = props => {
     const [page, setPage] = useState(props.page)
     const [previousPath, setPreviousPath] = useState('')
+
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -30,12 +31,12 @@ const Details = props => {
                 changePageType('details')
             }
         }
-       // const id = addSchemaScript(props.data.page_schema, props.data.id)
-        // return () => {
-        //     if (id) {
-        //          removeSchemaScript(id)
-        //     }
-        // }
+       const id = addSchemaScript(props.detailsData.page_schema, props.detailsData.id)
+        return () => {
+            if (id) {
+                 removeSchemaScript(id)
+            }
+        }
     }, [page])
 
     const changePageType = page => {
@@ -44,6 +45,7 @@ const Details = props => {
             setPreviousPath('details')
         }
     }
+
 
     if (!props.productData) {
         return <PageNotFound />
@@ -60,6 +62,7 @@ const Details = props => {
                         primaryPath={props.primaryPath}
                         productType={props.productType}
                         changePageType={changePageType}
+                        formRedirection={props.formRedirection}
                     />
                 case 'blocks.offers-details-component':
                     return <ProductDetails
@@ -139,6 +142,8 @@ export async function getServerSideProps(ctx) {
     const strapi = new Strapi()
     const { query } = ctx
 
+    const formRedirection = query.form ? query.form : null
+
     let { primaryPath, bank: bankSlug, product: productSlug, page } = query
     if (!page) {
         page = 'details'
@@ -159,7 +164,7 @@ export async function getServerSideProps(ctx) {
     return {
         props: {
             detailsData, longFormData, productData, productType, 
-            preferredSelectionLists, page, primaryPath
+            preferredSelectionLists, page, primaryPath, formRedirection
         }
     }
 }

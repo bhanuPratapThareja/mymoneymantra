@@ -14,6 +14,7 @@ export const unpackComponents = data => {
             reject(null)
         }
         let bank = data.bank
+        let productType = data.product_type_v_2
         const componentsArr = data.dynamic
     
         let product = {
@@ -29,10 +30,10 @@ export const unpackComponents = data => {
             bank = bank[0]
         }
     
-        // if (typeof productType === 'string') {
-        //     productType = await strapi.processReq('GET', `product-type-v-2-s?id=${productType}`)
-        //     productType = productType[0]
-        // }
+        if (typeof productType === 'string') {
+            productType = await strapi.processReq('GET', `product-type-v-2-s?id=${productType}`)
+            productType = productType[0]
+        }
     
         componentsArr.forEach(component => {
             for (let key in component) {
@@ -46,7 +47,7 @@ export const unpackComponents = data => {
             }
         })
     
-        resolve({ bank, product })
+        resolve({ bank, product, productType })
     })
 }
 

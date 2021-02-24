@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 
@@ -16,8 +16,13 @@ import { getLeadId, getLeadBank } from '../utils/localAccess'
 
 const ThankYouPage = props => {
 
+    const [leadId, setLeadId] = useState('')
+    const [leadBank, setLeadBank] = useState('')
+
     useEffect(() => {
         window.scrollTo(0, 0)
+        setLeadId(getLeadId(props.primaryPath))
+        setLeadBank(getLeadBank())
     }, [])
 
     const getComponents = dynamic => {
@@ -27,8 +32,8 @@ const ThankYouPage = props => {
                     return <ThankYouBanner
                         key={block.id}
                         data={block}
-                        leadId={getLeadId(props.primaryPath)}
-                        bank={getLeadBank()}
+                        leadId={leadId}
+                        bank={leadBank}
                         productType={props.productType}
                         primaryPath={props.primaryPath}
                     />

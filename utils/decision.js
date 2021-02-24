@@ -1,45 +1,57 @@
 import { setLeadBank } from './localAccess.js'
 
 export const makeDecision = (buttonText, offer, primaryPath, changePageType) => {
-    const { bank: { bank_name: bankName, slug: bankSlug, bank_id: bankId  }, product: { slug: productSlug } } = offer
-    let pathname = ''
-    let query = { bankName }
-    console.log(buttonText)
+  const { bank: { bank_name: bankName, slug: bankSlug, bank_id: bankId }, product: { slug: productSlug } } = offer
+  let pathname = ''
+  let query = { bankName }
 
-    switch (buttonText) {
-      case "Apply Now":
-      case "Instant Approval":
-      case "Instant Approve":
+  switch (buttonText) {
+    case "Apply Now":
+      if (offer.formRedirection === 'sf') {
+        pathname = `/${primaryPath}`
+        query.formRedirection = offer.formRedirection
+        const leadBank = { bankId, bankName }
+        setLeadBank(leadBank)
+
+      } else {
         const leadBank = { bankName, bankId }
         setLeadBank(leadBank)
         pathname = `/thank-you`;
-        break;
+      }
+      break
 
-      case "EConnect":
-        if(primaryPath === 'credit-cards') {
-          pathname = `/${primaryPath}/${bankSlug}/${productSlug}?page=long-form`
-        } else {
-          pathname = `/${primaryPath}/${bankSlug}?page=long-form`
-        }
-        query.page = 'long-form'
-        if(changePageType) {
-          changePageType('long-form')
-        }
-        break;
+    case "Instant Approval":
+    case "Instant Approve":
+      const leadBank = { bankName, bankId }
+      setLeadBank(leadBank)
+      pathname = `/thank-you`;
+      break;
 
-      // view details
-      default:
-        if(primaryPath === 'credit-cards') {
-          pathname = `/${primaryPath}/${bankSlug}/${productSlug}`
-        } else {
-          pathname = `/${primaryPath}/${bankSlug}`
-        }
-       
-        query.page = 'details'
-        if(changePageType) {
-          changePageType('details')
-        }
-    }
+    case "EConnect":
+      if (primaryPath === 'credit-cards') {
+        pathname = `/${primaryPath}/${bankSlug}/${productSlug}?page=long-form`
+      } else {
+        pathname = `/${primaryPath}/${bankSlug}?page=long-form`
+      }
+      query.page = 'long-form'
+      if (changePageType) {
+        changePageType('long-form')
+      }
+      break;
 
-    return { pathname, query }
+    // view details
+    default:
+      if (primaryPath === 'credit-cards') {
+        pathname = `/${primaryPath}/${bankSlug}/${productSlug}`
+      } else {
+        pathname = `/${primaryPath}/${bankSlug}`
+      }
+
+      query.page = 'details'
+      if (changePageType) {
+        changePageType('details')
+      }
+  }
+
+  return { pathname, query }
 }

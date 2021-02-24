@@ -20,7 +20,6 @@ const [isLoggedId, setisLoggedId] = useState(false)
 
    useEffect(() => {
       let customerId=localStorage.getItem('customerId');
-      console.log(customerId)
       if(customerId&&customerId!==''){
          setisLoggedId(true);
       }

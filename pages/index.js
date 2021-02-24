@@ -20,11 +20,8 @@ import { get } from 'jquery'
 import { addSchemaScript, removeSchemaScript } from '../utils/handleSchema'
 
 const Home = props => {
-    const [trendingOffers, setTrendingOffers] = useState([])
-
 
     useEffect(() => {
-        //getOffers()
         localStorage.clear()
         const scriptId = addSchemaScript(props.data.page_schema, props.data.id)
         return () => {
@@ -34,18 +31,8 @@ const Home = props => {
         }
     }, [])
 
-    const getOffers = async () => {
-        const apiOffers = await viewOffers()
-        if (apiOffers) {
-            const { trendings } = apiOffers
-            console.log(trendings)
-            const trendingOffers = await extractOffers(trendings)
-            setTrendingOffers(trendingOffers)
-        }
-    }
 
     const getComponents = (dynamic) => {
-        console.log(dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner-component':
@@ -63,7 +50,7 @@ const Home = props => {
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
-                    return <TrendingOffers key={block.id} data={block} blogTrendingOffers={trendingOffers} />
+                    return <TrendingOffers key={block.id} data={block} productType={props.productType} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.app-download-component':

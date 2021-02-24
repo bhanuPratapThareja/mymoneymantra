@@ -91,8 +91,14 @@ class ShortExtendedForm extends React.Component {
         })
 
         let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading, slideClass }]
-        this.setState({ ...this.state, slides: [...upDatedSlides], enableCheckboxes: [...this.state.enableCheckboxes, ...enableCheckboxes] }, () => {
+        this.setState({ 
+            ...this.state, slides: [...upDatedSlides], 
+            enableCheckboxes: [...this.state.enableCheckboxes, ...enableCheckboxes]
+        }, () => {
             this.setState({ backUpSlides: JSON.parse(JSON.stringify(this.state.slides)) })
+            if(this.props.formRedirection === 'sf') {
+                this.props.goToShortForm()
+            }
         })
     }
 
@@ -112,7 +118,7 @@ class ShortExtendedForm extends React.Component {
         })
 
         // setTimeout(()  => {
-        //     console.log(this.state.slides)
+        //     console.log(this.state)
         // }, 1000)
     }
 
@@ -223,7 +229,11 @@ class ShortExtendedForm extends React.Component {
                     } else {
                         this.onSubmitShortForm()
                             .then(res => {
-                                this.props.router.push(`/${this.props.primaryPath}/listings`)
+                                if(this.props.formRedirection === 'sf') {
+                                    this.props.router.push(`/thank-you`)
+                                } else {
+                                    this.props.router.push(`/${this.props.primaryPath}/listings`)
+                                }
                             })
                             .catch(() => {
                                 this.setState({ submissionError: 'Something went wrong. Please try again.' })

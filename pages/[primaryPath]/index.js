@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 
@@ -18,22 +18,25 @@ import LearnMore from '../../components/common/LearnMore'
 import PageNotFound from '../../components/PageNotFound'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { clearLeadId, clearLeadBank, clearFormData } from '../../utils/localAccess'
-import { addSchemaScript,removeSchemaScript } from '../../utils/handleSchema';
+import { addSchemaScript,removeSchemaScript } from '../../utils/handleSchema'
 
 const PrimaryPage = props => {
 
+  const [formRedirection, setFormRedirection] = useState('')
+
   useEffect(() => {
     window.scrollTo(0, 0)
-    clearLeadBank()
-    clearLeadId(props.primaryPath)
-    clearFormData(props.primaryPath)
+    // clearLeadBank()
+    // clearLeadId(props.primaryPath)
+    // clearFormData(props.primaryPath)
+    setFormRedirection(props.formRedirection)
     const scriptId = addSchemaScript(props.data.page_schema, props.data.id)
     return () => {
         if (scriptId) {
             removeSchemaScript(scriptId)
         }
     }
-   
+    
   }, [])
 
   const goToShortForm = () => {
@@ -65,6 +68,8 @@ const PrimaryPage = props => {
             primaryPath={props.primaryPath}
             productType={props.productType}
             preferredSelectionLists={props.preferredSelectionLists}
+            formRedirection={formRedirection}
+            goToShortForm={goToShortForm}
           />
         case 'offers.popular-offers-component':
           return <PopularOffers
@@ -73,6 +78,7 @@ const PrimaryPage = props => {
             primaryPath={props.primaryPath}
             productType={props.productType}
             goToShortForm={goToShortForm}
+            setFormRedirection={setFormRedirection}
           />
         case 'blocks.credit-score-component':
           return <CreditScore key={block.id} data={block} />
@@ -83,6 +89,7 @@ const PrimaryPage = props => {
             primaryPath={props.primaryPath}
             productType={props.productType}
             goToShortForm={goToShortForm}
+            setFormRedirection={setFormRedirection}
           />
         case 'blocks.bank-slider-component':
           return <BankSlider key={block.id} data={block} />
@@ -112,6 +119,7 @@ const PrimaryPage = props => {
 export async function getServerSideProps(ctx) {
   const strapi = new Strapi()
   const { query } = ctx
+  const formRedirection = query.formRedirection ? query.formRedirection : null
   const primaryPath = query.primaryPath
   const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
   const productType = productTypeData[0]
@@ -123,7 +131,7 @@ export async function getServerSideProps(ctx) {
   return {
     props: {
       data, primaryPath, preferredSelectionLists,
-      productType, tncData
+      productType, tncData, formRedirection
     }
   }
 }
