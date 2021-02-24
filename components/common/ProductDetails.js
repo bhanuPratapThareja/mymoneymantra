@@ -34,6 +34,7 @@ const ProductDetails = props => {
                             <div className="logo"><Image image={bank.bank_image} /></div>
                             : null}
                         {leftPositionedOffers.map(offer => {
+                            console.log('offer',offer)
                             return (
                                 <React.Fragment key={offer.id}>
                                     <div dangerouslySetInnerHTML={{ __html: offer.content }}></div>

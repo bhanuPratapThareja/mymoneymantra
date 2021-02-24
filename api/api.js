@@ -120,7 +120,7 @@ const api = {
       }
     },
     orchestration: {
-      devUrl: "lead/api/lead/v1/generate",
+      devUrl: "orchestration/api/v1/lead",
       uatUrl: "api/lead/v1/",
       prodUrl: "api/master/v1/",
       body: {

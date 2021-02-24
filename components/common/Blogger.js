@@ -48,6 +48,7 @@ const Blogger = props => {
                         const blogClasses = ['blog-wrapper-card', `card-${i + 1}`]
                         return (
                             (i < 3) ? <div className={blogClasses.join(' ')} id={`blog-card-${i + 1}`} key={i}>
+                                <a onClick={() => onOpenBlog(blog)}>
                                 <div className={`image_${i + 1}`}>
                                     <Image image={image} />
                                 </div>
@@ -59,6 +60,7 @@ const Blogger = props => {
                                         <button onClick={() => onOpenBlog(blog)}>Read more</button>
                                     </div>
                                 </div>
+                                </a>
                             </div> : null
                         )
                     })}
