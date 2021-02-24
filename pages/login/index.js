@@ -46,7 +46,7 @@ const login = (props) => {
         .then((res) => {
           const { otpId, customerId, message } = res;
           setOtpId(otpId);
-          // localStorage.setItem("customerId", customerId);
+          localStorage.setItem("customerId", customerId);
           setcounter(counter + 1);
         })
         .catch((err) => {

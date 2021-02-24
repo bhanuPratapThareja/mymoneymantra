@@ -123,13 +123,10 @@ const WorkInfo = (props) => {
       }
     })
     setBankList(filteredBanks)
-    // console.log(inputValue)
-    // console.log(filteredBanks)
 
   }
 
   const onSelectBank = (bank) => {
-    console.log(bank)
     setBankName(bank.bank_name)
     setBankId(bank.bank_id)
     setBankList([])
@@ -138,7 +135,7 @@ const WorkInfo = (props) => {
   return (
     <form className="work-wrapper" onSubmit={submitHandler}>
       {/* <div className="shortforms-container"> */}
-      <h5>Employment Type</h5>
+      {isedit ? <h5>Employment Type</h5> : null}
       <div className="shortforms-container">
         {/* <div
           className={
@@ -323,14 +320,16 @@ const WorkInfo = (props) => {
             value={bankName}
             onChange={handleBankChange}
           />
-          {bankList.length ?
-            <div className="dropdown-content">
-              <div className="dropdown-content-links">
-                {bankList.map((bank, i) => (
-                  <a key={i} onClick={() => onSelectBank(bank)} className='dropdown-content-links_link'>{bank.bank_name}</a>
-                ))}
-              </div>
-            </div> : null}
+
+          {isedit && bankList.length ?
+            <datalist style={{ display: 'block', background: '#fff' }}>
+              {bankList.map((bank, i) => (
+                <option key={i} value={bank.bank_id} onClick={() => onSelectBank(bank)}>
+                  {bank.bank_name}
+                </option>
+              ))}
+            </datalist>
+            : null}
           {/* <select
             readOnly={!isedit}
             className="form__field"
