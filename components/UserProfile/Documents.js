@@ -5,8 +5,8 @@ import { fileToByteArray } from '../../utils/byteArray'
 const Documents = () => {
   const [aadhaar, setAadhaar] = useState({
     documentName: '',
-    documentNo: '',
-    documentTypeId: '',
+    documentNo: '1000000374',
+    documentTypeId: '1000000036',
     uploadStatus: '',
   })
   const [pan, setPan] = useState({
@@ -54,8 +54,7 @@ const Documents = () => {
     try {
       const customerId = localStorage.getItem('customerId')
       const responseObject = await axios.get(
-        `http://203.122.46.189:8060/customer/api/profile/v1/all-docs?customerId=${
-          customerId ? customerId : 101
+        `http://203.122.46.189:8060/customer/api/profile/v1/all-docs?customerId=${customerId ? customerId : 101
         }`
       )
       responseObject.data.docList.map((doc) => {

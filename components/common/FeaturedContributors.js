@@ -10,7 +10,7 @@ const FeaturedContributors = (props) => {
    let featuredContributors = post_contributors
    featuredContributors.forEach((contributor => {
       props.allBlogs.forEach(blog => {
-         if (contributor.post_contributors_name.includes(blog.post_contributors.post_contributors_name)) {
+         if (contributor.post_contributors_name.includes(blog.blog_contributor.blog_contributors_name)) {
             contributor.post_count++
          }
       })

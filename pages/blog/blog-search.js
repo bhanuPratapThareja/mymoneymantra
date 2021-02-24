@@ -51,7 +51,7 @@ const BlogSearchPage = (props) => {
         if (props.query.author) {
             let filteredBlogs = []
             props.blogData.forEach(blog => {
-                if (props.query.author.toLowerCase().includes(blog.post_contributors.post_contributors_name.toLowerCase())) {
+                if (props.query.author.toLowerCase().includes(blog.post_contributor.post_contributors_name.toLowerCase())) {
                     if (blog.header.toLowerCase().includes(props.query.q.toLowerCase())) {
                         filteredBlogs.push(blog)
                     }
@@ -85,7 +85,7 @@ export async function getServerSideProps(ctx) {
 
     const blogData = await strapi.processReq(
         "GET",
-        `posts`
+        `quick-blogs`
     );
     const pageData = await strapi.processReq(
         "GET",

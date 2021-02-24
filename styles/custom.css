@@ -1699,6 +1699,28 @@ button.cstm-load-btn {
   cursor: pointer;
 } 
 
+/*-- THank-you after login/Signup --*/
+.thankyou-page.b2c-flow .mobile-otp .lets-find-content .login-options.otp-wrapper {
+  bottom: 0;
+  top: 0;
+  position: relative;
+} 
+
+.thankyou-page.b2c-flow .main-head {
+  padding-top: 180px;
+}
+
+.thankyou-page.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms h2 {
+  margin: 0;
+}
+
+.thankyou-page .container .thankyou-banner .top h2 {
+  color: #000;
+  font-family: "Avenir-Heavy";
+  font-size: 1.75rem;
+  line-height: 2.5rem;
+}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
@@ -2642,11 +2664,11 @@ button.cstm-load-btn {
   max-width: 100px;
 }
 
-.popular-cards-slider-card-top {
+.paymentRank-wrapper-head .popular-cards-slider-card-top {
   min-height: 252px;
 }
 
-.popular-cards-slider-card-bottom {
+.paymentRank-wrapper-head .popular-cards-slider-card-bottom {
   min-height: 48px;
 }
 
@@ -2693,7 +2715,11 @@ button.cstm-load-btn {
 
 .option-wrapper #option-3-data .work-wrapper .shortforms-container.gender-style {
   grid-template-columns: auto auto auto auto;
-  margin: 0 0 16px;
+  margin: 0;
+}
+
+.option-wrapper #option-3-data .work-wrapper > .shortforms-container :first-child {
+  grid-column: 1 / -1;
 }
 
 .option-wrapper #option-3-data .work-wrapper .shortforms-container .form__group label {
@@ -2702,4 +2728,38 @@ button.cstm-load-btn {
 
 .option-wrapper #option-3-data .work-wrapper .shortforms-container .form__group input{
   color: #fff;
+}
+
+.shortforms-container .form__group.field datalist {
+  padding: 12px;
+  width: 360px;
+  position: relative;
+  border-radius: 5px;
+  z-index: 999;
+  top: 10px;
+}
+
+.shortforms-container .form__group.field datalist option {
+  border-radius: 6px;
+  color: #221F1F;
+  font-size: 1rem;
+  font-family: "Avenir-Heavy";
+  line-height: 1.5rem;
+  padding: 8px 12px;
+}
+
+.option-wrapper .shortforms-container .form__group.field select.form__field {
+  color: #fff;
+}
+
+.option-wrapper .shortforms-container .form__group.field select.form__field option {
+  color: #333;
+}
+
+.credit-card-flow .banner .creditScore-wrapper h2 {
+  color: #000;
+  font-size: 1.75rem;
+  font-family: "Avenir-Heavy";
+  line-height: 2.5rem;
+  display: block;
 }

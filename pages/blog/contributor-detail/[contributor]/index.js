@@ -17,10 +17,8 @@ const ContributorDetails = (props) => {
         let id = getContributorId()
         let filteredBlogs = []
         const filteredContributors = props.contributorData.filter(contributor => contributor.id == id)
-        let name = filteredContributors[0].blog_contributors_name
+        let name = filteredContributors[0].post_contributors_name
         props.allBlogs.forEach(blog => {
-            // console.log(blog)
-            console.log(blog.post_contributor)
             let blogFound = name.toLowerCase().includes(blog.post_contributor.post_contributors_name.toLowerCase())
             if (blogFound) {
                 filteredBlogs.push(blog)
@@ -65,7 +63,7 @@ export async function getServerSideProps(ctx) {
     );
     const allBlogs = await strapi.processReq(
         "GET",
-        `posts`
+        `quick-blogs`
     );
     const pageData = await strapi.processReq(
         "GET",

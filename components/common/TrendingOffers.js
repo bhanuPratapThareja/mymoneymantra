@@ -30,9 +30,9 @@ const trendingOffers = props => {
          const trendingOffers = await extractOffers(trendings)
          setTrendingOffers(trendingOffers)
          if (window !== undefined && window.initSlickCards && trendingOffers.length) {
-           setTimeout(() => {
-            window.initSlickCards()
-           }, 1000)
+            setTimeout(() => {
+               window.initSlickCards()
+            }, 1000)
          }
       }
 
@@ -73,16 +73,11 @@ const trendingOffers = props => {
                               </ul>
                            </div>
 
-                           {product_annual_fee ? <div className="fee">
-                              <h5><b>₹{product_annual_fee.annual_fee_fy}</b> Annual fee</h5>
-                           </div> : null}
-
-                           {/* {product_interest_rate ? <div className="fee">
-                              <h5>{product_interest_rate.min_value}% - {product_interest_rate.max_value}%
-                              {product_interest_rate.duration === 'Annually' ? 'p.a.' : 'm.a.'}</h5>
-                           </div> : null} */}
-
                            <div className="fee">
+                              {product_annual_fee ?
+                                 <h5><b>₹{product_annual_fee.annual_fee_fy}</b> Annual fee</h5>
+                                 : null}
+                                 
                               {product_interest_rate ?
                                  <h5>Int Rates : <span><b>&nbsp; {product_interest_rate.min_value}% - {product_interest_rate.max_value}%
                               {product_interest_rate.duration === 'Annually' ? 'p.a.' : 'm.a.'}</b></span></h5>

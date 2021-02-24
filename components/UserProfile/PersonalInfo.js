@@ -28,13 +28,13 @@ const PersonalInfo = () => {
           setLastName(firstName.split(' ')[1])
         } else {
           setFirstName(firstName)
-          setLastName(lastName)
+          setLastName(lastName?lastName:'')
         }
         setGender(gender)
         setMaritalStatus(martialStatus)
 
         setPanNumber(panNo)
-        setDob(dob ? moment(dob, 'DD/MM/YYYYY').format('YYYY-MM-DD') : '')
+        setDob(dob ? moment(dob, 'DD/MM/YYYYY').format('YYYY-MM-DD') : null)
         let mName = checkMartialStatus(martialStatus)
         setmartaialname(mName)
       })

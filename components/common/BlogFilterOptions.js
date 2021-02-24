@@ -29,7 +29,6 @@ class BlogFilterOptions extends React.Component {
 
             this.setState({ checkboxes: updatedCheckboxes })
         }
-        console.log("all filters", filters)
 
     }
     closeFilter = () => {
@@ -41,7 +40,6 @@ class BlogFilterOptions extends React.Component {
         this.closeFilter()
     }
     handleDateChange = (e) => {
-        console.log(e.target.value)
         const filters = { ...this.state.filters, date: e.target.value }
         this.setState({ ...this.state, filters })
     }
