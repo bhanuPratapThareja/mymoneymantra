@@ -1579,18 +1579,6 @@ section.popular-card-container {
   max-width: 100px;
 }
 
-button.cstm-load-btn {
-  border: 1px solid #89c142;
-  margin: 30px 0 0;
-  display: inline-block;
-  padding: 8px 10px;
-  font-size: 13px;
-  border-radius: 3px;
-  background: #89c142;
-  color: #fff;
-  cursor: pointer;
-}
-
 /*-- Trending and Popular Offers --*/
 .popular-cards-slider-card-top .fee h5 {
   display: inline-block;

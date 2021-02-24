@@ -126,7 +126,7 @@ const BlogFilter = props => {
             <InfiniteScroll
                dataLength={blogsToDisplay.length}
                hasMore={hasMore}
-               loader={blogsToDisplay.length ? <h2>Loading...</h2> : ''}
+               loader={blogsToDisplay.length ? <h2 className="cstm-load-btn">Loading...</h2> : ''}
                next={fetchMoreData}
             >
                <div className="filter-cards-wrapper">
