@@ -2642,11 +2642,11 @@ button.cstm-load-btn {
   max-width: 100px;
 }
 
-.popular-cards-slider-card-top {
+.paymentRank-wrapper-head .popular-cards-slider-card-top {
   min-height: 252px;
 }
 
-.popular-cards-slider-card-bottom {
+.paymentRank-wrapper-head .popular-cards-slider-card-bottom {
   min-height: 48px;
 }
 
