@@ -5,6 +5,7 @@ import Image from '../ImageComponent/ImageComponent'
 
 
 const Blogger = props => {
+    console.log(props)
     const router = useRouter()
     useEffect(() => {
         if (window !== undefined && window.initSlickBlogs && props.data.posts && props.data.posts.image.length) {
@@ -12,7 +13,7 @@ const Blogger = props => {
         }
     })
 
-    let { section_heading, bloggers: posts } = props.data
+    let { section_heading, posts } = props.data
     let popularBlogs = posts.filter(blog => blog.popular === true)
     const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -29,6 +30,7 @@ const Blogger = props => {
         setBlogId(blog.id)
         router.push(`/blog/details/${blog.slug}`)
     }
+
 
     return (
         <section data-aos="fade-up" className="container blog-container aos-init aos-animate">
