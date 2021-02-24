@@ -42,7 +42,7 @@ const creditScoreProfile = (props) => {
     <div className={props.pageClasses}>
       <Layout>
         <Loader active={loading} text="loading" />
-        <CreditScoreBanner />
+        <CreditScoreBanner accountHistory={cpScoreData?.accountHistory} />
         <TipSection />
         <FactorsAffecting />
         <CreditOverview />
