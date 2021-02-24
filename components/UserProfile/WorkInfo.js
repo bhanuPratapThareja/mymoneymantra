@@ -283,6 +283,9 @@ const WorkInfo = (props) => {
               : 'form__group field read-part'
           }
         >
+          <label className="form__label" htmlFor="bank-name">
+            Bank Name
+          </label>
           <select
             readOnly={!isedit}
             className="form__field"
@@ -293,9 +296,6 @@ const WorkInfo = (props) => {
             required=""
             onChange={(e) => setBankId(e.target.value)}
           >
-            <label className="form__label" htmlFor="bank-name">
-              Bank Name
-            </label>
             {props.data.map((item) => (
               <option key={item.bank_id} value={item.bank_id}>
                 {item.bank_name}
