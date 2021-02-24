@@ -18,10 +18,7 @@ const ContributorDetails = (props) => {
         let filteredBlogs = []
         const filteredContributors = props.contributorData.filter(contributor => contributor.id == id)
         let name = filteredContributors[0].post_contributors_name
-        console.log("name:",name)
         props.allBlogs.forEach(blog => {
-            // console.log(blog)
-            console.log("blogsssssss",blog.post_contributor.post_contributors_name.toLowerCase())
             let blogFound = name.toLowerCase().includes(blog.post_contributor.post_contributors_name.toLowerCase())
             if (blogFound) {
                 filteredBlogs.push(blog)
@@ -29,14 +26,11 @@ const ContributorDetails = (props) => {
         })
         setName(name)
         setAuthor(filteredContributors)
-        console.log("filteredBlogs",filteredBlogs)
         setBlogs(filteredBlogs)
         window.scroll(0, 0)
     }, [])
     const getComponents = (dynamic) => {
-        console.log("dynamic",dynamic)
         return dynamic.map((block) => {
-            console.log("block",block)
             switch (block.__component) {
                 case "banners.blog-banners-component":
                     return <BlogBanner key={block.id} data={block} name={name} author={author[0]} />

@@ -8,7 +8,6 @@ import Image from '../ImageComponent/ImageComponent'
 import BlogFilterOptions from './BlogFilterOptions'
 
 const BlogFilter = props => {
-   console.log(props)
    const { blogsFilter, data } = props
    let limit = 3
    const [blogs, setBlogs] = useState([])
@@ -59,7 +58,6 @@ const BlogFilter = props => {
             const { post_categories } = blog
             if (post_categories.length) {
                post_categories.forEach(category => {
-                  console.log(category.post_category_name)
                   if (filter.categories.includes(category.post_category_name)) {
                      filteredBlogs.push(blog)
                   }
@@ -77,7 +75,6 @@ const BlogFilter = props => {
             const { post_sub_categories } = blog
             if (post_sub_categories.length) {
                post_sub_categories.forEach(category => {
-                  console.log(category.post_sub_category)
                   if (filter.subCategories.includes(category.post_sub_category)) {
                      filteredBlogs.push(blog)
                   }

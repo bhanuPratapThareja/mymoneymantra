@@ -41,7 +41,6 @@ const BlogDetail = props => {
     }, [props.query])
 
     const getComponents = (dynamic) => {
-        console.log("dynamic-------",dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.blog-texts-component':

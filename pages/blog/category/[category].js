@@ -24,7 +24,6 @@ const BlogsByCategory = (props) => {
     }, [props.query.category])
 
     const getComponents = (dynamic) => {
-        console.log("----xxx-----",dynamic)
         return dynamic.map((block) => {
             switch (block.__component) {
                 case "banners.blog-banners-component":

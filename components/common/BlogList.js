@@ -13,7 +13,6 @@ const BlogList = (props) => {
     const [blogsToDisplay, setBlogsToDispaly] = useState([])
     const [sliceIndex, setSliceIndex] = useState(limit);
     const [hasMore, setHasMore] = useState(limit < allBlogs.length)
-    console.log('blog list', allBlogs.length)
 
     const router = useRouter()
     const onOpenBlog = blog => {
@@ -27,7 +26,6 @@ const BlogList = (props) => {
         setBlogsToDispaly(slice(sortedBlogs, 0, limit))
     }, [props.data])
     const fetchMoreData = () => {
-        console.log("i am here")
         let newIndex = sliceIndex + limit
         let newList = slice(allBlogs, sliceIndex, newIndex)
         let finalList = [...blogsToDisplay, ...newList]
@@ -40,7 +38,6 @@ const BlogList = (props) => {
         setTimeout(() => {
             setBlogsToDispaly(finalList)
         }, 1000)
-        console.log("finalList", finalList)
     }
     return (
         <section className="blogs-filter container">

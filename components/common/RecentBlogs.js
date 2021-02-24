@@ -11,7 +11,6 @@ const RecentBlogs = (props) => {
 
     useEffect(() => {
         if (window !== undefined && window.initSlickCards && posts && posts.length) {
-            console.log('recent slic intialized')
             window.initSlickCards()
         }
     })

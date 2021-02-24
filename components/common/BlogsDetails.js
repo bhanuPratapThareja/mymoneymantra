@@ -29,7 +29,6 @@ const BlogsDetails = props => {
     // const { header, read_text, blog_sub_category, content, display_short_text } = props.data.blogger
     const { header, blog_contributor,post_contributor, published_at, read_text, blog_sub_category, content, display_short_text, blog, blog_categories,post_categories } = blogData
     const mainCategories = post_categories ? post_categories : []
-    console.log("blog_categories",post_categories)
     const readingTime = require('reading-time');
     const blogreadTime = displayBlog ? readingTime(content, { wordsPerMinute: '50' }) : null;
     const { blogId, allBlogs } = props
