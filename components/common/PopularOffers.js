@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import { makeDecision } from '../../utils/decision'
 import { extractOffers, viewOffers } from '../../services/offersService'
-import { getFormattedCurrency, getWholeNumberFromCurrency } from "../../utils/formattedCurrency"
 
 const PopularOffers = props => {
    const router = useRouter()
@@ -11,7 +10,6 @@ const PopularOffers = props => {
    const { section_heading } = props.data
 
    useEffect(() => {
-      console.log('check')
       if (!popularOffers.length) {
          getOffers()
       }
