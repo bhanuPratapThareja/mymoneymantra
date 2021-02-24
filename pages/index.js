@@ -26,10 +26,10 @@ const Home = props => {
     useEffect(() => {
         //getOffers()
         localStorage.clear()
-        const id = addSchemaScript(props.data.page_schema, props.data.id)
+        const scriptId = addSchemaScript(props.data.page_schema, props.data.id)
         return () => {
-            if (id) {
-                 removeSchemaScript(id)
+            if (scriptId) {
+                removeSchemaScript(scriptId)
             }
         }
     }, [])
