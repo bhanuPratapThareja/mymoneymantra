@@ -66,13 +66,16 @@ const api = {
       devUrl: "masters/api/master/v2/pincode",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: { name: "" }
+      body: { name: "" ,
+      bankId :"" }
     },
     designation: {
       devUrl: "masters/api/master/v1/designation",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: { name: "" }
+      body: { name: "",
+      bankId : "",
+      productId :""}
     },
     qualification: {
       devUrl: "masters/api/master/v1/qualification",
@@ -96,7 +99,8 @@ const api = {
       devUrl: "masters/api/master/v1/purpose-of-loan",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: { name: "" }
+      body: { name: "",
+      productId : ""}
     },
     leadProductDecision: {
       devUrl: "lead/api/lead/v1/product/decision",
