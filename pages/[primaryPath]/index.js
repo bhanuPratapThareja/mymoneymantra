@@ -29,12 +29,11 @@ const PrimaryPage = props => {
     // clearLeadBank()
     // clearLeadId(props.primaryPath)
     // clearFormData(props.primaryPath)
+  
     setFormRedirection(props.formRedirection)
-    const scriptId = addSchemaScript(props.data.page_schema, props.data.id)
+    const { scriptId, canonicalId } = addSchemaScript(props.data, props.data.id)
     return () => {
-        if (scriptId) {
-            removeSchemaScript(scriptId)
-        }
+        removeSchemaScript(scriptId, canonicalId)
     }
     
   }, [])
