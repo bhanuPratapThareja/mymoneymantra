@@ -17,6 +17,7 @@ const WorkInfo = (props) => {
   const [companyName, setCompanyName] = useState('')
   const [customerId, setCustomerId] = useState('')
   const [bankName, setBankName] = useState('')
+  const [bankList, setBankList] = useState([])
 
   useEffect(() => {
     console.log(props.data)
@@ -71,7 +72,7 @@ const WorkInfo = (props) => {
       .catch((err) => {
         console.log(err)
       })
-      .finally(() => {})
+      .finally(() => { })
   }
 
   const submitHandler = async (e) => {
@@ -106,6 +107,32 @@ const WorkInfo = (props) => {
   const companyNameChangeHandler = (e) => {
     setCompanyName(e.target.value)
     setCompanyQuery(e.target.value)
+  }
+  const handleBankChange = (e) => {
+    let allBanks = props.data
+    let inputValue = e.target.value
+    let filteredBanks = []
+    setBankName(inputValue)
+    if (!inputValue.length) {
+      setBankList([])
+      return
+    }
+    allBanks.forEach((bank, i) => {
+      if (bank.bank_name.toLowerCase().includes(inputValue.toLowerCase())) {
+        filteredBanks.push(bank)
+      }
+    })
+    setBankList(filteredBanks)
+    // console.log(inputValue)
+    // console.log(filteredBanks)
+
+  }
+
+  const onSelectBank = (bank) => {
+    console.log(bank)
+    setBankName(bank.bank_name)
+    setBankId(bank.bank_id)
+    setBankList([])
   }
 
   return (
@@ -189,29 +216,29 @@ const WorkInfo = (props) => {
             <label htmlFor="defense">Defense</label>
           </div>
         ) : (
-          <div className="form__group field">
-            <input
-              readOnly={true}
-              value={
-                employedType == 1000000001
-                  ? 'Self Employed'
-                  : employedType == 1000000002
-                  ? 'Self Employed Professional'
-                  : employedType == 1000000004
-                  ? 'Salaried'
-                  : 'Defense'
-              }
-              className="form__field"
-              type="text"
-              id="emp-type"
-              name="emp-type"
-              required=""
-            />
-            <label className="form__label" htmlFor="emp-type">
-              Employment Type
+            <div className="form__group field">
+              <input
+                readOnly={true}
+                value={
+                  employedType == 1000000001
+                    ? 'Self Employed'
+                    : employedType == 1000000002
+                      ? 'Self Employed Professional'
+                      : employedType == 1000000004
+                        ? 'Salaried'
+                        : 'Defense'
+                }
+                className="form__field"
+                type="text"
+                id="emp-type"
+                name="emp-type"
+                required=""
+              />
+              <label className="form__label" htmlFor="emp-type">
+                Employment Type
             </label>
-          </div>
-        )}
+            </div>
+          )}
         {/* <div className="shortforms-container"> */}
         <div
           className={
@@ -286,7 +313,25 @@ const WorkInfo = (props) => {
           <label className="form__label" htmlFor="bank-name">
             Bank Name
           </label>
-          <select
+          <input
+            readOnly={!isedit}
+            className="form__field"
+            type='text'
+            id='bank-name'
+            placeholder='Bank Name'
+            required=''
+            value={bankName}
+            onChange={handleBankChange}
+          />
+          {bankList.length ?
+            <div className="dropdown-content">
+              <div className="dropdown-content-links">
+                {bankList.map((bank, i) => (
+                  <a key={i} onClick={() => onSelectBank(bank)} className='dropdown-content-links_link'>{bank.bank_name}</a>
+                ))}
+              </div>
+            </div> : null}
+          {/* <select
             readOnly={!isedit}
             className="form__field"
             type="text"
@@ -301,7 +346,7 @@ const WorkInfo = (props) => {
                 {item.bank_name}
               </option>
             ))}
-          </select>
+          </select> */}
         </div>
         <div
           className={
