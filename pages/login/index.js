@@ -26,14 +26,16 @@ const login = (props) => {
     // setemail(val.email);
     // setsocialType(val.type);
     // settoken(val.id);
-    socialLoginAPi(val.email,val.type,val.id).then(res=>{
+    socialLoginAPi(val.email, val.type, val.id).then(res => {
       console.log(res);
-      if(res.message=="Login Successful"){
-        localStorage.setItem("customerId",res.customerId)
-      setcounter(counter + 2);}
-      else{
-      alert(res.message);}
-    }).catch(err=>{
+      if (res.message == "Login Successful") {
+        localStorage.setItem("customerId", res.customerId)
+        setcounter(counter + 2);
+      }
+      else {
+        alert(res.message);
+      }
+    }).catch(err => {
       console.log(err);
     })
   };
@@ -59,7 +61,7 @@ const login = (props) => {
       verifyOtp(phone, otp, otpId)
         .then((res) => {
           console.log(res);
-          localStorage.setItem("customerId",res.customerId)
+          localStorage.setItem("customerId", res.customerId)
           setcounter(counter + 1);
         })
         .catch((err) => {
@@ -71,12 +73,13 @@ const login = (props) => {
     }
   };
   return (
-    <div className={props.pageClasses}>
+    <div className='credit-card-flow thankyou-page b2c-thank-you b2c-flow'>
       <Layout>
-        <WelcomeHeader></WelcomeHeader>
+        {counter != 2 ? <WelcomeHeader></WelcomeHeader> : null}
         <section
           data-aos="fade-up"
           className="container lets-find-container aos-init aos-animate"
+          style={{ display: counter == 2 ? "none" : "block" }}
         >
           <MobileWelcomeHeader></MobileWelcomeHeader>
           <div className="all-form-wrapper">
@@ -98,8 +101,8 @@ const login = (props) => {
                           <CustomImage></CustomImage>
                         </>
                       ) : (
-                        <></>
-                      )}
+                          <></>
+                        )}
                       <PhoneNumberCustom
                         social={({ ...val }) => social({ ...val })}
                         setNumber={(val) => setphone(val)}
@@ -127,18 +130,12 @@ const login = (props) => {
                     </div>
                   </div>
                 </form>
-                <div
-                  className="sf-forms mobile-otp opacity-in"
-                  id="sf-2"
-                  style={{ display: counter == 2 ? "block" : "none" }}
-                >
-                  <Thanks></Thanks>
-                </div>
+
                 {counter !== 2 ? (
                   <CustomButtons
                     nextValid={
                       (phone.length == 10 && isChecked) ||
-                      (counter == 1 && otp.length > 0)
+                        (counter == 1 && otp.length > 0)
                         ? false
                         : true
                     }
@@ -146,12 +143,19 @@ const login = (props) => {
                     counterStep={(i) => counterStep(i)}
                   ></CustomButtons>
                 ) : (
-                  <></>
-                )}
+                    <></>
+                  )}
               </div>
             </div>
           </div>
         </section>
+        <div
+          className="sf-forms mobile-otp opacity-in"
+          id="sf-2"
+          style={{ display: counter == 2 ? "block" : "none" }}
+        >
+          <Thanks></Thanks>
+        </div>
       </Layout>
       <Loader
         msg={counter == 0 ? messgaes.otpSent : messgaes.validateOtp}

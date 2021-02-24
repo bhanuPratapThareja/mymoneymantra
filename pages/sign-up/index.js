@@ -29,7 +29,7 @@ const signUp = (props) => {
   const [isLoader, setisLoader] = useState(false);
   const [token, settoken] = useState('')
   const counterStep = (i) => {
-    if ( (i == -1 && counter !== 0)) {
+    if ((i == -1 && counter !== 0)) {
       setcounter(counter + i);
     } else if (i == 1 && counter == 0) {
       console.log("here");
@@ -62,7 +62,7 @@ const signUp = (props) => {
   };
   const signUpUser = (resend = null) => {
     setisLoader(true);
-    sendSignUpOtp(name, email, phone,token,null)
+    sendSignUpOtp(name, email, phone, token, null)
       .then((res) => {
         const { otpId, customerId, message } = res;
         setOtpId(otpId);
@@ -80,12 +80,13 @@ const signUp = (props) => {
   };
 
   return (
-    <div className={props.pageClasses}>
+    <div className='credit-card-flow thankyou-page b2c-thank-you b2c-flow'>
       <Layout>
-        <WelcomeHeader></WelcomeHeader>
+        {counter != 2 ? <WelcomeHeader></WelcomeHeader> : null}
         <section
           data-aos="fade-up"
           className="container lets-find-container aos-init aos-animate"
+          style={{ display: counter == 2 ? "none" : "block" }}
         >
           <MobileWelcomeHeader></MobileWelcomeHeader>
           <div className="all-form-wrapper">
@@ -107,8 +108,8 @@ const signUp = (props) => {
                           <CustomImage></CustomImage>
                         </>
                       ) : (
-                        <></>
-                      )}
+                          <></>
+                        )}
                       <CustomName
                         setName={(val) => setname(val)}
                         name={name}
@@ -125,51 +126,52 @@ const signUp = (props) => {
                         phone={phone}
                         type={type}
                         isChecked={isChecked}
-                        
+
                         setChecked={() => setisChecked(!isChecked)}
                       ></PhoneNumberCustom>
                     </div>
-                   </div>
-                    <div
-                      className="sf-forms mobile-otp opacity-in"
-                      id="sf-2"
-                      style={{ display: counter == 1 ? "block" : "none" }}
-                    >
-                      <div className="lets-find-content">
-                        <h2>
-                          Verify your mobile
+                  </div>
+                  <div
+                    className="sf-forms mobile-otp opacity-in"
+                    id="sf-2"
+                    style={{ display: counter == 1 ? "block" : "none" }}
+                  >
+                    <div className="lets-find-content">
+                      <h2>
+                        Verify your mobile
                           <br />
                           number
                         </h2>
-                        <CustomImage></CustomImage>
-                        <Otp
-                          setotp={(val) => setotp(val)}
-                          otp={otp}
-                          resend={() => signUpUser("val")}
-                        ></Otp>
-                      </div>
+                      <CustomImage></CustomImage>
+                      <Otp
+                        setotp={(val) => setotp(val)}
+                        otp={otp}
+                        resend={() => signUpUser("val")}
+                      ></Otp>
                     </div>
-                  
+                  </div>
+
                 </form>
-                <div
-                  className="sf-forms mobile-otp opacity-in"
-                  id="sf-2"
-                  style={{ display: counter == 2 ? "block" : "none" }}
-                >
-                  <Thanks></Thanks>
-                </div>
+
                 {counter < 6 ? (
                   <CustomButtons
                     nextValid={validNext()}
                     counterStep={(i) => counterStep(i)}
                   ></CustomButtons>
                 ) : (
-                  <></>
-                )}
+                    <></>
+                  )}
               </div>
             </div>
           </div>
         </section>
+        <div
+          className="sf-forms mobile-otp opacity-in"
+          id="sf-2"
+          style={{ display: counter == 2 ? "block" : "none" }}
+        >
+          <Thanks></Thanks>
+        </div>
       </Layout>
       <Loader
         msg={counter == 0 ? messgaes.otpSent : messgaes.validateOtp}
