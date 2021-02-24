@@ -36,30 +36,34 @@ const ListingCards = (props) => {
         // ir = interest rate
         // np = no of period(month)
         // pv =  loan amount
-
-
-        // function PMT (ir, np, pv ) {
-        //   let pmt = ( ir * ( pv * Math.pow ( (ir+1), np ) ) ) / ( ( ir + 1 ) * ( Math.pow ( (ir+1), np) -1 ) );
-        //   console.log('PMT returned',pmt)
-        //   return pmt;
-        //  }
-
         // let ir = product_interest_rate.max_value;
         // let np = product_tenure.tenure;
-        // let pv;
-        // console.log('ir',ir);
-        // console.log('np',np)
-        // const formData = JSON.parse(localStorage.getItem("formData"))
-        // //console.log('formData--', formData)
 
-        // if (formData && formData[primaryPath]) {
-        //   let data = formData[primaryPath]
-        //    pv = data.requestedLoanamount;
-        //   console.log('pv.requestedLoanamount',pv)
-        //   PMT(ir,np,pv)
+        // function PMT (ir, np, pv,fv ) {
+        //   let pmt = Math.round( ir * ( pv * Math.pow ( (ir+1), np )+ fv ) ) / ( ( ir + 1 ) * ( Math.pow ( (ir+1), np) -1 ) );
+        //   console.log('PMT returned',pmt)
+        //   return pmt;
+
+        //  }
+
+       
+        // let pv;
+       
+
+        // const formData = JSON.parse(localStorage.getItem("formData"))
+        // console.log('formData--', formData)
+
+        // if (formData && formData[props.primaryPath]) {
+        //   console.log('ir',ir);
+        //   console.log('np',np)
+        //   let data = formData[props.primaryPath]
+        //    let pv = data.requestedLoanamount;
+        //    let fv= 0;
+        //   console.log('inside if pv.requestedLoanamount',pv)
+        //   PMT(ir,np,pv,fv)
         // }
 
-        // console.log('interestRate',interestRate)
+       
 
 
 

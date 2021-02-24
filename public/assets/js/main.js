@@ -237,8 +237,8 @@ $(document).ready(function () {
     })
     $('#popular-cards-sec, #trending-offers-sec').slick("refresh")
   }
-
   initSlickCards()
+
   initSlickBanks = function () {
     $('.banks-slider').not('.slick-initialized').slick({
       infinite: false,
@@ -283,13 +283,11 @@ $(document).ready(function () {
     })
     $('.banks-slider').slick("refresh")
   }
-
   initSlickBanks()
 
   initSlickBlogs = function () {
     if ($(window).width() < 1200) {
-      // alert("responsive");
-      $('#slider_blogs').slick({
+      $('#slider_blogs').not('.slick-initialized').slick({
         dots: false,
         arrows: false,
         infinite: true,
@@ -313,8 +311,8 @@ $(document).ready(function () {
       $('#slider_blogs').slick("refresh")
     }
   }
+  initSlickBlogs()
 
   $('#datepickerr').datepicker();
-  initSlickBlogs()
 
 });
