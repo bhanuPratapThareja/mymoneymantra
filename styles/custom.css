@@ -1686,19 +1686,6 @@ button.cstm-load-btn {
   position: relative;
 }
 
-.cstm-load-btn {
-  border: 1px solid #89c142;
-  margin: 30px 0 0;
-  display: inline-block;
-  padding: 5px 10px;
-  font-size: 16px;
-  line-height: 25px;
-  border-radius: 3px;
-  background: #89c142;
-  color: #fff;
-  cursor: pointer;
-} 
-
 /*-- THank-you after login/Signup --*/
 .thankyou-page.b2c-flow .mobile-otp .lets-find-content .login-options.otp-wrapper {
   bottom: 0;
@@ -1720,6 +1707,62 @@ button.cstm-load-btn {
   font-size: 1.75rem;
   line-height: 2.5rem;
 }
+
+/*-- Cstm Blue Table --*/
+
+.c-detail-page .annual-fee-wrapper figure.table {
+  border: 1px solid #828282;
+  border-radius: 15px;overflow: hidden;
+}
+
+.c-detail-page .annual-fee-wrapper .table table tr td:first-child {
+  background: rgb(49,129,208);
+  background: linear-gradient(90deg, rgba(49,129,208,1) 0%, rgba(39,59,116,1) 100%);
+  border-color: #fff;
+  color: #fff;
+  font-family: 'Avenir-Medium';
+}
+
+.c-detail-page .annual-fee-wrapper figure.table table {
+  border-collapse: collapse;
+  width: 100%;
+  border-spacing: unset;
+}
+
+.c-detail-page .annual-fee-wrapper figure.table table tr td {
+  width: 50%;
+  font-family: 'Avenir-Roman';
+  padding: 10px 30px 10px 40px;
+  line-height: 20px;
+  font-size: 13px;
+  color: #a4a3a3;
+  border-bottom: 1px solid #828282;
+}
+
+.c-detail-page .annual-fee-wrapper figure.table table tr:last-child td {
+  border-bottom: 0;
+}
+
+/*-- Long form dropdown style --*/
+.long-form form .shortforms-container .dropdown-content {
+  z-index: 99991;
+}
+
+.cstm-btn-center {
+  border: 1px solid #89c142;
+  margin: 30px auto 0;
+  display: block;
+  max-width: 100px;
+  padding: 5px 10px;
+  font-size: 16px;
+  line-height: 25px;
+  border-radius: 3px;
+  background: #89c142;
+  color: #fff;
+  cursor: pointer;
+  font-weight: normal;
+} 
+
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
