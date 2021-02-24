@@ -139,6 +139,7 @@ const BlogFilter = props => {
                         const readingTime = require('reading-time');
                         const blogreadTime = readingTime(content, { wordsPerMinute: '50' });
                         return (
+                        <a onClick={() => onOpenBlog(blog)}>
                            <div key={i} className="blog-wrapper-card  single card-1" id="blog-card-1">
                               <div className="image_1"></div>
                               <Image image={image} />
@@ -151,6 +152,7 @@ const BlogFilter = props => {
                                  </div>
                               </div>
                            </div>
+                           </a>
                         )
                      }) : null
                   }
