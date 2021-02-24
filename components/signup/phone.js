@@ -1,5 +1,4 @@
 import CustomImage from "./image";
-import SocialLogin from "./socialLogin";
 import SubHeader from "./subheader";
 
 const PhoneNumberCustom=(props)=>{
@@ -27,7 +26,6 @@ const PhoneNumberCustom=(props)=>{
                   Phone number
                 </label>
               </div>
-              <SocialLogin social={props.social}></SocialLogin>
             </div>
             <div className="login-terms">
               <div className="checkbox-container">

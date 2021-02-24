@@ -15,8 +15,6 @@ import Loader from "../../components/common/Loader";
 import { messgaes } from "../../utils/messages";
 import SubHeader from "../../components/signup/subheader";
 import CustomImage from "../../components/signup/image";
-import SocialLogin from "../../components/signup/socialLogin";
-
 const signUp = (props) => {
   const [counter, setcounter] = useState(0);
   const [phone, setphone] = useState("");
@@ -29,7 +27,6 @@ const signUp = (props) => {
   const [isChecked, setisChecked] = useState(false);
   const [otpId, setOtpId] = useState("");
   const [isLoader, setisLoader] = useState(false);
-  const [socialType, setsocialType] = useState('');
   const [token, settoken] = useState('')
   const counterStep = (i) => {
     if ( (i == -1 && counter !== 0)) {
@@ -42,12 +39,6 @@ const signUp = (props) => {
     }
     console.log(counter);
   };
-  const social =({...val})=>{
-    setname(val.name);
-    setemail(val.email);
-    setsocialType(val.type);
-    settoken(val.id);
-  }
   const validNext = () => {
     switch (counter) {
       case 0:
@@ -71,7 +62,7 @@ const signUp = (props) => {
   };
   const signUpUser = (resend = null) => {
     setisLoader(true);
-    sendSignUpOtp(name, email, phone,token,socialType)
+    sendSignUpOtp(name, email, phone,token,null)
       .then((res) => {
         const { otpId, customerId, message } = res;
         setOtpId(otpId);
@@ -134,7 +125,7 @@ const signUp = (props) => {
                         phone={phone}
                         type={type}
                         isChecked={isChecked}
-                        social={({...val})=>social({...val})}
+                        
                         setChecked={() => setisChecked(!isChecked)}
                       ></PhoneNumberCustom>
                     </div>
