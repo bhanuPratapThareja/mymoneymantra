@@ -29,7 +29,7 @@ const WorkInfo = (props) => {
   const calculateSectionProgress = () => {
     let savedFields = 0
     if (employedType && employedType.length) {
-      console.log('employed')
+      // console.log('employed')
       savedFields += 1
     }
     if (bankId && bankId.length) {
@@ -108,11 +108,12 @@ const WorkInfo = (props) => {
   const submitHandler = async (e) => {
     e.preventDefault()
     setIsedit(false)
+    let custId = localStorage.getItem('customerId')
     const { url } = getApiData('workProfile')
     try {
       const responseObject = await axios.post(url, {
         bankName,
-        customerId,
+        customerId: custId,
         companyId,
         bankId,
         netMonthlyIncome,
