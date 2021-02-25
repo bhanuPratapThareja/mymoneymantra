@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Image from '../ImageComponent/ImageComponent'
 import DecisionButton from '../DecisionButton/DescisionButton'
 import { getProductDecision } from '../../services/offersService'
+import { sf, lf, ApplyNow, EConnect } from '../../utils/types'
 
 const DetailsBanner = props => {
     const [productData, setProductData] = useState(null)
@@ -13,10 +14,10 @@ const DetailsBanner = props => {
     const getProductData = async () => {
         if (props.formRedirection) {
             props.productData.formRedirection = props.formRedirection
-            if (props.formRedirection === 'lf') {
-                props.productData.productDecision = 'EConnect'
-            } else if (props.formRedirection === 'sf') {
-                props.productData.productDecision = 'Apply Now'
+            if (props.formRedirection === lf) {
+                props.productData.productDecision = EConnect
+            } else if (props.formRedirection === sf) {
+                props.productData.productDecision = ApplyNow
             }
             setProductData(props.productData)
             return

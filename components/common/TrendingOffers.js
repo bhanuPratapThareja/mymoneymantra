@@ -4,6 +4,7 @@ import Image from '../ImageComponent/ImageComponent'
 import { makeDecision } from '../../utils/decision'
 import { extractOffers, viewOffers } from '../../services/offersService'
 import { setLeadBank, clearLeadId } from '../../utils/localAccess'
+import { sf, ApplyNow } from '../../utils/types'
 
 const trendingOffers = props => {
    const router = useRouter()
@@ -43,18 +44,18 @@ const trendingOffers = props => {
       setLeadBank(leadBank)
       clearLeadId(props.primaryPath)
       if (router.pathname === '/[primaryPath]') {
-         props.setFormRedirection('sf')
+         props.setFormRedirection(sf)
          props.goToShortForm()
       } else {
          const pathname = productType.slug
-         const query = { formRedirection: 'sf' }
+         const query = { formRedirection: sf }
          router.push({ pathname, query }, pathname, { shallow: true })
       }
    }
 
    const onOfferClick = async offer => {
       const { productDecision, productType } = offer
-      if (productDecision === 'Apply Now') {
+      if (productDecision === ApplyNow) {
          redirectToShortForm(offer)
          return
       }

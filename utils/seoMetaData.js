@@ -1,3 +1,5 @@
+import { pageTitle } from './types'
+
 let head
 export const addSeoMetaData = (data, id) => {
     head = document.querySelector('head')
@@ -19,7 +21,7 @@ export const addMetaTitle = seo_meta_title => {
     if(seo_meta_title) {
         title.innerHTML = seo_meta_title
     } else {
-        title.innerHTML = 'My Money Mantra' 
+        title.innerHTML = pageTitle
     }
     head.appendChild(title)
 }
