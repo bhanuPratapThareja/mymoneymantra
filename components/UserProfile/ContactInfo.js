@@ -24,12 +24,23 @@ const ContactInfo = (props) => {
         setEmailId(emailId)
         setMobileNo(mobileNo)
         setAddress(address)
+        
+        let count = emailId?1: 0;
+            count = mobileNo?count + 1 :count;
+            count =address?count + 1 :count;
+
+            sendCount(count,3);
+
+
       })
       .catch((err) => {
         console.log(err)
       })
   }
 
+  const sendCount = (val,max) =>{
+    props.contactCount(val,max)
+  }
   const submitHandler = async (e) => {
     e.preventDefault()
     setEditing(false)
