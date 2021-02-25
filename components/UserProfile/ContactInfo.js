@@ -24,12 +24,12 @@ const ContactInfo = (props) => {
         setEmailId(emailId)
         setMobileNo(mobileNo)
         setAddress(address)
-        
-        let count = emailId?1: 0;
-            count = mobileNo?count + 1 :count;
-            count =address?count + 1 :count;
 
-            sendCount(count,3);
+        let count = emailId ? 1 : 0;
+        count = mobileNo ? count + 1 : count;
+        count = address ? count + 1 : count;
+
+        sendCount(count, 3);
 
 
       })
@@ -38,8 +38,8 @@ const ContactInfo = (props) => {
       })
   }
 
-  const sendCount = (val,max) =>{
-    props.contactCount(val,max)
+  const sendCount = (val, max) => {
+    props.contactCount(val, max)
   }
   const submitHandler = async (e) => {
     e.preventDefault()
@@ -78,7 +78,7 @@ const ContactInfo = (props) => {
             }
           >
             <input
-              readOnly={!editing}
+              readOnly={true}
               className="form__field"
               type="text"
               value={mobileNo}

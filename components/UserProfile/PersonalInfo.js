@@ -14,10 +14,29 @@ const PersonalInfo = (props) => {
   const [maritalStatus, setMaritalStatus] = useState('')
   const [panNumber, setPanNumber] = useState('')
   const [martaialname, setmartaialname] = useState('')
+  const [errMsg, setErrMsg] = useState('')
+  const [nameError, setNameError] = useState(false)
+  const [panError, setPanError] = useState(false)
   const { totalNumberOfFields, calculateProfileProgress, setPersonalInfoProgress } = props
   useEffect(() => {
     getInfo()
   }, [])
+
+  const validateSaveButton = () => {
+    return nameError && panError
+  }
+
+  const validateName = (isFirstname) => {
+    if (isFirstname) {
+
+    } else {
+
+    }
+  }
+
+  const validatePanNumber = () => {
+
+  }
 
   const getInfo = () => {
     getPersonalInfo()
@@ -95,7 +114,7 @@ const PersonalInfo = (props) => {
                 onChange={(e) => setFirstName(e.target.value)}
               />
               <label className="form__label" htmlFor="mother-f-name">
-                Full Name
+                First Name
               </label>
             </div>
             <div className="form__group field">
