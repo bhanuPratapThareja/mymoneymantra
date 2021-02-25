@@ -23,19 +23,37 @@ const PersonalInfo = (props) => {
   }, [])
 
   const validateSaveButton = () => {
-    return nameError && panError
+    return nameError || panError || (gender == null)
   }
 
   const validateName = (isFirstname) => {
+    let pattern = /^[a-z]{3,25}$/gi
+    let msg = 'Name should be between 3-25 characters'
     if (isFirstname) {
-
+      if (pattern.test(firstName)) {
+        setNameError(false)
+      } else {
+        setNameError(true)
+        setErrMsg(`First ${msg}`)
+      }
     } else {
-
+      if (pattern.test(lastName) || lastName == '') {
+        setNameError(false)
+      } else {
+        setNameError(true)
+        setErrMsg(`Last ${msg}`)
+      }
     }
   }
 
   const validatePanNumber = () => {
-
+    let pattern = /^[a-z]{5}[0-9]{4}[a-z]{1,2}$/gi
+    if (pattern.test(panNumber)) {
+      setPanError(false)
+    } else {
+      setPanError(true)
+      setErrMsg('Invalid PAN number')
+    }
   }
 
   const getInfo = () => {
@@ -57,6 +75,10 @@ const PersonalInfo = (props) => {
         setDob(dob ? moment(dob, 'DD/MM/YYYYY').format('DD-MM-YYYY') : null)
         let mName = checkMartialStatus(martialStatus)
         setmartaialname(mName)
+        // let today = moment()
+
+        // let dateOfBirth = moment(dob).format()
+        // console.log('dob diff in years', today, dateOfBirth, today.diff(dateOfBirth))
       })
       .catch((err) => {
         console.log(err)
@@ -112,6 +134,7 @@ const PersonalInfo = (props) => {
                 placeholder="First Name"
                 required=""
                 onChange={(e) => setFirstName(e.target.value)}
+                onBlur={() => validateName(true)}
               />
               <label className="form__label" htmlFor="mother-f-name">
                 First Name
@@ -127,11 +150,13 @@ const PersonalInfo = (props) => {
                 placeholder="Last Name"
                 required=""
                 onChange={(e) => setLastName(e.target.value)}
+                onBlur={() => validateName(false)}
               />
               <label className="form__label" htmlFor="mother-l-name">
                 Last Name
               </label>
             </div>
+            {nameError ? <p style={{ color: 'red' }}>{errMsg}</p> : null}
           </div>
           <h5>Date of Birth</h5>
           <div className="shortforms-container personal-style">
@@ -285,15 +310,17 @@ const PersonalInfo = (props) => {
                       : e.target.value
                   )
                 }
+                onBlur={validatePanNumber}
               />
               <label className="form__label" htmlFor="l-pan">
                 PAN Number
               </label>
             </div>
+            {panError ? <p style={{ color: 'red' }}>{errMsg}</p> : null}
           </div>
 
           <div className="save-options">
-            <button type="submit" className="save-personal" id="save-personal">
+            <button type="submit" className="save-personal" id="save-personal" disabled={validateSaveButton()}>
               Save
             </button>
             <button
