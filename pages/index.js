@@ -15,37 +15,20 @@ import FinancialTools from '../components/common/FinancialTools'
 import Blogger from '../components/common/Blogger'
 import TrendingOffers from '../components/common/TrendingOffers'
 import { getClassesForPage } from '../utils/classesForPage'
-import { viewOffers, extractOffers } from '../services/offersService'
-import { get } from 'jquery'
-import { addSchemaScript, removeSchemaScript } from '../utils/handleSchema'
+import { addSeo, removeSeo } from '../utils/handleSchema'
 
 const Home = props => {
-    const [trendingOffers, setTrendingOffers] = useState([])
-
 
     useEffect(() => {
-        //getOffers()
         localStorage.clear()
-        const scriptId = addSchemaScript(props.data.page_schema, props.data.id)
+        const { scriptId, canonicalId } = addSeo(props.data, props.data.id)
         return () => {
-            if (scriptId) {
-                removeSchemaScript(scriptId)
-            }
+            removeSeo(scriptId, canonicalId)
         }
     }, [])
 
-    const getOffers = async () => {
-        const apiOffers = await viewOffers()
-        if (apiOffers) {
-            const { trendings } = apiOffers
-            console.log(trendings)
-            const trendingOffers = await extractOffers(trendings)
-            setTrendingOffers(trendingOffers)
-        }
-    }
 
     const getComponents = (dynamic) => {
-        console.log(dynamic)
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.product-banner-component':
@@ -63,7 +46,7 @@ const Home = props => {
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
-                    return <TrendingOffers key={block.id} data={block} blogTrendingOffers={trendingOffers} />
+                    return <TrendingOffers key={block.id} data={block} productType={props.productType} />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.app-download-component':

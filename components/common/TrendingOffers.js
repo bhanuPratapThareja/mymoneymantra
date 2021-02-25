@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import { makeDecision } from '../../utils/decision'
 import { extractOffers, viewOffers } from '../../services/offersService'
+import { setLeadBank, clearLeadId } from '../../utils/localAccess'
 
 const trendingOffers = props => {
    const router = useRouter()
@@ -14,7 +15,6 @@ const trendingOffers = props => {
          if (props.blogTrendingOffers) {
             setTrendingOffers(props.blogTrendingOffers)
             if (window !== undefined && window.initSlickCards && trendingOffers.length) {
-               console.log('slick initialized')
                window.initSlickCards()
             }
          } else {
@@ -24,7 +24,7 @@ const trendingOffers = props => {
    })
 
    const getOffers = async () => {
-      const apiOffers = await viewOffers(props.productType.product_type_id)
+      const apiOffers = await viewOffers(props.productType)
       if (apiOffers) {
          let trendings = apiOffers.trendings
          const trendingOffers = await extractOffers(trendings)
@@ -35,13 +35,30 @@ const trendingOffers = props => {
             }, 1000)
          }
       }
+   }
 
-
+   const redirectToShortForm = offer => {
+      const { bank: { bank_name: bankName, bank_id: bankId }, productType } = offer
+      const leadBank = { bankId, bankName }
+      setLeadBank(leadBank)
+      clearLeadId(props.primaryPath)
+      if (router.pathname === '/[primaryPath]') {
+         props.setFormRedirection('sf')
+         props.goToShortForm()
+      } else {
+         const pathname = productType.slug
+         const query = { formRedirection: 'sf' }
+         router.push({ pathname, query }, pathname, { shallow: true })
+      }
    }
 
    const onOfferClick = async offer => {
-      const { productDecision } = offer
-      const decision = makeDecision(productDecision, offer, props.primaryPath, null)
+      const { productDecision, productType } = offer
+      if (productDecision === 'Apply Now') {
+         redirectToShortForm(offer)
+         return
+      }
+      const decision = makeDecision(productDecision, offer, productType.slug, null)
       const { pathname, query } = decision
       router.push({ pathname, query }, pathname, { shallow: true })
    }
@@ -77,7 +94,7 @@ const trendingOffers = props => {
                               {product_annual_fee ?
                                  <h5><b>₹{product_annual_fee.annual_fee_fy}</b> Annual fee</h5>
                                  : null}
-                                 
+
                               {product_interest_rate ?
                                  <h5>Int Rates : <span><b>&nbsp; {product_interest_rate.min_value}% - {product_interest_rate.max_value}%
                               {product_interest_rate.duration === 'Annually' ? 'p.a.' : 'm.a.'}</b></span></h5>

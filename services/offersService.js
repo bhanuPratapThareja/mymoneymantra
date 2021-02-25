@@ -6,10 +6,10 @@ import { unpackComponents } from './componentsService'
 
 const defaultDecision = 'EConnect'
 
-export const viewOffers = async productTypeId => {
+export const viewOffers = async productType => {
     const { url, body } = getApiData('viewOffers')
     body.customerId = ''
-    body.productId = productTypeId ? productTypeId : ''
+    body.productId = productType && productType.product_type_id ? productType.product_type_id : ''
 
     try {
         const res = await axios.post(url, body)

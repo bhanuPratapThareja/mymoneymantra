@@ -11,11 +11,21 @@ const DetailsBanner = props => {
     }, [])
 
     const getProductData = async () => {
+        if (props.formRedirection) {
+            props.productData.formRedirection = props.formRedirection
+            if (props.formRedirection === 'lf') {
+                props.productData.productDecision = 'EConnect'
+            } else if (props.formRedirection === 'sf') {
+                props.productData.productDecision = 'Apply Now'
+            }
+            setProductData(props.productData)
+            return
+        }
         const productWithDesicion = await getProductDecision([props.productData], props.primaryPath, props.productType)
         setProductData(productWithDesicion[0])
     }
 
-    if(!productData) {
+    if (!productData) {
         return null
     }
 
@@ -26,18 +36,18 @@ const DetailsBanner = props => {
             <div className="mobile-background"></div>
             <section className="banner container">
                 <div className="banner-wrapper">
-             
+
                     <h1><b>{bank.bank_name}</b><br />
-                        {props.primaryPath === 'credit-cards' ? 
+                        {props.primaryPath === 'credit-cards' ?
                             product.product_name : props.productType.product_type_name.slice(0, -1)}
                     </h1>
-                    {product.product_banner_detail ? <div dangerouslySetInnerHTML={{ __html: product.product_banner_detail.content }}></div>: null}
-        
+                    {product.product_banner_detail ? <div dangerouslySetInnerHTML={{ __html: product.product_banner_detail.content }}></div> : null}
+
 
                     {productDecision ?
                         <span className="details-button-div">
-                            <DecisionButton 
-                                buttonText={productDecision} 
+                            <DecisionButton
+                                buttonText={productDecision}
                                 offer={productData}
                                 primaryPath={props.primaryPath}
                                 changePageType={props.changePageType}
