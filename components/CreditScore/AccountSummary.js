@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import moment from 'moment'
 import { findBank } from '../../utils/findBank'
+import formatAmount from 'indian-currency-formatter'
 
 const AccountSummary = ({ active, closed, name, banks }) => {
   const [activeTab, setActiveTab] = useState('accepted')
@@ -73,7 +74,7 @@ const AccountSummary = ({ active, closed, name, banks }) => {
                           </div>
                           <div className="value">
                             <span>Current Balance:</span>
-                            <h5>₹{item.currentBalance}</h5>
+                            <h5>₹{formatAmount(item.currentBalance)}</h5>
                           </div>
                           <div className="value">
                             <span>
@@ -82,7 +83,12 @@ const AccountSummary = ({ active, closed, name, banks }) => {
                                 : 'Loan Amount'}
                               :
                             </span>
-                            <h5>₹{item.creditLimit}</h5>
+                            <h5>
+                              ₹
+                              {item.productType === 'CREDIT CARD'
+                                ? formatAmount(item.creditLimit)
+                                : formatAmount(item.loanAmount)}
+                            </h5>
                           </div>
                         </div>
                       </div>
@@ -134,7 +140,7 @@ const AccountSummary = ({ active, closed, name, banks }) => {
                           </div>
                           <div className="value">
                             <span>Credit Limit:</span>
-                            <h5>₹{item.creditLimit}</h5>
+                            <h5>₹{formatAmount(item.creditLimit)}</h5>
                           </div>
                         </div>
                       </div>

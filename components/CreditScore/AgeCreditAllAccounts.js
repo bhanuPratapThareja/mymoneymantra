@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import moment from 'moment'
 import { findBank } from '../../utils/findBank'
+import formatAmount from 'indian-currency-formatter'
 
 const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
   const [activeTab, setActiveTab] = useState('accepted')
@@ -91,7 +92,7 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                                 : 'Loan Amount'}
                               :
                             </span>
-                            <h5>₹{item.highestCredit}</h5>
+                            <h5>₹{formatAmount(item.highestCredit)}</h5>
                           </div>
                         </div>
                       </div>
@@ -114,8 +115,7 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
               {closed?.map((item, i) => {
                 const bank = findBank(banks, item.bankId)
                 return (
-                  <>
-                    {/* <div className="popular-cards-slider-card">
+                  <div key={i} className="popular-cards-slider-card">
                     <div className="popular-cards-slider-card-top">
                       <div className="head">
                         <h3>
@@ -127,66 +127,34 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                           src={`http://203.122.46.189:1338${bank?.bank_logo?.url}`}
                         />
                       </div>
+                      <div className="account-number">
+                        <p>{item.accountNo}</p>
+                      </div>
                       <div className="app_progress_card_content">
                         <div className="left">
                           <div className="value">
-                            <span>Applicant’s Name:</span>
-                            <h5>{name}</h5>
+                            <span>Closed On:</span>
+                            <h5>
+                              {moment(item.issuedOn).format('DD MMM YYYY')}
+                            </h5>
                           </div>
                           <div className="value">
-                            <span>Product Type:</span>
-                            <h5>Credit Card</h5>
+                            <span>Last Payment Date:</span>
+                            <h5>{item.lastPaymentDate}</h5>
+                          </div>
+                          <div className="value">
+                            <span>Credit Limit:</span>
+                            <h5>₹{formatAmount(item.creditLimit)}</h5>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="popular-cards-slider-card-bottom rejected-red">
+                    <div className="popular-cards-slider-card-bottom">
                       <div>
-                        <h5>Rejected: Due to poor Credit Score</h5>
+                        <h5>Account Closed</h5>
                       </div>
                     </div>
-                  </div> */}
-                    <div key={i} className="popular-cards-slider-card">
-                      <div className="popular-cards-slider-card-top">
-                        <div className="head">
-                          <h3>
-                            <b className="card_name">{bank?.bank_name}</b>
-                            <br />
-                            Platinum Delight Credit Card
-                          </h3>
-                          <img
-                            src={`http://203.122.46.189:1338${bank?.bank_logo?.url}`}
-                          />
-                        </div>
-                        <div className="account-number">
-                          <p>{item.accountNo}</p>
-                        </div>
-                        <div className="app_progress_card_content">
-                          <div className="left">
-                            <div className="value">
-                              <span>Closed On:</span>
-                              <h5>
-                                {moment(item.issuedOn).format('DD MMM YYYY')}
-                              </h5>
-                            </div>
-                            <div className="value">
-                              <span>Last Payment Date:</span>
-                              <h5>{item.lastPaymentDate}</h5>
-                            </div>
-                            <div className="value">
-                              <span>Credit Limit:</span>
-                              <h5>₹{item.creditLimit}</h5>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="popular-cards-slider-card-bottom">
-                        <div>
-                          <h5>Account Closed</h5>
-                        </div>
-                      </div>
-                    </div>
-                  </>
+                  </div>
                 )
               })}
             </div>
@@ -238,7 +206,7 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                   </div>
                   <div className="values">
                     <span>Credit Limit:</span>
-                    <h5>₹{modalData?.creditLimit}</h5>
+                    <h5>₹{formatAmount(modalData?.creditLimit)}</h5>
                   </div>
                   <div className="values">
                     <span>Account Status:</span>
@@ -246,11 +214,11 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                   </div>
                   <div className="values">
                     <span>Amount Overdue:</span>
-                    <h5>₹{modalData?.amountOverDue}</h5>
+                    <h5>₹{formatAmount(modalData?.amountOverDue)}</h5>
                   </div>
                   <div className="values">
                     <span>Current Balance:</span>
-                    <h5>₹{modalData?.currentBalance}</h5>
+                    <h5>₹{formatAmount(modalData?.currentBalance)}</h5>
                   </div>
                   <div className="values">
                     <span>Last Updated Date:</span>
@@ -265,7 +233,7 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
               </div>
               <div className="graph">
                 <iframe
-                  class="chartjs-hidden-iframe"
+                  className="chartjs-hidden-iframe"
                   tabIndex={-1}
                   style={{
                     display: 'block',

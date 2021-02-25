@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 
 import OffersForYou from '../../components/CreditScore/OffersForYou'
 import TipSection from '../../components/CreditScore/TipSection'
