@@ -54,6 +54,7 @@ const ContactInfo = (props) => {
       <form
         className="contact-wrapper"
         style={{ display: 'block' }}
+        autocomplete="off"
         onSubmit={submitHandler}
       >
         <div className="shortforms-container">
@@ -70,6 +71,7 @@ const ContactInfo = (props) => {
               type="text"
               value={mobileNo}
               id="mob-num"
+              autocomplete="off"
               onChange={(e) => setMobileNo(e.target.value)}
               placeholder="Mobile Number"
               required=""
@@ -90,6 +92,7 @@ const ContactInfo = (props) => {
               className="form__field"
               type="text"
               value={emailId}
+              autocomplete="off"
               id="email"
               placeholder="Email ID"
               onChange={(e) => setEmailId(e.target.value)}
@@ -111,6 +114,7 @@ const ContactInfo = (props) => {
               className="form__field"
               type="text"
               value={currentAddress}
+              autocomplete="off"
               id="current-address"
               placeholder="Current Address"
               onChange={(e) => setCurrentAddress(e.target.value)}
@@ -131,6 +135,7 @@ const ContactInfo = (props) => {
               readOnly={!editing}
               className="form__field"
               type="text"
+              autocomplete="off"
               value={permanentAddress}
               id="permanent-address"
               placeholder="Permanent Address"

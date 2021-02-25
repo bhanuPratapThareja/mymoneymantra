@@ -2790,6 +2790,8 @@ button.cstm-load-btn {
   border-radius: 5px;
   z-index: 999;
   top: 10px;
+  height:300px;
+  overflow-y: auto;
 }
 
 .shortforms-container .form__group.field datalist option {
@@ -2799,6 +2801,7 @@ button.cstm-load-btn {
   font-family: "Avenir-Heavy";
   line-height: 1.5rem;
   padding: 8px 12px;
+  white-space: break-spaces;
 }
 
 .option-wrapper .shortforms-container .form__group.field select.form__field {

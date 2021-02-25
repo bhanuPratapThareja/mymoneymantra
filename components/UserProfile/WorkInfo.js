@@ -163,7 +163,7 @@ const WorkInfo = (props) => {
   }
 
   return (
-    <form className="work-wrapper" onSubmit={submitHandler}>
+    <form className="work-wrapper" onSubmit={submitHandler} autocomplete="off">
       {/* <div className="shortforms-container"> */}
       {isedit ? <h5>Employment Type</h5> : null}
       <div className="shortforms-container">
@@ -200,6 +200,7 @@ const WorkInfo = (props) => {
               className="lets-checkbox"
               type="radio"
               id="self-employed"
+              autocomplete="off"
               name="emp-type"
               required=""
               onChange={(e) => setEmployedType(e.target.value)}
@@ -212,6 +213,7 @@ const WorkInfo = (props) => {
               id="self-employed-professional"
               name="emp-type"
               required=""
+              autocomplete="off"
               onChange={(e) => setEmployedType(e.target.value)}
               defaultChecked={employedType == 1000000002 ? true : false}
             />
@@ -221,6 +223,7 @@ const WorkInfo = (props) => {
               type="radio"
               id="salaried"
               name="emp-type"
+              autocomplete="off"
               required=""
               onChange={(e) => setEmployedType(e.target.value)}
               defaultChecked={employedType == 1000000004 ? true : false}
@@ -232,6 +235,7 @@ const WorkInfo = (props) => {
               id="defense"
               name="emp-type"
               required=""
+              autocomplete="off"
               onChange={(e) => setEmployedType(e.target.value)}
               defaultChecked={employedType == 1000000008 ? true : false}
             />
@@ -246,6 +250,7 @@ const WorkInfo = (props) => {
             <div className="form__group field">
               <input
                 readOnly={true}
+                autocomplete="off"
                 value={
                   employedType == 1000000001
                     ? 'Self Employed'
@@ -278,6 +283,7 @@ const WorkInfo = (props) => {
             readOnly={!isedit}
             className="form__field"
             type="text"
+            autocomplete="off"
             value={companyName}
             id="company-name"
             placeholder="Company Name"
@@ -320,6 +326,7 @@ const WorkInfo = (props) => {
             readOnly={!isedit}
             className="form__field"
             type="text"
+            autocomplete="off"
             value={netMonthlyIncome}
             id="monthly-income"
             placeholder="Net Monthly Income"
@@ -345,6 +352,7 @@ const WorkInfo = (props) => {
             className="form__field"
             type='text'
             id='bank-name'
+            autocomplete="off"
             placeholder='Bank Name'
             required=''
             value={bankName}
@@ -388,6 +396,7 @@ const WorkInfo = (props) => {
             readOnly={!isedit}
             className="form__field"
             type="text"
+            autocomplete="off"
             value={accountNo}
             id="account-num"
             placeholder="Account Number"
@@ -411,6 +420,7 @@ const WorkInfo = (props) => {
             type="text"
             value={ifscCode}
             id="ifsc"
+            autocomplete="off"
             placeholder="IFSC Code"
             required=""
             onChange={(e) => setIfscCode(e.target.value)}
