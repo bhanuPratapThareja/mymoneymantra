@@ -47,12 +47,11 @@ const Blogger = props => {
                         const blogreadTime = readingTime(content);
                         const blogClasses = ['blog-wrapper-card', `card-${i + 1}`]
                         return (
-                            (i < 3) ? <div className={blogClasses.join(' ')} id={`blog-card-${i + 1}`} key={i}>
-                                <a onClick={() => onOpenBlog(blog)}>
+                            (i < 3) ? <div onClick={() => onOpenBlog(blog)} className={blogClasses.join(' ')} id={`blog-card-${i + 1}`} key={i}>
                                 <div className={`image_${i + 1}`}>
-                                    <Image image={image} />
+                                    <Image image={image}/>
                                 </div>
-                                <div className="content" onClick={() => onOpenBlog(blog)}>
+                                <div className="content">
                                     <span dangerouslySetInnerHTML={{ __html: header }}></span>
                                     <span dangerouslySetInnerHTML={{ __html: short_text }}></span>
                                     <div className="details">
@@ -60,7 +59,6 @@ const Blogger = props => {
                                         <button onClick={() => onOpenBlog(blog)}>Read more</button>
                                     </div>
                                 </div>
-                                </a>
                             </div> : null
                         )
                     })}

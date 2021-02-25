@@ -38,8 +38,19 @@ export const clearLeadBank = () => {
 
 export const setFormData = (data, primaryPath) => {
     const previouslySavedData = JSON.parse(localStorage.getItem('formData'))
-    const formData = { ...previouslySavedData, [primaryPath]: data }
+    let formData
+    if(!previouslySavedData) {
+        formData = { ...previouslySavedData, [primaryPath]: data }
+    } else {
+        formData = { ...previouslySavedData, [primaryPath]: { ...previouslySavedData[primaryPath], ...data } }
+    }
     localStorage.setItem('formData', JSON.stringify(formData))
+}
+
+export const getFormData = primaryPath  => {
+    const rawFormData = JSON.parse(localStorage.getItem('formData'))
+    const formData = rawFormData && rawFormData[primaryPath] ? rawFormData[primaryPath] : null
+    return formData
 }
 
 export const clearFormData = primaryPath => {

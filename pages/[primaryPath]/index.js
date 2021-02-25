@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 
@@ -17,23 +17,25 @@ import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import PageNotFound from '../../components/PageNotFound'
 import { getClassesForPage } from '../../utils/classesForPage'
-import { clearLeadId, clearLeadBank, clearFormData } from '../../utils/localAccess'
-import { addSchemaScript,removeSchemaScript } from '../../utils/handleSchema';
+import { addSeoMetaData, removeSeoMetaData } from '../../utils/seoMetaData'
+import { clearLeadBank, clearFormData, clearLeadId } from '../../utils/localAccess';
 
 const PrimaryPage = props => {
 
+  const [formRedirection, setFormRedirection] = useState('')
+
   useEffect(() => {
     window.scrollTo(0, 0)
-    clearLeadBank()
-    clearLeadId(props.primaryPath)
-    clearFormData(props.primaryPath)
-    const scriptId = addSchemaScript(props.data.page_schema, props.data.id)
-    return () => {
-        if (scriptId) {
-            removeSchemaScript(scriptId)
-        }
+    setFormRedirection(props.formRedirection)
+    if(!props.formRedirection) {
+      clearLeadBank()
+      clearFormData(props.primaryPath)
+      clearLeadId(props.primaryPath)
     }
-   
+    const { scriptId, canonicalId, metaDescriptionId, metaKeywordId } = addSeoMetaData(props.data, props.data.id)
+    return () => {
+      removeSeoMetaData(scriptId, canonicalId, metaDescriptionId, metaKeywordId)
+    }
   }, [])
 
   const goToShortForm = () => {
@@ -65,6 +67,8 @@ const PrimaryPage = props => {
             primaryPath={props.primaryPath}
             productType={props.productType}
             preferredSelectionLists={props.preferredSelectionLists}
+            formRedirection={formRedirection}
+            goToShortForm={goToShortForm}
           />
         case 'offers.popular-offers-component':
           return <PopularOffers
@@ -73,6 +77,7 @@ const PrimaryPage = props => {
             primaryPath={props.primaryPath}
             productType={props.productType}
             goToShortForm={goToShortForm}
+            setFormRedirection={setFormRedirection}
           />
         case 'blocks.credit-score-component':
           return <CreditScore key={block.id} data={block} />
@@ -83,6 +88,7 @@ const PrimaryPage = props => {
             primaryPath={props.primaryPath}
             productType={props.productType}
             goToShortForm={goToShortForm}
+            setFormRedirection={setFormRedirection}
           />
         case 'blocks.bank-slider-component':
           return <BankSlider key={block.id} data={block} />
@@ -112,6 +118,7 @@ const PrimaryPage = props => {
 export async function getServerSideProps(ctx) {
   const strapi = new Strapi()
   const { query } = ctx
+  const formRedirection = query.formRedirection ? query.formRedirection : null
   const primaryPath = query.primaryPath
   const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
   const productType = productTypeData[0]
@@ -123,7 +130,7 @@ export async function getServerSideProps(ctx) {
   return {
     props: {
       data, primaryPath, preferredSelectionLists,
-      productType, tncData
+      productType, tncData, formRedirection
     }
   }
 }

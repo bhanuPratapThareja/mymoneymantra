@@ -1763,6 +1763,11 @@ button.cstm-load-btn {
   font-weight: normal;
 } 
 
+/*-- Blog -- */
+.popular-cards .blog-wrapper-card,
+.blog-container .blog-wrapper .blog-wrapper-card {
+  cursor: pointer;
+}
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {

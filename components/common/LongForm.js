@@ -8,6 +8,7 @@ import { generateLead, sendNotification, submitOtp, getOtp } from "../../service
 import { setLeadId, getLeadId, setLeadBank } from "../../utils/localAccess"
 import { getFormattedCurrency, getWholeNumberFromCurrency } from "../../utils/formattedCurrency"
 import ImageComponent from '../../components/ImageComponent/ImageComponent'
+import { lf } from '../../utils/types'
 import {
   textTypeInputs,
   handleChangeInputs,
@@ -126,7 +127,7 @@ class LongForm extends React.Component {
       cardTypeCC: this.props.productData && this.props.productData.product ? this.props.productData.product.cardType : null,
       submitButtonDisabled: enableCheckboxes.length !== 0,
       askForOtp: always_ask_for_otp,
-      formType: 'lf',
+      formType: lf,
       fulfillTnc: primaryPath !== 'rkpl' && (!leadId || always_ask_for_otp)
     }, () => {
       const newLongFormSections = this.state.longFormSections
@@ -463,7 +464,7 @@ class LongForm extends React.Component {
     let { primaryPath, leadBank } = this.state
 
 
-    generateLead(data, primaryPath, 'lf', this.props.productType)
+    generateLead(data, primaryPath, lf, this.props.productType)
       .then((res) => {
         const leadId = res.data.leadId
         let actionName = this.state.primaryPath === 'rkpl' ? 'RKPL-CC' : 'Short Form Submit'

@@ -16,6 +16,7 @@ import { extractListingOffers } from '../../services/componentsService'
 import { getProductDecision } from '../../services/offersService'
 import { filterOfferCardsInFilterComponent } from '../../utils/listingsFilterHandler'
 import { getClassesForPage } from '../../utils/classesForPage'
+import { addSeoMetaData, removeSeoMetaData } from '../../utils/seoMetaData';
 
 const Listings = props => {
     const [allOfferCards, setAllOfferCards] = useState([])
@@ -24,6 +25,10 @@ const Listings = props => {
     useEffect(() => {
         window.scrollTo(0, 0)
         getListingOffers()
+        const { scriptId, canonicalId } = addSeoMetaData(props.data, props.data.id)
+        return () => {
+            removeSeoMetaData(scriptId, canonicalId)
+        }
     }, [])
 
     const getListingOffers = async () => {

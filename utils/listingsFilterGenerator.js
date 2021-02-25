@@ -213,7 +213,6 @@ export const generateTenureBlock = allOfferCards => {
 
 export const generateInterestRateBlock = allOfferCards => {
     let interestRates = []
-    console.log(allOfferCards)
     for(let i = 0; i < allOfferCards.length; i++) {
         if(!allOfferCards[i].product.product_interest_rate) {
             continue
