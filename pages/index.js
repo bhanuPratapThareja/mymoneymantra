@@ -15,15 +15,15 @@ import FinancialTools from '../components/common/FinancialTools'
 import Blogger from '../components/common/Blogger'
 import TrendingOffers from '../components/common/TrendingOffers'
 import { getClassesForPage } from '../utils/classesForPage'
-import { addSchemaScript, removeSchemaScript } from '../utils/handleSchema'
+import { addSeo, removeSeo } from '../utils/handleSchema'
 
 const Home = props => {
 
     useEffect(() => {
         localStorage.clear()
-        const { scriptId, canonicalId } = addSchemaScript(props.data, props.data.id)
+        const { scriptId, canonicalId } = addSeo(props.data, props.data.id)
         return () => {
-            removeSchemaScript(scriptId, canonicalId)
+            removeSeo(scriptId, canonicalId)
         }
     }, [])
 

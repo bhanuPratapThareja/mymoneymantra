@@ -17,8 +17,7 @@ import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import PageNotFound from '../../components/PageNotFound'
 import { getClassesForPage } from '../../utils/classesForPage'
-import { clearLeadId, clearLeadBank, clearFormData } from '../../utils/localAccess'
-import { addSchemaScript,removeSchemaScript } from '../../utils/handleSchema'
+import { addSeo,removeSeo } from '../../utils/handleSchema'
 
 const PrimaryPage = props => {
 
@@ -26,14 +25,10 @@ const PrimaryPage = props => {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    // clearLeadBank()
-    // clearLeadId(props.primaryPath)
-    // clearFormData(props.primaryPath)
-  
     setFormRedirection(props.formRedirection)
-    const { scriptId, canonicalId } = addSchemaScript(props.data, props.data.id)
+    const { scriptId, canonicalId } = addSeo(props.data, props.data.id)
     return () => {
-        removeSchemaScript(scriptId, canonicalId)
+      removeSeo(scriptId, canonicalId)
     }
     
   }, [])

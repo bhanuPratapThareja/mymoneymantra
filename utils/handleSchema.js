@@ -1,10 +1,14 @@
-export const addSchemaScript = (data, id) => {
-    const head = document.querySelector('head')
-    const canonicalLink = document.createElement('link')
-
+let head
+export const addSeo = (data, id) => {
+    head = document.querySelector('head')
     const { page_schema, seo_meta_conical_link } = data
+    const scriptId = addSchemaScript(page_schema, id)
+    const canonicalId = addCanonicalLink(seo_meta_conical_link, id)
+    return { scriptId, canonicalId }
+}
+
+export const addSchemaScript = (page_schema, id) => {
     let scriptId
-    let canonicalId
     if (page_schema) {
         const script = document.createElement('script')
         scriptId = `schema_${id}`
@@ -13,7 +17,12 @@ export const addSchemaScript = (data, id) => {
         script.append(page_schema)
         head.appendChild(script)
     }
+    return scriptId
+}
 
+export const addCanonicalLink = (seo_meta_conical_link, id) => {
+    const canonicalLink = document.createElement('link')
+    let canonicalId
     if(seo_meta_conical_link) {
         canonicalLink.href = seo_meta_conical_link
     } else {
@@ -23,12 +32,10 @@ export const addSchemaScript = (data, id) => {
     canonicalLink.id = `canonical_${id}`
     canonicalId = canonicalLink.id
     head.appendChild(canonicalLink)
-
-
-    return { scriptId, canonicalId }
+    return canonicalId
 }
 
-export const removeSchemaScript = (scriptId, canonicalId) => {
+export const removeSeo = (scriptId, canonicalId) => {
     if(scriptId) {
         const script = document.getElementById(scriptId)
         script.parentNode.removeChild(script)
