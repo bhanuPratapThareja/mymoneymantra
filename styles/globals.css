@@ -431,8 +431,15 @@ label {
   border-radius: 6px;
   overflow: hidden;
   max-width: 552px; }
+.popular-cards-slider-card-user{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
   .popular-cards-slider-card-top {
-    padding: 32px; }
+    padding: 32px; 
+    height:85%;
+  }
     @media (max-width: 768px) {
       .popular-cards-slider-card-top {
         padding: 16px; } }
