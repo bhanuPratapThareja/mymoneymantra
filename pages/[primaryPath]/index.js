@@ -17,7 +17,7 @@ import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import PageNotFound from '../../components/PageNotFound'
 import { getClassesForPage } from '../../utils/classesForPage'
-import { addSeo, removeSeo } from '../../utils/handleSchema'
+import { addSeoMetaData, removeSeoMetaData } from '../../utils/seoMetaData'
 
 const PrimaryPage = props => {
 
@@ -26,9 +26,9 @@ const PrimaryPage = props => {
   useEffect(() => {
     window.scrollTo(0, 0)
     setFormRedirection(props.formRedirection)
-    const { scriptId, canonicalId } = addSeo(props.data, props.data.id)
+    const { scriptId, canonicalId, metaDescriptionId, metaKeywordId } = addSeoMetaData(props.data, props.data.id)
     return () => {
-      removeSeo(scriptId, canonicalId)
+      removeSeoMetaData(scriptId, canonicalId, metaDescriptionId, metaKeywordId)
     }
   }, [])
 
