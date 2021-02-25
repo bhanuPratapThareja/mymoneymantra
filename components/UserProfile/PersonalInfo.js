@@ -124,7 +124,7 @@ const PersonalInfo = (props) => {
                 <input
                   value={dob}
                   className="form__field profile-dob datepicker gj-textbox-md"
-                  type="date"
+                  type="text"
                   id="dob"
                   autocomplete="off"
                   format="DD/MM/YYYY"

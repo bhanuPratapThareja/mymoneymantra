@@ -93,6 +93,10 @@ const userProfile = (props) => {
 
     }
   }
+
+  const contactCount =(val,max)=>{
+    console.log(val,max)
+  }
   const uploadPicture = async (body) => {
     try {
       const customerId = localStorage.getItem('customerId')
@@ -201,9 +205,7 @@ const userProfile = (props) => {
                 </div>
                 <div className="option-data" id="option-2-data">
                   <ContactInfo
-                    totalNumberOfFields={totalNumberOfFields}
-                    calculateProfileProgress={calculateProfileProgress}
-                    setContactInfoProgress={setContactInfoProgress}
+                    contactCount ={(val,max)=>contactCount(val,max)}
                   />
                 </div>
               </div>
