@@ -2553,6 +2553,9 @@ button.cstm-load-btn {
 .creditProfile-age-flow .paymentRank-wrapper .paymentRank-wrapper-head h2,
 .paymentRank .paymentRank-wrapper .paymentRank-wrapper-head h2 {
   color: #000;
+  font-size: 1.75rem;
+  font-family: "Avenir-Heavy";
+  line-height: 2.5rem;
 }
 
 .credit-rank-flow .paymentRank-wrapper-head .underline-img, .creditProfile-age-flow .paymentRank-wrapper-head .underline-img, .creditProfile-utilization-flow .paymentRank-wrapper-head .underline-img, .creditProfile-account-flow .paymentRank-wrapper-head .underline-img, .creditProfile-enquiries-flow .paymentRank-wrapper-head .underline-img {
@@ -2707,11 +2710,13 @@ button.cstm-load-btn {
   max-width: 100px;
 }
 
-.paymentRank-wrapper-head .popular-cards-slider-card-top {
+.paymentRank-wrapper-head .popular-cards-slider-card-top,
+.product-wrapper .popular-cards-slider-card-top {
   min-height: 252px;
 }
 
-.paymentRank-wrapper-head .popular-cards-slider-card-bottom {
+.paymentRank-wrapper-head .popular-cards-slider-card-bottom,
+.product-wrapper .popular-cards-slider-card-bottom {
   min-height: 48px;
 }
 

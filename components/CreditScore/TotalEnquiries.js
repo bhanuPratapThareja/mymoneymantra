@@ -1,3 +1,4 @@
+import formatAmount from 'indian-currency-formatter'
 import { useEffect, useState } from 'react'
 import { findBank } from '../../utils/findBank'
 
@@ -80,7 +81,7 @@ const TotalEnquiries = ({ enquiries, banks }) => {
                                 : 'Credit Limit'}
                               :
                             </span>
-                            <h5>₹{item.loanAmount}</h5>
+                            <h5>₹{formatAmount(item.loanAmount)}</h5>
                           </div>
                         </div>
                       </div>
@@ -234,16 +235,16 @@ const TotalEnquiries = ({ enquiries, banks }) => {
       </section>
       {open && (
         <section
-          class="listing-modal mm-modal cards-popup-wrap"
+          className="listing-modal mm-modal cards-popup-wrap"
           id="cards-popup-wrap"
           style={{ display: 'block' }}
           onClick={() => setOpen(false)}
         >
-          <div class="overlay"></div>
-          <div class="mm-modal-wrapper">
-            <div class="heads">
+          <div className="overlay"></div>
+          <div className="mm-modal-wrapper">
+            <div className="heads">
               <svg
-                class="filter-cross"
+                className="filter-cross"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -257,9 +258,9 @@ const TotalEnquiries = ({ enquiries, banks }) => {
                 ></path>
               </svg>
             </div>
-            <div class="cards-popup-content">
-              <div class="card-details">
-                <div class="head">
+            <div className="cards-popup-content">
+              <div className="card-details">
+                <div className="head">
                   <h3>
                     <span>{modalBankData?.bank_name}</span>
                     <br />
@@ -269,25 +270,25 @@ const TotalEnquiries = ({ enquiries, banks }) => {
                     src={`http://203.122.46.189:1338${modalBankData?.bank_logo?.url}`}
                   />
                 </div>
-                <h5 class="card-num">xxxx xxxx xxxx 6338</h5>
-                <div class="values-wrap">
-                  <div class="values">
+                <h5 className="card-num">xxxx xxxx xxxx 6338</h5>
+                <div className="values-wrap">
+                  <div className="values">
                     <span>Bank Name:</span>
                     <h5>{modalBankData?.bank_name}</h5>
                   </div>
-                  <div class="values">
+                  <div className="values">
                     <span>Product Type:</span>
                     <h5>{modalData?.productType}</h5>
                   </div>
-                  <div class="values">
+                  <div className="values">
                     <span>Date of Enquiry:</span>
                     <h5>{modalData?.dateOfEnquiry}</h5>
                   </div>
-                  {/* <div class="values">
+                  {/* <div className="values">
                     <span>Status of Enquiry:</span>
-                    <h5 class="status">Approved</h5>
+                    <h5 className="status">Approved</h5>
                   </div> */}
-                  <div class="values">
+                  <div className="values">
                     <span>Enquiry For:</span>
                     <h5>{modalData?.enquiryFor}</h5>
                   </div>

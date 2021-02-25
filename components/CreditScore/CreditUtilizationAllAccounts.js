@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import moment from 'moment'
 import { findBank } from '../../utils/findBank'
+import formatAmount from 'indian-currency-formatter'
 
 const CreditUtilizationAllAccounts = ({ active, closed, name, banks }) => {
   const [activeTab, setActiveTab] = useState('accepted')
@@ -63,7 +65,12 @@ const CreditUtilizationAllAccounts = ({ active, closed, name, banks }) => {
                                 : 'Loan Amount'}
                               :
                             </span>
-                            <h5>₹{item.creditLimitAmt}</h5>
+                            <h5>
+                              ₹
+                              {item.accountType === 'CREDIT CARD'
+                                ? formatAmount(item.creditLimitAmt)
+                                : formatAmount(item.loanAmount)}
+                            </h5>
                           </div>
                           <div className="content-section-left-block">
                             <span>
@@ -72,10 +79,9 @@ const CreditUtilizationAllAccounts = ({ active, closed, name, banks }) => {
                                 : 'Loan Current Outstanding'}
                               :
                             </span>
-                            <h5>₹{item.currentBalance}</h5>
+                            <h5>₹{formatAmount(item.currentBalance)}</h5>
                           </div>
                         </div>
-
                         <div className="content-section-right">
                           <span>Credit Utilisation:</span>
                           <div className="content-section-right-percentage">
@@ -143,8 +149,7 @@ const CreditUtilizationAllAccounts = ({ active, closed, name, banks }) => {
             {closed?.map((item, i) => {
               const bank = findBank(banks, item.bankId)
               return (
-                <>
-                  {/* <div key={i} className="popular-cards-slider-card">
+                <div key={i} className="popular-cards-slider-card">
                   <div className="popular-cards-slider-card-top">
                     <div className="head">
                       <h3>
@@ -156,66 +161,32 @@ const CreditUtilizationAllAccounts = ({ active, closed, name, banks }) => {
                         src={`http://203.122.46.189:1338${bank?.bank_logo?.url}`}
                       />
                     </div>
+                    <div className="account-number">
+                      <p>{item.accountNo}</p>
+                    </div>
                     <div className="app_progress_card_content">
                       <div className="left">
                         <div className="value">
-                          <span>Applicant’s Name:</span>
-                          <h5>{name}</h5>
+                          <span>Closed On:</span>
+                          <h5>{moment(item.issuedOn).format('DD MMM YYYY')}</h5>
                         </div>
                         <div className="value">
-                          <span>Product Type:</span>
-                          <h5>{item.accountType}</h5>
+                          <span>Last Payment Date:</span>
+                          <h5>{item.lastPaymentDate}</h5>
+                        </div>
+                        <div className="value">
+                          <span>Credit Limit:</span>
+                          <h5>₹{formatAmount(item.creditLimitAmt)}</h5>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="popular-cards-slider-card-bottom rejected-red">
+                  <div className="popular-cards-slider-card-bottom">
                     <div>
-                      <h5>Rejected: Due to poor Credit Score</h5>
+                      <h5>Account Closed</h5>
                     </div>
                   </div>
-                </div> */}
-                  <div key={i} className="popular-cards-slider-card">
-                    <div className="popular-cards-slider-card-top">
-                      <div className="head">
-                        <h3>
-                          <b className="card_name">{bank?.bank_name}</b>
-                          <br />
-                          Platinum Delight Credit Card
-                        </h3>
-                        <img
-                          src={`http://203.122.46.189:1338${bank?.bank_logo?.url}`}
-                        />
-                      </div>
-                      <div className="account-number">
-                        <p>{item.accountNo}</p>
-                      </div>
-                      <div className="app_progress_card_content">
-                        <div className="left">
-                          <div className="value">
-                            <span>Closed On:</span>
-                            <h5>
-                              {moment(item.issuedOn).format('DD MMM YYYY')}
-                            </h5>
-                          </div>
-                          <div className="value">
-                            <span>Last Payment Date:</span>
-                            <h5>{item.lastPaymentDate}</h5>
-                          </div>
-                          <div className="value">
-                            <span>Credit Limit:</span>
-                            <h5>₹{item.creditLimit}</h5>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="popular-cards-slider-card-bottom">
-                      <div>
-                        <h5>Account Closed</h5>
-                      </div>
-                    </div>
-                  </div>
-                </>
+                </div>
               )
             })}
           </div>
