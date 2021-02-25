@@ -17,13 +17,50 @@ const PersonalInfo = (props) => {
   const [errMsg, setErrMsg] = useState('')
   const [nameError, setNameError] = useState(false)
   const [panError, setPanError] = useState(false)
+  const [dobError, setDobError] = useState(false)
   const { totalNumberOfFields, calculateProfileProgress, setPersonalInfoProgress } = props
   useEffect(() => {
     getInfo()
   }, [])
 
   const validateSaveButton = () => {
-    return nameError || panError || (gender == null)
+    return nameError || panError || (gender == null) || dobError
+  }
+
+  const dateDiffInYears = () => {
+    let startDate = dob
+    let endDate = moment().format('DD-MM-YYYY')
+
+    let newStartDate = new Date(startDate.split("-").reverse().join("-"));
+    let newEndDate = new Date(endDate.split("-").reverse().join("-"));
+    const msPerDay = 1000 * 60 * 60 * 24;
+    let utcStartDate = Date.UTC(
+      newStartDate.getFullYear(),
+      newStartDate.getMonth(),
+      newStartDate.getDate()
+    );
+    let utcEndDate = Date.UTC(
+      newEndDate.getFullYear(),
+      newEndDate.getMonth(),
+      newEndDate.getDate()
+    );
+
+    let differnce = Math.ceil(Math.ceil((utcEndDate - utcStartDate) / msPerDay) / 365)
+    console.log(differnce);
+    return differnce;
+  };
+
+  const validateDob = () => {
+    let differnce = dateDiffInYears()
+    if (isNaN(differnce)) {
+      setDobError(true)
+      setErrMsg('Invalid date')
+    } else if (differnce > 18 && differnce < 100) {
+      setDobError(false)
+    } else {
+      setDobError(true)
+      setErrMsg('Age should be between 18-100 ')
+    }
   }
 
   const validateName = (isFirstname) => {
@@ -75,10 +112,6 @@ const PersonalInfo = (props) => {
         setDob(dob ? moment(dob, 'DD/MM/YYYYY').format('DD-MM-YYYY') : null)
         let mName = checkMartialStatus(martialStatus)
         setmartaialname(mName)
-        // let today = moment()
-
-        // let dateOfBirth = moment(dob).format()
-        // console.log('dob diff in years', today, dateOfBirth, today.diff(dateOfBirth))
       })
       .catch((err) => {
         console.log(err)
@@ -179,6 +212,7 @@ const PersonalInfo = (props) => {
                   data-datepicker="true"
                   role="input"
                   onChange={(e) => setDob(e.target.value)}
+                  onBlur={validateDob}
                 />
                 <i className="gj-icon" role="right-icon">
                   event
@@ -188,6 +222,7 @@ const PersonalInfo = (props) => {
                 Date of Birth
               </label>
             </div>
+            {dobError ? <p style={{ color: 'red' }}>{errMsg}</p> : null}
           </div>
           <h5>Gender</h5>
           <div className="shortforms-container gender-style">

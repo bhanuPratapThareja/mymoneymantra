@@ -27,28 +27,37 @@ const WorkInfo = (props) => {
   }, [])
 
   const calculateSectionProgress = () => {
-    let savedFields = 0
-    if (employedType && employedType.length) {
-      // console.log('employed')
-      savedFields += 1
-    }
-    if (bankId && bankId.length) {
-      savedFields += 1
-    }
-    if (netMonthlyIncome && netMonthlyIncome.length) {
-      savedFields += 1
-    }
-    if (companyName && companyName.length) (
-      savedFields += 1
-    )
-    if (accountNo && accountNo.length) {
-      savedFields += 1
-    }
-    if (ifscCode && ifscCode.length) {
-      savedFields += 1
-    }
+    // let savedFields = 0
+    let value1 = (employedType && employedType.length) ? 1 : 0
+    let value2 = (bankId && bankId.length) ? 1 : 0
+    let value3 = (netMonthlyIncome && netMonthlyIncome.length) ? 1 : 0
+    let value4 = (companyName && companyName.length) ? 1 : 0
+    let value5 = (accountNo && accountNo.length) ? 1 : 0
+    let value6 = (ifscCode && ifscCode.length) ? 1 : 0
+    let savedFields = value1 + value2 + value3 + value4 + value5 + value6
+    // if (employedType && employedType.length) {
+    //   savedFields += 1
+    // }
+    // if (bankId && bankId.length) {
+    //   savedFields += 1
+    // }
+    // if (netMonthlyIncome && netMonthlyIncome.length) {
+    //   savedFields += 1
+    // }
+    // if (companyName && companyName.length) (
+    //   savedFields += 1
+    // )
+    // if (accountNo && accountNo.length) {
+    //   savedFields += 1
+    // }
+    // if (ifscCode && ifscCode.length) {
+    //   savedFields += 1
+    // }
     console.log(savedFields)
     console.log((Math.round((savedFields / totalNumberOfFields) * 100)))
+    let progress = Math.round((savedFields / totalNumberOfFields) * 100)
+    setWorkInfoProgress(progress)
+    calculateProfileProgress()
   }
 
   useEffect(() => {
@@ -97,7 +106,7 @@ const WorkInfo = (props) => {
         setIfscCode(ifscCode)
         setCompanyName(companyName)
         setCompanyQuery(companyName)
-        calculateSectionProgress()
+        // calculateSectionProgress()
       })
       .catch((err) => {
         console.log(err)

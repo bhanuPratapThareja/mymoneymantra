@@ -9,13 +9,23 @@ const ContactInfo = (props) => {
   const [currentAddress, setCurrentAddress] = useState('')
   const [permanentAddress, setPermanentAddress] = useState('')
   const [address, setAddress] = useState([])
+  const [emailError, setEmailError] = useState(false)
+  const [errMsg, setErrMsg] = useState('')
 
   const { totalNumberOfFields, calculateProfileProgress, setContactInfoProgress } = props
 
   useEffect(() => {
     getContact()
   }, [])
-
+  const validateEmail = () => {
+    let pattern = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/
+    if (pattern.test(emailId)) {
+      setEmailError(false)
+    } else {
+      setEmailError(true)
+      setErrMsg('Invalid Email Id')
+    }
+  }
   const getContact = () => {
     getContactInfo()
       .then((res) => {
@@ -109,10 +119,12 @@ const ContactInfo = (props) => {
               placeholder="Email ID"
               onChange={(e) => setEmailId(e.target.value)}
               required=""
+              onBlur={validateEmail}
             />
             <label className="form__label" htmlFor="email">
               Email ID
             </label>
+            {emailError ? <p style={{ color: 'red' }}>{errMsg}</p> : null}
           </div>
           <div
             className={
@@ -163,7 +175,7 @@ const ContactInfo = (props) => {
           className="save-options"
           style={{ display: editing ? 'flex' : 'none' }}
         >
-          <button type="submit" className="save-contact" id="save-contact">
+          <button type="submit" className="save-contact" id="save-contact" disabled={emailError}>
             Save
           </button>
           <button
