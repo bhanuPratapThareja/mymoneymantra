@@ -124,7 +124,7 @@ const BlogFilter = props => {
             <InfiniteScroll
                dataLength={blogsToDisplay.length}
                hasMore={hasMore}
-               loader={blogsToDisplay.length ? <h2>Loading...</h2> : ''}
+               loader={blogsToDisplay.length ? <h2 className="cstm-btn-center">Loading...</h2> : ''}
                next={fetchMoreData}
             >
                <div className="filter-cards-wrapper">
@@ -139,6 +139,7 @@ const BlogFilter = props => {
                         const readingTime = require('reading-time');
                         const blogreadTime = readingTime(content, { wordsPerMinute: '50' });
                         return (
+                        <a onClick={() => onOpenBlog(blog)}>
                            <div key={i} className="blog-wrapper-card  single card-1" id="blog-card-1">
                               <div className="image_1"></div>
                               <Image image={image} />
@@ -151,6 +152,7 @@ const BlogFilter = props => {
                                  </div>
                               </div>
                            </div>
+                           </a>
                         )
                      }) : null
                   }
