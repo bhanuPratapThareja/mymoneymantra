@@ -76,7 +76,7 @@ const PersonalInfo = (props) => {
     <div className="personal-wrapper">
       {editing ? (
         <form
-        autocomplete="off"
+          autocomplete="off"
           className="personal-forms-wrapper"
           style={{ display: 'block' }}
           onSubmit={submitHandler}
@@ -85,7 +85,7 @@ const PersonalInfo = (props) => {
           <div className="shortforms-container personal-style">
             <div className="form__group field">
               <input
-              autocomplete="off"
+                autocomplete="off"
                 value={firstName}
                 className="form__field"
                 type="text"
@@ -100,7 +100,7 @@ const PersonalInfo = (props) => {
             </div>
             <div className="form__group field">
               <input
-              autocomplete="off"
+                autocomplete="off"
                 value={lastName}
                 className="form__field"
                 type="text"
@@ -313,7 +313,7 @@ const PersonalInfo = (props) => {
                   readOnly={true}
                   className="form__field"
                   type="text"
-                  value={dob != null ? moment(dob).format('DD-MM-YYYY') : 'DD/MM/YYYY'}
+                  value={dob != null ? dob : 'DD/MM/YYYY'}
                   id="dob"
                   autocomplete="off"
                   placeholder="Date of Birth"
