@@ -46,7 +46,8 @@ const ContactInfo = (props) => {
     setEditing(false)
     try {
       // const customerId = localStorage.getItem('customerId')
-      const responseObject = await saveContactInfo()
+      let contactNo = JSON.stringify(mobileNo)
+      const responseObject = await saveContactInfo(contactNo, emailId, address)
       if (responseObject.status === 200) {
         getContact()
       }
