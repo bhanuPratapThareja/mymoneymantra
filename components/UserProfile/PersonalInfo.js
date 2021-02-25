@@ -35,7 +35,7 @@ const PersonalInfo = (props) => {
         setMaritalStatus(martialStatus)
 
         setPanNumber(panNo)
-        setDob(dob ? moment(dob, 'DD/MM/YYYYY').format('YYYY-MM-DD') : null)
+        setDob(dob ? moment(dob, 'DD/MM/YYYYY').format('DD-MM-YYYY') : null)
         let mName = checkMartialStatus(martialStatus)
         setmartaialname(mName)
       })
@@ -300,7 +300,7 @@ const PersonalInfo = (props) => {
                   readOnly={true}
                   className="form__field"
                   type="text"
-                  value={moment(dob, 'YYYY-MM-DD').format('DD/MM/YYYY')}
+                  value={dob != null ? moment(dob).format('DD-MM-YYYY') : 'DD/MM/YYYY'}
                   id="dob"
                   placeholder="Date of Birth"
                   required=""
@@ -314,7 +314,7 @@ const PersonalInfo = (props) => {
                   readOnly={true}
                   className="form__field"
                   type="text"
-                  value={gender == 0 ? 'Female' : gender == 1 ? 'Male' : 'Other'}
+                  value={gender == 0 ? 'Female' : gender == 1 ? 'Male' : gender == 2 ? 'Other' : 'Gender'}
                   id="gender"
                   placeholder="Gender"
                   required=""
@@ -328,7 +328,7 @@ const PersonalInfo = (props) => {
                   readOnly={true}
                   className="form__field"
                   type="text"
-                  value={martaialname}
+                  value={martaialname ? martaialname : 'Marital Status'}
                   id="marital-Status"
                   placeholder="Marital Status"
                   required=""
@@ -342,7 +342,7 @@ const PersonalInfo = (props) => {
                   readOnly={true}
                   className="form__field"
                   type="text"
-                  value={panNumber}
+                  value={panNumber ? panNumber : 'PAN number'}
                   id="pan-num"
                   placeholder="PAN Number"
                   required=""
