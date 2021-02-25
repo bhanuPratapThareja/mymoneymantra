@@ -17,7 +17,7 @@ import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import PageNotFound from '../../components/PageNotFound'
 import { getClassesForPage } from '../../utils/classesForPage'
-import { addSeo,removeSeo } from '../../utils/handleSchema'
+import { addSeo, removeSeo } from '../../utils/handleSchema'
 
 const PrimaryPage = props => {
 
@@ -30,7 +30,6 @@ const PrimaryPage = props => {
     return () => {
       removeSeo(scriptId, canonicalId)
     }
-    
   }, [])
 
   const goToShortForm = () => {

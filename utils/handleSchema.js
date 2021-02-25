@@ -35,6 +35,21 @@ export const addCanonicalLink = (seo_meta_conical_link, id) => {
     return canonicalId
 }
 
+export const addMetaTitle = (seo_meta_title, id) => {
+    const metaTitle = document.createElement('meta')
+    let metaTitleId
+    if(seo_meta_title) {
+        canonicalLink.href = seo_meta_conical_link
+    } else {
+        canonicalLink.href = window.location.href
+    }
+    canonicalLink.rel='canonical' 
+    canonicalLink.id = `canonical_${id}`
+    canonicalId = canonicalLink.id
+    head.appendChild(canonicalLink)
+    return canonicalId
+}
+
 export const removeSeo = (scriptId, canonicalId) => {
     if(scriptId) {
         const script = document.getElementById(scriptId)
