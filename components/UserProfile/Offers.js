@@ -41,7 +41,7 @@ const Offers = () => {
             product_usp_highlight, product_interest_rate,
             product_tenure, product_loan_amount, product_emi } = product
           return (
-            <div className="popular-cards-slider-card" key={product.id}>
+            <div className="popular-cards-slider-card popular-cards-slider-card-user" key={product.id}>
               <div className="popular-cards-slider-card-top">
                 <div className="head">
                   <h3><b className="card_name">{bank.bank_name}</b><br />{product_name}</h3>
@@ -52,10 +52,11 @@ const Offers = () => {
                     {product_feature.product_feature.map(feature => <li key={feature.id}><span dangerouslySetInnerHTML={{ __html: feature.description }}></span></li>)}
                   </ul>
                 </div>
-                <div className="popular-cards-slider-card-bottom">
-                  <div dangerouslySetInnerHTML={{ __html: product_usp_highlight.highlight }}></div>
-                </div>
+                
               </div>
+              <div className="popular-cards-slider-card-bottom">
+                  <div dangerouslySetInnerHTML={{ __html: `<h5>${product_usp_highlight.highlight}</h5>` }}></div>
+                </div>
             </div>
           )
         })
