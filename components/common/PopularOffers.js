@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import { makeDecision } from '../../utils/decision'
 import { extractOffers, viewOffers } from '../../services/offersService'
-import { setLeadBank, clearLeadId } from '../../utils/localAccess'
+import { setLeadBank, clearLeadId, clearFormData, setFormData } from '../../utils/localAccess'
 import { sf, ApplyNow } from '../../utils/types'
 
 const PopularOffers = props => {
@@ -35,7 +35,11 @@ const PopularOffers = props => {
       const { bank: { bank_name: bankName, bank_id: bankId }, productType } = offer
       const leadBank = { bankId, bankName }
       setLeadBank(leadBank)
+      let data = {}
+      data.leadBank = leadBank
+      clearFormData(props.primaryPath)
       clearLeadId(props.primaryPath)
+      setFormData(data, props.primaryPath)
       if (router.pathname === '/[primaryPath]') {
          props.setFormRedirection(sf)
          props.goToShortForm()

@@ -18,6 +18,7 @@ import LearnMore from '../../components/common/LearnMore'
 import PageNotFound from '../../components/PageNotFound'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { addSeoMetaData, removeSeoMetaData } from '../../utils/seoMetaData'
+import { clearLeadBank, clearFormData, clearLeadId } from '../../utils/localAccess';
 
 const PrimaryPage = props => {
 
@@ -26,6 +27,11 @@ const PrimaryPage = props => {
   useEffect(() => {
     window.scrollTo(0, 0)
     setFormRedirection(props.formRedirection)
+    if(!props.formRedirection) {
+      clearLeadBank()
+      clearFormData(props.primaryPath)
+      clearLeadId(props.primaryPath)
+    }
     const { scriptId, canonicalId, metaDescriptionId, metaKeywordId } = addSeoMetaData(props.data, props.data.id)
     return () => {
       removeSeoMetaData(scriptId, canonicalId, metaDescriptionId, metaKeywordId)
