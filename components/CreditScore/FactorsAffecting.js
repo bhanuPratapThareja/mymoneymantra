@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 const FactorsAffecting = () => {
   return (
     <section
@@ -43,10 +45,14 @@ const FactorsAffecting = () => {
                     className="slide_cell"
                     style={{ width: '100%', display: 'inline-block' }}
                   >
-                    <img
-                      src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/payment-history.svg"
-                      alt="payment-history"
-                    />
+                    <Link href="/credit-score">
+                      <a>
+                        <img
+                          src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/payment-history.svg"
+                          alt="payment-history"
+                        />
+                      </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -61,10 +67,14 @@ const FactorsAffecting = () => {
                     className="slide_cell"
                     style={{ width: '100%', display: 'inline-block' }}
                   >
-                    <img
-                      src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/creditcard-utilisation.svg"
-                      alt="creditcard-utilisation"
-                    />
+                    <Link href="/credit-score/utilization">
+                      <a>
+                        <img
+                          src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/creditcard-utilisation.svg"
+                          alt="creditcard-utilisation"
+                        />
+                      </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -79,10 +89,14 @@ const FactorsAffecting = () => {
                     className="slide_cell"
                     style={{ width: '100%', display: 'inline-block' }}
                   >
-                    <img
-                      src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/age-of-credit.svg"
-                      alt="age-of-credit"
-                    />
+                    <Link href="/credit-score/age">
+                      <a>
+                        <img
+                          src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/age-of-credit.svg"
+                          alt="age-of-credit"
+                        />
+                      </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -97,10 +111,14 @@ const FactorsAffecting = () => {
                     className="slide_cell"
                     style={{ width: '100%', display: 'inline-block' }}
                   >
-                    <img
-                      src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/total-accounts.svg"
-                      alt="total-accounts"
-                    />
+                    <Link href="/credit-score/accounts">
+                      <a>
+                        <img
+                          src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/total-accounts.svg"
+                          alt="total-accounts"
+                        />
+                      </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -116,10 +134,14 @@ const FactorsAffecting = () => {
                     className="slide_cell"
                     style={{ width: '100%', display: 'inline-block' }}
                   >
-                    <img
-                      src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/total-accounts.svg"
-                      alt="total-accounts"
-                    />
+                    <Link href="/credit-score/enquiries">
+                      <a>
+                        <img
+                          src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/total-accounts.svg"
+                          alt="total-accounts"
+                        />
+                      </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -135,10 +157,14 @@ const FactorsAffecting = () => {
                     className="slide_cell"
                     style={{ width: '100%', display: 'inline-block' }}
                   >
-                    <img
-                      src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/total-accounts.svg"
-                      alt="total-accounts"
-                    />
+                    <Link href="/credit-score/rank">
+                      <a>
+                        <img
+                          src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/total-accounts.svg"
+                          alt="total-accounts"
+                        />
+                      </a>
+                    </Link>
                   </div>
                 </div>
               </div>
