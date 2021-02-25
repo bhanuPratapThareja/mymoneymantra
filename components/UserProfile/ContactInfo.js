@@ -2,13 +2,15 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { getContactInfo, saveContactInfo } from '../../utils/userProfileService'
-const ContactInfo = () => {
+const ContactInfo = (props) => {
   const [editing, setEditing] = useState(false)
   const [mobileNo, setMobileNo] = useState('')
   const [emailId, setEmailId] = useState('')
   const [currentAddress, setCurrentAddress] = useState('')
   const [permanentAddress, setPermanentAddress] = useState('')
   const [address, setAddress] = useState([])
+
+  const { totalNumberOfFields, calculateProfileProgress, setContactInfoProgress } = props
 
   useEffect(() => {
     getContact()

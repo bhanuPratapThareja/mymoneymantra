@@ -61,6 +61,7 @@ const login = (props) => {
       verifyOtp(phone, otp, otpId)
         .then((res) => {
           console.log(res);
+          if (res.message == 'OTP Verification Failed') return
           localStorage.setItem("customerId", res.customerId)
           setcounter(counter + 1);
         })
@@ -73,7 +74,7 @@ const login = (props) => {
     }
   };
   return (
-    <div className='credit-card-flow thankyou-page b2c-thank-you b2c-flow'>
+    <div className={props.pageClasses}>
       <Layout>
         {counter != 2 ? <WelcomeHeader></WelcomeHeader> : null}
         <section

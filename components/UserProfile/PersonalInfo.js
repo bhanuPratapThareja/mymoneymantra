@@ -5,7 +5,7 @@ import {
 } from '../../utils/userProfileService'
 import moment from 'moment'
 
-const PersonalInfo = () => {
+const PersonalInfo = (props) => {
   const [editing, setEditing] = useState(false)
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -14,6 +14,7 @@ const PersonalInfo = () => {
   const [maritalStatus, setMaritalStatus] = useState('')
   const [panNumber, setPanNumber] = useState('')
   const [martaialname, setmartaialname] = useState('')
+  const { totalNumberOfFields, calculateProfileProgress, setPersonalInfoProgress } = props
   useEffect(() => {
     getInfo()
   }, [])
@@ -28,7 +29,7 @@ const PersonalInfo = () => {
           setLastName(firstName.split(' ')[1])
         } else {
           setFirstName(firstName)
-          setLastName(lastName?lastName:'')
+          setLastName(lastName ? lastName : '')
         }
         setGender(gender)
         setMaritalStatus(martialStatus)
@@ -278,89 +279,89 @@ const PersonalInfo = () => {
           </div>
         </form>
       ) : (
-        <div className="before-edit">
-          <div className="shortforms-container">
-            <div className="form__group field">
-              <input
-                readOnly={true}
-                className="form__field"
-                type="text"
-                value={`${firstName} ${lastName}`}
-                id="full-name"
-                placeholder="Full Name"
-                required=""
-              />
-              <label className="form__label" htmlFor="full-name">
-                Full Name
+          <div className="before-edit">
+            <div className="shortforms-container">
+              <div className="form__group field">
+                <input
+                  readOnly={true}
+                  className="form__field"
+                  type="text"
+                  value={`${firstName} ${lastName}`}
+                  id="full-name"
+                  placeholder="Full Name"
+                  required=""
+                />
+                <label className="form__label" htmlFor="full-name">
+                  Full Name
               </label>
-            </div>
-            <div className="form__group field">
-              <input
-                readOnly={true}
-                className="form__field"
-                type="text"
-                value={moment(dob, 'YYYY-MM-DD').format('DD/MM/YYYY')}
-                id="dob"
-                placeholder="Date of Birth"
-                required=""
-              />
-              <label className="form__label" htmlFor="dob">
-                Date of Birth
+              </div>
+              <div className="form__group field">
+                <input
+                  readOnly={true}
+                  className="form__field"
+                  type="text"
+                  value={moment(dob, 'YYYY-MM-DD').format('DD/MM/YYYY')}
+                  id="dob"
+                  placeholder="Date of Birth"
+                  required=""
+                />
+                <label className="form__label" htmlFor="dob">
+                  Date of Birth
               </label>
-            </div>
-            <div className="form__group field">
-              <input
-                readOnly={true}
-                className="form__field"
-                type="text"
-                value={gender == 0 ? 'Female' : gender == 1 ? 'Male' : 'Other'}
-                id="gender"
-                placeholder="Gender"
-                required=""
-              />
-              <label className="form__label" htmlFor="gender">
-                Gender
+              </div>
+              <div className="form__group field">
+                <input
+                  readOnly={true}
+                  className="form__field"
+                  type="text"
+                  value={gender == 0 ? 'Female' : gender == 1 ? 'Male' : 'Other'}
+                  id="gender"
+                  placeholder="Gender"
+                  required=""
+                />
+                <label className="form__label" htmlFor="gender">
+                  Gender
               </label>
-            </div>
-            <div className="form__group field">
-              <input
-                readOnly={true}
-                className="form__field"
-                type="text"
-                value={martaialname}
-                id="marital-Status"
-                placeholder="Marital Status"
-                required=""
-              />
-              <label className="form__label" htmlFor="marital-Status">
-                Marital Status
+              </div>
+              <div className="form__group field">
+                <input
+                  readOnly={true}
+                  className="form__field"
+                  type="text"
+                  value={martaialname}
+                  id="marital-Status"
+                  placeholder="Marital Status"
+                  required=""
+                />
+                <label className="form__label" htmlFor="marital-Status">
+                  Marital Status
               </label>
-            </div>
-            <div className="form__group field">
-              <input
-                readOnly={true}
-                className="form__field"
-                type="text"
-                value={panNumber}
-                id="pan-num"
-                placeholder="PAN Number"
-                required=""
-              />
-              <label className="form__label" htmlFor="pan-num">
-                PAN Number
+              </div>
+              <div className="form__group field">
+                <input
+                  readOnly={true}
+                  className="form__field"
+                  type="text"
+                  value={panNumber}
+                  id="pan-num"
+                  placeholder="PAN Number"
+                  required=""
+                />
+                <label className="form__label" htmlFor="pan-num">
+                  PAN Number
               </label>
+              </div>
             </div>
-          </div>
-          <button
-            type="button"
-            id="edit-personal"
-            className="edit-button"
-            onClick={() => setEditing(true)}
-          >
-            Edit
+            <button
+              type="button"
+              id="edit-personal"
+              className="edit-button"
+              onClick={() => setEditing(true)}
+            >
+              Edit
           </button>
-        </div>
-      )}
+          </div>
+        )}
     </div>
   )
 }

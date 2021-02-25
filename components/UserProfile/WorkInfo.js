@@ -19,23 +19,52 @@ const WorkInfo = (props) => {
   const [bankName, setBankName] = useState('')
   const [bankList, setBankList] = useState([])
 
+  const { totalNumberOfFields, calculateProfileProgress, setWorkInfoProgress } = props
+
   useEffect(() => {
     console.log(props.data)
     getWork()
   }, [])
 
+  const calculateSectionProgress = () => {
+    let savedFields = 0
+    if (employedType && employedType.length) {
+      console.log('employed')
+      savedFields += 1
+    }
+    if (bankId && bankId.length) {
+      savedFields += 1
+    }
+    if (netMonthlyIncome && netMonthlyIncome.length) {
+      savedFields += 1
+    }
+    if (companyName && companyName.length) (
+      savedFields += 1
+    )
+    if (accountNo && accountNo.length) {
+      savedFields += 1
+    }
+    if (ifscCode && ifscCode.length) {
+      savedFields += 1
+    }
+    console.log(savedFields)
+    console.log((Math.round((savedFields / totalNumberOfFields) * 100)))
+  }
+
   useEffect(() => {
     const timer = setTimeout(async () => {
-      if (companyQuery.length > 0) {
-        try {
-          const { url, body } = getApiData('company')
-          body.name = companyQuery
-          const responseObject = await axios.post(url, body)
-          const { data } = responseObject
-          console.log({ responseObject })
-          setCompanyOtions(data?.companyMaster)
-        } catch (err) {
-          console.log(err)
+      if (companyQuery) {
+        if (companyQuery.length > 0) {
+          try {
+            const { url, body } = getApiData('company')
+            body.name = companyQuery
+            const responseObject = await axios.post(url, body)
+            const { data } = responseObject
+            console.log({ responseObject })
+            setCompanyOtions(data?.companyMaster)
+          } catch (err) {
+            console.log(err)
+          }
         }
       }
     }, 3000)
@@ -68,6 +97,7 @@ const WorkInfo = (props) => {
         setIfscCode(ifscCode)
         setCompanyName(companyName)
         setCompanyQuery(companyName)
+        calculateSectionProgress()
       })
       .catch((err) => {
         console.log(err)
@@ -223,7 +253,7 @@ const WorkInfo = (props) => {
                       ? 'Self Employed Professional'
                       : employedType == 1000000004
                         ? 'Salaried'
-                        : 'Defense'
+                        : employedType == 1000000008 ? 'Defense' : ''
                 }
                 className="form__field"
                 type="text"

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { fileToByteArray } from '../../utils/byteArray'
 
-const Documents = () => {
+const Documents = (props) => {
   const [aadhaar, setAadhaar] = useState({
     documentName: '',
     documentNo: '1000000374',
@@ -45,7 +45,7 @@ const Documents = () => {
     documentTypeId: '1000000037',
     uploadStatus: '',
   })
-
+  const { totalNumberOfFields, calculateProfileProgress, setDocumentProgress } = props
   useEffect(() => {
     getAllDocuments()
   }, [])
@@ -255,15 +255,15 @@ const Documents = () => {
     }
   }
 
-  console.log({
-    aadhaar,
-    pan,
-    bankStatement,
-    salarySlips,
-    form16,
-    rentAgreement,
-    bill,
-  })
+  // console.log({
+  //   aadhaar,
+  //   pan,
+  //   bankStatement,
+  //   salarySlips,
+  //   form16,
+  //   rentAgreement,
+  //   bill,
+  // })
 
   return (
     <form>
