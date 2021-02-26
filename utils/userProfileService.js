@@ -67,10 +67,10 @@ export const getContactInfo = async () => {
   }
 }
 
-export const saveContactInfo = async (mobileNo, emailId, currentAddress) => {
+export const saveContactInfo = async (mobileNo, emailId, currentAddress, permanentAddress) => {
   let addressForApi = [
     {
-      addressId: 124,
+      addressId: 300,
       addressTypeMasterId: 10000001,
       addressline1: currentAddress,
       addressline2: " ",
@@ -79,9 +79,10 @@ export const saveContactInfo = async (mobileNo, emailId, currentAddress) => {
       pincode: 1232
     },
     {
+      addressId: 301,
       addressTypeMasterId: 10000001,
-      addressline1: "New address",
-      addressline2: "New address",
+      addressline1: permanentAddress,
+      addressline2: " ",
       city: 2,
       state: 2,
       pincode: 2222

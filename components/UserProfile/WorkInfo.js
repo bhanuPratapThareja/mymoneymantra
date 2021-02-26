@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import { getWorkInfo } from '../../utils/userProfileService'
 import { getApiData } from '../../api/api'
+import { getFormattedCurrency, getWholeNumberFromCurrency } from '../../utils/formattedCurrency'
 
 const WorkInfo = (props) => {
   const [isedit, setIsedit] = useState(false)
@@ -96,16 +97,17 @@ const WorkInfo = (props) => {
           customerId,
           bankName,
         } = { ...res }
+        let formattedIncome = getFormattedCurrency(netMonthlyIncome.toString())
         setBankName(bankName)
         setCustomerId(customerId)
         setCompanyId(companyId)
         setEmployedType(employedType)
-        setNetMonthlyIncome(netMonthlyIncome)
+        setNetMonthlyIncome(formattedIncome)
         setBankId(bankId)
         setAccountNo(accountNo)
         setIfscCode(ifscCode)
         setCompanyName(companyName)
-        setCompanyQuery(companyName)
+        // setCompanyQuery(companyName)
         // calculateSectionProgress()
       })
       .catch((err) => {
@@ -125,9 +127,10 @@ const WorkInfo = (props) => {
         customerId: custId,
         companyId,
         bankId,
-        netMonthlyIncome,
+        netMonthlyIncome: getWholeNumberFromCurrency(netMonthlyIncome),
         accountNo,
         employedType,
+        ifscCode
       })
       if (responseObject.status === 200) {
         getWork()
@@ -170,6 +173,17 @@ const WorkInfo = (props) => {
     setBankName(bank.bank_name)
     setBankId(bank.bank_id)
     setBankList([])
+  }
+
+  const handleIncomeChange = (e) => {
+    let { value } = e.target
+    value = value.toString()
+    const numString = getWholeNumberFromCurrency(value)
+    if (isNaN(numString)) {
+      return
+    }
+    value = getFormattedCurrency(value)
+    setNetMonthlyIncome(value)
   }
 
   return (
@@ -341,7 +355,8 @@ const WorkInfo = (props) => {
             id="monthly-income"
             placeholder="Net Monthly Income"
             required=""
-            onChange={(e) => setNetMonthlyIncome(e.target.value)}
+            onChange={handleIncomeChange}
+          // onChange={(e) => setNetMonthlyIncome(e.target.value)}
           />
           <label className="form__label" htmlFor="monthly-income">
             Net Monthly Income
