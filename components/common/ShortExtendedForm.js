@@ -92,12 +92,12 @@ class ShortExtendedForm extends React.Component {
         })
 
         let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading, slideClass }]
-        this.setState({ 
-            ...this.state, slides: [...upDatedSlides], 
+        this.setState({
+            ...this.state, slides: [...upDatedSlides],
             enableCheckboxes: [...this.state.enableCheckboxes, ...enableCheckboxes]
         }, () => {
             this.setState({ backUpSlides: JSON.parse(JSON.stringify(this.state.slides)) })
-            if(this.props.formRedirection === sf) {
+            if (this.props.formRedirection === sf) {
                 this.props.goToShortForm()
             }
         })
@@ -226,7 +226,7 @@ class ShortExtendedForm extends React.Component {
                     } else {
                         this.onSubmitShortForm()
                             .then(res => {
-                                if(this.props.formRedirection === sf) {
+                                if (this.props.formRedirection === sf) {
                                     this.props.router.push(`/thank-you`)
                                 } else {
                                     this.props.router.push(`/${this.props.primaryPath}/listings`)
@@ -265,8 +265,8 @@ class ShortExtendedForm extends React.Component {
 
     handleChange = async field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const {inputDropdown, propertyValue} = await handleChangeInputs(inputs, field, this.props.preferredSelectionLists, null)
-        if(propertyValue) {
+        const { inputDropdown, propertyValue } = await handleChangeInputs(inputs, field, this.props.preferredSelectionLists, null)
+        if (propertyValue) {
             this.setState({ propertyValue })
         }
         if (inputDropdown && field.type === 'input_with_dropdown') {
@@ -335,31 +335,63 @@ class ShortExtendedForm extends React.Component {
     }
 
     checkInputValidity = field => {
-        const { newSlides, inputs } = getCurrentSlideInputs(this.state)
+        const { newSlides, inputs, slideIndex } = getCurrentSlideInputs(this.state)
         updateInputsValidity(inputs, field, this.state.errorMsgs, this.state.propertyValue)
         this.setState({ ...this.state, slides: newSlides }, () => {
-            if (field.type === 'radio') {
-                let mandatoryInputsHaveValues = true
-                inputs.forEach(input => {
-                    if (input.mandatory && !input.value) {
-                        mandatoryInputsHaveValues = false
-                    }
-                })
-                if (mandatoryInputsHaveValues) {
-                    setTimeout(() => {
+            // let hasRadio =  false
+            // inputs.forEach(input => {
+            //     if(input.type === 'radio') {
+            //         hasRadio = true
+            //     } 
+            // })
+
+
+            inputs.forEach(input => {
+
+                if (input.type === 'radio' && input.value && input.radio.breakpoints) {
+                    const breakpoints = input.radio.breakpoints
+                    if (breakpoints.length) {
+                        for (let i = 0; i < breakpoints.length; i++) {
+                            if (breakpoints[i].breakpoint_value !== input.value) {
+                                continue
+                            }
+                            if (breakpoints[i].breakpoint_value === input.value && breakpoints[i].breakpoint_sequence) {
+                                const currentSlideId = `${sf}-${slideIndex}`
+                                const breakpointSequence = breakpoints[i].breakpoint_sequence.split(',')
+                                const slidesCopy1 = JSON.parse(JSON.stringify(this.state.slides))
+                                const slidesCopy2 = JSON.parse(JSON.stringify(this.state.backUpSlides))
+                                const slicedSlides = slidesCopy1.splice(0, slideIndex + 1)
+                                const slidesAddtion = []
+                                slidesCopy2.forEach(slide => {
+                                    breakpointSequence.forEach(breakpoint => {
+                                        const slideIndex = slide.slideId.split('-')[1]
+                                        if (slideIndex == breakpoint) {
+                                            slidesAddtion.push(slide)
+                                        }
+                                    })
+                                })
+
+                                let index = slideIndex
+                                slidesAddtion.forEach(slide => {
+                                    index++
+                                    let newSlideId = `${sf}-${index}`
+                                    slide.slideId = newSlideId
+                                })
+
+                                const newSlides = [...slicedSlides, ...slidesAddtion]
+                                this.setState({ ...this.state, slides: newSlides, currentSlide: currentSlideId, slideIndex }, () => {
+                                    this.plusSlides(1)
+                                })
+
+                            }
+                        }
+                    } else {
                         this.plusSlides(1)
-                         // console.log(this.state.slides)
-                            // const copySlides = [...this.state.slides]
-                            // console.log('copySlides: ', copySlides)
-                            // const splicedSlides = copySlides.splice(4,2)
-                            // console.log('splicedSlides: ', splicedSlides)
-                            // this.setState({ ...this.state, slides: splicedSlides, currentSlide: 'sf-4', slideIndex: 0 }, () => {
-                            //     console.log(this.state)
-                            // })
-                        
-                    }, 125)
+                    }
+
                 }
-            }
+            })
+
         })
     }
 

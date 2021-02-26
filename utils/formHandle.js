@@ -16,11 +16,16 @@ export const textTypeInputs = [
 
 export const getCurrentSlideInputs = (state) => {
   const newSlides = [...state.slides]
-  const slide = newSlides.filter(
-    (slide) => slide.slideId === state.currentSlide
-  )
+  // console.log(newSlides)
+  const slide = newSlides.filter(slide => slide.slideId === state.currentSlide)
+  // console.log(slide)
+  if(!slide.length)  {
+    return
+  }
+  const slideId = slide[0].slideId
+  const slideIndex = Number(slideId.split('-')[1])
   const inputs = slide[0].inputs
-  return { newSlides, inputs }
+  return { newSlides, inputs, slideIndex }
 }
 
 export const handleChangeInputs = (inputs, field, preferredSelectionLists, selectedBank) => {
