@@ -147,6 +147,7 @@ export const generateLead = async (data, primaryPath, formType, productType) => 
             body.personal.title = "1000000003"
         }
         else{
+
             body.personal.title = "1000000002"
         }
         body.personal.maritalStatus = maritalStatus
