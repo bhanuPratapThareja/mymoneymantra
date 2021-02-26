@@ -2819,3 +2819,27 @@ button.cstm-load-btn {
   line-height: 2.5rem;
   display: block;
 }
+
+/*-- User Profile Edit Btn css --*/
+.profile-flow .profile-head .profile-container .profile-image > span > img {
+  max-width: 23px;
+  height: auto !important;
+  display: block;
+  margin: 0 auto;
+}
+
+.profile-flow .profile-head .profile-container .profile-head-wrapper .profile-image {
+  position: relative;
+}
+
+.profile-flow .profile-head .profile-container .profile-image > span {
+  background: #93D642;
+  display: block;
+  width: 25px;
+  right: 10px;
+  top: 10px;
+  position: absolute;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+}
