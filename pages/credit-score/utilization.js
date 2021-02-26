@@ -9,6 +9,7 @@ import { getClassesForPage } from '../../utils/classesForPage'
 import CreditUtilizationAllAccounts from '../../components/CreditScore/CreditUtilizationAllAccounts'
 import Loader from '../../components/common/Loader'
 import { getCreditUtilization } from '../../utils/creditProfileService'
+import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
 
 const utilization = (props) => {
   const [loading, setLoading] = useState(true)
@@ -43,6 +44,7 @@ const utilization = (props) => {
           creditUtilization={cpUtilizationData?.totalCreditUtilization}
         />
         <TipSection />
+        <FactorsAffecting />
         <CreditUtilizationAllAccounts
           active={active}
           closed={closed}

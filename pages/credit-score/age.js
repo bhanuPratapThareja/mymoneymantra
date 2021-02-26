@@ -9,6 +9,7 @@ import AgeCreditAllAccounts from '../../components/CreditScore/AgeCreditAllAccou
 import { getClassesForPage } from '../../utils/classesForPage'
 import Loader from '../../components/common/Loader'
 import { getCreditAge } from '../../utils/creditProfileService'
+import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
 
 const age = (props) => {
   const [loading, setLoading] = useState(true)
@@ -41,6 +42,7 @@ const age = (props) => {
         <Loader active={loading} text="loading" />
         <AgeOfCredit creditAge={cpAgeData?.totalAge} />
         <TipSection />
+        <FactorsAffecting />
         <AgeCreditAllAccounts
           active={active}
           closed={closed}
