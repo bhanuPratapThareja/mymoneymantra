@@ -55,7 +55,7 @@ const TotalEnquiries = ({ enquiries, banks }) => {
                   <div
                     key={i}
                     className="popular-cards-slider-card"
-                    onClick={() => modalOpenHandle(item)}
+                    // onClick={() => modalOpenHandle(item)}
                   >
                     <div className="popular-cards-slider-card-top">
                       <div className="head">
@@ -70,7 +70,7 @@ const TotalEnquiries = ({ enquiries, banks }) => {
                         />
                       </div>
                       <div className="account-number">
-                        <p>{item.accountNumber}</p>
+                        {/* <p>{item.accountNumber}</p> */}
                       </div>
                       <div className="app_progress_card_content">
                         <div className="left">
@@ -81,14 +81,20 @@ const TotalEnquiries = ({ enquiries, banks }) => {
                                 : 'Credit Limit'}
                               :
                             </span>
-                            <h5>₹{formatAmount(item.loanAmount)}</h5>
+                            <h5>
+                              {item.loanAmount
+                                ? `₹ ${formatAmount(item.loanAmount)}`
+                                : 'Not Available'}
+                            </h5>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="popular-cards-slider-card-bottom">
                       <div>
-                        <h5>{/* Approved */}</h5>
+                        <h5>
+                          {/* Approved */}Date of Enquiry: {item.dateOfEnquiry}
+                        </h5>
                       </div>
                     </div>
                   </div>

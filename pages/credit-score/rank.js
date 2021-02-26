@@ -9,6 +9,7 @@ import Layout from '../../components/Layout'
 import { getClassesForPage } from '../../utils/classesForPage'
 import Loader from '../../components/common/Loader'
 import { getCreditRank } from '../../utils/creditProfileService'
+import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
 
 const rank = (props) => {
   const [loading, setLoading] = useState(true)
@@ -41,6 +42,7 @@ const rank = (props) => {
         <Loader active={loading} text="loading" />
         <PaymentRank rank={cpRankData?.rank} />
         <TipSection />
+        <FactorsAffecting />
         <PaymentRecord onTime={onTime} delayed={delayed} banks={props?.data} />
         <OffersForYou />
       </Layout>

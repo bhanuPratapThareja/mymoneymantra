@@ -9,6 +9,7 @@ import TotalActiveAccounts from '../../components/CreditScore/TotalActiveAccount
 import { getClassesForPage } from '../../utils/classesForPage'
 import Loader from '../../components/common/Loader'
 import { getCreditAccounts } from '../../utils/creditProfileService'
+import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
 
 const accounts = (props) => {
   const [loading, setLoading] = useState(true)
@@ -41,6 +42,7 @@ const accounts = (props) => {
         <Loader active={loading} text="loading" />
         <TotalAccounts totalAccount={cpAccountsData?.totalAccount} />
         <TipSection />
+        <FactorsAffecting />
         <TotalActiveAccounts
           active={active}
           closed={closed}

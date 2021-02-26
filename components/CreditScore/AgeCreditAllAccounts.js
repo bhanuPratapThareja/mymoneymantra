@@ -231,7 +231,7 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                   </div>
                 </div>
               </div>
-              <div className="graph">
+              {/* <div className="graph">
                 <iframe
                   className="chartjs-hidden-iframe"
                   tabIndex={-1}
@@ -257,7 +257,7 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                   width="880"
                   style={{ display: 'block', width: '440px', height: '220px' }}
                 ></canvas>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>

@@ -8,6 +8,7 @@ import YourTotalEnquiries from '../../components/CreditScore/YourTotalEnquiries'
 import TotalEnquiries from '../../components/CreditScore/TotalEnquiries'
 import Loader from '../../components/common/Loader'
 import { getCreditEnquiries } from '../../utils/creditProfileService'
+import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
 
 const enquiries = (props) => {
   const [loading, setLoading] = useState(true)
@@ -35,6 +36,7 @@ const enquiries = (props) => {
         <Loader active={loading} text="loading" />
         <YourTotalEnquiries totalEnquiries={cpEnquiriesData?.totalEnquiries} />
         <TipSection />
+        <FactorsAffecting />
         <TotalEnquiries
           enquiries={cpEnquiriesData?.paymentRecord}
           banks={props.data}
