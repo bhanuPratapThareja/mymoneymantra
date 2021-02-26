@@ -2329,7 +2329,19 @@ button.cstm-load-btn {
   .credit-card-flow .sf-forms .form__group.field.file-type>img {
     left: 15px;
   }
+  .profile-flow .profile-head .profile-container .profile-image > span{
+    right:0px !important;
+    top:0px !important;
+  }
 
+
+  .shortforms-container .gender-style{
+    display: flex  !important;
+    flex-direction: column !important;
+  }
+  .shortforms-container .form__group.field datalist{
+    width: 100% !important;
+  }
 }
 
 @media(max-width: 375px) {
@@ -2785,7 +2797,7 @@ button.cstm-load-btn {
 
 .shortforms-container .form__group.field datalist {
   padding: 12px;
-  width: 360px;
+  /* width: 360px; */
   position: relative;
   border-radius: 5px;
   z-index: 999;

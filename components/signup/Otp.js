@@ -6,6 +6,7 @@ const Otp = (props) => {
     <div className="otp-wrapper login-options">
       <div className="form__group field">
         <input
+        autoComplete={"off"}
           className="form__field"
           type="text"
           id="otp"
