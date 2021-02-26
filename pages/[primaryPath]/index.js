@@ -92,7 +92,7 @@ const PrimaryPage = props => {
             setFormRedirection={setFormRedirection}
           />
         case 'blocks.bank-slider-component':
-          return <BankSlider key={block.id} data={block} />
+          return <BankSlider key={block.id} data={block} primaryPath={props.primaryPath} />
         case 'blocks.rewards-component':
           return <Rewards key={block.id} data={block} />
         case 'blocks.quick-financial-tools-component':
