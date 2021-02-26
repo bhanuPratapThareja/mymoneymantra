@@ -3,8 +3,9 @@ import { getApiData } from '../api/api'
 import Strapi from '../providers/strapi'
 import { getLeadId } from '../utils/localAccess'
 import { unpackComponents } from './componentsService'
+import { EConnect } from '../utils/types'
 
-const defaultDecision = 'EConnect'
+const defaultDecision = EConnect
 
 export const viewOffers = async productType => {
     const { url, body } = getApiData('viewOffers')
@@ -21,7 +22,6 @@ export const extractOffers = async apiOffers => {
     return new Promise(async (resolve) => {
         const strapi = new Strapi()
         const productIdArray = []
-        if (!apiOffers.length) resolve([])
 
         for(let i = 0; i < apiOffers.length; i++) {
             if(!apiOffers[i].cardType) {

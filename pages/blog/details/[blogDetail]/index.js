@@ -3,7 +3,7 @@ import BlogMediaLinks from "../../../../components/common/BlogMediaLinks"
 import BlogsDetails from "../../../../components/common/BlogsDetails"
 import ProductSlider from "../../../../components/common/ProductSlider"
 import SimilarArticles from "../../../../components/common/SimilarArticles"
-import TrendingOffers from "../../../../components/common/TrendingOffers"
+import Offers from "../../../../components/common/Offers"
 import Layout from "../../../../components/Layout"
 import Strapi from "../../../../providers/strapi"
 import { extractOffers, viewOffers } from "../../../../services/offersService"
@@ -50,10 +50,9 @@ const BlogDetail = props => {
                 case "blocks.blog-category":
                     return <ProductSlider key={block.id} data={block} />;
                 case 'offers.trending-offers-component':
-                    return <TrendingOffers
-                        key={block.id}
+                    return <Offers 
+                        key={block.id} 
                         data={block}
-                        // productType={productType}
                         blogTrendingOffers={trendingOffers}
                     />
                 case 'blocks.similar-blogs-component':

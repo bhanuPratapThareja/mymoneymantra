@@ -6,7 +6,7 @@ import PageNotFound from '../../../../components/PageNotFound'
 import DetailsBanner from '../../../../components/Banners/DetailsBanner'
 import ProductDetails from '../../../../components/common/ProductDetails'
 import CreditScore from '../../../../components/common/CreditScore'
-import TrendingOffers from '../../../../components/common/TrendingOffers'
+import Offers from '../../../../components/common/Offers'
 import BankSlider from '../../../../components/common/BankSlider'
 import Rewards from '../../../../components/common/Rewards'
 import FinancialTools from '../../../../components/common/FinancialTools'
@@ -16,7 +16,7 @@ import LongFormBanner from '../../../../components/Banners/LongFormBanner'
 import LongForm from '../../../../components/common/LongForm'
 import { getClassesForPage } from '../../../../utils/classesForPage'
 import { getUnpackedProduct } from '../../../../services/componentsService'
-import { addSeo, removeSeo } from '../../../../utils/handleSchema'
+import { addSeoMetaData, removeSeoMetaData } from '../../../../utils/seoMetaData'
 
 const Details = props => {
     const [page, setPage] = useState(props.page)
@@ -31,9 +31,9 @@ const Details = props => {
                 changePageType('details')
             }
         }
-        const { scriptId, canonicalId } = addSeo(props.detailsData, props.detailsData.id)
+        const { scriptId, canonicalId } = addSeoMetaData(props.detailsData, props.detailsData.id)
         return () => {
-            removeSeo(scriptId, canonicalId)
+            removeSeoMetaData(scriptId, canonicalId)
         }
     }, [page])
 
@@ -72,10 +72,10 @@ const Details = props => {
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
-                    return <TrendingOffers 
+                    return <Offers 
                         key={block.id} 
                         data={block}
-                        primaryPath={props.primaryPath}
+                        componentType={block.__component}
                         productType={props.productType}
                     />
                 case 'blocks.bank-slider-component':

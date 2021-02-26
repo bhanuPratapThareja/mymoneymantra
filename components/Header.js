@@ -130,7 +130,7 @@ const logout=()=>{
    return (
       <>
          <Head>
-            <title>My Money Mantra</title>
+            {/* <title>My Money Mantra</title> */}
             <link rel="preload" href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
          </Head>
 

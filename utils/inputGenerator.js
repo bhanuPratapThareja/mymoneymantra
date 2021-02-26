@@ -1,8 +1,6 @@
-import { getDevice } from "./getDevice";
-import {
-  getFormattedCurrency,
-  getWholeNumberFromCurrency,
-} from "./formattedCurrency";
+import { getDevice } from './getDevice';
+import { getFormattedCurrency, getWholeNumberFromCurrency } from './formattedCurrency'
+import { sf, lf } from './types'
 
 export const generateInputs = (component, handleChange, checkInputValidity,
   handleInputDropdownSelection, formType, checkboxAnchorClick) => {
@@ -282,10 +280,10 @@ export const generateInputs = (component, handleChange, checkInputValidity,
     if (list && list.length && getDevice() !== "desktop") {
       let listEl
       let listElOffset = 0
-      if (formType === 'lf') {
+      if (formType === lf) {
         listEl = document.getElementById(fieldId)
         listElOffset = listEl.offsetTop
-      } else if (formType === 'sf') {
+      } else if (formType === sf) {
         listEl = document.getElementsByClassName('lets-find-container')[0]
         listElOffset = listEl.offsetTop + 140
       }

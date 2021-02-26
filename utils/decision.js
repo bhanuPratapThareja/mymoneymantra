@@ -1,4 +1,5 @@
-import { setLeadBank } from './localAccess.js'
+import { setLeadBank, setFormData, clearLeadId, clearFormData } from './localAccess.js'
+import { sf, ApplyNow, EConnect, InstantApproval, InstantApprove } from './types.js'
 
 export const makeDecision = (buttonText, offer, primaryPath, changePageType) => {
   const { bank: { bank_name: bankName, slug: bankSlug, bank_id: bankId }, product: { slug: productSlug } } = offer
@@ -6,28 +7,31 @@ export const makeDecision = (buttonText, offer, primaryPath, changePageType) => 
   let query = { bankName }
 
   switch (buttonText) {
-    case "Apply Now":
-      if (offer.formRedirection === 'sf') {
+    case ApplyNow:
+      const leadBank = { bankId, bankName }
+
+      if (offer.formRedirection === sf) {
         pathname = `/${primaryPath}`
         query.formRedirection = offer.formRedirection
-        const leadBank = { bankId, bankName }
-        setLeadBank(leadBank)
-
+        let data = {}
+        data.leadBank = leadBank
+        clearFormData(primaryPath)
+        clearLeadId(primaryPath)
+        setFormData(data, primaryPath)
       } else {
-        const leadBank = { bankName, bankId }
-        setLeadBank(leadBank)
-        pathname = `/thank-you`;
+        pathname = `/thank-you`
       }
+
+      setLeadBank(leadBank)
       break
 
-    case "Instant Approval":
-    case "Instant Approve":
-      const leadBank = { bankName, bankId }
+    case InstantApproval:
+    case InstantApprove:
       setLeadBank(leadBank)
       pathname = `/thank-you`;
       break;
 
-    case "EConnect":
+    case EConnect:
       if (primaryPath === 'credit-cards') {
         pathname = `/${primaryPath}/${bankSlug}/${productSlug}?page=long-form`
       } else {

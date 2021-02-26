@@ -9,6 +9,7 @@ import { getDropdownList } from '../../services/formService'
 import { getOtp, submitOtp, sendNotification } from '../../services/formService'
 import { getDevice } from '../../utils/getDevice'
 import { setLeadId } from '../../utils/localAccess'
+import { sf } from '../../utils/types'
 import {
     textTypeInputs,
     getCurrentSlideInputs,
@@ -31,7 +32,7 @@ import {
 class ShortExtendedForm extends React.Component {
     otpInterval = null;
     state = {
-        formType: 'sf',
+        formType: sf,
         slideIndex: 0,
         currentSlide: 'onboard',
         submitButtonDisabled: true,
@@ -96,7 +97,7 @@ class ShortExtendedForm extends React.Component {
             enableCheckboxes: [...this.state.enableCheckboxes, ...enableCheckboxes]
         }, () => {
             this.setState({ backUpSlides: JSON.parse(JSON.stringify(this.state.slides)) })
-            if(this.props.formRedirection === 'sf') {
+            if(this.props.formRedirection === sf) {
                 this.props.goToShortForm()
             }
         })
@@ -116,10 +117,6 @@ class ShortExtendedForm extends React.Component {
                 slideNo++
             }, 500)
         })
-
-        // setTimeout(()  => {
-        //     console.log(this.state)
-        // }, 1000)
     }
 
     onShowTncModal = on_click_anchor => {
@@ -229,7 +226,7 @@ class ShortExtendedForm extends React.Component {
                     } else {
                         this.onSubmitShortForm()
                             .then(res => {
-                                if(this.props.formRedirection === 'sf') {
+                                if(this.props.formRedirection === sf) {
                                     this.props.router.push(`/thank-you`)
                                 } else {
                                     this.props.router.push(`/${this.props.primaryPath}/listings`)
@@ -314,8 +311,6 @@ class ShortExtendedForm extends React.Component {
             }
 
         })
-
-        // console.log(this.state)
     }
 
     handleInputDropdownChange = (listType, list, input_id, field) => {

@@ -4,7 +4,7 @@ import Layout from '../components/Layout'
 
 import ThankYouBanner from '../components/Banners/ThankYouBanner'
 import CreditScore from '../components/common/CreditScore'
-import TrendingOffers from '../components/common/TrendingOffers'
+import Offers from '../components/common/Offers'
 import BankSlider from '../components/common/BankSlider'
 import Rewards from '../components/common/Rewards'
 import FinancialTools from '../components/common/FinancialTools'
@@ -40,10 +40,10 @@ const ThankYouPage = props => {
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
-                    return <TrendingOffers 
+                    return <Offers 
                         key={block.id} 
                         data={block}
-                        primaryPath={props.primaryPath}
+                        componentType={block.__component}
                         productType={props.productType}
                     />
                 case 'blocks.bank-slider-component':
@@ -80,11 +80,8 @@ export async function getServerSideProps(ctx) {
 
     const pageData = await strapi.processReq('GET', `pages?slug=${primaryPath}-${secondaryPath}`)
     const data = pageData && pageData.length ? pageData[0] : null
-    console.log('primaryPath: ', primaryPath)
     const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${primaryPath}`)
     const productType = productTypeData[0]
-    console.log('productTypeDataLL ', productTypeData)
-    console.log('productType ', productType)
 
     return { 
         props: { 

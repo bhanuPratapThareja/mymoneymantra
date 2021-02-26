@@ -1,4 +1,5 @@
 import { generateInputs } from '../../../utils/inputGenerator'
+import { sf } from '../../../utils/types'
 
 const OnBoardForm = props => {
     return (
@@ -16,7 +17,7 @@ const OnBoardForm = props => {
                         {props.slides[0].inputs.map(component => {
                             return <React.Fragment key={component.id}>
                                 {generateInputs(component, props.handleChange, props.checkInputValidity,
-                                    null, 'sf', props.checkboxAnchorClick)}
+                                    null, sf, props.checkboxAnchorClick)}
                             </React.Fragment>
                         })}
                         <div className='lets-go-button'>
