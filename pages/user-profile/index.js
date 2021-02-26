@@ -11,7 +11,6 @@ import ReferEarn from '../../components/UserProfile/ReferEarn'
 import WorkInfo from '../../components/UserProfile/WorkInfo'
 import { fileToByteArray } from '../../utils/byteArray'
 import { getClassesForPage } from '../../utils/classesForPage'
-
 const userProfile = (props) => {
   const [picture, setPicture] = useState('')
   const [pictureType, setPictureType] = useState('')
@@ -124,7 +123,9 @@ const userProfile = (props) => {
         <div className="profile-head">
           <div className="profile-container container">
             <div className="profile-head-wrapper">
+             
               <div className="profile-image">
+                <span> <img src="assets/images/icons/edit.svg" ></img></span>
                 <img src={picture.length ? `data:image/${pictureType};base64,${picture}` : "https://the1thing.github.io/MyMoneyMantra/build/images/icons/people1.png"} />
                 <input
                   type="file"
