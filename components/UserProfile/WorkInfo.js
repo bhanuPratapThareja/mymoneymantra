@@ -474,14 +474,14 @@ const WorkInfo = (props) => {
         </button>
       </div>
 
-      <button
+      {!isedit ? <button
         type="button"
         id="edit-work"
         className="edit-button"
         onClick={() => setIsedit(!isedit)}
       >
         Edit
-      </button>
+      </button> : null}
     </form>
   )
 }

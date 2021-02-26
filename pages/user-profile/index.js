@@ -93,8 +93,8 @@ const userProfile = (props) => {
     }
   }
 
-  const contactCount =(val,max)=>{
-    console.log(val,max)
+  const contactCount = (val, max) => {
+    console.log(val, max)
   }
   const uploadPicture = async (body) => {
     try {
@@ -123,9 +123,15 @@ const userProfile = (props) => {
         <div className="profile-head">
           <div className="profile-container container">
             <div className="profile-head-wrapper">
-             
+
               <div className="profile-image">
-                <span> <img src="assets/images/icons/edit.svg" ></img></span>
+                <label
+                  id="edit-personal"
+                  htmlFor='profile-picture'
+                >
+                  <img src="assets/images/icons/edit.svg" ></img>
+                </label>
+                <span> </span>
                 <img src={picture.length ? `data:image/${pictureType};base64,${picture}` : "https://the1thing.github.io/MyMoneyMantra/build/images/icons/people1.png"} />
                 <input
                   type="file"
@@ -133,14 +139,7 @@ const userProfile = (props) => {
                   style={{ display: 'none' }}
                   id='profile-picture'
                 />
-                <label
-                  id="edit-personal"
-                  className="edit-button"
-                  htmlFor='profile-picture'
-                  style={{ color: "white" }}
-                >
-                  Edit
-          </label>
+
               </div>
               <h1>{'Customer Name'}</h1>
               <div className="profile-progress">
@@ -206,7 +205,7 @@ const userProfile = (props) => {
                 </div>
                 <div className="option-data" id="option-2-data">
                   <ContactInfo
-                    contactCount ={(val,max)=>contactCount(val,max)}
+                    contactCount={(val, max) => contactCount(val, max)}
                   />
                 </div>
               </div>

@@ -28,7 +28,7 @@ const PersonalInfo = (props) => {
   }
 
   const dateDiffInYears = () => {
-    let startDate = dob
+    let startDate = dob ? dob.split('/').join('-') : dob
     let endDate = moment().format('DD-MM-YYYY')
 
     let newStartDate = new Date(startDate.split("-").reverse().join("-"));
@@ -69,6 +69,7 @@ const PersonalInfo = (props) => {
     if (isFirstname) {
       if (pattern.test(firstName)) {
         setNameError(false)
+        setErrMsg('')
       } else {
         setNameError(true)
         setErrMsg(`First ${msg}`)
@@ -76,6 +77,7 @@ const PersonalInfo = (props) => {
     } else {
       if (pattern.test(lastName) || lastName == '') {
         setNameError(false)
+        setErrMsg('')
       } else {
         setNameError(true)
         setErrMsg(`Last ${msg}`)
@@ -87,6 +89,7 @@ const PersonalInfo = (props) => {
     let pattern = /^[a-z]{5}[0-9]{4}[a-z]{1,2}$/gi
     if (pattern.test(panNumber)) {
       setPanError(false)
+      setErrMsg('')
     } else {
       setPanError(true)
       setErrMsg('Invalid PAN number')
@@ -108,7 +111,7 @@ const PersonalInfo = (props) => {
         setGender(gender)
         setMaritalStatus(martialStatus)
         setPanNumber(panNo)
-        setDob(dob ? moment(dob, 'DD/MM/YYYYY').format('DD-MM-YYYY') : null)
+        setDob(dob ? moment(dob, 'DD/MM/YYYYY').format('DD/MM/YYYY') : null)
         let mName = checkMartialStatus(martialStatus)
         setmartaialname(mName)
       })
@@ -448,14 +451,14 @@ const PersonalInfo = (props) => {
               </label>
               </div>
             </div>
-            <button
+            {!editing ? <button
               type="button"
               id="edit-personal"
               className="edit-button"
               onClick={() => setEditing(true)}
             >
               Edit
-          </button>
+          </button> : null}
           </div>
         )}
     </div>

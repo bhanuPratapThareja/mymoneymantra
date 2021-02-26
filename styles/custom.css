@@ -2844,7 +2844,7 @@ button.cstm-load-btn {
   position: relative;
 }
 
-.profile-flow .profile-head .profile-container .profile-image > span {
+.profile-flow .profile-head .profile-container .profile-image > label {
   background: #93D642;
   display: block;
   width: 25px;
