@@ -6,7 +6,7 @@ import PageNotFound from '../../../components/PageNotFound'
 import DetailsBanner from '../../../components/Banners/DetailsBanner'
 import ProductDetails from '../../../components/common/ProductDetails'
 import CreditScore from '../../../components/common/CreditScore'
-import TrendingOffers from '../../../components/common/TrendingOffers'
+import Offers from '../../../components/common/Offers'
 import BankSlider from '../../../components/common/BankSlider'
 import Rewards from '../../../components/common/Rewards'
 import FinancialTools from '../../../components/common/FinancialTools'
@@ -71,10 +71,10 @@ const Details = props => {
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
-                    return <TrendingOffers 
+                    return <Offers 
                         key={block.id} 
                         data={block}
-                        primaryPath={props.primaryPath}
+                        componentType={block.__component}
                         productType={props.productType}
                     />
                 case 'blocks.bank-slider-component':

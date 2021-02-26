@@ -117,10 +117,6 @@ class ShortExtendedForm extends React.Component {
                 slideNo++
             }, 500)
         })
-
-        // setTimeout(()  => {
-        //     console.log(this.state)
-        // }, 1000)
     }
 
     onShowTncModal = on_click_anchor => {
@@ -315,8 +311,6 @@ class ShortExtendedForm extends React.Component {
             }
 
         })
-
-        // console.log(this.state)
     }
 
     handleInputDropdownChange = (listType, list, input_id, field) => {

@@ -13,7 +13,7 @@ import AppDownload from '../components/common/AppDownload'
 import Rewards from '../components/common/Rewards'
 import FinancialTools from '../components/common/FinancialTools'
 import Blogger from '../components/common/Blogger'
-import TrendingOffers from '../components/common/TrendingOffers'
+import Offers from '../components/common/Offers'
 import { getClassesForPage } from '../utils/classesForPage'
 import { addSeoMetaData, removeSeoMetaData } from '../utils/seoMetaData'
 
@@ -46,7 +46,11 @@ const Home = props => {
                 case 'blocks.credit-score-component':
                     return <CreditScore key={block.id} data={block} />
                 case 'offers.trending-offers-component':
-                    return <TrendingOffers key={block.id} data={block} productType={props.productType} />
+                    return <Offers 
+                        key={block.id} 
+                        data={block}
+                        componentType={block.__component}
+                    />
                 case 'blocks.bank-slider-component':
                     return <BankSlider key={block.id} data={block} />
                 case 'blocks.app-download-component':

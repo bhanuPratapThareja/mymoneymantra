@@ -5,7 +5,7 @@ import Layout from '../../components/Layout'
 import ListingsBanner from '../../components/Banners/ListingsBanner'
 import ListingCards from '../../components/Listings/ListingCards'
 import CreditScore from '../../components/common/CreditScore'
-import TrendingOffers from '../../components/common/TrendingOffers'
+import Offers from '../../components/common/Offers'
 import BankSlider from '../../components/common/BankSlider'
 import Rewards from '../../components/common/Rewards'
 import FinancialTools from '../../components/common/FinancialTools'
@@ -86,10 +86,10 @@ const Listings = props => {
                     return <CreditScore key={block.id} data={block} />
 
                 case 'offers.trending-offers-component':
-                    return <TrendingOffers
-                        key={block.id}
+                    return <Offers 
+                        key={block.id} 
                         data={block}
-                        primaryPath={props.primaryPath}
+                        componentType={block.__component}
                         productType={props.productType}
                     />
 
