@@ -98,16 +98,15 @@ const PersonalInfo = (props) => {
       .then((res) => {
         console.log({ res })
         const { firstName, gender, martialStatus, panNo, lastName, dob } = res
-        if (firstName.split(' ').length > 1) {
+        if (firstName && firstName.split(' ').length > 1) {
           setFirstName(firstName.split(' ')[0])
           setLastName(firstName.split(' ')[1])
         } else {
-          setFirstName(firstName)
+          setFirstName(firstName ? firstName : '')
           setLastName(lastName ? lastName : '')
         }
         setGender(gender)
         setMaritalStatus(martialStatus)
-
         setPanNumber(panNo)
         setDob(dob ? moment(dob, 'DD/MM/YYYYY').format('DD-MM-YYYY') : null)
         let mName = checkMartialStatus(martialStatus)
@@ -115,7 +114,6 @@ const PersonalInfo = (props) => {
       })
       .catch((err) => {
         console.log(err)
-        alert(err.message)
       })
   }
   const submitHandler = (e) => {
