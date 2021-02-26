@@ -1,19 +1,21 @@
 import CustomImage from "./image";
 
 // import * as greenUnderline from '../../public/assets/images/credit-card-flow/green-underline.png'
-const Otp=(props)=>{
-    return( 
+const Otp = (props) => {
+  return (
     <div className="otp-wrapper login-options">
       <div className="form__group field">
         <input
+        autoComplete={"off"}
           className="form__field"
           type="text"
           id="otp"
           placeholder="otp"
           required=""
           val={props.otp}
-          onChange={(e)=>props.setotp(e.target.value)}
+          onChange={(e) => props.setotp(e.target.value)}
         />
+        {props.error ? <p style={{ color: 'red' }}>OTP Invalid</p> : null}
         <label className="form__label" htmlFor="phone">
           One time password
         </label>
@@ -23,8 +25,8 @@ const Otp=(props)=>{
         <h6>Resend</h6>
       </button>
     </div>
-  
-)
+
+  )
 }
 
 export default Otp;

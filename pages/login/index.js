@@ -21,6 +21,9 @@ const login = (props) => {
   const [type, settype] = useState("login");
   const [isChecked, setisChecked] = useState(false);
   const [isLoader, setisLoader] = useState(false);
+  const [otpError, setOtpError] = useState(false)
+  const [mobileError, setMobileError] = useState(false)
+  const [mobileErrorMsg, setMobileErrorMsg] = useState('')
   const social = ({ ...val }) => {
     // setname(val.name);
     // setemail(val.email);
@@ -48,9 +51,12 @@ const login = (props) => {
           setOtpId(otpId);
           localStorage.setItem("customerId", customerId);
           setcounter(counter + 1);
+          setMobileError(false)
+          setMobileErrorMsg('')
         })
         .catch((err) => {
-          alert(err.message);
+          setMobileError(true)
+          setMobileErrorMsg(err.message)
         })
         .finally(() => {
           setisLoader(false);
@@ -61,8 +67,13 @@ const login = (props) => {
       verifyOtp(phone, otp, otpId)
         .then((res) => {
           console.log(res);
+          if (res.message == 'OTP Verification Failed') {
+            setOtpError(true)
+            return
+          }
           localStorage.setItem("customerId", res.customerId)
           setcounter(counter + 1);
+          setOtpError(false)
         })
         .catch((err) => {
           alert(err.message);
@@ -73,7 +84,7 @@ const login = (props) => {
     }
   };
   return (
-    <div className='credit-card-flow thankyou-page b2c-thank-you b2c-flow'>
+    <div className={props.pageClasses}>
       <Layout>
         {counter != 2 ? <WelcomeHeader></WelcomeHeader> : null}
         <section
@@ -110,6 +121,8 @@ const login = (props) => {
                         type={type}
                         isChecked={isChecked}
                         setChecked={() => setisChecked(!isChecked)}
+                        errorMsg={mobileErrorMsg}
+                        error={mobileErrorMsg}
                       ></PhoneNumberCustom>
                     </div>
                   </div>
@@ -126,7 +139,7 @@ const login = (props) => {
                         number
                       </h2>
                       <CustomImage></CustomImage>
-                      <Otp setotp={(val) => setotp(val)} otp={otp}></Otp>
+                      <Otp error={otpError} setotp={(val) => setotp(val)} otp={otp}></Otp>
                     </div>
                   </div>
                 </form>

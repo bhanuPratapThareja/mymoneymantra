@@ -3,13 +3,14 @@ import { getApiData } from '../api/api'
 import Strapi from '../providers/strapi'
 import { getLeadId } from '../utils/localAccess'
 import { unpackComponents } from './componentsService'
+import { EConnect } from '../utils/types'
 
-const defaultDecision = 'EConnect'
+const defaultDecision = EConnect
 
-export const viewOffers = async productTypeId => {
+export const viewOffers = async productType => {
     const { url, body } = getApiData('viewOffers')
     body.customerId = ''
-    body.productId = productTypeId ? productTypeId : ''
+    body.productId = productType && productType.product_type_id ? productType.product_type_id : ''
 
     try {
         const res = await axios.post(url, body)

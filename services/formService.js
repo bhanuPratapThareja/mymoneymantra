@@ -4,6 +4,7 @@ import { getApiData } from '../api/api'
 import { getLeadId } from '../utils/localAccess'
 import { getFormattedDate } from '../utils/formatDataForApi'
 import { getDocumentIdandTypeId } from '../utils/uploadDocumentHelper'
+import { sf, lf } from '../utils/types'
 const CancelToken = axios.CancelToken
 let cancel
 let otpId = ''
@@ -145,6 +146,9 @@ export const generateLead = async (data, primaryPath, formType, productType) => 
         body.personal.gender = gender
         if(gender == "1000000002"){
             body.personal.title = "1000000003"
+        }
+        else{
+            body.personal.title = "1000000002"
         }
         body.personal.maritalStatus = maritalStatus
         body.personal.nationality = nationality
@@ -331,9 +335,9 @@ export const generateLead = async (data, primaryPath, formType, productType) => 
 
         let headers = {}
 
-        if (formType === 'sf') {
+        if (formType === sf) {
             headers = { 'sync': 'false' }
-        } else if (formType === 'lf') {
+        } else if (formType === lf) {
             if (primaryPath !== 'rkpl') {
                 headers = { 'sync': 'true' }
             } else {

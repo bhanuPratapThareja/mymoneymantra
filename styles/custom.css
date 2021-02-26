@@ -1763,6 +1763,11 @@ button.cstm-load-btn {
   font-weight: normal;
 } 
 
+/*-- Blog -- */
+.popular-cards .blog-wrapper-card,
+.blog-container .blog-wrapper .blog-wrapper-card {
+  cursor: pointer;
+}
 
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
@@ -2324,7 +2329,19 @@ button.cstm-load-btn {
   .credit-card-flow .sf-forms .form__group.field.file-type>img {
     left: 15px;
   }
+  .profile-flow .profile-head .profile-container .profile-image > span{
+    right:0px !important;
+    top:0px !important;
+  }
 
+
+  .shortforms-container .gender-style{
+    display: flex  !important;
+    flex-direction: column !important;
+  }
+  .shortforms-container .form__group.field datalist{
+    width: 100% !important;
+  }
 }
 
 @media(max-width: 375px) {
@@ -2780,11 +2797,13 @@ button.cstm-load-btn {
 
 .shortforms-container .form__group.field datalist {
   padding: 12px;
-  width: 360px;
+  /* width: 360px; */
   position: relative;
   border-radius: 5px;
   z-index: 999;
   top: 10px;
+  height:300px;
+  overflow-y: auto;
 }
 
 .shortforms-container .form__group.field datalist option {
@@ -2794,6 +2813,7 @@ button.cstm-load-btn {
   font-family: "Avenir-Heavy";
   line-height: 1.5rem;
   padding: 8px 12px;
+  white-space: break-spaces;
 }
 
 .option-wrapper .shortforms-container .form__group.field select.form__field {
@@ -2811,3 +2831,28 @@ button.cstm-load-btn {
   line-height: 2.5rem;
   display: block;
 }
+
+
+.profile-flow .profile-head .profile-container .profile-image > span > img {
+  max-width: 23px;
+  height: auto !important;
+  display: block;
+  margin: 0 auto;
+}
+/*User profile edit icon*/
+.profile-flow .profile-head .profile-container .profile-head-wrapper .profile-image {
+  position: relative;
+}
+
+.profile-flow .profile-head .profile-container .profile-image > span {
+  background: #93D642;
+  display: block;
+  width: 25px;
+  right: 10px;
+  top: 10px;
+  position: absolute;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+/*end*/

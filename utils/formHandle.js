@@ -3,7 +3,7 @@ import { isInputValid, isMonetaryValid } from "./formValidations"
 import { getBase64, documentUpload, generateLead } from "../services/formService"
 import { getFormattedName } from "./formatDataForApi"
 import { getWholeNumberFromCurrency, getFormattedCurrency } from "./formattedCurrency"
-import { setFormData } from "./localAccess"
+import { setFormData, getFormData } from "./localAccess"
 
 export const textTypeInputs = [
   "text",
@@ -575,13 +575,16 @@ export const submitShortForm = (slides, currentSlide, primaryPath, formType, pro
     }
    
     setFormData(data, primaryPath)
-    generateLead(data, primaryPath, formType, productType)
+    const latestFormData = getFormData(primaryPath)
+    if(latestFormData) {
+      generateLead(latestFormData, primaryPath, formType, productType)
       .then((res) => {
         resolve(res)
       })
       .catch((err) => {
         reject("Error while Submitting. Please try again.!!!")
       })
+    }
   })
 }
 

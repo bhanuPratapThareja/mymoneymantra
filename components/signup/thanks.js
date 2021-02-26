@@ -18,8 +18,8 @@ const Thanks=(props)=>{
         </div>
         <div className="bottom">
             <h6>Go to your dashboard to start your journey and ease up your application process</h6>
-            <div className="track-button">
-                <button onClick={(e)=>handleClick(e,'/user-profile')}> Let’s Go</button>
+            <div className="track-button" onClick={(e)=>handleClick(e,'/user-profile')}>
+                <button > Let’s Go</button>
             </div>
         </div>
     </div>

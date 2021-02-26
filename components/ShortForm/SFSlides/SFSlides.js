@@ -1,12 +1,13 @@
 import SFButtons from '../SFButtons/SFButtons'
 import { generateInputs } from '../../../utils/inputGenerator'
+import { sf } from '../../../utils/types'
 
 const SFSlides = props => {
     const totalSlides = props.slides.length
     const slideNumber = props.slideIndex
     const progressWidth = `${slideNumber / totalSlides * 100}%`
     const sfSlides = props.slides
-    const formType = 'sf'
+    const formType = sf
 
     return (
         <div className="lets-find-stepper-wrapper" onClick={props.handleClickOnSlideBackground}>

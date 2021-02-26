@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import { getWorkInfo } from '../../utils/userProfileService'
 import { getApiData } from '../../api/api'
+import { getFormattedCurrency, getWholeNumberFromCurrency } from '../../utils/formattedCurrency'
 
 const WorkInfo = (props) => {
   const [isedit, setIsedit] = useState(false)
@@ -19,23 +20,61 @@ const WorkInfo = (props) => {
   const [bankName, setBankName] = useState('')
   const [bankList, setBankList] = useState([])
 
+  const { totalNumberOfFields, calculateProfileProgress, setWorkInfoProgress } = props
+
   useEffect(() => {
     console.log(props.data)
     getWork()
   }, [])
 
+  const calculateSectionProgress = () => {
+    // let savedFields = 0
+    let value1 = (employedType && employedType.length) ? 1 : 0
+    let value2 = (bankId && bankId.length) ? 1 : 0
+    let value3 = (netMonthlyIncome && netMonthlyIncome.length) ? 1 : 0
+    let value4 = (companyName && companyName.length) ? 1 : 0
+    let value5 = (accountNo && accountNo.length) ? 1 : 0
+    let value6 = (ifscCode && ifscCode.length) ? 1 : 0
+    let savedFields = value1 + value2 + value3 + value4 + value5 + value6
+    // if (employedType && employedType.length) {
+    //   savedFields += 1
+    // }
+    // if (bankId && bankId.length) {
+    //   savedFields += 1
+    // }
+    // if (netMonthlyIncome && netMonthlyIncome.length) {
+    //   savedFields += 1
+    // }
+    // if (companyName && companyName.length) (
+    //   savedFields += 1
+    // )
+    // if (accountNo && accountNo.length) {
+    //   savedFields += 1
+    // }
+    // if (ifscCode && ifscCode.length) {
+    //   savedFields += 1
+    // }
+    console.log(savedFields)
+    console.log((Math.round((savedFields / totalNumberOfFields) * 100)))
+    let progress = Math.round((savedFields / totalNumberOfFields) * 100)
+    setWorkInfoProgress(progress)
+    calculateProfileProgress()
+  }
+
   useEffect(() => {
     const timer = setTimeout(async () => {
-      if (companyQuery.length > 0) {
-        try {
-          const { url, body } = getApiData('company')
-          body.name = companyQuery
-          const responseObject = await axios.post(url, body)
-          const { data } = responseObject
-          console.log({ responseObject })
-          setCompanyOtions(data?.companyMaster)
-        } catch (err) {
-          console.log(err)
+      if (companyQuery) {
+        if (companyQuery.length > 0) {
+          try {
+            const { url, body } = getApiData('company')
+            body.name = companyQuery
+            const responseObject = await axios.post(url, body)
+            const { data } = responseObject
+            console.log({ responseObject })
+            setCompanyOtions(data?.companyMaster)
+          } catch (err) {
+            console.log(err)
+          }
         }
       }
     }, 3000)
@@ -58,16 +97,18 @@ const WorkInfo = (props) => {
           customerId,
           bankName,
         } = { ...res }
+        let formattedIncome = getFormattedCurrency(netMonthlyIncome.toString())
         setBankName(bankName)
         setCustomerId(customerId)
         setCompanyId(companyId)
         setEmployedType(employedType)
-        setNetMonthlyIncome(netMonthlyIncome)
+        setNetMonthlyIncome(formattedIncome)
         setBankId(bankId)
         setAccountNo(accountNo)
         setIfscCode(ifscCode)
         setCompanyName(companyName)
-        setCompanyQuery(companyName)
+        // setCompanyQuery(companyName)
+        // calculateSectionProgress()
       })
       .catch((err) => {
         console.log(err)
@@ -78,16 +119,18 @@ const WorkInfo = (props) => {
   const submitHandler = async (e) => {
     e.preventDefault()
     setIsedit(false)
+    let custId = localStorage.getItem('customerId')
     const { url } = getApiData('workProfile')
     try {
       const responseObject = await axios.post(url, {
         bankName,
-        customerId,
+        customerId: custId,
         companyId,
         bankId,
-        netMonthlyIncome,
+        netMonthlyIncome: getWholeNumberFromCurrency(netMonthlyIncome),
         accountNo,
         employedType,
+        ifscCode
       })
       if (responseObject.status === 200) {
         getWork()
@@ -132,8 +175,19 @@ const WorkInfo = (props) => {
     setBankList([])
   }
 
+  const handleIncomeChange = (e) => {
+    let { value } = e.target
+    value = value.toString()
+    const numString = getWholeNumberFromCurrency(value)
+    if (isNaN(numString)) {
+      return
+    }
+    value = getFormattedCurrency(value)
+    setNetMonthlyIncome(value)
+  }
+
   return (
-    <form className="work-wrapper" onSubmit={submitHandler}>
+    <form className="work-wrapper" onSubmit={submitHandler} autocomplete="off">
       {/* <div className="shortforms-container"> */}
       {isedit ? <h5>Employment Type</h5> : null}
       <div className="shortforms-container">
@@ -170,6 +224,7 @@ const WorkInfo = (props) => {
               className="lets-checkbox"
               type="radio"
               id="self-employed"
+              autocomplete="off"
               name="emp-type"
               required=""
               onChange={(e) => setEmployedType(e.target.value)}
@@ -182,6 +237,7 @@ const WorkInfo = (props) => {
               id="self-employed-professional"
               name="emp-type"
               required=""
+              autocomplete="off"
               onChange={(e) => setEmployedType(e.target.value)}
               defaultChecked={employedType == 1000000002 ? true : false}
             />
@@ -191,6 +247,7 @@ const WorkInfo = (props) => {
               type="radio"
               id="salaried"
               name="emp-type"
+              autocomplete="off"
               required=""
               onChange={(e) => setEmployedType(e.target.value)}
               defaultChecked={employedType == 1000000004 ? true : false}
@@ -202,6 +259,7 @@ const WorkInfo = (props) => {
               id="defense"
               name="emp-type"
               required=""
+              autocomplete="off"
               onChange={(e) => setEmployedType(e.target.value)}
               defaultChecked={employedType == 1000000008 ? true : false}
             />
@@ -216,6 +274,7 @@ const WorkInfo = (props) => {
             <div className="form__group field">
               <input
                 readOnly={true}
+                autocomplete="off"
                 value={
                   employedType == 1000000001
                     ? 'Self Employed'
@@ -223,7 +282,7 @@ const WorkInfo = (props) => {
                       ? 'Self Employed Professional'
                       : employedType == 1000000004
                         ? 'Salaried'
-                        : 'Defense'
+                        : employedType == 1000000008 ? 'Defense' : ''
                 }
                 className="form__field"
                 type="text"
@@ -248,6 +307,7 @@ const WorkInfo = (props) => {
             readOnly={!isedit}
             className="form__field"
             type="text"
+            autocomplete="off"
             value={companyName}
             id="company-name"
             placeholder="Company Name"
@@ -290,11 +350,13 @@ const WorkInfo = (props) => {
             readOnly={!isedit}
             className="form__field"
             type="text"
+            autocomplete="off"
             value={netMonthlyIncome}
             id="monthly-income"
             placeholder="Net Monthly Income"
             required=""
-            onChange={(e) => setNetMonthlyIncome(e.target.value)}
+            onChange={handleIncomeChange}
+          // onChange={(e) => setNetMonthlyIncome(e.target.value)}
           />
           <label className="form__label" htmlFor="monthly-income">
             Net Monthly Income
@@ -315,6 +377,7 @@ const WorkInfo = (props) => {
             className="form__field"
             type='text'
             id='bank-name'
+            autocomplete="off"
             placeholder='Bank Name'
             required=''
             value={bankName}
@@ -358,6 +421,7 @@ const WorkInfo = (props) => {
             readOnly={!isedit}
             className="form__field"
             type="text"
+            autocomplete="off"
             value={accountNo}
             id="account-num"
             placeholder="Account Number"
@@ -381,6 +445,7 @@ const WorkInfo = (props) => {
             type="text"
             value={ifscCode}
             id="ifsc"
+            autocomplete="off"
             placeholder="IFSC Code"
             required=""
             onChange={(e) => setIfscCode(e.target.value)}

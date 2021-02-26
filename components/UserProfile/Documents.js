@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { fileToByteArray } from '../../utils/byteArray'
 
-const Documents = () => {
+const Documents = (props) => {
   const [aadhaar, setAadhaar] = useState({
     documentName: '',
     documentNo: '1000000374',
@@ -45,10 +45,36 @@ const Documents = () => {
     documentTypeId: '1000000037',
     uploadStatus: '',
   })
-
+  const { totalNumberOfFields, calculateProfileProgress, setDocumentProgress } = props
   useEffect(() => {
     getAllDocuments()
   }, [])
+
+
+  const getPanAndAadhar = (doc) => {
+    if (doc.documentNo == '1000000290') {
+      setPan({ ...doc })
+    }
+    if (doc.documentNo == '1000000374') {
+      setAadhaar({ ...doc })
+    }
+  }
+  const getRentAgreementAndBill = (doc) => {
+    if (doc.documentNo == '1000000299') {
+      setRentAgreement({ ...doc })
+    }
+    if (doc.documentNo == '1000000321') {
+      setBill({ ...doc })
+    }
+  }
+  const getSalarySlipAndForm16 = (doc) => {
+    if (doc.documentNo == '1000000305') {
+      setForm16({ ...doc })
+    }
+    if (doc.documentNo == '1000000307') {
+      setSalarySlips({ ...doc })
+    }
+  }
 
   const getAllDocuments = async () => {
     try {
@@ -57,24 +83,33 @@ const Documents = () => {
         `http://203.122.46.189:8060/customer/api/profile/v1/all-docs?customerId=${customerId ? customerId : 101
         }`
       )
+      console.log('All documents', responseObject)
       responseObject.data.docList.map((doc) => {
         switch (doc.documentTypeId) {
           case '1000000036':
-            setPan((prevState) => ({ ...prevState, doc }))
+            // setPan((prevState) => ({ ...prevState, doc }))
+            // setPan({ ...doc })
+            getPanAndAadhar(doc)
             break
           case '1000000044':
-            setBankStatement((prevState) => ({ ...prevState, doc }))
+            // setBankStatement((prevState) => ({ ...prevState, doc }))
+            setBankStatement({ ...doc })
             break
           case '1000000043':
-            setSalarySlips((prevState) => ({ ...prevState, doc }))
+            // setSalarySlips((prevState) => ({ ...prevState, doc }))
+            // setSalarySlips({ ...doc })
+            getSalarySlipAndForm16(doc)
             break
           case '1000000037':
-            setBill((prevState) => ({ ...prevState, doc }))
+            // setBill((prevState) => ({ ...prevState, doc }))
+            // setBill({ ...doc })
+            getRentAgreementAndBill(doc)
             break
           default:
             break
         }
       })
+      console.log('all doc', pan, bankStatement)
     } catch (err) {
       console.log(err)
     }
@@ -255,15 +290,15 @@ const Documents = () => {
     }
   }
 
-  console.log({
-    aadhaar,
-    pan,
-    bankStatement,
-    salarySlips,
-    form16,
-    rentAgreement,
-    bill,
-  })
+  // console.log({
+  //   aadhaar,
+  //   pan,
+  //   bankStatement,
+  //   salarySlips,
+  //   form16,
+  //   rentAgreement,
+  //   bill,
+  // })
 
   return (
     <form>

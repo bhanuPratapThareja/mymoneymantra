@@ -16,7 +16,7 @@ import LongFormBanner from '../../../components/Banners/LongFormBanner'
 import LongForm from '../../../components/common/LongForm'
 import { getClassesForPage } from '../../../utils/classesForPage'
 import { getUnpackedProduct } from '../../../services/componentsService'
-//import { addSchemaScript, removeSchemaScript } from '../../../utils/handleSchema'
+import { addSeoMetaData, removeSeoMetaData } from '../../../utils/seoMetaData'
 
 const Details = props => {
     const [page, setPage] = useState(props.page)
@@ -31,12 +31,10 @@ const Details = props => {
                 changePageType('details')
             }
         }
-        // const id = addSchemaScript(props.data.page_schema, props.data.id)
-        // return () => {
-        //     if (id) {
-        //          removeSchemaScript(id)
-        //     }
-        // }
+        const { scriptId, canonicalId } = addSeoMetaData(props.detailsData, props.detailsData.id)
+        return () => {
+            removeSeoMetaData(scriptId, canonicalId)
+        }
     }, [page])
 
 
