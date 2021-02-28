@@ -18,37 +18,39 @@ const PersonalInfo = (props) => {
   const [nameError, setNameError] = useState(false)
   const [panError, setPanError] = useState(false)
   const [dobError, setDobError] = useState(false)
-  const { totalNumberOfFields, calculateProfileProgress, setPersonalInfoProgress } = props
+  const { setPersonalInfoProgress } = props
   useEffect(() => {
     getInfo()
   }, [])
 
   const validateSaveButton = () => {
-    return nameError || panError || (gender == null) || dobError
+    return nameError || panError || gender == null || dobError
   }
 
   const dateDiffInYears = () => {
     let startDate = dob ? dob.split('/').join('-') : dob
     let endDate = moment().format('DD-MM-YYYY')
 
-    let newStartDate = new Date(startDate.split("-").reverse().join("-"));
-    let newEndDate = new Date(endDate.split("-").reverse().join("-"));
-    const msPerDay = 1000 * 60 * 60 * 24;
+    let newStartDate = new Date(startDate.split('-').reverse().join('-'))
+    let newEndDate = new Date(endDate.split('-').reverse().join('-'))
+    const msPerDay = 1000 * 60 * 60 * 24
     let utcStartDate = Date.UTC(
       newStartDate.getFullYear(),
       newStartDate.getMonth(),
       newStartDate.getDate()
-    );
+    )
     let utcEndDate = Date.UTC(
       newEndDate.getFullYear(),
       newEndDate.getMonth(),
       newEndDate.getDate()
-    );
+    )
 
-    let differnce = Math.ceil(Math.ceil((utcEndDate - utcStartDate) / msPerDay) / 365)
-    console.log(differnce);
-    return differnce;
-  };
+    let differnce = Math.ceil(
+      Math.ceil((utcEndDate - utcStartDate) / msPerDay) / 365
+    )
+    console.log(differnce)
+    return differnce
+  }
 
   const validateDob = () => {
     let differnce = dateDiffInYears()
@@ -114,6 +116,7 @@ const PersonalInfo = (props) => {
         setDob(dob ? moment(dob, 'DD/MM/YYYYY').format('DD/MM/YYYY') : null)
         let mName = checkMartialStatus(martialStatus)
         setmartaialname(mName)
+        calculate(res)
       })
       .catch((err) => {
         console.log(err)
@@ -145,6 +148,16 @@ const PersonalInfo = (props) => {
     } else if (martial == 4) {
       return 'Widowed'
     } else return ''
+  }
+
+  const calculate = (fields) => {
+    let progress = 0
+    Object.keys(fields).map((field) => {
+      if (fields[field]) {
+        progress += 1
+      }
+    })
+    setPersonalInfoProgress(progress)
   }
 
   return (
@@ -356,7 +369,12 @@ const PersonalInfo = (props) => {
           </div>
 
           <div className="save-options">
-            <button type="submit" className="save-personal" id="save-personal" disabled={validateSaveButton()}>
+            <button
+              type="submit"
+              className="save-personal"
+              id="save-personal"
+              disabled={validateSaveButton()}
+            >
               Save
             </button>
             <button
@@ -373,94 +391,104 @@ const PersonalInfo = (props) => {
           </div>
         </form>
       ) : (
-          <div className="before-edit">
-            <div className="shortforms-container">
-              <div className="form__group field">
-                <input
-                  readOnly={true}
-                  className="form__field"
-                  type="text"
-                  value={`${firstName} ${lastName}`}
-                  id="full-name"
-                  autocomplete="off"
-                  placeholder="Full Name"
-                  required=""
-                />
-                <label className="form__label" htmlFor="full-name">
-                  Full Name
+        <div className="before-edit">
+          <div className="shortforms-container">
+            <div className="form__group field">
+              <input
+                readOnly={true}
+                className="form__field"
+                type="text"
+                value={`${firstName} ${lastName}`}
+                id="full-name"
+                autocomplete="off"
+                placeholder="Full Name"
+                required=""
+              />
+              <label className="form__label" htmlFor="full-name">
+                Full Name
               </label>
-              </div>
-              <div className="form__group field">
-                <input
-                  readOnly={true}
-                  className="form__field"
-                  type="text"
-                  value={dob != null ? dob : 'DD/MM/YYYY'}
-                  id="dob"
-                  autocomplete="off"
-                  placeholder="Date of Birth"
-                  required=""
-                />
-                <label className="form__label" htmlFor="dob">
-                  Date of Birth
-              </label>
-              </div>
-              <div className="form__group field">
-                <input
-                  readOnly={true}
-                  className="form__field"
-                  type="text"
-                  value={gender == 0 ? 'Female' : gender == 1 ? 'Male' : gender == 2 ? 'Other' : 'Gender'}
-                  id="gender"
-                  autocomplete="off"
-                  placeholder="Gender"
-                  required=""
-                />
-                <label className="form__label" htmlFor="gender">
-                  Gender
-              </label>
-              </div>
-              <div className="form__group field">
-                <input
-                  readOnly={true}
-                  className="form__field"
-                  type="text"
-                  autocomplete="off"
-                  value={martaialname ? martaialname : 'Marital Status'}
-                  id="marital-Status"
-                  placeholder="Marital Status"
-                  required=""
-                />
-                <label className="form__label" htmlFor="marital-Status">
-                  Marital Status
-              </label>
-              </div>
-              <div className="form__group field">
-                <input
-                  readOnly={true}
-                  className="form__field"
-                  type="text"
-                  autocomplete="off"
-                  value={panNumber ? panNumber : 'PAN number'}
-                  id="pan-num"
-                  placeholder="PAN Number"
-                  required=""
-                />
-                <label className="form__label" htmlFor="pan-num">
-                  PAN Number
-              </label>
-              </div>
             </div>
-            {!editing ? <button
+            <div className="form__group field">
+              <input
+                readOnly={true}
+                className="form__field"
+                type="text"
+                value={dob != null ? dob : 'DD/MM/YYYY'}
+                id="dob"
+                autocomplete="off"
+                placeholder="Date of Birth"
+                required=""
+              />
+              <label className="form__label" htmlFor="dob">
+                Date of Birth
+              </label>
+            </div>
+            <div className="form__group field">
+              <input
+                readOnly={true}
+                className="form__field"
+                type="text"
+                value={
+                  gender == 0
+                    ? 'Female'
+                    : gender == 1
+                    ? 'Male'
+                    : gender == 2
+                    ? 'Other'
+                    : 'Gender'
+                }
+                id="gender"
+                autocomplete="off"
+                placeholder="Gender"
+                required=""
+              />
+              <label className="form__label" htmlFor="gender">
+                Gender
+              </label>
+            </div>
+            <div className="form__group field">
+              <input
+                readOnly={true}
+                className="form__field"
+                type="text"
+                autocomplete="off"
+                value={martaialname ? martaialname : 'Marital Status'}
+                id="marital-Status"
+                placeholder="Marital Status"
+                required=""
+              />
+              <label className="form__label" htmlFor="marital-Status">
+                Marital Status
+              </label>
+            </div>
+            <div className="form__group field">
+              <input
+                readOnly={true}
+                className="form__field"
+                type="text"
+                autocomplete="off"
+                value={panNumber ? panNumber : 'PAN number'}
+                id="pan-num"
+                placeholder="PAN Number"
+                required=""
+              />
+              <label className="form__label" htmlFor="pan-num">
+                PAN Number
+              </label>
+            </div>
+          </div>
+          {!editing ? (
+            <button
               type="button"
               id="edit-personal"
               className="edit-button"
               onClick={() => setEditing(true)}
             >
               Edit
-          </button> : null}
-          </div>
-        )}
+            </button>
+          ) : null}
+        </div>
+      )}
     </div>
   )
 }
