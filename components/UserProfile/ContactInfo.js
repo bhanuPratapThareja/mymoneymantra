@@ -12,7 +12,7 @@ const ContactInfo = (props) => {
   const [emailError, setEmailError] = useState(false)
   const [errMsg, setErrMsg] = useState('')
 
-  const { totalNumberOfFields, calculateProfileProgress, setContactInfoProgress } = props
+  const { setContactInfoProgress } = props
 
   useEffect(() => {
     getContact()
@@ -34,22 +34,21 @@ const ContactInfo = (props) => {
         setEmailId(emailId)
         setMobileNo(mobileNo)
         setAddress(address)
-        address.map((a => {
+        address.map((a) => {
           if (a.addressId == 300) {
             setCurrentAddress(a.addressline1)
           }
           if (a.addressId == 301) {
             setPermanentAddress(a.addressline1)
           }
-        }))
+        })
         console.log('adderss', address)
-        let count = emailId ? 1 : 0;
-        count = mobileNo ? count + 1 : count;
-        count = address ? count + 1 : count;
+        let count = emailId ? 1 : 0
+        count = mobileNo ? count + 1 : count
+        count = address ? count + 1 : count
 
-        sendCount(count, 3);
-
-
+        sendCount(count, 3)
+        calculate(res)
       })
       .catch((err) => {
         console.log(err)
@@ -65,7 +64,12 @@ const ContactInfo = (props) => {
     try {
       // const customerId = localStorage.getItem('customerId')
       let contactNo = JSON.stringify(mobileNo)
-      const responseObject = await saveContactInfo(contactNo, emailId, currentAddress, permanentAddress)
+      const responseObject = await saveContactInfo(
+        contactNo,
+        emailId,
+        currentAddress,
+        permanentAddress
+      )
       if (responseObject.status === 200) {
         getContact()
       }
@@ -77,6 +81,16 @@ const ContactInfo = (props) => {
   const cancleHandler = () => {
     setEditing(false)
     getContact()
+  }
+
+  const calculate = (fields) => {
+    let progress = 0
+    Object.keys(fields).map((field) => {
+      if (fields[field]) {
+        progress += 1
+      }
+    })
+    setContactInfoProgress(progress)
   }
 
   return (
@@ -183,7 +197,12 @@ const ContactInfo = (props) => {
           className="save-options"
           style={{ display: editing ? 'flex' : 'none' }}
         >
-          <button type="submit" className="save-contact" id="save-contact" disabled={emailError}>
+          <button
+            type="submit"
+            className="save-contact"
+            id="save-contact"
+            disabled={emailError}
+          >
             Save
           </button>
           <button
