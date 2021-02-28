@@ -2603,63 +2603,52 @@ button.cstm-load-btn {
   transform: translate(-50%, -50%);
 }
 
-.red-circle{
-  background: url("/assets/images/icons/redc.png") !important;
+.creditProfile-utilization-flow .paymentRank-wrapper-content .left-mobile-view .value-utilisation,
+.creditProfile-enquiries-flow .paymentRank-wrapper-content-left.left-mobile-view  .value-enquiries,
+.credit-rank-flow .paymentRank-wrapper-content .left-mobile-view .value-rank {
   max-width: 240px;
   height: 100%;
   background-color: #ffffff;
-  background-repeat: no-repeat !important;
-  background-size: contain;
   -ms-flex-pack: center;
   justify-content: center;
   -ms-flex-align: center;
   align-items: center;
-  background-position: center !important;
 }
 
-.orange-circle{
-  background: url("/assets/images/icons/orangec.png") !important;
-  max-width: 240px;
-  height: 100%;
-  background-color: #ffffff;
-  background-repeat: no-repeat !important;
-  background-size: contain;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-position: center !important;
+
+.creditProfile-utilization-flow .paymentRank-wrapper-content .left-mobile-view .value-utilisation.red-circle,
+.creditProfile-enquiries-flow .paymentRank-wrapper-content-left.left-mobile-view  .value-enquiries.red-circle,
+.credit-rank-flow .paymentRank-wrapper-content .left-mobile-view .value-rank.red-circle {
+  background: url("/assets/images/icons/redc.png") no-repeat center / contain;  
 }
 
-.yellow-circle{
-  background: url("/assets/images/icons/yellowc.png") !important;
-  max-width: 240px;
-  height: 100%;
-  background-color: #ffffff;
-  background-repeat: no-repeat !important;
-  background-size: contain;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-position: center !important;
+.creditProfile-utilization-flow .paymentRank-wrapper-content .left-mobile-view .value-utilisation.orange-circle,
+.creditProfile-enquiries-flow .paymentRank-wrapper-content-left.left-mobile-view  .value-enquiries.orange-circle,
+.credit-rank-flow .paymentRank-wrapper-content .left-mobile-view .value-rank.orange-circle {
+  background: url("/assets/images/icons/orangec.png") no-repeat center / contain;
 }
 
-.green-circle{
+.creditProfile-utilization-flow .paymentRank-wrapper-content .left-mobile-view .value-utilisation.yellow-circle,
+.creditProfile-enquiries-flow .paymentRank-wrapper-content-left.left-mobile-view  .value-enquiries.yellow-circle,
+.credit-rank-flow .paymentRank-wrapper-content .left-mobile-view .value-rank.yellow-circle {
+  background: url("/assets/images/icons/yellowc.png") no-repeat center / contain;
+}
+
+.creditProfile-utilization-flow .paymentRank-wrapper-content .left-mobile-view .value-utilisation.green-circle,
+.creditProfile-enquiries-flow .paymentRank-wrapper-content-left.left-mobile-view  .value-enquiries.green-circle ,
+.credit-rank-flow .paymentRank-wrapper-content .left-mobile-view .value-rank.green-circle {
   background: url("/assets/images/icons/greenc.png") no-repeat center / contain;
-  max-width: 240px;
+  /* max-width: 240px;
   height: 100%;
   background-color: #ffffff;
   -ms-flex-pack: center;
   justify-content: center;
   -ms-flex-align: center;
   align-items: center;
-  min-width: 240px;
+  min-width: 240px;*/
   position: relative;
-  border-radius: 50%;
+  border-radius: 50%; 
 }
-
-
 
 .red-square{
   background: url("/assets/images/icons/reds.png") !important;
@@ -2856,3 +2845,7 @@ button.cstm-load-btn {
   cursor: pointer;
 }
 /*end*/
+
+.tabcontent .popular-cards-slider-card .app_progress_card_content .left .value:nth-child(2) {
+  margin: 0;
+}

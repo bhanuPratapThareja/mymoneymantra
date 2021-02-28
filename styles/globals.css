@@ -438,7 +438,7 @@ label {
 }
   .popular-cards-slider-card-top {
     padding: 32px; 
-    height:85%;
+    /* height:85%; */
   }
     @media (max-width: 768px) {
       .popular-cards-slider-card-top {
