@@ -3,7 +3,10 @@ import axios from 'axios'
 
 import { getWorkInfo } from '../../utils/userProfileService'
 import { getApiData } from '../../api/api'
-import { getFormattedCurrency, getWholeNumberFromCurrency } from '../../utils/formattedCurrency'
+import {
+  getFormattedCurrency,
+  getWholeNumberFromCurrency,
+} from '../../utils/formattedCurrency'
 
 const WorkInfo = (props) => {
   const [isedit, setIsedit] = useState(false)
@@ -20,46 +23,46 @@ const WorkInfo = (props) => {
   const [bankName, setBankName] = useState('')
   const [bankList, setBankList] = useState([])
 
-  const { totalNumberOfFields, calculateProfileProgress, setWorkInfoProgress } = props
+  const { setWorkInfoProgress } = props
 
   useEffect(() => {
     console.log(props.data)
     getWork()
   }, [])
 
-  const calculateSectionProgress = () => {
-    // let savedFields = 0
-    let value1 = (employedType && employedType.length) ? 1 : 0
-    let value2 = (bankId && bankId.length) ? 1 : 0
-    let value3 = (netMonthlyIncome && netMonthlyIncome.length) ? 1 : 0
-    let value4 = (companyName && companyName.length) ? 1 : 0
-    let value5 = (accountNo && accountNo.length) ? 1 : 0
-    let value6 = (ifscCode && ifscCode.length) ? 1 : 0
-    let savedFields = value1 + value2 + value3 + value4 + value5 + value6
-    // if (employedType && employedType.length) {
-    //   savedFields += 1
-    // }
-    // if (bankId && bankId.length) {
-    //   savedFields += 1
-    // }
-    // if (netMonthlyIncome && netMonthlyIncome.length) {
-    //   savedFields += 1
-    // }
-    // if (companyName && companyName.length) (
-    //   savedFields += 1
-    // )
-    // if (accountNo && accountNo.length) {
-    //   savedFields += 1
-    // }
-    // if (ifscCode && ifscCode.length) {
-    //   savedFields += 1
-    // }
-    console.log(savedFields)
-    console.log((Math.round((savedFields / totalNumberOfFields) * 100)))
-    let progress = Math.round((savedFields / totalNumberOfFields) * 100)
-    setWorkInfoProgress(progress)
-    calculateProfileProgress()
-  }
+  // const calculateSectionProgress = () => {
+  //   // let savedFields = 0
+  //   let value1 = employedType && employedType.length ? 1 : 0
+  //   let value2 = bankId && bankId.length ? 1 : 0
+  //   let value3 = netMonthlyIncome && netMonthlyIncome.length ? 1 : 0
+  //   let value4 = companyName && companyName.length ? 1 : 0
+  //   let value5 = accountNo && accountNo.length ? 1 : 0
+  //   let value6 = ifscCode && ifscCode.length ? 1 : 0
+  //   let savedFields = value1 + value2 + value3 + value4 + value5 + value6
+  //   // if (employedType && employedType.length) {
+  //   //   savedFields += 1
+  //   // }
+  //   // if (bankId && bankId.length) {
+  //   //   savedFields += 1
+  //   // }
+  //   // if (netMonthlyIncome && netMonthlyIncome.length) {
+  //   //   savedFields += 1
+  //   // }
+  //   // if (companyName && companyName.length) (
+  //   //   savedFields += 1
+  //   // )
+  //   // if (accountNo && accountNo.length) {
+  //   //   savedFields += 1
+  //   // }
+  //   // if (ifscCode && ifscCode.length) {
+  //   //   savedFields += 1
+  //   // }
+  //   console.log(savedFields)
+  //   console.log(Math.round((savedFields / totalNumberOfFields) * 100))
+  //   let progress = Math.round((savedFields / totalNumberOfFields) * 100)
+  //   setWorkInfoProgress(progress)
+  //   calculateProfileProgress()
+  // }
 
   useEffect(() => {
     const timer = setTimeout(async () => {
@@ -109,11 +112,12 @@ const WorkInfo = (props) => {
         setCompanyName(companyName)
         // setCompanyQuery(companyName)
         // calculateSectionProgress()
+        calculate(res)
       })
       .catch((err) => {
         console.log(err)
       })
-      .finally(() => { })
+      .finally(() => {})
   }
 
   const submitHandler = async (e) => {
@@ -130,7 +134,7 @@ const WorkInfo = (props) => {
         netMonthlyIncome: getWholeNumberFromCurrency(netMonthlyIncome),
         accountNo,
         employedType,
-        ifscCode
+        ifscCode,
       })
       if (responseObject.status === 200) {
         getWork()
@@ -166,7 +170,6 @@ const WorkInfo = (props) => {
       }
     })
     setBankList(filteredBanks)
-
   }
 
   const onSelectBank = (bank) => {
@@ -184,6 +187,16 @@ const WorkInfo = (props) => {
     }
     value = getFormattedCurrency(value)
     setNetMonthlyIncome(value)
+  }
+
+  const calculate = (fields) => {
+    let progress = 0
+    Object.keys(fields).map((field) => {
+      if (fields[field]) {
+        progress += 1
+      }
+    })
+    setWorkInfoProgress(progress)
   }
 
   return (
@@ -271,30 +284,32 @@ const WorkInfo = (props) => {
             <label htmlFor="defense">Defense</label>
           </div>
         ) : (
-            <div className="form__group field">
-              <input
-                readOnly={true}
-                autocomplete="off"
-                value={
-                  employedType == 1000000001
-                    ? 'Self Employed'
-                    : employedType == 1000000002
-                      ? 'Self Employed Professional'
-                      : employedType == 1000000004
-                        ? 'Salaried'
-                        : employedType == 1000000008 ? 'Defense' : ''
-                }
-                className="form__field"
-                type="text"
-                id="emp-type"
-                name="emp-type"
-                required=""
-              />
-              <label className="form__label" htmlFor="emp-type">
-                Employment Type
+          <div className="form__group field">
+            <input
+              readOnly={true}
+              autocomplete="off"
+              value={
+                employedType == 1000000001
+                  ? 'Self Employed'
+                  : employedType == 1000000002
+                  ? 'Self Employed Professional'
+                  : employedType == 1000000004
+                  ? 'Salaried'
+                  : employedType == 1000000008
+                  ? 'Defense'
+                  : ''
+              }
+              className="form__field"
+              type="text"
+              id="emp-type"
+              name="emp-type"
+              required=""
+            />
+            <label className="form__label" htmlFor="emp-type">
+              Employment Type
             </label>
-            </div>
-          )}
+          </div>
+        )}
         {/* <div className="shortforms-container"> */}
         <div
           className={
@@ -356,7 +371,7 @@ const WorkInfo = (props) => {
             placeholder="Net Monthly Income"
             required=""
             onChange={handleIncomeChange}
-          // onChange={(e) => setNetMonthlyIncome(e.target.value)}
+            // onChange={(e) => setNetMonthlyIncome(e.target.value)}
           />
           <label className="form__label" htmlFor="monthly-income">
             Net Monthly Income
@@ -375,24 +390,28 @@ const WorkInfo = (props) => {
           <input
             readOnly={!isedit}
             className="form__field"
-            type='text'
-            id='bank-name'
+            type="text"
+            id="bank-name"
             autocomplete="off"
-            placeholder='Bank Name'
-            required=''
+            placeholder="Bank Name"
+            required=""
             value={bankName}
             onChange={handleBankChange}
           />
 
-          {isedit && bankList.length ?
+          {isedit && bankList.length ? (
             <datalist style={{ display: 'block', background: '#fff' }}>
               {bankList.map((bank, i) => (
-                <option key={i} value={bank.bank_id} onClick={() => onSelectBank(bank)}>
+                <option
+                  key={i}
+                  value={bank.bank_id}
+                  onClick={() => onSelectBank(bank)}
+                >
                   {bank.bank_name}
                 </option>
               ))}
             </datalist>
-            : null}
+          ) : null}
           {/* <select
             readOnly={!isedit}
             className="form__field"
@@ -474,14 +493,16 @@ const WorkInfo = (props) => {
         </button>
       </div>
 
-      {!isedit ? <button
-        type="button"
-        id="edit-work"
-        className="edit-button"
-        onClick={() => setIsedit(!isedit)}
-      >
-        Edit
-      </button> : null}
+      {!isedit ? (
+        <button
+          type="button"
+          id="edit-work"
+          className="edit-button"
+          onClick={() => setIsedit(!isedit)}
+        >
+          Edit
+        </button>
+      ) : null}
     </form>
   )
 }
