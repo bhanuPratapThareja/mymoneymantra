@@ -45,11 +45,10 @@ const Documents = (props) => {
     documentTypeId: '1000000037',
     uploadStatus: '',
   })
-  const { totalNumberOfFields, calculateProfileProgress, setDocumentProgress } = props
+  const { setDocumentProgress } = props
   useEffect(() => {
     getAllDocuments()
   }, [])
-
 
   const getPanAndAadhar = (doc) => {
     if (doc.documentNo == '1000000290') {
@@ -80,7 +79,8 @@ const Documents = (props) => {
     try {
       const customerId = localStorage.getItem('customerId')
       const responseObject = await axios.get(
-        `http://203.122.46.189:8060/customer/api/profile/v1/all-docs?customerId=${customerId ? customerId : 101
+        `http://203.122.46.189:8060/customer/api/profile/v1/all-docs?customerId=${
+          customerId ? customerId : 101
         }`
       )
       console.log('All documents', responseObject)
@@ -110,6 +110,7 @@ const Documents = (props) => {
         }
       })
       console.log('all doc', pan, bankStatement)
+      calculate(responseObject.data.docList)
     } catch (err) {
       console.log(err)
     }
@@ -299,6 +300,16 @@ const Documents = (props) => {
   //   rentAgreement,
   //   bill,
   // })
+
+  const calculate = (fields) => {
+    let progress = 0
+    fields.map((field) => {
+      if (field) {
+        progress += 1
+      }
+    })
+    setDocumentProgress(progress)
+  }
 
   return (
     <form>
