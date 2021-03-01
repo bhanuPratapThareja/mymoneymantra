@@ -15,7 +15,7 @@ const PopularOffers = props => {
       if (!popularOffers.length) {
          getOffers()
       }
-   })
+   },[])
 
    const getOffers = async () => {
       const apiOffers = await viewOffers(props.productType)

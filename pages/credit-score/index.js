@@ -2,14 +2,14 @@ import AccountSummary from '../../components/CreditScore/AccountSummary'
 import CreditOverview from '../../components/CreditScore/CreditOverview'
 import CreditScoreBanner from '../../components/CreditScore/CreditScoreBanner'
 import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
-import OffersForYou from '../../components/CreditScore/OffersForYou'
+// import OffersForYou from '../../components/CreditScore/OffersForYou'
 import TipSection from '../../components/CreditScore/TipSection'
 import Layout from '../../components/Layout'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { useEffect, useState } from 'react'
 import Loader from '../../components/common/Loader'
 import { getCreditScore } from '../../utils/creditProfileService'
-
+import PopularOffers from '../../components/common/PopularOffers';
 const creditScoreProfile = (props) => {
   const [loading, setLoading] = useState(true)
   const [cpScoreData, setCpScoreData] = useState({})
@@ -48,14 +48,14 @@ const creditScoreProfile = (props) => {
         />
         <TipSection />
         <FactorsAffecting />
-        <CreditOverview />
+        <CreditOverview  totalScore={cpScoreData.totalCurrentCredit} overview={cpScoreData.creditOverview}/>
         <AccountSummary
           active={active}
           closed={closed}
           name={cpScoreData?.applicantName}
           banks={props?.data}
         />
-        <OffersForYou />
+        <PopularOffers data='Offers For You' />
       </Layout>
     </div>
   )

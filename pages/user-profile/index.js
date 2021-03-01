@@ -154,9 +154,9 @@ const userProfile = (props) => {
               <h1>{customerName}</h1>
               <div className="profile-progress">
                 <div className="inner">
-                  <div className="percent-bar">
-                    <div className="perctange-wrap">
-                      <h6 id="percentage">{profileProgress}%</h6>
+                  <div className="percent-bar" style={{width:`${profileProgress>100?100:profileProgress}%`}}>
+                    <div className="perctange-wrap" >
+                      <h6 id="percentage">{profileProgress>100?100:profileProgress}%</h6>
                     </div>
                   </div>
                 </div>
