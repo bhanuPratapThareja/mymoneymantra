@@ -14,8 +14,8 @@ const Offers = () => {
         const responseObject = await axios.post(
           'http://203.122.46.189:8060/customer/api/customer/v1/view-offers',
           {
-            // customerId: customerId ? customerId : '206',
-            customerId: '',
+            customerId: customerId ? customerId : '206',
+            // customerId: '',
             productId: '',
           }
         )
