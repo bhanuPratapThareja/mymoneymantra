@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 
-const CreditScoreBanner = ({ accountHistory }) => {
+const CreditScoreBanner = ({ accountHistory, score }) => {
   const [data, setData] = useState([])
   const [label, setLabel] = useState([])
 
