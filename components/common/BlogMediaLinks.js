@@ -10,6 +10,10 @@ import {
     PinterestShareButton,
     TwitterIcon,
     TwitterShareButton,
+    WhatsappShareButton,
+    WhatsappIcon,
+    EmailShareButton,
+    EmailIcon
 } from "react-share";
 
 const BlogMediaLinks = props => {
@@ -34,15 +38,14 @@ const BlogMediaLinks = props => {
                     <LinkedinShareButton url={props.url} onShareWindowClose={() => props.openBlogShare(false)} >
                         {props.blogShareButton ? <LinkedinIcon size={32} /> : <LinkedinIcon size={36} />}
                     </LinkedinShareButton>
+                     <WhatsappShareButton url={props.url} onShareWindowClose={() => props.openBlogShare(false)} >
+                        {props.blogShareButton ? <WhatsappIcon size={32} /> : <WhatsappIcon size={36} />}
+                    </WhatsappShareButton>
+                    <EmailShareButton url={props.url} onShareWindowClose={() => props.openBlogShare(false)} >
+                        {props.blogShareButton ? <EmailIcon size={32} /> : <EmailIcon size={36} />}
+                    </EmailShareButton>
                     {props.blogShareButton ? <button onClick={() => props.openBlogShare(false)}>X</button> : null}
                 </div>
-                {/* {blog_social_media_link_component.map(image => {
-                    return (
-                        <div onClick={goToMediaLinks} className="slide_cell" key={image.id}>
-                            <a> <img src={`${strapi.baseUrl}${image.blog_social_media_image.url}`} /></a>
-                        </div>
-                    )
-                })} */}
             </div>
         </section>
     )
