@@ -6,8 +6,8 @@ const ContactInfo = (props) => {
   const [editing, setEditing] = useState(false)
   const [mobileNo, setMobileNo] = useState('')
   const [emailId, setEmailId] = useState('')
-  const [currentAddress, setCurrentAddress] = useState('')
-  const [permanentAddress, setPermanentAddress] = useState('')
+  const [currentAddressDisplay, setCurrentAddressDisplay] = useState('')
+  const [permanentAddressDisplay, setPermanentAddressDisplay] = useState('')
   const [address, setAddress] = useState([])
   const [emailError, setEmailError] = useState(false)
   const [errMsg, setErrMsg] = useState('')
@@ -26,6 +26,21 @@ const ContactInfo = (props) => {
   useEffect(() => {
     getContact()
   }, [])
+
+  useEffect(() => {
+    if (sameAddress) {
+      setPermanentPincode(currentPincode)
+      setPermanentCity(currentCity)
+      setPermanentAddressLine1(currentAddressLine1)
+      setPermanentAddressLine2(currentAddressLine2)
+    } else {
+      setPermanentPincode('')
+      setPermanentCity('')
+      setPermanentAddressLine1('')
+      setPermanentAddressLine2('')
+    }
+  }, [sameAddress])
+
   const validateEmail = () => {
     let pattern = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/
     if (pattern.test(emailId)) {
@@ -71,6 +86,18 @@ const ContactInfo = (props) => {
     e.preventDefault()
     setEditing(false)
     try {
+      const permanentAddress = {
+        pincode: permanentPincode,
+        city: permanentCity,
+        addressline1: permanentAddressLine1,
+        addressline2: permanentAddressLine2,
+      }
+      const currentAddress = {
+        pincode: currentPincode,
+        city: currentCity,
+        addressline1: currentAddressLine1,
+        addressline2: currentAddressLine2,
+      }
       // const customerId = localStorage.getItem('customerId')
       let contactNo = JSON.stringify(mobileNo)
       const responseObject = await saveContactInfo(
@@ -165,14 +192,13 @@ const ContactInfo = (props) => {
             }
           >
             <input
-              readOnly={!editing}
+              readOnly
               className="form__field"
               type="text"
-              value={currentAddress}
+              value={currentAddressDisplay}
               autocomplete="off"
               id="current-address"
               placeholder="Current Address"
-              onChange={(e) => setCurrentAddress(e.target.value)}
               required=""
             />
             <label className="form__label" htmlFor="current-address">
@@ -187,14 +213,13 @@ const ContactInfo = (props) => {
             }
           >
             <input
-              readOnly={!editing}
+              readOnly
               className="form__field"
               type="text"
               autocomplete="off"
-              value={permanentAddress}
+              value={permanentAddressDisplay}
               id="permanent-address"
               placeholder="Permanent Address"
-              onChange={(e) => setPermanentAddress(e.target.value)}
               required=""
             />
             <label className="form__label" htmlFor="permanent-address">
@@ -236,12 +261,13 @@ const ContactInfo = (props) => {
               </div>
               <div class="form__group field edit-part">
                 <input
-                  value=""
+                  value={currentAddressLine1}
                   class="form__field"
                   type="text"
                   id="c-address-line-1"
                   placeholder="Address Line 1"
                   required=""
+                  onChange={(e) => setCurrentAddressLine1(e.target.value)}
                 />
                 <label class="form__label" for="c-address-line-1">
                   Address Line 1
@@ -249,12 +275,13 @@ const ContactInfo = (props) => {
               </div>
               <div class="form__group field edit-part">
                 <input
-                  value=""
+                  value={currentAddressLine2}
                   class="form__field"
                   type="text"
                   id="c-address-line-2"
                   placeholder="address-line-2"
                   required=""
+                  onChange={(e) => setCurrentAddressLine2(e.target.value)}
                 />
                 <label class="form__label" for="c-address-line-2">
                   Address Line 2
@@ -262,8 +289,14 @@ const ContactInfo = (props) => {
               </div>
             </div>
             <div class="checkbox-container">
-              <div class="checkbox">
-                <input type="checkbox" id="checkbox" name="" value="" />
+              <div class="checkbox edit-part">
+                <input
+                  type="checkbox"
+                  id="checkbox"
+                  name=""
+                  checked={sameAddress}
+                  onChange={(e) => setSameAddress(e.target.checked)}
+                />
                 <label for="checkbox">
                   <span>Permanent address is same as current address.</span>
                 </label>
@@ -273,12 +306,13 @@ const ContactInfo = (props) => {
             <div class="shortforms-container personal-style">
               <div class="form__group field edit-part">
                 <input
-                  value=""
+                  value={permanentPincode}
                   class="form__field"
                   type="text"
                   id="p-pincode"
                   placeholder="Pincode"
                   required=""
+                  onChange={(e) => setPermanentPincode(e.target.value)}
                 />
                 <label class="form__label" for="p-pincode">
                   Pincode
@@ -286,12 +320,13 @@ const ContactInfo = (props) => {
               </div>
               <div class="form__group field edit-part">
                 <input
-                  value=""
+                  value={permanentCity}
                   class="form__field"
                   type="text"
                   id="p-city"
                   placeholder="City"
                   required=""
+                  onChange={(e) => setPermanentCity(e.target.value)}
                 />
                 <label class="form__label" for="p-city">
                   City
@@ -299,12 +334,13 @@ const ContactInfo = (props) => {
               </div>
               <div class="form__group field edit-part">
                 <input
-                  value=""
+                  value={permanentAddressLine1}
                   class="form__field"
                   type="text"
                   id="p-address-line-1"
                   placeholder="Address Line 1"
                   required=""
+                  onChange={(e) => setPermanentAddressLine1(e.target.value)}
                 />
                 <label class="form__label" for="p-address-line-1">
                   Address Line 1
@@ -312,12 +348,13 @@ const ContactInfo = (props) => {
               </div>
               <div class="form__group field edit-part">
                 <input
-                  value=""
+                  value={permanentAddressLine2}
                   class="form__field"
                   type="text"
                   id="p-address-line-2"
                   placeholder="address-line-2"
                   required=""
+                  onChange={(e) => setPermanentAddressLine2(e.target.value)}
                 />
                 <label class="form__label" for="p-address-line-2">
                   Address Line 2
