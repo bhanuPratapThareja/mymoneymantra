@@ -18,6 +18,7 @@ import {
     updateInputsValidity,
     incrementSlideId,
     decrementSlideId,
+    setRadioBreakpoints,
     updateDropdownList,
     updateSelectionFromDropdown,
     resetDropdowns,
@@ -338,16 +339,7 @@ class ShortExtendedForm extends React.Component {
         const { newSlides, inputs, slideIndex } = getCurrentSlideInputs(this.state)
         updateInputsValidity(inputs, field, this.state.errorMsgs, this.state.propertyValue)
         this.setState({ ...this.state, slides: newSlides }, () => {
-            // let hasRadio =  false
-            // inputs.forEach(input => {
-            //     if(input.type === 'radio') {
-            //         hasRadio = true
-            //     } 
-            // })
-
-
             inputs.forEach(input => {
-
                 if (input.type === 'radio' && input.value && input.radio.breakpoints) {
                     const breakpoints = input.radio.breakpoints
                     if (breakpoints.length) {
@@ -356,33 +348,10 @@ class ShortExtendedForm extends React.Component {
                                 continue
                             }
                             if (breakpoints[i].breakpoint_value === input.value && breakpoints[i].breakpoint_sequence) {
-                                const currentSlideId = `${sf}-${slideIndex}`
-                                const breakpointSequence = breakpoints[i].breakpoint_sequence.split(',')
-                                const slidesCopy1 = JSON.parse(JSON.stringify(this.state.slides))
-                                const slidesCopy2 = JSON.parse(JSON.stringify(this.state.backUpSlides))
-                                const slicedSlides = slidesCopy1.splice(0, slideIndex + 1)
-                                const slidesAddtion = []
-                                slidesCopy2.forEach(slide => {
-                                    breakpointSequence.forEach(breakpoint => {
-                                        const slideIndex = slide.slideId.split('-')[1]
-                                        if (slideIndex == breakpoint) {
-                                            slidesAddtion.push(slide)
-                                        }
-                                    })
-                                })
-
-                                let index = slideIndex
-                                slidesAddtion.forEach(slide => {
-                                    index++
-                                    let newSlideId = `${sf}-${index}`
-                                    slide.slideId = newSlideId
-                                })
-
-                                const newSlides = [...slicedSlides, ...slidesAddtion]
+                                const { currentSlideId, newSlides } = setRadioBreakpoints(slideIndex, breakpoints[i], this.state.slides, this.state.backUpSlides)
                                 this.setState({ ...this.state, slides: newSlides, currentSlide: currentSlideId, slideIndex }, () => {
                                     this.plusSlides(1)
                                 })
-
                             }
                         }
                     } else {

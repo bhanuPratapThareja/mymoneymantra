@@ -4,6 +4,7 @@ import { getBase64, documentUpload, generateLead } from "../services/formService
 import { getFormattedName } from "./formatDataForApi"
 import { getWholeNumberFromCurrency, getFormattedCurrency } from "./formattedCurrency"
 import { setFormData, getFormData } from "./localAccess"
+import { sf } from './types'
 
 export const textTypeInputs = [
   "text",
@@ -16,10 +17,8 @@ export const textTypeInputs = [
 
 export const getCurrentSlideInputs = (state) => {
   const newSlides = [...state.slides]
-  // console.log(newSlides)
   const slide = newSlides.filter(slide => slide.slideId === state.currentSlide)
-  // console.log(slide)
-  if(!slide.length)  {
+  if (!slide.length) {
     return
   }
   const slideId = slide[0].slideId
@@ -201,14 +200,14 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
           inp.errorMsg = ""
           inp.verified = false
         }
-        if(inp.end_point_name === 'propertyValue' && inp.value) {
+        if (inp.end_point_name === 'propertyValue' && inp.value) {
           propertyValue = Number(getWholeNumberFromCurrency(inp.value))
         }
       }
     })
   }
 
-  return {inputDropdown, propertyValue}
+  return { inputDropdown, propertyValue }
 }
 
 export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) => {
@@ -229,16 +228,16 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
       // check on blur
 
       if (field.blur) {
-        if(inp.end_point_name === 'requestedLoanamount' && inp.value && inp.input_id === field.currentActiveInput && propertyValue){
+        if (inp.end_point_name === 'requestedLoanamount' && inp.value && inp.input_id === field.currentActiveInput && propertyValue) {
 
           errors = true
           inp.error = true
           inp.verified = false
-          if(!inp.value) {
+          if (!inp.value) {
             inp.errorMsg = errorMsgs.mandatory
-          } else if(Number(getWholeNumberFromCurrency(inp.value)) > propertyValue) {
+          } else if (Number(getWholeNumberFromCurrency(inp.value)) > propertyValue) {
             inp.errorMsg = `The value cannot be more than Property Value of ${getFormattedCurrency(propertyValue.toString())}`
-          } else if(!isMonetaryValid(inp)) {
+          } else if (!isMonetaryValid(inp)) {
             inp.errorMsg = inp.validation_error
           } else {
             inp.error = false
@@ -334,7 +333,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
             errors = true
           } else {
             inp.error = false
-            inp.errorMsg = ""     
+            inp.errorMsg = ""
           }
 
         } else if (
@@ -363,16 +362,16 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
     // check on slide or form submit
   } else {
     inputs.forEach((inp) => {
-      if(inp.end_point_name === 'requestedLoanamount' && inp.value && propertyValue){
-        if(!inp.value) {
+      if (inp.end_point_name === 'requestedLoanamount' && inp.value && propertyValue) {
+        if (!inp.value) {
           errors = true
           inp.error = true
           inp.errorMsg = errorMsgs.mandatory
-        }else if(!isMonetaryValid(inp)) {
+        } else if (!isMonetaryValid(inp)) {
           errors = true
-          inp.error = true         
+          inp.error = true
           inp.errorMsg = inp.validation_error
-        } else if(Number(getWholeNumberFromCurrency(inp.value)) > propertyValue) {
+        } else if (Number(getWholeNumberFromCurrency(inp.value)) > propertyValue) {
           errors = true
           inp.error = true
           inp.errorMsg = `The value cannot be more than Property Value of ${getFormattedCurrency(propertyValue.toString())}`
@@ -448,6 +447,35 @@ export const decrementSlideId = (slideId) => {
   return slideId
 }
 
+export const setRadioBreakpoints = (slideIndex, breakpoints, slides, backUpSlides) => {
+  const currentSlideId = `${sf}-${slideIndex}`
+  const breakpointSequence = breakpoints.breakpoint_sequence.split(',')
+  const slidesCopy1 = JSON.parse(JSON.stringify(slides))
+  const slidesCopy2 = JSON.parse(JSON.stringify(backUpSlides))
+  const slicedSlides = slidesCopy1.splice(0, slideIndex + 1)
+  const slidesAddtion = []
+  breakpointSequence.forEach(breakpoint => {
+    slidesCopy2.forEach(slide => {
+      const slideIndex = slide.slideId.split('-')[1]
+      if (slideIndex == breakpoint) {
+        slidesAddtion.push(slide)
+      }
+    })
+  })
+
+  let index = slideIndex
+  slidesAddtion.forEach(slide => {
+    index++
+    let newSlideId = `${sf}-${index}`
+    slide.slideId = newSlideId
+  })
+
+  const newSlides = [...slicedSlides, ...slidesAddtion]
+
+  return { currentSlideId, newSlides }
+
+}
+
 export const updateDropdownList = (inputs, listType, list, input_id) => {
   inputs.forEach((inp) => {
     if (inp.input_id === input_id) {
@@ -486,10 +514,10 @@ export const updateSelectionFromDropdown = (inputs, input_id, item) => {
           dependentInput.selectedId = item[dependentInput.select_id]
           dependentInput.error = false
           update_field_with_end_point_name = dependentInput.update_field_with_end_point_name
-          if(dependentInput.value) {
+          if (dependentInput.value) {
             dependentInput.verified = true
           }
-          if(!dependentInput.mandatory) {
+          if (!dependentInput.mandatory) {
             dependentInput.verified = false
           }
         }
@@ -578,17 +606,17 @@ export const submitShortForm = (slides, currentSlide, primaryPath, formType, pro
         data[key] = ""
       }
     }
-   
+
     setFormData(data, primaryPath)
     const latestFormData = getFormData(primaryPath)
-    if(latestFormData) {
+    if (latestFormData) {
       generateLead(latestFormData, primaryPath, formType, productType)
-      .then((res) => {
-        resolve(res)
-      })
-      .catch((err) => {
-        reject("Error while Submitting. Please try again.!!!")
-      })
+        .then((res) => {
+          resolve(res)
+        })
+        .catch((err) => {
+          reject("Error while Submitting. Please try again.!!!")
+        })
     }
   })
 }
