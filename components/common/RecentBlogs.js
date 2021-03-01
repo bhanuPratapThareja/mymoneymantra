@@ -17,7 +17,7 @@ const RecentBlogs = (props) => {
 
     const onOpenBlog = blog => {
         setBlogId(blog.id)
-        router.push(`/blog/details/${blog.slug}`)
+        router.push(`/blog/${blog.slug}`)
     }
     return (
         <section data-aos="fade-up" className="popular-card-container aos-animate aos-init">
