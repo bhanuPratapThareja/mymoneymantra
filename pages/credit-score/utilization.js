@@ -10,6 +10,7 @@ import CreditUtilizationAllAccounts from '../../components/CreditScore/CreditUti
 import Loader from '../../components/common/Loader'
 import { getCreditUtilization } from '../../utils/creditProfileService'
 import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
+import PopularOffers from '../../components/common/PopularOffers'
 
 const utilization = (props) => {
   const [loading, setLoading] = useState(true)
@@ -51,7 +52,7 @@ const utilization = (props) => {
           name={cpUtilizationData?.applicantName}
           banks={props?.data}
         />
-        <OffersForYou />
+        <PopularOffers data='Offers For You' />
       </Layout>
     </div>
   )

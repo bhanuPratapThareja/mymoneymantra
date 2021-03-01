@@ -10,6 +10,7 @@ import { getClassesForPage } from '../../utils/classesForPage'
 import Loader from '../../components/common/Loader'
 import { getCreditRank } from '../../utils/creditProfileService'
 import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
+import PopularOffers from '../../components/common/PopularOffers'
 
 const rank = (props) => {
   const [loading, setLoading] = useState(true)
@@ -44,7 +45,7 @@ const rank = (props) => {
         <TipSection />
         <FactorsAffecting />
         <PaymentRecord onTime={onTime} delayed={delayed} banks={props?.data} />
-        <OffersForYou />
+        <PopularOffers data='Offers For You' />
       </Layout>
     </div>
   )

@@ -10,6 +10,7 @@ import { getClassesForPage } from '../../utils/classesForPage'
 import Loader from '../../components/common/Loader'
 import { getCreditAge } from '../../utils/creditProfileService'
 import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
+import PopularOffers from '../../components/common/PopularOffers'
 
 const age = (props) => {
   const [loading, setLoading] = useState(true)
@@ -49,7 +50,7 @@ const age = (props) => {
           name={cpAgeData?.applicantName}
           banks={props.data}
         />
-        <OffersForYou />
+        <PopularOffers data='Offers For You' />
       </Layout>
     </div>
   )

@@ -9,6 +9,7 @@ import TotalEnquiries from '../../components/CreditScore/TotalEnquiries'
 import Loader from '../../components/common/Loader'
 import { getCreditEnquiries } from '../../utils/creditProfileService'
 import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
+import PopularOffers from '../../components/common/PopularOffers'
 
 const enquiries = (props) => {
   const [loading, setLoading] = useState(true)
@@ -41,7 +42,7 @@ const enquiries = (props) => {
           enquiries={cpEnquiriesData?.paymentRecord}
           banks={props.data}
         />
-        <OffersForYou />
+        <PopularOffers data='Offers For You' />
       </Layout>
     </div>
   )

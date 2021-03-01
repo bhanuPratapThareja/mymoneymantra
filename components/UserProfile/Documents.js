@@ -79,9 +79,7 @@ const Documents = (props) => {
     try {
       const customerId = localStorage.getItem('customerId')
       const responseObject = await axios.get(
-        `http://203.122.46.189:8060/customer/api/profile/v1/all-docs?customerId=${
-          customerId ? customerId : 101
-        }`
+        `http://203.122.46.189:8061/customer/api/profile/v1/all-docs`,{params:{customerId}}
       )
       console.log('All documents', responseObject)
       responseObject.data.docList.map((doc) => {
