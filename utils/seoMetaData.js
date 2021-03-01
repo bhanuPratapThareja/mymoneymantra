@@ -3,23 +3,23 @@ import { pageTitle } from './types'
 let head
 export const addSeoMetaData = (data, id) => {
     head = document.querySelector('head')
-    const { seo_meta_title, page_schema, seo_meta_conical_link, seo_meta_description, seo_meta_keywords } = data
-    addMetaTitle(seo_meta_title)
+    const { meta_title, page_schema, meta_conical_link, meta_description, meta_keywords } = data
+    addMetaTitle(meta_title)
     const scriptId = addSchemaScript(page_schema, id)
-    const canonicalId = addCanonicalLink(seo_meta_conical_link, id)
-    const metaDescriptionId = addMetaDescription(seo_meta_description, id)
-    const metaKeywordId = addMetaKeyword(seo_meta_keywords, id)
+    const canonicalId = addCanonicalLink(meta_conical_link, id)
+    const metaDescriptionId = addMetaDescription(meta_description, id)
+    const metaKeywordId = addMetaKeyword(meta_keywords, id)
     return { scriptId, canonicalId, metaDescriptionId, metaKeywordId }
 }
 
-export const addMetaTitle = seo_meta_title => {
+export const addMetaTitle = meta_title => {
     const existingTitle =  document.querySelector('title')
     if(existingTitle) {
         existingTitle.parentNode.removeChild(existingTitle)
     }
     const title = document.createElement('title')
-    if(seo_meta_title) {
-        title.innerHTML = seo_meta_title
+    if(meta_title) {
+        title.innerHTML = meta_title
     } else {
         title.innerHTML = pageTitle
     }
@@ -39,13 +39,13 @@ export const addSchemaScript = (page_schema, id) => {
     return scriptId
 }
 
-export const addCanonicalLink = (seo_meta_conical_link, id) => {
+export const addCanonicalLink = (meta_conical_link, id) => {
     let canonicalId
-    if(seo_meta_conical_link) {
+    if(meta_conical_link) {
         const canonicalLink = document.createElement('link')
         canonicalLink.rel = 'canonical'
-        if (seo_meta_conical_link) {
-            canonicalLink.href = seo_meta_conical_link
+        if (meta_conical_link) {
+            canonicalLink.href = meta_conical_link
         } else {
             canonicalLink.href = window.location.href
         }
@@ -56,12 +56,12 @@ export const addCanonicalLink = (seo_meta_conical_link, id) => {
     }
 }
 
-export const addMetaDescription = (seo_meta_description, id) => {
+export const addMetaDescription = (meta_description, id) => {
     let metaDescriptionId
-    if (seo_meta_description) {
+    if (meta_description) {
         const metaDescription = document.createElement('meta')
         metaDescription.name = 'Description'
-        metaDescription.content = seo_meta_description
+        metaDescription.content = meta_description
         metaDescription.id = `description_${id}`
         metaDescriptionId = metaDescription.id
         head.appendChild(metaDescription)
@@ -69,12 +69,12 @@ export const addMetaDescription = (seo_meta_description, id) => {
     }
 }
 
-export const addMetaKeyword = (seo_meta_keywords, id) => {
+export const addMetaKeyword = (meta_keywords, id) => {
     let metaKeywordId
-    if (seo_meta_keywords) {
+    if (meta_keywords) {
         const metaKeyword = document.createElement('meta')
         metaKeyword.name = 'Keyword'
-        metaKeyword.content = seo_meta_keywords
+        metaKeyword.content = meta_keywords
         metaKeyword.id = `keyword_${id}`
         metaKeywordId = metaKeyword.id
         head.appendChild(metaKeyword)

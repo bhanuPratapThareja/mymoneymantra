@@ -102,6 +102,12 @@ const api = {
       body: { name: "",
       productId : ""}
     },
+    profession : {
+      devUrl: "masters/api/master/v1/profession",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: { name: ""}
+    },
     leadProductDecision: {
       devUrl: "lead/api/lead/v1/product/decision",
       uatUrl: "api/master/v1/",
