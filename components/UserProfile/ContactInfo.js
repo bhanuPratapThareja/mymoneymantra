@@ -11,6 +11,15 @@ const ContactInfo = (props) => {
   const [address, setAddress] = useState([])
   const [emailError, setEmailError] = useState(false)
   const [errMsg, setErrMsg] = useState('')
+  const [currentPincode, setCurrentPincode] = useState('')
+  const [currentCity, setCurrentCity] = useState('')
+  const [currentAddressLine1, setCurrentAddressLine1] = useState('')
+  const [currentAddressLine2, setCurrentAddressLine2] = useState('')
+  const [permanentPincode, setPermanentPincode] = useState('')
+  const [permanentCity, setPermanentCity] = useState('')
+  const [permanentAddressLine1, setPermanentAddressLine1] = useState('')
+  const [permanentAddressLine2, setPermanentAddressLine2] = useState('')
+  const [sameAddress, setSameAddress] = useState(false)
 
   const { setContactInfoProgress } = props
 
@@ -193,6 +202,130 @@ const ContactInfo = (props) => {
             </label>
           </div>
         </div>
+        {editing && (
+          <>
+            <h5>Current address</h5>
+            <div class="shortforms-container personal-style">
+              <div class="form__group field edit-part">
+                <input
+                  value={currentPincode}
+                  class="form__field"
+                  type="text"
+                  id="c-pincode"
+                  placeholder="Pincode"
+                  required=""
+                  onChange={(e) => setCurrentPincode(e.target.value)}
+                />
+                <label class="form__label" for="c-pincode">
+                  Pincode
+                </label>
+              </div>
+              <div class="form__group field edit-part">
+                <input
+                  value={currentCity}
+                  class="form__field"
+                  type="text"
+                  id="c-city"
+                  placeholder="City"
+                  required=""
+                  onChange={(e) => setCurrentCity(e.target.value)}
+                />
+                <label class="form__label" for="c-city">
+                  City
+                </label>
+              </div>
+              <div class="form__group field edit-part">
+                <input
+                  value=""
+                  class="form__field"
+                  type="text"
+                  id="c-address-line-1"
+                  placeholder="Address Line 1"
+                  required=""
+                />
+                <label class="form__label" for="c-address-line-1">
+                  Address Line 1
+                </label>
+              </div>
+              <div class="form__group field edit-part">
+                <input
+                  value=""
+                  class="form__field"
+                  type="text"
+                  id="c-address-line-2"
+                  placeholder="address-line-2"
+                  required=""
+                />
+                <label class="form__label" for="c-address-line-2">
+                  Address Line 2
+                </label>
+              </div>
+            </div>
+            <div class="checkbox-container">
+              <div class="checkbox">
+                <input type="checkbox" id="checkbox" name="" value="" />
+                <label for="checkbox">
+                  <span>Permanent address is same as current address.</span>
+                </label>
+              </div>
+            </div>
+            <h5>Permanent address</h5>
+            <div class="shortforms-container personal-style">
+              <div class="form__group field edit-part">
+                <input
+                  value=""
+                  class="form__field"
+                  type="text"
+                  id="p-pincode"
+                  placeholder="Pincode"
+                  required=""
+                />
+                <label class="form__label" for="p-pincode">
+                  Pincode
+                </label>
+              </div>
+              <div class="form__group field edit-part">
+                <input
+                  value=""
+                  class="form__field"
+                  type="text"
+                  id="p-city"
+                  placeholder="City"
+                  required=""
+                />
+                <label class="form__label" for="p-city">
+                  City
+                </label>
+              </div>
+              <div class="form__group field edit-part">
+                <input
+                  value=""
+                  class="form__field"
+                  type="text"
+                  id="p-address-line-1"
+                  placeholder="Address Line 1"
+                  required=""
+                />
+                <label class="form__label" for="p-address-line-1">
+                  Address Line 1
+                </label>
+              </div>
+              <div class="form__group field edit-part">
+                <input
+                  value=""
+                  class="form__field"
+                  type="text"
+                  id="p-address-line-2"
+                  placeholder="address-line-2"
+                  required=""
+                />
+                <label class="form__label" for="p-address-line-2">
+                  Address Line 2
+                </label>
+              </div>
+            </div>
+          </>
+        )}
         <div
           className="save-options"
           style={{ display: editing ? 'flex' : 'none' }}
