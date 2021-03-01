@@ -18,7 +18,7 @@ const PersonalInfo = (props) => {
   const [nameError, setNameError] = useState(false)
   const [panError, setPanError] = useState(false)
   const [dobError, setDobError] = useState(false)
-  const { setPersonalInfoProgress } = props
+  const { setPersonalInfoProgress, setCustomerName } = props
   useEffect(() => {
     getInfo()
   }, [])
@@ -116,6 +116,7 @@ const PersonalInfo = (props) => {
         setDob(dob ? moment(dob, 'DD/MM/YYYYY').format('DD/MM/YYYY') : null)
         let mName = checkMartialStatus(martialStatus)
         setmartaialname(mName)
+        setCustomerName(`${firstName} ${lastName}`)
         calculate(res)
       })
       .catch((err) => {

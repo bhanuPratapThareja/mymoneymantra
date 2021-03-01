@@ -20,6 +20,7 @@ const userProfile = (props) => {
   const [contactInfoProgress, setContactInfoProgress] = useState(0)
   const [workInfoProgress, setWorkInfoProgress] = useState(0)
   const [documentProgress, setDocumentProgress] = useState(0)
+  const [customerName, setCustomerName] = useState('')
 
   useEffect(() => {
     getPicture().then((res) => {})
@@ -150,7 +151,7 @@ const userProfile = (props) => {
                   id="profile-picture"
                 />
               </div>
-              <h1>{'Customer Name'}</h1>
+              <h1>{customerName}</h1>
               <div className="profile-progress">
                 <div className="inner">
                   <div className="percent-bar">
@@ -190,6 +191,7 @@ const userProfile = (props) => {
                 >
                   <PersonalInfo
                     setPersonalInfoProgress={setPersonalInfoProgress}
+                    setCustomerName={setCustomerName}
                   />
                 </div>
               </div>
