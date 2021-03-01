@@ -17,7 +17,7 @@ const BlogList = (props) => {
     const router = useRouter()
     const onOpenBlog = blog => {
         setBlogId(blog.id)
-        router.push(`/blog/details/${blog.slug}`)
+        router.push(`/blog/${blog.slug}`)
     }
     useEffect(() => {
         let newHasMore = limit < sortedBlogs.length
