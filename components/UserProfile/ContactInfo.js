@@ -81,6 +81,7 @@ const ContactInfo = (props) => {
   const cancleHandler = () => {
     setEditing(false)
     getContact()
+    setEmailError(false)
   }
 
   const calculate = (fields) => {
@@ -219,7 +220,8 @@ const ContactInfo = (props) => {
             type="button"
             id="edit-contact"
             className="edit-button"
-            onClick={() => setEditing(true)}
+            onClick={() =>
+              setEditing(true)}
           >
             Edit
           </button>
