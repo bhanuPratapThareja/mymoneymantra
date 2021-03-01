@@ -45,7 +45,7 @@ const creditScoreProfile = (props) => {
         <CreditScoreBanner accountHistory={cpScoreData?.accountHistory} />
         <TipSection />
         <FactorsAffecting />
-        <CreditOverview />
+        <CreditOverview  totalScore={cpScoreData.totalCurrentCredit} overview={cpScoreData.creditOverview}/>
         <AccountSummary
           active={active}
           closed={closed}

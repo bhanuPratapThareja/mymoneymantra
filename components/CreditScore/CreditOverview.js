@@ -1,4 +1,20 @@
-const CreditOverview = () => {
+import { useEffect, useState } from 'react';
+import {getFormattedCurrency}  from '../../utils/formattedCurrency';
+
+const CreditOverview = (props) => {
+
+  const [data, setData] = useState([])
+  const [label, setLabel] = useState([])
+useEffect(() => {
+  const chartData = []
+    const chartLabel = []
+  props.overview?.forEach((item,index) => {
+    chartData.push(item.productPercent)
+    chartLabel.push(item.productType)
+  })
+  setData(chartData)
+  setLabel(chartLabel)
+}, [props])
   return (
     <section data-aos="fade-up" className="container creditOverview aos-init aos-animate">
       <div className="creditOverview-head">
@@ -8,7 +24,7 @@ const CreditOverview = () => {
         <div className="creditOverview-wrapper-left">
           <div className="creditOverview-wrapper-left-head">
             <h3>Total Current Credit</h3>
-            <h2>₹1,24,800</h2>
+            <h2>{getFormattedCurrency(props.totalScore)}</h2>
             <hr />
           </div>
           <div className="creditOverview-wrapper-left-icon">
@@ -25,21 +41,14 @@ const CreditOverview = () => {
             </div>
           </div>
           <div className="creditOverview-wrapper-left-content">
+            
+            {props.overview && props.overview.length ? props.overview.map((item,index)=>
             <div className="creditOverview-components">
-              <img src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/blue.png" alt="" />
-              <p className="sector">Credit Cards-</p>
-              <p className="percentages">60%</p>
-            </div>
-            <div className="creditOverview-components">
-              <img src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/green.png" alt="" />
-              <p className="sector">Automobile Loan-</p>
-              <p className="percentages">35%</p>
-            </div>
-            <div className="creditOverview-components">
-              <img src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/red.png" alt="" />
-              <p className="sector">Loan Against Properity-</p>
-              <p className="percentages">10%</p>
-            </div>
+           <div style={{ backgroundColor:`${defaultColor[index]}`}} className="color-box"></div>
+            <p className="sector">{item.productType} -</p>
+            <p className="percentages">{item.productPercent}%</p>
+          </div>
+            ):<></>}
           </div>
         </div>
       </div>
@@ -48,3 +57,19 @@ const CreditOverview = () => {
 }
 
 export default CreditOverview
+
+
+
+const defaultColor=[
+  'blue',
+  'red',
+  'green',
+  'orange',
+  'violet',
+  'black',
+  'indigo',
+  'yellow',
+  'magenta',
+  'aquamarine',
+  'crimson'
+]
