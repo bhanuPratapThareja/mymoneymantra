@@ -21,7 +21,7 @@ const Otp = (props) => {
         </label>
       </div>
       <span>Haven’t received the OTP yet?</span>
-      <button onClick={props.resend}>
+      <button onClick={(e)=>{e.preventDefault();props.resend()}}>
         <h6>Resend</h6>
       </button>
     </div>

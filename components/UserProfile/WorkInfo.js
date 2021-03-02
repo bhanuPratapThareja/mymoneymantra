@@ -264,7 +264,7 @@ const WorkInfo = (props) => {
                   ? 'Salaried'
                   : employedType == 1000000008
                   ? 'Defense'
-                  : null
+                  : ''
               }
               className="form__field"
               type="text"

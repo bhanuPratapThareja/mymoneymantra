@@ -1,16 +1,25 @@
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { getPersonalInfo, getPictureservice } from "../utils/userProfileService";
 
 const SideMenu = (props) => {
 const [picture, setpicture] = useState('/assets/images/icons/profile.svg')
 const [name, setName] = useState('Guest');
+const router=useRouter();
    useEffect(() => {
       
       getPicture();
       getInfo();
    },[]);
-
+   const logout=(e)=>{
+      e.preventDefault();
+      localStorage.setItem('customerId','');
+      setName('Guest');
+      setpicture('/assets/images/icons/profile.svg')
+      router.push('/','/',{shallow:false})
+   }
+   
    const getInfo = () => {
       getPersonalInfo()
         .then((res) => {
@@ -20,6 +29,7 @@ const [name, setName] = useState('Guest');
         })
         .catch((err) => {
           console.log(err)
+          setName('Guest');
         })
     }
    const checkCustomerId=()=>{
@@ -48,6 +58,7 @@ const [name, setName] = useState('Guest');
         }
       } catch (err) {
          console.log(err)
+         setpicture('/assets/images/icons/profile.svg')
       }
     }
 
@@ -285,9 +296,9 @@ const [name, setName] = useState('Guest');
 
             </div>
 
-            <div className="content-wrapper" style={{display:checkCustomerId() ? 'block' :'none' }}>
-               <a href="#">
-                  <div className="data">
+            <div className="content-wrapper" style={{display:checkCustomerId() ? 'block' :'block' }}>
+               <a href="#" onClick={logout}>
+                  <div className="data" >
                      <img src="/assets/images/menu/logout.svg" />
                      <h5>Logout</h5>
                   </div>

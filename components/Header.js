@@ -9,8 +9,9 @@ import { getDevice } from '../utils/getDevice'
 import $ from 'jquery'
 
 const Header = () => {
+   const router=useRouter()
    const strapi = new Strapi()
-   const router = useRouter()
+   
    const headerRef = useRef()
    const [headerData, setHeaderData] = useState(null)
    const [headerClasses, setHeaderClasses] = useState('header')
@@ -125,8 +126,9 @@ const [isLoggedId, setisLoggedId] = useState(false)
       $('body', "html").css("overflow", "hidden")
    }
 const logout=()=>{
-   localStorage.setItem('customerId','');
+   localStorage.setItem('customerId',null);
    setisLoggedId(false);
+   router.push('/','/',{shallow:false})
 }
    return (
       <>
