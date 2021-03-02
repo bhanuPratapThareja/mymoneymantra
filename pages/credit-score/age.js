@@ -41,6 +41,7 @@ const age = (props) => {
     <div className={props.pageClasses}>
       <Layout>
         <Loader active={loading} text="loading" />
+        <div class="mobile-background"></div>
         <AgeOfCredit creditAge={cpAgeData?.totalAge} />
         <TipSection />
         <FactorsAffecting />

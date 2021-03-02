@@ -8989,6 +8989,8 @@ label {
     position: relative;
     padding: 40px 192px;
     background: #ffffff;
+    align-items: center;
+    justify-content: space-between;
     border-radius: 6px; }
     @media (min-width: 1024px) and (max-width: 1350px) {
       .creditProfile-score-flow .creditOverview-wrapper {
@@ -9026,9 +9028,8 @@ label {
         .creditProfile-score-flow .creditOverview-wrapper-left-head {
           text-align: center; } }
       .creditProfile-score-flow .creditOverview-wrapper-left-icon {
-        position: absolute;
-        right: 230px;
-        top: 40px; }
+        position: relative;
+         }
         @media (max-width: 768px) {
           .creditProfile-score-flow .creditOverview-wrapper-left-icon {
             position: relative !important;

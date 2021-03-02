@@ -129,6 +129,7 @@ const userProfile = (props) => {
   return (
     <div className={props.pageClasses}>
       <Layout>
+      <div class="mobile-background"></div>
         <div className="profile-head">
           <div className="profile-container container">
             <div className="profile-head-wrapper">

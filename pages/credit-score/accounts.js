@@ -41,6 +41,7 @@ const accounts = (props) => {
     <div className={props.pageClasses}>
       <Layout>
         <Loader active={loading} text="loading" />
+        <div class="mobile-background"></div>
         <TotalAccounts totalAccount={cpAccountsData?.totalAccount} />
         <TipSection />
         <FactorsAffecting />

@@ -41,6 +41,7 @@ const rank = (props) => {
     <div className={props.pageClasses}>
       <Layout>
         <Loader active={loading} text="loading" />
+        <div class="mobile-background"></div>
         <PaymentRank rank={cpRankData?.rank} />
         <TipSection />
         <FactorsAffecting />

@@ -35,6 +35,7 @@ const enquiries = (props) => {
     <div className={props.pageClasses}>
       <Layout>
         <Loader active={loading} text="loading" />
+        <div class="mobile-background"></div>
         <YourTotalEnquiries totalEnquiries={cpEnquiriesData?.totalEnquiries} />
         <TipSection />
         <FactorsAffecting />

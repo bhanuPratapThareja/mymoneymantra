@@ -10,7 +10,7 @@ import { Doughnut } from 'react-chartjs-2'
 //     },
 //   ],
 // }
-const DoughnutChart = ({ overview }) => {
+const DoughnutChart = ({ overview,colors }) => {
   const [data, setData] = useState([])
   const [label, setLabel] = useState([])
   useEffect(() => {
@@ -26,15 +26,15 @@ const DoughnutChart = ({ overview }) => {
     setLabel(chartLabel)
   }, [overview])
   return (
-    <div>
+    <div style={{position: 'relative', width:'512px'}}>
       <Doughnut
         data={{
           labels: label,
           datasets: [
             {
-              data: data.length > 0 ? data : [60, 40],
-              backgroundColor: ['#3080CF', '#F03535'],
-              hoverBackgroundColor: ['#3080CF', '#F03535'],
+              data:  data,
+              backgroundColor: colors,
+              hoverBackgroundColor: colors,
             },
           ],
         }}
@@ -42,8 +42,15 @@ const DoughnutChart = ({ overview }) => {
           legend: {
             display: false,
           },
+          aspectRatio:1,
+          cutoutPercentage:70,
+          responsiveAnimationDuration:2,
           maintainAspectRatio: true,
           responsive: true,
+          showLines:true,
+          title:{
+            display:false
+          }
         }}
       />
     </div>

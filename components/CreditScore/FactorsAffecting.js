@@ -1,6 +1,8 @@
 import Link from 'next/link'
-
+import { useRouter } from 'next/router'
 const FactorsAffecting = () => {
+  const router=useRouter();
+  
   return (
     <section
       data-aos="fade-up"
@@ -30,7 +32,6 @@ const FactorsAffecting = () => {
               className="slick-track factor-affect"
               style={{
                 opacity: 1,
-                
                 transform: 'translate3d(0px, 0px, 0px)',
               }}
             >
@@ -39,6 +40,7 @@ const FactorsAffecting = () => {
                 className="slick-slide slick-current slick-active"
                 data-slick-index={item.id}
                 aria-hidden="false"
+                style={{display:router.pathname === item.link ? 'none' : 'block' }}
               >
                 <div>
                   <div
@@ -77,7 +79,7 @@ const factors=[
     id:0,
     value:80,
     title:'Payment History',
-    link:"/credit-score"
+    link:"/credit-score/rank"
   },
   {
     id:1,
@@ -106,8 +108,8 @@ const factors=[
   {
     id:5,
     value:0,
-    title:'Rank',
-    link:'/credit-score/rank' 
+    title:'Credit Overview',
+    link:'/credit-score' 
   }
 ]
 export default FactorsAffecting
