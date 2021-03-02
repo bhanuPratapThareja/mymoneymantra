@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { getApiData } from '../../api/api'
 import { getContactInfo, saveContactInfo } from '../../utils/userProfileService'
 const ContactInfo = (props) => {
   const [editing, setEditing] = useState(false)
@@ -8,18 +9,26 @@ const ContactInfo = (props) => {
   const [emailId, setEmailId] = useState('')
   const [currentAddressDisplay, setCurrentAddressDisplay] = useState('')
   const [permanentAddressDisplay, setPermanentAddressDisplay] = useState('')
-  const [address, setAddress] = useState([])
   const [emailError, setEmailError] = useState(false)
   const [errMsg, setErrMsg] = useState('')
+  const [currentAddressId, setCurrentAddressId] = useState(null)
   const [currentPincode, setCurrentPincode] = useState('')
+  const [currentPincodeQuery, setCurrentPincodeQuery] = useState('')
   const [currentCity, setCurrentCity] = useState('')
   const [currentAddressLine1, setCurrentAddressLine1] = useState('')
   const [currentAddressLine2, setCurrentAddressLine2] = useState('')
+  const [currentStateId, setCurrentStateId] = useState(0)
+  const [currentCityId, setCurrentcityId] = useState(0)
+  const [permanentAddressId, setPermanentAddressId] = useState(null)
   const [permanentPincode, setPermanentPincode] = useState('')
+  const [permanentPincodeQuery, setPermanentPincodeQuery] = useState('')
   const [permanentCity, setPermanentCity] = useState('')
   const [permanentAddressLine1, setPermanentAddressLine1] = useState('')
   const [permanentAddressLine2, setPermanentAddressLine2] = useState('')
+  const [permanentStateId, setPermanentStateId] = useState(0)
+  const [permanentCityId, setPermanentCityId] = useState(0)
   const [sameAddress, setSameAddress] = useState(false)
+  const [cities, setCities] = useState([])
 
   const { setContactInfoProgress } = props
 
@@ -47,6 +56,44 @@ const ContactInfo = (props) => {
     currentAddressLine2,
   ])
 
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (currentPincodeQuery) {
+        try {
+          const { url, body } = getApiData('pincode')
+          body.name = currentPincodeQuery
+          const responseObject = await axios.post(url, body)
+          const { data } = responseObject
+          console.log({ responseObject })
+          setCities(data.pinList)
+        } catch (err) {
+          console.log(err)
+        }
+      }
+    }, 3000)
+
+    return () => clearTimeout(timer)
+  }, [currentPincodeQuery])
+
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (permanentPincodeQuery) {
+        try {
+          const { url, body } = getApiData('pincode')
+          body.name = permanentPincodeQuery
+          const responseObject = await axios.post(url, body)
+          const { data } = responseObject
+          console.log({ responseObject })
+          setCities(data.pinList)
+        } catch (err) {
+          console.log(err)
+        }
+      }
+    }, 3000)
+
+    return () => clearTimeout(timer)
+  }, [permanentPincodeQuery])
+
   const validateEmail = () => {
     let pattern = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/
     if (pattern.test(emailId)) {
@@ -66,10 +113,10 @@ const ContactInfo = (props) => {
         setAddress(address)
         address.map((a) => {
           if (a.addressId == 300) {
-            setCurrentAddress(a.addressline1)
+            setCurrentAddressDisplay(a.addressline1)
           }
           if (a.addressId == 301) {
-            setPermanentAddress(a.addressline1)
+            setPermanentAddressDisplay(a.addressline1)
           }
         })
         console.log('adderss', address)
@@ -133,6 +180,32 @@ const ContactInfo = (props) => {
       }
     })
     setContactInfoProgress(progress)
+  }
+
+  const currentPincodeQueryHandler = (e) => {
+    setCurrentPincodeQuery(e.target.value)
+    setCurrentPincode(e.target.value)
+  }
+
+  const permanentPincodeQueryHandler = (e) => {
+    setPermanentPincodeQuery(e.target.value)
+    setPermanentPincode(e.target.value)
+  }
+
+  const currentPincodeHandler = (pincodeObject) => {
+    setCurrentCity(pincodeObject.cityName)
+    setCurrentPincode(pincodeObject.pincode)
+    setCurrentStateId(pincodeObject.stateId)
+    setCurrentCityId(pincodeObject.cityId)
+    setCurrentPincodeQuery('')
+  }
+
+  const permanentPincodeHandler = (pincodeObject) => {
+    setPermanentCity(pincodeObject.cityName)
+    setPermanentPincode(pincodeObject.pincode)
+    setPermanentStateId(pincodeObject.stateId)
+    setPermanentCityId(pincodeObject.cityId)
+    setPermanentPincodeQuery('')
   }
 
   return (
@@ -246,11 +319,30 @@ const ContactInfo = (props) => {
                     id="c-pincode"
                     placeholder="Pincode"
                     required=""
-                    onChange={(e) => setCurrentPincode(e.target.value)}
+                    pattern="[0-9]{6}"
+                    onChange={currentPincodeQueryHandler}
                   />
                   <label class="form__label" for="c-pincode">
                     Pincode
                   </label>
+                  {editing &&
+                    cities.length > 0 &&
+                    currentPincodeQuery.length > 0 && (
+                      <datalist
+                        id="company-name"
+                        style={{ display: 'block', background: '#fff' }}
+                      >
+                        {cities.map((item) => (
+                          <option
+                            key={item.pincode}
+                            value={item.pincode}
+                            onClick={() => currentPincodeHandler(item)}
+                          >
+                            {item.pincode}
+                          </option>
+                        ))}
+                      </datalist>
+                    )}
                 </div>
                 <div class="form__group field edit-part">
                   <input
@@ -260,7 +352,7 @@ const ContactInfo = (props) => {
                     id="c-city"
                     placeholder="City"
                     required=""
-                    onChange={(e) => setCurrentCity(e.target.value)}
+                    readOnly
                   />
                   <label class="form__label" for="c-city">
                     City
@@ -320,22 +412,40 @@ const ContactInfo = (props) => {
                     id="p-pincode"
                     placeholder="Pincode"
                     required=""
-                    onChange={(e) => setPermanentPincode(e.target.value)}
+                    onChange={permanentPincodeQueryHandler}
                   />
                   <label class="form__label" for="p-pincode">
                     Pincode
                   </label>
+                  {!sameAddress &&
+                    editing &&
+                    cities.length > 0 &&
+                    permanentPincodeQuery.length > 0 && (
+                      <datalist
+                        id="company-name"
+                        style={{ display: 'block', background: '#fff' }}
+                      >
+                        {cities.map((item) => (
+                          <option
+                            key={item.pincode}
+                            value={item.pincode}
+                            onClick={() => permanentPincodeHandler(item)}
+                          >
+                            {item.pincode}
+                          </option>
+                        ))}
+                      </datalist>
+                    )}
                 </div>
                 <div class="form__group field edit-part">
                   <input
-                    readOnly={sameAddress}
+                    readOnly
                     value={permanentCity}
                     class="form__field"
                     type="text"
                     id="p-city"
                     placeholder="City"
                     required=""
-                    onChange={(e) => setPermanentCity(e.target.value)}
                   />
                   <label class="form__label" for="p-city">
                     City
