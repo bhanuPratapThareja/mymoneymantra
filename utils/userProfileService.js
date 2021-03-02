@@ -67,27 +67,7 @@ export const getContactInfo = async () => {
   }
 }
 
-export const saveContactInfo = async (mobileNo, emailId, currentAddress, permanentAddress) => {
-  let addressForApi = [
-    {
-      addressId: 300,
-      addressTypeMasterId: 10000001,
-      addressline1: currentAddress,
-      addressline2: " ",
-      city: 1,
-      state: 1,
-      pincode: 1232
-    },
-    {
-      addressId: 301,
-      addressTypeMasterId: 10000001,
-      addressline1: permanentAddress,
-      addressline2: " ",
-      city: 2,
-      state: 2,
-      pincode: 2222
-    }
-  ]
+export const saveContactInfo = async (mobileNo, emailId, address) => {
   try {
     const customerId = localStorage.getItem('customerId')
     const { url } = getApiData('contactProfile')
@@ -95,7 +75,7 @@ export const saveContactInfo = async (mobileNo, emailId, currentAddress, permane
       customerId,
       mobileNo,
       emailId,
-      address: addressForApi,
+      address,
     })
     return responseObject
   } catch (err) {
