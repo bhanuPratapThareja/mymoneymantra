@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react"
-import BlogMediaLinks from "../../../../components/common/BlogMediaLinks"
-import BlogsDetails from "../../../../components/common/BlogsDetails"
-import ProductSlider from "../../../../components/common/ProductSlider"
-import SimilarArticles from "../../../../components/common/SimilarArticles"
-import TrendingOffers from "../../../../components/common/TrendingOffers"
-import Layout from "../../../../components/Layout"
-import Strapi from "../../../../providers/strapi"
-import { extractOffers, viewOffers } from "../../../../services/offersService"
-import { getClassesForPage } from "../../../../utils/classesForPage"
-import { getBlogId } from "../../../../utils/localAccess"
+import BlogMediaLinks from "../../../components/common/BlogMediaLinks"
+import BlogsDetails from "../../../components/common/BlogsDetails"
+import ProductSlider from "../../../components/common/ProductSlider"
+import SimilarArticles from "../../../components/common/SimilarArticles"
+import Offers from "../../../components/common/Offers"
+import Layout from "../../../components/Layout"
+import Strapi from "../../../providers/strapi"
+import { extractOffers, viewOffers } from "../../../services/offersService"
+import { getClassesForPage } from "../../../utils/classesForPage"
+import { getBlogId } from "../../../utils/localAccess"
 
 const BlogDetail = props => {
     const [currentUrl, setCurrentUrl] = useState()
     const [blogData, setBlogData] = useState([])
     const [trendingOffers, setTrendingOffers] = useState([])
     const [productType, setProductType] = useState()
+    const [showContent,setShowContent] = useState(false)
     let strapi = new Strapi()
     useEffect(() => {
         let blogId = getBlogId('blogId')
@@ -44,20 +45,20 @@ const BlogDetail = props => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.blog-texts-component':
-                    return <BlogsDetails key={block.id} data={blogData} blogId={blogData.id} url={currentUrl} allBlogs={props.allBlogs} />
+                    return <BlogsDetails key={block.id} data={blogData} blogId={blogData.id} url={currentUrl} allBlogs={props.allBlogs} showContent={showContent} setShowContent = {setShowContent} />
                 case 'blocks.blog-social-media-links-component':
-                    return <BlogMediaLinks key={block.id} data={block} url={currentUrl} blogData={blogData} />
+                    return showContent ?  <BlogMediaLinks key={block.id} data={block} url={currentUrl} blogData={blogData} showContent={showContent} />:null
                 case "blocks.blog-category":
-                    return <ProductSlider key={block.id} data={block} />;
+                    return  showContent ? <ProductSlider key={block.id} data={block} /> :null;
                 case 'offers.trending-offers-component':
-                    return <TrendingOffers
-                        key={block.id}
+                    return  showContent ?<Offers 
+                        key={block.id} 
                         data={block}
-                        // productType={productType}
                         blogTrendingOffers={trendingOffers}
-                    />
+                        
+                    />:null
                 case 'blocks.similar-blogs-component':
-                    return <SimilarArticles key={block.id} data={props.allBlogs} categories={blogData.post_categories} subCategories={blogData.post_sub_categories} />
+                    return  showContent ? <SimilarArticles key={block.id} data={props.allBlogs} categories={blogData.post_categories} subCategories={blogData.post_sub_categories} /> :null
             }
         })
     }

@@ -13,7 +13,6 @@ const BlogSearchPage = (props) => {
         return sortedBlogsByKeyword
     }
     const sortBlogsByDate = (blogs) => {
-        // let sortedBlogsByDate = blogs.sort((a, b) => moment(moment(a.publish_at).format('YYYY-MM-DD')).isBefore(moment(b.publish_at).format('YYYY-MM-DD')) ? 1 : -1)
         let sortedBlogsByDate = blogs.sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
         return sortedBlogsByDate
     }
@@ -21,7 +20,6 @@ const BlogSearchPage = (props) => {
     useEffect(() => {
         if (props.query.q) {
             searchKey = props.query.q
-            // let filteredBlogs = props.blogData.filter(blog => blog.header.toLowerCase().includes(searchKey.toLowerCase()))
             let filteredBlogs = []
             props.blogData.forEach(blog => {
                 if (blog.header.toLowerCase().includes(searchKey.toLowerCase())) {
@@ -37,17 +35,7 @@ const BlogSearchPage = (props) => {
             let sortByDate = sortBlogsByDate(blogs)
             setData(sortByDate)
         }
-        // if (props.query.category) {
-        //     let filteredBlogs = []
-        //     props.blogData.forEach((blog) => {
-        //         blog.blog_categories.forEach(category => {
-        //             if (category.blog_category_name.toLowerCase().includes(props.query.category.toLowerCase())) {
-        //                 filteredBlogs.push(blog)
-        //             }
-        //         })
-        //     })
-        //     setData(filteredBlogs)
-        // }
+       
         if (props.query.author) {
             let filteredBlogs = []
             props.blogData.forEach(blog => {

@@ -9,10 +9,15 @@ import FeaturedContributors from "../../components/common/FeaturedContributors";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import RecentBlogs from "../../components/common/RecentBlogs";
+import { addSeoMetaData, removeSeoMetaData } from '../../utils/seoMetaData'
 
 const Blog = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0)
+    const { scriptId, canonicalId, metaDescriptionId, metaKeywordId } = addSeoMetaData(props.data, props.data.id)
+        return () => {
+            removeSeoMetaData(scriptId, canonicalId, metaDescriptionId, metaKeywordId)
+        }
   })
   const getComponents = (dynamic) => {
     return dynamic.map((block) => {
