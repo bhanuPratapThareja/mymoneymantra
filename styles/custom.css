@@ -2865,5 +2865,45 @@ button.cstm-load-btn {
   margin-top: 5px;
   margin-right: 10px;
   border: 1px solid black;
+}
 
+/*-- contact form --*/
+.profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper h5:not(:first-child) {
+  margin-top: 24px;
+}
+
+.profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper h5 {
+  color: #ffffff;
+}
+.hide-form{
+  display: none;
+}
+
+.profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .shortforms-container.personal-style {
+  grid-template-columns: auto auto;
+  grid-gap: 24px;
+}
+
+.profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .shortforms-container {
+  display: grid;
+  margin-top: 16px;
+}
+
+.profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .checkbox-container {
+  margin-top: 24px;
+}
+
+.profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .checkbox-container label {
+  min-height: 24px;
+}
+
+.profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .checkbox-container label::before {
+  border: 2px solid #ffffff;
+}
+
+.profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .checkbox-container label span {
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 24px;
 }
