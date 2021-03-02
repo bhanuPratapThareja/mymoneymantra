@@ -77,37 +77,37 @@ const FactorsAffecting = () => {
 const factors=[
   {
     id:0,
-    value:80,
+    value:null,
     title:'Payment History',
     link:"/credit-score/rank"
   },
   {
     id:1,
-    value:18,
+    value:null,
     title:'Credit Card Utilisation',
     link:'/credit-score/utilization'
   },
   {
     id:2,
-    value:23,
+    value:null,
     title:'Age of Credit',
     link:'/credit-score/age'
   },
   {
     id:3,
-    value:45,
+    value:null,
     title:'Total Accounts',
     link:'/credit-score/accounts' 
   },
   {
     id:4,
-    value:0,
+    value:null,
     title:'Enquries',
     link:'/credit-score/enquiries' 
   },
   {
     id:5,
-    value:0,
+    value:null,
     title:'Credit Overview',
     link:'/credit-score' 
   }

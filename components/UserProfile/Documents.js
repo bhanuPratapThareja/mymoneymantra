@@ -275,7 +275,7 @@ const Documents = (props) => {
         'http://203.122.46.189:8060/customer/api/profile/v1/doc-upload',
         {
           ...body,
-          customerId: customerId ? customerId : '101',
+          customerId: customerId 
         }
       )
       console.log(responseObject)

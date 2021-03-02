@@ -122,13 +122,24 @@ const ContactInfo = (props) => {
             if (a.addressId) {
               setCurrentAddressId(a.addressId)
             }
-            setCurrentAddressDisplay(a.addressline1)
+            setCurrentAddressLine1(a.addressline1);
+            setCurrentAddressLine2(a.addressline2);
+            setCurrentCityId(a.city);
+            setCurrentStateId(a.state);
+            setCurrentPincode(a.pincode);
+            setCurrentAddressDisplay(`${a.addressline1}, ${a.addressline2}, ${a.pincode} `)
           }
           if (a.addressTypeMasterId == 1000000003) {
             if (a.addressId) {
               setPermanentAddressId(a.addressId)
+              setPermanentAddressLine1(a.addressline1);
+            setPermanentAddressLine2(a.addressline2);
+            setPermanentCityId(a.city);
+            setPermanentStateId(a.state);
+            setPermanentPincode(a.pincode);
+            
             }
-            setPermanentAddressDisplay(a.addressline1)
+            setPermanentAddressDisplay(`${a.addressline1}, ${a.addressline2}, ${a.pincode} `)
           }
         })
         console.log('adderss', address)
@@ -232,7 +243,8 @@ const ContactInfo = (props) => {
         <form
           className="contact-forms-wrapper"
           style={{ display: 'block' }}
-          autocomplete="off"
+          autoComplete={"off"}
+          autoFill={"off"}
           onSubmit={submitHandler}
         >
           <div className="shortforms-container">
@@ -243,13 +255,13 @@ const ContactInfo = (props) => {
                   : 'form__group field read-part'
               }
             >
-              <input
+              <input autofill="off" autoComplete={"off"}
                 readOnly={true}
                 className="form__field"
                 type="text"
                 value={mobileNo}
                 id="mob-num"
-                autocomplete="off"
+                autoComplete={"off"}
                 onChange={(e) => setMobileNo(e.target.value)}
                 placeholder="Mobile Number"
                 required=""
@@ -265,12 +277,12 @@ const ContactInfo = (props) => {
                   : 'form__group field read-part'
               }
             >
-              <input
+              <input autofill="off" autoComplete={"off"}
                 readOnly={!editing}
                 className="form__field"
                 type="text"
                 value={emailId}
-                autocomplete="off"
+                autoComplete={"off"}
                 id="email"
                 placeholder="Email ID"
                 onChange={(e) => setEmailId(e.target.value)}
@@ -289,12 +301,12 @@ const ContactInfo = (props) => {
                   : 'form__group field read-part'
               }
             >
-              <input
+              <input autofill="off" autoComplete={"off"}
                 readOnly
                 className="form__field"
                 type="text"
                 value={currentAddressDisplay}
-                autocomplete="off"
+                autoComplete={"off"}
                 id="current-address"
                 placeholder="Current Address"
                 required=""
@@ -310,11 +322,11 @@ const ContactInfo = (props) => {
                   : 'form__group field read-part'
               }
             >
-              <input
+              <input autofill="off" autoComplete={"off"}
                 readOnly
                 className="form__field"
                 type="text"
-                autocomplete="off"
+                autoComplete={"off"}
                 value={permanentAddressDisplay}
                 id="permanent-address"
                 placeholder="Permanent Address"
@@ -330,7 +342,7 @@ const ContactInfo = (props) => {
               <h5>Current address</h5>
               <div class="shortforms-container personal-style">
                 <div class="form__group field edit-part">
-                  <input
+                  <input autofill="off" autoComplete={"off"}
                     value={currentPincode}
                     class="form__field"
                     type="text"
@@ -340,7 +352,7 @@ const ContactInfo = (props) => {
                     pattern="[0-9]{6}"
                     onChange={currentPincodeQueryHandler}
                   />
-                  <label class="form__label" for="c-pincode">
+                  <label class="form__label" htmlFor="c-pincode">
                     Pincode
                   </label>
                   {editing &&
@@ -363,7 +375,7 @@ const ContactInfo = (props) => {
                     )}
                 </div>
                 <div class="form__group field edit-part">
-                  <input
+                  <input autofill="off" autoComplete={"off"}
                     value={currentCity}
                     class="form__field"
                     type="text"
@@ -372,12 +384,12 @@ const ContactInfo = (props) => {
                     required=""
                     readOnly
                   />
-                  <label class="form__label" for="c-city">
+                  <label class="form__label" htmlFor="c-city">
                     City
                   </label>
                 </div>
                 <div class="form__group field edit-part">
-                  <input
+                  <input autofill="off" autoComplete={"off"}
                     value={currentAddressLine1}
                     class="form__field"
                     type="text"
@@ -386,12 +398,12 @@ const ContactInfo = (props) => {
                     required=""
                     onChange={(e) => setCurrentAddressLine1(e.target.value)}
                   />
-                  <label class="form__label" for="c-address-line-1">
+                  <label class="form__label" htmlFor="c-address-line-1">
                     Address Line 1
                   </label>
                 </div>
                 <div class="form__group field edit-part">
-                  <input
+                  <input autofill="off" autoComplete={"off"}
                     value={currentAddressLine2}
                     class="form__field"
                     type="text"
@@ -400,21 +412,21 @@ const ContactInfo = (props) => {
                     required=""
                     onChange={(e) => setCurrentAddressLine2(e.target.value)}
                   />
-                  <label class="form__label" for="c-address-line-2">
+                  <label class="form__label" htmlFor="c-address-line-2">
                     Address Line 2
                   </label>
                 </div>
               </div>
               <div class="checkbox-container">
                 <div class="checkbox edit-part">
-                  <input
+                  <input autofill="off" autoComplete={"off"}
                     type="checkbox"
                     id="checkbox"
                     name=""
                     checked={sameAddress}
                     onChange={(e) => setSameAddress(e.target.checked)}
                   />
-                  <label for="checkbox">
+                  <label htmlFor="checkbox">
                     <span>Permanent address is same as current address.</span>
                   </label>
                 </div>
@@ -422,17 +434,17 @@ const ContactInfo = (props) => {
               <h5>Permanent address</h5>
               <div class="shortforms-container personal-style">
                 <div class="form__group field edit-part">
-                  <input
+                  <input autofill="off" autoComplete={"off"}
                     readOnly={sameAddress}
                     value={permanentPincode}
                     class="form__field"
-                    type="text"
+                    type="tel"
                     id="p-pincode"
                     placeholder="Pincode"
                     required=""
                     onChange={permanentPincodeQueryHandler}
                   />
-                  <label class="form__label" for="p-pincode">
+                  <label class="form__label" htmlFor="p-pincode">
                     Pincode
                   </label>
                   {!sameAddress &&
@@ -443,9 +455,9 @@ const ContactInfo = (props) => {
                         id="company-name"
                         style={{ display: 'block', background: '#fff' }}
                       >
-                        {cities.map((item) => (
+                        {cities.map((item,index) => (
                           <option
-                            key={item.pincode}
+                            key={index}
                             value={item.pincode}
                             onClick={() => permanentPincodeHandler(item)}
                           >
@@ -456,7 +468,7 @@ const ContactInfo = (props) => {
                     )}
                 </div>
                 <div class="form__group field edit-part">
-                  <input
+                  <input autofill="off" autoComplete={"off"}
                     readOnly
                     value={permanentCity}
                     class="form__field"
@@ -465,12 +477,12 @@ const ContactInfo = (props) => {
                     placeholder="City"
                     required=""
                   />
-                  <label class="form__label" for="p-city">
+                  <label class="form__label" htmlFor="p-city">
                     City
                   </label>
                 </div>
                 <div class="form__group field edit-part">
-                  <input
+                  <input autofill="off" autoComplete={"off"}
                     readOnly={sameAddress}
                     value={permanentAddressLine1}
                     class="form__field"
@@ -480,12 +492,12 @@ const ContactInfo = (props) => {
                     required=""
                     onChange={(e) => setPermanentAddressLine1(e.target.value)}
                   />
-                  <label class="form__label" for="p-address-line-1">
+                  <label class="form__label" htmlFor="p-address-line-1">
                     Address Line 1
                   </label>
                 </div>
                 <div class="form__group field edit-part">
-                  <input
+                  <input autofill="off" autoComplete={"off"}
                     readOnly={sameAddress}
                     value={permanentAddressLine2}
                     class="form__field"
@@ -495,7 +507,7 @@ const ContactInfo = (props) => {
                     required=""
                     onChange={(e) => setPermanentAddressLine2(e.target.value)}
                   />
-                  <label class="form__label" for="p-address-line-2">
+                  <label class="form__label" htmlFor="p-address-line-2">
                     Address Line 2
                   </label>
                 </div>

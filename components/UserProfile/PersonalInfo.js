@@ -262,7 +262,7 @@ const PersonalInfo = (props) => {
               onChange={(e) => setGender(e.target.value)}
               defaultChecked={gender == 1 ? true : false}
             />
-            <input
+            {/* <input
               value="2"
               className="lets-checkbox"
               type="radio"
@@ -272,11 +272,11 @@ const PersonalInfo = (props) => {
               autocomplete="off"
               onChange={(e) => setGender(e.target.value)}
               defaultChecked={gender == 2 ? true : false}
-            />
+            /> */}
 
             <label htmlFor="female">Female</label>
             <label htmlFor="male">Male</label>
-            <label htmlFor="other">Other</label>
+            {/* <label htmlFor="other">Other</label> */}
           </div>
           <h5>Marital Status</h5>
           <div className="shortforms-container marital-style">
@@ -302,7 +302,7 @@ const PersonalInfo = (props) => {
               defaultChecked={maritalStatus == 1 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
             />
-            <input
+            {/* <input
               value="2"
               className="lets-checkbox"
               type="radio"
@@ -312,8 +312,8 @@ const PersonalInfo = (props) => {
               autocomplete="off"
               defaultChecked={maritalStatus == 2 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
-            />
-            <input
+            /> */}
+            {/* <input
               value="3"
               className="lets-checkbox"
               type="radio"
@@ -323,8 +323,8 @@ const PersonalInfo = (props) => {
               required=""
               defaultChecked={maritalStatus == 3 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
-            />
-            <input
+            /> */}
+            {/* <input
               value="4"
               className="lets-checkbox"
               type="radio"
@@ -334,13 +334,13 @@ const PersonalInfo = (props) => {
               autocomplete="off"
               defaultChecked={maritalStatus == 4 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
-            />
+            /> */}
 
             <label htmlFor="single">Single</label>
             <label htmlFor="married">Married</label>
-            <label htmlFor="separated">Separated</label>
+            {/* <label htmlFor="separated">Separated</label>
             <label htmlFor="divorced">Divorced</label>
-            <label htmlFor="widowed">Widowed</label>
+            <label htmlFor="widowed">Widowed</label> */}
           </div>
           <h5>PAN Number</h5>
           <div className="shortforms-container">

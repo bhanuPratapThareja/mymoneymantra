@@ -20,7 +20,8 @@ const [isLoggedId, setisLoggedId] = useState(false)
 
    useEffect(() => {
       let customerId=localStorage.getItem('customerId');
-      if(customerId&&customerId!==''){
+      console.log('customerId',customerId)
+      if(customerId && customerId!=='' && customerId!==null){
          setisLoggedId(true);
       }
       else{
@@ -162,6 +163,9 @@ const logout=()=>{
                   <div className="border"></div>
                   <button id="sign_up"><a href="/sign-up">{headerData.signup.label}</a></button>
                </div></>:<>
+               <div className="login-cta">
+                  <button id="log_in"><a href="/user-profile">My Profile</a></button>
+               </div>
                <div className="signup-cta secondary-cta">
                   <div className="border"></div>
                   <button id="sign_up" onClick={()=>{logout()}}>Logout</button>

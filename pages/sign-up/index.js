@@ -62,7 +62,7 @@ const signUp = (props) => {
             setcounter(counter + 1);
           })
           .catch((err) => {
-            alert(err.message);
+            // alert(err.message);
           })
           .finally(() => {
             setisLoader(false);
@@ -70,7 +70,7 @@ const signUp = (props) => {
 
       })
       .catch((err) => {
-        alert(err.message);
+        // alert(err.message);
       })
       .finally(() => setisLoader(false));
   };
@@ -85,7 +85,7 @@ const signUp = (props) => {
         }
       })
       .catch((err) => {
-        alert(err.message);
+        // alert(err.message);
       })
       .finally(() => {
         setisLoader(false);

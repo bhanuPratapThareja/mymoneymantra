@@ -11,10 +11,11 @@ import ReferEarn from '../../components/UserProfile/ReferEarn'
 import WorkInfo from '../../components/UserProfile/WorkInfo'
 import { fileToByteArray } from '../../utils/byteArray'
 import { getClassesForPage } from '../../utils/classesForPage'
+import { getPictureservice } from '../../utils/userProfileService'
 const userProfile = (props) => {
   const [picture, setPicture] = useState('')
   const [pictureType, setPictureType] = useState('')
-  const [totalNumberOfFields, setTotalNumberOfFields] = useState(19)
+  const [totalNumberOfFields, setTotalNumberOfFields] = useState(26)
   const [profileProgress, setProfileProgress] = useState(0)
   const [personalInfoProgress, setPersonalInfoProgress] = useState(0)
   const [contactInfoProgress, setContactInfoProgress] = useState(0)
@@ -78,11 +79,7 @@ const userProfile = (props) => {
   }
   const getPicture = async () => {
     try {
-      const customerId = await localStorage.getItem('customerId')
-      const responseObject = await axios.get(
-        'http://203.122.46.189:8061/customer/api/profile/v1/all-docs',
-        { params: { customerId } }
-      )
+      const responseObject= await getPictureservice();
       if (responseObject.status === 200) {
         console.log(responseObject.data)
         console.log('responseObject')
@@ -110,7 +107,7 @@ const userProfile = (props) => {
         'http://203.122.46.189:8061/customer/api/profile/v1/doc-upload',
         {
           ...body,
-          customerId: customerId ? customerId : '101',
+          customerId: customerId ,
         }
       )
       console.log(responseObject)
@@ -311,7 +308,7 @@ const userProfile = (props) => {
                   <Offers />
                 </div>
               </div>
-              <div className="option-wrapper">
+              {/* <div className="option-wrapper">
                 <div id="option-7" className="option">
                   <h3>Refer &amp; Earn</h3>
                   <svg
@@ -352,7 +349,7 @@ const userProfile = (props) => {
                 <div className="option-data" id="option-8-data">
                   <Help />
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
