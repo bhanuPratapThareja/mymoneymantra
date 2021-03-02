@@ -1,5 +1,6 @@
 * {
   -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
 }
 
 :root {
@@ -1769,6 +1770,9 @@ button.cstm-load-btn {
   cursor: pointer;
 }
 
+/*-- Blog social icons slide button --*/
+.cstm-social-btn {display: none;}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
@@ -2285,6 +2289,58 @@ button.cstm-load-btn {
   .cstm-dsktxt {
     display: none;
   }
+
+  
+  /*-- Blog social icons slide button --*/
+  
+  #blog-socials {
+    top: 40%;
+    z-index: 99;
+    right: -51px;
+    transition: all ease 0.5s;
+    -webkit-transition: all ease 0.5s;
+    -moz-transition: all ease 0.5s;
+    -ms-transition: all ease 0.5s;
+  }
+
+  #blog-socials.show-social-icons {
+    right: 0;
+  }
+
+
+  .cstm-social-btn {
+    position: absolute;
+    bottom: 20px;
+    display: block;
+    left: -40px;
+    min-height: 50px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    cursor: pointer;
+    box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+    -webkit-box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+    -moz-box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+    -ms-box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+  }
+
+  .cstm-social-btn i {
+    background-image: url("../public/assets/images/icons/menu_bottom_top_bg.png");
+    background-position: 0 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 28px;
+    left: 12px;
+    position: absolute;
+    top: 12px;
+    width: 22px;
+  }
+  
+  .cstm-social-btn:focus{
+    outline: none;
+  }
+  
 
 }
 
