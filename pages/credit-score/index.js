@@ -9,7 +9,7 @@ import { getClassesForPage } from '../../utils/classesForPage'
 import { useEffect, useState } from 'react'
 import Loader from '../../components/common/Loader'
 import { getCreditScore } from '../../utils/creditProfileService'
-import PopularOffers from '../../components/common/PopularOffers';
+import Offers from '../../components/common/Offers'
 const creditScoreProfile = (props) => {
   const [loading, setLoading] = useState(true)
   const [cpScoreData, setCpScoreData] = useState({})
@@ -56,7 +56,7 @@ const creditScoreProfile = (props) => {
           name={cpScoreData?.applicantName}
           banks={props?.data}
         />
-        <PopularOffers data='Offers For You' />
+        <Offers/>
       </Layout>
     </div>
   )
