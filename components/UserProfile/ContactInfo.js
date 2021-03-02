@@ -39,7 +39,13 @@ const ContactInfo = (props) => {
       setPermanentAddressLine1('')
       setPermanentAddressLine2('')
     }
-  }, [sameAddress])
+  }, [
+    sameAddress,
+    currentPincode,
+    currentCity,
+    currentAddressLine1,
+    currentAddressLine2,
+  ])
 
   const validateEmail = () => {
     let pattern = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/
