@@ -43,10 +43,10 @@ const SideMenu = (props) => {
 
             </div>
             <div className="content-wrapper">
-               <a href="/credit-score">
+               <a href="/credit-cards">
                   <div className="data">
                      <img src="/assets/images/menu/credit.svg" />
-                     <h5>My Credit Score</h5>
+                     <h5>Credit Cards</h5>
                   </div>
                </a>
                <div className="data data-expand" onClick={() => onDataExpand(0)}>

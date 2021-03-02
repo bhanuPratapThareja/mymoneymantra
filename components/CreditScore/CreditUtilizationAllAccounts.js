@@ -127,8 +127,8 @@ const CreditUtilizationAllAccounts = ({ active, closed, name, banks }) => {
                                     strokeWidth="10"
                                     fillOpacity="0"
                                     style={{
-                                      strokeDasharray: '282.783, 282.783',
-                                      strokeDashoffset: '56.5566',
+                                      strokeDasharray: item.creditUtilization ? `${((parseInt(item.creditUtilization)/100)*278)} ,282.783`: '10, 282.783',
+                                      strokeDashoffset: '10',
                                       strokeLinecap: 'round',
                                     }}
                                   ></path>
@@ -148,7 +148,7 @@ const CreditUtilizationAllAccounts = ({ active, closed, name, banks }) => {
                                     fontWeight: 'bold',
                                   }}
                                 >
-                                  {item.creditUtilization}%
+                                  {item.creditUtilization?item.creditUtilization + '%':'NA'}
                                 </div>
                               </div>
                             </div>

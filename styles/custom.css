@@ -1,5 +1,6 @@
 * {
   -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
 }
 
 :root {
@@ -1802,6 +1803,9 @@ button.cstm-load-btn {
   cursor: pointer;
 }
 
+/*-- Blog social icons slide button --*/
+.cstm-social-btn {display: none;}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
@@ -2349,6 +2353,58 @@ button.cstm-load-btn {
     display: none;
   }
 
+  
+  /*-- Blog social icons slide button --*/
+  
+  #blog-socials {
+    top: 40%;
+    z-index: 99;
+    right: -51px;
+    transition: all ease 0.5s;
+    -webkit-transition: all ease 0.5s;
+    -moz-transition: all ease 0.5s;
+    -ms-transition: all ease 0.5s;
+  }
+
+  #blog-socials.show-social-icons {
+    right: 0;
+  }
+
+
+  .cstm-social-btn {
+    position: absolute;
+    bottom: 20px;
+    display: block;
+    left: -40px;
+    min-height: 50px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    cursor: pointer;
+    box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+    -webkit-box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+    -moz-box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+    -ms-box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+  }
+
+  .cstm-social-btn i {
+    background-image: url("../public/assets/images/icons/menu_bottom_top_bg.png");
+    background-position: 0 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 28px;
+    left: 12px;
+    position: absolute;
+    top: 12px;
+    width: 22px;
+  }
+  
+  .cstm-social-btn:focus{
+    outline: none;
+  }
+  
+
 }
 
 @media(max-width: 767px) {
@@ -2382,27 +2438,9 @@ button.cstm-load-btn {
 }
 
 @media(max-width: 479px) {
-  .creditProfile-score-flow .creditScore-wrapper-left .score-scale-img{
-    margin-left:0px !important;
-  }
-  .creditProfile-score-flow .creditScore-wrapper-left,.creditProfile-score-flow .creditScore-wrapper-right{
-    max-width: 550px !important;
-    background-size: 30% 15%;
-    padding: 32px 16px !important;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    display: flex;
-    margin-right:0px;
-  }
-  .creditProfile-score-flow .creditScore-wrapper-left{
-    margin-bottom:16px;
-    
-  }
-  .creditProfile-score-flow .creditScore-wrapper{
-    flex-direction: column;
-    width: 100%;
-    padding-right: 0px !important;
+  .container.banner.new-credit-wrap.aos-init.aos-animate{
+    overflow-y: auto;
+
   }
   .sf-submit-button_text {
     margin-right: 5px !important;
@@ -2700,13 +2738,15 @@ button.cstm-load-btn {
   justify-content: center;
   -ms-flex-align: center;
   align-items: center;
+  min-width: 170px;
+  min-height: 160px;
 }
 
 
 .creditProfile-utilization-flow .paymentRank-wrapper-content .left-mobile-view .value-utilisation.red-circle,
 .creditProfile-enquiries-flow .paymentRank-wrapper-content-left.left-mobile-view  .value-enquiries.red-circle,
 .credit-rank-flow .paymentRank-wrapper-content .left-mobile-view .value-rank.red-circle {
-  background: url("/assets/images/icons/redc.png") no-repeat center / contain;  
+  background: url("/assets/images/icons/redc.png") no-repeat center / cover;  
 }
 
 .creditProfile-utilization-flow .paymentRank-wrapper-content .left-mobile-view .value-utilisation.orange-circle,
@@ -2740,6 +2780,8 @@ button.cstm-load-btn {
 .red-square{
   background: url("/assets/images/icons/reds.png") !important;
   max-width: 240px;
+  min-width: 160px;
+  min-height: 160px;
   height: 100%;
   background-color: #ffffff;
   background-repeat: no-repeat !important;
@@ -2754,19 +2796,22 @@ button.cstm-load-btn {
 .orange-square{
   background: url("/assets/images/icons/oranges.png") no-repeat center / contain;
   max-width: 240px;
+  min-width: 160px;
+  min-height: 160px;
   height: 100%;
   background-color: #ffffff;
   -ms-flex-pack: center;
   justify-content: center;
   -ms-flex-align: center;
   align-items: center;
-  min-width: 240px;
   position: relative;
 }
 
 .yellow-square{
   background: url("/assets/images/icons/yellows.png") !important;
   max-width: 240px;
+  min-width: 160px;
+  min-height: 160px;
   height: 100%;
   background-color: #ffffff;
   background-repeat: no-repeat !important;
@@ -2781,6 +2826,8 @@ button.cstm-load-btn {
 .green-square{
   background: url("/assets/images/icons/greens.png") !important;
   max-width: 240px;
+  min-width: 160px;
+  min-height: 160px;
   height: 100%;
   background-color: #ffffff;
   background-repeat: no-repeat !important;

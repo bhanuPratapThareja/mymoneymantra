@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Strapi from '../../providers/strapi'
 import Image from '../ImageComponent/ImageComponent'
 
@@ -8,6 +8,12 @@ const BlogBanner = props => {
     const router = useRouter()
     const strapi = new Strapi()
     const [searchKey, setSearchKey] = useState('')
+
+    useEffect(() =>{
+        if(router.query.q){
+            setSearchKey(router.query.q)
+        }
+    },[]) 
 
     const handleSearch = () => {
         if (props.author) {

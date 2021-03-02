@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { getFormattedCurrency } from '../../utils/formattedCurrency'
 import DoughnutChart from './DoughnutChart'
 
-const defaultColor = ['#3080CF', '#F03535', '#56AB2F']
+
 
 const CreditOverview = (props) => {
   const [data, setData] = useState([])
@@ -32,26 +32,14 @@ const CreditOverview = (props) => {
             <h2>{getFormattedCurrency(props.totalScore)}</h2>
             <hr />
           </div>
-          <div className="creditOverview-wrapper-left-icon">
-            <div className="three-holder">
-              <DoughnutChart overview={props?.overview} />
-              {/* <div className="blue">
-                <h2>60,000</h2>
-              </div>
-              <div className="green">
-                <h3>35,000</h3>
-              </div>
-              <div className="red">
-                <h6>5,000</h6>
-              </div> */}
-            </div>
-          </div>
+          
+          
           <div className="creditOverview-wrapper-left-content">
             {props.overview && props.overview.length ? (
               props.overview.map((item, index) => (
                 <div className="creditOverview-components">
                   <div
-                    style={{ backgroundColor: `${defaultColor[index]}` }}
+                    style={{ backgroundColor: `${customColor[index]}` }}
                     className="color-box"
                   ></div>
                   <p className="sector">{item.productType} -</p>
@@ -63,9 +51,29 @@ const CreditOverview = (props) => {
             )}
           </div>
         </div>
+        <div className="creditOverview-wrapper-left-icon">
+            <div className="three-holder">
+              <DoughnutChart overview={props?.overview} colors={customColor} />
+              
+            </div>
+            </div>
       </div>
     </section>
   )
 }
+
+const customColor=[
+  'blue',
+  'red',
+  'green',
+  'orange',
+  'violet',
+  'black',
+  'indigo',
+  'yellow',
+  'magenta',
+  'aquamarine',
+  'crimson'
+]
 
 export default CreditOverview

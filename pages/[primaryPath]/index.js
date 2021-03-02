@@ -7,8 +7,7 @@ import PersonalLoansBanner from '../../components/Banners/PersonalLoansBanner'
 import HomeLoansBanner from '../../components/Banners/HomeLoansBanner'
 import UspCards from '../../components/common/UspCards'
 import CreditScore from '../../components/common/CreditScore'
-import PopularOffers from '../../components/common/PopularOffers'
-import TrendingOffers from '../../components/common/TrendingOffers'
+
 import BankSlider from '../../components/common/BankSlider'
 import Rewards from '../../components/common/Rewards'
 import FinancialTools from '../../components/common/FinancialTools'
@@ -19,6 +18,7 @@ import PageNotFound from '../../components/PageNotFound'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { addSeoMetaData, removeSeoMetaData } from '../../utils/seoMetaData'
 import { clearLeadBank, clearFormData, clearLeadId } from '../../utils/localAccess';
+import Offers from '../../components/common/Offers'
 
 const PrimaryPage = props => {
 
@@ -71,27 +71,28 @@ const PrimaryPage = props => {
             goToShortForm={goToShortForm}
           />
         case 'offers.popular-offers-component':
-          return <PopularOffers
+          return <Offers
             key={block.id}
             data={block}
-            primaryPath={props.primaryPath}
+            componentType={block.__component}
             productType={props.productType}
             goToShortForm={goToShortForm}
             setFormRedirection={setFormRedirection}
           />
+          
         case 'blocks.credit-score-component':
           return <CreditScore key={block.id} data={block} />
         case 'offers.trending-offers-component':
-          return <TrendingOffers
+          return <Offers
             key={block.id}
             data={block}
-            primaryPath={props.primaryPath}
+            componentType={block.__component}
             productType={props.productType}
             goToShortForm={goToShortForm}
             setFormRedirection={setFormRedirection}
           />
         case 'blocks.bank-slider-component':
-          return <BankSlider key={block.id} data={block} />
+          return <BankSlider key={block.id} data={block} primaryPath={props.primaryPath} />
         case 'blocks.rewards-component':
           return <Rewards key={block.id} data={block} />
         case 'blocks.quick-financial-tools-component':
