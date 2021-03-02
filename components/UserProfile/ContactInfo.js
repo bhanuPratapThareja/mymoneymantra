@@ -18,7 +18,7 @@ const ContactInfo = (props) => {
   const [currentAddressLine1, setCurrentAddressLine1] = useState('')
   const [currentAddressLine2, setCurrentAddressLine2] = useState('')
   const [currentStateId, setCurrentStateId] = useState(0)
-  const [currentCityId, setCurrentcityId] = useState(0)
+  const [currentCityId, setCurrentCityId] = useState(0)
   const [permanentAddressId, setPermanentAddressId] = useState(null)
   const [permanentPincode, setPermanentPincode] = useState('')
   const [permanentPincodeQuery, setPermanentPincodeQuery] = useState('')
@@ -42,11 +42,15 @@ const ContactInfo = (props) => {
       setPermanentCity(currentCity)
       setPermanentAddressLine1(currentAddressLine1)
       setPermanentAddressLine2(currentAddressLine2)
+      setPermanentCityId(currentCityId)
+      setPermanentStateId(currentStateId)
     } else {
       setPermanentPincode('')
       setPermanentCity('')
       setPermanentAddressLine1('')
       setPermanentAddressLine2('')
+      setPermanentCityId('')
+      setPermanentStateId('')
     }
   }, [
     sameAddress,
@@ -54,6 +58,8 @@ const ContactInfo = (props) => {
     currentCity,
     currentAddressLine1,
     currentAddressLine2,
+    currentStateId,
+    currentCityId,
   ])
 
   useEffect(() => {
@@ -110,12 +116,18 @@ const ContactInfo = (props) => {
         const { customerId, emailId, mobileNo, address } = res
         setEmailId(emailId)
         setMobileNo(mobileNo)
-        setAddress(address)
+        // setAddress(address)
         address.map((a) => {
-          if (a.addressId == 300) {
+          if (a.addressTypeMasterId == 1000000001) {
+            if (a.addressId) {
+              setCurrentAddressId(a.addressId)
+            }
             setCurrentAddressDisplay(a.addressline1)
           }
-          if (a.addressId == 301) {
+          if (a.addressTypeMasterId == 1000000003) {
+            if (a.addressId) {
+              setPermanentAddressId(a.addressId)
+            }
             setPermanentAddressDisplay(a.addressline1)
           }
         })
@@ -140,25 +152,31 @@ const ContactInfo = (props) => {
     setEditing(false)
     try {
       const permanentAddress = {
+        addressTypeMasterId: 1000000003,
         pincode: permanentPincode,
-        city: permanentCity,
+        city: permanentCityId,
+        state: permanentStateId,
         addressline1: permanentAddressLine1,
         addressline2: permanentAddressLine2,
       }
+      if (permanentAddressId) {
+        permanentAddress.addressId = permanentAddressId
+      }
       const currentAddress = {
+        addressTypeMasterId: 1000000001,
         pincode: currentPincode,
-        city: currentCity,
+        city: currentCityId,
+        state: currentStateId,
         addressline1: currentAddressLine1,
         addressline2: currentAddressLine2,
       }
+      if (currentAddressId) {
+        currentAddress.addressId = currentAddressId
+      }
+      const address = [permanentAddress, currentAddress]
       // const customerId = localStorage.getItem('customerId')
       let contactNo = JSON.stringify(mobileNo)
-      const responseObject = await saveContactInfo(
-        contactNo,
-        emailId,
-        currentAddress,
-        permanentAddress
-      )
+      const responseObject = await saveContactInfo(contactNo, emailId, address)
       if (responseObject.status === 200) {
         getContact()
       }
