@@ -1924,9 +1924,6 @@ button.cstm-load-btn {
     top:0px !important;
     right:0px  !important;
   }
-  .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper .contact-wrapper .shortforms-container .form__group, .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper .work-wrapper .shortforms-container .form__group{
-  padding: 0px 20px 10px 0px !important;
-}
 
   /* .homepage-flow .aboutUs-left .aboutUs-underline {
     display: none;

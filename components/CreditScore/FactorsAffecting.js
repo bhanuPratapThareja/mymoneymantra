@@ -49,7 +49,7 @@ const FactorsAffecting = () => {
                   >
                     <Link href={item.link}>
                       <div className="factors-affecting-child">
-                      <p className="percent">{item.value}%</p>
+                      <p className="percent">{item.value}</p>
                       <p className="title">{item.title}</p>
                       </div>
                     </Link>
