@@ -39,7 +39,13 @@ const ContactInfo = (props) => {
       setPermanentAddressLine1('')
       setPermanentAddressLine2('')
     }
-  }, [sameAddress])
+  }, [
+    sameAddress,
+    currentPincode,
+    currentCity,
+    currentAddressLine1,
+    currentAddressLine2,
+  ])
 
   const validateEmail = () => {
     let pattern = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/
@@ -131,272 +137,275 @@ const ContactInfo = (props) => {
 
   return (
     <>
-    <div className="contact-wrapper">
-      <form
-        className="contact-forms-wrapper"
-        style={{ display: 'block' }}
-        autocomplete="off"
-        onSubmit={submitHandler}
-      >
-        <div className="shortforms-container">
-          <div
-            className={
-              editing
-                ? 'form__group field edit-part'
-                : 'form__group field read-part'
-            }
-          >
-            <input
-              readOnly={true}
-              className="form__field"
-              type="text"
-              value={mobileNo}
-              id="mob-num"
-              autocomplete="off"
-              onChange={(e) => setMobileNo(e.target.value)}
-              placeholder="Mobile Number"
-              required=""
-            />
-            <label className="form__label" htmlFor="mob-num">
-              Mobile Number
-            </label>
-          </div>
-          <div
-            className={
-              editing
-                ? 'form__group field edit-part'
-                : 'form__group field read-part'
-            }
-          >
-            <input
-              readOnly={!editing}
-              className="form__field"
-              type="text"
-              value={emailId}
-              autocomplete="off"
-              id="email"
-              placeholder="Email ID"
-              onChange={(e) => setEmailId(e.target.value)}
-              required=""
-              onBlur={validateEmail}
-            />
-            <label className="form__label" htmlFor="email">
-              Email ID
-            </label>
-            {emailError ? <p style={{ color: 'red' }}>{errMsg}</p> : null}
-          </div>
-          <div
-            className={
-              editing
-                ? 'form__group field hide-form'
-                : 'form__group field read-part'
-            }
-          >
-            <input
-              readOnly
-              className="form__field"
-              type="text"
-              value={currentAddressDisplay}
-              autocomplete="off"
-              id="current-address"
-              placeholder="Current Address"
-              required=""
-            />
-            <label className="form__label" htmlFor="current-address">
-              Current Address
-            </label>
-          </div>
-          <div
-            className={
-              editing
-                ? 'form__group field hide-form'
-                : 'form__group field read-part'
-            }
-          >
-            <input
-              readOnly
-              className="form__field"
-              type="text"
-              autocomplete="off"
-              value={permanentAddressDisplay}
-              id="permanent-address"
-              placeholder="Permanent Address"
-              required=""
-            />
-            <label className="form__label" htmlFor="permanent-address">
-              Permanent Address
-            </label>
-          </div>
-        </div>
-        {editing && (
-          <>
-            <h5>Current address</h5>
-            <div class="shortforms-container personal-style">
-              <div class="form__group field edit-part">
-                <input
-                  value={currentPincode}
-                  class="form__field"
-                  type="text"
-                  id="c-pincode"
-                  placeholder="Pincode"
-                  required=""
-                  onChange={(e) => setCurrentPincode(e.target.value)}
-                />
-                <label class="form__label" for="c-pincode">
-                  Pincode
-                </label>
-              </div>
-              <div class="form__group field edit-part">
-                <input
-                  value={currentCity}
-                  class="form__field"
-                  type="text"
-                  id="c-city"
-                  placeholder="City"
-                  required=""
-                  onChange={(e) => setCurrentCity(e.target.value)}
-                />
-                <label class="form__label" for="c-city">
-                  City
-                </label>
-              </div>
-              <div class="form__group field edit-part">
-                <input
-                  value={currentAddressLine1}
-                  class="form__field"
-                  type="text"
-                  id="c-address-line-1"
-                  placeholder="Address Line 1"
-                  required=""
-                  onChange={(e) => setCurrentAddressLine1(e.target.value)}
-                />
-                <label class="form__label" for="c-address-line-1">
-                  Address Line 1
-                </label>
-              </div>
-              <div class="form__group field edit-part">
-                <input
-                  value={currentAddressLine2}
-                  class="form__field"
-                  type="text"
-                  id="c-address-line-2"
-                  placeholder="address-line-2"
-                  required=""
-                  onChange={(e) => setCurrentAddressLine2(e.target.value)}
-                />
-                <label class="form__label" for="c-address-line-2">
-                  Address Line 2
-                </label>
-              </div>
-           
-            </div>
-            <div class="checkbox-container">
-              <div class="checkbox edit-part">
-                <input
-                  type="checkbox"
-                  id="checkbox"
-                  name=""
-                  checked={sameAddress}
-                  onChange={(e) => setSameAddress(e.target.checked)}
-                />
-                <label for="checkbox">
-                  <span>Permanent address is same as current address.</span>
-                </label>
-              </div>
-            </div>
-            <h5>Permanent address</h5>
-            <div class="shortforms-container personal-style">
-              <div class="form__group field edit-part">
-                <input
-                  value={permanentPincode}
-                  class="form__field"
-                  type="text"
-                  id="p-pincode"
-                  placeholder="Pincode"
-                  required=""
-                  onChange={(e) => setPermanentPincode(e.target.value)}
-                />
-                <label class="form__label" for="p-pincode">
-                  Pincode
-                </label>
-              </div>
-              <div class="form__group field edit-part">
-                <input
-                  value={permanentCity}
-                  class="form__field"
-                  type="text"
-                  id="p-city"
-                  placeholder="City"
-                  required=""
-                  onChange={(e) => setPermanentCity(e.target.value)}
-                />
-                <label class="form__label" for="p-city">
-                  City
-                </label>
-              </div>
-              <div class="form__group field edit-part">
-                <input
-                  value={permanentAddressLine1}
-                  class="form__field"
-                  type="text"
-                  id="p-address-line-1"
-                  placeholder="Address Line 1"
-                  required=""
-                  onChange={(e) => setPermanentAddressLine1(e.target.value)}
-                />
-                <label class="form__label" for="p-address-line-1">
-                  Address Line 1
-                </label>
-              </div>
-              <div class="form__group field edit-part">
-                <input
-                  value={permanentAddressLine2}
-                  class="form__field"
-                  type="text"
-                  id="p-address-line-2"
-                  placeholder="address-line-2"
-                  required=""
-                  onChange={(e) => setPermanentAddressLine2(e.target.value)}
-                />
-                <label class="form__label" for="p-address-line-2">
-                  Address Line 2
-                </label>
-              </div>
-            </div>
-          </>
-        )}
-        <div
-          className="save-options"
-          style={{ display: editing ? 'flex' : 'none' }}
+      <div className="contact-wrapper">
+        <form
+          className="contact-forms-wrapper"
+          style={{ display: 'block' }}
+          autocomplete="off"
+          onSubmit={submitHandler}
         >
-          <button
-            type="submit"
-            className="save-contact"
-            id="save-contact"
-            disabled={emailError}
+          <div className="shortforms-container">
+            <div
+              className={
+                editing
+                  ? 'form__group field edit-part'
+                  : 'form__group field read-part'
+              }
+            >
+              <input
+                readOnly={true}
+                className="form__field"
+                type="text"
+                value={mobileNo}
+                id="mob-num"
+                autocomplete="off"
+                onChange={(e) => setMobileNo(e.target.value)}
+                placeholder="Mobile Number"
+                required=""
+              />
+              <label className="form__label" htmlFor="mob-num">
+                Mobile Number
+              </label>
+            </div>
+            <div
+              className={
+                editing
+                  ? 'form__group field edit-part'
+                  : 'form__group field read-part'
+              }
+            >
+              <input
+                readOnly={!editing}
+                className="form__field"
+                type="text"
+                value={emailId}
+                autocomplete="off"
+                id="email"
+                placeholder="Email ID"
+                onChange={(e) => setEmailId(e.target.value)}
+                required=""
+                onBlur={validateEmail}
+              />
+              <label className="form__label" htmlFor="email">
+                Email ID
+              </label>
+              {emailError ? <p style={{ color: 'red' }}>{errMsg}</p> : null}
+            </div>
+            <div
+              className={
+                editing
+                  ? 'form__group field hide-form'
+                  : 'form__group field read-part'
+              }
+            >
+              <input
+                readOnly
+                className="form__field"
+                type="text"
+                value={currentAddressDisplay}
+                autocomplete="off"
+                id="current-address"
+                placeholder="Current Address"
+                required=""
+              />
+              <label className="form__label" htmlFor="current-address">
+                Current Address
+              </label>
+            </div>
+            <div
+              className={
+                editing
+                  ? 'form__group field hide-form'
+                  : 'form__group field read-part'
+              }
+            >
+              <input
+                readOnly
+                className="form__field"
+                type="text"
+                autocomplete="off"
+                value={permanentAddressDisplay}
+                id="permanent-address"
+                placeholder="Permanent Address"
+                required=""
+              />
+              <label className="form__label" htmlFor="permanent-address">
+                Permanent Address
+              </label>
+            </div>
+          </div>
+          {editing && (
+            <>
+              <h5>Current address</h5>
+              <div class="shortforms-container personal-style">
+                <div class="form__group field edit-part">
+                  <input
+                    value={currentPincode}
+                    class="form__field"
+                    type="text"
+                    id="c-pincode"
+                    placeholder="Pincode"
+                    required=""
+                    onChange={(e) => setCurrentPincode(e.target.value)}
+                  />
+                  <label class="form__label" for="c-pincode">
+                    Pincode
+                  </label>
+                </div>
+                <div class="form__group field edit-part">
+                  <input
+                    value={currentCity}
+                    class="form__field"
+                    type="text"
+                    id="c-city"
+                    placeholder="City"
+                    required=""
+                    onChange={(e) => setCurrentCity(e.target.value)}
+                  />
+                  <label class="form__label" for="c-city">
+                    City
+                  </label>
+                </div>
+                <div class="form__group field edit-part">
+                  <input
+                    value={currentAddressLine1}
+                    class="form__field"
+                    type="text"
+                    id="c-address-line-1"
+                    placeholder="Address Line 1"
+                    required=""
+                    onChange={(e) => setCurrentAddressLine1(e.target.value)}
+                  />
+                  <label class="form__label" for="c-address-line-1">
+                    Address Line 1
+                  </label>
+                </div>
+                <div class="form__group field edit-part">
+                  <input
+                    value={currentAddressLine2}
+                    class="form__field"
+                    type="text"
+                    id="c-address-line-2"
+                    placeholder="address-line-2"
+                    required=""
+                    onChange={(e) => setCurrentAddressLine2(e.target.value)}
+                  />
+                  <label class="form__label" for="c-address-line-2">
+                    Address Line 2
+                  </label>
+                </div>
+              </div>
+              <div class="checkbox-container">
+                <div class="checkbox edit-part">
+                  <input
+                    type="checkbox"
+                    id="checkbox"
+                    name=""
+                    checked={sameAddress}
+                    onChange={(e) => setSameAddress(e.target.checked)}
+                  />
+                  <label for="checkbox">
+                    <span>Permanent address is same as current address.</span>
+                  </label>
+                </div>
+              </div>
+              <h5>Permanent address</h5>
+              <div class="shortforms-container personal-style">
+                <div class="form__group field edit-part">
+                  <input
+                    readOnly={sameAddress}
+                    value={permanentPincode}
+                    class="form__field"
+                    type="text"
+                    id="p-pincode"
+                    placeholder="Pincode"
+                    required=""
+                    onChange={(e) => setPermanentPincode(e.target.value)}
+                  />
+                  <label class="form__label" for="p-pincode">
+                    Pincode
+                  </label>
+                </div>
+                <div class="form__group field edit-part">
+                  <input
+                    readOnly={sameAddress}
+                    value={permanentCity}
+                    class="form__field"
+                    type="text"
+                    id="p-city"
+                    placeholder="City"
+                    required=""
+                    onChange={(e) => setPermanentCity(e.target.value)}
+                  />
+                  <label class="form__label" for="p-city">
+                    City
+                  </label>
+                </div>
+                <div class="form__group field edit-part">
+                  <input
+                    readOnly={sameAddress}
+                    value={permanentAddressLine1}
+                    class="form__field"
+                    type="text"
+                    id="p-address-line-1"
+                    placeholder="Address Line 1"
+                    required=""
+                    onChange={(e) => setPermanentAddressLine1(e.target.value)}
+                  />
+                  <label class="form__label" for="p-address-line-1">
+                    Address Line 1
+                  </label>
+                </div>
+                <div class="form__group field edit-part">
+                  <input
+                    readOnly={sameAddress}
+                    value={permanentAddressLine2}
+                    class="form__field"
+                    type="text"
+                    id="p-address-line-2"
+                    placeholder="address-line-2"
+                    required=""
+                    onChange={(e) => setPermanentAddressLine2(e.target.value)}
+                  />
+                  <label class="form__label" for="p-address-line-2">
+                    Address Line 2
+                  </label>
+                </div>
+              </div>
+            </>
+          )}
+          <div
+            className="save-options"
+            style={{ display: editing ? 'flex' : 'none' }}
           >
-            Save
-          </button>
-          <button
-            type="button"
-            className="cancel"
-            id="cancel"
-            onClick={cancleHandler}
-          >
-            Cancel
-          </button>
-        </div>
-        {!editing && (
-          <button
-            type="button"
-            id="edit-contact"
-            className="edit-button"
-            onClick={() => setEditing(true)}
-          >
-            Edit
-          </button>
-        )}
-      </form>
+            <button
+              type="submit"
+              className="save-contact"
+              id="save-contact"
+              disabled={emailError}
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              className="cancel"
+              id="cancel"
+              onClick={cancleHandler}
+            >
+              Cancel
+            </button>
+          </div>
+          {!editing && (
+            <button
+              type="button"
+              id="edit-contact"
+              className="edit-button"
+              onClick={() => setEditing(true)}
+            >
+              Edit
+            </button>
+          )}
+        </form>
       </div>
     </>
   )
