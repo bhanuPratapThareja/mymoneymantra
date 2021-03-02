@@ -131,8 +131,9 @@ const ContactInfo = (props) => {
 
   return (
     <>
+    <div className="contact-wrapper">
       <form
-        className="contact-wrapper"
+        className="contact-forms-wrapper"
         style={{ display: 'block' }}
         autocomplete="off"
         onSubmit={submitHandler}
@@ -187,7 +188,7 @@ const ContactInfo = (props) => {
           <div
             className={
               editing
-                ? 'form__group field edit-part'
+                ? 'form__group field hide-form'
                 : 'form__group field read-part'
             }
           >
@@ -208,7 +209,7 @@ const ContactInfo = (props) => {
           <div
             className={
               editing
-                ? 'form__group field edit-part'
+                ? 'form__group field hide-form'
                 : 'form__group field read-part'
             }
           >
@@ -287,6 +288,7 @@ const ContactInfo = (props) => {
                   Address Line 2
                 </label>
               </div>
+           
             </div>
             <div class="checkbox-container">
               <div class="checkbox edit-part">
@@ -395,6 +397,7 @@ const ContactInfo = (props) => {
           </button>
         )}
       </form>
+      </div>
     </>
   )
 }

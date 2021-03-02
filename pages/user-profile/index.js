@@ -361,8 +361,8 @@ const userProfile = (props) => {
 }
 export async function getServerSideProps(ctx) {
   const primaryPath = 'user-profile'
-  const responseObject = await fetch('http://203.122.46.189:1338/banks')
-  const data = await responseObject.json()
+  // const responseObject = await fetch('http://203.122.46.189:1338/banks')
+  const data = {} //await responseObject.json()
   const pageClasses = getClassesForPage(primaryPath)
   return { props: { pageClasses, data } }
 }
