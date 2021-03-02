@@ -1,4 +1,8 @@
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 const FactorsAffecting = () => {
+  const router=useRouter();
+  
   return (
     <section
       data-aos="fade-up"
@@ -25,123 +29,35 @@ const FactorsAffecting = () => {
             style={{ overflowX: 'scroll', overflowY: 'hidden' }}
           >
             <div
-              className="slick-track"
+              className="slick-track factor-affect"
               style={{
                 opacity: 1,
-                width: '1116px',
                 transform: 'translate3d(0px, 0px, 0px)',
               }}
             >
-              <div
+              {factors.map(item=>  <div
+                key={item.id}
                 className="slick-slide slick-current slick-active"
-                data-slick-index="0"
+                data-slick-index={item.id}
                 aria-hidden="false"
-                style={{ width: '186px' }}
+                style={{display:router.pathname === item.link ? 'none' : 'block' }}
               >
                 <div>
                   <div
                     className="slide_cell"
                     style={{ width: '100%', display: 'inline-block' }}
                   >
-                    <img
-                      src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/payment-history.svg"
-                      alt="payment-history"
-                    />
+                    <Link href={item.link}>
+                      <div className="factors-affecting-child">
+                      <p className="percent">{item.value}</p>
+                      <p className="title">{item.title}</p>
+                      </div>
+                    </Link>
                   </div>
                 </div>
               </div>
-              <div
-                className="slick-slide slick-active"
-                data-slick-index="1"
-                aria-hidden="false"
-                style={{ width: '186px' }}
-              >
-                <div>
-                  <div
-                    className="slide_cell"
-                    style={{ width: '100%', display: 'inline-block' }}
-                  >
-                    <img
-                      src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/creditcard-utilisation.svg"
-                      alt="creditcard-utilisation"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div
-                className="slick-slide slick-active"
-                data-slick-index="2"
-                aria-hidden="false"
-                style={{ width: '186px' }}
-              >
-                <div>
-                  <div
-                    className="slide_cell"
-                    style={{ width: '100%', display: 'inline-block' }}
-                  >
-                    <img
-                      src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/age-of-credit.svg"
-                      alt="age-of-credit"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div
-                className="slick-slide slick-active"
-                data-slick-index="3"
-                aria-hidden="false"
-                style={{ width: '186px' }}
-              >
-                <div>
-                  <div
-                    className="slide_cell"
-                    style={{ width: '100%', display: 'inline-block' }}
-                  >
-                    <img
-                      src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/total-accounts.svg"
-                      alt="total-accounts"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div
-                className="slick-slide"
-                data-slick-index="4"
-                aria-hidden="true"
-                tabIndex="-1"
-                style={{ width: '186px' }}
-              >
-                <div>
-                  <div
-                    className="slide_cell"
-                    style={{ width: '100%', display: 'inline-block' }}
-                  >
-                    <img
-                      src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/total-accounts.svg"
-                      alt="total-accounts"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div
-                className="slick-slide"
-                data-slick-index="5"
-                aria-hidden="true"
-                tabIndex="-1"
-                style={{ width: '186px' }}
-              >
-                <div>
-                  <div
-                    className="slide_cell"
-                    style={{ width: '100%', display: 'inline-block' }}
-                  >
-                    <img
-                      src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/total-accounts.svg"
-                      alt="total-accounts"
-                    />
-                  </div>
-                </div>
-              </div>
+            )}
+              
             </div>
           </div>
           <button
@@ -158,4 +74,42 @@ const FactorsAffecting = () => {
   )
 }
 
+const factors=[
+  {
+    id:0,
+    value:80,
+    title:'Payment History',
+    link:"/credit-score/rank"
+  },
+  {
+    id:1,
+    value:18,
+    title:'Credit Card Utilisation',
+    link:'/credit-score/utilization'
+  },
+  {
+    id:2,
+    value:23,
+    title:'Age of Credit',
+    link:'/credit-score/age'
+  },
+  {
+    id:3,
+    value:45,
+    title:'Total Accounts',
+    link:'/credit-score/accounts' 
+  },
+  {
+    id:4,
+    value:0,
+    title:'Enquries',
+    link:'/credit-score/enquiries' 
+  },
+  {
+    id:5,
+    value:0,
+    title:'Credit Overview',
+    link:'/credit-score' 
+  }
+]
 export default FactorsAffecting

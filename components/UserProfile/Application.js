@@ -10,7 +10,7 @@ const Application = ({ banks }) => {
       try {
         const customerId = localStorage.getItem('customerId')
         const responseObject = await axios.get(
-          `http://203.122.46.189:8060/customer/api/profile/v1/cust-app?customerId=${
+          `http://203.122.46.189:8061/customer/api/profile/v1/cust-app?customerId=${
             customerId ? customerId : 206
           }`
         )

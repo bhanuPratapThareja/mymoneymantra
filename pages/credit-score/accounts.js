@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import OffersForYou from '../../components/CreditScore/OffersForYou'
+import Offers from '../../components/common/Offers'
 import TipSection from '../../components/CreditScore/TipSection'
 import Layout from '../../components/Layout'
 import TotalAccounts from '../../components/CreditScore/TotalAccounts'
@@ -9,6 +9,7 @@ import TotalActiveAccounts from '../../components/CreditScore/TotalActiveAccount
 import { getClassesForPage } from '../../utils/classesForPage'
 import Loader from '../../components/common/Loader'
 import { getCreditAccounts } from '../../utils/creditProfileService'
+import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
 
 const accounts = (props) => {
   const [loading, setLoading] = useState(true)
@@ -39,15 +40,17 @@ const accounts = (props) => {
     <div className={props.pageClasses}>
       <Layout>
         <Loader active={loading} text="loading" />
+        <div class="mobile-background"></div>
         <TotalAccounts totalAccount={cpAccountsData?.totalAccount} />
         <TipSection />
+        <FactorsAffecting />
         <TotalActiveAccounts
           active={active}
           closed={closed}
           name={cpAccountsData?.applicantName}
           banks={props?.data}
         />
-        <OffersForYou />
+        <Offers data={{section_heading:'Offers For You'}} />
       </Layout>
     </div>
   )

@@ -11,24 +11,43 @@ import ReferEarn from '../../components/UserProfile/ReferEarn'
 import WorkInfo from '../../components/UserProfile/WorkInfo'
 import { fileToByteArray } from '../../utils/byteArray'
 import { getClassesForPage } from '../../utils/classesForPage'
-
 const userProfile = (props) => {
   const [picture, setPicture] = useState('')
   const [pictureType, setPictureType] = useState('')
+  const [totalNumberOfFields, setTotalNumberOfFields] = useState(19)
+  const [profileProgress, setProfileProgress] = useState(0)
+  const [personalInfoProgress, setPersonalInfoProgress] = useState(0)
+  const [contactInfoProgress, setContactInfoProgress] = useState(0)
+  const [workInfoProgress, setWorkInfoProgress] = useState(0)
+  const [documentProgress, setDocumentProgress] = useState(0)
+  const [customerName, setCustomerName] = useState('')
 
   useEffect(() => {
-    getPicture().then(res=>{
-      
-      
+    getPicture().then((res) => {})
+  }, [])
 
-      
-  })
-}, [])
+  useEffect(() => {
+    let curretProgress =
+      personalInfoProgress +
+      contactInfoProgress +
+      workInfoProgress +
+      documentProgress
+    const progressPercentage = Math.floor(
+      (curretProgress / totalNumberOfFields) * 100
+    )
+    setProfileProgress(progressPercentage)
+  }, [
+    personalInfoProgress,
+    contactInfoProgress,
+    workInfoProgress,
+    documentProgress,
+  ])
+
   const fileExtention = (fileType) => {
     const fileTypeArray = fileType.split('/')
     return fileTypeArray[1]
   }
-  const pictureUpload = async e => {
+  const pictureUpload = async (e) => {
     console.log(e.target.files[0])
     const file = e.target.files[0]
     if (!file) return
@@ -46,44 +65,43 @@ const userProfile = (props) => {
       setPicture(docBytes)
       setPictureType(documentExtension)
     }
-
   }
-  const getPictureByte=async(id)=>{
-    try{
+  const getPictureByte = async (id) => {
+    try {
       const responseObject = await axios.get(
-        'http://203.122.46.189:8061/customer/api/profile/v1/doc',{params:{documentId:id}} 
+        'http://203.122.46.189:8061/customer/api/profile/v1/doc',
+        { params: { documentId: id } }
       )
       console.log(responseObject.data)
       setPicture(responseObject.data.docByte)
-    }
-    catch(err){
-
-    }
+    } catch (err) {}
   }
-  const getPicture=async ()=>{
-    try{
+  const getPicture = async () => {
+    try {
       const customerId = await localStorage.getItem('customerId')
       const responseObject = await axios.get(
-        'http://203.122.46.189:8061/customer/api/profile/v1/all-docs',{params:{customerId}} 
+        'http://203.122.46.189:8061/customer/api/profile/v1/all-docs',
+        { params: { customerId } }
       )
       if (responseObject.status === 200) {
         console.log(responseObject.data)
         console.log('responseObject')
         let res = responseObject.data.docList
-        let i=-1;
-        res.forEach((item,index)=>{
-          console.log(item)
-          if(item.documentTypeId == 2130000043)i=item.documentId
+        let i = -1
+        res.forEach((item, index) => {
+          // console.log(item)
+          if (item.documentTypeId == 2130000043) i = item.documentId
         })
-        console.log(i);
-        if(i>0){
+        console.log(i)
+        if (i > 0) {
           getPictureByte(i)
         }
       }
-    }
-    catch(err){
+    } catch (err) {}
+  }
 
-    }
+  const contactCount = (val, max) => {
+    console.log(val, max)
   }
   const uploadPicture = async (body) => {
     try {
@@ -105,36 +123,41 @@ const userProfile = (props) => {
       console.log(err)
     }
   }
-  
+
+  console.log({ personalInfoProgress })
+
   return (
     <div className={props.pageClasses}>
       <Layout>
+      <div class="mobile-background"></div>
         <div className="profile-head">
           <div className="profile-container container">
             <div className="profile-head-wrapper">
               <div className="profile-image">
-                <img src={picture.length ? `data:image/${pictureType};base64,${picture}` : "https://the1thing.github.io/MyMoneyMantra/build/images/icons/people1.png"} />
+                <label id="edit-personal" htmlFor="profile-picture">
+                  <img src="assets/images/icons/edit.svg"></img>
+                </label>
+                <span> </span>
+                <img
+                  src={
+                    picture.length
+                      ? `data:image/${pictureType};base64,${picture}`
+                      : 'https://the1thing.github.io/MyMoneyMantra/build/images/icons/people1.png'
+                  }
+                />
                 <input
                   type="file"
                   onChange={pictureUpload}
                   style={{ display: 'none' }}
-                  id='profile-picture'
+                  id="profile-picture"
                 />
-                <label
-                  id="edit-personal"
-                  className="edit-button"
-                  htmlFor='profile-picture'
-                  style={{color:"white"}}
-                >
-                  Edit
-          </label>
               </div>
-              <h1>{'Customer Name'}</h1>
+              <h1>{customerName}</h1>
               <div className="profile-progress">
                 <div className="inner">
-                  <div className="percent-bar">
-                    <div className="perctange-wrap">
-                      <h6 id="percentage">57%</h6>
+                  <div className="percent-bar" style={{width:`${profileProgress>100?100:profileProgress}%`}}>
+                    <div className="perctange-wrap" >
+                      <h6 id="percentage">{profileProgress>100?100:profileProgress}%</h6>
                     </div>
                   </div>
                 </div>
@@ -167,7 +190,10 @@ const userProfile = (props) => {
                   id="option-1-data"
                   style={{ display: 'block' }}
                 >
-                  <PersonalInfo />
+                  <PersonalInfo
+                    setPersonalInfoProgress={setPersonalInfoProgress}
+                    setCustomerName={setCustomerName}
+                  />
                 </div>
               </div>
               <div className="option-wrapper">
@@ -188,7 +214,10 @@ const userProfile = (props) => {
                   </svg>
                 </div>
                 <div className="option-data" id="option-2-data">
-                  <ContactInfo />
+                  <ContactInfo
+                    contactCount={(val, max) => contactCount(val, max)}
+                    setContactInfoProgress={setContactInfoProgress}
+                  />
                 </div>
               </div>
               <div className="option-wrapper">
@@ -209,7 +238,11 @@ const userProfile = (props) => {
                   </svg>
                 </div>
                 <div className="option-data" id="option-3-data">
-                  <WorkInfo data={props.data} />
+                  <WorkInfo
+                    data={props.data}
+                    totalNumberOfFields={totalNumberOfFields}
+                    setWorkInfoProgress={setWorkInfoProgress}
+                  />
                 </div>
               </div>
               <div className="option-wrapper">
@@ -230,7 +263,10 @@ const userProfile = (props) => {
                   </svg>
                 </div>
                 <div className="option-data" id="option-4-data">
-                  <Documents />
+                  <Documents
+                    totalNumberOfFields={totalNumberOfFields}
+                    setDocumentProgress={setDocumentProgress}
+                  />
                 </div>
               </div>
               <div className="option-wrapper">

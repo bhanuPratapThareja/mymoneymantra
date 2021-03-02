@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 
-const CreditScoreBanner = ({ accountHistory }) => {
+const CreditScoreBanner = ({ accountHistory, score }) => {
   const [data, setData] = useState([])
   const [label, setLabel] = useState([])
 
@@ -75,7 +75,7 @@ const CreditScoreBanner = ({ accountHistory }) => {
                     },
                   ],
                 }}
-                width={478}
+                width={425}
                 height={239}
                 options={{
                   maintainAspectRatio: false,

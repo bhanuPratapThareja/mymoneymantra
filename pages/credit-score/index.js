@@ -2,14 +2,14 @@ import AccountSummary from '../../components/CreditScore/AccountSummary'
 import CreditOverview from '../../components/CreditScore/CreditOverview'
 import CreditScoreBanner from '../../components/CreditScore/CreditScoreBanner'
 import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
-import OffersForYou from '../../components/CreditScore/OffersForYou'
+// import OffersForYou from '../../components/CreditScore/OffersForYou'
 import TipSection from '../../components/CreditScore/TipSection'
 import Layout from '../../components/Layout'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { useEffect, useState } from 'react'
 import Loader from '../../components/common/Loader'
 import { getCreditScore } from '../../utils/creditProfileService'
-
+import Offers from '../../components/common/Offers'
 const creditScoreProfile = (props) => {
   const [loading, setLoading] = useState(true)
   const [cpScoreData, setCpScoreData] = useState({})
@@ -42,17 +42,21 @@ const creditScoreProfile = (props) => {
     <div className={props.pageClasses}>
       <Layout>
         <Loader active={loading} text="loading" />
-        <CreditScoreBanner accountHistory={cpScoreData?.accountHistory} />
+        <div class="mobile-background"></div>
+        <CreditScoreBanner
+          accountHistory={cpScoreData?.accountHistory}
+          score={cpScoreData?.score}
+        />
         <TipSection />
         <FactorsAffecting />
-        <CreditOverview />
+        <CreditOverview  totalScore={cpScoreData.totalCurrentCredit} overview={cpScoreData.creditOverview}/>
         <AccountSummary
           active={active}
           closed={closed}
           name={cpScoreData?.applicantName}
           banks={props?.data}
         />
-        <OffersForYou />
+        <Offers data={{section_heading:'Offers For You'}} />
       </Layout>
     </div>
   )
