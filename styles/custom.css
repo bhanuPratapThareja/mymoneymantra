@@ -1,5 +1,6 @@
 * {
   -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
 }
 
 :root {
@@ -170,6 +171,39 @@ button:disabled {
 .listings .banner-wrapper .top h2:nth-child(2) strong, .credit-card-flow .banner h2:first-child strong:first-child {
   color: #89c142;
 }
+
+/*----credit score factor affecting you --*/
+.slick-track.factor-affect{
+  width: 1116px;
+}
+.slick-track.factor-affect .slick-slide{
+  width:186px;
+}
+.factors-affecting-child{
+
+  background-color: white;
+  height: 140px;
+  width: 168px;
+  border-radius: 8px;
+  padding: 16px 24px;
+  margin: 0px 12px;
+  cursor: pointer;
+  
+  color: rgba(34,31,31,0.6);
+}
+.factors-affecting-child .percent{
+  font-size: 28px;
+    line-height: 40px;
+    color: #89C142;
+    font-weight: 900;
+}
+.factors-affecting-child .title{
+    margin-top: 8px;
+  line-height: 32px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
 
 /*-- Error Styling --*/
 
@@ -1769,6 +1803,9 @@ button.cstm-load-btn {
   cursor: pointer;
 }
 
+/*-- Blog social icons slide button --*/
+.cstm-social-btn {display: none;}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
@@ -1837,6 +1874,28 @@ button.cstm-load-btn {
 
 @media(max-width: 767px) {
   
+  .factors-affecting-child{
+    width: 144px;
+    height: 114px;
+    margin:0px 4px;
+      }
+      .factors-affecting-child .percent{
+        font-size: 20px;
+          line-height: 28px;
+          
+      }
+      .factors-affecting-child .title{
+          
+        line-height: 24px;
+        font-size: 14px;
+        
+      }
+      .slick-track.factor-affect{
+        width: 816px;
+      }
+      .slick-track.factor-affect .slick-slide{
+        width:144px;
+      }
   .credit-card-flow .lets-find {
     padding: 24px 15px;
   }
@@ -1865,9 +1924,6 @@ button.cstm-load-btn {
     top:0px !important;
     right:0px  !important;
   }
-  .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper .contact-wrapper .shortforms-container .form__group, .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper .work-wrapper .shortforms-container .form__group{
-  padding: 0px 20px 10px 0px !important;
-}
 
   /* .homepage-flow .aboutUs-left .aboutUs-underline {
     display: none;
@@ -2294,6 +2350,58 @@ button.cstm-load-btn {
     display: none;
   }
 
+  
+  /*-- Blog social icons slide button --*/
+  
+  #blog-socials {
+    top: 40%;
+    z-index: 99;
+    right: -51px;
+    transition: all ease 0.5s;
+    -webkit-transition: all ease 0.5s;
+    -moz-transition: all ease 0.5s;
+    -ms-transition: all ease 0.5s;
+  }
+
+  #blog-socials.show-social-icons {
+    right: 0;
+  }
+
+
+  .cstm-social-btn {
+    position: absolute;
+    bottom: 20px;
+    display: block;
+    left: -40px;
+    min-height: 50px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    cursor: pointer;
+    box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+    -webkit-box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+    -moz-box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+    -ms-box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+  }
+
+  .cstm-social-btn i {
+    background-image: url("../public/assets/images/icons/menu_bottom_top_bg.png");
+    background-position: 0 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 28px;
+    left: 12px;
+    position: absolute;
+    top: 12px;
+    width: 22px;
+  }
+  
+  .cstm-social-btn:focus{
+    outline: none;
+  }
+  
+
 }
 
 @media(max-width: 767px) {
@@ -2323,9 +2431,20 @@ button.cstm-load-btn {
     width: 83%;
   }
 
+
 }
 
 @media(max-width: 479px) {
+  .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper .work-wrapper .shortforms-container .form__group{
+    padding: 0px 16px 10px 0px;
+  }
+  .container.banner.new-credit-wrap.aos-init.aos-animate{
+    overflow-y: auto;
+
+  }
+  .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .shortforms-container.personal-style{
+    grid-template-columns:auto !important;
+  }
   .sf-submit-button_text {
     margin-right: 5px !important;
     font-size: 12px;
@@ -2375,6 +2494,7 @@ button.cstm-load-btn {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
 
 }
 
@@ -2621,13 +2741,15 @@ button.cstm-load-btn {
   justify-content: center;
   -ms-flex-align: center;
   align-items: center;
+  min-width: 170px;
+  min-height: 160px;
 }
 
 
 .creditProfile-utilization-flow .paymentRank-wrapper-content .left-mobile-view .value-utilisation.red-circle,
 .creditProfile-enquiries-flow .paymentRank-wrapper-content-left.left-mobile-view  .value-enquiries.red-circle,
 .credit-rank-flow .paymentRank-wrapper-content .left-mobile-view .value-rank.red-circle {
-  background: url("/assets/images/icons/redc.png") no-repeat center / contain;  
+  background: url("/assets/images/icons/redc.png") no-repeat center / cover;  
 }
 
 .creditProfile-utilization-flow .paymentRank-wrapper-content .left-mobile-view .value-utilisation.orange-circle,
@@ -2661,6 +2783,8 @@ button.cstm-load-btn {
 .red-square{
   background: url("/assets/images/icons/reds.png") !important;
   max-width: 240px;
+  min-width: 160px;
+  min-height: 160px;
   height: 100%;
   background-color: #ffffff;
   background-repeat: no-repeat !important;
@@ -2675,19 +2799,22 @@ button.cstm-load-btn {
 .orange-square{
   background: url("/assets/images/icons/oranges.png") no-repeat center / contain;
   max-width: 240px;
+  min-width: 160px;
+  min-height: 160px;
   height: 100%;
   background-color: #ffffff;
   -ms-flex-pack: center;
   justify-content: center;
   -ms-flex-align: center;
   align-items: center;
-  min-width: 240px;
   position: relative;
 }
 
 .yellow-square{
   background: url("/assets/images/icons/yellows.png") !important;
   max-width: 240px;
+  min-width: 160px;
+  min-height: 160px;
   height: 100%;
   background-color: #ffffff;
   background-repeat: no-repeat !important;
@@ -2702,6 +2829,8 @@ button.cstm-load-btn {
 .green-square{
   background: url("/assets/images/icons/greens.png") !important;
   max-width: 240px;
+  min-width: 160px;
+  min-height: 160px;
   height: 100%;
   background-color: #ffffff;
   background-repeat: no-repeat !important;
@@ -2732,6 +2861,12 @@ button.cstm-load-btn {
 .paymentRank-wrapper-head .popular-cards-slider-card-bottom,
 .product-wrapper .popular-cards-slider-card-bottom {
   min-height: 48px;
+
+  /*--
+  changed by divyanshu
+  --*/
+  max-height: 48px;
+  
 }
 
 /*-- Fateh's css for User Profile Radio styling --*/
@@ -2907,3 +3042,4 @@ button.cstm-load-btn {
   font-size: 16px;
   line-height: 24px;
 }
+

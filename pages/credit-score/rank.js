@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import OffersForYou from '../../components/CreditScore/OffersForYou'
 import PaymentRank from '../../components/CreditScore/PaymentRank'
 import PaymentRecord from '../../components/CreditScore/PaymentRecord'
 import TipSection from '../../components/CreditScore/TipSection'
@@ -10,7 +9,7 @@ import { getClassesForPage } from '../../utils/classesForPage'
 import Loader from '../../components/common/Loader'
 import { getCreditRank } from '../../utils/creditProfileService'
 import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
-import PopularOffers from '../../components/common/PopularOffers'
+import Offers from '../../components/common/Offers'
 
 const rank = (props) => {
   const [loading, setLoading] = useState(true)
@@ -41,11 +40,12 @@ const rank = (props) => {
     <div className={props.pageClasses}>
       <Layout>
         <Loader active={loading} text="loading" />
+        <div class="mobile-background"></div>
         <PaymentRank rank={cpRankData?.rank} />
         <TipSection />
         <FactorsAffecting />
         <PaymentRecord onTime={onTime} delayed={delayed} banks={props?.data} />
-        <PopularOffers data='Offers For You' />
+        <Offers data={{section_heading:'Offers For You'}} />
       </Layout>
     </div>
   )

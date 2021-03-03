@@ -20,9 +20,9 @@ const PopularOffers = props => {
    const getOffers = async () => {
       const apiOffers = await viewOffers(props.productType)
       if (apiOffers) {
-         let populars = apiOffers.populars
-         const popularOffers = await extractOffers(populars)
-         setPopularOffers(popularOffers)
+         // let populars = apiOffers.populars
+         // const popularOffers = await extractOffers(populars)
+         // setPopularOffers(popularOffers)
          if (window !== undefined && window.initSlickCards && popularOffers.length) {
             setTimeout(() => {
                window.initSlickCards()

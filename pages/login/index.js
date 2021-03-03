@@ -42,6 +42,25 @@ const login = (props) => {
       console.log(err);
     })
   };
+const resend =()=>{
+  sendLoginOtp(phone)
+        .then((res) => {
+          const { otpId, customerId, message } = res;
+          setOtpId(otpId);
+          localStorage.setItem("customerId", customerId);
+          
+          setMobileError(false)
+          setMobileErrorMsg('')
+        })
+        .catch((err) => {
+          setMobileError(true)
+          setMobileErrorMsg(err.message)
+        })
+        .finally(() => {
+          
+        });
+}
+
   const counterStep = (i) => {
     if (i == 1 && counter == 0) {
       setisLoader(true);
@@ -139,7 +158,7 @@ const login = (props) => {
                         number
                       </h2>
                       <CustomImage></CustomImage>
-                      <Otp error={otpError} setotp={(val) => setotp(val)} otp={otp}></Otp>
+                      <Otp error={otpError} setotp={(val) => setotp(val)} otp={otp} resend={() => resend()}></Otp>
                     </div>
                   </div>
                 </form>

@@ -193,7 +193,7 @@ const PersonalInfo = (props) => {
     <div className="personal-wrapper">
       {editing ? (
         <form
-          autocomplete="off"
+          autoComplete={'off'}
           className="personal-forms-wrapper"
           style={{ display: 'block' }}
           onSubmit={submitHandler}
@@ -202,7 +202,7 @@ const PersonalInfo = (props) => {
           <div className="shortforms-container personal-style">
             <div className="form__group field">
               <input
-                autocomplete="off"
+                autoComplete={'off'}
                 value={firstName}
                 className="form__field"
                 type="text"
@@ -218,7 +218,7 @@ const PersonalInfo = (props) => {
             </div>
             <div className="form__group field">
               <input
-                autocomplete="off"
+                autoComplete={'off'}
                 value={lastName}
                 className="form__field"
                 type="text"
@@ -246,7 +246,7 @@ const PersonalInfo = (props) => {
                   className="form__field profile-dob datepicker gj-textbox-md"
                   type="text"
                   id="dob"
-                  autocomplete="off"
+                  autoComplete={'off'}
                   format="DD/MM/YYYY"
                   placeholder="DD / MM / YYYY"
                   required=""
@@ -276,7 +276,7 @@ const PersonalInfo = (props) => {
               id="female"
               name="gender"
               required=""
-              autocomplete="off"
+              autoComplete={'off'}
               onChange={(e) => setGender(e.target.value)}
               defaultChecked={gender == 0 ? true : false}
             />
@@ -290,21 +290,21 @@ const PersonalInfo = (props) => {
               onChange={(e) => setGender(e.target.value)}
               defaultChecked={gender == 1 ? true : false}
             />
-            <input
+            {/* <input
               value="2"
               className="lets-checkbox"
               type="radio"
               id="other"
               name="gender"
               required=""
-              autocomplete="off"
+              autoComplete={'off'}
               onChange={(e) => setGender(e.target.value)}
               defaultChecked={gender == 2 ? true : false}
-            />
+            /> */}
 
             <label htmlFor="female">Female</label>
             <label htmlFor="male">Male</label>
-            <label htmlFor="other">Other</label>
+            {/* <label htmlFor="other">Other</label> */}
           </div>
           <h5>Marital Status</h5>
           <div className="shortforms-container marital-style">
@@ -315,7 +315,7 @@ const PersonalInfo = (props) => {
               id="single"
               name="Marital"
               required=""
-              autocomplete="off"
+              autoComplete={'off'}
               defaultChecked={maritalStatus == 0 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
             />
@@ -326,49 +326,49 @@ const PersonalInfo = (props) => {
               id="married"
               name="Marital"
               required=""
-              autocomplete="off"
+              autoComplete={'off'}
               defaultChecked={maritalStatus == 1 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
             />
-            <input
+            {/* <input
               value="2"
               className="lets-checkbox"
               type="radio"
               id="separated"
               name="Marital"
               required=""
-              autocomplete="off"
+              autoComplete={'off'}
               defaultChecked={maritalStatus == 2 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
-            />
-            <input
+            /> */}
+            {/* <input
               value="3"
               className="lets-checkbox"
               type="radio"
               id="divorced"
               name="Marital"
-              autocomplete="off"
+              autoComplete={'off'}
               required=""
               defaultChecked={maritalStatus == 3 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
-            />
-            <input
+            /> */}
+            {/* <input
               value="4"
               className="lets-checkbox"
               type="radio"
               id="widowed"
               name="Marital"
               required=""
-              autocomplete="off"
+              autoComplete={'off'}
               defaultChecked={maritalStatus == 4 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
-            />
+            /> */}
 
             <label htmlFor="single">Single</label>
             <label htmlFor="married">Married</label>
-            <label htmlFor="separated">Separated</label>
+            {/* <label htmlFor="separated">Separated</label>
             <label htmlFor="divorced">Divorced</label>
-            <label htmlFor="widowed">Widowed</label>
+            <label htmlFor="widowed">Widowed</label> */}
           </div>
           <h5>PAN Number</h5>
           <div className="shortforms-container">
@@ -380,7 +380,7 @@ const PersonalInfo = (props) => {
                 id="l-pan"
                 placeholder="PAN Number"
                 required=""
-                autocomplete="off"
+                autoComplete={'off'}
                 onChange={(e) =>
                   setPanNumber(
                     e.target.value
@@ -417,6 +417,7 @@ const PersonalInfo = (props) => {
           </div>
         </form>
       ) : (
+<<<<<<< HEAD
           <div className="before-edit">
             <div className="shortforms-container">
               <div className="form__group field">
@@ -500,6 +501,91 @@ const PersonalInfo = (props) => {
                 />
                 <label className="form__label" htmlFor="pan-num">
                   PAN Number
+=======
+        <div className="before-edit">
+          <div className="shortforms-container">
+            <div className="form__group field">
+              <input
+                readOnly={true}
+                className="form__field"
+                type="text"
+                value={`${firstName} ${lastName}`}
+                id="full-name"
+                autoComplete={'off'}
+                placeholder="Full Name"
+                required=""
+              />
+              <label className="form__label" htmlFor="full-name">
+                Full Name
+              </label>
+            </div>
+            <div className="form__group field">
+              <input
+                readOnly={true}
+                className="form__field"
+                type="text"
+                value={dob != null ? dob : 'DD/MM/YYYY'}
+                id="dob"
+                autoComplete={'off'}
+                placeholder="Date of Birth"
+                required=""
+              />
+              <label className="form__label" htmlFor="dob">
+                Date of Birth
+              </label>
+            </div>
+            <div className="form__group field">
+              <input
+                readOnly={true}
+                className="form__field"
+                type="text"
+                value={
+                  gender == 0
+                    ? 'Female'
+                    : gender == 1
+                    ? 'Male'
+                    : gender == 2
+                    ? 'Other'
+                    : 'Gender'
+                }
+                id="gender"
+                autoComplete={'off'}
+                placeholder="Gender"
+                required=""
+              />
+              <label className="form__label" htmlFor="gender">
+                Gender
+              </label>
+            </div>
+            <div className="form__group field">
+              <input
+                readOnly={true}
+                className="form__field"
+                type="text"
+                autoComplete={'off'}
+                value={martaialname ? martaialname : 'Marital Status'}
+                id="marital-Status"
+                placeholder="Marital Status"
+                required=""
+              />
+              <label className="form__label" htmlFor="marital-Status">
+                Marital Status
+              </label>
+            </div>
+            <div className="form__group field">
+              <input
+                readOnly={true}
+                className="form__field"
+                type="text"
+                autoComplete={'off'}
+                value={panNumber ? panNumber : 'PAN number'}
+                id="pan-num"
+                placeholder="PAN Number"
+                required=""
+              />
+              <label className="form__label" htmlFor="pan-num">
+                PAN Number
+>>>>>>> origin/dev_chandrakant
               </label>
               </div>
             </div>

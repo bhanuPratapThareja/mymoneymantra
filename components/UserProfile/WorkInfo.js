@@ -13,14 +13,14 @@ const WorkInfo = (props) => {
   const [employedType, setEmployedType] = useState('')
   const [companyQuery, setCompanyQuery] = useState('')
   const [bankId, setBankId] = useState('')
-  const [ifscCode, setIfscCode] = useState('')
-  const [netMonthlyIncome, setNetMonthlyIncome] = useState('')
-  const [accountNo, setAccountNo] = useState('')
+  const [ifscCode, setIfscCode] = useState(null)
+  const [netMonthlyIncome, setNetMonthlyIncome] = useState(null)
+  const [accountNo, setAccountNo] = useState(null)
   const [companyOptions, setCompanyOtions] = useState([])
   const [companyId, setCompanyId] = useState('')
-  const [companyName, setCompanyName] = useState('')
+  const [companyName, setCompanyName] = useState(null)
   const [customerId, setCustomerId] = useState('')
-  const [bankName, setBankName] = useState('')
+  const [bankName, setBankName] = useState(null)
   const [bankList, setBankList] = useState([])
 
   const { setWorkInfoProgress } = props
@@ -29,40 +29,6 @@ const WorkInfo = (props) => {
     console.log(props.data)
     getWork()
   }, [])
-
-  // const calculateSectionProgress = () => {
-  //   // let savedFields = 0
-  //   let value1 = employedType && employedType.length ? 1 : 0
-  //   let value2 = bankId && bankId.length ? 1 : 0
-  //   let value3 = netMonthlyIncome && netMonthlyIncome.length ? 1 : 0
-  //   let value4 = companyName && companyName.length ? 1 : 0
-  //   let value5 = accountNo && accountNo.length ? 1 : 0
-  //   let value6 = ifscCode && ifscCode.length ? 1 : 0
-  //   let savedFields = value1 + value2 + value3 + value4 + value5 + value6
-  //   // if (employedType && employedType.length) {
-  //   //   savedFields += 1
-  //   // }
-  //   // if (bankId && bankId.length) {
-  //   //   savedFields += 1
-  //   // }
-  //   // if (netMonthlyIncome && netMonthlyIncome.length) {
-  //   //   savedFields += 1
-  //   // }
-  //   // if (companyName && companyName.length) (
-  //   //   savedFields += 1
-  //   // )
-  //   // if (accountNo && accountNo.length) {
-  //   //   savedFields += 1
-  //   // }
-  //   // if (ifscCode && ifscCode.length) {
-  //   //   savedFields += 1
-  //   // }
-  //   console.log(savedFields)
-  //   console.log(Math.round((savedFields / totalNumberOfFields) * 100))
-  //   let progress = Math.round((savedFields / totalNumberOfFields) * 100)
-  //   setWorkInfoProgress(progress)
-  //   calculateProfileProgress()
-  // }
 
   useEffect(() => {
     const timer = setTimeout(async () => {
@@ -232,7 +198,7 @@ const WorkInfo = (props) => {
         </div> */}
         {isedit ? (
           <div className="shortforms-container gender-style">
-            <input
+            <input autocomplete="off"
               value="1000000001"
               className="lets-checkbox"
               type="radio"
@@ -243,7 +209,7 @@ const WorkInfo = (props) => {
               onChange={(e) => setEmployedType(e.target.value)}
               defaultChecked={employedType == 1000000001 ? true : false}
             />
-            <input
+            <input autocomplete="off"
               value="1000000002"
               className="lets-checkbox"
               type="radio"
@@ -254,7 +220,7 @@ const WorkInfo = (props) => {
               onChange={(e) => setEmployedType(e.target.value)}
               defaultChecked={employedType == 1000000002 ? true : false}
             />
-            <input
+            <input autocomplete="off"
               value="1000000004"
               className="lets-checkbox"
               type="radio"
@@ -265,7 +231,7 @@ const WorkInfo = (props) => {
               onChange={(e) => setEmployedType(e.target.value)}
               defaultChecked={employedType == 1000000004 ? true : false}
             />
-            <input
+            <input autocomplete="off"
               value="1000000008"
               className="lets-checkbox"
               type="radio"
@@ -285,9 +251,10 @@ const WorkInfo = (props) => {
           </div>
         ) : (
           <div className="form__group field">
-            <input
+            <input autocomplete="off"
               readOnly={true}
               autocomplete="off"
+              placeholder="Employment Type"
               value={
                 employedType == 1000000001
                   ? 'Self Employed'
@@ -318,7 +285,7 @@ const WorkInfo = (props) => {
               : 'form__group field read-part'
           }
         >
-          <input
+          <input autocomplete="off"
             readOnly={!isedit}
             className="form__field"
             type="text"
@@ -361,7 +328,7 @@ const WorkInfo = (props) => {
               : 'form__group field read-part'
           }
         >
-          <input
+          <input autocomplete="off"
             readOnly={!isedit}
             className="form__field"
             type="text"
@@ -384,10 +351,8 @@ const WorkInfo = (props) => {
               : 'form__group field read-part'
           }
         >
-          <label className="form__label" htmlFor="bank-name">
-            Bank Name
-          </label>
-          <input
+          
+          <input autocomplete="off"
             readOnly={!isedit}
             className="form__field"
             type="text"
@@ -395,9 +360,11 @@ const WorkInfo = (props) => {
             autocomplete="off"
             placeholder="Bank Name"
             required=""
-            value={bankName}
+            value={bankName ? bankName: null}
             onChange={handleBankChange}
-          />
+          /><label className="form__label" htmlFor="bank-name">
+          Bank Name
+        </label>
 
           {isedit && bankList.length ? (
             <datalist style={{ display: 'block', background: '#fff' }}>
@@ -436,7 +403,7 @@ const WorkInfo = (props) => {
               : 'form__group field read-part'
           }
         >
-          <input
+          <input autocomplete="off"
             readOnly={!isedit}
             className="form__field"
             type="text"
@@ -458,7 +425,7 @@ const WorkInfo = (props) => {
               : 'form__group field read-part'
           }
         >
-          <input
+          <input autocomplete="off"
             readOnly={!isedit}
             className="form__field"
             type="text"

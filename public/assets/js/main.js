@@ -193,6 +193,8 @@ $(document).ready(function () {
       cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
       speed: 1000,
       autoplay: true,
+      autoplaySpeed: 7000,
+      useTransform: false,
       infinite: true,
       variableWidth: true,
       responsive: [

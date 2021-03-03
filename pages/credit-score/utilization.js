@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
-
 import YourCreditUtilization from '../../components/CreditScore/YourCreditUtilization'
-import OffersForYou from '../../components/CreditScore/OffersForYou'
 import TipSection from '../../components/CreditScore/TipSection'
 import Layout from '../../components/Layout'
 import { getClassesForPage } from '../../utils/classesForPage'
@@ -10,7 +7,7 @@ import CreditUtilizationAllAccounts from '../../components/CreditScore/CreditUti
 import Loader from '../../components/common/Loader'
 import { getCreditUtilization } from '../../utils/creditProfileService'
 import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
-import PopularOffers from '../../components/common/PopularOffers'
+import Offers from '../../components/common/Offers'
 
 const utilization = (props) => {
   const [loading, setLoading] = useState(true)
@@ -41,6 +38,7 @@ const utilization = (props) => {
     <div className={props.pageClasses}>
       <Layout>
         <Loader active={loading} text="loading" />
+        <div class="mobile-background"></div>
         <YourCreditUtilization
           creditUtilization={cpUtilizationData?.totalCreditUtilization}
         />
@@ -52,7 +50,7 @@ const utilization = (props) => {
           name={cpUtilizationData?.applicantName}
           banks={props?.data}
         />
-        <PopularOffers data='Offers For You' />
+        <Offers data={{section_heading:'Offers For You'}} />
       </Layout>
     </div>
   )

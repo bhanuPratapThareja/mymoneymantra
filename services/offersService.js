@@ -22,7 +22,6 @@ export const extractOffers = async apiOffers => {
     return new Promise(async (resolve) => {
         const strapi = new Strapi()
         const productIdArray = []
-        if (!apiOffers.length) resolve([])
 
         for(let i = 0; i < apiOffers.length; i++) {
             if(!apiOffers[i].cardType) {

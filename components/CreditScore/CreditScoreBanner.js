@@ -75,7 +75,7 @@ const CreditScoreBanner = ({ accountHistory, score }) => {
                     },
                   ],
                 }}
-                width={478}
+                width={425}
                 height={239}
                 options={{
                   maintainAspectRatio: false,
