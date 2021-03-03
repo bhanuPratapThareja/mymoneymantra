@@ -218,7 +218,7 @@ class LongForm extends React.Component {
         updateDropdownList(inputs, listType, list, input_id)
         inputs.forEach(input => {
           if (input.input_id === input_id) {
-            if (list && list.length && field && field.value) {
+            if (list && list.length && field && field.value && input.auto_select) {
               let filteredItemList = list.filter(item => item[input.select_name] === field.value.toUpperCase())
               let filteredItem = filteredItemList.length ? filteredItemList[0] : null
               this.handleInputDropdownSelection(input_id, filteredItem)
