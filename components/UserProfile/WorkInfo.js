@@ -271,6 +271,7 @@ const WorkInfo = (props) => {
               id="emp-type"
               name="emp-type"
               required=""
+              disabled
             />
             <label className="form__label" htmlFor="emp-type">
               Employment Type
@@ -295,6 +296,7 @@ const WorkInfo = (props) => {
             placeholder="Company Name"
             required=""
             onChange={companyNameChangeHandler}
+            disabled={!isedit}
           />
           <label className="form__label" htmlFor="company-name">
             Company Name
@@ -338,6 +340,7 @@ const WorkInfo = (props) => {
             placeholder="Net Monthly Income"
             required=""
             onChange={handleIncomeChange}
+            disabled={!isedit}
             // onChange={(e) => setNetMonthlyIncome(e.target.value)}
           />
           <label className="form__label" htmlFor="monthly-income">
@@ -413,6 +416,7 @@ const WorkInfo = (props) => {
             placeholder="Account Number"
             required=""
             onChange={(e) => setAccountNo(e.target.value)}
+            disabled={!isedit}
           />
           <label className="form__label" htmlFor="account-num">
             Account Number
@@ -435,6 +439,7 @@ const WorkInfo = (props) => {
             placeholder="IFSC Code"
             required=""
             onChange={(e) => setIfscCode(e.target.value)}
+            disabled={!isedit}
           />
           <label className="form__label" htmlFor="ifsc">
             IFSC Code
