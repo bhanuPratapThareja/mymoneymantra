@@ -7,7 +7,7 @@ import Layout from '../../components/Layout'
 import TotalAccounts from '../../components/CreditScore/TotalAccounts'
 import TotalActiveAccounts from '../../components/CreditScore/TotalActiveAccounts'
 import { getClassesForPage } from '../../utils/classesForPage'
-import Loader from '../../components/common/Loader'
+
 import { getCreditAccounts } from '../../utils/creditProfileService'
 import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
 
@@ -39,7 +39,7 @@ const accounts = (props) => {
   return (
     <div className={props.pageClasses}>
       <Layout>
-        <Loader active={loading} text="loading" />
+        
         <div class="mobile-background"></div>
         <TotalAccounts totalAccount={cpAccountsData?.totalAccount} />
         <TipSection />

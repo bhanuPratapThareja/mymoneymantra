@@ -261,6 +261,7 @@ const ContactInfo = (props) => {
                 onChange={(e) => setMobileNo(e.target.value)}
                 placeholder="Mobile Number"
                 required=""
+                disabled
               />
               <label className="form__label" htmlFor="mob-num">
                 Mobile Number
@@ -284,6 +285,7 @@ const ContactInfo = (props) => {
                 onChange={(e) => setEmailId(e.target.value)}
                 required=""
                 onBlur={validateEmail}
+                disabled={!editing}
               />
               <label className="form__label" htmlFor="email">
                 Email ID
@@ -327,6 +329,7 @@ const ContactInfo = (props) => {
                 id="permanent-address"
                 placeholder="Permanent Address"
                 required=""
+                disabled={!editing}
               />
               <label className="form__label" htmlFor="permanent-address">
                 Permanent Address
@@ -347,6 +350,7 @@ const ContactInfo = (props) => {
                     required=""
                     pattern="[0-9]{6}"
                     onChange={currentPincodeQueryHandler}
+                    disabled={!editing}
                   />
                   <label class="form__label" htmlFor="c-pincode">
                     Pincode
@@ -379,6 +383,7 @@ const ContactInfo = (props) => {
                     placeholder="City"
                     required=""
                     readOnly
+                    disabled={!editing}
                   />
                   <label class="form__label" htmlFor="c-city">
                     City
@@ -393,6 +398,7 @@ const ContactInfo = (props) => {
                     placeholder="Address Line 1"
                     required=""
                     onChange={(e) => setCurrentAddressLine1(e.target.value)}
+                    disabled={!editing}
                   />
                   <label class="form__label" htmlFor="c-address-line-1">
                     Address Line 1
@@ -407,6 +413,7 @@ const ContactInfo = (props) => {
                     placeholder="address-line-2"
                     required=""
                     onChange={(e) => setCurrentAddressLine2(e.target.value)}
+                    disabled={!editing}
                   />
                   <label class="form__label" htmlFor="c-address-line-2">
                     Address Line 2
@@ -421,6 +428,7 @@ const ContactInfo = (props) => {
                     name=""
                     checked={sameAddress}
                     onChange={(e) => setSameAddress(e.target.checked)}
+                    disabled={!editing}
                   />
                   <label htmlFor="checkbox">
                     <span>Permanent address is same as current address.</span>
@@ -439,6 +447,7 @@ const ContactInfo = (props) => {
                     placeholder="Pincode"
                     required=""
                     onChange={permanentPincodeQueryHandler}
+                    disabled={!editing}
                   />
                   <label class="form__label" htmlFor="p-pincode">
                     Pincode
@@ -472,6 +481,7 @@ const ContactInfo = (props) => {
                     id="p-city"
                     placeholder="City"
                     required=""
+                    disabled={!editing}
                   />
                   <label class="form__label" htmlFor="p-city">
                     City
@@ -487,6 +497,7 @@ const ContactInfo = (props) => {
                     placeholder="Address Line 1"
                     required=""
                     onChange={(e) => setPermanentAddressLine1(e.target.value)}
+                    disabled={!editing}
                   />
                   <label class="form__label" htmlFor="p-address-line-1">
                     Address Line 1
@@ -502,6 +513,7 @@ const ContactInfo = (props) => {
                     placeholder="address-line-2"
                     required=""
                     onChange={(e) => setPermanentAddressLine2(e.target.value)}
+                    disabled={!editing}
                   />
                   <label class="form__label" htmlFor="p-address-line-2">
                     Address Line 2

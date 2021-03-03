@@ -6,7 +6,7 @@ import Layout from '../../components/Layout'
 import { getClassesForPage } from '../../utils/classesForPage'
 import YourTotalEnquiries from '../../components/CreditScore/YourTotalEnquiries'
 import TotalEnquiries from '../../components/CreditScore/TotalEnquiries'
-import Loader from '../../components/common/Loader'
+
 import { getCreditEnquiries } from '../../utils/creditProfileService'
 import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
 
@@ -33,7 +33,7 @@ const enquiries = (props) => {
   return (
     <div className={props.pageClasses}>
       <Layout>
-        <Loader active={loading} text="loading" />
+        
         <div class="mobile-background"></div>
         <YourTotalEnquiries totalEnquiries={cpEnquiriesData?.totalEnquiries} />
         <TipSection />

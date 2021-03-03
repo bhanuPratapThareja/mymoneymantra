@@ -11,7 +11,7 @@ const TotalAccounts = ({ totalAccount }) => {
           <h2>Your Total Accounts</h2>
           <img
             className="underline-img"
-            src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_rank/underline.png"
+            src="/assets/images/credit-card-flow/green-underline.png"
             alt=""
           />
         </div>
@@ -34,7 +34,7 @@ const TotalAccounts = ({ totalAccount }) => {
             <p>What does this reflect?</p>
             <div className="progress-bar">
               <img
-                src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_accounts/accounts-meter.png"
+                src="/assets/images/CP_profile/CP_accounts/accounts-meter.png"
                 alt=""
               />
             </div>

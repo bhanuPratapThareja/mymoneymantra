@@ -7,7 +7,9 @@
   --error-color: #DC3737;
   --next-btn: #221F1F;
 }
-
+.docs-container .identity-options .options{
+  cursor: pointer;
+}
 /* .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.error-input {
   border: none;
   background: url(/assets/images/icons/error.png);

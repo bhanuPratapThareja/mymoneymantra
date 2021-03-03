@@ -10,9 +10,7 @@ const Application = ({ banks }) => {
       try {
         const customerId = localStorage.getItem('customerId')
         const responseObject = await axios.get(
-          `http://203.122.46.189:8061/customer/api/profile/v1/cust-app?customerId=${
-            customerId ? customerId : 206
-          }`
+          `http://203.122.46.189:8061/customer/api/profile/v1/cust-app`,{params:{customerId}}
         )
         console.log(responseObject?.data?.applications)
         setApplicationData(responseObject?.data?.applications)

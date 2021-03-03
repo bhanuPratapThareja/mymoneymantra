@@ -6,7 +6,7 @@ import PaymentRecord from '../../components/CreditScore/PaymentRecord'
 import TipSection from '../../components/CreditScore/TipSection'
 import Layout from '../../components/Layout'
 import { getClassesForPage } from '../../utils/classesForPage'
-import Loader from '../../components/common/Loader'
+
 import { getCreditRank } from '../../utils/creditProfileService'
 import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
 import Offers from '../../components/common/Offers'
@@ -39,7 +39,7 @@ const rank = (props) => {
   return (
     <div className={props.pageClasses}>
       <Layout>
-        <Loader active={loading} text="loading" />
+        
         <div class="mobile-background"></div>
         <PaymentRank rank={cpRankData?.rank} />
         <TipSection />

@@ -431,6 +431,7 @@ const PersonalInfo = (props) => {
                 autoComplete={false}
                 placeholder="Full Name"
                 required=""
+                disabled
               />
               <label className="form__label" htmlFor="full-name">
                 Full Name
@@ -446,6 +447,7 @@ const PersonalInfo = (props) => {
                 autoComplete={false}
                 placeholder="Date of Birth"
                 required=""
+                disabled
               />
               <label className="form__label" htmlFor="dob">
                 Date of Birth
@@ -469,6 +471,7 @@ const PersonalInfo = (props) => {
                 autoComplete={false}
                 placeholder="Gender"
                 required=""
+                disabled
               />
               <label className="form__label" htmlFor="gender">
                 Gender
@@ -484,6 +487,7 @@ const PersonalInfo = (props) => {
                 id="marital-Status"
                 placeholder="Marital Status"
                 required=""
+                disabled
               />
               <label className="form__label" htmlFor="marital-Status">
                 Marital Status
@@ -499,6 +503,7 @@ const PersonalInfo = (props) => {
                 id="pan-num"
                 placeholder="PAN Number"
                 required=""
+                disabled
               />
               <label className="form__label" htmlFor="pan-num">
                 PAN Number
