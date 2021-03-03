@@ -1891,7 +1891,7 @@ button.cstm-load-btn {
         
       }
       .slick-track.factor-affect{
-        width: 1016px;
+        width: 816px;
       }
       .slick-track.factor-affect .slick-slide{
         width:144px;
@@ -1924,9 +1924,6 @@ button.cstm-load-btn {
     top:0px !important;
     right:0px  !important;
   }
-  .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper .contact-wrapper .shortforms-container .form__group, .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper .work-wrapper .shortforms-container .form__group{
-  padding: 0px 20px 10px 0px !important;
-}
 
   /* .homepage-flow .aboutUs-left .aboutUs-underline {
     display: none;
@@ -2438,9 +2435,15 @@ button.cstm-load-btn {
 }
 
 @media(max-width: 479px) {
+  .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper .work-wrapper .shortforms-container .form__group{
+    padding: 0px 16px 10px 0px;
+  }
   .container.banner.new-credit-wrap.aos-init.aos-animate{
     overflow-y: auto;
 
+  }
+  .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .shortforms-container.personal-style{
+    grid-template-columns:auto !important;
   }
   .sf-submit-button_text {
     margin-right: 5px !important;
@@ -2858,6 +2861,12 @@ button.cstm-load-btn {
 .paymentRank-wrapper-head .popular-cards-slider-card-bottom,
 .product-wrapper .popular-cards-slider-card-bottom {
   min-height: 48px;
+
+  /*--
+  changed by divyanshu
+  --*/
+  max-height: 48px;
+  
 }
 
 /*-- Fateh's css for User Profile Radio styling --*/

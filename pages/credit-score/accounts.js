@@ -50,7 +50,7 @@ const accounts = (props) => {
           name={cpAccountsData?.applicantName}
           banks={props?.data}
         />
-        <Offers data='Offers For You' />
+        <Offers data={{section_heading:'Offers For You'}} />
       </Layout>
     </div>
   )

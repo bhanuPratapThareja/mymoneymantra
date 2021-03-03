@@ -50,7 +50,7 @@ const age = (props) => {
           name={cpAgeData?.applicantName}
           banks={props.data}
         />
-        <Offers />
+        <Offers data={{section_heading:'Offers For You'}} />
       </Layout>
     </div>
   )

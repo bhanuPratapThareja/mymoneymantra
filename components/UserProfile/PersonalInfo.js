@@ -16,8 +16,12 @@ const PersonalInfo = (props) => {
   const [martaialname, setmartaialname] = useState('')
   const [errMsg, setErrMsg] = useState('')
   const [nameError, setNameError] = useState(false)
+  const [lastNameErrMsg,setLastNameErrMsg]=useState('')
+  const [lastNameErr,setLastNameErr]=useState(false)
   const [panError, setPanError] = useState(false)
+  const [panErrMsg, setPanErrMsg] = useState('')
   const [dobError, setDobError] = useState(false)
+  const [dobErrMsg, setDobErrMsg] = useState('')
   const { setPersonalInfoProgress, setCustomerName } = props
   useEffect(() => {
     getInfo()
@@ -53,15 +57,33 @@ const PersonalInfo = (props) => {
   }
 
   const validateDob = () => {
+    let dobPattern = /^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)\d\d$/
+    if (!dobPattern.test(dob)) {
+      setDobError(true)
+      setDobErrMsg('Invalid date')
+      return
+    }
+
+    let month = dob.split('/')[1]
+    let day = dob.split('/')[0]
+    if (month == '02' && (day == '30' || day == '31')) {
+      console.log('invalid day for feb', day)
+      setDobError(true)
+      setDobErrMsg('Invalid date')
+      return
+    }
+
+
     let differnce = dateDiffInYears()
     if (isNaN(differnce)) {
       setDobError(true)
-      setErrMsg('Invalid date')
+      setDobErrMsg('Invalid date')
     } else if (differnce > 18 && differnce < 100) {
       setDobError(false)
+      setDobErrMsg('')
     } else {
       setDobError(true)
-      setErrMsg('Age should be between 18-100 ')
+      setDobErrMsg('Age should be between 18-100 ')
     }
   }
 
@@ -78,11 +100,11 @@ const PersonalInfo = (props) => {
       }
     } else {
       if (pattern.test(lastName) || lastName == '') {
-        setNameError(false)
-        setErrMsg('')
+        setLastNameErr(false)
+        setLastNameErrMsg('')
       } else {
-        setNameError(true)
-        setErrMsg(`Last ${msg}`)
+        setLastNameErr(true)
+        setLastNameErrMsg(`Last ${msg}`)
       }
     }
   }
@@ -91,10 +113,10 @@ const PersonalInfo = (props) => {
     let pattern = /^[a-z]{5}[0-9]{4}[a-z]{1,2}$/gi
     if (pattern.test(panNumber)) {
       setPanError(false)
-      setErrMsg('')
+      setPanErrMsg('')
     } else {
       setPanError(true)
-      setErrMsg('Invalid PAN number')
+      setPanErrMsg('Invalid PAN number')
     }
   }
 
@@ -161,11 +183,19 @@ const PersonalInfo = (props) => {
     setPersonalInfoProgress(progress)
   }
 
+  const cancelHandler = () => {
+    setEditing(false)
+    getInfo()
+    setDobError(false)
+    setNameError(false)
+    setPanError(false)
+  }
+
   return (
     <div className="personal-wrapper">
       {editing ? (
         <form
-          autocomplete="off"
+          autoComplete={false}
           className="personal-forms-wrapper"
           style={{ display: 'block' }}
           onSubmit={submitHandler}
@@ -174,7 +204,7 @@ const PersonalInfo = (props) => {
           <div className="shortforms-container personal-style">
             <div className="form__group field">
               <input
-                autocomplete="off"
+                autoComplete={false}
                 value={firstName}
                 className="form__field"
                 type="text"
@@ -190,7 +220,7 @@ const PersonalInfo = (props) => {
             </div>
             <div className="form__group field">
               <input
-                autocomplete="off"
+                autoComplete={false}
                 value={lastName}
                 className="form__field"
                 type="text"
@@ -204,7 +234,7 @@ const PersonalInfo = (props) => {
                 Last Name
               </label>
             </div>
-            {nameError ? <p style={{ color: 'red' }}>{errMsg}</p> : null}
+            {lastNameErr ? <p style={{ color: 'red' }}>{lastNameErrMsg}</p> : null}
           </div>
           <h5>Date of Birth</h5>
           <div className="shortforms-container personal-style">
@@ -218,7 +248,7 @@ const PersonalInfo = (props) => {
                   className="form__field profile-dob datepicker gj-textbox-md"
                   type="text"
                   id="dob"
-                  autocomplete="off"
+                  autoComplete={false}
                   format="DD/MM/YYYY"
                   placeholder="DD / MM / YYYY"
                   required=""
@@ -236,8 +266,8 @@ const PersonalInfo = (props) => {
               <label className="form__label" htmlFor="dob">
                 Date of Birth
               </label>
+              {dobError ? <p style={{ color: 'red' }}>{dobErrMsg}</p> : null}
             </div>
-            {dobError ? <p style={{ color: 'red' }}>{errMsg}</p> : null}
           </div>
           <h5>Gender</h5>
           <div className="shortforms-container gender-style">
@@ -248,7 +278,7 @@ const PersonalInfo = (props) => {
               id="female"
               name="gender"
               required=""
-              autocomplete="off"
+              autoComplete={false}
               onChange={(e) => setGender(e.target.value)}
               defaultChecked={gender == 0 ? true : false}
             />
@@ -262,21 +292,21 @@ const PersonalInfo = (props) => {
               onChange={(e) => setGender(e.target.value)}
               defaultChecked={gender == 1 ? true : false}
             />
-            <input
+            {/* <input
               value="2"
               className="lets-checkbox"
               type="radio"
               id="other"
               name="gender"
               required=""
-              autocomplete="off"
+              autoComplete={false}
               onChange={(e) => setGender(e.target.value)}
               defaultChecked={gender == 2 ? true : false}
-            />
+            /> */}
 
             <label htmlFor="female">Female</label>
             <label htmlFor="male">Male</label>
-            <label htmlFor="other">Other</label>
+            {/* <label htmlFor="other">Other</label> */}
           </div>
           <h5>Marital Status</h5>
           <div className="shortforms-container marital-style">
@@ -287,7 +317,7 @@ const PersonalInfo = (props) => {
               id="single"
               name="Marital"
               required=""
-              autocomplete="off"
+              autoComplete={false}
               defaultChecked={maritalStatus == 0 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
             />
@@ -298,49 +328,49 @@ const PersonalInfo = (props) => {
               id="married"
               name="Marital"
               required=""
-              autocomplete="off"
+              autoComplete={false}
               defaultChecked={maritalStatus == 1 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
             />
-            <input
+            {/* <input
               value="2"
               className="lets-checkbox"
               type="radio"
               id="separated"
               name="Marital"
               required=""
-              autocomplete="off"
+              autoComplete={false}
               defaultChecked={maritalStatus == 2 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
-            />
-            <input
+            /> */}
+            {/* <input
               value="3"
               className="lets-checkbox"
               type="radio"
               id="divorced"
               name="Marital"
-              autocomplete="off"
+              autoComplete={false}
               required=""
               defaultChecked={maritalStatus == 3 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
-            />
-            <input
+            /> */}
+            {/* <input
               value="4"
               className="lets-checkbox"
               type="radio"
               id="widowed"
               name="Marital"
               required=""
-              autocomplete="off"
+              autoComplete={false}
               defaultChecked={maritalStatus == 4 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
-            />
+            /> */}
 
             <label htmlFor="single">Single</label>
             <label htmlFor="married">Married</label>
-            <label htmlFor="separated">Separated</label>
+            {/* <label htmlFor="separated">Separated</label>
             <label htmlFor="divorced">Divorced</label>
-            <label htmlFor="widowed">Widowed</label>
+            <label htmlFor="widowed">Widowed</label> */}
           </div>
           <h5>PAN Number</h5>
           <div className="shortforms-container">
@@ -352,7 +382,7 @@ const PersonalInfo = (props) => {
                 id="l-pan"
                 placeholder="PAN Number"
                 required=""
-                autocomplete="off"
+                autoComplete={false}
                 onChange={(e) =>
                   setPanNumber(
                     e.target.value
@@ -366,7 +396,7 @@ const PersonalInfo = (props) => {
                 PAN Number
               </label>
             </div>
-            {panError ? <p style={{ color: 'red' }}>{errMsg}</p> : null}
+            {panError ? <p style={{ color: 'red' }}>{panErrMsg}</p> : null}
           </div>
 
           <div className="save-options">
@@ -382,10 +412,7 @@ const PersonalInfo = (props) => {
               type="button"
               className="cancel"
               id="cancel"
-              onClick={() => {
-                setEditing(false)
-                getInfo()
-              }}
+              onClick={cancelHandler}
             >
               Cancel
             </button>
@@ -401,7 +428,7 @@ const PersonalInfo = (props) => {
                 type="text"
                 value={`${firstName} ${lastName}`}
                 id="full-name"
-                autocomplete="off"
+                autoComplete={false}
                 placeholder="Full Name"
                 required=""
               />
@@ -416,7 +443,7 @@ const PersonalInfo = (props) => {
                 type="text"
                 value={dob != null ? dob : 'DD/MM/YYYY'}
                 id="dob"
-                autocomplete="off"
+                autoComplete={false}
                 placeholder="Date of Birth"
                 required=""
               />
@@ -439,7 +466,7 @@ const PersonalInfo = (props) => {
                     : 'Gender'
                 }
                 id="gender"
-                autocomplete="off"
+                autoComplete={false}
                 placeholder="Gender"
                 required=""
               />
@@ -452,7 +479,7 @@ const PersonalInfo = (props) => {
                 readOnly={true}
                 className="form__field"
                 type="text"
-                autocomplete="off"
+                autoComplete={false}
                 value={martaialname ? martaialname : 'Marital Status'}
                 id="marital-Status"
                 placeholder="Marital Status"
@@ -467,7 +494,7 @@ const PersonalInfo = (props) => {
                 readOnly={true}
                 className="form__field"
                 type="text"
-                autocomplete="off"
+                autoComplete={false}
                 value={panNumber ? panNumber : 'PAN number'}
                 id="pan-num"
                 placeholder="PAN Number"
@@ -476,20 +503,20 @@ const PersonalInfo = (props) => {
               <label className="form__label" htmlFor="pan-num">
                 PAN Number
               </label>
+              </div>
             </div>
+            {!editing ? (
+              <button
+                type="button"
+                id="edit-personal"
+                className="edit-button"
+                onClick={() => setEditing(true)}
+              >
+                Edit
+              </button>
+            ) : null}
           </div>
-          {!editing ? (
-            <button
-              type="button"
-              id="edit-personal"
-              className="edit-button"
-              onClick={() => setEditing(true)}
-            >
-              Edit
-            </button>
-          ) : null}
-        </div>
-      )}
+        )}
     </div>
   )
 }

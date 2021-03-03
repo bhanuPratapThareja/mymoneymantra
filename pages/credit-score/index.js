@@ -56,7 +56,7 @@ const creditScoreProfile = (props) => {
           name={cpScoreData?.applicantName}
           banks={props?.data}
         />
-        <Offers/>
+        <Offers data={{section_heading:'Offers For You'}} />
       </Layout>
     </div>
   )

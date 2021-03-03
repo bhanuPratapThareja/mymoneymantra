@@ -1,4 +1,80 @@
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { getPersonalInfo, getPictureservice } from "../utils/userProfileService";
+
 const SideMenu = (props) => {
+const [picture, setpicture] = useState('/assets/images/icons/profile.svg')
+const [name, setName] = useState('Guest');
+const router=useRouter();
+   useEffect(() => {
+      
+      getPicture();
+      getInfo();
+   },[]);
+   const logout=(e)=>{
+      e.preventDefault();
+      localStorage.setItem('customerId','');
+      setName('Guest');
+      setpicture('/assets/images/icons/profile.svg')
+      router.push('/','/',{shallow:false})
+   }
+   
+   const getInfo = () => {
+      getPersonalInfo()
+        .then((res) => {
+          console.log({ res })
+          const { firstName} = res
+          setName(firstName);
+        })
+        .catch((err) => {
+          console.log(err)
+          setName('Guest');
+        })
+    }
+   const checkCustomerId=()=>{
+      return localStorage.getItem('customerId');
+   }
+   
+   const getPicture = async () => {
+      console.log('in side .........')
+      try {
+        const responseObject= await getPictureservice();
+        if (responseObject.status === 200) {
+          
+          let res = responseObject.data.docList
+          let i = -1
+          res.forEach((item, index) => {
+            // console.log(item)
+            if (item.documentTypeId == 2130000043) i = item.documentId
+          })
+          
+          if (i > 0) {
+            
+            
+            setTimeout(()=>getPictureByte(i),3000)
+            
+          }
+        }
+      } catch (err) {
+         console.log(err)
+         setpicture('/assets/images/icons/profile.svg')
+      }
+    }
+
+    const getPictureByte = async (id) => {
+      try {
+         
+        const responseObject = await axios.get(
+          'http://203.122.46.189:8061/customer/api/profile/v1/doc',
+          { params: { documentId: id } }
+        )
+      //
+        setpicture(`data:image/png;base64,${responseObject.data.docByte}`)
+      } catch (err) {
+         console.log(err);
+      }
+    }
 
    const onCloseSideMenu = () => {
       $(".menu-login").hide("slide");
@@ -18,17 +94,31 @@ const SideMenu = (props) => {
             <img className="menu-close" onClick={onCloseSideMenu} src="/assets/images/icons/cross.svg" />
             <div className="profile">
                <div className="image">
-                  <img src="/assets/images/icons/profile.svg" />
+                  <img src={picture}  style={{height:'64px', width:'64px'}}/>
                   <div className="hello">
                      <h2>Hello,</h2>
-                     <h2 className="name">Rakesh Pawa!</h2>
+                     <h2 className="name">{name}!</h2>
                   </div>
                </div>
             </div>
          </div>
          <div className="content">
-            <div className="content-wrapper">
-               <a href="#">
+            { !checkCustomerId() ? <div className="content-wrapper">
+               <a href="/login">
+                  <div className="data">
+                     <img src="/assets/images/menu/login.svg" />
+                     <h5>Login</h5>
+                  </div>
+               </a>
+               <a href="/sign-up">
+                  <div className="data">
+                     <img src="/assets/images/menu/credit.svg" />
+                     <h5>Sign Up</h5>
+                  </div>
+               </a>
+
+            </div> : <div className="content-wrapper">
+               <a href="/user-profile">
                   <div className="data">
                      <img src="/assets/images/menu/login.svg" />
                      <h5>My Profile</h5>
@@ -41,7 +131,7 @@ const SideMenu = (props) => {
                   </div>
                </a>
 
-            </div>
+            </div>}
             <div className="content-wrapper">
                <a href="/credit-cards">
                   <div className="data">
@@ -206,9 +296,9 @@ const SideMenu = (props) => {
 
             </div>
 
-            <div className="content-wrapper">
-               <a href="#">
-                  <div className="data">
+            <div className="content-wrapper" style={{display:checkCustomerId() ? 'block' :'none' }}>
+               <a href="#" onClick={logout}>
+                  <div className="data" >
                      <img src="/assets/images/menu/logout.svg" />
                      <h5>Logout</h5>
                   </div>

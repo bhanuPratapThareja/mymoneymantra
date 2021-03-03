@@ -14,9 +14,9 @@ const Offers = props => {
     useEffect(() => {
         if (!componentOffers.length) {
             if (props.blogTrendingOffers) {
-                setComponentOffers(props.blogTrendingOffers)
+               // setComponentOffers(props.blogTrendingOffers)
             } else {
-               getOffers()
+              // getOffers()
             }
          }
     },[])

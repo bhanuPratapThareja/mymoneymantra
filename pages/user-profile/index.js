@@ -11,6 +11,8 @@ import ReferEarn from '../../components/UserProfile/ReferEarn'
 import WorkInfo from '../../components/UserProfile/WorkInfo'
 import { fileToByteArray } from '../../utils/byteArray'
 import { getClassesForPage } from '../../utils/classesForPage'
+import { getPictureservice } from '../../utils/userProfileService'
+import $ from 'jquery'
 const userProfile = (props) => {
   const [picture, setPicture] = useState('')
   const [pictureType, setPictureType] = useState('')
@@ -23,7 +25,7 @@ const userProfile = (props) => {
   const [customerName, setCustomerName] = useState('')
 
   useEffect(() => {
-    getPicture().then((res) => {})
+    getPicture()
   }, [])
 
   useEffect(() => {
@@ -78,11 +80,7 @@ const userProfile = (props) => {
   }
   const getPicture = async () => {
     try {
-      const customerId = await localStorage.getItem('customerId')
-      const responseObject = await axios.get(
-        'http://203.122.46.189:8061/customer/api/profile/v1/all-docs',
-        { params: { customerId } }
-      )
+      const responseObject = await getPictureservice()
       if (responseObject.status === 200) {
         console.log(responseObject.data)
         console.log('responseObject')
@@ -110,7 +108,7 @@ const userProfile = (props) => {
         'http://203.122.46.189:8061/customer/api/profile/v1/doc-upload',
         {
           ...body,
-          customerId: customerId ? customerId : '101',
+          customerId: customerId,
         }
       )
       console.log(responseObject)
@@ -127,9 +125,15 @@ const userProfile = (props) => {
   console.log({ personalInfoProgress })
 
   return (
-    <div className={props.pageClasses}>
+    <div
+      className={props.pageClasses}
+      data-aos-easing="ease"
+      data-aos-duration="600"
+      data-aos-delay="0"
+      cz-shortcut-listen="true"
+    >
       <Layout>
-        <div class="mobile-background"></div>
+        <div className="mobile-background"></div>
         <div className="profile-head">
           <div className="profile-container container">
             <div className="profile-head-wrapper">
@@ -178,10 +182,9 @@ const userProfile = (props) => {
             </div>
             <div className="profile-options-wrapper">
               <div className="option-wrapper">
-                <div id="option-1" className="option question-open">
+                <div id="option-1" className="option" key="option-1">
                   <h3>Personal Information</h3>
                   <svg
-                    className="question-active"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -196,6 +199,7 @@ const userProfile = (props) => {
                 </div>
                 <div
                   className="option-data"
+                  style={{ display: 'none' }}
                   id="option-1-data"
                   style={{ display: 'block' }}
                 >
@@ -222,7 +226,11 @@ const userProfile = (props) => {
                     ></path>
                   </svg>
                 </div>
-                <div className="option-data" id="option-2-data">
+                <div
+                  className="option-data"
+                  style={{ display: 'none' }}
+                  id="option-2-data"
+                >
                   <ContactInfo
                     contactCount={(val, max) => contactCount(val, max)}
                     setContactInfoProgress={setContactInfoProgress}
@@ -246,7 +254,11 @@ const userProfile = (props) => {
                     ></path>
                   </svg>
                 </div>
-                <div className="option-data" id="option-3-data">
+                <div
+                  className="option-data"
+                  style={{ display: 'none' }}
+                  id="option-3-data"
+                >
                   <WorkInfo
                     data={props.data}
                     totalNumberOfFields={totalNumberOfFields}
@@ -271,7 +283,11 @@ const userProfile = (props) => {
                     ></path>
                   </svg>
                 </div>
-                <div className="option-data" id="option-4-data">
+                <div
+                  className="option-data"
+                  style={{ display: 'none' }}
+                  id="option-4-data"
+                >
                   <Documents
                     totalNumberOfFields={totalNumberOfFields}
                     setDocumentProgress={setDocumentProgress}
@@ -295,7 +311,11 @@ const userProfile = (props) => {
                     ></path>
                   </svg>
                 </div>
-                <div className="option-data" id="option-5-data">
+                <div
+                  className="option-data"
+                  style={{ display: 'none' }}
+                  id="option-5-data"
+                >
                   <Application banks={props?.data} />
                 </div>
               </div>
@@ -316,11 +336,15 @@ const userProfile = (props) => {
                     ></path>
                   </svg>
                 </div>
-                <div className="option-data" id="option-6-data">
+                <div
+                  className="option-data"
+                  style={{ display: 'none' }}
+                  id="option-6-data"
+                >
                   <Offers />
                 </div>
               </div>
-              <div className="option-wrapper">
+              {/* <div className="option-wrapper">
                 <div id="option-7" className="option">
                   <h3>Refer &amp; Earn</h3>
                   <svg
@@ -337,7 +361,7 @@ const userProfile = (props) => {
                     ></path>
                   </svg>
                 </div>
-                <div className="option-data" id="option-7-data">
+                <div className="option-data" style={{display:'none'}} id="option-7-data">
                   <ReferEarn />
                 </div>
               </div>
@@ -358,10 +382,10 @@ const userProfile = (props) => {
                     ></path>
                   </svg>
                 </div>
-                <div className="option-data" id="option-8-data">
+                <div className="option-data" style={{display:'none'}} id="option-8-data">
                   <Help />
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
