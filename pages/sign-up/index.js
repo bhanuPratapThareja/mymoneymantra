@@ -11,7 +11,6 @@ import CustomName from "../../components/signup/name";
 import CustomEmail from "../../components/signup/email";
 import CustomLastName from "../../components/signup/lastname";
 import { sendSignUpOtp, sendSignUpData, verifyOtp } from "../../utils/otp";
-import Loader from "../../components/common/Loader";
 import { messgaes } from "../../utils/messages";
 import SubHeader from "../../components/signup/subheader";
 import CustomImage from "../../components/signup/image";
