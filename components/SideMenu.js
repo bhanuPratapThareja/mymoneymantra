@@ -296,7 +296,7 @@ const router=useRouter();
 
             </div>
 
-            <div className="content-wrapper" style={{display:checkCustomerId() ? 'block' :'block' }}>
+            <div className="content-wrapper" style={{display:checkCustomerId() ? 'block' :'none' }}>
                <a href="#" onClick={logout}>
                   <div className="data" >
                      <img src="/assets/images/menu/logout.svg" />

@@ -16,6 +16,8 @@ const PersonalInfo = (props) => {
   const [martaialname, setmartaialname] = useState('')
   const [errMsg, setErrMsg] = useState('')
   const [nameError, setNameError] = useState(false)
+  const [lastNameErrMsg,setLastNameErrMsg]=useState('')
+  const [lastNameErr,setLastNameErr]=useState(false)
   const [panError, setPanError] = useState(false)
   const [panErrMsg, setPanErrMsg] = useState('')
   const [dobError, setDobError] = useState(false)
@@ -98,11 +100,11 @@ const PersonalInfo = (props) => {
       }
     } else {
       if (pattern.test(lastName) || lastName == '') {
-        setNameError(false)
-        setErrMsg('')
+        setLastNameErr(false)
+        setLastNameErrMsg('')
       } else {
-        setNameError(true)
-        setErrMsg(`Last ${msg}`)
+        setLastNameErr(true)
+        setLastNameErrMsg(`Last ${msg}`)
       }
     }
   }
@@ -232,7 +234,7 @@ const PersonalInfo = (props) => {
                 Last Name
               </label>
             </div>
-            {nameError ? <p style={{ color: 'red' }}>{errMsg}</p> : null}
+            {lastNameErr ? <p style={{ color: 'red' }}>{lastNameErrMsg}</p> : null}
           </div>
           <h5>Date of Birth</h5>
           <div className="shortforms-container personal-style">
