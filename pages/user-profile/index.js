@@ -14,7 +14,7 @@ import { getClassesForPage } from '../../utils/classesForPage'
 const userProfile = (props) => {
   const [picture, setPicture] = useState('')
   const [pictureType, setPictureType] = useState('')
-  const [totalNumberOfFields, setTotalNumberOfFields] = useState(19)
+  const [totalNumberOfFields, setTotalNumberOfFields] = useState(22)
   const [profileProgress, setProfileProgress] = useState(0)
   const [personalInfoProgress, setPersonalInfoProgress] = useState(0)
   const [contactInfoProgress, setContactInfoProgress] = useState(0)
@@ -129,7 +129,7 @@ const userProfile = (props) => {
   return (
     <div className={props.pageClasses}>
       <Layout>
-      <div class="mobile-background"></div>
+        <div class="mobile-background"></div>
         <div className="profile-head">
           <div className="profile-container container">
             <div className="profile-head-wrapper">
@@ -155,9 +155,18 @@ const userProfile = (props) => {
               <h1>{customerName}</h1>
               <div className="profile-progress">
                 <div className="inner">
-                  <div className="percent-bar" style={{width:`${profileProgress>100?100:profileProgress}%`}}>
-                    <div className="perctange-wrap" >
-                      <h6 id="percentage">{profileProgress>100?100:profileProgress}%</h6>
+                  <div
+                    className="percent-bar"
+                    style={{
+                      width: `${
+                        profileProgress > 100 ? 100 : profileProgress
+                      }%`,
+                    }}
+                  >
+                    <div className="perctange-wrap">
+                      <h6 id="percentage">
+                        {profileProgress > 100 ? 100 : profileProgress}%
+                      </h6>
                     </div>
                   </div>
                 </div>
