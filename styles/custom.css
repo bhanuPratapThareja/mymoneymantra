@@ -3066,3 +3066,6 @@ letter-spacing: 0.04em;
   line-height: 24px;
 }
 
+.bar-of-progress {
+  z-index: 999999 !important;
+}
