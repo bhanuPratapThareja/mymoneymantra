@@ -20,15 +20,7 @@ const [isLoggedId, setisLoggedId] = useState(false)
    let longForm = null
 
    useEffect(() => {
-      let customerId=localStorage.getItem('customerId');
-      console.log('customerId',customerId)
-      if(customerId && customerId!=='' && customerId!==null){
-         setisLoggedId(true);
-      }
-      else{
-         setisLoggedId(false);
-
-      }
+      
       if (router.pathname === '/' && getDevice() !== 'desktop') {
          setHeaderClasses('header mobile-header')
       }
@@ -81,6 +73,16 @@ const [isLoggedId, setisLoggedId] = useState(false)
          const header = await strapi.processReq('GET', 'header')
          setHeaderData(header)
       }
+
+      let customerId=localStorage.getItem('customerId');
+      console.log('customerId',customerId)
+      if(customerId && customerId !== '' && customerId !== null && customerId !== undefined){
+         setisLoggedId(true);
+      }
+      else{
+         setisLoggedId(false);
+
+      }
    }, [])
 
    const headerEffect = header => {
@@ -125,10 +127,14 @@ const [isLoggedId, setisLoggedId] = useState(false)
       $(".menu-login").show("slide");
       $('body', "html").css("overflow", "hidden")
    }
-const logout=()=>{
-   localStorage.setItem('customerId',null);
-   setisLoggedId(false);
-   router.push('/','/',{shallow:false})
+const logout= async ()=>{
+   // setisLoggedId(false);
+
+  localStorage.removeItem('customerId');
+   setTimeout(()=>
+   router.push('/','/',{shallow:false}),300
+   ) 
+   
 }
    return (
       <>
@@ -170,7 +176,7 @@ const logout=()=>{
                </div>
                <div className="signup-cta secondary-cta">
                   <div className="border"></div>
-                  <button id="sign_up" onClick={()=>{logout()}}>Logout</button>
+                  <button id="sign_up" onClick={(e)=>{logout();e.preventDefault()}}>Logout</button>
                </div>
                </>
                }
