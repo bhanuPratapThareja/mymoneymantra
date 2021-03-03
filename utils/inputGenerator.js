@@ -247,6 +247,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
       <div className={fieldClasses.join(" ")} key={id} id={fieldId} style={uploadButtonBorderStyles}>
         <input
           id={inputFileId}
+          name={input_id}
           type="file"
           accept={upload_types}
           multiple
