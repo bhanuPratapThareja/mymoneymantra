@@ -9,8 +9,9 @@ import { getDevice } from '../utils/getDevice'
 import $ from 'jquery'
 
 const Header = () => {
+   const router=useRouter()
    const strapi = new Strapi()
-   const router = useRouter()
+   
    const headerRef = useRef()
    const [headerData, setHeaderData] = useState(null)
    const [headerClasses, setHeaderClasses] = useState('header')
@@ -20,7 +21,8 @@ const [isLoggedId, setisLoggedId] = useState(false)
 
    useEffect(() => {
       let customerId=localStorage.getItem('customerId');
-      if(customerId&&customerId!==''){
+      console.log('customerId',customerId)
+      if(customerId && customerId!=='' && customerId!==null){
          setisLoggedId(true);
       }
       else{
@@ -124,8 +126,9 @@ const [isLoggedId, setisLoggedId] = useState(false)
       $('body', "html").css("overflow", "hidden")
    }
 const logout=()=>{
-   localStorage.setItem('customerId','');
+   localStorage.setItem('customerId',null);
    setisLoggedId(false);
+   router.push('/','/',{shallow:false})
 }
    return (
       <>
@@ -162,6 +165,9 @@ const logout=()=>{
                   <div className="border"></div>
                   <button id="sign_up"><a href="/sign-up">{headerData.signup.label}</a></button>
                </div></>:<>
+               <div className="login-cta">
+                  <button id="log_in"><a href="/user-profile">My Profile</a></button>
+               </div>
                <div className="signup-cta secondary-cta">
                   <div className="border"></div>
                   <button id="sign_up" onClick={()=>{logout()}}>Logout</button>

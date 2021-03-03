@@ -1,4 +1,14 @@
+import { useEffect } from "react"
+
 const OffersForYou = () => {
+useEffect(() => {
+  if (window !== undefined && window.initSlickCards ) {
+    setTimeout(() => {
+       window.initSlickCards()
+    }, 1000)
+ }
+}, [])
+
   return (
     <section data-aos="fade-up" className="container popular-card-container aos-init aos-animate">
       <div className="popular-cards">

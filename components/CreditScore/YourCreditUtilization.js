@@ -1,6 +1,11 @@
+import classNames from 'classnames'
+
 const YourCreditUtilization = ({ creditUtilization }) => {
   return (
-    <section data-aos="fade-up" className="banner container paymentRank aos-init aos-animate">
+    <section
+      data-aos="fade-up"
+      className="banner container paymentRank aos-init aos-animate"
+    >
       <div className="paymentRank-wrapper">
         <div className="paymentRank-wrapper-head">
           <h2>Your Credit Utilization</h2>
@@ -12,7 +17,20 @@ const YourCreditUtilization = ({ creditUtilization }) => {
         </div>
         <div className="paymentRank-wrapper-content">
           <div className="paymentRank-wrapper-content-left left-mobile-view">
-            <div className="value-utilisation">
+            <div
+              className={classNames('value-utilisation', {
+                'green-circle':
+                  parseInt(creditUtilization) >= 0 &&
+                  parseInt(creditUtilization) <= 29,
+                'yellow-circle':
+                  parseInt(creditUtilization) >= 30 &&
+                  parseInt(creditUtilization) <= 49,
+                'orange-circle':
+                  parseInt(creditUtilization) >= 50 &&
+                  parseInt(creditUtilization) <= 80,
+                'red-circle': parseInt(creditUtilization) > 80,
+              })}
+            >
               <h1>{creditUtilization}</h1>
             </div>
           </div>

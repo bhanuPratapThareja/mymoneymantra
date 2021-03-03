@@ -6,7 +6,7 @@ import CommentSection from './CommentSection'
 
 const BlogsDetails = props => {
     const router = useRouter()
-    const [displayBlog, setDisplayBlog] = useState(false)
+    // const [showContent, setshowContent] = useState(false)
     const [blogData, setBlogData] = useState([])
     const goToPage = (name) => {
         let formattedCategoryName = formatCategoryForUrl(name)
@@ -17,12 +17,13 @@ const BlogsDetails = props => {
         setContributorId(contributor.id)
         router.push(`/blog/contributor-detail/${name}`)
     }
+    const {showContent} = props
     useEffect(() => {
         if (props.data.length != 0) {
-            setDisplayBlog(true)
+            props.setShowContent(true)
             setBlogData(props.data)
         } else {
-            setDisplayBlog(false)
+            props.setShowContent(false)
         }
         window.scroll(0, 0)
     }, [props.data])
@@ -30,18 +31,18 @@ const BlogsDetails = props => {
     const { header, blog_contributor,post_contributor, published_at, read_text, blog_sub_category, content, display_short_text, blog, blog_categories,post_categories } = blogData
     const mainCategories = post_categories ? post_categories : []
     const readingTime = require('reading-time');
-    const blogreadTime = displayBlog ? readingTime(content, { wordsPerMinute: '50' }) : null;
+    const blogreadTime = showContent ? readingTime(content, { wordsPerMinute: '50' }) : null;
     const { blogId, allBlogs } = props
-    const authorBlogs = displayBlog ? allBlogs.filter(blog => blog.blog_contributor.blog_contributors_name == blog_contributor.blog_contributors_name) : []
+    const authorBlogs = showContent ? allBlogs.filter(blog => blog.post_contributor.post_contributors_name.toLowerCase() == post_contributor.post_contributors_name.toLowerCase()) : []
     const blogCount = authorBlogs.length ? authorBlogs.length : 0
-    const date = displayBlog ? new Date(published_at) : null;
-    const ye = displayBlog ? new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date) : null;
-    const mo = displayBlog ? new Intl.DateTimeFormat('en', { month: 'short' }).format(date) : null;
-    const da = displayBlog ? new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date) : null;
+    const date = showContent ? new Date(published_at) : null;
+    const ye = showContent ? new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date) : null;
+    const mo = showContent ? new Intl.DateTimeFormat('en', { month: 'short' }).format(date) : null;
+    const da = showContent ? new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date) : null;
     const createdDate = `${da} ${mo} ${ye}`;
     return (
         <section className="blog-head">
-            {displayBlog ? <div className="blog-detail-wrapper container">
+            {showContent ? <div className="blog-detail-wrapper container">
                 <div className="blog-wrapper-content">
                     <div className="blog-wrap-top">
                         <div dangerouslySetInnerHTML={{ __html: header }}></div>

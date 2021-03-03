@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import CustomName from "../../components/signup/name";
 import CustomEmail from "../../components/signup/email";
 import CustomLastName from "../../components/signup/lastname";
-import { sendSignUpOtp,sendSignUpData, verifyOtp } from "../../utils/otp";
+import { sendSignUpOtp, sendSignUpData, verifyOtp } from "../../utils/otp";
 import Loader from "../../components/common/Loader";
 import { messgaes } from "../../utils/messages";
 import SubHeader from "../../components/signup/subheader";
@@ -28,6 +28,7 @@ const signUp = (props) => {
   const [otpId, setOtpId] = useState("");
   const [isLoader, setisLoader] = useState(false);
   const [token, settoken] = useState('')
+  const [otpError, setOtpError] = useState(false)
   const counterStep = (i) => {
     if ((i == -1 && counter !== 0)) {
       setcounter(counter + i);
@@ -42,7 +43,7 @@ const signUp = (props) => {
   const validNext = () => {
     switch (counter) {
       case 0:
-        return name.length > 2 && phone.length == 10 && email.length > 10
+        return name.length > 2 && phone.length == 10 && email.length > 4
           ? false
           : true;
       default:
@@ -54,22 +55,22 @@ const signUp = (props) => {
     verifyOtp(phone, otp, otpId)
       .then((res) => {
         sendSignUpData(name, email, phone, token, null)
-      .then((res) => {
-        const { customerId, message } = res;
-        // setOtpId(otpId);
-        localStorage.setItem("customerId", customerId);
-        setcounter(counter + 1);
+          .then((res) => {
+            const { customerId, message } = res;
+            // setOtpId(otpId);
+            localStorage.setItem("customerId", customerId);
+            setcounter(counter + 1);
+          })
+          .catch((err) => {
+            // alert(err.message);
+          })
+          .finally(() => {
+            setisLoader(false);
+          });
+
       })
       .catch((err) => {
-        alert(err.message);
-      })
-      .finally(() => {
-        setisLoader(false);
-      });
-        
-      })
-      .catch((err) => {
-        alert(err.message);
+        // alert(err.message);
       })
       .finally(() => setisLoader(false));
   };
@@ -77,14 +78,14 @@ const signUp = (props) => {
     setisLoader(true);
     sendSignUpOtp(phone)
       .then((res) => {
-        const { otpId} = res;
+        const { otpId } = res;
         setOtpId(otpId);
         if (!resend) {
           setcounter(counter + 1);
         }
       })
       .catch((err) => {
-        alert(err.message);
+        // alert(err.message);
       })
       .finally(() => {
         setisLoader(false);
@@ -158,6 +159,7 @@ const signUp = (props) => {
                       <Otp
                         setotp={(val) => setotp(val)}
                         otp={otp}
+                        error={otpError}
                         resend={() => signUpUser("val")}
                       ></Otp>
                     </div>

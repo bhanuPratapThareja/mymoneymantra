@@ -21,7 +21,7 @@ const TotalAccounts = ({ totalAccount }) => {
             <img className="rank-mobile" src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_accounts/accounts-mobile.png" alt="" /> */}
             {/* <h2>{totalAccount}</h2> */}
             <div
-              class={classNames('value-accounts', {
+              className={classNames('value-accounts', {
                 'green-square': totalAccount >= 5,
                 'yellow-square': totalAccount >= 3 && totalAccount < 5,
                 'orange-square': totalAccount < 3,
