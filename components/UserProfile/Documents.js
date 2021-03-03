@@ -50,6 +50,10 @@ const Documents = (props) => {
     getAllDocuments()
   }, [])
 
+  useEffect(() => {
+    calculate()
+  }, [aadhaar, pan, bankStatement, salarySlips, bankStatement, form16, bill])
+
   const getPanAndAadhar = (doc) => {
     if (doc.documentNo == '1000000290') {
       setPan({ ...doc })
@@ -79,7 +83,8 @@ const Documents = (props) => {
     try {
       const customerId = localStorage.getItem('customerId')
       const responseObject = await axios.get(
-        `http://203.122.46.189:8061/customer/api/profile/v1/all-docs`,{params:{customerId}}
+        `http://203.122.46.189:8061/customer/api/profile/v1/all-docs`,
+        { params: { customerId } }
       )
       console.log('All documents', responseObject)
       responseObject.data.docList.map((doc) => {
@@ -107,8 +112,8 @@ const Documents = (props) => {
             break
         }
       })
-      console.log('all doc', pan, bankStatement)
-      calculate(responseObject.data.docList)
+      // console.log('all doc', pan, bankStatement)
+      // calculate()
     } catch (err) {
       console.log(err)
     }
@@ -275,7 +280,7 @@ const Documents = (props) => {
         'http://203.122.46.189:8060/customer/api/profile/v1/doc-upload',
         {
           ...body,
-          customerId: customerId 
+          customerId: customerId,
         }
       )
       console.log(responseObject)
@@ -299,10 +304,25 @@ const Documents = (props) => {
   //   bill,
   // })
 
-  const calculate = (fields) => {
+  const calculate = () => {
+    console.log('Calculate')
     let progress = 0
-    fields.map((field) => {
-      if (field) {
+    // fields.map((field) => {
+    //   if (field) {
+    //     progress += 1
+    //   }
+    // })
+    const fields = [
+      aadhaar,
+      pan,
+      bankStatement,
+      salarySlips,
+      bankStatement,
+      form16,
+      bill,
+    ]
+    fields.map((item) => {
+      if (item.documentName !== '') {
         progress += 1
       }
     })
