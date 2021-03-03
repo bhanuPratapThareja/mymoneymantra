@@ -34,6 +34,15 @@ const userProfile = (props) => {
       contactInfoProgress +
       workInfoProgress +
       documentProgress
+
+    if (picture) curretProgress += 1
+
+    // console.log({
+    //   personalInfoProgress,
+    //   contactInfoProgress,
+    //   workInfoProgress,
+    //   documentProgress,
+    // })
     const progressPercentage = Math.floor(
       (curretProgress / totalNumberOfFields) * 100
     )
@@ -146,7 +155,7 @@ const userProfile = (props) => {
                   src={
                     picture.length
                       ? `data:image/${pictureType};base64,${picture}`
-                      : 'https://the1thing.github.io/MyMoneyMantra/build/images/icons/people1.png'
+                      : '/assets/images/icons/people1.png'
                   }
                 />
                 <input

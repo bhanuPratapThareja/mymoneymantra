@@ -26,7 +26,7 @@ const CreditScoreBanner = ({ accountHistory, score }) => {
             <h2>Your Credit Score</h2>
             <img
               className="underline-img"
-              src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/underline.png"
+              src="/assets/images/credit-card-flow/green-underline.png"
               alt=""
             />
           </div>
@@ -42,7 +42,7 @@ const CreditScoreBanner = ({ accountHistory, score }) => {
             <h2>Your Credit Score History</h2>
             <img
               className="underline-img"
-              src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/underline.png"
+              src="/assets/images/credit-card-flow/green-underline.png"
               alt=""
             />
           </div>

@@ -148,7 +148,7 @@ const AccountSummary = ({ active, closed, name, banks }) => {
                         <h3>
                           <b className="card_name">{bank?.bank_name}</b>
                           <br />
-                          Platinum Delight Credit Card
+                          {item.productType}
                         </h3>
                         <img
                           src={`http://203.122.46.189:1338${bank?.bank_logo?.url}`}
