@@ -16,7 +16,7 @@ import $ from 'jquery'
 const userProfile = (props) => {
   const [picture, setPicture] = useState('')
   const [pictureType, setPictureType] = useState('')
-  const [totalNumberOfFields, setTotalNumberOfFields] = useState(26)
+  const [totalNumberOfFields, setTotalNumberOfFields] = useState(22)
   const [profileProgress, setProfileProgress] = useState(0)
   const [personalInfoProgress, setPersonalInfoProgress] = useState(0)
   const [contactInfoProgress, setContactInfoProgress] = useState(0)
@@ -25,8 +25,7 @@ const userProfile = (props) => {
   const [customerName, setCustomerName] = useState('')
 
   useEffect(() => {
-    getPicture();
-    
+    getPicture()
   }, [])
 
   useEffect(() => {
@@ -81,7 +80,7 @@ const userProfile = (props) => {
   }
   const getPicture = async () => {
     try {
-      const responseObject= await getPictureservice();
+      const responseObject = await getPictureservice()
       if (responseObject.status === 200) {
         console.log(responseObject.data)
         console.log('responseObject')
@@ -109,7 +108,7 @@ const userProfile = (props) => {
         'http://203.122.46.189:8061/customer/api/profile/v1/doc-upload',
         {
           ...body,
-          customerId: customerId ,
+          customerId: customerId,
         }
       )
       console.log(responseObject)
@@ -126,9 +125,15 @@ const userProfile = (props) => {
   console.log({ personalInfoProgress })
 
   return (
-    <div className={props.pageClasses} data-aos-easing="ease" data-aos-duration="600" data-aos-delay="0" cz-shortcut-listen="true">
+    <div
+      className={props.pageClasses}
+      data-aos-easing="ease"
+      data-aos-duration="600"
+      data-aos-delay="0"
+      cz-shortcut-listen="true"
+    >
       <Layout>
-      <div className="mobile-background"></div>
+        <div className="mobile-background"></div>
         <div className="profile-head">
           <div className="profile-container container">
             <div className="profile-head-wrapper">
@@ -154,9 +159,18 @@ const userProfile = (props) => {
               <h1>{customerName}</h1>
               <div className="profile-progress">
                 <div className="inner">
-                  <div className="percent-bar" style={{width:`${profileProgress>100?100:profileProgress}%`}}>
-                    <div className="perctange-wrap" >
-                      <h6 id="percentage">{profileProgress>100?100:profileProgress}%</h6>
+                  <div
+                    className="percent-bar"
+                    style={{
+                      width: `${
+                        profileProgress > 100 ? 100 : profileProgress
+                      }%`,
+                    }}
+                  >
+                    <div className="perctange-wrap">
+                      <h6 id="percentage">
+                        {profileProgress > 100 ? 100 : profileProgress}%
+                      </h6>
                     </div>
                   </div>
                 </div>
@@ -171,7 +185,6 @@ const userProfile = (props) => {
                 <div id="option-1" className="option" key="option-1">
                   <h3>Personal Information</h3>
                   <svg
-                    
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -185,7 +198,8 @@ const userProfile = (props) => {
                   </svg>
                 </div>
                 <div
-                  className="option-data" style={{display:'none'}}
+                  className="option-data"
+                  style={{ display: 'none' }}
                   id="option-1-data"
                   style={{ display: 'block' }}
                 >
@@ -212,7 +226,11 @@ const userProfile = (props) => {
                     ></path>
                   </svg>
                 </div>
-                <div className="option-data" style={{display:'none'}} id="option-2-data">
+                <div
+                  className="option-data"
+                  style={{ display: 'none' }}
+                  id="option-2-data"
+                >
                   <ContactInfo
                     contactCount={(val, max) => contactCount(val, max)}
                     setContactInfoProgress={setContactInfoProgress}
@@ -236,7 +254,11 @@ const userProfile = (props) => {
                     ></path>
                   </svg>
                 </div>
-                <div className="option-data" style={{display:'none'}} id="option-3-data">
+                <div
+                  className="option-data"
+                  style={{ display: 'none' }}
+                  id="option-3-data"
+                >
                   <WorkInfo
                     data={props.data}
                     totalNumberOfFields={totalNumberOfFields}
@@ -261,7 +283,11 @@ const userProfile = (props) => {
                     ></path>
                   </svg>
                 </div>
-                <div className="option-data" style={{display:'none'}} id="option-4-data">
+                <div
+                  className="option-data"
+                  style={{ display: 'none' }}
+                  id="option-4-data"
+                >
                   <Documents
                     totalNumberOfFields={totalNumberOfFields}
                     setDocumentProgress={setDocumentProgress}
@@ -285,7 +311,11 @@ const userProfile = (props) => {
                     ></path>
                   </svg>
                 </div>
-                <div className="option-data" style={{display:'none'}} id="option-5-data">
+                <div
+                  className="option-data"
+                  style={{ display: 'none' }}
+                  id="option-5-data"
+                >
                   <Application banks={props?.data} />
                 </div>
               </div>
@@ -306,7 +336,11 @@ const userProfile = (props) => {
                     ></path>
                   </svg>
                 </div>
-                <div className="option-data" style={{display:'none'}} id="option-6-data">
+                <div
+                  className="option-data"
+                  style={{ display: 'none' }}
+                  id="option-6-data"
+                >
                   <Offers />
                 </div>
               </div>

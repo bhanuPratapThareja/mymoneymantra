@@ -194,6 +194,7 @@ const ContactInfo = (props) => {
   const cancleHandler = () => {
     setEditing(false)
     getContact()
+    setEmailError(false)
   }
 
   const calculate = (fields) => {

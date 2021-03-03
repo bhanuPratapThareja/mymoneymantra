@@ -1556,6 +1556,19 @@ section.popular-card-container {
   list-style: none;
 }
 
+.cp-score-custom{
+  position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    line-height: 46px;
+    font-weight: 800;
+    font-size: 34px;
+    letter-spacing: 0.04em;
+    color: white;
+}
 /*-- Blog Styling --*/
 /* .blog-container .blog .blog-wrapper-card > div > img {	
   display: none;	
@@ -2401,6 +2414,10 @@ button.cstm-load-btn {
     outline: none;
   }
   
+  .credit-card-flow .banner .creditScore-wrapper h2 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
 
 }
 
@@ -2435,6 +2452,12 @@ button.cstm-load-btn {
 }
 
 @media(max-width: 479px) {
+  .cp-score-custom{
+    
+font-size: 22px;
+line-height: 31px;
+letter-spacing: 0.04em;
+  }
   .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper .work-wrapper .shortforms-container .form__group{
     padding: 0px 16px 10px 0px;
   }
