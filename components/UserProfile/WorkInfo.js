@@ -3,62 +3,32 @@ import axios from 'axios'
 
 import { getWorkInfo } from '../../utils/userProfileService'
 import { getApiData } from '../../api/api'
+import {
+  getFormattedCurrency,
+  getWholeNumberFromCurrency,
+} from '../../utils/formattedCurrency'
 
 const WorkInfo = (props) => {
   const [isedit, setIsedit] = useState(false)
   const [employedType, setEmployedType] = useState('')
   const [companyQuery, setCompanyQuery] = useState('')
   const [bankId, setBankId] = useState('')
-  const [ifscCode, setIfscCode] = useState('')
-  const [netMonthlyIncome, setNetMonthlyIncome] = useState('')
-  const [accountNo, setAccountNo] = useState('')
+  const [ifscCode, setIfscCode] = useState(null)
+  const [netMonthlyIncome, setNetMonthlyIncome] = useState(null)
+  const [accountNo, setAccountNo] = useState(null)
   const [companyOptions, setCompanyOtions] = useState([])
   const [companyId, setCompanyId] = useState('')
-  const [companyName, setCompanyName] = useState('')
+  const [companyName, setCompanyName] = useState(null)
   const [customerId, setCustomerId] = useState('')
-  const [bankName, setBankName] = useState('')
+  const [bankName, setBankName] = useState(null)
   const [bankList, setBankList] = useState([])
 
-  const { totalNumberOfFields, calculateProfileProgress, setWorkInfoProgress } = props
+  const { setWorkInfoProgress } = props
 
   useEffect(() => {
     console.log(props.data)
     getWork()
   }, [])
-
-  const calculateSectionProgress = () => {
-    // let savedFields = 0
-    let value1 = (employedType && employedType.length) ? 1 : 0
-    let value2 = (bankId && bankId.length) ? 1 : 0
-    let value3 = (netMonthlyIncome && netMonthlyIncome.length) ? 1 : 0
-    let value4 = (companyName && companyName.length) ? 1 : 0
-    let value5 = (accountNo && accountNo.length) ? 1 : 0
-    let value6 = (ifscCode && ifscCode.length) ? 1 : 0
-    let savedFields = value1 + value2 + value3 + value4 + value5 + value6
-    // if (employedType && employedType.length) {
-    //   savedFields += 1
-    // }
-    // if (bankId && bankId.length) {
-    //   savedFields += 1
-    // }
-    // if (netMonthlyIncome && netMonthlyIncome.length) {
-    //   savedFields += 1
-    // }
-    // if (companyName && companyName.length) (
-    //   savedFields += 1
-    // )
-    // if (accountNo && accountNo.length) {
-    //   savedFields += 1
-    // }
-    // if (ifscCode && ifscCode.length) {
-    //   savedFields += 1
-    // }
-    console.log(savedFields)
-    console.log((Math.round((savedFields / totalNumberOfFields) * 100)))
-    let progress = Math.round((savedFields / totalNumberOfFields) * 100)
-    setWorkInfoProgress(progress)
-    calculateProfileProgress()
-  }
 
   useEffect(() => {
     const timer = setTimeout(async () => {
@@ -96,22 +66,24 @@ const WorkInfo = (props) => {
           customerId,
           bankName,
         } = { ...res }
+        let formattedIncome = getFormattedCurrency(netMonthlyIncome.toString())
         setBankName(bankName)
         setCustomerId(customerId)
         setCompanyId(companyId)
         setEmployedType(employedType)
-        setNetMonthlyIncome(netMonthlyIncome)
+        setNetMonthlyIncome(formattedIncome)
         setBankId(bankId)
         setAccountNo(accountNo)
         setIfscCode(ifscCode)
         setCompanyName(companyName)
-        setCompanyQuery(companyName)
+        // setCompanyQuery(companyName)
         // calculateSectionProgress()
+        calculate(res)
       })
       .catch((err) => {
         console.log(err)
       })
-      .finally(() => { })
+      .finally(() => {})
   }
 
   const submitHandler = async (e) => {
@@ -125,9 +97,10 @@ const WorkInfo = (props) => {
         customerId: custId,
         companyId,
         bankId,
-        netMonthlyIncome,
+        netMonthlyIncome: getWholeNumberFromCurrency(netMonthlyIncome),
         accountNo,
         employedType,
+        ifscCode,
       })
       if (responseObject.status === 200) {
         getWork()
@@ -163,13 +136,33 @@ const WorkInfo = (props) => {
       }
     })
     setBankList(filteredBanks)
-
   }
 
   const onSelectBank = (bank) => {
     setBankName(bank.bank_name)
     setBankId(bank.bank_id)
     setBankList([])
+  }
+
+  const handleIncomeChange = (e) => {
+    let { value } = e.target
+    value = value.toString()
+    const numString = getWholeNumberFromCurrency(value)
+    if (isNaN(numString)) {
+      return
+    }
+    value = getFormattedCurrency(value)
+    setNetMonthlyIncome(value)
+  }
+
+  const calculate = (fields) => {
+    let progress = 0
+    Object.keys(fields).map((field) => {
+      if (fields[field]) {
+        progress += 1
+      }
+    })
+    setWorkInfoProgress(progress)
   }
 
   return (
@@ -205,7 +198,7 @@ const WorkInfo = (props) => {
         </div> */}
         {isedit ? (
           <div className="shortforms-container gender-style">
-            <input
+            <input autocomplete="off"
               value="1000000001"
               className="lets-checkbox"
               type="radio"
@@ -216,7 +209,7 @@ const WorkInfo = (props) => {
               onChange={(e) => setEmployedType(e.target.value)}
               defaultChecked={employedType == 1000000001 ? true : false}
             />
-            <input
+            <input autocomplete="off"
               value="1000000002"
               className="lets-checkbox"
               type="radio"
@@ -227,7 +220,7 @@ const WorkInfo = (props) => {
               onChange={(e) => setEmployedType(e.target.value)}
               defaultChecked={employedType == 1000000002 ? true : false}
             />
-            <input
+            <input autocomplete="off"
               value="1000000004"
               className="lets-checkbox"
               type="radio"
@@ -238,7 +231,7 @@ const WorkInfo = (props) => {
               onChange={(e) => setEmployedType(e.target.value)}
               defaultChecked={employedType == 1000000004 ? true : false}
             />
-            <input
+            <input autocomplete="off"
               value="1000000008"
               className="lets-checkbox"
               type="radio"
@@ -257,30 +250,34 @@ const WorkInfo = (props) => {
             <label htmlFor="defense">Defense</label>
           </div>
         ) : (
-            <div className="form__group field">
-              <input
-                readOnly={true}
-                autocomplete="off"
-                value={
-                  employedType == 1000000001
-                    ? 'Self Employed'
-                    : employedType == 1000000002
-                      ? 'Self Employed Professional'
-                      : employedType == 1000000004
-                        ? 'Salaried'
-                        : employedType == 1000000008 ? 'Defense' : ''
-                }
-                className="form__field"
-                type="text"
-                id="emp-type"
-                name="emp-type"
-                required=""
-              />
-              <label className="form__label" htmlFor="emp-type">
-                Employment Type
+          <div className="form__group field">
+            <input autocomplete="off"
+              readOnly={true}
+              autocomplete="off"
+              placeholder="Employment Type"
+              value={
+                employedType == 1000000001
+                  ? 'Self Employed'
+                  : employedType == 1000000002
+                  ? 'Self Employed Professional'
+                  : employedType == 1000000004
+                  ? 'Salaried'
+                  : employedType == 1000000008
+                  ? 'Defense'
+                  : ''
+              }
+              className="form__field"
+              type="text"
+              id="emp-type"
+              name="emp-type"
+              required=""
+              disabled
+            />
+            <label className="form__label" htmlFor="emp-type">
+              Employment Type
             </label>
-            </div>
-          )}
+          </div>
+        )}
         {/* <div className="shortforms-container"> */}
         <div
           className={
@@ -289,7 +286,7 @@ const WorkInfo = (props) => {
               : 'form__group field read-part'
           }
         >
-          <input
+          <input autocomplete="off"
             readOnly={!isedit}
             className="form__field"
             type="text"
@@ -299,6 +296,7 @@ const WorkInfo = (props) => {
             placeholder="Company Name"
             required=""
             onChange={companyNameChangeHandler}
+            disabled={!isedit}
           />
           <label className="form__label" htmlFor="company-name">
             Company Name
@@ -332,7 +330,7 @@ const WorkInfo = (props) => {
               : 'form__group field read-part'
           }
         >
-          <input
+          <input autocomplete="off"
             readOnly={!isedit}
             className="form__field"
             type="text"
@@ -341,7 +339,9 @@ const WorkInfo = (props) => {
             id="monthly-income"
             placeholder="Net Monthly Income"
             required=""
-            onChange={(e) => setNetMonthlyIncome(e.target.value)}
+            onChange={handleIncomeChange}
+            disabled={!isedit}
+            // onChange={(e) => setNetMonthlyIncome(e.target.value)}
           />
           <label className="form__label" htmlFor="monthly-income">
             Net Monthly Income
@@ -354,30 +354,34 @@ const WorkInfo = (props) => {
               : 'form__group field read-part'
           }
         >
-          <label className="form__label" htmlFor="bank-name">
-            Bank Name
-          </label>
-          <input
+          
+          <input autocomplete="off"
             readOnly={!isedit}
             className="form__field"
-            type='text'
-            id='bank-name'
+            type="text"
+            id="bank-name"
             autocomplete="off"
-            placeholder='Bank Name'
-            required=''
-            value={bankName}
+            placeholder="Bank Name"
+            required=""
+            value={bankName ? bankName: null}
             onChange={handleBankChange}
-          />
+          /><label className="form__label" htmlFor="bank-name">
+          Bank Name
+        </label>
 
-          {isedit && bankList.length ?
+          {isedit && bankList.length ? (
             <datalist style={{ display: 'block', background: '#fff' }}>
               {bankList.map((bank, i) => (
-                <option key={i} value={bank.bank_id} onClick={() => onSelectBank(bank)}>
+                <option
+                  key={i}
+                  value={bank.bank_id}
+                  onClick={() => onSelectBank(bank)}
+                >
                   {bank.bank_name}
                 </option>
               ))}
             </datalist>
-            : null}
+          ) : null}
           {/* <select
             readOnly={!isedit}
             className="form__field"
@@ -402,7 +406,7 @@ const WorkInfo = (props) => {
               : 'form__group field read-part'
           }
         >
-          <input
+          <input autocomplete="off"
             readOnly={!isedit}
             className="form__field"
             type="text"
@@ -412,6 +416,7 @@ const WorkInfo = (props) => {
             placeholder="Account Number"
             required=""
             onChange={(e) => setAccountNo(e.target.value)}
+            disabled={!isedit}
           />
           <label className="form__label" htmlFor="account-num">
             Account Number
@@ -424,7 +429,7 @@ const WorkInfo = (props) => {
               : 'form__group field read-part'
           }
         >
-          <input
+          <input autocomplete="off"
             readOnly={!isedit}
             className="form__field"
             type="text"
@@ -434,6 +439,7 @@ const WorkInfo = (props) => {
             placeholder="IFSC Code"
             required=""
             onChange={(e) => setIfscCode(e.target.value)}
+            disabled={!isedit}
           />
           <label className="form__label" htmlFor="ifsc">
             IFSC Code
@@ -459,14 +465,16 @@ const WorkInfo = (props) => {
         </button>
       </div>
 
-      <button
-        type="button"
-        id="edit-work"
-        className="edit-button"
-        onClick={() => setIsedit(!isedit)}
-      >
-        Edit
-      </button>
+      {!isedit ? (
+        <button
+          type="button"
+          id="edit-work"
+          className="edit-button"
+          onClick={() => setIsedit(!isedit)}
+        >
+          Edit
+        </button>
+      ) : null}
     </form>
   )
 }

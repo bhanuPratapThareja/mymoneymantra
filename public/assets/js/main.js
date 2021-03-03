@@ -179,11 +179,11 @@ $(document).ready(function () {
 
   //toggle of the profile page options
   //learn more toggle
-  $(".profile-options-wrapper .option").click(function () {
-    $("#" + this.id + "-data").slideToggle("ease-in-out");
-    $("#" + this.id).find("svg").toggleClass("question-active");
-    $("#" + this.id).toggleClass("question-open")
-  })
+  // $(".profile-options-wrapper .option").click(function () {
+  //   $("#" + this.id + "-data").slideToggle("ease-in-out");
+  //   $("#" + this.id).find("svg").toggleClass("question-active");
+  //   $("#" + this.id).toggleClass("question-open")
+  // })
 
 
   initSlickCards = function () {
@@ -193,6 +193,8 @@ $(document).ready(function () {
       cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
       speed: 1000,
       autoplay: true,
+      autoplaySpeed: 7000,
+      useTransform: false,
       infinite: true,
       variableWidth: true,
       responsive: [

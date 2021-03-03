@@ -12,10 +12,9 @@ const Offers = () => {
       try {
         const customerId = localStorage.getItem('customerId')
         const responseObject = await axios.post(
-          'http://203.122.46.189:8060/customer/api/customer/v1/view-offers',
+          'http://203.122.46.189:8061/customer/api/customer/v1/view-offers',
           {
-            // customerId: customerId ? customerId : '206',
-            customerId: '',
+            customerId: customerId ,
             productId: '',
           }
         )

@@ -11,7 +11,7 @@ const YourTotalEnquiries = ({ totalEnquiries }) => {
           <h2>Your Total Enquiries</h2>
           <img
             className="underline-img"
-            src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_rank/underline.png"
+            src="/assets/images/credit-card-flow/green-underline.png"
             alt="underline"
           />
         </div>
@@ -42,7 +42,7 @@ const YourTotalEnquiries = ({ totalEnquiries }) => {
             <p>What does your rank reflect?</p>
             <div className="progress-bar">
               <img
-                src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_rank/meter.png"
+                src="/assets/images/CP_profile/CP_rank/meter.png"
                 alt="enquiry-meter"
               />
             </div>

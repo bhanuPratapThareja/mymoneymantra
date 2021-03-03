@@ -1,55 +1,58 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { fileToByteArray } from '../../utils/byteArray'
-
+const placeholderData="Please Upload the file"
 const Documents = (props) => {
   const [aadhaar, setAadhaar] = useState({
-    documentName: '',
+    documentName: placeholderData,
     documentNo: '1000000374',
     documentTypeId: '1000000036',
     uploadStatus: '',
   })
   const [pan, setPan] = useState({
-    documentName: '',
+    documentName: placeholderData,
     documentNo: '1000000290',
     documentTypeId: '1000000036',
     uploadStatus: '',
   })
   const [bankStatement, setBankStatement] = useState({
-    documentName: '',
+    documentName: placeholderData,
     documentNo: '1000000308',
     documentTypeId: '1000000044',
     uploadStatus: '',
   })
   const [salarySlips, setSalarySlips] = useState({
-    documentName: '',
+    documentName: placeholderData,
     documentNo: '1000000307',
     documentTypeId: '1000000043',
     uploadStatus: '',
   })
   const [form16, setForm16] = useState({
-    documentName: '',
+    documentName: placeholderData,
     documentNo: '1000000305',
     documentTypeId: '1000000043',
     uploadStatus: '',
   })
   const [rentAgreement, setRentAgreement] = useState({
-    documentName: '',
+    documentName: placeholderData,
     documentNo: '1000000299',
     documentTypeId: '1000000037',
     uploadStatus: '',
   })
   const [bill, setBill] = useState({
-    documentName: '',
+    documentName: placeholderData,
     documentNo: '1000000321',
     documentTypeId: '1000000037',
     uploadStatus: '',
   })
-  const { totalNumberOfFields, calculateProfileProgress, setDocumentProgress } = props
+  const { setDocumentProgress } = props
   useEffect(() => {
     getAllDocuments()
   }, [])
 
+  useEffect(() => {
+    calculate()
+  }, [aadhaar, pan, bankStatement, salarySlips, bankStatement, form16, bill])
 
   const getPanAndAadhar = (doc) => {
     if (doc.documentNo == '1000000290') {
@@ -80,8 +83,8 @@ const Documents = (props) => {
     try {
       const customerId = localStorage.getItem('customerId')
       const responseObject = await axios.get(
-        `http://203.122.46.189:8060/customer/api/profile/v1/all-docs?customerId=${customerId ? customerId : 101
-        }`
+        `http://203.122.46.189:8061/customer/api/profile/v1/all-docs`,
+        { params: { customerId } }
       )
       console.log('All documents', responseObject)
       responseObject.data.docList.map((doc) => {
@@ -109,7 +112,8 @@ const Documents = (props) => {
             break
         }
       })
-      console.log('all doc', pan, bankStatement)
+      // console.log('all doc', pan, bankStatement)
+      // calculate()
     } catch (err) {
       console.log(err)
     }
@@ -276,7 +280,7 @@ const Documents = (props) => {
         'http://203.122.46.189:8060/customer/api/profile/v1/doc-upload',
         {
           ...body,
-          customerId: customerId ? customerId : '101',
+          customerId: customerId,
         }
       )
       console.log(responseObject)
@@ -299,6 +303,31 @@ const Documents = (props) => {
   //   rentAgreement,
   //   bill,
   // })
+
+  const calculate = () => {
+    console.log('Calculate')
+    let progress = 0
+    // fields.map((field) => {
+    //   if (field) {
+    //     progress += 1
+    //   }
+    // })
+    const fields = [
+      aadhaar,
+      pan,
+      bankStatement,
+      salarySlips,
+      bankStatement,
+      form16,
+      bill,
+    ]
+    fields.map((item) => {
+      if (item.documentName !== '') {
+        progress += 1
+      }
+    })
+    setDocumentProgress(progress)
+  }
 
   return (
     <form>

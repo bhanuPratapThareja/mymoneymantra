@@ -27,7 +27,7 @@ const Blogger = props => {
 
     const onOpenBlog = blog => {
         setBlogId(blog.id)
-        router.push(`/blog/details/${blog.slug}`)
+        router.push(`/blog/${blog.slug}`)
     }
 
 

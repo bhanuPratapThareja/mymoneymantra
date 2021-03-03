@@ -9,8 +9,9 @@ import { getDevice } from '../utils/getDevice'
 import $ from 'jquery'
 
 const Header = () => {
+   const router=useRouter()
    const strapi = new Strapi()
-   const router = useRouter()
+   
    const headerRef = useRef()
    const [headerData, setHeaderData] = useState(null)
    const [headerClasses, setHeaderClasses] = useState('header')
@@ -19,14 +20,7 @@ const [isLoggedId, setisLoggedId] = useState(false)
    let longForm = null
 
    useEffect(() => {
-      let customerId=localStorage.getItem('customerId');
-      if(customerId&&customerId!==''){
-         setisLoggedId(true);
-      }
-      else{
-         setisLoggedId(false);
-
-      }
+      
       if (router.pathname === '/' && getDevice() !== 'desktop') {
          setHeaderClasses('header mobile-header')
       }
@@ -79,6 +73,16 @@ const [isLoggedId, setisLoggedId] = useState(false)
          const header = await strapi.processReq('GET', 'header')
          setHeaderData(header)
       }
+
+      let customerId=localStorage.getItem('customerId');
+      console.log('customerId',customerId)
+      if(customerId && customerId !== '' && customerId !== null && customerId !== undefined){
+         setisLoggedId(true);
+      }
+      else{
+         setisLoggedId(false);
+
+      }
    }, [])
 
    const headerEffect = header => {
@@ -123,9 +127,14 @@ const [isLoggedId, setisLoggedId] = useState(false)
       $(".menu-login").show("slide");
       $('body', "html").css("overflow", "hidden")
    }
-const logout=()=>{
-   localStorage.setItem('customerId','');
-   setisLoggedId(false);
+const logout= async ()=>{
+   // setisLoggedId(false);
+
+  localStorage.removeItem('customerId');
+   setTimeout(()=>
+   router.push('/','/',{shallow:false}),300
+   ) 
+   
 }
    return (
       <>
@@ -162,9 +171,12 @@ const logout=()=>{
                   <div className="border"></div>
                   <button id="sign_up"><a href="/sign-up">{headerData.signup.label}</a></button>
                </div></>:<>
+               <div className="login-cta">
+                  <button id="log_in"><a href="/user-profile">My Profile</a></button>
+               </div>
                <div className="signup-cta secondary-cta">
                   <div className="border"></div>
-                  <button id="sign_up" onClick={()=>{logout()}}>Logout</button>
+                  <button id="sign_up" onClick={(e)=>{logout();e.preventDefault()}}>Logout</button>
                </div>
                </>
                }

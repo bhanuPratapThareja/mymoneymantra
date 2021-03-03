@@ -68,7 +68,7 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                         <h3>
                           <b className="card_name">{bank?.bank_name}</b>
                           <br />
-                          Platinum Delight Credit Card
+                          {item.accountType}
                         </h3>
                         <img
                           src={`http://203.122.46.189:1338${bank?.bank_logo?.url}`}
@@ -82,7 +82,9 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                           <div className="value">
                             <span>Issued On:</span>
                             <h5>
-                              {moment(item.issuedOn).format('DD MMM YYYY')}
+                              {item.issuedOn
+                                ? moment(item.issuedOn).format('DD MMM YYYY')
+                                : 'Not Available'}
                             </h5>
                           </div>
                           <div className="value">
@@ -92,7 +94,11 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                                 : 'Loan Amount'}
                               :
                             </span>
-                            <h5>₹{formatAmount(item.highestCredit)}</h5>
+                            <h5>
+                              {item.highestCredit
+                                ? `₹ ${formatAmount(item.highestCredit)}`
+                                : 'Not Available'}
+                            </h5>
                           </div>
                         </div>
                       </div>
@@ -121,7 +127,7 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                         <h3>
                           <b className="card_name">{bank?.bank_name}</b>
                           <br />
-                          Platinum Delight Credit Card
+                          {item.accountType}
                         </h3>
                         <img
                           src={`http://203.122.46.189:1338${bank?.bank_logo?.url}`}
@@ -135,16 +141,26 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                           <div className="value">
                             <span>Closed On:</span>
                             <h5>
-                              {moment(item.issuedOn).format('DD MMM YYYY')}
+                              {item.issuedOn
+                                ? moment(item.issuedOn).format('DD MMM YYYY')
+                                : 'Not Available'}
                             </h5>
                           </div>
                           <div className="value">
                             <span>Last Payment Date:</span>
-                            <h5>{item.lastPaymentDate}</h5>
+                            <h5>
+                              {item.lastPaymentDate
+                                ? item.lastPaymentDate
+                                : 'Not Available'}
+                            </h5>
                           </div>
                           <div className="value">
                             <span>Credit Limit:</span>
-                            <h5>₹{formatAmount(item.creditLimit)}</h5>
+                            <h5>
+                              {item.creditLimit
+                                ? `₹ ${formatAmount(item.creditLimit)}`
+                                : 'Not Available'}
+                            </h5>
                           </div>
                         </div>
                       </div>
@@ -192,7 +208,7 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                   <h3>
                     <span>{modalBankData?.bank_name}</span>
                     <br />
-                    Platinum Delight Credit Card
+                    {modalData?.accountType}
                   </h3>
                   <img
                     src={`http://203.122.46.189:1338${modalBankData?.bank_logo?.url}`}
@@ -202,36 +218,57 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                 <div className="values-wrap">
                   <div className="values">
                     <span>Date Opened</span>
-                    <h5>{moment(modalData?.issuedOn).format('DD MMM YYYY')}</h5>
+                    <h5>
+                      {modalData?.issuedOn
+                        ? moment(modalData?.issuedOn).format('DD MMM YYYY')
+                        : 'Not Available'}
+                    </h5>
                   </div>
                   <div className="values">
                     <span>Credit Limit:</span>
-                    <h5>₹{formatAmount(modalData?.creditLimit)}</h5>
+                    <h5>
+                      {modalData?.creditLimit
+                        ? `₹ ${formatAmount(modalData?.creditLimit)}`
+                        : 'Not Available'}
+                    </h5>
                   </div>
                   <div className="values">
                     <span>Account Status:</span>
-                    <h5 className="status">{modalData?.accountStatus}</h5>
+                    <h5 className="status">
+                      {modalData?.accountStatus
+                        ? modalData?.accountStatus
+                        : 'Not Available'}
+                    </h5>
                   </div>
                   <div className="values">
                     <span>Amount Overdue:</span>
-                    <h5>₹{formatAmount(modalData?.amountOverDue)}</h5>
+                    <h5>
+                      {modalData?.amountOverDue
+                        ? `₹ ${formatAmount(modalData?.amountOverDue)}`
+                        : 'Not Available'}
+                    </h5>
                   </div>
                   <div className="values">
                     <span>Current Balance:</span>
-                    <h5>₹{formatAmount(modalData?.currentBalance)}</h5>
+                    <h5>
+                      {modalData?.currentBalance
+                        ? `₹ ${formatAmount(modalData?.currentBalance)}`
+                        : 'Not Available'}
+                    </h5>
                   </div>
                   <div className="values">
                     <span>Last Updated Date:</span>
                     <h5>
-                      {modalData?.lastPaymentDate &&
-                        moment(modalData?.lastPaymentDate).format(
-                          'DD MMM YYYY'
-                        )}
+                      {modalData?.lastPaymentDate
+                        ? moment(modalData?.lastPaymentDate).format(
+                            'DD MMM YYYY'
+                          )
+                        : 'Not Available'}
                     </h5>
                   </div>
                 </div>
               </div>
-              <div className="graph">
+              {/* <div className="graph">
                 <iframe
                   className="chartjs-hidden-iframe"
                   tabIndex={-1}
@@ -257,7 +294,7 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                   width="880"
                   style={{ display: 'block', width: '440px', height: '220px' }}
                 ></canvas>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>

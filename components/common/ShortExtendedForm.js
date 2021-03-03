@@ -18,6 +18,7 @@ import {
     updateInputsValidity,
     incrementSlideId,
     decrementSlideId,
+    setRadioBreakpoints,
     updateDropdownList,
     updateSelectionFromDropdown,
     resetDropdowns,
@@ -32,7 +33,6 @@ import {
 class ShortExtendedForm extends React.Component {
     otpInterval = null;
     state = {
-        formType: sf,
         slideIndex: 0,
         currentSlide: 'onboard',
         submitButtonDisabled: true,
@@ -92,12 +92,12 @@ class ShortExtendedForm extends React.Component {
         })
 
         let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading, slideClass }]
-        this.setState({ 
-            ...this.state, slides: [...upDatedSlides], 
+        this.setState({
+            ...this.state, slides: [...upDatedSlides],
             enableCheckboxes: [...this.state.enableCheckboxes, ...enableCheckboxes]
         }, () => {
             this.setState({ backUpSlides: JSON.parse(JSON.stringify(this.state.slides)) })
-            if(this.props.formRedirection === sf) {
+            if (this.props.formRedirection === sf) {
                 this.props.goToShortForm()
             }
         })
@@ -109,7 +109,8 @@ class ShortExtendedForm extends React.Component {
         this.setInputsInState(side_form, 'onboard')
         form_slide.forEach(slide => {
             setTimeout(() => {
-                let slideId = `${this.state.formType}-${slideNo}`
+                console.log('slide: ', slide)
+                let slideId = `${sf}-${slideNo}`
                 const fields = slide.onboard_form_slide.fields
                 const heading = slide.onboard_form_slide.heading
                 const slideClass = slide.onboard_form_slide.slide_class
@@ -141,7 +142,7 @@ class ShortExtendedForm extends React.Component {
     onClickLetsGo = async e => {
         e.preventDefault()
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
+        const { errorsPresent } = updateInputsValidity(inputs, null, this.state.errorMsgs)
         this.setState({ ...this.state, slides: newSlides }, async () => {
             this.scrollToTopOfSlide()
             if (!errorsPresent) {
@@ -179,7 +180,7 @@ class ShortExtendedForm extends React.Component {
             const leadId = res.data.leadId
             setLeadId(leadId, this.props.primaryPath)
             sendNotification(leadId)
-            this.setState({ currentSlide: `${this.state.formType}-1`, slideIndex: 1, slideButtonText: 'Next' }, () => {
+            this.setState({ currentSlide: `${sf}-1`, slideIndex: 1, slideButtonText: 'Next' }, () => {
                 goToSlides()
             })
         } catch (err) {
@@ -211,7 +212,7 @@ class ShortExtendedForm extends React.Component {
     plusSlides = (n) => {
         if (n >= 1) {
             const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-            const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs, this.state.propertyValue)
+            const { errorsPresent } = updateInputsValidity(inputs, null, this.state.errorMsgs, this.state.propertyValue)
             this.setState({ ...this.state, slides: newSlides }, async () => {
                 if (!errorsPresent) {
                     const newSlideId = incrementSlideId(this.state.currentSlide)
@@ -226,7 +227,7 @@ class ShortExtendedForm extends React.Component {
                     } else {
                         this.onSubmitShortForm()
                             .then(res => {
-                                if(this.props.formRedirection === sf) {
+                                if (this.props.formRedirection === sf) {
                                     this.props.router.push(`/thank-you`)
                                 } else {
                                     this.props.router.push(`/${this.props.primaryPath}/listings`)
@@ -253,7 +254,7 @@ class ShortExtendedForm extends React.Component {
 
     onSubmitShortForm = () => {
         return new Promise((resolve, reject) => {
-            submitShortForm([...this.state.slides], this.state.currentSlide, this.props.primaryPath, this.state.formType, this.props.productType)
+            submitShortForm([...this.state.slides], this.state.currentSlide, this.props.primaryPath, sf, this.props.productType)
                 .then(res => {
                     resolve(res)
                 })
@@ -265,8 +266,8 @@ class ShortExtendedForm extends React.Component {
 
     handleChange = async field => {
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const {inputDropdown, propertyValue} = await handleChangeInputs(inputs, field, this.props.preferredSelectionLists, null)
-        if(propertyValue) {
+        const { inputDropdown, propertyValue } = await handleChangeInputs(inputs, field, this.props.preferredSelectionLists, null)
+        if (propertyValue) {
             this.setState({ propertyValue })
         }
         if (inputDropdown && field.type === 'input_with_dropdown') {
@@ -335,31 +336,31 @@ class ShortExtendedForm extends React.Component {
     }
 
     checkInputValidity = field => {
-        const { newSlides, inputs } = getCurrentSlideInputs(this.state)
+        const { newSlides, inputs, slideIndex } = getCurrentSlideInputs(this.state)
         updateInputsValidity(inputs, field, this.state.errorMsgs, this.state.propertyValue)
         this.setState({ ...this.state, slides: newSlides }, () => {
-            if (field.type === 'radio') {
-                let mandatoryInputsHaveValues = true
-                inputs.forEach(input => {
-                    if (input.mandatory && !input.value) {
-                        mandatoryInputsHaveValues = false
-                    }
-                })
-                if (mandatoryInputsHaveValues) {
-                    setTimeout(() => {
+            inputs.forEach(input => {
+                if (input.type === 'radio' && input.value && input.radio.breakpoints) {
+                    const breakpoints = input.radio.breakpoints
+                    if (breakpoints.length) {
+                        for (let i = 0; i < breakpoints.length; i++) {
+                            if (breakpoints[i].breakpoint_value !== input.value) {
+                                continue
+                            }
+                            if (breakpoints[i].breakpoint_value === input.value && breakpoints[i].breakpoint_sequence) {
+                                const { currentSlideId, newSlides } = setRadioBreakpoints(slideIndex, breakpoints[i], this.state.slides, this.state.backUpSlides)
+                                this.setState({ ...this.state, slides: newSlides, currentSlide: currentSlideId, slideIndex }, () => {
+                                    this.plusSlides(1)
+                                })
+                            }
+                        }
+                    } else {
                         this.plusSlides(1)
-                         // console.log(this.state.slides)
-                            // const copySlides = [...this.state.slides]
-                            // console.log('copySlides: ', copySlides)
-                            // const splicedSlides = copySlides.splice(4,2)
-                            // console.log('splicedSlides: ', splicedSlides)
-                            // this.setState({ ...this.state, slides: splicedSlides, currentSlide: 'sf-4', slideIndex: 0 }, () => {
-                            //     console.log(this.state)
-                            // })
-                        
-                    }, 125)
+                    }
+
                 }
-            }
+            })
+
         })
     }
 

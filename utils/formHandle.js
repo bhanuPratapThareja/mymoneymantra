@@ -1,9 +1,10 @@
 import $ from "jquery"
-import { isInputValid, isMonetaryValid } from "./formValidations"
+import { isInputValid, isMonetaryValid, isDateValid } from "./formValidations"
 import { getBase64, documentUpload, generateLead } from "../services/formService"
 import { getFormattedName } from "./formatDataForApi"
 import { getWholeNumberFromCurrency, getFormattedCurrency } from "./formattedCurrency"
 import { setFormData, getFormData } from "./localAccess"
+import { sf } from './types'
 
 export const textTypeInputs = [
   "text",
@@ -16,11 +17,14 @@ export const textTypeInputs = [
 
 export const getCurrentSlideInputs = (state) => {
   const newSlides = [...state.slides]
-  const slide = newSlides.filter(
-    (slide) => slide.slideId === state.currentSlide
-  )
+  const slide = newSlides.filter(slide => slide.slideId === state.currentSlide)
+  if (!slide.length) {
+    return
+  }
+  const slideId = slide[0].slideId
+  const slideIndex = Number(slideId.split('-')[1])
   const inputs = slide[0].inputs
-  return { newSlides, inputs }
+  return { newSlides, inputs, slideIndex }
 }
 
 export const handleChangeInputs = (inputs, field, preferredSelectionLists, selectedBank) => {
@@ -106,13 +110,15 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
         inp.list = []
       }
     })
-  } else if (field.type === "input_with_calendar") {
-    inputs.forEach((inp) => {
-      if (inp.input_id === field.name) {
-        inp.value = field.value
-      }
-    })
-  } else if (field.type === "upload_button") {
+  } 
+  // else if (field.type === "input_with_calendar") {
+  //   inputs.forEach((inp) => {
+  //     if (inp.input_id === field.name) {
+  //       inp.value = field.value
+  //     }
+  //   })
+  // } 
+  else if (field.type === "upload_button") {
     let noOfUploadsError = false
     inputs.forEach((inp) => {
       if (inp.input_id === field.name) {
@@ -196,18 +202,19 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
           inp.errorMsg = ""
           inp.verified = false
         }
-        if(inp.end_point_name === 'propertyValue' && inp.value) {
+        if (inp.end_point_name === 'propertyValue' && inp.value) {
           propertyValue = Number(getWholeNumberFromCurrency(inp.value))
         }
       }
     })
   }
 
-  return {inputDropdown, propertyValue}
+  return { inputDropdown, propertyValue }
 }
 
 export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) => {
-  let errors = false
+  let errorsPresent = false
+  let errorInput = null
 
   // check on input
   if (field) {
@@ -224,16 +231,16 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
       // check on blur
 
       if (field.blur) {
-        if(inp.end_point_name === 'requestedLoanamount' && inp.value && inp.input_id === field.currentActiveInput && propertyValue){
+        if (inp.end_point_name === 'requestedLoanamount' && inp.value && inp.input_id === field.currentActiveInput && propertyValue) {
 
-          errors = true
+          errorsPresent = true
           inp.error = true
           inp.verified = false
-          if(!inp.value) {
+          if (!inp.value) {
             inp.errorMsg = errorMsgs.mandatory
-          } else if(Number(getWholeNumberFromCurrency(inp.value)) > propertyValue) {
+          } else if (Number(getWholeNumberFromCurrency(inp.value)) > propertyValue) {
             inp.errorMsg = `The value cannot be more than Property Value of ${getFormattedCurrency(propertyValue.toString())}`
-          } else if(!isMonetaryValid(inp)) {
+          } else if (!isMonetaryValid(inp)) {
             inp.errorMsg = inp.validation_error
           } else {
             inp.error = false
@@ -243,7 +250,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
         }
         else if (inp.type === "email" && inp.input_id === field.currentActiveInput) {
           if (!isInputValid(inp)) {
-            errors = true
+            errorsPresent = true
             inp.error = true
             inp.verified = false
             if (!inp.value) {
@@ -256,12 +263,24 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
             inp.errorMsg = ""
             inp.verified = true
           }
-        } else if (
-          inp.type === "money" &&
-          inp.input_id === field.currentActiveInput
-        ) {
+        } else if (inp.type === "input_with_calendar" && inp.input_id === field.currentActiveInput) {
+          if (!isDateValid(inp)) {
+            errorsPresent = true
+            inp.error = true
+            inp.verified = false
+            if (!inp.value) {
+              inp.errorMsg = errorMsgs.mandatory
+            } else {
+              inp.errorMsg = inp.validation_error
+            }
+          } else {
+            inp.error = false
+            inp.errorMsg = ""
+            inp.verified = true
+          }
+        } else if (inp.type === "money" && inp.input_id === field.currentActiveInput) {
           if (!isMonetaryValid(inp)) {
-            errors = true
+            errorsPresent = true
             inp.error = true
             inp.verified = false
             if (!inp.value) {
@@ -274,12 +293,10 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
             inp.errorMsg = ""
             inp.verified = true
           }
-        } else if (
-          inp.type === "phone_no" &&
-          inp.input_id === field.currentActiveInput
-        ) {
+
+        } else if (inp.type === "phone_no" && inp.input_id === field.currentActiveInput) {
           if (!isInputValid(inp)) {
-            errors = true
+            errorsPresent = true
             inp.error = true
             inp.verified = false
             if (!inp.value) {
@@ -292,12 +309,9 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
             inp.errorMsg = ""
             inp.verified = true
           }
-        } else if (
-          inp.type === "pan_card" &&
-          inp.input_id === field.currentActiveInput
-        ) {
+        } else if (inp.type === "pan_card" && inp.input_id === field.currentActiveInput) {
           if (!isInputValid(inp)) {
-            errors = true
+            errorsPresent = true
             inp.error = true
             inp.verified = false
             if (!inp.value) {
@@ -312,7 +326,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
           }
         } else if (inp.type === "input_with_dropdown" && inp.input_id === field.currentActiveInput && inp.mandatory) {
           if (!inp.selectedId) {
-            errors = true
+            errorsPresent = true
             inp.error = true
             inp.errorMsg = errorMsgs.mandatory
             inp.verified = false
@@ -329,16 +343,12 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
             errors = true
           } else {
             inp.error = false
-            inp.errorMsg = ""     
+            inp.errorMsg = ""
           }
 
-        } else if (
-          textTypeInputs.includes(inp.type) &&
-          inp.input_id === field.currentActiveInput &&
-          inp.mandatory
-        ) {
+        } else if (textTypeInputs.includes(inp.type) && inp.input_id === field.currentActiveInput && inp.mandatory) {
           if (!inp.value || !isInputValid(inp)) {
-            errors = true
+            errorsPresent = true
             inp.error = true
             inp.verified = false
             if (!inp.value) {
@@ -358,17 +368,20 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
     // check on slide or form submit
   } else {
     inputs.forEach((inp) => {
-      if(inp.end_point_name === 'requestedLoanamount' && inp.value && propertyValue){
-        if(!inp.value) {
-          errors = true
+      if (inp.end_point_name === 'requestedLoanamount' && inp.value && propertyValue) {
+        if (!inp.value) {
+          errorsPresent = true
+          errorInput = inp
           inp.error = true
           inp.errorMsg = errorMsgs.mandatory
-        }else if(!isMonetaryValid(inp)) {
-          errors = true
-          inp.error = true         
+        } else if (!isMonetaryValid(inp)) {
+          errorsPresent = true
+          errorInput = inp
+          inp.error = true
           inp.errorMsg = inp.validation_error
-        } else if(Number(getWholeNumberFromCurrency(inp.value)) > propertyValue) {
-          errors = true
+        } else if (Number(getWholeNumberFromCurrency(inp.value)) > propertyValue) {
+          errorsPresent = true
+          errorInput = inp
           inp.error = true
           inp.errorMsg = `The value cannot be more than Property Value of ${getFormattedCurrency(propertyValue.toString())}`
         }
@@ -378,7 +391,8 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
         inp.verified = false
       } else if ((textTypeInputs.includes(inp.type) || inp.type === "radio")) {
         if ((inp.mandatory && !inp.value) || !isInputValid(inp)) {
-          errors = true
+          errorsPresent = true
+          errorInput = inp
           inp.error = true
           if (!inp.value) {
             inp.errorMsg = errorMsgs.mandatory
@@ -389,27 +403,38 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
       } else if (inp.type === "email" && !isInputValid(inp)) {
         inp.errorMsg = inp.validation_error
         inp.error = true
-        errors = true
+        errorInput = inp
+        errorsPresent = true
+      } else if (inp.type === "input_with_calendar" && !isDateValid(inp)) {
+        inp.errorMsg = inp.validation_error
+        inp.error = true
+        errorInput = inp
+        errorsPresent = true
       } else if (inp.type === "phone_no" && !isInputValid(inp)) {
         inp.errorMsg = inp.validation_error
         inp.error = true
-        errors = true
+        errorInput = inp
+        errorsPresent = true
       } else if (inp.type === "pan_card" && !isInputValid(inp)) {
         inp.errorMsg = inp.validation_error
         inp.error = true
-        errors = true
+        errorInput = inp
+        errorsPresent = true
       } else if (inp.type === "money" && !isMonetaryValid(inp)) {
         inp.error = true
         inp.errorMsg = inp.validation_error
-        errors = true
+        errorInput = inp
+        errorsPresent = true
       } else if (inp.type === "upload_button" && inp.mandatory && !inp.value) {
         inp.error = true
         inp.errorMsg = errorMsgs.mandatory
-        errors = true
+        errorInput = inp
+        errorsPresent = true
       } else if (inp.type === "input_with_dropdown" && (!inp.value || (inp.value && !inp.selectedId) || (inp.selectedItem && inp.selectedItem[inp.select_name] !== inp.value))) {
         inp.error = true
         inp.errorMsg = inp.validation_error
-        errors = true
+        errorInput = inp
+        errorsPresent = true
       } else {
         inp.error = false
         inp.errorMsg = ""
@@ -418,7 +443,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
     })
   }
 
-  return errors
+  return { errorsPresent, errorInput }
 }
 
 export const getUserMobileNumber = (slide) => {
@@ -441,6 +466,35 @@ export const decrementSlideId = (slideId) => {
   let [slide, id] = slideId.split("-")
   slideId = `${slide}-${--id}`
   return slideId
+}
+
+export const setRadioBreakpoints = (slideIndex, breakpoints, slides, backUpSlides) => {
+  const currentSlideId = `${sf}-${slideIndex}`
+  const breakpointSequence = breakpoints.breakpoint_sequence.split(',')
+  const slidesCopy1 = JSON.parse(JSON.stringify(slides))
+  const slidesCopy2 = JSON.parse(JSON.stringify(backUpSlides))
+  const slicedSlides = slidesCopy1.splice(0, slideIndex + 1)
+  const slidesAddtion = []
+  breakpointSequence.forEach(breakpoint => {
+    slidesCopy2.forEach(slide => {
+      const slideIndex = slide.slideId.split('-')[1]
+      if (slideIndex == breakpoint) {
+        slidesAddtion.push(slide)
+      }
+    })
+  })
+
+  let index = slideIndex
+  slidesAddtion.forEach(slide => {
+    index++
+    let newSlideId = `${sf}-${index}`
+    slide.slideId = newSlideId
+  })
+
+  const newSlides = [...slicedSlides, ...slidesAddtion]
+
+  return { currentSlideId, newSlides }
+
 }
 
 export const updateDropdownList = (inputs, listType, list, input_id) => {
@@ -481,10 +535,10 @@ export const updateSelectionFromDropdown = (inputs, input_id, item) => {
           dependentInput.selectedId = item[dependentInput.select_id]
           dependentInput.error = false
           update_field_with_end_point_name = dependentInput.update_field_with_end_point_name
-          if(dependentInput.value) {
+          if (dependentInput.value) {
             dependentInput.verified = true
           }
-          if(!dependentInput.mandatory) {
+          if (!dependentInput.mandatory) {
             dependentInput.verified = false
           }
         }
@@ -507,6 +561,21 @@ export const resetDropdowns = (inputs, errorMsgs) => {
       }
     }
   })
+}
+
+export const scrollToErrorInput = inputWithError => {
+  if (inputWithError && inputWithError.input_id) {
+    const errorEl = document.querySelector(`[name=${inputWithError.input_id}]`)
+    if (errorEl) {
+      const focusTypeInputs = ['text', 'email', 'number', 'tel', 'pan_card', 'phone_no', 'input_with_calendar', 'money', 'input_with_dropdown']
+      if (focusTypeInputs.includes(inputWithError.type)) {
+        errorEl.focus()
+      } else {
+        const errorElOffset = errorEl.offsetTop
+        window.scrollTo({ top: errorElOffset })
+      }
+    }
+  }
 }
 
 export const getSfData = (slides) => {
@@ -573,17 +642,17 @@ export const submitShortForm = (slides, currentSlide, primaryPath, formType, pro
         data[key] = ""
       }
     }
-   
+
     setFormData(data, primaryPath)
     const latestFormData = getFormData(primaryPath)
-    if(latestFormData) {
+    if (latestFormData) {
       generateLead(latestFormData, primaryPath, formType, productType)
-      .then((res) => {
-        resolve(res)
-      })
-      .catch((err) => {
-        reject("Error while Submitting. Please try again.!!!")
-      })
+        .then((res) => {
+          resolve(res)
+        })
+        .catch((err) => {
+          reject("Error while Submitting. Please try again.!!!")
+        })
     }
   })
 }
