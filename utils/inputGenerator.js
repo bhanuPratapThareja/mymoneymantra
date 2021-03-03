@@ -1,6 +1,7 @@
 import { getDevice } from './getDevice';
 import { getFormattedCurrency, getWholeNumberFromCurrency } from './formattedCurrency'
 import { sf, lf } from './types'
+import MaskedInput from 'react-maskedinput'
 
 export const generateInputs = (component, handleChange, checkInputValidity,
   handleInputDropdownSelection, formType, checkboxAnchorClick) => {
@@ -49,19 +50,19 @@ export const generateInputs = (component, handleChange, checkInputValidity,
   };
 
   const openDatePicker = () => {
-    const datepicker = $(`#${"dob"}`).datepicker();
-    datepicker.open();
+    // const datepicker = $(`#${"dob"}`).datepicker();
+    // datepicker.open();
   };
 
   const onChangeDate = (name, type) => {
-    setTimeout(() => {
-      const datepicker = $(`#${"dob"}`).datepicker();
-      const value = datepicker.val();
-      const field = { name, value, type, blur: true, currentActiveInput: name };
-      if (value) {
-        handleChange(field);
-      }
-    }, 250);
+    // setTimeout(() => {
+    //   const datepicker = $(`#${"dob"}`).datepicker();
+    //   const value = datepicker.val();
+    //   const field = { name, value, type, blur: true, currentActiveInput: name };
+    //   if (value) {
+    //     handleChange(field);
+    //   }
+    // }, 250);
   };
 
   const onUploadAttachment = async (name, type, inputFileId, attach) => {
@@ -335,9 +336,24 @@ export const generateInputs = (component, handleChange, checkInputValidity,
     const fieldId = `${input_id}_${type}`;
     return (
       <div className="cstm-cal" id={fieldId} key={id}>
-        <div className={fieldClasses.join(" ")} key={id}>
+        <div className={fieldClasses.join(" ")}>
           <label className="form__label">{label}</label>
-          <input
+          <MaskedInput 
+            mask="11/11/1111" 
+            className="form__field phone-grid-span"
+            name={input_id}
+            id={'dob'}
+            placeholder={placeholder}
+            placeholderChar=' '
+            isrevealingmask={'true'}
+            type={'text'}
+            value={value}
+            autoComplete="off"
+            required={mandatory}
+            onBlur={(e) => validate(e, type)}
+            onChange={(e) => handleInputChange(e, type)}
+          />
+          {/* <input
             className="form__field phone-grid-span"
             id={"dob"}
             placeholder={placeholder}
@@ -351,7 +367,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
             onBlur={() => onChangeDate(input_id, type)}
             onChange={(e) => e.preventDefault()}
             onKeyDown={(e) => e.preventDefault()}
-          />
+          /> */}
           {error ? (
             <div className="input-error">
               <p>{errorMsg}</p>
