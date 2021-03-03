@@ -16,8 +16,6 @@ const BankSlider = props => {
 
     const onClickBank = url => {
         let redirectedUrl = `/${primaryPath}${url}`
-        console.log('redirectedUrl', redirectedUrl)
-
         router.push(redirectedUrl)
     }
 
