@@ -148,12 +148,13 @@ const userProfile = (props) => {
                   src={
                     picture.length
                       ? `data:image/${pictureType};base64,${picture}`
-                      : 'https://the1thing.github.io/MyMoneyMantra/build/images/icons/people1.png'
+                      : '/assets/images/icons/profile.svg'
                   }
                 />
                 <input
                   type="file"
                   onChange={pictureUpload}
+                  accept="image/*"
                   style={{ display: 'none' }}
                   id="profile-picture"
                 />

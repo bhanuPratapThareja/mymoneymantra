@@ -20,83 +20,78 @@ const login = (props) => {
   const [isPartner, setisPartner] = useState(false);
   const [type, settype] = useState("login");
   const [isChecked, setisChecked] = useState(false);
-  
-  const [otpError, setOtpError] = useState(false)
-  const [mobileError, setMobileError] = useState(false)
-  const [mobileErrorMsg, setMobileErrorMsg] = useState('')
+
+  const [otpError, setOtpError] = useState(false);
+  const [mobileError, setMobileError] = useState(false);
+  const [mobileErrorMsg, setMobileErrorMsg] = useState("");
   const social = ({ ...val }) => {
     // setname(val.name);
     // setemail(val.email);
     // setsocialType(val.type);
     // settoken(val.id);
-    socialLoginAPi(val.email, val.type, val.id).then(res => {
-      console.log(res);
-      if (res.message == "Login Successful") {
-        localStorage.setItem("customerId", res.customerId)
-        setcounter(counter + 2);
-      }
-      else {
-        alert(res.message);
-      }
-    }).catch(err => {
-      console.log(err);
-    })
+    socialLoginAPi(val.email, val.type, val.id)
+      .then((res) => {
+        console.log(res);
+        if (res.message == "Login Successful") {
+          localStorage.setItem("customerId", res.customerId);
+          setcounter(counter + 2);
+        } else {
+          alert(res.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-const resend =()=>{
-  sendLoginOtp(phone)
-        .then((res) => {
-          const { otpId, customerId, message } = res;
-          setOtpId(otpId);
-          localStorage.setItem("customerId", customerId);
-          
-          setMobileError(false)
-          setMobileErrorMsg('')
-        })
-        .catch((err) => {
-          setMobileError(true)
-          setMobileErrorMsg(err.message)
-        })
-        .finally(() => {
-          
-        });
-}
+  const resend = () => {
+    sendLoginOtp(phone)
+      .then((res) => {
+        const { otpId, customerId, message } = res;
+        setOtpId(otpId);
+        localStorage.setItem("customerId", customerId);
+
+        setMobileError(false);
+        setMobileErrorMsg("");
+      })
+      .catch((err) => {
+        setMobileError(true);
+        setMobileErrorMsg(err.message);
+      })
+      .finally(() => {});
+  };
 
   const counterStep = (i) => {
     if (i == 1 && counter == 0) {
-      
       sendLoginOtp(phone)
         .then((res) => {
           const { otpId, customerId, message } = res;
           setOtpId(otpId);
           localStorage.setItem("customerId", customerId);
           setcounter(counter + 1);
-          setMobileError(false)
-          setMobileErrorMsg('')
+          setMobileError(false);
+          setMobileErrorMsg("");
         })
         .catch((err) => {
-          setMobileError(true)
-          setMobileErrorMsg(err.message)
+          setMobileError(true);
+          setMobileErrorMsg(err.message);
         })
-        .finally(() => {
-          
-        });
+        .finally(() => {});
     } else if (otp.length > 0 && counter == 1 && i == 1) {
-      
       console.log("in opt");
       verifyOtp(phone, otp, otpId)
         .then((res) => {
           console.log(res);
-          if (res.message == 'OTP Verification Failed') {
-            setOtpError(true)
-            return
+          if (res.message == "OTP Verification Failed") {
+            setOtpError(true);
+            return;
           }
-          localStorage.setItem("customerId", res.customerId)
+          localStorage.setItem("customerId", res.customerId);
           setcounter(counter + 1);
-          setOtpError(false)
+          setOtpError(false);
         })
         .catch((err) => {
           alert(err.message);
-        })
+        });
     } else if (counter == 1 && i == -1) {
       setcounter(counter + i);
     }
@@ -130,8 +125,8 @@ const resend =()=>{
                           <CustomImage></CustomImage>
                         </>
                       ) : (
-                          <></>
-                        )}
+                        <></>
+                      )}
                       <PhoneNumberCustom
                         social={({ ...val }) => social({ ...val })}
                         setNumber={(val) => setphone(val)}
@@ -157,7 +152,12 @@ const resend =()=>{
                         number
                       </h2>
                       <CustomImage></CustomImage>
-                      <Otp error={otpError} setotp={(val) => setotp(val)} otp={otp} resend={() => resend()}></Otp>
+                      <Otp
+                        error={otpError}
+                        setotp={(val) => setotp(val)}
+                        otp={otp}
+                        resend={() => resend()}
+                      ></Otp>
                     </div>
                   </div>
                 </form>
@@ -166,7 +166,7 @@ const resend =()=>{
                   <CustomButtons
                     nextValid={
                       (phone.length == 10 && isChecked) ||
-                        (counter == 1 && otp.length > 0)
+                      (counter == 1 && otp.length > 0)
                         ? false
                         : true
                     }
@@ -174,8 +174,8 @@ const resend =()=>{
                     counterStep={(i) => counterStep(i)}
                   ></CustomButtons>
                 ) : (
-                    <></>
-                  )}
+                  <></>
+                )}
               </div>
             </div>
           </div>
@@ -188,7 +188,6 @@ const resend =()=>{
           <Thanks></Thanks>
         </div>
       </Layout>
-      
     </div>
   );
 };
