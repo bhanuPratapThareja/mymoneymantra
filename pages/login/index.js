@@ -9,7 +9,7 @@ import Thanks from "../../components/signup/thanks";
 import { messgaes } from "../../utils/messages";
 import { useEffect, useState } from "react";
 import { sendLoginOtp, socialLoginAPi, verifyOtp } from "../../utils/otp";
-import Loader from "../../components/common/Loader";
+
 import SubHeader from "../../components/signup/subheader";
 import CustomImage from "../../components/signup/image";
 const login = (props) => {
@@ -20,7 +20,7 @@ const login = (props) => {
   const [isPartner, setisPartner] = useState(false);
   const [type, settype] = useState("login");
   const [isChecked, setisChecked] = useState(false);
-  const [isLoader, setisLoader] = useState(false);
+  
   const [otpError, setOtpError] = useState(false)
   const [mobileError, setMobileError] = useState(false)
   const [mobileErrorMsg, setMobileErrorMsg] = useState('')
@@ -63,7 +63,7 @@ const resend =()=>{
 
   const counterStep = (i) => {
     if (i == 1 && counter == 0) {
-      setisLoader(true);
+      
       sendLoginOtp(phone)
         .then((res) => {
           const { otpId, customerId, message } = res;
@@ -78,10 +78,10 @@ const resend =()=>{
           setMobileErrorMsg(err.message)
         })
         .finally(() => {
-          setisLoader(false);
+          
         });
     } else if (otp.length > 0 && counter == 1 && i == 1) {
-      setisLoader(true);
+      
       console.log("in opt");
       verifyOtp(phone, otp, otpId)
         .then((res) => {
@@ -97,7 +97,6 @@ const resend =()=>{
         .catch((err) => {
           alert(err.message);
         })
-        .finally(() => setisLoader(false));
     } else if (counter == 1 && i == -1) {
       setcounter(counter + i);
     }
@@ -189,10 +188,7 @@ const resend =()=>{
           <Thanks></Thanks>
         </div>
       </Layout>
-      <Loader
-        msg={counter == 0 ? messgaes.otpSent : messgaes.validateOtp}
-        isActive={isLoader}
-      ></Loader>
+      
     </div>
   );
 };

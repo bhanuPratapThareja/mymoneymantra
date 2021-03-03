@@ -12,7 +12,7 @@ import WorkInfo from '../../components/UserProfile/WorkInfo'
 import { fileToByteArray } from '../../utils/byteArray'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { getPictureservice } from '../../utils/userProfileService'
-import $ from 'jquery'
+import * as $ from 'jquery'
 const userProfile = (props) => {
   const [picture, setPicture] = useState('')
   const [pictureType, setPictureType] = useState('')
@@ -23,11 +23,16 @@ const userProfile = (props) => {
   const [workInfoProgress, setWorkInfoProgress] = useState(0)
   const [documentProgress, setDocumentProgress] = useState(0)
   const [customerName, setCustomerName] = useState('')
-
+  const jq = ()=>$(".option-wrapper .option").click(function () {
+    console.log(this.id);
+    $("#"  + this.id +'-data').slideToggle("ease-in-out");
+    $("#"  + this.id +'-svg').toggleClass("question-active");
+    $("#"  + this.id).toggleClass("question-open") 
+ });
   useEffect(() => {
-    getPicture()
+   getPicture();
+   jq();
   }, [])
-
   useEffect(() => {
     let curretProgress =
       personalInfoProgress +
@@ -127,10 +132,7 @@ const userProfile = (props) => {
   return (
     <div
       className={props.pageClasses}
-      data-aos-easing="ease"
-      data-aos-duration="600"
-      data-aos-delay="0"
-      cz-shortcut-listen="true"
+      
     >
       <Layout>
         <div className="mobile-background"></div>
@@ -181,10 +183,12 @@ const userProfile = (props) => {
               </p>
             </div>
             <div className="profile-options-wrapper">
-              <div className="option-wrapper">
-                <div id="option-1" className="option" key="option-1">
+              <div className="option-wrapper" id="-1" >
+                <div id="option-1" className="option" key="1">
                   <h3>Personal Information</h3>
                   <svg
+                  id="option-1-svg"
+                    className=""
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -196,12 +200,12 @@ const userProfile = (props) => {
                       fill="white"
                     ></path>
                   </svg>
-                </div>
+                  </div>
                 <div
                   className="option-data"
-                  style={{ display: 'none' }}
+                  // // style={{ display: 'none' }}
                   id="option-1-data"
-                  style={{ display: 'block' }}
+                  
                 >
                   <PersonalInfo
                     setPersonalInfoProgress={setPersonalInfoProgress}
@@ -209,10 +213,11 @@ const userProfile = (props) => {
                   />
                 </div>
               </div>
-              <div className="option-wrapper">
-                <div id="option-2" className="option">
+              <div className="option-wrapper" id="-2">
+                <div id="option-2" className="option" >
                   <h3>Contact Information</h3>
                   <svg
+                  id="option-2-svg"
                     className=""
                     width="24"
                     height="24"
@@ -228,7 +233,7 @@ const userProfile = (props) => {
                 </div>
                 <div
                   className="option-data"
-                  style={{ display: 'none' }}
+                  // style={{ display: 'none' }}
                   id="option-2-data"
                 >
                   <ContactInfo
@@ -237,10 +242,11 @@ const userProfile = (props) => {
                   />
                 </div>
               </div>
-              <div className="option-wrapper">
-                <div id="option-3" className="option">
+              <div className="option-wrapper" id="-3">
+                <div id="option-3" className="option" >
                   <h3>Work Information</h3>
                   <svg
+                  id="option-3-svg"
                     className=""
                     width="24"
                     height="24"
@@ -256,7 +262,7 @@ const userProfile = (props) => {
                 </div>
                 <div
                   className="option-data"
-                  style={{ display: 'none' }}
+                  // style={{ display: 'none' }}
                   id="option-3-data"
                 >
                   <WorkInfo
@@ -266,11 +272,12 @@ const userProfile = (props) => {
                   />
                 </div>
               </div>
-              <div className="option-wrapper">
-                <div id="option-4" className="option">
+              <div className="option-wrapper" id="-4">
+                <div id="option-4" className="option" >
                   <h3>Documents</h3>
                   <svg
-                    className=""
+                  
+                  id="option-4-svg"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -285,7 +292,7 @@ const userProfile = (props) => {
                 </div>
                 <div
                   className="option-data"
-                  style={{ display: 'none' }}
+                  // style={{ display: 'none' }}
                   id="option-4-data"
                 >
                   <Documents
@@ -294,11 +301,11 @@ const userProfile = (props) => {
                   />
                 </div>
               </div>
-              <div className="option-wrapper">
-                <div id="option-5" className="option">
+              <div className="option-wrapper" id="-5">
+                <div id="option-5" className="option" >
                   <h3>Application</h3>
                   <svg
-                    className=""
+                  id="option-5-svg"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -313,17 +320,17 @@ const userProfile = (props) => {
                 </div>
                 <div
                   className="option-data"
-                  style={{ display: 'none' }}
+                  // style={{ display: 'none' }}
                   id="option-5-data"
                 >
                   <Application banks={props?.data} />
                 </div>
               </div>
-              <div className="option-wrapper">
+              <div className="option-wrapper" id="-6">
                 <div id="option-6" className="option">
                   <h3>Offers</h3>
                   <svg
-                    className=""
+                    id="option-6-svg"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -338,17 +345,17 @@ const userProfile = (props) => {
                 </div>
                 <div
                   className="option-data"
-                  style={{ display: 'none' }}
+                  // style={{ display: 'none' }}
                   id="option-6-data"
                 >
                   <Offers />
                 </div>
               </div>
-              {/* <div className="option-wrapper">
+              {/* <div className="option-wrapper" id="-7">
                 <div id="option-7" className="option">
                   <h3>Refer &amp; Earn</h3>
                   <svg
-                    className=""
+                    id="option-7-svg"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -365,11 +372,11 @@ const userProfile = (props) => {
                   <ReferEarn />
                 </div>
               </div>
-              <div className="option-wrapper">
+              <div className="option-wrapper" id="-8">
                 <div id="option-8" className="option">
                   <h3>Help</h3>
                   <svg
-                    className=""
+                    id="option-8-svg"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
