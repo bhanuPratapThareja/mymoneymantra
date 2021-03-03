@@ -55,6 +55,23 @@ const PersonalInfo = (props) => {
   }
 
   const validateDob = () => {
+    let dobPattern = /^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)\d\d$/
+    if (!dobPattern.test(dob)) {
+      setDobError(true)
+      setDobErrMsg('Invalid date')
+      return
+    }
+
+    let month = dob.split('/')[1]
+    let day = dob.split('/')[0]
+    if (month == '02' && (day == '30' || day == '31')) {
+      console.log('invalid day for feb', day)
+      setDobError(true)
+      setDobErrMsg('Invalid date')
+      return
+    }
+
+
     let differnce = dateDiffInYears()
     if (isNaN(differnce)) {
       setDobError(true)
