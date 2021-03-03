@@ -405,6 +405,11 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
         inp.error = true
         errorInput = inp
         errorsPresent = true
+      } else if (inp.type === "input_with_calendar" && !isDateValid(inp)) {
+        inp.errorMsg = inp.validation_error
+        inp.error = true
+        errorInput = inp
+        errorsPresent = true
       } else if (inp.type === "phone_no" && !isInputValid(inp)) {
         inp.errorMsg = inp.validation_error
         inp.error = true
