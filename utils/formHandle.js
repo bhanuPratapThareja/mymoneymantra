@@ -1,5 +1,5 @@
 import $ from "jquery"
-import { isInputValid, isMonetaryValid } from "./formValidations"
+import { isInputValid, isMonetaryValid, isDateValid } from "./formValidations"
 import { getBase64, documentUpload, generateLead } from "../services/formService"
 import { getFormattedName } from "./formatDataForApi"
 import { getWholeNumberFromCurrency, getFormattedCurrency } from "./formattedCurrency"
@@ -110,13 +110,15 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
         inp.list = []
       }
     })
-  } else if (field.type === "input_with_calendar") {
-    inputs.forEach((inp) => {
-      if (inp.input_id === field.name) {
-        inp.value = field.value
-      }
-    })
-  } else if (field.type === "upload_button") {
+  } 
+  // else if (field.type === "input_with_calendar") {
+  //   inputs.forEach((inp) => {
+  //     if (inp.input_id === field.name) {
+  //       inp.value = field.value
+  //     }
+  //   })
+  // } 
+  else if (field.type === "upload_button") {
     let noOfUploadsError = false
     inputs.forEach((inp) => {
       if (inp.input_id === field.name) {
@@ -261,10 +263,22 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
             inp.errorMsg = ""
             inp.verified = true
           }
-        } else if (
-          inp.type === "money" &&
-          inp.input_id === field.currentActiveInput
-        ) {
+        } else if (inp.type === "input_with_calendar" && inp.input_id === field.currentActiveInput) {
+          if (!isDateValid(inp)) {
+            errorsPresent = true
+            inp.error = true
+            inp.verified = false
+            if (!inp.value) {
+              inp.errorMsg = errorMsgs.mandatory
+            } else {
+              inp.errorMsg = inp.validation_error
+            }
+          } else {
+            inp.error = false
+            inp.errorMsg = ""
+            inp.verified = true
+          }
+        } else if (inp.type === "money" && inp.input_id === field.currentActiveInput) {
           if (!isMonetaryValid(inp)) {
             errorsPresent = true
             inp.error = true
@@ -279,10 +293,8 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
             inp.errorMsg = ""
             inp.verified = true
           }
-        } else if (
-          inp.type === "phone_no" &&
-          inp.input_id === field.currentActiveInput
-        ) {
+
+        } else if (inp.type === "phone_no" && inp.input_id === field.currentActiveInput) {
           if (!isInputValid(inp)) {
             errorsPresent = true
             inp.error = true
@@ -297,10 +309,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
             inp.errorMsg = ""
             inp.verified = true
           }
-        } else if (
-          inp.type === "pan_card" &&
-          inp.input_id === field.currentActiveInput
-        ) {
+        } else if (inp.type === "pan_card" && inp.input_id === field.currentActiveInput) {
           if (!isInputValid(inp)) {
             errorsPresent = true
             inp.error = true
@@ -337,11 +346,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
             inp.errorMsg = ""
           }
 
-        } else if (
-          textTypeInputs.includes(inp.type) &&
-          inp.input_id === field.currentActiveInput &&
-          inp.mandatory
-        ) {
+        } else if (textTypeInputs.includes(inp.type) && inp.input_id === field.currentActiveInput && inp.mandatory) {
           if (!inp.value || !isInputValid(inp)) {
             errorsPresent = true
             inp.error = true
