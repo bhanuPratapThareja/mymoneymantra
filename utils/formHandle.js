@@ -211,7 +211,8 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
 }
 
 export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) => {
-  let errors = false
+  let errorsPresent = false
+  let errorInput = null
 
   // check on input
   if (field) {
@@ -230,7 +231,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
       if (field.blur) {
         if (inp.end_point_name === 'requestedLoanamount' && inp.value && inp.input_id === field.currentActiveInput && propertyValue) {
 
-          errors = true
+          errorsPresent = true
           inp.error = true
           inp.verified = false
           if (!inp.value) {
@@ -247,7 +248,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
         }
         else if (inp.type === "email" && inp.input_id === field.currentActiveInput) {
           if (!isInputValid(inp)) {
-            errors = true
+            errorsPresent = true
             inp.error = true
             inp.verified = false
             if (!inp.value) {
@@ -265,7 +266,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
           inp.input_id === field.currentActiveInput
         ) {
           if (!isMonetaryValid(inp)) {
-            errors = true
+            errorsPresent = true
             inp.error = true
             inp.verified = false
             if (!inp.value) {
@@ -283,7 +284,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
           inp.input_id === field.currentActiveInput
         ) {
           if (!isInputValid(inp)) {
-            errors = true
+            errorsPresent = true
             inp.error = true
             inp.verified = false
             if (!inp.value) {
@@ -301,7 +302,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
           inp.input_id === field.currentActiveInput
         ) {
           if (!isInputValid(inp)) {
-            errors = true
+            errorsPresent = true
             inp.error = true
             inp.verified = false
             if (!inp.value) {
@@ -316,7 +317,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
           }
         } else if (inp.type === "input_with_dropdown" && inp.input_id === field.currentActiveInput && inp.mandatory) {
           if (!inp.selectedId) {
-            errors = true
+            errorsPresent = true
             inp.error = true
             inp.errorMsg = errorMsgs.mandatory
             inp.verified = false
@@ -342,7 +343,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
           inp.mandatory
         ) {
           if (!inp.value || !isInputValid(inp)) {
-            errors = true
+            errorsPresent = true
             inp.error = true
             inp.verified = false
             if (!inp.value) {
@@ -364,15 +365,18 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
     inputs.forEach((inp) => {
       if (inp.end_point_name === 'requestedLoanamount' && inp.value && propertyValue) {
         if (!inp.value) {
-          errors = true
+          errorsPresent = true
+          errorInput = inp
           inp.error = true
           inp.errorMsg = errorMsgs.mandatory
         } else if (!isMonetaryValid(inp)) {
-          errors = true
+          errorsPresent = true
+          errorInput = inp
           inp.error = true
           inp.errorMsg = inp.validation_error
         } else if (Number(getWholeNumberFromCurrency(inp.value)) > propertyValue) {
-          errors = true
+          errorsPresent = true
+          errorInput = inp
           inp.error = true
           inp.errorMsg = `The value cannot be more than Property Value of ${getFormattedCurrency(propertyValue.toString())}`
         }
@@ -382,7 +386,8 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
         inp.verified = false
       } else if ((textTypeInputs.includes(inp.type) || inp.type === "radio")) {
         if ((inp.mandatory && !inp.value) || !isInputValid(inp)) {
-          errors = true
+          errorsPresent = true
+          errorInput = inp
           inp.error = true
           if (!inp.value) {
             inp.errorMsg = errorMsgs.mandatory
@@ -393,27 +398,33 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
       } else if (inp.type === "email" && !isInputValid(inp)) {
         inp.errorMsg = inp.validation_error
         inp.error = true
-        errors = true
+        errorInput = inp
+        errorsPresent = true
       } else if (inp.type === "phone_no" && !isInputValid(inp)) {
         inp.errorMsg = inp.validation_error
         inp.error = true
-        errors = true
+        errorInput = inp
+        errorsPresent = true
       } else if (inp.type === "pan_card" && !isInputValid(inp)) {
         inp.errorMsg = inp.validation_error
         inp.error = true
-        errors = true
+        errorInput = inp
+        errorsPresent = true
       } else if (inp.type === "money" && !isMonetaryValid(inp)) {
         inp.error = true
         inp.errorMsg = inp.validation_error
-        errors = true
+        errorInput = inp
+        errorsPresent = true
       } else if (inp.type === "upload_button" && inp.mandatory && !inp.value) {
         inp.error = true
         inp.errorMsg = errorMsgs.mandatory
-        errors = true
+        errorInput = inp
+        errorsPresent = true
       } else if (inp.type === "input_with_dropdown" && (!inp.value || (inp.value && !inp.selectedId) || (inp.selectedItem && inp.selectedItem[inp.select_name] !== inp.value))) {
         inp.error = true
         inp.errorMsg = inp.validation_error
-        errors = true
+        errorInput = inp
+        errorsPresent = true
       } else {
         inp.error = false
         inp.errorMsg = ""
@@ -422,7 +433,7 @@ export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) =>
     })
   }
 
-  return errors
+  return { errorsPresent, errorInput }
 }
 
 export const getUserMobileNumber = (slide) => {
@@ -540,6 +551,21 @@ export const resetDropdowns = (inputs, errorMsgs) => {
       }
     }
   })
+}
+
+export const scrollToErrorInput = inputWithError => {
+  if (inputWithError && inputWithError.input_id) {
+    const errorEl = document.querySelector(`[name=${inputWithError.input_id}]`)
+    if (errorEl) {
+      const focusTypeInputs = ['text', 'email', 'number', 'tel', 'pan_card', 'phone_no', 'input_with_calendar', 'money', 'input_with_dropdown']
+      if (focusTypeInputs.includes(inputWithError.type)) {
+        errorEl.focus()
+      } else {
+        const errorElOffset = errorEl.offsetTop
+        window.scrollTo({ top: errorElOffset })
+      }
+    }
+  }
 }
 
 export const getSfData = (slides) => {

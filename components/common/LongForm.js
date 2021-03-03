@@ -16,7 +16,8 @@ import {
   updateDropdownList,
   updateSelectionFromDropdown,
   resetDropdowns,
-  submitDocument,
+  scrollToErrorInput,
+  submitDocument
 } from "../../utils/formHandle"
 
 class LongForm extends React.Component {
@@ -127,22 +128,21 @@ class LongForm extends React.Component {
       cardTypeCC: this.props.productData && this.props.productData.product ? this.props.productData.product.cardType : null,
       submitButtonDisabled: enableCheckboxes.length !== 0,
       askForOtp: always_ask_for_otp,
-      formType: lf,
       fulfillTnc: primaryPath !== 'rkpl' && (!leadId || always_ask_for_otp)
     }, () => {
       const newLongFormSections = this.state.longFormSections
-      for(let i = 0; i < newLongFormSections.length; i++) {
+      for (let i = 0; i < newLongFormSections.length; i++) {
         const long_form_blocks = newLongFormSections[i].sections[0].long_form_blocks
-        for(let j = 0; j < long_form_blocks.length; j++) {
-            const inputs = long_form_blocks[j].blocks
-            for(let k = 0; k < inputs.length; k++) {
-              if(inputs[k].type === 'checkbox' && inputs[k].tnc && !this.state.fulfillTnc) {
-                newLongFormSections.splice(i, 1)
-                this.setState({ enableCheckboxes: [], submitButtonDisabled: false })
-              }
+        for (let j = 0; j < long_form_blocks.length; j++) {
+          const inputs = long_form_blocks[j].blocks
+          for (let k = 0; k < inputs.length; k++) {
+            if (inputs[k].type === 'checkbox' && inputs[k].tnc && !this.state.fulfillTnc) {
+              newLongFormSections.splice(i, 1)
+              this.setState({ enableCheckboxes: [], submitButtonDisabled: false })
             }
           }
-        
+        }
+
       }
       this.handlePercentage()
     })
@@ -184,8 +184,8 @@ class LongForm extends React.Component {
       if (textTypeInputs.includes(field.type) || field.type === 'input_with_dropdown' || field.type === 'money') {
         this.checkInputValidity(field, field.focusDropdown)
       }
-      
-      if(!this.state.fulfillTnc) {
+
+      if (!this.state.fulfillTnc) {
         this.setState({ submitButtonDisabled: false })
         this.updateState(newLongFormSections)
         return
@@ -334,17 +334,30 @@ class LongForm extends React.Component {
 
   onSubmitLongForm = e => {
     e.preventDefault()
-    let errors = false;
+    let errors = false
+    let inputWithError = null
     const newLongFormSections = [...this.state.longFormSections]
-    newLongFormSections.forEach((longFormSection) => {
+    newLongFormSections.forEach(longFormSection => {
       const long_form_blocks = longFormSection.sections[0].long_form_blocks;
-      long_form_blocks.forEach(async (long_form_block) => {
-        const inputs = long_form_block.blocks;
-        const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
+      long_form_blocks.forEach(long_form_block => {
+        const inputs = long_form_block.blocks
+        const { errorsPresent } = updateInputsValidity(inputs, null, this.state.errorMsgs)
         if (errorsPresent) {
           errors = true
           this.setState({ errors: true })
         }
+      })
+    })
+
+    newLongFormSections.forEach(longFormSection => {
+      const long_form_blocks = longFormSection.sections[0].long_form_blocks;
+      long_form_blocks.forEach(long_form_block => {
+        const inputs = long_form_block.blocks
+        inputs.forEach(inp => {
+          if (errors && inp.error && !inputWithError) {
+            inputWithError = inp
+          }
+        })
       })
     })
 
@@ -372,6 +385,7 @@ class LongForm extends React.Component {
         }
       } else {
         this.setState({ submissionError: 'Please correct the fields marked in red' })
+        scrollToErrorInput(inputWithError)
       }
     })
   }
@@ -545,7 +559,7 @@ class LongForm extends React.Component {
                             <React.Fragment key={component.id}>
                               {generateInputs(component, this.handleChange,
                                 this.checkInputValidity, this.handleInputDropdownSelection,
-                                this.state.formType, null)}
+                                lf, null)}
                             </React.Fragment>
                           );
                         })}
