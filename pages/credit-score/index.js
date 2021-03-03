@@ -7,7 +7,6 @@ import TipSection from '../../components/CreditScore/TipSection'
 import Layout from '../../components/Layout'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { useEffect, useState } from 'react'
-import Loader from '../../components/common/Loader'
 import { getCreditScore } from '../../utils/creditProfileService'
 import Offers from '../../components/common/Offers'
 const creditScoreProfile = (props) => {
@@ -41,8 +40,8 @@ const creditScoreProfile = (props) => {
   return (
     <div className={props.pageClasses}>
       <Layout>
-        <Loader active={loading} text="loading" />
-        <div class="mobile-background"></div>
+        
+        <div className="mobile-background"></div>
         <CreditScoreBanner
           accountHistory={cpScoreData?.accountHistory}
           score={cpScoreData?.score}

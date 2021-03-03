@@ -1,8 +1,14 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react';
 const FactorsAffecting = () => {
   const router=useRouter();
-  
+  useEffect(() => {
+    console.log(window);
+    if (window !== undefined && window && window.initSlickBanks) {
+      window.initSlickBanks()
+  }
+  }, [])
   return (
     <section
       data-aos="fade-up"
@@ -14,37 +20,17 @@ const FactorsAffecting = () => {
           Factors affecting <br className="blankSpace" />
           <b>Credit Score</b>
         </h2>
-        <div className="banks-slider slick-initialized slick-slider">
-          <button
-            className="slick-prev slick-arrow slick-disabled"
-            aria-label="Previous"
-            type="button"
-            aria-disabled="true"
-            style={{ display: 'inline-block' }}
-          >
-            Previous
-          </button>
-          <div
-            className="slick-list draggable scroll"
-            style={{ overflowX: 'scroll', overflowY: 'hidden' }}
-          >
-            <div
-              className="slick-track factor-affect"
-              style={{
-                opacity: 1,
-                transform: 'translate3d(0px, 0px, 0px)',
-              }}
-            >
+        <div className="banks-slider">
               {factors.map(item=>  <div
                 key={item.id}
-                className="slick-slide slick-current slick-active"
+                className="slide_cell"
                 data-slick-index={item.id}
                 aria-hidden="false"
                 style={{display:router.pathname === item.link ? 'none' : 'block' }}
               >
                 <div>
                   <div
-                    className="slide_cell"
+                    className=""
                     style={{ width: '100%', display: 'inline-block' }}
                   >
                     <Link href={item.link}>
@@ -59,16 +45,7 @@ const FactorsAffecting = () => {
             )}
               
             </div>
-          </div>
-          <button
-            className="slick-next slick-arrow"
-            aria-label="Next"
-            type="button"
-            aria-disabled="false"
-          >
-            Next
-          </button>
-        </div>
+      
       </div>
     </section>
   )

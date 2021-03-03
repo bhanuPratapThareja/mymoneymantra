@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2'
-
+import CreditScore from'./credit-score';
 const CreditScoreBanner = ({ accountHistory, score }) => {
   const [data, setData] = useState([])
   const [label, setLabel] = useState([])
@@ -31,10 +31,8 @@ const CreditScoreBanner = ({ accountHistory, score }) => {
             />
           </div>
           <div className="score-scale-img">
-            <img
-              src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/score-scale.png"
-              alt=""
-            />
+          <div className="cp-score-custom">{score}</div>
+            <CreditScore></CreditScore>
           </div>
         </div>
         <div className="creditScore-wrapper-right">

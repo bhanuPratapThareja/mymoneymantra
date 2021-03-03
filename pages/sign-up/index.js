@@ -11,7 +11,6 @@ import CustomName from "../../components/signup/name";
 import CustomEmail from "../../components/signup/email";
 import CustomLastName from "../../components/signup/lastname";
 import { sendSignUpOtp, sendSignUpData, verifyOtp } from "../../utils/otp";
-import Loader from "../../components/common/Loader";
 import { messgaes } from "../../utils/messages";
 import SubHeader from "../../components/signup/subheader";
 import CustomImage from "../../components/signup/image";
@@ -26,7 +25,7 @@ const signUp = (props) => {
   const [type, settype] = useState("sign up");
   const [isChecked, setisChecked] = useState(false);
   const [otpId, setOtpId] = useState("");
-  const [isLoader, setisLoader] = useState(false);
+  
   const [token, settoken] = useState('')
   const [otpError, setOtpError] = useState(false)
   const counterStep = (i) => {
@@ -51,7 +50,7 @@ const signUp = (props) => {
     }
   };
   const verifyOTP = () => {
-    setisLoader(true);
+    
     verifyOtp(phone, otp, otpId)
       .then((res) => {
         sendSignUpData(name, email, phone, token, null)
@@ -65,17 +64,17 @@ const signUp = (props) => {
             // alert(err.message);
           })
           .finally(() => {
-            setisLoader(false);
+            
           });
 
       })
       .catch((err) => {
         // alert(err.message);
       })
-      .finally(() => setisLoader(false));
+      
   };
   const signUpUser = (resend = null) => {
-    setisLoader(true);
+    
     sendSignUpOtp(phone)
       .then((res) => {
         const { otpId } = res;
@@ -88,7 +87,7 @@ const signUp = (props) => {
         // alert(err.message);
       })
       .finally(() => {
-        setisLoader(false);
+        
       });
   };
 
@@ -187,10 +186,7 @@ const signUp = (props) => {
           <Thanks></Thanks>
         </div>
       </Layout>
-      <Loader
-        msg={counter == 0 ? messgaes.otpSent : messgaes.validateOtp}
-        isActive={isLoader}
-      ></Loader>
+      
     </div>
   );
 };

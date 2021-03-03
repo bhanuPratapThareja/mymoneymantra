@@ -1,46 +1,46 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { fileToByteArray } from '../../utils/byteArray'
-
+const placeholderData="Please Upload the file"
 const Documents = (props) => {
   const [aadhaar, setAadhaar] = useState({
-    documentName: '',
+    documentName: placeholderData,
     documentNo: '1000000374',
     documentTypeId: '1000000036',
     uploadStatus: '',
   })
   const [pan, setPan] = useState({
-    documentName: '',
+    documentName: placeholderData,
     documentNo: '1000000290',
     documentTypeId: '1000000036',
     uploadStatus: '',
   })
   const [bankStatement, setBankStatement] = useState({
-    documentName: '',
+    documentName: placeholderData,
     documentNo: '1000000308',
     documentTypeId: '1000000044',
     uploadStatus: '',
   })
   const [salarySlips, setSalarySlips] = useState({
-    documentName: '',
+    documentName: placeholderData,
     documentNo: '1000000307',
     documentTypeId: '1000000043',
     uploadStatus: '',
   })
   const [form16, setForm16] = useState({
-    documentName: '',
+    documentName: placeholderData,
     documentNo: '1000000305',
     documentTypeId: '1000000043',
     uploadStatus: '',
   })
   const [rentAgreement, setRentAgreement] = useState({
-    documentName: '',
+    documentName: placeholderData,
     documentNo: '1000000299',
     documentTypeId: '1000000037',
     uploadStatus: '',
   })
   const [bill, setBill] = useState({
-    documentName: '',
+    documentName: placeholderData,
     documentNo: '1000000321',
     documentTypeId: '1000000037',
     uploadStatus: '',

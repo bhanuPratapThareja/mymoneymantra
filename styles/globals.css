@@ -8922,6 +8922,7 @@ label {
         background-color: #ffffff;
         margin-right: 16px; } }
     .creditProfile-score-flow .creditScore-wrapper-left .score-scale-img {
+      position: relative;
       max-width: 360px;
       width: 100%;
       margin-top: 16px;

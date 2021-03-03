@@ -30,7 +30,6 @@
     "react-chartjs-2": "^2.11.1",
     "react-dom": "16.13.1",
     "react-infinite-scroll-component": "^6.0.0",
-    "react-loading-overlay": "^1.0.1",
     "react-maskedinput": "^4.0.1",
     "react-select-search": "^3.0.1",
     "react-share": "^4.3.1",

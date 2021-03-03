@@ -7,7 +7,7 @@ import Layout from '../../components/Layout'
 import AgeOfCredit from '../../components/CreditScore/AgeOfCredit'
 import AgeCreditAllAccounts from '../../components/CreditScore/AgeCreditAllAccounts'
 import { getClassesForPage } from '../../utils/classesForPage'
-import Loader from '../../components/common/Loader'
+
 import { getCreditAge } from '../../utils/creditProfileService'
 import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
 
@@ -39,7 +39,7 @@ const age = (props) => {
   return (
     <div className={props.pageClasses}>
       <Layout>
-        <Loader active={loading} text="loading" />
+        
         <div class="mobile-background"></div>
         <AgeOfCredit creditAge={cpAgeData?.totalAge} />
         <TipSection />

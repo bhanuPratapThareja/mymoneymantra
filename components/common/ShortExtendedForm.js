@@ -33,7 +33,6 @@ import {
 class ShortExtendedForm extends React.Component {
     otpInterval = null;
     state = {
-        formType: sf,
         slideIndex: 0,
         currentSlide: 'onboard',
         submitButtonDisabled: true,
@@ -110,7 +109,8 @@ class ShortExtendedForm extends React.Component {
         this.setInputsInState(side_form, 'onboard')
         form_slide.forEach(slide => {
             setTimeout(() => {
-                let slideId = `${this.state.formType}-${slideNo}`
+                console.log('slide: ', slide)
+                let slideId = `${sf}-${slideNo}`
                 const fields = slide.onboard_form_slide.fields
                 const heading = slide.onboard_form_slide.heading
                 const slideClass = slide.onboard_form_slide.slide_class
@@ -142,7 +142,7 @@ class ShortExtendedForm extends React.Component {
     onClickLetsGo = async e => {
         e.preventDefault()
         const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-        const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs)
+        const { errorsPresent } = updateInputsValidity(inputs, null, this.state.errorMsgs)
         this.setState({ ...this.state, slides: newSlides }, async () => {
             this.scrollToTopOfSlide()
             if (!errorsPresent) {
@@ -180,7 +180,7 @@ class ShortExtendedForm extends React.Component {
             const leadId = res.data.leadId
             setLeadId(leadId, this.props.primaryPath)
             sendNotification(leadId)
-            this.setState({ currentSlide: `${this.state.formType}-1`, slideIndex: 1, slideButtonText: 'Next' }, () => {
+            this.setState({ currentSlide: `${sf}-1`, slideIndex: 1, slideButtonText: 'Next' }, () => {
                 goToSlides()
             })
         } catch (err) {
@@ -212,7 +212,7 @@ class ShortExtendedForm extends React.Component {
     plusSlides = (n) => {
         if (n >= 1) {
             const { newSlides, inputs } = getCurrentSlideInputs(this.state)
-            const errorsPresent = updateInputsValidity(inputs, null, this.state.errorMsgs, this.state.propertyValue)
+            const { errorsPresent } = updateInputsValidity(inputs, null, this.state.errorMsgs, this.state.propertyValue)
             this.setState({ ...this.state, slides: newSlides }, async () => {
                 if (!errorsPresent) {
                     const newSlideId = incrementSlideId(this.state.currentSlide)
@@ -254,7 +254,7 @@ class ShortExtendedForm extends React.Component {
 
     onSubmitShortForm = () => {
         return new Promise((resolve, reject) => {
-            submitShortForm([...this.state.slides], this.state.currentSlide, this.props.primaryPath, this.state.formType, this.props.productType)
+            submitShortForm([...this.state.slides], this.state.currentSlide, this.props.primaryPath, sf, this.props.productType)
                 .then(res => {
                     resolve(res)
                 })

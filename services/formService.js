@@ -83,7 +83,7 @@ export const documentUpload = async (docs, documentName, primaryPath) => {
             documentTypeId,
             documentExtension: type.split("/")[1],
             docBytes: base64.split(",")[1]
-        }
+        } 
         docList.push(doc)
     }
     body.docList = docList
@@ -128,7 +128,7 @@ export const generateLead = async (data, primaryPath, formType, productType) => 
             utmCampaign, utmMedium, utmSource, utmRemark,
             referenceType, referenceFirstName, referenceLastName, referenceEmail, referenceMobile,
 
-            yearsCurrentJob, projectrName,profession,
+            yearsCurrentJob, projectrName,profession,annualTurnover,annualReciepts,
         } = data
 
         const productTypeId = productType && productType.product_type_id ? productType.product_type_id : ''
@@ -167,6 +167,7 @@ export const generateLead = async (data, primaryPath, formType, productType) => 
         body.work.qualification = qualificationId ? qualificationId.educationId : ''
         body.work.yearsCurrentJob = yearsCurrentJob
         body.work.profession = profession ? profession.professionId  : ''
+        body.work.annualTurnover = annualTurnover || annualReciepts
 
         body.contact.mobile[0].mobile = mobile
 

@@ -4,7 +4,7 @@ import TipSection from '../../components/CreditScore/TipSection'
 import Layout from '../../components/Layout'
 import { getClassesForPage } from '../../utils/classesForPage'
 import CreditUtilizationAllAccounts from '../../components/CreditScore/CreditUtilizationAllAccounts'
-import Loader from '../../components/common/Loader'
+
 import { getCreditUtilization } from '../../utils/creditProfileService'
 import FactorsAffecting from '../../components/CreditScore/FactorsAffecting'
 import Offers from '../../components/common/Offers'
@@ -37,7 +37,7 @@ const utilization = (props) => {
   return (
     <div className={props.pageClasses}>
       <Layout>
-        <Loader active={loading} text="loading" />
+        
         <div class="mobile-background"></div>
         <YourCreditUtilization
           creditUtilization={cpUtilizationData?.totalCreditUtilization}
