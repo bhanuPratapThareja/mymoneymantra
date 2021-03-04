@@ -186,26 +186,29 @@ button:disabled {
   background-color: white;
   height: 140px;
   width: 168px;
-  border-radius: 8px;
+  border-radius: 5px;
   padding: 16px 24px;
   margin: 0px 12px;
   cursor: pointer;
   
   color: rgba(34,31,31,0.6);
 }
-.factors-affecting-child .percent{
+.factors-affecting-child .percent {
   font-size: 28px;
-    line-height: 40px;
-    color: #89C142;
-    font-weight: 900;
-}
-.factors-affecting-child .title{
-    margin-top: 8px;
-  line-height: 32px;
-  font-size: 20px;
-  font-weight: 800;
+  line-height: 40px;
+  color: #89C142;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  font-family: 'Avenir-Medium';
 }
 
+.factors-affecting-child .title {
+  margin-top: 8px;
+  line-height: 32px;
+  font-size: 20px;
+  font-family: 'Avenir-Medium';
+  font-weight: 600;
+}
 
 /*-- Error Styling --*/
 
@@ -1560,17 +1563,21 @@ section.popular-card-container {
 
 .cp-score-custom{
   position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    line-height: 46px;
-    font-weight: 800;
-    font-size: 34px;
-    letter-spacing: 0.04em;
-    color: white;
+  width: 100%;
+  font-weight: 400;
+  height: 100%;
+  display: -moz-box;
+  display: flex;
+  -moz-box-align: center;
+  align-items: center;
+  justify-content: space-around;
+  line-height: 46px;
+  font-family: 'Avenir-Medium';
+  letter-spacing: 0.04em;
+  color: white;
+  font-size: 35px;
 }
+
 /*-- Blog Styling --*/
 /* .blog-container .blog .blog-wrapper-card > div > img {	
   display: none;	
@@ -1821,712 +1828,23 @@ button.cstm-load-btn {
 /*-- Blog social icons slide button --*/
 .cstm-social-btn {display: none;}
 
+/*-- Chandrakant css code --*/
+.long-form-submit {
+  margin-top: 2rem !important;
+}
+.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container .form__group#city_cc_input_with_dropdown, 
+.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container .form__group.verified-input#city_cc_input_with_dropdown,
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .filled-input.long-city,
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.long-city {
+  background: none;
+  border: none !important;
+}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
   }
-
-  .banner-sticky {
-    position: static;
-    top: 0;
-    width: 100%;
-  }
-
-  .banner-sticky_bottom {
-    margin-top: 0;
-  }
-  
-  .long-form .long-form-wrapper .banner-sticky+.form-wrapper {
-    max-width: 100%;
-    left: 0;
-    position: relative;
-  }
-
-  .b2c-flow .main-head .cstm-head, .cstm-head + span > h3 {
-    font-size: 20px;
-    line-height: 30px;
-  }
-
-  .cstm-head + span {
-    width: 29%;
-  }
-
 }
-
-@media(max-width: 1023px) and (min-width: 769px) {
-  .footer .container .top-connect-social a:not(:last-child) {
-    margin-right: 0;
-  }
-}
-
-@media(max-width: 991px) and (min-width: 769px) {
-  .footer .container .top-primary-links ul a li {
-    font-size: 14px;
-    line-height: 20px;
-  }
-  .footer .container .top-main-links {
-    width: 16.4%;
-  }
-  .footer .container .top-primary-links {
-    width: 38%;
-  }
-  .footer .container .top-connect {
-    /* margin-right: 0 !important; */
-    width: 29.6%;
-  }
-  .footer .container .top-main-links ul a li {
-    font-size: 15px;
-  }
-  .footer .container .top-connect h5 {
-    margin-top: 8px;
-    font-size: 13px;
-  }
-
-  .blogs-flow .main-head .container div {
-    max-width: 400px;
-  }
-}
-
-@media(max-width: 767px) {
-  
-  .factors-affecting-child{
-    width: 144px;
-    height: 114px;
-    margin:0px 4px;
-      }
-      .factors-affecting-child .percent{
-        font-size: 20px;
-          line-height: 28px;
-          
-      }
-      .factors-affecting-child .title{
-          
-        line-height: 24px;
-        font-size: 14px;
-        
-      }
-      .slick-track.factor-affect{
-        width: 816px;
-      }
-      .slick-track.factor-affect .slick-slide{
-        width:144px;
-      }
-  .credit-card-flow .lets-find {
-    padding: 24px 15px;
-  }
-
-  .banks-slider {
-    overflow-x: hidden;
-  }
-  .listings .banner-wrapper .top h2:nth-child(2) strong {
-    color: #fff;
-  }
-  .listings .banner-wrapper .top h2, .credit-card-flow .banner h2, .credit-card-flow .homepage-banner-wrapper h2, .homepage-flow .buy-section-wrapper h2, .homepage-flow .aboutUs-left h2 {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
-  .credit-card-flow .banner h2:first-child {
-    display: block;
-  }
-  .homepage-flow .testimonial .bottom-block {
-    margin-top: 32px !important;
-  }
-  .homepage-flow .product-wrapper-left a img:first-child, .homepage-flow .product-wrapper-right a img:first-child {
-    max-width: 40px;
-    max-height: 40px;
-  }
-  .profile-flow .profile-head .profile-container .profile-image > label {
-    top:0px !important;
-    right:0px  !important;
-  }
-
-  /* .homepage-flow .aboutUs-left .aboutUs-underline {
-    display: none;
-  } */
-  .credit-card-flow .lets-find-content.otp-card_custom {
-    max-width: 100%;
-  }
-  .otp-wrapper.login-options {
-    min-width: 100%;
-    position: relative;
-    top: 40px;
-  }
-  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms h2 {
-    margin-bottom: 12px;
-  }
-  /* div#cc_holder_bank_input_with_dropdown {
-    margin-top: 8px;
-  } */
-  .credit-card-flow .lets-find-container .lets-find-forms-container .sf-forms .shortforms-container>div#employment_type_cc_radio {
-    display: flex;
-  }
-  
-  .credit-card-flow .lets-find-container .shortforms-container .form__group.field.file-type {
-    max-width: 100%;
-  }
-  
-  .listings .banner-wrapper.cstm-bnr-txt h2 strong, .personal-loan-listing .banner-wrapper .top div h2 strong, .ltrong {
-    color: #fff;
-  }
-  .listings .banner-wrapper.cstm-bnr-txt h2 {
-    text-align: center;
-    margin: 22px 0 3px;
-  }
-  .long-cards-wrapper-card .top .name .mob-logo {
-    max-height: 30px;
-  }
-  
-  .shortforms-container .radio-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .shortforms-container .radio-container>div:nth-child(even),
-  .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div:nth-child(even) {
-    margin: 0 0 8px;
-  }
-  .shortforms-container .radio-container>div {
-    min-width: 47%;
-  }
-  
-  .shortforms-container .radio-container>div {
-  /* .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div */
-    min-width: 47%;
-    display: flex;
-    justify-content: space-between;
-    margin: 0 8px 8px 0;
-  }
-  .sf-forms .shortforms-container .cstm-cal {
-    max-width: 100%;
-  }
-  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container .form__group.verified-input, 
-  .sf-forms .shortforms-container.pan-card-cont .form__group.field, .sf-forms .shortforms-container .form__group.field.file-type {
-    /* max-width: 100%; */
-    margin-bottom: 8px;
-  }
-
-  .sf-forms .shortforms-container.pan-card-cont .form__group.field {
-    max-width: 100%;
-  }
-
-  .sf-forms .shortforms-container.current-address .form__group.field,
-  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container.current-address .form__group.verified-input {
-    margin-bottom: 8px;
-  }
-  .sf-forms .shortforms-container.current-address .form__group.field:first-child {
-    margin-right: 8px;
-    max-width: 47%;
-  }
-  .long-form .long-form-wrapper {
-    padding-top: 0;
-  }
-
-  /* .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div {
-    margin: 0 8px 8px 0;
-    min-width: 48%;
-  } */
-  
-  .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group {
-    margin-bottom: 8px !important;
-  }
-  .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div {
-    min-width: 47%;
-    display: flex;
-    margin: 0 8px 8px 0;
-  }
-
-  /* .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div:nth-child(even) {
-    margin-right: 0;
-  } */
-  .long-address .long-pincode, .long-address .long-city {
-    width: 100% !important;
-    display: inline-block;
-    margin: 0 0 8px 0;
-  }
-  .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container {
-    display: block;
-  }
-  .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.error-input, .sf-forms .shortforms-container .form__group.error-input {
-    margin-bottom: 24px !important;
-  }
-  .long-form .long-form-wrapper, .c-detail-page .combined-wrapper .banner .banner-wrapper {
-    padding-top: 16px;
-  }
-  .cstm-heading h2 {
-    color: #ffffff;
-    text-align: center;
-    font-weight: inherit;
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    font-family: "Avenir-Black";
-  }
-  
-  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container.pan-card-cont, 
-  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container.monthly-earn {
-    display: block;
-  }
-
-  .lets-find-form .agree .checkbox span p {
-    font-size: 0.625rem;
-    line-height: 1rem;
-  }
-
-  .popular-cards-slider .popular-cards-slider-card-bottom div {
-    font-size: 0.875rem;
-    line-height: 1.5rem; 
-  }
-
-  .credit-card-flow.home-loan-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper {
-    min-height: 635px;
-  }
-
-  .thankyou-page .container .thankyou-banner .bottom h4 {
-    font-size: 0.75rem;
-    line-height: 1.25rem;
-  }
-
-  .thankyou-banner .top > div > p {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
-  
-  .thankyou-page .container .thankyou-banner .top h5 {
-    font-size: 0.875rem;
-    line-height: 1.5rem;
-  }
-
-  .mobile-otp {
-    width: 100%;
-  }
-
-  .otp-wrapper.login-options .form__group {
-    min-width: 100%;
-  }
-
-  .long-cards-wrapper-card .top .content ul li span {
-    font-size: 0.75rem;
-    line-height: 1.25rem;
-  }
-
-  .modal-body {
-    max-width: 90%;
-  }
-  .blogs-flow .main-head .container h2 {
-    text-align: center;
-    z-index: 99999;
-    position: relative;
-    font-size: 1.25rem;
-  }
-  .mobile-background{
-    top: 62px;
-  }
-
-  .blogs-flow .featured-wrapper .container .people .detail h5 p {
-    text-align: center;
-    margin-top: 0;
-    font-size: 0.625rem;
-    line-height: 1rem;  
-  }
-
-  .b2c-flow .main-head div h2,
-  .b2c-flow .main-head div h3 {
-    text-align: center;
-    z-index: 99999;
-    position: relative;
-    color: #ffffff;
-    font-weight: inherit;
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
- 
-  .cstm-desig {
-    float: none;
-  }
-  
-  .cstm-content .content-heading>h3:first-child {
-    float: none;
-  }
-
-  .cstm-content .content-heading>h3, .cstm-content .content-heading > h3 > span {
-    font-size: 16px;
-    display: inline-block;
-  }
-
-  .cstm-content {
-    width: 100%;
-    padding-left: 0;
-    text-align: center;
-  }
-
-  .cstm-pic {
-    width: 100%;
-    margin: 0 auto 10px;
-  }
-
-  .cstm-content p,
-  .cstm-content h5 {
-    text-align: center;
-    margin-top: 0;
-    font-size: 0.625rem;
-    line-height: 1rem;
-  }
-
-  .cstm-post {
-    padding: 20px;
-  }
-
-  .blog-details.blogs-flow .blogs-filter .filter-cards-wrapper {
-    padding: 0;
-  }
-
-  .blogs-flow .banks-holder .banks-slider .slide_cell{
-    max-width: 98px;
-    min-height: auto;
-    padding: 20px 24px;
-  }
-
-  .cstm-prd{
-    margin: 0;
-  }
-  .blogs-flow .featured-wrapper .container .people .image{
-    margin: 0;
-  }
-  /* .blogs-flow .featured-wrapper .container .people .image img {
-    width: 80px;
-    height: 80px;
-    max-width: 80px;
-  } */
-  .blog-wrap-top>span>p{
-    padding: 0 24px;
-  }  
-  .cstm-head{
-    font-size: 1.35rem !important;
-    margin-top: -10px;
-  }
-  .cstm-head>span>h3{
-    font-size: 1.35rem !important;
-    display: inline;
-  }
-  .cstm-space{
-    margin-top: 64px;
-  }
-  .filter-fields-wrapper {
-    grid-template-columns:50% 50%;
-  }
-  .filter-view-all {
-    grid-column: 1 / 3;
-  }
-  .blog-wrap-top h1>h3{
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
-  .blog-wrapper-card>div>img{
-    height: 180px;
-  }
-
-  .filter-content>form>.content-one>input {
-    width: 100%;
-  }
-  
-  #popular-cards-sec .slick-list.draggable {
-    margin: 0;
-  }
-
-  .popular-cards-slider .cstm-prd {
-    margin: 0 10px 0 0;
-  }
-
-  .blog-wrapper-card>img {
-    height: 160px;
-  }
-
-  .filter-cards-wrapper .content p {
-    font-size: 0.75rem;
-    line-height: 1.25rem;
-  }
-
-  .single.card-1 .image_1 {
-    max-height: 180px;
-  }
-
-  .blog-wrap-top p > p {
-    margin-top: 24px;
-    padding: 0 24px;
-  }
-  
-  .contributor-detail.blogs-flow .mobile-background {
-    height: 140px;
-  }
-
-  .contributor-detail.blogs-flow .main-head {
-    padding-top: 30px;
-  }
-
-  .blog-wrap-top p > h2 {
-    padding: 0 24px;
-  }
-
-  .blog-wrap-top p> ul {
-    list-style: inside disc;
-  }
-  
-.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top > div > h3 {	
-    font-size: 1.25rem;	
-    line-height: 1.75rem;	
-  }
-  
-  .shortforms-container .checkbox-container label p span {
-    font-size: 0.875rem;
-    line-height: 1.5rem;
-  }
-
-  .modal-body .tnc {
-    max-height: 330px;
-    margin: 30px 0 0 0;
-  }   
- 
-  /*-- Datepicker --*/
-  .gj-picker {
-    z-index: 9999999999 !important;
-    max-width: 265px;
-    left: 0 !important;
-    right: 0;
-    margin: 0 auto;
-  }
-
-  .gj-picker-md table tr td div, 
-  .gj-picker-md table tr th div {
-    width: 35px;
-    height: 35px;
-    line-height: 35px;
-  }
-
-  [type=year].gj-picker-md table tr td div, 
-  [type=decade].gj-picker-md table tr td div, 
-  [type=century].gj-picker-md table tr td div {
-    width: 65px;
-    height: 65px;
-    line-height: 65px;
-  }
-
-  .gj-picker div[role=navigator] div[role=period] {
-    font-size: 13px;
-  }
-
-  .gj-icon {
-    top: 10px !important;
-  }
-
-  #blog-socials button svg path {
-    fill: rgba(34, 31, 31, 0.6); 
-  } 
-
-  .blog-wrap-top p> h3 {
-    padding: 0 24px;
-  }
-  
-  .learn-more-wrapper-content .question svg {
-    min-width: 24px;
-  }
-
-  .long-form .long-form-wrapper .form-wrapper .cstm-lf-img {
-    top: -70px;
-  }
-
-  .popular-cards-slider-card-top .fee h5 {
-    font-size: 12px;
-    line-height: 18px;
-  }
-
-  .popular-cards-slider-card-top .fee h5 span {
-    display: block;
-    margin: 0 0 0 -5px;
-  }
-
-  .personal-loan-listing .long-cards-wrapper-card .top .fee h5 {
-    display: block;
-  }
-
-  .personal-loan-listing .long-cards-wrapper-card .top .fee h5 span {
-    display: block;
-    margin: 0 0 0 -6px;
-    font-size: 12px;
-  }
-
-  .personal-loan-listing .long-cards-wrapper-card .top .fee h5 {
-    display: inline-block;
-    max-width: 49%;
-    min-width: 49%;
-    margin: 0 0 6px;
-    font-size: 13px;
-  }
-
-  .cstm-dsktxt {
-    display: none;
-  }
-
-  
-  /*-- Blog social icons slide button --*/
-  
-  #blog-socials {
-    top: 40%;
-    z-index: 99;
-    right: -51px;
-    transition: all ease 0.5s;
-    -webkit-transition: all ease 0.5s;
-    -moz-transition: all ease 0.5s;
-    -ms-transition: all ease 0.5s;
-  }
-
-  #blog-socials.show-social-icons {
-    right: 0;
-  }
-
-
-  .cstm-social-btn {
-    position: absolute;
-    bottom: 20px;
-    display: block;
-    left: -40px;
-    min-height: 50px;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px 0 0 5px;
-    cursor: pointer;
-    box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
-    -webkit-box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
-    -moz-box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
-    -ms-box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
-  }
-
-  .cstm-social-btn i {
-    background-image: url("../public/assets/images/icons/menu_bottom_top_bg.png");
-    background-position: 0 0;
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 28px;
-    left: 12px;
-    position: absolute;
-    top: 12px;
-    width: 22px;
-  }
-  
-  .cstm-social-btn:focus{
-    outline: none;
-  }
-  
-  .credit-card-flow .banner .creditScore-wrapper h2 {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
-
-}
-
-@media(max-width: 767px) {
-  .lets-find-container-top {
-    position: absolute !important;
-    top: 0 !important;
-  }
-  .banner-features-container-switch {
-    margin-top: 820px;
-  }
-  .details-button-div {
-    position: fixed;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    width: 150% !important;
-    text-align: center !important;
-    padding-top: 0px;
-    background: linear-gradient(90deg, #0D2333 0%, #040A0F 100%) !important;
-  }
-  .details-button-div>button {
-    margin: 10px !important;
-    display: block !important;
-    font-size: 0.875rem;
-    line-height: 1.5rem;
-    height: 56px;
-    width: 83%;
-  }
-
-
-}
-
-@media(max-width: 479px) {
-  .cp-score-custom{
-    
-font-size: 22px;
-line-height: 31px;
-letter-spacing: 0.04em;
-  }
-  .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper .work-wrapper .shortforms-container .form__group{
-    padding: 0px 16px 10px 0px;
-  }
-  .container.banner.new-credit-wrap.aos-init.aos-animate{
-    overflow-y: auto;
-
-  }
-  .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .shortforms-container.personal-style{
-    grid-template-columns:auto !important;
-  }
-  .sf-submit-button_text {
-    margin-right: 5px !important;
-    font-size: 12px;
-    text-align: right;
-    line-height: 15px;
-  
-  }
-
-  .credit-card-flow .sf-forms .form__group.field.file-type>img {
-    left: 15px;
-  }
-  .profile-flow .profile-head .profile-container .profile-image > span{
-    right:0px !important;
-    top:0px !important;
-  }
-
-
-  .shortforms-container .gender-style{
-    display: flex  !important;
-    flex-direction: column !important;
-  }
-  .shortforms-container .form__group.field datalist{
-    width: 90% !important;
-  }
-}
-
-@media(max-width: 375px) {
-  .credit-card-flow .lets-find-container .shortforms-container .form__group.field.file-type {
-    padding: 0px 10px 10px !important;
-  }
-
-  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms h5 {
-    font-size: 13px;
-    line-height: 13px;
-    top: 17px;
-  }
-
-  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms h5 b {
-    font-size: 13px;
-    display: block;
-  }
-
-  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .file-type-back.file-type-border h5 {
-    top: 24px;
-    left: 40px;
-    max-width: 177px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-
-}
-
-.long-form-submit {
-  margin-top: 2rem !important;
-}
-
 .form-invalid-text {
   color: var(--error-color) !important;
   text-align: center;
@@ -2990,7 +2308,6 @@ letter-spacing: 0.04em;
   display: block;
 }
 
-
 .profile-flow .profile-head .profile-container .profile-image > span > img {
   max-width: 23px;
   height: auto !important;
@@ -3066,6 +2383,713 @@ letter-spacing: 0.04em;
   font-weight: 800;
   font-size: 16px;
   line-height: 24px;
+}
+
+
+
+@media(max-width: 1199px) {
+  .banks h2 strong:nth-child(2) {
+    display: block;
+  }
+
+  .banner-sticky {
+    position: static;
+    top: 0;
+    width: 100%;
+  }
+
+  .banner-sticky_bottom {
+    margin-top: 0;
+  }
+  
+  .long-form .long-form-wrapper .banner-sticky+.form-wrapper {
+    max-width: 100%;
+    left: 0;
+    position: relative;
+  }
+
+  .b2c-flow .main-head .cstm-head, .cstm-head + span > h3 {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .cstm-head + span {
+    width: 29%;
+  }
+
+}
+
+@media(max-width: 1023px) and (min-width: 769px) {
+  .footer .container .top-connect-social a:not(:last-child) {
+    margin-right: 0;
+  }
+}
+
+@media(max-width: 991px) and (min-width: 769px) {
+  .footer .container .top-primary-links ul a li {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .footer .container .top-main-links {
+    width: 16.4%;
+  }
+  .footer .container .top-primary-links {
+    width: 38%;
+  }
+  .footer .container .top-connect {
+    /* margin-right: 0 !important; */
+    width: 29.6%;
+  }
+  .footer .container .top-main-links ul a li {
+    font-size: 15px;
+  }
+  .footer .container .top-connect h5 {
+    margin-top: 8px;
+    font-size: 13px;
+  }
+
+  .blogs-flow .main-head .container div {
+    max-width: 400px;
+  }
+}
+
+@media(max-width: 767px) {
+  
+  .factors-affecting-child {
+    width: 112px;
+    height: 93px;
+    padding: 15px;
+    margin: 0;
+      }
+      .factors-affecting-child .percent{
+        font-size: 19px;
+        line-height: 20px;
+      }
+      .factors-affecting-child .title{
+        line-height: 22px;
+        font-size: 14px;        
+      }
+      .slick-track.factor-affect{
+        width: 816px;
+      }
+      .slick-track.factor-affect .slick-slide{
+        width:144px;
+      }
+  .credit-card-flow .lets-find {
+    padding: 24px 15px;
+  }
+
+  .banks-slider {
+    overflow-x: hidden;
+  }
+  .listings .banner-wrapper .top h2:nth-child(2) strong {
+    color: #fff;
+  }
+  .listings .banner-wrapper .top h2, .credit-card-flow .banner h2, .credit-card-flow .homepage-banner-wrapper h2, .homepage-flow .buy-section-wrapper h2, .homepage-flow .aboutUs-left h2 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+  .credit-card-flow .banner h2:first-child {
+    display: block;
+  }
+  .homepage-flow .testimonial .bottom-block {
+    margin-top: 32px !important;
+  }
+  .homepage-flow .product-wrapper-left a img:first-child, .homepage-flow .product-wrapper-right a img:first-child {
+    max-width: 40px;
+    max-height: 40px;
+  }
+  .profile-flow .profile-head .profile-container .profile-image > label {
+    top:0px !important;
+    right:0px  !important;
+  }
+
+  /* .homepage-flow .aboutUs-left .aboutUs-underline {
+    display: none;
+  } */
+  .credit-card-flow .lets-find-content.otp-card_custom {
+    max-width: 100%;
+  }
+  .otp-wrapper.login-options {
+    min-width: 100%;
+    position: relative;
+    top: 40px;
+  }
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms h2 {
+    margin-bottom: 12px;
+  }
+  /* div#cc_holder_bank_input_with_dropdown {
+    margin-top: 8px;
+  } */
+  .credit-card-flow .lets-find-container .lets-find-forms-container .sf-forms .shortforms-container>div#employment_type_cc_radio {
+    display: flex;
+  }
+  
+  .credit-card-flow .lets-find-container .shortforms-container .form__group.field.file-type {
+    max-width: 100%;
+  }
+  
+  .listings .banner-wrapper.cstm-bnr-txt h2 strong, .personal-loan-listing .banner-wrapper .top div h2 strong, .ltrong {
+    color: #fff;
+  }
+  .listings .banner-wrapper.cstm-bnr-txt h2 {
+    text-align: center;
+    margin: 22px 0 3px;
+  }
+  .long-cards-wrapper-card .top .name .mob-logo {
+    max-height: 30px;
+  }
+  
+  .shortforms-container .radio-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .shortforms-container .radio-container>div:nth-child(even),
+  .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div:nth-child(even) {
+    margin: 0 0 8px;
+  }
+  .shortforms-container .radio-container>div {
+    min-width: 47%;
+  }
+  
+  .shortforms-container .radio-container>div {
+  /* .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div */
+    min-width: 47%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 8px 8px 0;
+  }
+  .sf-forms .shortforms-container .cstm-cal {
+    max-width: 100%;
+  }
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container .form__group.verified-input, 
+  .sf-forms .shortforms-container.pan-card-cont .form__group.field, .sf-forms .shortforms-container .form__group.field.file-type {
+    /* max-width: 100%; */
+    margin-bottom: 8px;
+  }
+
+  .sf-forms .shortforms-container.pan-card-cont .form__group.field {
+    max-width: 100%;
+  }
+
+  .sf-forms .shortforms-container.current-address .form__group.field,
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container.current-address .form__group.verified-input {
+    margin-bottom: 8px;
+  }
+  .sf-forms .shortforms-container.current-address .form__group.field:first-child {
+    margin-right: 8px;
+    max-width: 47%;
+  }
+  .long-form .long-form-wrapper {
+    padding-top: 0;
+  }
+
+  /* .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div {
+    margin: 0 8px 8px 0;
+    min-width: 48%;
+  } */
+  
+  .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group {
+    margin-bottom: 8px !important;
+  }
+  .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div {
+    min-width: 47%;
+    display: flex;
+    margin: 0 8px 8px 0;
+  }
+
+  /* .long-form .long-forms-wrapper .shortforms-container.long-gender .radio-container>div:nth-child(even) {
+    margin-right: 0;
+  } */
+  .long-address .long-pincode, .long-address .long-city {
+    width: 100% !important;
+    display: inline-block;
+    margin: 0 0 8px 0;
+  }
+  .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container {
+    display: block;
+  }
+  .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.error-input, .sf-forms .shortforms-container .form__group.error-input {
+    margin-bottom: 24px !important;
+  }
+  .long-form .long-form-wrapper, .c-detail-page .combined-wrapper .banner .banner-wrapper {
+    padding-top: 16px;
+  }
+  .cstm-heading h2 {
+    color: #ffffff;
+    text-align: center;
+    font-weight: inherit;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-family: "Avenir-Black";
+  }
+  
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container.pan-card-cont, 
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container.monthly-earn {
+    display: block;
+  }
+
+  .lets-find-form .agree .checkbox span p {
+    font-size: 0.625rem;
+    line-height: 1rem;
+  }
+
+  .popular-cards-slider .popular-cards-slider-card-bottom div {
+    font-size: 0.875rem;
+    line-height: 1.5rem; 
+  }
+
+  .credit-card-flow.home-loan-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper {
+    min-height: 635px;
+  }
+
+  .thankyou-page .container .thankyou-banner .bottom h4 {
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+  }
+
+  .thankyou-banner .top > div > p {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+  
+  .thankyou-page .container .thankyou-banner .top h5 {
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+  }
+
+  .mobile-otp {
+    width: 100%;
+  }
+
+  .otp-wrapper.login-options .form__group {
+    min-width: 100%;
+  }
+
+  .long-cards-wrapper-card .top .content ul li span {
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+  }
+
+  .modal-body {
+    max-width: 90%;
+  }
+  .blogs-flow .main-head .container h2 {
+    text-align: center;
+    z-index: 99999;
+    position: relative;
+    font-size: 1.25rem;
+  }
+  /* .mobile-background{
+    top: 62px;
+  } */
+
+  .blogs-flow .featured-wrapper .container .people .detail h5 p {
+    text-align: center;
+    margin-top: 0;
+    font-size: 0.625rem;
+    line-height: 1rem;  
+  }
+
+  .b2c-flow .main-head div h2,
+  .b2c-flow .main-head div h3 {
+    text-align: center;
+    z-index: 99999;
+    position: relative;
+    color: #ffffff;
+    font-weight: inherit;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+ 
+  .cstm-desig {
+    float: none;
+  }
+  
+  .cstm-content .content-heading>h3:first-child {
+    float: none;
+  }
+
+  .cstm-content .content-heading>h3, .cstm-content .content-heading > h3 > span {
+    font-size: 16px;
+    display: inline-block;
+  }
+
+  .cstm-content {
+    width: 100%;
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .cstm-pic {
+    width: 100%;
+    margin: 0 auto 10px;
+  }
+
+  .cstm-content p,
+  .cstm-content h5 {
+    text-align: center;
+    margin-top: 0;
+    font-size: 0.625rem;
+    line-height: 1rem;
+  }
+
+  .cstm-post {
+    padding: 20px;
+  }
+
+  .blog-details.blogs-flow .blogs-filter .filter-cards-wrapper {
+    padding: 0;
+  }
+
+  .blogs-flow .banks-holder .banks-slider .slide_cell{
+    max-width: 98px;
+    min-height: auto;
+    padding: 20px 24px;
+  }
+
+  .cstm-prd{
+    margin: 0;
+  }
+  .blogs-flow .featured-wrapper .container .people .image{
+    margin: 0;
+  }
+  /* .blogs-flow .featured-wrapper .container .people .image img {
+    width: 80px;
+    height: 80px;
+    max-width: 80px;
+  } */
+  .blog-wrap-top>span>p{
+    padding: 0 24px;
+  }  
+  .cstm-head{
+    font-size: 1.35rem !important;
+    margin-top: -10px;
+  }
+  .cstm-head>span>h3{
+    font-size: 1.35rem !important;
+    display: inline;
+  }
+  .cstm-space{
+    margin-top: 64px;
+  }
+  .filter-fields-wrapper {
+    grid-template-columns:50% 50%;
+  }
+  .filter-view-all {
+    grid-column: 1 / 3;
+  }
+  .blog-wrap-top h1>h3{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+  .blog-wrapper-card>div>img{
+    height: 180px;
+  }
+
+  .filter-content>form>.content-one>input {
+    width: 100%;
+  }
+  
+  #popular-cards-sec .slick-list.draggable {
+    margin: 0;
+  }
+
+  .popular-cards-slider .cstm-prd {
+    margin: 0 10px 0 0;
+  }
+
+  .blog-wrapper-card>img {
+    height: 160px;
+  }
+
+  .filter-cards-wrapper .content p {
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+  }
+
+  .single.card-1 .image_1 {
+    max-height: 180px;
+  }
+
+  .blog-wrap-top p > p {
+    margin-top: 24px;
+    padding: 0 24px;
+  }
+  
+  .contributor-detail.blogs-flow .mobile-background {
+    height: 140px;
+  }
+
+  .contributor-detail.blogs-flow .main-head {
+    padding-top: 30px;
+  }
+
+  .blog-wrap-top p > h2 {
+    padding: 0 24px;
+  }
+
+  .blog-wrap-top p> ul {
+    list-style: inside disc;
+  }
+  
+.blog-details .blog-detail-wrapper .blog-wrapper-content .blog-wrap-top > div > h3 {	
+    font-size: 1.25rem;	
+    line-height: 1.75rem;	
+  }
+  
+  .shortforms-container .checkbox-container label p span {
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+  }
+
+  .modal-body .tnc {
+    max-height: 330px;
+    margin: 30px 0 0 0;
+  }   
+ 
+  /*-- Datepicker --*/
+  .gj-picker {
+    z-index: 9999999999 !important;
+    max-width: 265px;
+    left: 0 !important;
+    right: 0;
+    margin: 0 auto;
+  }
+
+  .gj-picker-md table tr td div, 
+  .gj-picker-md table tr th div {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+  }
+
+  [type=year].gj-picker-md table tr td div, 
+  [type=decade].gj-picker-md table tr td div, 
+  [type=century].gj-picker-md table tr td div {
+    width: 65px;
+    height: 65px;
+    line-height: 65px;
+  }
+
+  .gj-picker div[role=navigator] div[role=period] {
+    font-size: 13px;
+  }
+
+  .gj-icon {
+    top: 10px !important;
+  }
+
+  #blog-socials button svg path {
+    fill: rgba(34, 31, 31, 0.6); 
+  } 
+
+  .blog-wrap-top p> h3 {
+    padding: 0 24px;
+  }
+  
+  .learn-more-wrapper-content .question svg {
+    min-width: 24px;
+  }
+
+  .long-form .long-form-wrapper .form-wrapper .cstm-lf-img {
+    top: -70px;
+  }
+
+  .popular-cards-slider-card-top .fee h5 {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .popular-cards-slider-card-top .fee h5 span {
+    display: block;
+    margin: 0 0 0 -5px;
+  }
+
+  .personal-loan-listing .long-cards-wrapper-card .top .fee h5 {
+    display: block;
+  }
+
+  .personal-loan-listing .long-cards-wrapper-card .top .fee h5 span {
+    display: block;
+    margin: 0 0 0 -6px;
+    font-size: 12px;
+  }
+
+  .personal-loan-listing .long-cards-wrapper-card .top .fee h5 {
+    display: inline-block;
+    max-width: 49%;
+    min-width: 49%;
+    margin: 0 0 6px;
+    font-size: 13px;
+  }
+
+  .cstm-dsktxt {
+    display: none;
+  }
+
+  
+  /*-- Blog social icons slide button --*/
+  
+  #blog-socials {
+    top: 40%;
+    z-index: 99;
+    right: -51px;
+    transition: all ease 0.5s;
+    -webkit-transition: all ease 0.5s;
+    -moz-transition: all ease 0.5s;
+    -ms-transition: all ease 0.5s;
+  }
+
+  #blog-socials.show-social-icons {
+    right: 0;
+  }
+
+
+  .cstm-social-btn {
+    position: absolute;
+    bottom: 20px;
+    display: block;
+    left: -40px;
+    min-height: 50px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    cursor: pointer;
+    box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+    -webkit-box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+    -moz-box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+    -ms-box-shadow: 0px 4px 20px rgb(0 0 0 / 10%);
+  }
+
+  .cstm-social-btn i {
+    background-image: url("../public/assets/images/icons/menu_bottom_top_bg.png");
+    background-position: 0 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 28px;
+    left: 12px;
+    position: absolute;
+    top: 12px;
+    width: 22px;
+  }
+  
+  .cstm-social-btn:focus{
+    outline: none;
+  }
+  
+  /*-- Credit Score --*/
+  .credit-card-flow .banner .creditScore-wrapper h2 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .creditProfile-score-flow .app_progress_card_content {
+    margin-top: 0px !important;
+  }
+
+}
+
+@media(max-width: 767px) {
+  .lets-find-container-top {
+    position: absolute !important;
+    top: 0 !important;
+  }
+  .banner-features-container-switch {
+    margin-top: 820px;
+  }
+  .details-button-div {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    width: 150% !important;
+    text-align: center !important;
+    padding-top: 0px;
+    background: linear-gradient(90deg, #0D2333 0%, #040A0F 100%) !important;
+  }
+  .details-button-div>button {
+    margin: 10px !important;
+    display: block !important;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+    height: 56px;
+    width: 83%;
+  }
+
+
+}
+
+@media(max-width: 479px) {
+  .cp-score-custom{
+    
+font-size: 22px;
+line-height: 31px;
+letter-spacing: 0.04em;
+  }
+  .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper .work-wrapper .shortforms-container .form__group{
+    padding: 0px 16px 10px 0px;
+  }
+  .container.banner.new-credit-wrap.aos-init.aos-animate{
+    overflow-y: auto;
+
+  }
+  .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .shortforms-container.personal-style{
+    grid-template-columns:auto !important;
+  }
+  .sf-submit-button_text {
+    margin-right: 5px !important;
+    font-size: 12px;
+    text-align: right;
+    line-height: 15px;
+  
+  }
+
+  .credit-card-flow .sf-forms .form__group.field.file-type>img {
+    left: 15px;
+  }
+  .profile-flow .profile-head .profile-container .profile-image > span{
+    right:0px !important;
+    top:0px !important;
+  }
+
+
+  .shortforms-container .gender-style{
+    display: flex  !important;
+    flex-direction: column !important;
+  }
+  .shortforms-container .form__group.field datalist{
+    width: 90% !important;
+  }
+}
+
+@media(max-width: 375px) {
+  .credit-card-flow .lets-find-container .shortforms-container .form__group.field.file-type {
+    padding: 0px 10px 10px !important;
+  }
+
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms h5 {
+    font-size: 13px;
+    line-height: 13px;
+    top: 17px;
+  }
+
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms h5 b {
+    font-size: 13px;
+    display: block;
+  }
+
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .file-type-back.file-type-border h5 {
+    top: 24px;
+    left: 40px;
+    max-width: 177px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+
 }
 
 .bar-of-progress {

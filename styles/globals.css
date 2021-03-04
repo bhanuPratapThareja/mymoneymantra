@@ -5731,7 +5731,7 @@ label {
     color: rgba(255, 255, 255, 0.7) !important; }
     @media (max-width: 768px) {
       .tab button > h2 {
-        font-family: Avenir;
+        font-family: 'Avenir-Medium';
         font-style: normal;
         font-weight: 800;
         font-size: 14px;
@@ -9963,17 +9963,17 @@ label {
   @media (max-width: 768px) {
     .creditProfile-age-flow .allAccount-section {
       margin-top: 64px !important; } }
-.creditProfile-age-flow .tipSection {
+/* .creditProfile-age-flow .tipSection {
   margin-top: 128px !important; }
   @media (max-width: 768px) {
     .creditProfile-age-flow .tipSection {
-      margin-top: 32px !important; } }
+      margin-top: 32px !important; } } */
 @media (max-width: 768px) {
   .creditProfile-age-flow .app_progress_card_content {
     margin-top: 16px !important; } }
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .creditProfile-age-flow .app_progress_card_content .value {
-    margin-top: 0 !important; } }
+    margin-top: 0 !important; } } */
 .creditProfile-age-flow .popular-cards {
   padding-bottom: 0px !important; }
 
