@@ -45,7 +45,7 @@ const BlogList = (props) => {
                 <InfiniteScroll
                     dataLength={blogsToDisplay.length}
                     hasMore={hasMore}
-                    loader={blogsToDisplay.length ? <h2>Loading...</h2> : ''}
+                    loader={blogsToDisplay.length ? <h2 className="cstm-btn-center">Loading...</h2> : ''}
                     next={fetchMoreData}
                 >
                     <div className="filter-cards-wrapper" >
@@ -75,7 +75,7 @@ const BlogList = (props) => {
                                     </div>
                                 </div>
                             )
-                        }) : <div>No Result Found</div>}
+                        }) : <div className ='blog_header-custom'>No Post Found</div>}
                     </div>
                 </InfiniteScroll>
             </div>
