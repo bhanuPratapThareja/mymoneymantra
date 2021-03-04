@@ -1773,6 +1773,15 @@ button.cstm-load-btn {
 /*-- Blog social icons slide button --*/
 .cstm-social-btn {display: none;}
 
+/*-- Short form city --*/
+.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container .form__group#city_cc_input_with_dropdown, 
+.credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .shortforms-container .form__group.verified-input#city_cc_input_with_dropdown,
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .filled-input.long-city,
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.long-city {
+  background: none;
+  border: none !important;
+}
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
