@@ -65,7 +65,7 @@ class LongForm extends React.Component {
       long_form_blocks.forEach((long_form_block) => {
         const inputs = long_form_block.blocks
         const { updatedNoOfMandatoryInputs, updatedEnableCheckboxes } = updateFormInputs(inputs)
-        noOfMandatoryInputs = noOfMandatoryInputs + updatedNoOfMandatoryInputs
+        noOfMandatoryInputs += updatedNoOfMandatoryInputs
         enableCheckboxes = [...enableCheckboxes, ...updatedEnableCheckboxes]
       })
     }
