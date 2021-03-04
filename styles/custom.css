@@ -2681,9 +2681,9 @@ button.cstm-load-btn {
     position: relative;
     font-size: 1.25rem;
   }
-  .mobile-background{
+  /* .mobile-background{
     top: 62px;
-  }
+  } */
 
   .blogs-flow .featured-wrapper .container .people .detail h5 p {
     text-align: center;
