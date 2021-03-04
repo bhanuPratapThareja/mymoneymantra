@@ -75,7 +75,7 @@ const BlogList = (props) => {
                                     </div>
                                 </div>
                             )
-                        }) : <div className ='blog_header-custom'>No Post Found</div>}
+                        }) : <div className ='cstm-no-post-found'>No Post Found</div>}
                     </div>
                 </InfiniteScroll>
             </div>

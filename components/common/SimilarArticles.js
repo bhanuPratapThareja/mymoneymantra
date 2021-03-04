@@ -44,7 +44,7 @@ const SimilarArticles = (props) => {
     return (
         <section data-aos="fade-up" className="popular-card-container aos-animate aos-init">
         {/* <section data-aos="fade-up" className="container blog-container aos-init aos-animate"> */}
-            <div className="blog">
+            <div className="popular-cards pt-0">
                 <div><h2>Similar Articles</h2></div>
                 {/* <div className="blog-wrapper" id="slider_blogs">
                     {similarBlogs.length ? similarBlogs.map((blog, i) => {

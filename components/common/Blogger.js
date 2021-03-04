@@ -32,9 +32,9 @@ const Blogger = props => {
 
 
     return (
-        <section data-aos="fade-up" className="popular-card-container aos-animate aos-init">
+        <section data-aos="fade-up" className="container popular-card-container aos-animate aos-init">
         {/* <section data-aos="fade-up" className="container blog-container aos-init aos-animate"> */}
-            <div className="blog">
+            <div className="popular-cards">
                 <div dangerouslySetInnerHTML={{ __html: section_heading }}></div>
                 {/* <div className="blog-wrapper" id="slider_blogs">
                     {randomBlogs.map((blog, i) => {
