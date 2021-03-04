@@ -8,12 +8,13 @@ const Otp = (props) => {
         <input
         autoComplete={"off"}
           className="form__field"
-          type="text"
+          type="tel"
           id="otp"
           placeholder="otp"
+          pattern="/^[0-9]{4}$/"
           required=""
           val={props.otp}
-          onChange={(e) => props.setotp(e.target.value)}
+          onChange={(e) => /^[0-9]{0,4}$/.test(e.target.value) ? props.setotp(e.target.value) : e.preventDefault()}
         />
         {props.error ? <p style={{ color: 'red' }}>OTP Invalid</p> : null}
         <label className="form__label" htmlFor="phone">

@@ -1,14 +1,27 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 const FactorsAffecting = () => {
   const router=useRouter();
+  const [filteredFactors, setfilteredFactors] = useState([]);
   useEffect(() => {
     console.log(window);
-    if (window !== undefined && window && window.initSlickBanks) {
+   
+  let i =factors.indexOf((item,index)=>
+    router.pathname === item.link
+  )
+  const data=factors.filter((item,index)=> {
+    if(router.pathname !== item.link) {return item}
+  })
+  console.log(data)
+  setfilteredFactors(data);
+ 
+  }, [])
+  useEffect(() => {
+    if (window !== undefined && window && window.initSlickBanks && filteredFactors.length) {
       window.initSlickBanks()
   }
-  }, [])
+  }, [filteredFactors])
   return (
     <section
       data-aos="fade-up"
@@ -21,12 +34,11 @@ const FactorsAffecting = () => {
           <b>Credit Score</b>
         </h2>
         <div className="banks-slider">
-              {factors.map(item=>  <div
+              {filteredFactors.map(item=>  <div
                 key={item.id}
                 className="slide_cell"
                 data-slick-index={item.id}
                 aria-hidden="false"
-                style={{display:router.pathname === item.link ? 'none' : 'block' }}
               >
                 <div>
                   <div
