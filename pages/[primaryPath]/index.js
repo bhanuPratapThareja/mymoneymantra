@@ -17,7 +17,7 @@ import LearnMore from '../../components/common/LearnMore'
 import PageNotFound from '../../components/PageNotFound'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { addSeoMetaData, removeSeoMetaData } from '../../utils/seoMetaData'
-import { clearLeadBank, clearFormData, clearLeadId } from '../../utils/localAccess';
+import { clearLeadBank, clearLeadId } from '../../utils/localAccess';
 import Offers from '../../components/common/Offers'
 
 const PrimaryPage = props => {
@@ -29,7 +29,6 @@ const PrimaryPage = props => {
     setFormRedirection(props.formRedirection)
     if(!props.formRedirection) {
       clearLeadBank()
-      clearFormData(props.primaryPath)
       clearLeadId(props.primaryPath)
     }
     const { scriptId, canonicalId, metaDescriptionId, metaKeywordId } = addSeoMetaData(props.data, props.data.id)

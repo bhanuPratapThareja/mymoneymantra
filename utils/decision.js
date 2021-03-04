@@ -15,9 +15,9 @@ export const makeDecision = (buttonText, offer, primaryPath, changePageType) => 
         query.formRedirection = offer.formRedirection
         let data = {}
         data.leadBank = leadBank
-        clearFormData(primaryPath)
+        clearFormData()
         clearLeadId(primaryPath)
-        setFormData(data, primaryPath)
+        setFormData(data)
       } else {
         pathname = `/thank-you`
       }

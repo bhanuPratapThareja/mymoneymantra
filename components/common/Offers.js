@@ -44,9 +44,9 @@ const Offers = props => {
         setLeadBank(leadBank)
         let data = {}
         data.leadBank = leadBank
-        clearFormData(primaryPath)
+        clearFormData()
         clearLeadId(primaryPath)
-        setFormData(data, primaryPath)
+        setFormData(data)
         if (router.pathname === '/[primaryPath]') {
             props.setFormRedirection(sf)
             props.goToShortForm()

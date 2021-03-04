@@ -12,6 +12,7 @@ import { setLeadId } from '../../utils/localAccess'
 import { sf } from '../../utils/types'
 import {
     textTypeInputs,
+    updateFormInputs,
     getCurrentSlideInputs,
     handleChangeInputs,
     getUserMobileNumber,
@@ -62,10 +63,10 @@ class ShortExtendedForm extends React.Component {
 
     setInputsInState = (inputsArray, slideId, heading, slideClass) => {
         if (getDevice() !== 'desktop') {
-            const letsFindContaiiner = document.getElementsByClassName('lets-find-container')[0]
+            const letsFindContainer = document.getElementsByClassName('lets-find-container')[0]
             const uspCardsContainer = document.getElementsByClassName('banner-features-container')[0]
-            if (letsFindContaiiner) {
-                letsFindContaiiner.classList.add('lets-find-container-top')
+            if (letsFindContainer) {
+                letsFindContainer.classList.add('lets-find-container-top')
                 if (uspCardsContainer) {
                     uspCardsContainer.classList.add('banner-features-container-switch')
                 }
@@ -73,7 +74,6 @@ class ShortExtendedForm extends React.Component {
         }
 
         let formInputs = []
-        let enableCheckboxes = []
         let slides = [...this.state.slides]
         inputsArray.forEach(item => {
             item.error = false
@@ -81,25 +81,25 @@ class ShortExtendedForm extends React.Component {
             if (item.type === 'input_with_dropdown') {
                 item.list = []
             }
-            if (item.type === 'checkbox') {
-                item.checkbox.checkbox_input.forEach(box => {
-                    if (box.enable_submit) {
-                        enableCheckboxes.push(box)
-                    }
-                })
-            }
             formInputs.push(item)
         })
 
         let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading, slideClass }]
         this.setState({
             ...this.state, slides: [...upDatedSlides],
-            enableCheckboxes: [...this.state.enableCheckboxes, ...enableCheckboxes]
         }, () => {
-            this.setState({ backUpSlides: JSON.parse(JSON.stringify(this.state.slides)) })
-            if (this.props.formRedirection === sf) {
-                this.props.goToShortForm()
-            }
+            let enableCheckboxes = []
+            this.state.slides.forEach(slide => {
+                const inputs = slide.inputs
+                const { updatedEnableCheckboxes } = updateFormInputs(inputs)
+                enableCheckboxes = [...enableCheckboxes, ...updatedEnableCheckboxes]
+            })
+            this.setState({ ...this.state, enableCheckboxes }, () => {
+                this.setState({ backUpSlides: JSON.parse(JSON.stringify(this.state.slides)) })
+                if (this.props.formRedirection === sf) {
+                    this.props.goToShortForm()
+                }
+            })
         })
     }
 
@@ -353,13 +353,17 @@ class ShortExtendedForm extends React.Component {
                                 })
                             }
                         }
-                    } else {
-                        this.plusSlides(1)
                     }
-
                 }
             })
 
+            for (let i = 0; i < inputs.length; i++) {
+                const activeEl = document.activeElement
+                if (activeEl && activeEl.type === 'radio' && !inputs[i].radio.breakpoints.length) {
+                    this.plusSlides(1)
+                    break
+                }
+            }
         })
     }
 

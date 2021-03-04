@@ -36,33 +36,19 @@ export const clearLeadBank = () => {
     localStorage.removeItem('leadBank')
 }
 
-export const setFormData = (data, primaryPath) => {
+export const setFormData = data => {
     const previouslySavedData = JSON.parse(localStorage.getItem('formData'))
-    let formData
-    if(!previouslySavedData) {
-        formData = { ...previouslySavedData, [primaryPath]: data }
-    } else {
-        formData = { ...previouslySavedData, [primaryPath]: { ...previouslySavedData[primaryPath], ...data } }
-    }
+    const formData =  { ...previouslySavedData, ...data }
     localStorage.setItem('formData', JSON.stringify(formData))
 }
 
-export const getFormData = primaryPath  => {
-    const rawFormData = JSON.parse(localStorage.getItem('formData'))
-    const formData = rawFormData && rawFormData[primaryPath] ? rawFormData[primaryPath] : null
-    return formData
+export const getFormData = ()  => {
+    const formData = JSON.parse(localStorage.getItem('formData'))
+    return formData 
 }
 
-export const clearFormData = primaryPath => {
-    const formData = JSON.parse(localStorage.getItem('formData'))
-    if (formData && formData[primaryPath]) {
-        delete formData[primaryPath]
-        if (isEmpty(formData)) {
-            localStorage.removeItem('formData')
-        } else {
-            localStorage.setItem('formData', JSON.stringify(formData))
-        }
-    }
+export const clearFormData = () => {
+    localStorage.removeItem('formData')
 }
 
 export const setBlogId = (blogId) => {
