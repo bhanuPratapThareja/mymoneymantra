@@ -74,7 +74,7 @@ export const getProductDecision = (offers, primaryPath, productType) => {
             resolve([])
         }
         const { url, body } = getApiData('leadProductDecision')
-        const leadId = getLeadId(primaryPath)
+        const leadId = getLeadId()
         pendingOffers.forEach(async offer => {
 
             body.productId = productType ? productType.product_type_id.toString() : ''
