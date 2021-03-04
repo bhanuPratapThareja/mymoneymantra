@@ -7,7 +7,9 @@
   --error-color: #DC3737;
   --next-btn: #221F1F;
 }
-
+.docs-container .identity-options .options{
+  cursor: pointer;
+}
 /* .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .shortforms-container .form__group.error-input {
   border: none;
   background: url(/assets/images/icons/error.png);
@@ -171,6 +173,39 @@ button:disabled {
 .listings .banner-wrapper .top h2:nth-child(2) strong, .credit-card-flow .banner h2:first-child strong:first-child {
   color: #89c142;
 }
+
+/*----credit score factor affecting you --*/
+.slick-track.factor-affect{
+  width: 1116px;
+}
+.slick-track.factor-affect .slick-slide{
+  width:186px;
+}
+.factors-affecting-child{
+
+  background-color: white;
+  height: 140px;
+  width: 168px;
+  border-radius: 8px;
+  padding: 16px 24px;
+  margin: 0px 12px;
+  cursor: pointer;
+  
+  color: rgba(34,31,31,0.6);
+}
+.factors-affecting-child .percent{
+  font-size: 28px;
+    line-height: 40px;
+    color: #89C142;
+    font-weight: 900;
+}
+.factors-affecting-child .title{
+    margin-top: 8px;
+  line-height: 32px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
 
 /*-- Error Styling --*/
 
@@ -1523,6 +1558,19 @@ section.popular-card-container {
   list-style: none;
 }
 
+.cp-score-custom{
+  position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    line-height: 46px;
+    font-weight: 800;
+    font-size: 34px;
+    letter-spacing: 0.04em;
+    color: white;
+}
 /*-- Blog Styling --*/
 /* .blog-container .blog .blog-wrapper-card > div > img {	
   display: none;	
@@ -1850,6 +1898,28 @@ button.cstm-load-btn {
 
 @media(max-width: 767px) {
   
+  .factors-affecting-child{
+    width: 144px;
+    height: 114px;
+    margin:0px 4px;
+      }
+      .factors-affecting-child .percent{
+        font-size: 20px;
+          line-height: 28px;
+          
+      }
+      .factors-affecting-child .title{
+          
+        line-height: 24px;
+        font-size: 14px;
+        
+      }
+      .slick-track.factor-affect{
+        width: 816px;
+      }
+      .slick-track.factor-affect .slick-slide{
+        width:144px;
+      }
   .credit-card-flow .lets-find {
     padding: 24px 15px;
   }
@@ -1874,6 +1944,11 @@ button.cstm-load-btn {
     max-width: 40px;
     max-height: 40px;
   }
+  .profile-flow .profile-head .profile-container .profile-image > label {
+    top:0px !important;
+    right:0px  !important;
+  }
+
   /* .homepage-flow .aboutUs-left .aboutUs-underline {
     display: none;
   } */
@@ -2350,6 +2425,10 @@ button.cstm-load-btn {
     outline: none;
   }
   
+  .credit-card-flow .banner .creditScore-wrapper h2 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
 
 }
 
@@ -2380,9 +2459,26 @@ button.cstm-load-btn {
     width: 83%;
   }
 
+
 }
 
 @media(max-width: 479px) {
+  .cp-score-custom{
+    
+font-size: 22px;
+line-height: 31px;
+letter-spacing: 0.04em;
+  }
+  .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper .work-wrapper .shortforms-container .form__group{
+    padding: 0px 16px 10px 0px;
+  }
+  .container.banner.new-credit-wrap.aos-init.aos-animate{
+    overflow-y: auto;
+
+  }
+  .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .shortforms-container.personal-style{
+    grid-template-columns:auto !important;
+  }
   .sf-submit-button_text {
     margin-right: 5px !important;
     font-size: 12px;
@@ -2394,7 +2490,19 @@ button.cstm-load-btn {
   .credit-card-flow .sf-forms .form__group.field.file-type>img {
     left: 15px;
   }
+  .profile-flow .profile-head .profile-container .profile-image > span{
+    right:0px !important;
+    top:0px !important;
+  }
 
+
+  .shortforms-container .gender-style{
+    display: flex  !important;
+    flex-direction: column !important;
+  }
+  .shortforms-container .form__group.field datalist{
+    width: 90% !important;
+  }
 }
 
 @media(max-width: 375px) {
@@ -2420,6 +2528,7 @@ button.cstm-load-btn {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
 
 }
 
@@ -2623,6 +2732,9 @@ button.cstm-load-btn {
 .creditProfile-age-flow .paymentRank-wrapper .paymentRank-wrapper-head h2,
 .paymentRank .paymentRank-wrapper .paymentRank-wrapper-head h2 {
   color: #000;
+  font-size: 1.75rem;
+  font-family: "Avenir-Heavy";
+  line-height: 2.5rem;
 }
 
 .credit-rank-flow .paymentRank-wrapper-head .underline-img, .creditProfile-age-flow .paymentRank-wrapper-head .underline-img, .creditProfile-utilization-flow .paymentRank-wrapper-head .underline-img, .creditProfile-account-flow .paymentRank-wrapper-head .underline-img, .creditProfile-enquiries-flow .paymentRank-wrapper-head .underline-img {
@@ -2653,67 +2765,60 @@ button.cstm-load-btn {
   transform: translate(-50%, -50%);
 }
 
-.red-circle{
-  background: url("/assets/images/icons/redc.png") !important;
+.creditProfile-utilization-flow .paymentRank-wrapper-content .left-mobile-view .value-utilisation,
+.creditProfile-enquiries-flow .paymentRank-wrapper-content-left.left-mobile-view  .value-enquiries,
+.credit-rank-flow .paymentRank-wrapper-content .left-mobile-view .value-rank {
   max-width: 240px;
   height: 100%;
   background-color: #ffffff;
-  background-repeat: no-repeat !important;
-  background-size: contain;
   -ms-flex-pack: center;
   justify-content: center;
   -ms-flex-align: center;
   align-items: center;
-  background-position: center !important;
+  min-width: 170px;
+  min-height: 160px;
 }
 
-.orange-circle{
-  background: url("/assets/images/icons/orangec.png") !important;
-  max-width: 240px;
-  height: 100%;
-  background-color: #ffffff;
-  background-repeat: no-repeat !important;
-  background-size: contain;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-position: center !important;
+
+.creditProfile-utilization-flow .paymentRank-wrapper-content .left-mobile-view .value-utilisation.red-circle,
+.creditProfile-enquiries-flow .paymentRank-wrapper-content-left.left-mobile-view  .value-enquiries.red-circle,
+.credit-rank-flow .paymentRank-wrapper-content .left-mobile-view .value-rank.red-circle {
+  background: url("/assets/images/icons/redc.png") no-repeat center / cover;  
 }
 
-.yellow-circle{
-  background: url("/assets/images/icons/yellowc.png") !important;
-  max-width: 240px;
-  height: 100%;
-  background-color: #ffffff;
-  background-repeat: no-repeat !important;
-  background-size: contain;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-position: center !important;
+.creditProfile-utilization-flow .paymentRank-wrapper-content .left-mobile-view .value-utilisation.orange-circle,
+.creditProfile-enquiries-flow .paymentRank-wrapper-content-left.left-mobile-view  .value-enquiries.orange-circle,
+.credit-rank-flow .paymentRank-wrapper-content .left-mobile-view .value-rank.orange-circle {
+  background: url("/assets/images/icons/orangec.png") no-repeat center / contain;
 }
 
-.green-circle{
+.creditProfile-utilization-flow .paymentRank-wrapper-content .left-mobile-view .value-utilisation.yellow-circle,
+.creditProfile-enquiries-flow .paymentRank-wrapper-content-left.left-mobile-view  .value-enquiries.yellow-circle,
+.credit-rank-flow .paymentRank-wrapper-content .left-mobile-view .value-rank.yellow-circle {
+  background: url("/assets/images/icons/yellowc.png") no-repeat center / contain;
+}
+
+.creditProfile-utilization-flow .paymentRank-wrapper-content .left-mobile-view .value-utilisation.green-circle,
+.creditProfile-enquiries-flow .paymentRank-wrapper-content-left.left-mobile-view  .value-enquiries.green-circle ,
+.credit-rank-flow .paymentRank-wrapper-content .left-mobile-view .value-rank.green-circle {
   background: url("/assets/images/icons/greenc.png") no-repeat center / contain;
-  max-width: 240px;
+  /* max-width: 240px;
   height: 100%;
   background-color: #ffffff;
   -ms-flex-pack: center;
   justify-content: center;
   -ms-flex-align: center;
   align-items: center;
-  min-width: 240px;
+  min-width: 240px;*/
   position: relative;
-  border-radius: 50%;
+  border-radius: 50%; 
 }
-
-
 
 .red-square{
   background: url("/assets/images/icons/reds.png") !important;
   max-width: 240px;
+  min-width: 160px;
+  min-height: 160px;
   height: 100%;
   background-color: #ffffff;
   background-repeat: no-repeat !important;
@@ -2728,19 +2833,22 @@ button.cstm-load-btn {
 .orange-square{
   background: url("/assets/images/icons/oranges.png") no-repeat center / contain;
   max-width: 240px;
+  min-width: 160px;
+  min-height: 160px;
   height: 100%;
   background-color: #ffffff;
   -ms-flex-pack: center;
   justify-content: center;
   -ms-flex-align: center;
   align-items: center;
-  min-width: 240px;
   position: relative;
 }
 
 .yellow-square{
   background: url("/assets/images/icons/yellows.png") !important;
   max-width: 240px;
+  min-width: 160px;
+  min-height: 160px;
   height: 100%;
   background-color: #ffffff;
   background-repeat: no-repeat !important;
@@ -2755,6 +2863,8 @@ button.cstm-load-btn {
 .green-square{
   background: url("/assets/images/icons/greens.png") !important;
   max-width: 240px;
+  min-width: 160px;
+  min-height: 160px;
   height: 100%;
   background-color: #ffffff;
   background-repeat: no-repeat !important;
@@ -2777,12 +2887,20 @@ button.cstm-load-btn {
   max-width: 100px;
 }
 
-.paymentRank-wrapper-head .popular-cards-slider-card-top {
+.paymentRank-wrapper-head .popular-cards-slider-card-top,
+.product-wrapper .popular-cards-slider-card-top {
   min-height: 252px;
 }
 
-.paymentRank-wrapper-head .popular-cards-slider-card-bottom {
+.paymentRank-wrapper-head .popular-cards-slider-card-bottom,
+.product-wrapper .popular-cards-slider-card-bottom {
   min-height: 48px;
+
+  /*--
+  changed by divyanshu
+  --*/
+  max-height: 48px;
+  
 }
 
 /*-- Fateh's css for User Profile Radio styling --*/
@@ -2845,11 +2963,14 @@ button.cstm-load-btn {
 
 .shortforms-container .form__group.field datalist {
   padding: 12px;
-  width: 360px;
-  position: relative;
+  
+  position: absolute;
+  width:90%;
   border-radius: 5px;
   z-index: 999;
-  top: 10px;
+  top: 61px;
+  height:300px;
+  overflow-y: auto;
 }
 
 .shortforms-container .form__group.field datalist option {
@@ -2859,6 +2980,7 @@ button.cstm-load-btn {
   font-family: "Avenir-Heavy";
   line-height: 1.5rem;
   padding: 8px 12px;
+  white-space: break-spaces;
 }
 
 .option-wrapper .shortforms-container .form__group.field select.form__field {
@@ -2875,4 +2997,86 @@ button.cstm-load-btn {
   font-family: "Avenir-Heavy";
   line-height: 2.5rem;
   display: block;
+}
+
+
+.profile-flow .profile-head .profile-container .profile-image > span > img {
+  max-width: 23px;
+  height: auto !important;
+  display: block;
+  margin: 0 auto;
+}
+/*User profile edit icon*/
+.profile-flow .profile-head .profile-container .profile-head-wrapper .profile-image {
+  position: relative;
+}
+
+.profile-flow .profile-head .profile-container .profile-image > label {
+  background: #93D642;
+  display: block;
+  width: 25px;
+  right: 10px;
+  top: 10px;
+  position: absolute;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+/*end*/
+
+.tabcontent .popular-cards-slider-card .app_progress_card_content .left .value:nth-child(2) {
+  margin: 0;
+}
+
+.color-box{
+  height: 18px;
+  width: 18px;
+  margin-top: 5px;
+  margin-right: 10px;
+  border: 1px solid black;
+}
+
+/*-- contact form --*/
+.profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper h5:not(:first-child) {
+  margin-top: 24px;
+}
+
+.profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper h5 {
+  color: #ffffff;
+}
+.hide-form{
+  display: none;
+}
+
+.profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .shortforms-container.personal-style {
+  grid-template-columns: auto auto;
+  grid-gap: 24px;
+}
+
+.profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .shortforms-container {
+  display: grid;
+  margin-top: 16px;
+}
+
+.profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .checkbox-container {
+  margin-top: 24px;
+}
+
+.profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .checkbox-container label {
+  min-height: 24px;
+}
+
+.profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .checkbox-container label::before {
+  border: 2px solid #ffffff;
+}
+
+.profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper .checkbox-container label span {
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.bar-of-progress {
+  z-index: 999999 !important;
 }

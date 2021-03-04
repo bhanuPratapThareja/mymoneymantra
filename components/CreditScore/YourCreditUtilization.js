@@ -1,18 +1,36 @@
+import classNames from 'classnames'
+
 const YourCreditUtilization = ({ creditUtilization }) => {
   return (
-    <section data-aos="fade-up" className="banner container paymentRank aos-init aos-animate">
+    <section
+      data-aos="fade-up"
+      className="banner container paymentRank aos-init aos-animate"
+    >
       <div className="paymentRank-wrapper">
         <div className="paymentRank-wrapper-head">
           <h2>Your Credit Utilization</h2>
           <img
             className="underline-img"
-            src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_rank/underline.png"
+            src="/assets/images/credit-card-flow/green-underline.png"
             alt=""
           />
         </div>
         <div className="paymentRank-wrapper-content">
           <div className="paymentRank-wrapper-content-left left-mobile-view">
-            <div className="value-utilisation">
+            <div
+              className={classNames('value-utilisation', {
+                'green-circle':
+                  parseInt(creditUtilization) >= 0 &&
+                  parseInt(creditUtilization) <= 29,
+                'yellow-circle':
+                  parseInt(creditUtilization) >= 30 &&
+                  parseInt(creditUtilization) <= 49,
+                'orange-circle':
+                  parseInt(creditUtilization) >= 50 &&
+                  parseInt(creditUtilization) <= 80,
+                'red-circle': parseInt(creditUtilization) > 80,
+              })}
+            >
               <h1>{creditUtilization}</h1>
             </div>
           </div>
@@ -20,7 +38,7 @@ const YourCreditUtilization = ({ creditUtilization }) => {
             <p>What does your percentage reflect?</p>
             <div className="progress-bar">
               <img
-                src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/CP_utilization/utilization-meter.png"
+                src="/assets/images/CP_profile/CP_utilization/utilization-meter.png"
                 alt=""
               />
             </div>

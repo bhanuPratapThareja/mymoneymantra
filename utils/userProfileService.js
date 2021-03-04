@@ -7,7 +7,7 @@ export const getPersonalInfo = async () => {
     let customerId = await localStorage.getItem('customerId')
     let { url } = getApiData('getPersonalInfo')
     let response = await axios.get(
-      `${url}?customerId=${customerId ? customerId : 206}`
+      url,{params:{customerId}}
     )
     return response.data
   } catch (err) {
@@ -20,7 +20,7 @@ export const getWorkInfo = async () => {
     let customerId = await localStorage.getItem('customerId')
     let { url } = getApiData('workProfile')
     let response = await axios.get(
-      `${url}?customerId=${customerId ? customerId : 206}`
+      url,{params:{customerId}}
     )
     return response.data
   } catch (err) {
@@ -45,7 +45,7 @@ export const savePersonalInfo = async (
     body.gender = gender ? gender : null
     body.martialStatus = martialStatus ? martialStatus : null
     body.panNo = panNo ? panNo : null
-    body.dob = dob ? moment(dob, 'YYYY-MM-DD').format('DD/MM/YYYY') : null
+    body.dob = dob;
     let response = await axios.post(url, body)
     return response.data
   } catch (err) {
@@ -58,7 +58,7 @@ export const getContactInfo = async () => {
     let customerId = await localStorage.getItem('customerId')
     const { url } = getApiData('contactProfile')
     let response = await axios.get(
-      `${url}?customerId=${customerId ? customerId : 206}`
+      url,{params:{customerId}}
     )
     return response.data
   } catch (err) {
@@ -71,7 +71,7 @@ export const saveContactInfo = async (mobileNo, emailId, address) => {
   try {
     const customerId = localStorage.getItem('customerId')
     const { url } = getApiData('contactProfile')
-    const responseObject = await axios.post(`${url}`, {
+    const responseObject = await axios.post(url, {
       customerId,
       mobileNo,
       emailId,
@@ -87,11 +87,23 @@ export const getAllDocuments = async () => {
   try {
     const customerId = localStorage.getItem('customerId')
     const { url } = getApiData('allDocument')
-    const responseObject = await axios.get(
-      `${url}?customerId=${customerId ? customerId : 101}`
+    let response = await axios.get(
+      url,{params:{customerId}}
     )
-    return responseObject
+    return response
   } catch (err) {
     throw err
   }
+}
+
+
+export const getPictureservice = async() => {
+  
+  const customerId = await localStorage.getItem('customerId')
+      
+  return axios.get(
+    'http://203.122.46.189:8061/customer/api/profile/v1/all-docs',
+    { params: { customerId } }
+  )
+ 
 }

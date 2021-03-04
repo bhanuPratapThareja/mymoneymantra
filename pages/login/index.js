@@ -9,7 +9,7 @@ import Thanks from "../../components/signup/thanks";
 import { messgaes } from "../../utils/messages";
 import { useEffect, useState } from "react";
 import { sendLoginOtp, socialLoginAPi, verifyOtp } from "../../utils/otp";
-import Loader from "../../components/common/Loader";
+
 import SubHeader from "../../components/signup/subheader";
 import CustomImage from "../../components/signup/image";
 const login = (props) => {
@@ -20,60 +20,84 @@ const login = (props) => {
   const [isPartner, setisPartner] = useState(false);
   const [type, settype] = useState("login");
   const [isChecked, setisChecked] = useState(false);
-  const [isLoader, setisLoader] = useState(false);
+
+  const [otpError, setOtpError] = useState(false);
+  const [mobileError, setMobileError] = useState(false);
+  const [mobileErrorMsg, setMobileErrorMsg] = useState("");
   const social = ({ ...val }) => {
     // setname(val.name);
     // setemail(val.email);
     // setsocialType(val.type);
     // settoken(val.id);
-    socialLoginAPi(val.email, val.type, val.id).then(res => {
-      console.log(res);
-      if (res.message == "Login Successful") {
-        localStorage.setItem("customerId", res.customerId)
-        setcounter(counter + 2);
-      }
-      else {
-        alert(res.message);
-      }
-    }).catch(err => {
-      console.log(err);
-    })
+    socialLoginAPi(val.email, val.type, val.id)
+      .then((res) => {
+        console.log(res);
+        if (res.message == "Login Successful") {
+          localStorage.setItem("customerId", res.customerId);
+          setcounter(counter + 2);
+        } else {
+          alert(res.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+  const resend = () => {
+    sendLoginOtp(phone)
+      .then((res) => {
+        const { otpId, customerId, message } = res;
+        setOtpId(otpId);
+        localStorage.setItem("customerId", customerId);
+
+        setMobileError(false);
+        setMobileErrorMsg("");
+      })
+      .catch((err) => {
+        setMobileError(true);
+        setMobileErrorMsg(err.message);
+      })
+      .finally(() => {});
+  };
+
   const counterStep = (i) => {
     if (i == 1 && counter == 0) {
-      setisLoader(true);
       sendLoginOtp(phone)
         .then((res) => {
           const { otpId, customerId, message } = res;
           setOtpId(otpId);
-          // localStorage.setItem("customerId", customerId);
+          localStorage.setItem("customerId", customerId);
           setcounter(counter + 1);
+          setMobileError(false);
+          setMobileErrorMsg("");
         })
         .catch((err) => {
-          alert(err.message);
+          setMobileError(true);
+          setMobileErrorMsg(err.message);
         })
-        .finally(() => {
-          setisLoader(false);
-        });
+        .finally(() => {});
     } else if (otp.length > 0 && counter == 1 && i == 1) {
-      setisLoader(true);
       console.log("in opt");
       verifyOtp(phone, otp, otpId)
         .then((res) => {
           console.log(res);
-          localStorage.setItem("customerId", res.customerId)
+          if (res.message == "OTP Verification Failed") {
+            setOtpError(true);
+            return;
+          }
+          localStorage.setItem("customerId", res.customerId);
           setcounter(counter + 1);
+          setOtpError(false);
         })
         .catch((err) => {
           alert(err.message);
-        })
-        .finally(() => setisLoader(false));
+        });
     } else if (counter == 1 && i == -1) {
       setcounter(counter + i);
     }
   };
   return (
-    <div className='credit-card-flow thankyou-page b2c-thank-you b2c-flow'>
+    <div className={props.pageClasses}>
       <Layout>
         {counter != 2 ? <WelcomeHeader></WelcomeHeader> : null}
         <section
@@ -101,8 +125,8 @@ const login = (props) => {
                           <CustomImage></CustomImage>
                         </>
                       ) : (
-                          <></>
-                        )}
+                        <></>
+                      )}
                       <PhoneNumberCustom
                         social={({ ...val }) => social({ ...val })}
                         setNumber={(val) => setphone(val)}
@@ -110,6 +134,8 @@ const login = (props) => {
                         type={type}
                         isChecked={isChecked}
                         setChecked={() => setisChecked(!isChecked)}
+                        errorMsg={mobileErrorMsg}
+                        error={mobileErrorMsg}
                       ></PhoneNumberCustom>
                     </div>
                   </div>
@@ -126,7 +152,12 @@ const login = (props) => {
                         number
                       </h2>
                       <CustomImage></CustomImage>
-                      <Otp setotp={(val) => setotp(val)} otp={otp}></Otp>
+                      <Otp
+                        error={otpError}
+                        setotp={(val) => setotp(val)}
+                        otp={otp}
+                        resend={() => resend()}
+                      ></Otp>
                     </div>
                   </div>
                 </form>
@@ -135,7 +166,7 @@ const login = (props) => {
                   <CustomButtons
                     nextValid={
                       (phone.length == 10 && isChecked) ||
-                        (counter == 1 && otp.length > 0)
+                      (counter == 1 && otp.length > 0)
                         ? false
                         : true
                     }
@@ -143,8 +174,8 @@ const login = (props) => {
                     counterStep={(i) => counterStep(i)}
                   ></CustomButtons>
                 ) : (
-                    <></>
-                  )}
+                  <></>
+                )}
               </div>
             </div>
           </div>
@@ -157,10 +188,6 @@ const login = (props) => {
           <Thanks></Thanks>
         </div>
       </Layout>
-      <Loader
-        msg={counter == 0 ? messgaes.otpSent : messgaes.validateOtp}
-        isActive={isLoader}
-      ></Loader>
     </div>
   );
 };

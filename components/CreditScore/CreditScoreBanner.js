@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2'
-
-const CreditScoreBanner = ({ accountHistory }) => {
+import CreditScore from'./credit-score';
+const CreditScoreBanner = ({ accountHistory, score }) => {
   const [data, setData] = useState([])
   const [label, setLabel] = useState([])
 
@@ -26,15 +26,13 @@ const CreditScoreBanner = ({ accountHistory }) => {
             <h2>Your Credit Score</h2>
             <img
               className="underline-img"
-              src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/underline.png"
+              src="/assets/images/credit-card-flow/green-underline.png"
               alt=""
             />
           </div>
           <div className="score-scale-img">
-            <img
-              src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/score-scale.png"
-              alt=""
-            />
+          <div className="cp-score-custom">{score}</div>
+            <CreditScore></CreditScore>
           </div>
         </div>
         <div className="creditScore-wrapper-right">
@@ -42,7 +40,7 @@ const CreditScoreBanner = ({ accountHistory }) => {
             <h2>Your Credit Score History</h2>
             <img
               className="underline-img"
-              src="https://the1thing.github.io/MyMoneyMantra/build/images/CP_profile/underline.png"
+              src="/assets/images/credit-card-flow/green-underline.png"
               alt=""
             />
           </div>
@@ -75,7 +73,7 @@ const CreditScoreBanner = ({ accountHistory }) => {
                     },
                   ],
                 }}
-                width={478}
+                width={425}
                 height={239}
                 options={{
                   maintainAspectRatio: false,

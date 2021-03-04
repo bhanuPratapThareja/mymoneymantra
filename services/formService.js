@@ -83,7 +83,7 @@ export const documentUpload = async (docs, documentName, primaryPath) => {
             documentTypeId,
             documentExtension: type.split("/")[1],
             docBytes: base64.split(",")[1]
-        }
+        } 
         docList.push(doc)
     }
     body.docList = docList
@@ -128,7 +128,7 @@ export const generateLead = async (data, primaryPath, formType, productType) => 
             utmCampaign, utmMedium, utmSource, utmRemark,
             referenceType, referenceFirstName, referenceLastName, referenceEmail, referenceMobile,
 
-            yearsCurrentJob, projectrName,
+            yearsCurrentJob, projectrName,profession,annualTurnover,annualReciepts,
         } = data
 
         const productTypeId = productType && productType.product_type_id ? productType.product_type_id : ''
@@ -166,6 +166,8 @@ export const generateLead = async (data, primaryPath, formType, productType) => 
         body.work.designation = designationId ? designationId.designationId : ''
         body.work.qualification = qualificationId ? qualificationId.educationId : ''
         body.work.yearsCurrentJob = yearsCurrentJob
+        body.work.profession = profession ? profession.professionId  : ''
+        body.work.annualTurnover = annualTurnover || annualReciepts
 
         body.contact.mobile[0].mobile = mobile
 
@@ -223,22 +225,23 @@ export const generateLead = async (data, primaryPath, formType, productType) => 
 
         body.existingFacility = []
         // for facility requested
-        if (exisTenorBalMonths || exisLoanAmount || exisEmi || exisRemark || (existingFacilityBank && existingFacilityBank.bankId)) {
+        if (exisTenorBalMonths || exisLoanAmount || exisEmi || exisRemark || (existingFacilityBank && existingFacilityBank.bank_id)) {
             let existingFacilityDetails = {
                 exisTenorBalMonths: exisTenorBalMonths,
                 exisfacility: '',
                 exisLoanAmount: exisLoanAmount,
                 exisEmi: exisEmi,
                 exisRemark: exisRemark,
-                exisBankId: existingFacilityBank && existingFacilityBank.bankId ? existingFacilityBank.bankId : ''
+                exisBankId: existingFacilityBank && existingFacilityBank.bank_id ? existingFacilityBank.bank_id : ''
             }
             body.existingFacility.push(existingFacilityDetails)
         }
 
         body.address = []
         // for residence address
+        
         if (addressline1 || addressline2 || addressline3 || nearByLandmark ||
-            (purposeOfLoan && purposeOfLoan.purposeOfLoanId) || (pincode && pincode.pincode) || (city && city.cityId) || state && state.stateId || stdCode) {
+            propertyType || (pincode && pincode.pincode) || (city && city.cityId) || state && state.stateId || stdCode) {
             let residenceAddress = {
                 addressTypeMasterId: '1000000001',
                 addressline1: addressline1,
@@ -252,7 +255,7 @@ export const generateLead = async (data, primaryPath, formType, productType) => 
                 city: city && city.cityId ? city.cityId : '',
                 state: state && state.stateId ? state.stateId : '',
                 stdCode: stdCode,
-                purposeOfLoan: purposeOfLoan && purposeOfLoan.purposeOfLoanId ? purposeOfLoan.purposeOfLoanId : "",
+                purposeOfLoan: propertyType,
 
             }
             body.address.push(residenceAddress)
@@ -296,7 +299,7 @@ export const generateLead = async (data, primaryPath, formType, productType) => 
 
         // for property address
         if (propertyType || propertyValue || propertyPincode || projectrName ||
-            //(purposeOfLoan &&  purposeOfLoan.purposeOfLoanId)
+            (purposeOfLoan &&  purposeOfLoan.purposeOfLoanId) ||
               propertyCityRadio || propertyCity || propertyState || propertyStdCode || purposeOfLoan) {
             let propertyAddress = {
                 addressTypeMasterId: '1000000004',
@@ -305,7 +308,7 @@ export const generateLead = async (data, primaryPath, formType, productType) => 
                 state: propertyState && propertyState.stateId ? propertyState.stateId : '',
                 stdCode: propertyStdCode,
                 propertyValue: propertyValue,
-                purposeOfLoan: propertyType,
+                purposeOfLoan: purposeOfLoan && purposeOfLoan.purposeOfLoanId ? purposeOfLoan.purposeOfLoanId : "",
                 projectrName : projectrName && projectrName.projectId ? projectrName.projectId : ""
             }
             body.address.push(propertyAddress)

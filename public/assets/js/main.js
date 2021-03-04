@@ -179,11 +179,11 @@ $(document).ready(function () {
 
   //toggle of the profile page options
   //learn more toggle
-  $(".profile-options-wrapper .option").click(function () {
-    $("#" + this.id + "-data").slideToggle("ease-in-out");
-    $("#" + this.id).find("svg").toggleClass("question-active");
-    $("#" + this.id).toggleClass("question-open")
-  })
+  // $(".profile-options-wrapper .option").click(function () {
+  //   $("#" + this.id + "-data").slideToggle("ease-in-out");
+  //   $("#" + this.id).find("svg").toggleClass("question-active");
+  //   $("#" + this.id).toggleClass("question-open")
+  // })
 
 
   initSlickCards = function () {

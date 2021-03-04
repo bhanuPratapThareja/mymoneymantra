@@ -49,6 +49,11 @@ let documents = [
     documentId: "1000000308",
     documentTypeId: "1000000044",
   },
+  {
+    name : 'ITR_attachment',
+    documentId : "1000000306",
+    documentTypeId : "1000000038"
+  },
 ];
 
 export const getDocumentIdandTypeId = (name) => {
