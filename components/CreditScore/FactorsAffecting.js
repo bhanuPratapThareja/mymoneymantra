@@ -3,25 +3,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react';
 const FactorsAffecting = () => {
   const router=useRouter();
-  const [filteredFactors, setfilteredFactors] = useState([]);
-  useEffect(() => {
-    console.log(window);
-   
-  let i =factors.indexOf((item,index)=>
-    router.pathname === item.link
-  )
-  const data=factors.filter((item,index)=> {
-    if(router.pathname !== item.link) {return item}
-  })
-  console.log(data)
-  setfilteredFactors(data);
  
-  }, [])
-  useEffect(() => {
-    if (window !== undefined && window && window.initSlickBanks && filteredFactors.length) {
-      window.initSlickBanks()
-  }
-  }, [filteredFactors])
   return (
     <section
       data-aos="fade-up"
@@ -34,7 +16,7 @@ const FactorsAffecting = () => {
           <b>Credit Score</b>
         </h2>
         <div className="banks-slider">
-              {filteredFactors.map(item=>  <div
+              {factors.map(item=> router.pathname !== item.link? <div
                 key={item.id}
                 className="slide_cell"
                 data-slick-index={item.id}
@@ -54,7 +36,7 @@ const FactorsAffecting = () => {
                   </div>
                 </div>
               </div>
-            )}
+           :<></> )}
               
             </div>
       
