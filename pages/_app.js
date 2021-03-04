@@ -1,5 +1,7 @@
 import '../styles/globals.css'
 import '../styles/custom.css'
+import Router from 'next/router'
+import ProgressBar from '@badrap/bar-of-progress'
 import axios from 'axios'
 import { setAuthToken, getAuthToken, appId, generateCorrelationId } from '../api/headers'
 import { getApiData } from '../api/api'
@@ -37,6 +39,16 @@ axios.interceptors.request.use(async config => {
   newConfig.headers.Authorization = `Bearer ${getAuthToken()}`
   return newConfig
 })
+
+const progress = new ProgressBar({
+  size: 10,
+  color: 'red',
+  className: 'bar-of-progress'
+});
+
+Router.events.on('routeChangeStart', progress.start);
+Router.events.on('routeChangeComplete', progress.finish);
+Router.events.on('routeChangeError', progress.finish);
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
