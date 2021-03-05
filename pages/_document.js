@@ -10,7 +10,7 @@ export default class MyDocument extends Document {
             <Html lang="en">
                 <Head >
                     <title>MyMoneyMantra</title>
-                    <meta name="theme" content="#56AB2F"></meta>
+                    <meta name="theme-color" content="#56AB2F"></meta>
                 </Head>
                 <body data-aos-easing="ease" data-aos-duration="600" data-aos-delay="0">
                     <Main />
