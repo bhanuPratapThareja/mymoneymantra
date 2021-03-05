@@ -3038,6 +3038,9 @@ button.cstm-load-btn {
   .creditProfile-utilization-flow .tipSection {
     margin-top: 32px !important;
   }
+  .creditProfile-age-flow .paymentRank-wrapper-content {
+    padding: 0 !important;
+  }
 }
 
 @media(max-width: 767px) {
