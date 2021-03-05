@@ -13,8 +13,7 @@ import FinancialTools from '../../components/common/FinancialTools'
 import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 
-import { extractListingOffers } from '../../services/componentsService'
-import { viewOffers, viewListingOffers, extractOffers, getProductDecision } from '../../services/offersService'
+import { viewOffers, extractOffers } from '../../services/offersService'
 import { filterOfferCardsInFilterComponent } from '../../utils/listingsFilterHandler'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { addSeoMetaData, removeSeoMetaData } from '../../utils/seoMetaData';
@@ -52,17 +51,9 @@ const Listings = props => {
                 return
             }
             const updatedOffers = await extractOffers(offers)
-            console.log('updatedOffers: ', updatedOffers)
             setOfferCards(updatedOffers)
             setAllOfferCards(updatedOffers)
         }
-    }
-
-    const getCardsWithButtonText = async cards => {
-        const newCards = await getProductDecision(cards, props.productType)
-        console.log(newCards)
-        setOfferCards(newCards)
-        setAllOfferCards(newCards)
     }
 
     const filterOfferCards = category => {
