@@ -126,7 +126,7 @@ const PaymentRecord = ({ onTime, delayed, banks }) => {
                     </div>
                     <div className="popular-cards-slider-card-bottom">
                       <div>
-                        <h5>{/* Rejected: Due to poor Credit Score */}</h5>
+                        <h5>Awesome! No Delayed Payments</h5>
                       </div>
                     </div>
                   </div>
