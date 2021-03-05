@@ -2423,7 +2423,6 @@ button.cstm-load-btn {
   line-height: 24px;
 }
 
-<<<<<<< HEAD
 /*-- Bank items image slider --*/
 .banks-slider .slide_cell img {
   width: auto;
@@ -2460,7 +2459,6 @@ button.cstm-load-btn {
 }
 
 
-=======
 .desktop-overrview-wrapper{
   display: block;
 }
@@ -2480,7 +2478,6 @@ button.cstm-load-btn {
 .creditProfile-utilization-flow .tipSection {
   margin-top: 128px !important;
 }
->>>>>>> origin/dev
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
