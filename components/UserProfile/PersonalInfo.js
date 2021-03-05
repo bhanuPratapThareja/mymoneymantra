@@ -135,10 +135,10 @@ const PersonalInfo = (props) => {
         setGender(gender)
         setMaritalStatus(martialStatus)
         setPanNumber(panNo)
-        setDob(dob ? moment(dob, 'DD/MM/YYYYY').format('DD/MM/YYYY') : null)
+        setDob(dob ? dob : null)
         let mName = checkMartialStatus(martialStatus)
         setmartaialname(mName)
-        setCustomerName(`${firstName} ${lastName}`)
+        setCustomerName(`${firstName} ${lastName?lastName:''}`)
         calculate(res)
       })
       .catch((err) => {
