@@ -147,7 +147,7 @@ const BlogFilter = props => {
                                  <span dangerouslySetInnerHTML={{ __html: header }}></span>
                                  <span dangerouslySetInnerHTML={{ __html: short_text }}></span>
                                  <div className="details">
-                                    <span>{createdDate}//{blogreadTime.text} </span>
+                                    <span>{createdDate} // {blogreadTime.text} </span>
                                     <button onClick={() => onOpenBlog(blog)}>Read more</button>
                                  </div>
                               </div>

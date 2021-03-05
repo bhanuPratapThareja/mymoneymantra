@@ -32,10 +32,11 @@ const Blogger = props => {
 
 
     return (
-        <section data-aos="fade-up" className="container blog-container aos-init aos-animate">
-            <div className="blog">
+        <section data-aos="fade-up" className="container popular-card-container aos-animate aos-init">
+        {/* <section data-aos="fade-up" className="container blog-container aos-init aos-animate"> */}
+            <div className="popular-cards">
                 <div dangerouslySetInnerHTML={{ __html: section_heading }}></div>
-                <div className="blog-wrapper" id="slider_blogs">
+                {/* <div className="blog-wrapper" id="slider_blogs">
                     {randomBlogs.map((blog, i) => {
                         const { header, short_text, image, read_text, redirect_url, id, createdAt, popular, content, published_at } = blog
                         const date = new Date(published_at);
@@ -63,8 +64,41 @@ const Blogger = props => {
                         )
                     })}
 
+                </div> */}
+                  <div className="popular-cards-slider" id="popular-cards-sec" >
+                    {
+                        randomBlogs.map((blog, i) => {
+                            const { header, short_text, image, read_text, redirect_url, id, createdAt, popular, content, published_at } = blog
+                            const date = new Date(published_at);
+                            const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
+                            const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
+                            const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
+                            const createdDate = `${da} ${mo} ${ye}`;
+                            const readingTime = require('reading-time');
+                            const blogreadTime = readingTime(content);
+                            return (
+                                <div key={i} className="blog-wrapper-card single card-1 slide_cell cstm-prd" id="blog-card-1"  onClick={() => onOpenBlog(blog)}>
+                                    <div className='image_1'>
+                                        <Image image={image} />
+                                    </div>
+                                    <div className="content">
+                                        <span dangerouslySetInnerHTML={{ __html: header }}></span>
+                                        <span dangerouslySetInnerHTML={{ __html: short_text }}></span>
+                                        <div className="details">
+                                            <span>{createdDate} // {blogreadTime.text} </span>
+                                            <button onClick={() => onOpenBlog(blog)}>Read more</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+
+
+
                 </div>
             </div>
+            {/* </div> */}
         </section>
     )
 }

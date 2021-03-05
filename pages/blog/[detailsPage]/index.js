@@ -9,34 +9,25 @@ import Strapi from "../../../providers/strapi"
 import { extractOffers, viewOffers } from "../../../services/offersService"
 import { getClassesForPage } from "../../../utils/classesForPage"
 import { getBlogId } from "../../../utils/localAccess"
+import PageNotFound from "../../../components/PageNotFound"
 
 const BlogDetail = props => {
     const [currentUrl, setCurrentUrl] = useState()
     const [blogData, setBlogData] = useState([])
     const [trendingOffers, setTrendingOffers] = useState([])
-    const [productType, setProductType] = useState()
-    const [showContent,setShowContent] = useState(false)
+    const [showContent, setShowContent] = useState(false)
     let strapi = new Strapi()
     useEffect(() => {
-        let blogId = getBlogId('blogId')
-        const getBlogData = async () => {
-            const blog = await strapi.processReq(
-                "GET",
-                `quick-blogs/${blogId}`
-            );
-           let slugForProductTypeData = blog.post_categories[0].slug ? blog.post_categories[0].slug : 'credit-cards'
-            const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${slugForProductTypeData}`)
-           let productTypeId = productTypeData[0].product_type_id
-            const apiOffers = await viewOffers(productTypeId)
+        const getOfferData = async () => {
+            console.log('product type id',props.productType)
+            const apiOffers = await viewOffers(props.productType)
             if (apiOffers) {
                 const { trendings } = apiOffers
-                const trendingOffers = await extractOffers(trendings, productTypeId)
+                const trendingOffers = await extractOffers(trendings, props.productType.product_type_id)
                 setTrendingOffers(trendingOffers)
             }
-            setProductType(productTypeData[0])
-            setBlogData(blog)
         }
-        getBlogData()
+        getOfferData()
         let url = window.location.href
         setCurrentUrl(url)
     }, [props.query])
@@ -45,22 +36,26 @@ const BlogDetail = props => {
         return dynamic.map(block => {
             switch (block.__component) {
                 case 'blocks.blog-texts-component':
-                    return <BlogsDetails key={block.id} data={blogData} blogId={blogData.id} url={currentUrl} allBlogs={props.allBlogs} showContent={showContent} setShowContent = {setShowContent} />
+                    return <BlogsDetails key={block.id} data={props.blog} blogId={props.blog.id} url={currentUrl} allBlogs={props.allBlogs} showContent={showContent} setShowContent={setShowContent} />
                 case 'blocks.blog-social-media-links-component':
-                    return showContent ?  <BlogMediaLinks key={block.id} data={block} url={currentUrl} blogData={blogData} showContent={showContent} />:null
+                    return showContent ? <BlogMediaLinks key={block.id} data={block} url={currentUrl} blogData={props.blog} showContent={showContent} /> : null
                 case "blocks.blog-category":
-                    return  showContent ? <ProductSlider key={block.id} data={block} /> :null;
+                    return showContent ? <ProductSlider key={block.id} data={block} /> : null;
                 case 'offers.trending-offers-component':
-                    return  showContent ?<Offers 
-                        key={block.id} 
+                    return trendingOffers&&trendingOffers.length? <Offers
+                        key={block.id}
                         data={block}
                         blogTrendingOffers={trendingOffers}
-                        
-                    />:null
+                    /> :null
                 case 'blocks.similar-blogs-component':
-                    return  showContent ? <SimilarArticles key={block.id} data={props.allBlogs} categories={blogData.post_categories} subCategories={blogData.post_sub_categories} /> :null
+                    return showContent ? <SimilarArticles key={block.id} data={props.allBlogs} categories={blogData.post_categories} subCategories={blogData.post_sub_categories} /> : null
             }
         })
+    }
+    if (props.blog == null) {
+        return <Layout>
+            <PageNotFound />
+        </Layout>
     }
     return (
         <div className={props.pageClasses}>
@@ -82,13 +77,19 @@ export async function getServerSideProps(ctx) {
 
     const blogData = await strapi.processReq(
         "GET",
-        `posts/${query.slug}`
+        `quick-blogs?slug=${query.detailsPage}`
     );
     const pageData = await strapi.processReq(
         "GET",
         `pages?slug=${primaryPath}-${secondaryPath}`
     );
+    const blog = blogData && blogData.length ? blogData[0] : null
+    let slugForProductTypeData =blog? blog.post_categories[0].slug :null
+    console.log("slugForProductTypeData",slugForProductTypeData)
+    const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${slugForProductTypeData}`)
+    let productType = productTypeData&&productTypeData.length?productTypeData[0]:null
     const data = pageData && pageData.length ? pageData[0] : null;
-    return { props: { data, pageClasses, blogData, allBlogs, query } };
+    console.log('slug for offers',productTypeData[0])
+    return { props: { data, pageClasses, allBlogs, query, blog, productType } };
 }
 export default BlogDetail

@@ -32,10 +32,6 @@ export const getFormData = ()  => {
     return JSON.parse(sessionStorage.getItem('formData')) 
 }
 
-export const clearFormData = () => {
-    sessionStorage.removeItem('formData')
-}
-
 export const setBlogId = (blogId) => {
     localStorage.setItem('blogId', blogId)
 }

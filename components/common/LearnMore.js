@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import $ from 'jquery'
+import { addLearnMoreSchema, removeSeoMetaData } from '../../utils/seoMetaData'
 
 const LearnMore = props => {
-
    const { section_heading, learn_more } = props.data
-   useEffect(() => {
 
+   useEffect(() => {
       $(".learn-more-wrapper-content .question").click(function () {
          $("#" + this.id + "-ans").slideToggle("ease-in-out");
          $("#" + this.id).find("svg").toggleClass("question-active");
@@ -21,11 +21,16 @@ const LearnMore = props => {
             $(this).closest(".form__group").removeClass('filled-input');
             $(this).closest(".form__group").addClass("active-input");
             $("#" + this.id + "-drop").show("slow");
-         });
+         })
+      const scriptId = addLearnMoreSchema(learn_more)
+      return () => {
+         removeSeoMetaData(scriptId)
+       }
    }, [])
 
+
    return (
-      <section data-aos="fade-up" className="container aos-init aos-animate">         
+      <section data-aos="fade-up" className="container aos-init aos-animate">
          <div className="learn-more">
             <h2>{section_heading}</h2>
             <div className="learn-more-wrapper">

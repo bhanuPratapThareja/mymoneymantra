@@ -41,14 +41,14 @@ const BlogList = (props) => {
     }
     return (
         <section className="blogs-filter container">
-            <div className="filter-cards">
+            <div className='filter-cards'>
                 <InfiniteScroll
                     dataLength={blogsToDisplay.length}
                     hasMore={hasMore}
-                    loader={blogsToDisplay.length ? <h2>Loading...</h2> : ''}
+                    loader={blogsToDisplay.length ? <h2 className="cstm-btn-center">Loading...</h2> : ''}
                     next={fetchMoreData}
                 >
-                    <div className="filter-cards-wrapper" >
+                    <div className={blogsToDisplay.length ? "filter-cards-wrapper" : 'cstm-no-post-found'} >
                         {blogsToDisplay.length ? blogsToDisplay.map((blog, i) => {
                             const { header, short_text, image, read_text, redirect_url, id, createdAt, published_at, content } = blog
                             const date = new Date(published_at);
@@ -75,7 +75,7 @@ const BlogList = (props) => {
                                     </div>
                                 </div>
                             )
-                        }) : <div>No Result Found</div>}
+                        }) : <div >No Post Found</div>}
                     </div>
                 </InfiniteScroll>
             </div>
