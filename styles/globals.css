@@ -488,6 +488,7 @@ label {
         .popular-cards-slider-card-top .fee h5 b {
           color: #221F1F; }
   .popular-cards-slider-card-bottom {
+    min-height: 36px;
     padding: 12px 32px;
     background: linear-gradient(90deg, #3080CF 0%, #356BB5 35.94%, #263A73 100%); }
     @media (max-width: 768px) {

@@ -40,7 +40,7 @@ const accounts = (props) => {
     <div className={props.pageClasses}>
       <Layout>
         
-        <div class="mobile-background"></div>
+        <div className="mobile-background"></div>
         <TotalAccounts totalAccount={cpAccountsData?.totalAccount} />
         <TipSection />
         <FactorsAffecting />
@@ -50,7 +50,7 @@ const accounts = (props) => {
           name={cpAccountsData?.applicantName}
           banks={props?.data}
         />
-        <Offers data={{section_heading:'Offers For You'}} />
+        <Offers componentType="trneding" data={{section_heading:'Offers For You'}} />
       </Layout>
     </div>
   )
