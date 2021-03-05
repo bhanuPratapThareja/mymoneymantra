@@ -2425,6 +2425,41 @@ button.cstm-load-btn {
   line-height: 24px;
 }
 
+/*-- Bank items image slider --*/
+.banks-slider.customBankSlider .slide_cell img {
+  width: auto;
+}
+
+.banks-slider.customBankSlider .slide_cell > div {
+  background: #fff;
+  padding: 15px 40px;
+  border-radius: 5px;
+  align-items: center;
+  cursor: pointer;
+  max-width: 100%;
+  display: flex;
+  min-height: 120px;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.banks-slider.customBankSlider .slide_cell > div img {
+  max-width: 50px;
+  height: auto;
+}
+
+.banks-slider.customBankSlider .slide_cell {
+  padding: 0 10px;
+}
+
+.banks-slider.customBankSlider .slick-arrow {
+  cursor: pointer;
+}
+
+.banks-holder.customBankSlider .container.banks > div {
+  padding: 0;
+}
+
 .desktop-overrview-wrapper{
   display: block;
 }
@@ -3099,6 +3134,20 @@ button.cstm-load-btn {
   .creditProfile-score-flow .app_progress_card_content {
     margin-top: 0px !important;
   }
+
+  .banks-slider.customBankSlider .slide_cell > div {
+    padding: 15px 30px;
+    min-height: 100px;
+  }
+  
+  .banks-slider.customBankSlider .slide_cell {
+    padding: 0 5px;
+  }
+
+  .banks-slider.customBankSlider .slick-slide {
+    margin-right: 5px;
+  }
+  
   .desktop-overrview-wrapper{
     display: none;
   }
