@@ -58,7 +58,7 @@ class LongForm extends React.Component {
     
     let noOfMandatoryInputs = 0
     let enableCheckboxes = []
-    let leadId = getLeadId(primaryPath)
+    let leadId = getLeadId()
 
     for (let i = 0; i < longFormSections.length; i++) {
       const long_form_blocks = longFormSections[i].sections[0].long_form_blocks
@@ -450,7 +450,7 @@ class LongForm extends React.Component {
           primaryPath = 'personal-loans'
         }
 
-        setLeadId(leadId, primaryPath)
+        setLeadId(leadId)
         setLeadBank(leadBank)
         const pathname = `/thank-you`
         const query = { primaryPath }

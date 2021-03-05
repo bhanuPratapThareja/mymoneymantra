@@ -177,7 +177,7 @@ class ShortExtendedForm extends React.Component {
         try {
             const res = await this.onSubmitShortForm()
             const leadId = res.data.leadId
-            setLeadId(leadId, this.props.primaryPath)
+            setLeadId(leadId)
             sendNotification(leadId)
             this.setState({ currentSlide: `${sf}-1`, slideIndex: 1, slideButtonText: 'Next' }, () => {
                 goToSlides()

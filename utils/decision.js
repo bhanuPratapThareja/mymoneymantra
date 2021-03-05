@@ -16,7 +16,7 @@ export const makeDecision = (buttonText, offer, primaryPath, changePageType) => 
         let data = {}
         data.leadBank = leadBank
         clearFormData()
-        clearLeadId(primaryPath)
+        clearLeadId()
         setFormData(data)
       } else {
         pathname = `/thank-you`
