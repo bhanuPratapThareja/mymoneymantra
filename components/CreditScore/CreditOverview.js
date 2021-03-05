@@ -34,7 +34,7 @@ const CreditOverview = (props) => {
           </div>
           
           
-          <div className="creditOverview-wrapper-left-content">
+          <div className="creditOverview-wrapper-left-content desktop-overrview-wrapper">
             {props.overview && props.overview.length ? (
               props.overview.map((item, index) => (
                 <div className="creditOverview-components">
@@ -56,7 +56,23 @@ const CreditOverview = (props) => {
               <DoughnutChart overview={props?.overview} colors={customColor} />
               
             </div>
+        </div>
+        <div className="creditOverview-wrapper-left-content mobile-overrview-wrapper">
+        {props.overview && props.overview.length ? (
+          props.overview.map((item, index) => (
+            <div className="creditOverview-components">
+              <div
+                style={{ backgroundColor: `${customColor[index]}` }}
+                className="color-box"
+              ></div>
+              <p className="sector">{item.productType} -</p>
+              <p className="percentages">{item.productPercent}%</p>
             </div>
+          ))
+        ) : (
+          <></>
+        )}
+        </div>
       </div>
     </section>
   )

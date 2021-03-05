@@ -1,9 +1,10 @@
 import Axios from 'axios'
 import { getApiData } from '../api/api'
+import { getItem, keys } from './storage'
 
 export const getCreditScore = async () => {
   try {
-    const customerId = localStorage.getItem('customerId')
+    const customerId = await getItem(keys.customerId);
     const { url, body } = getApiData('creditProfileScore')
     body.customerId = customerId 
     const response = await Axios.post(`${url}`, body)
@@ -15,7 +16,7 @@ export const getCreditScore = async () => {
 
 export const getCreditAccounts = async () => {
   try {
-    let customerId = localStorage.getItem('customerId')
+    const customerId = await getItem(keys.customerId);
     let { url, body } = getApiData('creditProfileAccounts')
     body.customerId = customerId 
     let response = await Axios.post(`${url}`, body)
@@ -27,7 +28,7 @@ export const getCreditAccounts = async () => {
 
 export const getCreditAge = async () => {
   try {
-    let customerId = localStorage.getItem('customerId')
+    const customerId = await getItem(keys.customerId);
     let { url, body } = getApiData('creditProfileAge')
     body.customerId = customerId 
     let response = await Axios.post(`${url}`, body)
@@ -39,7 +40,7 @@ export const getCreditAge = async () => {
 
 export const getCreditEnquiries = async () => {
   try {
-    let customerId = localStorage.getItem('customerId')
+    const customerId = await getItem(keys.customerId);
     let { url, body } = getApiData('creditProfileEnquiries')
     body.customerId = customerId 
     let response = await Axios.post(`${url}`, body)
@@ -51,7 +52,7 @@ export const getCreditEnquiries = async () => {
 
 export const getCreditRank = async () => {
   try {
-    let customerId = localStorage.getItem('customerId')
+    const customerId = await getItem(keys.customerId);
     let { url, body } = getApiData('creditProfileRank')
     body.customerId = customerId 
     let response = await Axios.post(`${url}`, body)
@@ -63,7 +64,7 @@ export const getCreditRank = async () => {
 
 export const getCreditUtilization = async () => {
   try {
-    let customerId = localStorage.getItem('customerId')
+    const customerId = await getItem(keys.customerId);
     let { url, body } = getApiData('creditProfileUtilization')
     body.customerId = customerId 
     let response = await Axios.post(`${url}`, body)

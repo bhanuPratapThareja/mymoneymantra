@@ -10,8 +10,8 @@ const PersonalInfo = (props) => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [dob, setDob] = useState('')
-  const [gender, setGender] = useState('')
-  const [maritalStatus, setMaritalStatus] = useState('')
+  const [gender, setGender] = useState(null)
+  const [maritalStatus, setMaritalStatus] = useState(null)
   const [panNumber, setPanNumber] = useState('')
   const [martaialname, setmartaialname] = useState('')
   const [errMsg, setErrMsg] = useState('')
@@ -135,10 +135,10 @@ const PersonalInfo = (props) => {
         setGender(gender)
         setMaritalStatus(martialStatus)
         setPanNumber(panNo)
-        setDob(dob ? moment(dob, 'DD/MM/YYYYY').format('DD/MM/YYYY') : null)
+        setDob(dob ? dob : null)
         let mName = checkMartialStatus(martialStatus)
         setmartaialname(mName)
-        setCustomerName(`${firstName} ${lastName}`)
+        setCustomerName(`${firstName} ${lastName?lastName:''}`)
         calculate(res)
       })
       .catch((err) => {
@@ -195,7 +195,7 @@ const PersonalInfo = (props) => {
     <div className="personal-wrapper">
       {editing ? (
         <form
-          autoComplete={false}
+          autoComplete={"off"}
           className="personal-forms-wrapper"
           style={{ display: 'block' }}
           onSubmit={submitHandler}
@@ -204,7 +204,7 @@ const PersonalInfo = (props) => {
           <div className="shortforms-container personal-style">
             <div className="form__group field">
               <input
-                autoComplete={false}
+                autoComplete={"off"}
                 value={firstName}
                 className="form__field"
                 type="text"
@@ -220,7 +220,7 @@ const PersonalInfo = (props) => {
             </div>
             <div className="form__group field">
               <input
-                autoComplete={false}
+                autoComplete={"off"}
                 value={lastName}
                 className="form__field"
                 type="text"
@@ -248,7 +248,7 @@ const PersonalInfo = (props) => {
                   className="form__field profile-dob datepicker gj-textbox-md"
                   type="text"
                   id="dob"
-                  autoComplete={false}
+                  autoComplete={"off"}
                   format="DD/MM/YYYY"
                   placeholder="DD / MM / YYYY"
                   required=""
@@ -278,7 +278,7 @@ const PersonalInfo = (props) => {
               id="female"
               name="gender"
               required=""
-              autoComplete={false}
+              autoComplete={"off"}
               onChange={(e) => setGender(e.target.value)}
               defaultChecked={gender == 0 ? true : false}
             />
@@ -299,7 +299,7 @@ const PersonalInfo = (props) => {
               id="other"
               name="gender"
               required=""
-              autoComplete={false}
+              autoComplete={"off"}
               onChange={(e) => setGender(e.target.value)}
               defaultChecked={gender == 2 ? true : false}
             /> */}
@@ -317,7 +317,7 @@ const PersonalInfo = (props) => {
               id="single"
               name="Marital"
               required=""
-              autoComplete={false}
+              autoComplete={"off"}
               defaultChecked={maritalStatus == 0 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
             />
@@ -328,7 +328,7 @@ const PersonalInfo = (props) => {
               id="married"
               name="Marital"
               required=""
-              autoComplete={false}
+              autoComplete={"off"}
               defaultChecked={maritalStatus == 1 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
             />
@@ -339,7 +339,7 @@ const PersonalInfo = (props) => {
               id="separated"
               name="Marital"
               required=""
-              autoComplete={false}
+              autoComplete={"off"}
               defaultChecked={maritalStatus == 2 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
             /> */}
@@ -349,7 +349,7 @@ const PersonalInfo = (props) => {
               type="radio"
               id="divorced"
               name="Marital"
-              autoComplete={false}
+              autoComplete={"off"}
               required=""
               defaultChecked={maritalStatus == 3 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
@@ -361,7 +361,7 @@ const PersonalInfo = (props) => {
               id="widowed"
               name="Marital"
               required=""
-              autoComplete={false}
+              autoComplete={"off"}
               defaultChecked={maritalStatus == 4 ? true : false}
               onChange={(e) => setMaritalStatus(e.target.value)}
             /> */}
@@ -382,7 +382,7 @@ const PersonalInfo = (props) => {
                 id="l-pan"
                 placeholder="PAN Number"
                 required=""
-                autoComplete={false}
+                autoComplete={"off"}
                 onChange={(e) =>
                   setPanNumber(
                     e.target.value
@@ -428,7 +428,7 @@ const PersonalInfo = (props) => {
                 type="text"
                 value={`${firstName} ${lastName}`}
                 id="full-name"
-                autoComplete={false}
+                autoComplete={"off"}
                 placeholder="Full Name"
                 required=""
                 disabled
@@ -444,7 +444,7 @@ const PersonalInfo = (props) => {
                 type="text"
                 value={dob != null ? dob : 'DD/MM/YYYY'}
                 id="dob"
-                autoComplete={false}
+                autoComplete={"off"}
                 placeholder="Date of Birth"
                 required=""
                 disabled
@@ -468,7 +468,7 @@ const PersonalInfo = (props) => {
                     : 'Gender'
                 }
                 id="gender"
-                autoComplete={false}
+                autoComplete={"off"}
                 placeholder="Gender"
                 required=""
                 disabled
@@ -482,7 +482,7 @@ const PersonalInfo = (props) => {
                 readOnly={true}
                 className="form__field"
                 type="text"
-                autoComplete={false}
+                autoComplete={"off"}
                 value={martaialname ? martaialname : 'Marital Status'}
                 id="marital-Status"
                 placeholder="Marital Status"
@@ -498,7 +498,7 @@ const PersonalInfo = (props) => {
                 readOnly={true}
                 className="form__field"
                 type="text"
-                autoComplete={false}
+                autoComplete={"off"}
                 value={panNumber ? panNumber : 'PAN number'}
                 id="pan-num"
                 placeholder="PAN Number"
