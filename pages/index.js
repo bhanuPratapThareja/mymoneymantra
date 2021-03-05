@@ -20,7 +20,6 @@ import { addSeoMetaData, removeSeoMetaData } from '../utils/seoMetaData'
 const Home = props => {
 
     useEffect(() => {
-        localStorage.clear()
         const { scriptId, canonicalId, metaDescriptionId, metaKeywordId } = addSeoMetaData(props.data, props.data.id)
         return () => {
             removeSeoMetaData(scriptId, canonicalId, metaDescriptionId, metaKeywordId)

@@ -12,7 +12,7 @@ import Blogger from '../components/common/Blogger'
 import LearnMore from '../components/common/LearnMore'
 
 import { getClassesForPage } from '../utils/classesForPage'
-import { getLeadId, getLeadBank } from '../utils/localAccess'
+import { getLeadId, getLeadBank } from '../utils/sessionAccess'
 
 const ThankYouPage = props => {
 

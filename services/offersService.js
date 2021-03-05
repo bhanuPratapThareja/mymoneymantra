@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { getApiData } from '../api/api'
 import Strapi from '../providers/strapi'
-import { getLeadId } from '../utils/localAccess'
+import { getLeadId } from '../utils/sessionAccess'
 import { unpackComponents } from './componentsService'
 import { EConnect } from '../utils/types'
 
@@ -11,7 +11,6 @@ export const viewOffers = async productType => {
     const { url, body } = getApiData('viewOffers')
     body.customerId = ''
     body.productId = productType && productType.product_type_id ? productType.product_type_id : ''
-
     try {
         const res = await axios.post(url, body)
         return res.data
@@ -67,7 +66,55 @@ export const saveOffers = async () => {
     }
 }
 
-export const getProductDecision = (offers, primaryPath, productType) => {
+export const getListingOffers = async productType => {
+    const { url, body } = getApiData('listing')
+    body.customerId = ''
+    body.leadId = getLeadId()
+    body.productId = productType && productType.product_type_id ? productType.product_type_id : ''
+    try {
+        const res = await axios.post(url, body)
+        return res.data
+    } catch { }
+}
+
+export const extractListingOffers = data => {
+    return new Promise((resolve) => {
+        if(!data) {
+            resolve([])
+        }
+
+        const components = data.dynamic
+        let componentArray = []
+
+        components.forEach(component => {
+            componentArray.push(component.__component)
+        })
+
+        if (!componentArray.includes('blocks.listing-cards')) {
+            resolve([])
+        }
+
+        components.forEach(component => {
+            if (component.__component === 'blocks.listing-cards') {
+                let listiingOffers = []
+                let pendingComponents = [...component.product_v_2s]
+                if (!pendingComponents.length) {
+                    resolve([])
+                }
+                component.product_v_2s.forEach(async item => {
+                    const offer = await unpackComponents(item)
+                    listiingOffers.push(offer)
+                    pendingComponents.shift()
+                    if (!pendingComponents.length) {
+                        resolve(listiingOffers)
+                    }
+                })
+            }
+        })
+    })
+}
+
+export const getProductDecision = (offers, productType) => {
     const promise = new Promise((resolve) => {
         const pendingOffers = [...offers]
         if (!pendingOffers.length) {

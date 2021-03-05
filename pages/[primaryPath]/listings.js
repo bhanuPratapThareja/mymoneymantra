@@ -14,11 +14,11 @@ import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 
 import { extractListingOffers } from '../../services/componentsService'
-import { getProductDecision } from '../../services/offersService'
+import { getListingOffers, getProductDecision } from '../../services/offersService'
 import { filterOfferCardsInFilterComponent } from '../../utils/listingsFilterHandler'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { addSeoMetaData, removeSeoMetaData } from '../../utils/seoMetaData';
-import { getLeadId } from '../../utils/localAccess'
+import { getLeadId } from '../../utils/sessionAccess'
 
 const Listings = props => {
     const router = useRouter()
@@ -32,7 +32,7 @@ const Listings = props => {
             goToLandingPage()
             return
         }
-        getListingOffers()
+        loadListingOffers()
         const { scriptId, canonicalId } = addSeoMetaData(props.data, props.data.id)
         return () => {
             removeSeoMetaData(scriptId, canonicalId)
@@ -44,15 +44,19 @@ const Listings = props => {
         router.push(`/${primaryPath}`)
     }
 
-    const getListingOffers = async () => {
+    const loadListingOffers = async () => {
         if (props.data) {
             const listingOffers = await extractListingOffers(props.data)
             getCardsWithButtonText(listingOffers)
         }
+        // const apiListingOffers = await getListingOffers(props.productType)
+        // console.log('apiListingOffers: ', apiListingOffers)
+        // const updatedListingOffers
     }
 
     const getCardsWithButtonText = async cards => {
-        const newCards = await getProductDecision(cards, props.primaryPath, props.productType)
+        const newCards = await getProductDecision(cards, props.productType)
+        console.log(newCards)
         setOfferCards(newCards)
         setAllOfferCards(newCards)
     }

@@ -5,7 +5,7 @@ import { uniq, debounce } from "lodash"
 import { generateInputs } from "../../utils/inputGenerator"
 import { getDropdownList } from "../../services/formService"
 import { generateLead, sendNotification, submitOtp, getOtp } from "../../services/formService"
-import { setLeadId, getLeadId, setLeadBank } from "../../utils/localAccess"
+import { setLeadId, getLeadId, setLeadBank } from "../../utils/sessionAccess"
 import { getWholeNumberFromCurrency } from "../../utils/formattedCurrency"
 import ImageComponent from '../../components/ImageComponent/ImageComponent'
 import { lf } from '../../utils/types'

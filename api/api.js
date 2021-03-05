@@ -66,16 +66,20 @@ const api = {
       devUrl: "masters/api/master/v2/pincode",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: { name: "" ,
-      bankId :"" }
+      body: {
+        name: "",
+        bankId: ""
+      }
     },
     designation: {
       devUrl: "masters/api/master/v1/designation",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: { name: "",
-      bankId : "",
-      productId :""}
+      body: {
+        name: "",
+        bankId: "",
+        productId: ""
+      }
     },
     qualification: {
       devUrl: "masters/api/master/v1/qualification",
@@ -99,14 +103,16 @@ const api = {
       devUrl: "masters/api/master/v1/purpose-of-loan",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: { name: "",
-      productId : ""}
+      body: {
+        name: "",
+        productId: ""
+      }
     },
-    profession : {
+    profession: {
       devUrl: "masters/api/master/v1/profession",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: { name: ""}
+      body: { name: "" }
     },
     leadProductDecision: {
       devUrl: "lead/api/lead/v1/product/decision",
@@ -239,13 +245,19 @@ const api = {
       devUrl: "customer/api/customer/v1/view-offers",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: { customerId: '9999000090', productId: '' }
+      body: { customerId: '', productId: '' }
+    },
+    listing: {
+      devUrl: "customer/api/customer/v1/listing",
+      uatUrl: "api/master/v1/",
+      prodUrl: "api/master/v1/",
+      body: { customerId: '', leadId: '', productId: '' }
     },
     saveOffers: {
       devUrl: "customer/api/customer/v1/profile/save-offers",
       uatUrl: "api/master/v1/",
       prodUrl: "api/master/v1/",
-      body: { customerId: '9999000090', offerId: '' }
+      body: { customerId: '', offerId: '' }
     },
     blogLikeDislike: {
       devUrl: "customer/api/blog/v1/blog-sentiment",

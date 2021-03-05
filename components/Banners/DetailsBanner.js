@@ -22,7 +22,7 @@ const DetailsBanner = props => {
             setProductData(props.productData)
             return
         }
-        const productWithDesicion = await getProductDecision([props.productData], props.primaryPath, props.productType)
+        const productWithDesicion = await getProductDecision([props.productData], props.productType)
         setProductData(productWithDesicion[0])
     }
 

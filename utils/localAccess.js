@@ -1,35 +1,23 @@
-export const setLeadId = newLeadId => {
-    sessionStorage.setItem('leadId', newLeadId)
-}
-
-export const getLeadId = () => {
-    return sessionStorage.getItem('leadId')
-}
-
-export const clearLeadId = () => {
-    sessionStorage.removeItem('leadId')
-}
-
-export const setLeadBank = leadBank => {
-    sessionStorage.setItem('leadBank', JSON.stringify(leadBank))
-}
-
-export const getLeadBank = () => {
-    return JSON.parse(sessionStorage.getItem('leadBank'))
-}
-
-export const clearLeadBank = () => {
-    sessionStorage.removeItem('leadBank')
-}
-
 export const setFormData = data => {
     const previouslySavedData = JSON.parse(localStorage.getItem('formData'))
     const formData =  { ...previouslySavedData, ...data }
-    sessionStorage.setItem('formData', JSON.stringify(formData))
+    localStorage.setItem('formData', JSON.stringify(formData))
 }
 
 export const getFormData = ()  => {
-    return JSON.parse(sessionStorage.getItem('formData')) 
+    return JSON.parse(localStorage.getItem('formData')) 
+}
+
+export const clearFormData = ()  => {
+    return localStorage.removeItem('formData')
+}
+
+export const clearFieldInFormData = field => {
+    const formData = JSON.parse(localStorage.getItem('formData'))
+    if(formData) {
+        delete formData[field]  
+        localStorage.setItem('formData', JSON.stringify(formData))
+    }
 }
 
 export const setBlogId = (blogId) => {

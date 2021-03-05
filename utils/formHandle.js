@@ -3,6 +3,7 @@ import { isInputValid, isMonetaryValid, isDateValid } from "./formValidations"
 import { getBase64, documentUpload, generateLead } from "../services/formService"
 import { getFormattedName } from "./formatDataForApi"
 import { getWholeNumberFromCurrency, getFormattedCurrency } from "./formattedCurrency"
+import { getLeadBank } from "./sessionAccess"
 import { setFormData, getFormData } from "./localAccess"
 import { sf } from './types'
 
@@ -583,25 +584,23 @@ export const getSfData = (slides) => {
   slides.forEach((slide) => {
     slide.inputs.forEach((input) => {
       switch (input.type) {
-        case "input_with_dropdown":
+        case 'input_with_dropdown':
           data[input.end_point_name] = input.selectedItem
           break
 
-        case "money":
+        case 'money':
           data[input.end_point_name] = getWholeNumberFromCurrency(input.value)
           break
 
-        case "checkbox":
-          input.checkbox.checkbox_input.forEach((box) => {
+        case 'checkbox':
+          input.checkbox.checkbox_input.forEach(box => {
             data[box.end_point_name] = box.value
           })
           break
 
         default:
           if (input.end_point_name === "fullName" && input.value) {
-            const { fullName, firstName, lastName } = getFormattedName(
-              input.value
-            )
+            const { fullName, firstName, lastName } = getFormattedName(input.value)
             data[input.end_point_name] = fullName
             data["firstName"] = firstName
             data["lastName"] = lastName
@@ -611,6 +610,8 @@ export const getSfData = (slides) => {
       }
     })
   })
+  const leadBank =  getLeadBank()
+  if(leadBank) data.leadBank = leadBank
   return data
 }
 

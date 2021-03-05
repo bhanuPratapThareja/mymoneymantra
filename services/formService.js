@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Strapi from '../providers/strapi'
 import { getApiData } from '../api/api'
-import { getLeadId } from '../utils/localAccess'
+import { getLeadId } from '../utils/sessionAccess'
 import { getFormattedDate } from '../utils/formatDataForApi'
 import { getDocumentIdandTypeId } from '../utils/uploadDocumentHelper'
 import { sf, lf } from '../utils/types'

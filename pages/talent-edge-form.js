@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import Strapi from '../providers/strapi'
 import Layout from '../components/Layout'
 import LongForm from '../components/common/LongForm'
-import { clearLeadBank, clearLeadId } from '../utils/localAccess'
+import { clearLeadBank, clearLeadId } from '../utils/sessionAccess'
 
 const TalentEdgeForm = props => {
 

@@ -7,7 +7,7 @@ import PersonalLoansBanner from '../../components/Banners/PersonalLoansBanner'
 import HomeLoansBanner from '../../components/Banners/HomeLoansBanner'
 import UspCards from '../../components/common/UspCards'
 import CreditScore from '../../components/common/CreditScore'
-
+import Offers from '../../components/common/Offers'
 import BankSlider from '../../components/common/BankSlider'
 import Rewards from '../../components/common/Rewards'
 import FinancialTools from '../../components/common/FinancialTools'
@@ -15,10 +15,11 @@ import ShortExtendedForm from '../../components/common/ShortExtendedForm'
 import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 import PageNotFound from '../../components/PageNotFound'
+
 import { getClassesForPage } from '../../utils/classesForPage'
 import { addSeoMetaData, removeSeoMetaData } from '../../utils/seoMetaData'
-import { clearLeadBank, clearLeadId } from '../../utils/localAccess';
-import Offers from '../../components/common/Offers'
+import { clearLeadId, clearLeadBank } from '../../utils/sessionAccess'
+import { clearFieldInFormData } from '../../utils/localAccess'
 
 const PrimaryPage = props => {
 
@@ -28,8 +29,9 @@ const PrimaryPage = props => {
     window.scrollTo(0, 0)
     setFormRedirection(props.formRedirection)
     if(!props.formRedirection) {
-      clearLeadBank()
       clearLeadId()
+      clearLeadBank()
+      clearFieldInFormData('leadBank')
     }
     const { scriptId, canonicalId, metaDescriptionId, metaKeywordId } = addSeoMetaData(props.data, props.data.id)
     return () => {

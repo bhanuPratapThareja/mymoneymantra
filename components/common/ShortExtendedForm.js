@@ -8,7 +8,7 @@ import { withRouter } from 'next/router'
 import { getDropdownList } from '../../services/formService'
 import { getOtp, submitOtp, sendNotification } from '../../services/formService'
 import { getDevice } from '../../utils/getDevice'
-import { setLeadId } from '../../utils/localAccess'
+import { setLeadId } from '../../utils/sessionAccess'
 import { sf } from '../../utils/types'
 import {
     textTypeInputs,
