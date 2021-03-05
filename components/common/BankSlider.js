@@ -24,7 +24,7 @@ const BankSlider = props => {
             <div className="blue-patch"></div>
             <div className="container banks">
                 <div dangerouslySetInnerHTML={{ __html: bank_slider_heading }}></div>
-                <div className="banks-slider">
+                <div className="banks-slider customBankSlider">
                     {bank_slider_images_new.map((image) => {
                         return (
                             <div className="slide_cell" key={image.id} >

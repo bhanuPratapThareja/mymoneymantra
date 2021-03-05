@@ -2424,11 +2424,11 @@ button.cstm-load-btn {
 }
 
 /*-- Bank items image slider --*/
-.banks-slider .slide_cell img {
+.banks-slider.customBankSlider .slide_cell img {
   width: auto;
 }
 
-.banks-slider .slide_cell > div {
+.banks-slider.customBankSlider .slide_cell > div {
   background: #fff;
   padding: 15px 40px;
   border-radius: 5px;
@@ -2441,23 +2441,22 @@ button.cstm-load-btn {
   flex-direction: column;
 }
 
-.banks-slider .slide_cell > div img {
+.banks-slider.customBankSlider .slide_cell > div img {
   max-width: 50px;
   height: auto;
 }
 
-.banks-slider .slide_cell {
+.banks-slider.customBankSlider .slide_cell {
   padding: 0 10px;
 }
 
-.banks-slider .slick-arrow {
+.banks-slider.customBankSlider .slick-arrow {
   cursor: pointer;
 }
 
-.banks-holder .container.banks > div {
+.banks-holder.customBankSlider .container.banks > div {
   padding: 0;
 }
-
 
 .desktop-overrview-wrapper{
   display: block;
@@ -3090,16 +3089,16 @@ button.cstm-load-btn {
     margin-top: 0px !important;
   }
 
-  .banks-slider .slide_cell > div {
+  .banks-slider.customBankSlider .slide_cell > div {
     padding: 15px 30px;
     min-height: 100px;
   }
   
-  .banks-slider .slide_cell {
+  .banks-slider.customBankSlider .slide_cell {
     padding: 0 5px;
   }
 
-  .banks-slider .slick-slide {
+  .banks-slider.customBankSlider .slick-slide {
     margin-right: 5px;
   }
   
