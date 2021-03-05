@@ -136,7 +136,7 @@ const Documents = (props) => {
       documentExtension,
       documentId:aadhaar.documentId
     };
-    const uploadStatus = await uploadDocument({...requestBody});
+    const uploadStatus = await uploadDocument(requestBody);
     setAadhaar((prevState) => ({
       ...prevState,
       uploadStatus,
@@ -158,7 +158,7 @@ const Documents = (props) => {
       documentId:pan.documentId
     };
     console.log(requestBody);
-    const uploadStatus = await uploadDocument(...requestBody);
+    const uploadStatus = await uploadDocument(requestBody);
     setPan((prevState) => ({
       ...prevState,
       uploadStatus,
@@ -179,7 +179,7 @@ const Documents = (props) => {
       documentExtension,
       documentId:bankStatement.documentId
     };
-    const uploadStatus = await uploadDocument(...requestBody);
+    const uploadStatus = await uploadDocument(requestBody);
     setBankStatement((prevState) => ({
       ...prevState,
       uploadStatus,
@@ -200,7 +200,7 @@ const Documents = (props) => {
       documentExtension,
       documentId:salarySlips.documentId
     };
-    const uploadStatus = await uploadDocument(...requestBody);
+    const uploadStatus = await uploadDocument(requestBody);
     setSalarySlips((prevState) => ({
       ...prevState,
       uploadStatus,
@@ -221,7 +221,7 @@ const Documents = (props) => {
       documentExtension,
       documentId:form16.documentId
     };
-    const uploadStatus = await uploadDocument(...requestBody);
+    const uploadStatus = await uploadDocument(requestBody);
     setForm16((prevState) => ({
       ...prevState,
       uploadStatus,
@@ -242,7 +242,7 @@ const Documents = (props) => {
       documentExtension,
       documentId:rentAgreement.documentId
     };
-    const uploadStatus = await uploadDocument(...requestBody);
+    const uploadStatus = await uploadDocument(requestBody);
     setRentAgreement((prevState) => ({
       ...prevState,
       uploadStatus,
@@ -255,15 +255,15 @@ const Documents = (props) => {
     if (!file) return;
     const docBytes = await fileToByteArray(file);
     const documentExtension = fileExtention(file.type);
-    
-    const uploadStatus = await uploadDocument(
-      bill.documentNo,
-      bill.documentTypeId,
+    const requestBody = {
+      documentNo: bill.documentNo,
+      documentTypeId: bill.documentTypeId,
       docBytes,
-      file.name,
+      documentName: file.name,
       documentExtension,
-      bill.documentId
-    );
+      documentId:bill.documentId
+    };
+    const uploadStatus = await uploadDocument(requestBody);
     setBill((prevState) => ({
       ...prevState,
       uploadStatus,
@@ -272,26 +272,13 @@ const Documents = (props) => {
   };
 
   const uploadDocument = async (
-    documentNo,
-    documentTypeId,
-    docBytes,
-    documentName,
-    documentExtension,
-    documentId
+    body
   ) => {
     try {
       const customerId = getItem(keys.customerId)
-      let { url, body } = getApiData("uploadDocument");
-      body = {
-        documentNo,
-        documentTypeId,
-        docBytes,
-        documentName,
-        documentExtension,
-        documentId,
-        customerId,
-      };
-      const responseObject = await axios.post( url, body );
+      let { url } = getApiData("uploadDocument");
+    
+      const responseObject = await axios.post( url, {...body,customerId} );
       console.log(responseObject);
       if (responseObject.status === 200) {
         return responseObject.data.message;
