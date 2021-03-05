@@ -159,7 +159,8 @@ const WorkInfo = (props) => {
   const calculate = (fields) => {
     let progress = 0
     Object.keys(fields).map((field) => {
-      if (fields[field]) {
+      if (fields[field]&& !/customerId|comapnyName/gi.test(field)) {
+        
         progress += 1
       }
     })

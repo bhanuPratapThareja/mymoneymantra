@@ -4,6 +4,7 @@ import {
   savePersonalInfo,
 } from '../../utils/userProfileService'
 import moment from 'moment'
+import { cond } from 'lodash'
 
 const PersonalInfo = (props) => {
   const [editing, setEditing] = useState(false)
@@ -176,7 +177,8 @@ const PersonalInfo = (props) => {
   const calculate = (fields) => {
     let progress = 0
     Object.keys(fields).map((field) => {
-      if (fields[field]) {
+      if (fields[field] && field!=='customerId') {
+        
         progress += 1
       }
     })
