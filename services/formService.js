@@ -131,6 +131,8 @@ export const generateLead = async (data, primaryPath, formType, productType) => 
             yearsCurrentJob, projectrName,profession,annualTurnover,annualReciepts,
         } = data
 
+        console.log('data---',data)
+
         const productTypeId = productType && productType.product_type_id ? productType.product_type_id : ''
         body.formBankId = leadBank && leadBank.bankId ? leadBank.bankId : ''
         body.bankId = salaryBank && salaryBank.bankId ? salaryBank.bankId : ''
@@ -322,19 +324,31 @@ export const generateLead = async (data, primaryPath, formType, productType) => 
 
         let utmCampaignChoice = ''
         if (primaryPath == 'rkpl') {
-            utmCampaignChoice = utmCampaign ? utmCampaign.includes('offcc') ? utmCampaign : 'offcc-rkpl' : ''
+            console.log('inside if form service primary path rkpl')
+
+           // utmCampaignChoice = utmCampaign ? utmCampaign.includes('offcc') ? utmCampaign : 'offcc-rkpl' : ''
+           
+            body.subQueue = '2'
+            body.source = '1000000013'
+            body.utmCampaign = 'OFFCC-RKPL'
+            body.utmSource = ''
+
         } else {
             utmCampaignChoice = utmCampaign ? utmCampaign : ''
         }
 
-        body.utmCampaign = utmCampaignChoice
-        body.utmMedium = utmMedium ? utmMedium : ''
-        body.utmSource = utmSource ? utmSource : ''
-        body.utmRemark = utmRemark ? utmRemark : ''
+        // body.utmCampaign = utmCampaignChoice
+        // body.utmMedium = utmMedium ? utmMedium : ''
+        // body.utmSource = utmSource ? utmSource : ''
+        // body.utmRemark = utmRemark ? utmRemark : ''
 
         if (primaryPath === 'talent-edge-form') {
+            console.log('in form servie primary pathtalent-edge-form')
             body.subQueue = '2'
             body.source = '1000000013'
+            body.utmCampaign = 'TE'
+            body.utmSource = ''
+
         }
 
         let headers = {}

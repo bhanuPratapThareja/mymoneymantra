@@ -481,8 +481,19 @@ class LongForm extends React.Component {
     generateLead(data, primaryPath, lf, this.props.productType)
       .then((res) => {
         const leadId = res.data.leadId
+        
         let actionName = this.state.primaryPath === 'rkpl' ? 'RKPL-CC' : 'Short Form Submit'
         sendNotification(leadId, actionName)
+
+        console.log('in longform.js res.data',res.data)
+
+        // if(this.state.primaryPath === 'rkpl'){
+        //   console.log('in long form rkpl primary path res',res)
+        //   let actionName = "RKPL-CC"
+
+        //   //sendNotification(leadId, actionName)
+          
+        // }
 
         documentsArray.forEach(input => {
           submitDocument(input.end_point_name, input.value)
