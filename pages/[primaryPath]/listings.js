@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import Strapi from '../../providers/strapi'
 import Layout from '../../components/Layout'
 
@@ -17,19 +18,31 @@ import { getProductDecision } from '../../services/offersService'
 import { filterOfferCardsInFilterComponent } from '../../utils/listingsFilterHandler'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { addSeoMetaData, removeSeoMetaData } from '../../utils/seoMetaData';
+import { getLeadId } from '../../utils/localAccess'
 
 const Listings = props => {
+    const router = useRouter()
     const [allOfferCards, setAllOfferCards] = useState([])
     const [offerCards, setOfferCards] = useState([])
 
     useEffect(() => {
         window.scrollTo(0, 0)
+        const leadId = getLeadId()
+        if(!leadId) {
+            goToLandingPage()
+            return
+        }
         getListingOffers()
         const { scriptId, canonicalId } = addSeoMetaData(props.data, props.data.id)
         return () => {
             removeSeoMetaData(scriptId, canonicalId)
         }
     }, [])
+
+    const goToLandingPage = () => {
+        const primaryPath = router.query.primaryPath
+        router.push(`/${primaryPath}`)
+    }
 
     const getListingOffers = async () => {
         if (props.data) {

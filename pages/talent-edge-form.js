@@ -8,7 +8,7 @@ const TalentEdgeForm = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        clearLeadId(props.primaryPath)
+        clearLeadId()
         clearLeadBank()
     }, [])
 
