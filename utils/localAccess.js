@@ -1,68 +1,35 @@
-import { isEmpty } from 'lodash'
+export const setLeadId = newLeadId => {
+    sessionStorage.setItem('leadId', newLeadId)
+}
 
-export const setLeadId = (newLeadId, primaryPath) => {
-    const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-    const leadId = { ...leadIdData, [primaryPath]: newLeadId }
-    localStorage.setItem('leadId', JSON.stringify(leadId))
+export const getLeadId = () => {
+    return sessionStorage.getItem('leadId')
+}
+
+export const clearLeadId = () => {
+    sessionStorage.removeItem('leadId')
 }
 
 export const setLeadBank = leadBank => {
-    localStorage.setItem('leadBank', JSON.stringify(leadBank))
-}
-
-export const getLeadId = primaryPath => {
-    const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-    const leadId = leadIdData && leadIdData[primaryPath] ? leadIdData[primaryPath] : ''
-    return leadId
+    sessionStorage.setItem('leadBank', JSON.stringify(leadBank))
 }
 
 export const getLeadBank = () => {
-    return JSON.parse(localStorage.getItem('leadBank'))
-}
-
-export const clearLeadId = primaryPath => {
-    const leadIdData = JSON.parse(localStorage.getItem('leadId'))
-    if (leadIdData && leadIdData[primaryPath]) {
-        delete leadIdData[primaryPath]
-        if (isEmpty(leadIdData)) {
-            localStorage.removeItem('leadId')
-        } else {
-            localStorage.setItem('leadId', JSON.stringify(leadIdData))
-        }
-    }
+    return JSON.parse(sessionStorage.getItem('leadBank'))
 }
 
 export const clearLeadBank = () => {
-    localStorage.removeItem('leadBank')
+    sessionStorage.removeItem('leadBank')
 }
 
-export const setFormData = (data, primaryPath) => {
+export const setFormData = data => {
     const previouslySavedData = JSON.parse(localStorage.getItem('formData'))
-    let formData
-    if(!previouslySavedData) {
-        formData = { ...previouslySavedData, [primaryPath]: data }
-    } else {
-        formData = { ...previouslySavedData, [primaryPath]: { ...previouslySavedData[primaryPath], ...data } }
-    }
-    localStorage.setItem('formData', JSON.stringify(formData))
+    const formData =  { ...previouslySavedData, ...data }
+    sessionStorage.setItem('formData', JSON.stringify(formData))
 }
 
-export const getFormData = primaryPath  => {
-    const rawFormData = JSON.parse(localStorage.getItem('formData'))
-    const formData = rawFormData && rawFormData[primaryPath] ? rawFormData[primaryPath] : null
-    return formData
-}
-
-export const clearFormData = primaryPath => {
-    const formData = JSON.parse(localStorage.getItem('formData'))
-    if (formData && formData[primaryPath]) {
-        delete formData[primaryPath]
-        if (isEmpty(formData)) {
-            localStorage.removeItem('formData')
-        } else {
-            localStorage.setItem('formData', JSON.stringify(formData))
-        }
-    }
+export const getFormData = ()  => {
+    return JSON.parse(sessionStorage.getItem('formData')) 
 }
 
 export const setBlogId = (blogId) => {

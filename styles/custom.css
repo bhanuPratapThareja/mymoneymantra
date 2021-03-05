@@ -1150,9 +1150,10 @@ img {
   left: auto;
 }
 
-.popular-cards-slider .cstm-prd {
+/* .popular-cards-slider .cstm-prd {
   margin: 0 10px;
-}
+} */
+
 .cstm-head{
   font-size: 2.5rem;
   color: #fff;
@@ -1268,9 +1269,16 @@ img {
 .blog-wrap-top p>p {
   max-width: 688px;
   margin: 0 auto;
-  margin-top: 0;
-  padding: 0;
+  margin-top: 40px;
+  padding: 0 24px;
+
 }
+
+.blog-wrap-top p > h2 {
+  margin: 20px auto 0;
+  max-width: 688px;
+}
+ 
 .blog-wrap-top h1>h3{
   text-align: center;
   color: #221F1F;
@@ -1315,10 +1323,13 @@ section.popular-card-container {
   max-height: 240px;
 }
 
-#popular-cards-sec .slick-list.draggable {
+.popular-cards-slider .slick-track {
+  overflow: auto;
+}
+/* #popular-cards-sec .slick-list.draggable {
   padding: 0 !important;
   margin: 0 55px;
-}
+} */
 
 .blogs-flow .blogs-filter .filters button {
   padding-right: 24px;
@@ -1637,14 +1648,28 @@ section.popular-card-container {
 
 button.cstm-load-btn {
   border: 1px solid #89c142;
-  margin: 30px 0 0;
-  display: inline-block;
+  margin: 30px auto 0;
+  display: block;
   padding: 8px 10px;
   font-size: 13px;
   border-radius: 3px;
   background: #89c142;
   color: #fff;
   cursor: pointer;
+}
+
+.popular-cards.pt-0 {
+  padding-top: 0;
+}
+
+.cstm-no-post-found {
+  font-size: 19px;
+  font-family: 'Avenir-Medium';
+  color: #fff;
+  font-weight: 500;
+  line-height: 22px;
+  overflow: hidden;
+  text-align: center;
 }
 
 /*-- Trending and Popular Offers --*/
@@ -1823,6 +1848,15 @@ button.cstm-load-btn {
 .popular-cards .blog-wrapper-card,
 .blog-container .blog-wrapper .blog-wrapper-card {
   cursor: pointer;
+}
+
+.blogs-flow .featured-wrapper .container .people .image {
+  min-height: 112px;
+  min-width: 112px;
+}
+
+.b2c-flow .main-head div.mobile-background {
+  top: 64px;
 }
 
 /*-- Blog social icons slide button --*/
@@ -2821,9 +2855,9 @@ button.cstm-load-btn {
     margin: 0;
   }
 
-  .popular-cards-slider .cstm-prd {
+  /* .popular-cards-slider .cstm-prd {
     margin: 0 10px 0 0;
-  }
+  } */
 
   .blog-wrapper-card>img {
     height: 160px;
@@ -2839,8 +2873,8 @@ button.cstm-load-btn {
   }
 
   .blog-wrap-top p > p {
-    margin-top: 24px;
-    padding: 0 24px;
+    /* margin-top: 24px;
+    padding: 0 24px; */
   }
   
   .contributor-detail.blogs-flow .mobile-background {
@@ -2912,6 +2946,11 @@ button.cstm-load-btn {
 
   .blog-wrap-top p> h3 {
     padding: 0 24px;
+    margin: 20px auto 0;
+  }
+
+  .blog-wrap-top p>p {
+    margin-top: 20px;
   }
   
   .learn-more-wrapper-content .question svg {

@@ -643,9 +643,11 @@ export const submitShortForm = (slides, currentSlide, primaryPath, formType, pro
       }
     }
 
-    setFormData(data, primaryPath)
-    const latestFormData = getFormData(primaryPath)
+    setFormData(data)
+    const latestFormData = getFormData()
     if (latestFormData) {
+
+    
       generateLead(latestFormData, primaryPath, formType, productType)
         .then((res) => {
           resolve(res)
@@ -655,6 +657,60 @@ export const submitShortForm = (slides, currentSlide, primaryPath, formType, pro
         })
     }
   })
+}
+
+export const updateFormInputs = (inputs) => {
+  let updatedNoOfMandatoryInputs = 0
+  let updatedEnableCheckboxes = []
+  const sfData = getFormData()
+  for (let i = 0; i < inputs.length; i++) {
+    inputs[i].error = false;
+    inputs[i].verified = false;
+
+    if (inputs[i].mandatory) {
+      updatedNoOfMandatoryInputs++;
+    }
+
+    if (inputs[i].type === "checkbox") {
+      inputs[i].checkbox.checkbox_input.forEach((box) => {
+        if (box.enable_submit) {
+          updatedEnableCheckboxes.push(box)
+        }
+      })
+    }
+
+    if (sfData) {
+      loop: for (let key in sfData) {
+        if (!sfData[key]) {
+          continue loop
+        }
+        
+
+        if(inputs[i].type === 'radio' && inputs[i].radio.breakpoints && inputs[i].radio.breakpoints.length) {
+          continue loop
+        }
+        
+        if (typeof sfData[key] === "object" && key === inputs[i].end_point_name) {
+          inputs[i].value = sfData[key][inputs[i].select_name];
+          inputs[i].selectedId = sfData[key][inputs[i].select_id];
+          inputs[i].selectedItem = sfData[key];
+          inputs[i].verified = true;
+          inputs[i].error = false;
+          continue loop
+        }
+
+        if (typeof sfData[key] === "string" && key === inputs[i].end_point_name) {
+          inputs[i].value = sfData[key];
+          inputs[i].verified = true;
+          inputs[i].error = false;
+          if (inputs[i].type === "money") {
+            inputs[i].value = getFormattedCurrency(sfData[key]);
+          }
+        }
+      }
+    }
+  }
+  return { updatedNoOfMandatoryInputs, updatedEnableCheckboxes }
 }
 
 export const letsFindFormToOtpForm = () => {
