@@ -1,24 +1,23 @@
 import { pageTitle } from './types'
 
-let head
 export const addSeoMetaData = (data, id) => {
-    head = document.querySelector('head')
+    const head = document.querySelector('head')
     const { meta_title, page_schema, meta_conical_link, meta_description, meta_keywords } = data
-    addMetaTitle(meta_title)
-    const scriptId = addSchemaScript(page_schema, id)
-    const canonicalId = addCanonicalLink(meta_conical_link, id)
-    const metaDescriptionId = addMetaDescription(meta_description, id)
-    const metaKeywordId = addMetaKeyword(meta_keywords, id)
+    addMetaTitle(meta_title, head)
+    const scriptId = addSchemaScript(page_schema, id, head)
+    const canonicalId = addCanonicalLink(meta_conical_link, id, head)
+    const metaDescriptionId = addMetaDescription(meta_description, id, head)
+    const metaKeywordId = addMetaKeyword(meta_keywords, id, head)
     return { scriptId, canonicalId, metaDescriptionId, metaKeywordId }
 }
 
-export const addMetaTitle = meta_title => {
-    const existingTitle =  document.querySelector('title')
-    if(existingTitle) {
+export const addMetaTitle = (meta_title, head) => {
+    const existingTitle = document.querySelector('title')
+    if (existingTitle) {
         existingTitle.parentNode.removeChild(existingTitle)
     }
     const title = document.createElement('title')
-    if(meta_title) {
+    if (meta_title) {
         title.innerHTML = meta_title
     } else {
         title.innerHTML = pageTitle
@@ -26,22 +25,23 @@ export const addMetaTitle = meta_title => {
     head.appendChild(title)
 }
 
-export const addSchemaScript = (page_schema, id) => {
+export const addSchemaScript = (page_schema, id, head) => {
     let scriptId
+    const newHead = head ? head : document.querySelector('head')
     if (page_schema) {
         const script = document.createElement('script')
         script.type = 'application/json'
         scriptId = `schema_${id}`
         script.id = scriptId
         script.append(page_schema)
-        head.appendChild(script)
+        newHead.appendChild(script)
     }
     return scriptId
 }
 
-export const addCanonicalLink = (meta_conical_link, id) => {
+export const addCanonicalLink = (meta_conical_link, id, head) => {
     let canonicalId
-    if(meta_conical_link) {
+    if (meta_conical_link) {
         const canonicalLink = document.createElement('link')
         canonicalLink.rel = 'canonical'
         if (meta_conical_link) {
@@ -56,7 +56,7 @@ export const addCanonicalLink = (meta_conical_link, id) => {
     }
 }
 
-export const addMetaDescription = (meta_description, id) => {
+export const addMetaDescription = (meta_description, id, head) => {
     let metaDescriptionId
     if (meta_description) {
         const metaDescription = document.createElement('meta')
@@ -69,7 +69,7 @@ export const addMetaDescription = (meta_description, id) => {
     }
 }
 
-export const addMetaKeyword = (meta_keywords, id) => {
+export const addMetaKeyword = (meta_keywords, id, head) => {
     let metaKeywordId
     if (meta_keywords) {
         const metaKeyword = document.createElement('meta')
@@ -101,6 +101,32 @@ export const removeSeoMetaData = (scriptId, canonicalId, metaDescriptionId, meta
     }
 }
 
-export const createLearnMoreSchema = () => {
+const createLearnMoreSchema = entities => {
+    const schema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": []
+    }
+    const schemaMainEntityObject = {
+        "@type": "Question",
+        "name": "",
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": ""
+        }
+    }
+    entities.forEach(entity => {
+        const schemaMainEntityObjectCopy = JSON.parse(JSON.stringify(schemaMainEntityObject))
+        schemaMainEntityObjectCopy['name'] = entity.heading
+        schemaMainEntityObjectCopy['acceptedAnswer']['text'] = entity.questions_and_answers
+        schema['mainEntity'].push(schemaMainEntityObjectCopy)
+    })
+    return JSON.stringify(schema)
+}
 
+export const addLearnMoreSchema = learnMore => {
+    const { learn_more_section_component: entities, id } = learnMore
+    const lmSchema = createLearnMoreSchema(entities)
+    const scriptId = addSchemaScript(lmSchema, id)
+    return scriptId
 }

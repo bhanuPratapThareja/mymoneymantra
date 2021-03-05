@@ -43,7 +43,6 @@ const Header = () => {
                if (longForm && longFormBanner) {
                   const longFormOffset = longForm.offsetTop
                   const longFormHeight = longForm.clientHeight
-                  const bannerOffset = longFormBanner.offsetTop
                   const bannerHeight = longFormBanner.clientHeight
 
                   if (window.pageYOffset >= longFormOffset && window.pageYOffset < longFormOffset + longFormHeight) {
@@ -75,7 +74,6 @@ const Header = () => {
       }
 
       let customerId = localStorage.getItem('customerId');
-      console.log('customerId', customerId)
       if (customerId && customerId !== '' && customerId !== null && customerId !== undefined) {
          setisLoggedId(true);
       }

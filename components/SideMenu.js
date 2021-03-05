@@ -23,12 +23,10 @@ const router=useRouter();
    const getInfo = () => {
       getPersonalInfo()
         .then((res) => {
-          console.log({ res })
           const { firstName} = res
           setName(firstName);
         })
         .catch((err) => {
-          console.log(err)
           setName('Guest');
         })
     }
@@ -37,7 +35,6 @@ const router=useRouter();
    }
    
    const getPicture = async () => {
-      console.log('in side .........')
       try {
         const responseObject= await getPictureservice();
         if (responseObject.status === 200) {
@@ -45,7 +42,6 @@ const router=useRouter();
           let res = responseObject.data.docList
           let i = -1
           res.forEach((item, index) => {
-            // console.log(item)
             if (item.documentTypeId == 2130000043) i = item.documentId
           })
           
@@ -57,7 +53,6 @@ const router=useRouter();
           }
         }
       } catch (err) {
-         console.log(err)
          setpicture('/assets/images/icons/profile.svg')
       }
     }
@@ -72,7 +67,6 @@ const router=useRouter();
       //
         setpicture(`data:image/png;base64,${responseObject.data.docByte}`)
       } catch (err) {
-         console.log(err);
       }
     }
 
