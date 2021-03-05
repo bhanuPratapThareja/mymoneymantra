@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Image from '../ImageComponent/ImageComponent'
 import { makeDecision } from '../../utils/decision'
 import { extractOffers, viewOffers } from '../../services/offersService'
-import { setLeadBank, clearLeadId, clearFormData, setFormData } from '../../utils/localAccess'
+import { setLeadBank, clearLeadId, setFormData } from '../../utils/localAccess'
 import { sf, ApplyNow } from '../../utils/types'
 
 const Offers = props => {
@@ -44,7 +44,6 @@ const Offers = props => {
         setLeadBank(leadBank)
         let data = {}
         data.leadBank = leadBank
-        clearFormData()
         clearLeadId()
         setFormData(data)
         if (router.pathname === '/[primaryPath]') {
