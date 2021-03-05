@@ -23,9 +23,9 @@ const rank = (props) => {
     try {
       const data = await getCreditRank()
       setCpRankData(data)
-      setLoading(false)
+      
     } catch (error) {
-      setLoading(false)
+      
     }
   }
 

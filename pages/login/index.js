@@ -9,7 +9,7 @@ import Thanks from "../../components/signup/thanks";
 import { messgaes } from "../../utils/messages";
 import { useEffect, useState } from "react";
 import { sendLoginOtp, socialLoginAPi, verifyOtp } from "../../utils/otp";
-
+import {setItem,keys} from '../../utils/storage';
 import SubHeader from "../../components/signup/subheader";
 import CustomImage from "../../components/signup/image";
 const login = (props) => {
@@ -31,9 +31,9 @@ const login = (props) => {
     // settoken(val.id);
     socialLoginAPi(val.email, val.type, val.id)
       .then((res) => {
-        console.log(res);
         if (res.message == "Login Successful") {
-          localStorage.setItem("customerId", res.customerId);
+          setItem(keys.customerId,res.customerId);
+          // localStorage.setItem("customerId", res.customerId);
           setcounter(counter + 2);
         } else {
           alert(res.message);
@@ -48,7 +48,7 @@ const login = (props) => {
       .then((res) => {
         const { otpId, customerId, message } = res;
         setOtpId(otpId);
-        localStorage.setItem("customerId", customerId);
+        setItem(keys.customerId,res.customerId);
 
         setMobileError(false);
         setMobileErrorMsg("");
@@ -66,7 +66,7 @@ const login = (props) => {
         .then((res) => {
           const { otpId, customerId, message } = res;
           setOtpId(otpId);
-          localStorage.setItem("customerId", customerId);
+          setItem(keys.customerId,res.customerId);
           setcounter(counter + 1);
           setMobileError(false);
           setMobileErrorMsg("");
@@ -85,7 +85,7 @@ const login = (props) => {
             setOtpError(true);
             return;
           }
-          localStorage.setItem("customerId", res.customerId);
+          setItem(keys.customerId,res.customerId);
           setcounter(counter + 1);
           setOtpError(false);
         })

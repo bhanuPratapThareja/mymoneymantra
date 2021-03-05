@@ -2159,9 +2159,9 @@ button.cstm-load-btn {
 
 .red-square{
   background: url("/assets/images/icons/reds.png") !important;
-  max-width: 240px;
+  max-width: 230px;
   min-width: 160px;
-  min-height: 160px;
+  min-height: 245px;/* sanjib */
   height: 100%;
   background-color: #ffffff;
   background-repeat: no-repeat !important;
@@ -2171,13 +2171,15 @@ button.cstm-load-btn {
   -ms-flex-align: center;
   align-items: center;
   background-position: center !important;
+  margin-left: 5px;
+  margin-top: -3px;
 }
 
 .orange-square{
   background: url("/assets/images/icons/oranges.png") no-repeat center / contain;
-  max-width: 240px;
+  max-width: 230px;
   min-width: 160px;
-  min-height: 160px;
+  min-height: 245px;/* sanjib */
   height: 100%;
   background-color: #ffffff;
   -ms-flex-pack: center;
@@ -2185,13 +2187,15 @@ button.cstm-load-btn {
   -ms-flex-align: center;
   align-items: center;
   position: relative;
+  margin-left: 5px;
+  margin-top: -3px;
 }
 
 .yellow-square{
   background: url("/assets/images/icons/yellows.png") !important;
-  max-width: 240px;
+  max-width: 230px;
   min-width: 160px;
-  min-height: 160px;
+  min-height: 245px;/* sanjib */
   height: 100%;
   background-color: #ffffff;
   background-repeat: no-repeat !important;
@@ -2201,13 +2205,15 @@ button.cstm-load-btn {
   -ms-flex-align: center;
   align-items: center;
   background-position: center !important;
+  margin-left: 5px;
+  margin-top: -3px;
 }
 
 .green-square{
   background: url("/assets/images/icons/greens.png") !important;
-  max-width: 240px;
+  max-width: 230px;
   min-width: 160px;
-  min-height: 160px;
+  min-height: 245px;/* sanjib */
   height: 100%;
   background-color: #ffffff;
   background-repeat: no-repeat !important;
@@ -2217,6 +2223,8 @@ button.cstm-load-btn {
   -ms-flex-align: center;
   align-items: center;
   background-position: center !important;
+  margin-left: 5px;
+  margin-top: -3px;
 }
 
 
@@ -2229,22 +2237,20 @@ button.cstm-load-btn {
   line-height: 2.5rem;
   max-width: 100px;
 }
-
-.paymentRank-wrapper-head .popular-cards-slider-card-top,
+/* commented by sanjib */
+/* .paymentRank-wrapper-head .popular-cards-slider-card-top,
 .product-wrapper .popular-cards-slider-card-top {
   min-height: 252px;
-}
+} 
 
 .paymentRank-wrapper-head .popular-cards-slider-card-bottom,
 .product-wrapper .popular-cards-slider-card-bottom {
   min-height: 48px;
 
-  /*--
   changed by divyanshu
-  --*/
   max-height: 48px;
   
-}
+}*/
 
 /*-- Fateh's css for User Profile Radio styling --*/
 .option-wrapper #option-3-data .work-wrapper .shortforms-container.gender-style input.lets-checkbox {
@@ -2306,7 +2312,6 @@ button.cstm-load-btn {
 
 .shortforms-container .form__group.field datalist {
   padding: 12px;
-  
   position: absolute;
   width:90%;
   border-radius: 5px;
@@ -2369,13 +2374,12 @@ button.cstm-load-btn {
 .tabcontent .popular-cards-slider-card .app_progress_card_content .left .value:nth-child(2) {
   margin: 0;
 }
-
-.color-box{
-  height: 18px;
-  width: 18px;
+.color-box {
+  height: 15px;
+  width: 27px;
   margin-top: 5px;
   margin-right: 10px;
-  border: 1px solid black;
+  border-radius: 1px;
 }
 
 /*-- contact form --*/
@@ -2419,6 +2423,7 @@ button.cstm-load-btn {
   line-height: 24px;
 }
 
+<<<<<<< HEAD
 /*-- Bank items image slider --*/
 .banks-slider .slide_cell img {
   width: auto;
@@ -2455,6 +2460,27 @@ button.cstm-load-btn {
 }
 
 
+=======
+.desktop-overrview-wrapper{
+  display: block;
+}
+.mobile-overrview-wrapper{
+  display:  none;
+}
+.creditProfile-score-flow .creditOverview-wrapper-left-content .creditOverview-components .percentages{
+  width: 20%;
+  text-align: center;
+}
+.creditProfile-account-flow .paymentRank-wrapper-content-right{
+  margin-top: 5px;
+}
+.creditProfile-age-flow .paymentRank-wrapper-content {
+  padding: 44px 136px 40px 84px !important;
+}
+.creditProfile-utilization-flow .tipSection {
+  margin-top: 128px !important;
+}
+>>>>>>> origin/dev
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
@@ -2749,7 +2775,11 @@ button.cstm-load-btn {
     position: relative;
     font-size: 1.25rem;
   }
-  /* .mobile-background{
+  .mobile-background.user-profile{
+    top: 62px;
+  }
+  /* 
+  .mobile-background{
     top: 62px;
   } */
 
@@ -3076,6 +3106,36 @@ button.cstm-load-btn {
     margin-right: 5px;
   }
   
+  .desktop-overrview-wrapper{
+    display: none;
+  }
+  .mobile-overrview-wrapper{
+    display:  block;
+  }
+  .creditProfile-score-flow .creditOverview-wrapper-left-icon .three-holder{
+    max-width: 240px;
+  }
+  .color-box {
+    height: 11px;
+    width: 19px;
+  }
+  .creditProfile-age-flow .paymentRank-wrapper .paymentRank-wrapper-head h2, .paymentRank .paymentRank-wrapper .paymentRank-wrapper-head h2{
+    font-size: 1.25rem;
+    line-height: initial;
+  }
+  .creditProfile-utilization-flow .paymentRank-wrapper-content .left-mobile-view .value-utilisation, .creditProfile-enquiries-flow .paymentRank-wrapper-content-left.left-mobile-view .value-enquiries, .credit-rank-flow .paymentRank-wrapper-content .left-mobile-view .value-rank{
+    min-width: 80px;
+    min-height: 80px;
+  }
+  .creditProfile-age-flow .paymentRank-wrapper-content {
+    margin-top: 20px !important;
+  }
+  .creditProfile-utilization-flow .tipSection {
+    margin-top: 32px !important;
+  }
+  .creditProfile-age-flow .paymentRank-wrapper-content {
+    padding: 0 !important;
+  }
 }
 
 @media(max-width: 767px) {

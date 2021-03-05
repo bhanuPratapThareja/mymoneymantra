@@ -7,18 +7,19 @@ import {
   getFormattedCurrency,
   getWholeNumberFromCurrency,
 } from '../../utils/formattedCurrency'
+import { getItem, keys } from '../../utils/storage'
 
 const WorkInfo = (props) => {
   const [isedit, setIsedit] = useState(false)
   const [employedType, setEmployedType] = useState('')
   const [companyQuery, setCompanyQuery] = useState('')
   const [bankId, setBankId] = useState('')
-  const [ifscCode, setIfscCode] = useState(null)
-  const [netMonthlyIncome, setNetMonthlyIncome] = useState(null)
-  const [accountNo, setAccountNo] = useState(null)
+  const [ifscCode, setIfscCode] = useState('')
+  const [netMonthlyIncome, setNetMonthlyIncome] = useState('')
+  const [accountNo, setAccountNo] = useState('')
   const [companyOptions, setCompanyOtions] = useState([])
-  const [companyId, setCompanyId] = useState('')
-  const [companyName, setCompanyName] = useState(null)
+  const [companyId, setCompanyId] = useState(null)
+  const [companyName, setCompanyName] = useState('')
   const [customerId, setCustomerId] = useState('')
   const [bankName, setBankName] = useState(null)
   const [bankList, setBankList] = useState([])
@@ -89,7 +90,7 @@ const WorkInfo = (props) => {
   const submitHandler = async (e) => {
     e.preventDefault()
     setIsedit(false)
-    let custId = localStorage.getItem('customerId')
+    let custId = getItem(keys.customerId)
     const { url } = getApiData('workProfile')
     try {
       const responseObject = await axios.post(url, {
@@ -166,7 +167,7 @@ const WorkInfo = (props) => {
   }
 
   return (
-    <form className="work-wrapper" onSubmit={submitHandler} autocomplete="off">
+    <form className="work-wrapper" onSubmit={submitHandler} autoComplete={"off"}>
       {/* <div className="shortforms-container"> */}
       {isedit ? <h5>Employment Type</h5> : null}
       <div className="shortforms-container">
@@ -198,47 +199,47 @@ const WorkInfo = (props) => {
         </div> */}
         {isedit ? (
           <div className="shortforms-container gender-style">
-            <input autocomplete="off"
+            <input autoComplete={"off"}
               value="1000000001"
               className="lets-checkbox"
               type="radio"
               id="self-employed"
-              autocomplete="off"
+              autoComplete={"off"}
               name="emp-type"
               required=""
               onChange={(e) => setEmployedType(e.target.value)}
               defaultChecked={employedType == 1000000001 ? true : false}
             />
-            <input autocomplete="off"
+            <input autoComplete={"off"}
               value="1000000002"
               className="lets-checkbox"
               type="radio"
               id="self-employed-professional"
               name="emp-type"
               required=""
-              autocomplete="off"
+              autoComplete={"off"}
               onChange={(e) => setEmployedType(e.target.value)}
               defaultChecked={employedType == 1000000002 ? true : false}
             />
-            <input autocomplete="off"
+            <input autoComplete={"off"}
               value="1000000004"
               className="lets-checkbox"
               type="radio"
               id="salaried"
               name="emp-type"
-              autocomplete="off"
+              autoComplete={"off"}
               required=""
               onChange={(e) => setEmployedType(e.target.value)}
               defaultChecked={employedType == 1000000004 ? true : false}
             />
-            <input autocomplete="off"
+            <input autoComplete={"off"}
               value="1000000008"
               className="lets-checkbox"
               type="radio"
               id="defense"
               name="emp-type"
               required=""
-              autocomplete="off"
+              autoComplete={"off"}
               onChange={(e) => setEmployedType(e.target.value)}
               defaultChecked={employedType == 1000000008 ? true : false}
             />
@@ -251,9 +252,9 @@ const WorkInfo = (props) => {
           </div>
         ) : (
           <div className="form__group field">
-            <input autocomplete="off"
+            <input autoComplete={"off"}
               readOnly={true}
-              autocomplete="off"
+              autoComplete={"off"}
               placeholder="Employment Type"
               value={
                 employedType == 1000000001
@@ -286,11 +287,11 @@ const WorkInfo = (props) => {
               : 'form__group field read-part'
           }
         >
-          <input autocomplete="off"
+          <input autoComplete={"off"}
             readOnly={!isedit}
             className="form__field"
             type="text"
-            autocomplete="off"
+            autoComplete={"off"}
             value={companyName}
             id="company-name"
             placeholder="Company Name"
@@ -330,11 +331,11 @@ const WorkInfo = (props) => {
               : 'form__group field read-part'
           }
         >
-          <input autocomplete="off"
+          <input autoComplete={"off"}
             readOnly={!isedit}
             className="form__field"
             type="text"
-            autocomplete="off"
+            autoComplete={"off"}
             value={netMonthlyIncome}
             id="monthly-income"
             placeholder="Net Monthly Income"
@@ -355,12 +356,13 @@ const WorkInfo = (props) => {
           }
         >
           
-          <input autocomplete="off"
+          <input autoComplete={"off"}
             readOnly={!isedit}
             className="form__field"
             type="text"
             id="bank-name"
-            autocomplete="off"
+            autoComplete={"off"}
+            disabled={isedit?false:true}
             placeholder="Bank Name"
             required=""
             value={bankName ? bankName: null}
@@ -406,11 +408,11 @@ const WorkInfo = (props) => {
               : 'form__group field read-part'
           }
         >
-          <input autocomplete="off"
+          <input autoComplete={"off"}
             readOnly={!isedit}
             className="form__field"
             type="text"
-            autocomplete="off"
+            autoComplete={"off"}
             value={accountNo}
             id="account-num"
             placeholder="Account Number"
@@ -429,13 +431,13 @@ const WorkInfo = (props) => {
               : 'form__group field read-part'
           }
         >
-          <input autocomplete="off"
+          <input autoComplete={"off"}
             readOnly={!isedit}
             className="form__field"
             type="text"
             value={ifscCode}
             id="ifsc"
-            autocomplete="off"
+            autoComplete={"off"}
             placeholder="IFSC Code"
             required=""
             onChange={(e) => setIfscCode(e.target.value)}

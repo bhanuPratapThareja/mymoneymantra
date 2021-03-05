@@ -1,30 +1,31 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { findBank } from '../../utils/findBank'
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { findBank } from "../../utils/findBank";
+import { getApiData } from "../../api/api";
+import { getItem, keys } from "../../utils/storage";
 
 const Application = ({ banks }) => {
-  const [applicationData, setApplicationData] = useState([])
+  const [applicationData, setApplicationData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const customerId = localStorage.getItem('customerId')
-        const responseObject = await axios.get(
-          `http://203.122.46.189:8061/customer/api/profile/v1/cust-app`,{params:{customerId}}
-        )
-        console.log(responseObject?.data?.applications)
-        setApplicationData(responseObject?.data?.applications)
+        const customerId = getItem(keys.customerId)
+        const { url } = getApiData("getApplications");
+        const responseObject = await axios.get(url, { params: { customerId } });
+        console.log(responseObject?.data?.applications);
+        setApplicationData(responseObject?.data?.applications);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-    }
-    fetchData()
-  }, [])
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="applications-cards-wrapper">
       {applicationData?.map((item, i) => {
-        const bank = findBank(banks, item.bankId)
+        const bank = findBank(banks, item.bankId);
         return (
           <div key={i} className="popular-cards-slider-card">
             <div className="popular-cards-slider-card-top">
@@ -47,10 +48,10 @@ const Application = ({ banks }) => {
               </div>
             </div>
           </div>
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};
 
-export default Application
+export default Application;
