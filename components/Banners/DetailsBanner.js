@@ -42,7 +42,7 @@ const DetailsBanner = props => {
                         {props.primaryPath === 'credit-cards' ?
                             product.product_name : props.productType.product_type_name.slice(0, -1)}
                     </h1>
-                    {product.product_banner_detail ? <div dangerouslySetInnerHTML={{ __html: product.product_banner_detail.content }}></div> : null}
+                    {props.primaryPath !== 'credit-cards' && product.product_banner_detail ? <div dangerouslySetInnerHTML={{ __html: product.product_banner_detail.content }}></div> : null}
 
 
                     {productDecision ?

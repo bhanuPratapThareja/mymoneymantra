@@ -46,9 +46,9 @@ const ListingCards = (props) => {
 
         //  }
 
-       
+
         // let pv;
-       
+
 
         // const formData = JSON.parse(localStorage.getItem("formData"))
         // console.log('formData--', formData)
@@ -63,7 +63,7 @@ const ListingCards = (props) => {
         //   PMT(ir,np,pv,fv)
         // }
 
-       
+
 
 
 
@@ -84,9 +84,13 @@ const ListingCards = (props) => {
                   <h3><span>{bank.bank_name}</span> {product.product_name}</h3>
 
                   <div>
-                    {props.primaryPath === "credit-cards" ?
-                      <Image image={product.product_image.image} /> : <Image image={bank.bank_image} />}
+                    {props.primaryPath === "credit-cards" && product.product_image ?
+                      <Image image={product.product_image.image} /> : null}
+                      
+                    {props.primaryPath !== "credit-cards" && bank.bank_image ?
+                      <Image image={bank.bank_image} /> : null}
                   </div>
+                 
                 </div>
 
                 <div className="content">

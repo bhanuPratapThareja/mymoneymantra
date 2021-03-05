@@ -14,7 +14,7 @@ import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 
 import { extractListingOffers } from '../../services/componentsService'
-import { viewListingOffers, getProductDecision } from '../../services/offersService'
+import { viewOffers, viewListingOffers, extractOffers, getProductDecision } from '../../services/offersService'
 import { filterOfferCardsInFilterComponent } from '../../utils/listingsFilterHandler'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { addSeoMetaData, removeSeoMetaData } from '../../utils/seoMetaData';
@@ -45,13 +45,24 @@ const Listings = props => {
     }
 
     const loadListingOffers = async () => {
-        if (props.data) {
-            const listingOffers = await extractListingOffers(props.data)
-            getCardsWithButtonText(listingOffers)
-        }
+        // if (props.data) {
+        //     const listingOffers = await extractListingOffers(props.data)
+        //     getCardsWithButtonText(listingOffers)
+        // }
         // const apiListingOffers = await viewListingOffers(props.productType)
         // console.log('apiListingOffers: ', apiListingOffers)
         // const updatedListingOffers
+        const apiOffers = await viewOffers(props.productType)
+        if (apiOffers) {
+            let offers = apiOffers['populars']
+            if(!offers || !offers.length) {
+                return
+            }
+            const updatedOffers = await extractOffers(offers)
+            console.log('updatedOffers: ', updatedOffers)
+            setOfferCards(updatedOffers)
+            setAllOfferCards(updatedOffers)
+        }
     }
 
     const getCardsWithButtonText = async cards => {
