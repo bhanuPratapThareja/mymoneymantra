@@ -7,6 +7,7 @@ import {
   getFormattedCurrency,
   getWholeNumberFromCurrency,
 } from '../../utils/formattedCurrency'
+import { getItem, keys } from '../../utils/storage'
 
 const WorkInfo = (props) => {
   const [isedit, setIsedit] = useState(false)
@@ -89,7 +90,7 @@ const WorkInfo = (props) => {
   const submitHandler = async (e) => {
     e.preventDefault()
     setIsedit(false)
-    let custId = localStorage.getItem('customerId')
+    let custId = getItem(keys.customerId)
     const { url } = getApiData('workProfile')
     try {
       const responseObject = await axios.post(url, {

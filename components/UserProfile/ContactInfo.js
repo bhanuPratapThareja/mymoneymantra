@@ -180,7 +180,6 @@ const ContactInfo = (props) => {
         currentAddress.addressId = currentAddressId
       }
       const address = [permanentAddress, currentAddress]
-      // const customerId = localStorage.getItem('customerId')
       let contactNo = JSON.stringify(mobileNo)
       const responseObject = await saveContactInfo(contactNo, emailId, address)
       if (responseObject.status === 200) {

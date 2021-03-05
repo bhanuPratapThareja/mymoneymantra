@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { findBank } from "../../utils/findBank";
 import { getApiData } from "../../api/api";
+import { getItem, keys } from "../../utils/storage";
 
 const Application = ({ banks }) => {
   const [applicationData, setApplicationData] = useState([]);
@@ -9,7 +10,7 @@ const Application = ({ banks }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const customerId = localStorage.getItem("customerId");
+        const customerId = getItem(keys.customerId)
         const { url } = getApiData("getApplications");
         const responseObject = await axios.get(url, { params: { customerId } });
         console.log(responseObject?.data?.applications);

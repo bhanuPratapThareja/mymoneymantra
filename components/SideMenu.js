@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { getItem, keys, setItem } from "../utils/storage";
 import { getPersonalInfo, getPictureservice } from "../utils/userProfileService";
 
 const SideMenu = (props) => {
@@ -14,7 +15,7 @@ const router=useRouter();
    },[]);
    const logout=(e)=>{
       e.preventDefault();
-      localStorage.setItem('customerId','');
+      setItem(keys.customerId,null);
       setName('Guest');
       setpicture('/assets/images/icons/profile.svg')
       router.push('/','/',{shallow:false})
@@ -33,7 +34,7 @@ const router=useRouter();
         })
     }
    const checkCustomerId=()=>{
-      return localStorage.getItem('customerId');
+      return getItem(keys.customerId)
    }
    
    const getPicture = async () => {

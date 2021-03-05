@@ -9,7 +9,7 @@ import Thanks from "../../components/signup/thanks";
 import { messgaes } from "../../utils/messages";
 import { useEffect, useState } from "react";
 import { sendLoginOtp, socialLoginAPi, verifyOtp } from "../../utils/otp";
-
+import {setItem,keys} from '../../utils/storage';
 import SubHeader from "../../components/signup/subheader";
 import CustomImage from "../../components/signup/image";
 const login = (props) => {
@@ -33,6 +33,7 @@ const login = (props) => {
       .then((res) => {
         console.log(res);
         if (res.message == "Login Successful") {
+          setItem(keys.customerId,res.customerId);
           localStorage.setItem("customerId", res.customerId);
           setcounter(counter + 2);
         } else {

@@ -7,6 +7,7 @@ import { useEffect, useState, useRef } from 'react'
 import { isScrolledIntoView } from '../utils/elementInView'
 import { getDevice } from '../utils/getDevice'
 import $ from 'jquery'
+import { getItem, keys, setItem } from '../utils/storage'
 
 const Header = () => {
    const router = useRouter()
@@ -74,8 +75,7 @@ const Header = () => {
          setHeaderData(header)
       }
 
-      let customerId = localStorage.getItem('customerId');
-      console.log('customerId', customerId)
+      const customerId = getItem(keys.customerId);
       if (customerId && customerId !== '' && customerId !== null && customerId !== undefined) {
          setisLoggedId(true);
       }
@@ -130,7 +130,7 @@ const Header = () => {
    const logout = async () => {
       // setisLoggedId(false);
 
-      localStorage.removeItem('customerId');
+      setItem(keys.customerId,null);
       setTimeout(() =>
          router.push('/', '/', { shallow: false }), 300
       )

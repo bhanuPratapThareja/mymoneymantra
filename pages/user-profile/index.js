@@ -14,6 +14,7 @@ import { getClassesForPage } from "../../utils/classesForPage";
 import { getPictureservice } from "../../utils/userProfileService";
 import * as $ from "jquery";
 import { getApiData } from "../../api/api";
+import { getItem, keys } from "../../utils/storage";
 const userProfile = (props) => {
   const [picture, setPicture] = useState("");
   const [pictureType, setPictureType] = useState("");
@@ -116,7 +117,7 @@ const userProfile = (props) => {
     documentTypeId
   ) => {
     try {
-      const customerId = localStorage.getItem("customerId");
+      const customerId = getItem(keys.customerId)
 
       let { url, body } = getApiData("uploadDocument");
       body = {

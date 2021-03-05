@@ -14,6 +14,7 @@ import { sendSignUpOtp, sendSignUpData, verifyOtp } from "../../utils/otp";
 import { messgaes } from "../../utils/messages";
 import SubHeader from "../../components/signup/subheader";
 import CustomImage from "../../components/signup/image";
+import { keys, setItem } from "../../utils/storage";
 const signUp = (props) => {
   const [counter, setcounter] = useState(0);
   const [phone, setphone] = useState("");
@@ -61,7 +62,7 @@ const signUp = (props) => {
               return;
             }
             else{
-            localStorage.setItem("customerId", customerId);
+              setItem(keys.customerId,customerId);
             setcounter(counter + 1);
           }
           })

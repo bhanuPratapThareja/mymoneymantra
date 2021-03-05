@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { getApiData } from "../../api/api";
 import { fileToByteArray } from "../../utils/byteArray";
+import { getItem, keys } from "../../utils/storage";
 const placeholderData = "Please Upload the file";
 const Documents = (props) => {
   const [aadhaar, setAadhaar] = useState({
@@ -278,7 +279,7 @@ const Documents = (props) => {
     documentId
   ) => {
     try {
-      const customerId = localStorage.getItem("customerId");
+      const customerId = getItem(keys.customerId)
       let { url, body } = getApiData("uploadDocument");
       body = {
         documentNo,

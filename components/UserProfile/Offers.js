@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { getApiData } from "../../api/api";
 import { extractOffers } from "../../services/offersService";
+import { getItem, keys } from "../../utils/storage";
 import Image from "../ImageComponent/ImageComponent";
 
 const Offers = () => {
@@ -11,7 +12,7 @@ const Offers = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const customerId = localStorage.getItem("customerId");
+        const customerId = getItem(keys.customerId)
         const { url, body } = getApiData("viewOffers");
         body.customerId = customerId;
         const responseObject = await axios.post(url, body);
