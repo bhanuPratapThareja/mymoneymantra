@@ -413,27 +413,27 @@ const api = {
       },
     },
     allDocument: {
-      devUrl: "/customer/api/profile/v1/all-docs",
-      uatUrl: "/customer/api/profile/v1/all-docs",
-      prodUrl: "/customer/api/profile/v1/all-docs",
+      devUrl: "customer/api/profile/v1/all-docs",
+      uatUrl: "customer/api/profile/v1/all-docs",
+      prodUrl: "customer/api/profile/v1/all-docs",
       body: {},
     },
     getDocument:{
-      devUrl:'/customer/api/profile/v1/doc',
-      uatUrl:'/customer/api/profile/v1/doc',
-      prodUrl:'/customer/api/profile/v1/doc',
+      devUrl:'customer/api/profile/v1/doc',
+      uatUrl:'customer/api/profile/v1/doc',
+      prodUrl:'customer/api/profile/v1/doc',
       body:{}
     },
     getApplications:{
-      devUrl:'/customer/api/profile/v1/cust-app',
-      uatUrl:'/customer/api/profile/v1/cust-app',
-      prodUrl:'/customer/api/profile/v1/cust-app',
+      devUrl:'customer/api/profile/v1/cust-app',
+      uatUrl:'customer/api/profile/v1/cust-app',
+      prodUrl:'customer/api/profile/v1/cust-app',
       body:{}
     },
       uploadDocument: {
-        devUrl: "/customer/api/profile/v1/doc-upload",
-        uatUrl: "/customer/api/profile/v1/doc-upload",
-        prodUrl: "/customer/api/profile/v1/doc-upload",
+        devUrl: "customer/api/profile/v1/doc-upload",
+        uatUrl: "customer/api/profile/v1/doc-upload",
+        prodUrl: "customer/api/profile/v1/doc-upload",
         body: {
           docBytes: null,
           documentName: null,
