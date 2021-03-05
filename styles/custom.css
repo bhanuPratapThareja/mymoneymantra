@@ -1323,10 +1323,13 @@ section.popular-card-container {
   max-height: 240px;
 }
 
-#popular-cards-sec .slick-list.draggable {
-  padding: 0 !important;
-  /* margin: 0 55px; */
+.popular-cards-slider .slick-track {
+  overflow: auto;
 }
+/* #popular-cards-sec .slick-list.draggable {
+  padding: 0 !important;
+  margin: 0 55px;
+} */
 
 .blogs-flow .blogs-filter .filters button {
   padding-right: 24px;
@@ -1666,6 +1669,7 @@ button.cstm-load-btn {
   font-weight: 500;
   line-height: 22px;
   overflow: hidden;
+  text-align: center;
 }
 
 /*-- Trending and Popular Offers --*/
