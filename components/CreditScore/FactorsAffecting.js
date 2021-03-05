@@ -43,7 +43,7 @@ const FactorsAffecting = () => {
                   </div>
                 </div>
               </div>
-           :<></> )}
+           :<React.Fragment key={index}></React.Fragment> )}
               
             </div>
       

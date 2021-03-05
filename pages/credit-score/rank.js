@@ -45,7 +45,7 @@ const rank = (props) => {
         <TipSection />
         <FactorsAffecting />
         <PaymentRecord onTime={onTime} delayed={delayed} banks={props?.data} />
-        <Offers data={{section_heading:'Offers For You'}} />
+        <Offers componentType="trneding" data={{section_heading:'Offers For You'}} />
       </Layout>
     </div>
   )

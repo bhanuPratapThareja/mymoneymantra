@@ -2158,7 +2158,7 @@ button.cstm-load-btn {
 }
 
 .red-square{
-  background: url("/assets/images/icons/reds.png") !important;
+  background-image: url("/assets/images/icons/reds.png") !important;
   max-width: 230px;
   min-width: 160px;
   min-height: 245px;/* sanjib */
@@ -2176,12 +2176,14 @@ button.cstm-load-btn {
 }
 
 .orange-square{
-  background: url("/assets/images/icons/oranges.png") no-repeat center / contain;
+  background-image: url("/assets/images/icons/oranges.png")!important;
   max-width: 230px;
   min-width: 160px;
   min-height: 245px;/* sanjib */
   height: 100%;
   background-color: #ffffff;
+  background-repeat: no-repeat !important;
+  background-size: contain;
   -ms-flex-pack: center;
   justify-content: center;
   -ms-flex-align: center;
@@ -2192,7 +2194,7 @@ button.cstm-load-btn {
 }
 
 .yellow-square{
-  background: url("/assets/images/icons/yellows.png") !important;
+  background-image: url("/assets/images/icons/yellows.png") !important;
   max-width: 230px;
   min-width: 160px;
   min-height: 245px;/* sanjib */
@@ -2210,7 +2212,7 @@ button.cstm-load-btn {
 }
 
 .green-square{
-  background: url("/assets/images/icons/greens.png") !important;
+  background-image: url("/assets/images/icons/greens.png") !important;
   max-width: 230px;
   min-width: 160px;
   min-height: 245px;/* sanjib */
@@ -2439,9 +2441,11 @@ button.cstm-load-btn {
 .creditProfile-age-flow .paymentRank-wrapper-content {
   padding: 44px 136px 40px 84px !important;
 }
+
 .creditProfile-utilization-flow .tipSection {
   margin-top: 128px !important;
 }
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
@@ -2507,9 +2511,51 @@ button.cstm-load-btn {
     max-width: 400px;
   }
 }
-
+.value-accounts h2{
+  width: 125px;
+    font-size: 1.75rem !important;
+    font-family: "Avenir-Heavy" !important;
+    line-height: 2.5rem !important;
+    word-break: break-word;
+}
 @media(max-width: 767px) {
-  
+  .square-hide{
+    display: none;
+  }
+  .green-square, .red-square, .orange-square, .yellow-square{
+    background-image: none !important;
+    
+    min-height: auto;
+    width: max-content;
+    max-width: max-content !important;
+    padding: 25px 90px;
+    min-width: 200px;
+    border-radius: 5px;
+    position: relative;
+  }
+  .orange-square{
+    background-color: #ff9839 !important;
+    
+
+  }
+  .green-square{
+    background-color: #89C142  !important;
+  }
+  .yellow-square{
+    background-color: #f9f900 !important;
+  }
+  .yellow-square h2{
+    color: #333 !important;
+  }
+  .red-square{
+    background-color: #DC3737 !important;
+  }
+  .green-square h2, .red-square h2, .orange-square h2, .yellow-square h2{
+    font-size: 1.25rem !important;
+    line-height: 1.75rem !important;
+    width: max-content;
+    max-width: max-content !important;
+  }
   .factors-affecting-child {
     width: 112px;
     height: 93px;
@@ -3075,7 +3121,7 @@ button.cstm-load-btn {
     min-height: 80px;
   }
   .creditProfile-age-flow .paymentRank-wrapper-content {
-    margin-top: 20px !important;
+    margin-top: 24px !important;
   }
   .creditProfile-utilization-flow .tipSection {
     margin-top: 32px !important;
@@ -3083,6 +3129,8 @@ button.cstm-load-btn {
   .creditProfile-age-flow .paymentRank-wrapper-content {
     padding: 0 !important;
   }
+
+
 }
 
 @media(max-width: 767px) {
@@ -3156,6 +3204,9 @@ letter-spacing: 0.04em;
   .shortforms-container .form__group.field datalist{
     width: 90% !important;
   }
+
+    
+  
 }
 
 @media(max-width: 375px) {
@@ -3187,4 +3238,7 @@ letter-spacing: 0.04em;
 
 .bar-of-progress {
   z-index: 999999 !important;
+}
+.popular-cards-slider-card{
+  justify-content: space-between;
 }
