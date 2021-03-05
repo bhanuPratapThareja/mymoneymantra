@@ -45,13 +45,6 @@ const Listings = props => {
     }
 
     const loadListingOffers = async () => {
-        // if (props.data) {
-        //     const listingOffers = await extractListingOffers(props.data)
-        //     getCardsWithButtonText(listingOffers)
-        // }
-        // const apiListingOffers = await viewListingOffers(props.productType)
-        // console.log('apiListingOffers: ', apiListingOffers)
-        // const updatedListingOffers
         const apiOffers = await viewOffers(props.productType)
         if (apiOffers) {
             let offers = apiOffers['populars']
