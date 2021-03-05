@@ -7657,6 +7657,7 @@ label {
             max-width: auto;
             width: 100%; }
             .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper .documents-wrapper .docs-container .identity-options .options {
+              padding: 0px 24px 10px 0px;
               -ms-flex-pack: start;
                   justify-content: flex-start; }
               .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper .documents-wrapper .docs-container .identity-options .options h5 {

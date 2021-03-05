@@ -47,6 +47,8 @@ const userProfile = (props) => {
     const progressPercentage = Math.floor(
       (curretProgress / totalNumberOfFields) * 100
     );
+    console.log(progressPercentage);
+    console.log(personalInfoProgress,contactInfoProgress,workInfoProgress,documentProgress)
     setProfileProgress(progressPercentage);
   }, [
     personalInfoProgress,

@@ -135,7 +135,7 @@ const Documents = (props) => {
       documentExtension,
       documentId:aadhaar.documentId
     };
-    const uploadStatus = await uploadDocument(...requestBody);
+    const uploadStatus = await uploadDocument({...requestBody});
     setAadhaar((prevState) => ({
       ...prevState,
       uploadStatus,
@@ -299,6 +299,8 @@ const Documents = (props) => {
       }
     } catch (err) {
       console.log(err);
+      return err.response.data.message?err.response.data.message:err.response.data.error
+      
     }
   };
 
@@ -317,20 +319,23 @@ const Documents = (props) => {
       bill,
     ];
     fields.map((item) => {
-      if (item.documentName !== "") {
+      if (item.documentName !== "" && item.documentId !=='') {
         progress += 1;
       }
     });
     setDocumentProgress(progress);
   };
 
+  const focusDocument =(id)=>{
+    document.getElementById(id).click();
+  }
   return (
     <form>
       <div className="documents-wrapper">
         <div className="docs-container">
           <span>Identity Proof</span>
           <div className="identity-options col-span">
-            <div className="options">
+            <div className="options" onClick={()=>focusDocument('aadhar')}>
               <h5>Aadhaar Card</h5>
               <div>
                 <label>
@@ -345,7 +350,8 @@ const Documents = (props) => {
                       fill="#fff"
                     ></path>
                   </svg>
-                  <input
+                  <input accept="image/*,.pdf" 
+                  id="aadhar"
                     type="file"
                     onChange={aadhaarChangeHandler}
                     style={{ display: "none" }}
@@ -357,7 +363,7 @@ const Documents = (props) => {
             </div>
           </div>
           <div className="identity-options">
-            <div className="options">
+            <div className="options" onClick={()=>focusDocument('pan')}>
               <h5>PAN Card</h5>
               <div>
                 <label>
@@ -372,7 +378,8 @@ const Documents = (props) => {
                       fill="#fff"
                     ></path>
                   </svg>
-                  <input
+                  <input accept="image/*,.pdf" 
+                  id="pan"
                     type="file"
                     onChange={panChangeHandler}
                     style={{ display: "none" }}
@@ -388,7 +395,7 @@ const Documents = (props) => {
         <div className="docs-container">
           <span>Income Proof</span>
           <div className="identity-options col-span">
-            <div className="options">
+            <div className="options" onClick={()=>focusDocument('bankStatement')}>
               <h5>Bank Statements</h5>
               <div>
                 <label>
@@ -403,7 +410,8 @@ const Documents = (props) => {
                       fill="#fff"
                     ></path>
                   </svg>
-                  <input
+                  <input accept="image/*,.pdf" 
+                  id="bankStatement"
                     type="file"
                     onChange={bankStatementChangeHandler}
                     style={{ display: "none" }}
@@ -415,7 +423,7 @@ const Documents = (props) => {
             </div>
           </div>
           <div className="identity-options">
-            <div className="options">
+            <div className="options" onClick={()=>focusDocument('salarySlip')}>
               <h5>Salary Slips</h5>
               <div>
                 <label>
@@ -430,7 +438,8 @@ const Documents = (props) => {
                       fill="#fff"
                     ></path>
                   </svg>
-                  <input
+                  <input accept="image/*,.pdf" 
+                  id="salarySlip"
                     type="file"
                     onChange={salarySlipChangeHandler}
                     style={{ display: "none" }}
@@ -442,7 +451,7 @@ const Documents = (props) => {
             </div>
           </div>
           <div className="identity-options">
-            <div className="options">
+            <div className="options" onClick={()=>focusDocument('itr')}>
               <h5>Form 16 / 26AS / ITR</h5>
               <div>
                 <label>
@@ -457,7 +466,8 @@ const Documents = (props) => {
                       fill="#fff"
                     ></path>
                   </svg>
-                  <input
+                  <input accept="image/*,.pdf" 
+                  id="itr"
                     type="file"
                     onChange={form16ChangeHandler}
                     style={{ display: "none" }}
@@ -473,7 +483,7 @@ const Documents = (props) => {
         <div className="docs-container">
           <span>Address Proof</span>
           <div className="identity-options col-span">
-            <div className="options">
+            <div className="options" onClick={()=>focusDocument('identity')}>
               <h5>Rent Agreement</h5>
               <div>
                 <label>
@@ -488,7 +498,8 @@ const Documents = (props) => {
                       fill="#fff"
                     ></path>
                   </svg>
-                  <input
+                  <input accept="image/*,.pdf" 
+                  id="identity"
                     type="file"
                     onChange={rentAgreementChangeHandler}
                     style={{ display: "none" }}
@@ -500,7 +511,7 @@ const Documents = (props) => {
             </div>
           </div>
           <div className="identity-options">
-            <div className="options">
+            <div className="options" onClick={()=>focusDocument('electricity')}>
               <h5>Electricity / Water / Telephone / Utility Bill</h5>
               <div>
                 <label>
@@ -515,7 +526,8 @@ const Documents = (props) => {
                       fill="#fff"
                     ></path>
                   </svg>
-                  <input
+                  <input accept="image/*,.pdf" 
+                  id="electricity"
                     type="file"
                     onChange={billChangeHandler}
                     style={{ display: "none" }}

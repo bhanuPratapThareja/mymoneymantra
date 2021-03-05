@@ -7,7 +7,7 @@ import { useEffect, useState, useRef } from 'react'
 import { isScrolledIntoView } from '../utils/elementInView'
 import { getDevice } from '../utils/getDevice'
 import $ from 'jquery'
-import { clearKey, getItem, keys, setItem } from '../utils/storage'
+import { clearKey, getItem, keys } from '../utils/storage'
 
 const Header = () => {
    const router = useRouter()

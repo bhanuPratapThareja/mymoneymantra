@@ -362,6 +362,7 @@ const WorkInfo = (props) => {
             type="text"
             id="bank-name"
             autocomplete="off"
+            disabled={isedit?false:true}
             placeholder="Bank Name"
             required=""
             value={bankName ? bankName: null}
