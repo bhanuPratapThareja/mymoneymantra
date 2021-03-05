@@ -2,7 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { getApiData } from "../api/api";
-import { clearKey, getItem, keys, setItem } from "../utils/storage";
+import { clearKey, getItem, keys } from "../utils/storage";
 import {
   getPersonalInfo,
   getPictureservice,

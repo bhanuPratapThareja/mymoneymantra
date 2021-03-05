@@ -6,11 +6,12 @@ import { generateInputs } from "../../utils/inputGenerator"
 import { getDropdownList } from "../../services/formService"
 import { generateLead, sendNotification, submitOtp, getOtp } from "../../services/formService"
 import { setLeadId, getLeadId, setLeadBank } from "../../utils/localAccess"
-import { getFormattedCurrency, getWholeNumberFromCurrency } from "../../utils/formattedCurrency"
+import { getWholeNumberFromCurrency } from "../../utils/formattedCurrency"
 import ImageComponent from '../../components/ImageComponent/ImageComponent'
 import { lf } from '../../utils/types'
 import {
   textTypeInputs,
+  updateFormInputs,
   handleChangeInputs,
   updateInputsValidity,
   updateDropdownList,
@@ -54,65 +55,18 @@ class LongForm extends React.Component {
     const leadBank = await this.getBankData()
     const { long_form_version_2, always_ask_for_otp } = this.props.data
     const longFormSections = long_form_version_2.long_form[0].long_form_sections
-    const formData = JSON.parse(localStorage.getItem("formData"))
-    let sfData = null
+    
     let noOfMandatoryInputs = 0
-    let leadId = getLeadId(primaryPath)
     let enableCheckboxes = []
-
-    if (formData && formData[primaryPath]) {
-      sfData = formData[primaryPath]
-    }
+    let leadId = getLeadId()
 
     for (let i = 0; i < longFormSections.length; i++) {
       const long_form_blocks = longFormSections[i].sections[0].long_form_blocks
       long_form_blocks.forEach((long_form_block) => {
         const inputs = long_form_block.blocks
-
-        for (let i = 0; i < inputs.length; i++) {
-
-          inputs[i].error = false;
-          inputs[i].verified = false;
-
-          if (inputs[i].mandatory) {
-            noOfMandatoryInputs++;
-          }
-
-          if (inputs[i].type === "checkbox") {
-            inputs[i].checkbox.checkbox_input.forEach((box) => {
-              if (box.enable_submit) {
-                enableCheckboxes.push(box)
-              }
-            })
-          }
-
-          if (sfData) {
-            loop: for (let key in sfData) {
-              if (!sfData[key]) {
-                continue loop
-              }
-
-              if (typeof sfData[key] === "object" && key === inputs[i].end_point_name) {
-                inputs[i].value = sfData[key][inputs[i].select_name];
-                inputs[i].selectedId = sfData[key][inputs[i].select_id];
-                inputs[i].selectedItem = sfData[key];
-                inputs[i].verified = true;
-                inputs[i].error = false;
-                continue loop;
-              }
-
-              if (typeof sfData[key] === "string" && key === inputs[i].end_point_name) {
-                inputs[i].value = sfData[key];
-                inputs[i].verified = true;
-                inputs[i].error = false;
-                if (inputs[i].type === "money") {
-                  inputs[i].value = getFormattedCurrency(sfData[key]);
-                }
-              }
-            }
-          }
-        }
-
+        const { updatedNoOfMandatoryInputs, updatedEnableCheckboxes } = updateFormInputs(inputs)
+        noOfMandatoryInputs += updatedNoOfMandatoryInputs
+        enableCheckboxes = [...enableCheckboxes, ...updatedEnableCheckboxes]
       })
     }
 
@@ -496,7 +450,7 @@ class LongForm extends React.Component {
           primaryPath = 'personal-loans'
         }
 
-        setLeadId(leadId, primaryPath)
+        setLeadId(leadId)
         setLeadBank(leadBank)
         const pathname = `/thank-you`
         const query = { primaryPath }

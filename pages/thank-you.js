@@ -21,7 +21,7 @@ const ThankYouPage = props => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        setLeadId(getLeadId(props.primaryPath))
+        setLeadId(getLeadId())
         setLeadBank(getLeadBank())
     }, [])
 

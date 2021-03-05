@@ -44,7 +44,6 @@ const Header = () => {
                if (longForm && longFormBanner) {
                   const longFormOffset = longForm.offsetTop
                   const longFormHeight = longForm.clientHeight
-                  const bannerOffset = longFormBanner.offsetTop
                   const bannerHeight = longFormBanner.clientHeight
 
                   if (window.pageYOffset >= longFormOffset && window.pageYOffset < longFormOffset + longFormHeight) {

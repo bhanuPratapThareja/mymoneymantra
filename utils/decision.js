@@ -1,4 +1,4 @@
-import { setLeadBank, setFormData, clearLeadId, clearFormData } from './localAccess.js'
+import { setLeadBank, setFormData, clearLeadId } from './localAccess.js'
 import { sf, ApplyNow, EConnect, InstantApproval, InstantApprove } from './types.js'
 
 export const makeDecision = (buttonText, offer, primaryPath, changePageType) => {
@@ -15,9 +15,8 @@ export const makeDecision = (buttonText, offer, primaryPath, changePageType) => 
         query.formRedirection = offer.formRedirection
         let data = {}
         data.leadBank = leadBank
-        clearFormData(primaryPath)
-        clearLeadId(primaryPath)
-        setFormData(data, primaryPath)
+        clearLeadId()
+        setFormData(data)
       } else {
         pathname = `/thank-you`
       }

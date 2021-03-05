@@ -33,6 +33,10 @@ export const extractOffers = async apiOffers => {
         const requiredProducts = productIdArray.join('&')
         const offersPacked = await strapi.processReq('GET', `product-v-2-s?${requiredProducts}`)
 
+        if(!offersPacked) {
+            resolve([])
+        }
+
         let offers = []
         let pendingOffers = [...offersPacked]
         offersPacked.forEach(async offer => {
@@ -70,7 +74,7 @@ export const getProductDecision = (offers, primaryPath, productType) => {
             resolve([])
         }
         const { url, body } = getApiData('leadProductDecision')
-        const leadId = getLeadId(primaryPath)
+        const leadId = getLeadId()
         pendingOffers.forEach(async offer => {
 
             body.productId = productType ? productType.product_type_id.toString() : ''
