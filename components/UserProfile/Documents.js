@@ -1,317 +1,315 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { fileToByteArray } from '../../utils/byteArray'
-const placeholderData="Please Upload the file"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { getApiData } from "../../api/api";
+import { fileToByteArray } from "../../utils/byteArray";
+import { getItem, keys } from "../../utils/storage";
+const placeholderData = "Please Upload the file";
 const Documents = (props) => {
   const [aadhaar, setAadhaar] = useState({
     documentName: placeholderData,
-    documentNo: '1000000374',
-    documentTypeId: '1000000036',
-    uploadStatus: '',
-  })
+    documentNo: "1000000374",
+    documentTypeId: "1000000036",
+    uploadStatus: "",
+    documentId:''
+  });
   const [pan, setPan] = useState({
     documentName: placeholderData,
-    documentNo: '1000000290',
-    documentTypeId: '1000000036',
-    uploadStatus: '',
-  })
+    documentNo: "1000000290",
+    documentTypeId: "1000000036",
+    uploadStatus: "",
+    documentId:''
+  });
   const [bankStatement, setBankStatement] = useState({
     documentName: placeholderData,
-    documentNo: '1000000308',
-    documentTypeId: '1000000044',
-    uploadStatus: '',
-  })
+    documentNo: "1000000308",
+    documentTypeId: "1000000044",
+    uploadStatus: "",
+    documentId:''
+  });
   const [salarySlips, setSalarySlips] = useState({
     documentName: placeholderData,
-    documentNo: '1000000307',
-    documentTypeId: '1000000043',
-    uploadStatus: '',
-  })
+    documentNo: "1000000307",
+    documentTypeId: "1000000043",
+    uploadStatus: "",
+    documentId:''
+  });
   const [form16, setForm16] = useState({
     documentName: placeholderData,
-    documentNo: '1000000305',
-    documentTypeId: '1000000043',
-    uploadStatus: '',
-  })
+    documentNo: "1000000305",
+    documentTypeId: "1000000043",
+    uploadStatus: "",
+    documentId:''
+  });
   const [rentAgreement, setRentAgreement] = useState({
     documentName: placeholderData,
-    documentNo: '1000000299',
-    documentTypeId: '1000000037',
-    uploadStatus: '',
-  })
+    documentNo: "1000000299",
+    documentTypeId: "1000000037",
+    uploadStatus: "",
+    documentId:''
+  });
   const [bill, setBill] = useState({
     documentName: placeholderData,
-    documentNo: '1000000321',
-    documentTypeId: '1000000037',
-    uploadStatus: '',
-  })
-  const { setDocumentProgress } = props
+    documentNo: "1000000321",
+    documentTypeId: "1000000037",
+    uploadStatus: "",
+    documentId:''
+  });
+  const { setDocumentProgress } = props;
   useEffect(() => {
-    getAllDocuments()
-  }, [])
+    getAllDocuments();
+  }, []);
 
   useEffect(() => {
-    calculate()
-  }, [aadhaar, pan, bankStatement, salarySlips, bankStatement, form16, bill])
+    calculate();
+  }, [aadhaar, pan, bankStatement, salarySlips, bankStatement, form16, bill]);
 
   const getPanAndAadhar = (doc) => {
-    if (doc.documentNo == '1000000290') {
-      setPan({ ...doc })
+    if (doc.documentNo == "1000000290") {
+      console.log(doc)
+      setPan({ ...doc });
     }
-    if (doc.documentNo == '1000000374') {
-      setAadhaar({ ...doc })
+    if (doc.documentNo == "1000000374") {
+      setAadhaar({ ...doc });
     }
-  }
+  };
   const getRentAgreementAndBill = (doc) => {
-    if (doc.documentNo == '1000000299') {
-      setRentAgreement({ ...doc })
+    if (doc.documentNo == "1000000299") {
+      setRentAgreement({ ...doc });
     }
-    if (doc.documentNo == '1000000321') {
-      setBill({ ...doc })
+    if (doc.documentNo == "1000000321") {
+      setBill({ ...doc });
     }
-  }
+  };
   const getSalarySlipAndForm16 = (doc) => {
-    if (doc.documentNo == '1000000305') {
-      setForm16({ ...doc })
+    if (doc.documentNo == "1000000305") {
+      setForm16({ ...doc });
     }
-    if (doc.documentNo == '1000000307') {
-      setSalarySlips({ ...doc })
+    if (doc.documentNo == "1000000307") {
+      setSalarySlips({ ...doc });
     }
-  }
+  };
 
   const getAllDocuments = async () => {
     try {
-      const customerId = localStorage.getItem('customerId')
-      const responseObject = await axios.get(
-        `http://203.122.46.189:8061/customer/api/profile/v1/all-docs`,
-        { params: { customerId } }
-      )
-      console.log('All documents', responseObject)
+      const customerId = getItem(keys.customerId)
+      const { url } = getApiData("allDocument");
+      const responseObject = await axios.get(url, { params: { customerId } });
+      console.log("All documents", responseObject);
       responseObject.data.docList.map((doc) => {
         switch (doc.documentTypeId) {
-          case '1000000036':
-            // setPan((prevState) => ({ ...prevState, doc }))
-            // setPan({ ...doc })
-            getPanAndAadhar(doc)
-            break
-          case '1000000044':
-            // setBankStatement((prevState) => ({ ...prevState, doc }))
-            setBankStatement({ ...doc })
-            break
-          case '1000000043':
-            // setSalarySlips((prevState) => ({ ...prevState, doc }))
-            // setSalarySlips({ ...doc })
-            getSalarySlipAndForm16(doc)
-            break
-          case '1000000037':
-            // setBill((prevState) => ({ ...prevState, doc }))
-            // setBill({ ...doc })
-            getRentAgreementAndBill(doc)
-            break
+          case "1000000036":
+            getPanAndAadhar(doc);
+            break;
+          case "1000000044":
+            setBankStatement({ ...doc });
+            break;
+          case "1000000043":
+            getSalarySlipAndForm16(doc);
+            break;
+          case "1000000037":
+            getRentAgreementAndBill(doc);
+            break;
           default:
-            break
+            break;
         }
-      })
-      // console.log('all doc', pan, bankStatement)
-      // calculate()
+      });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   const fileExtention = (fileType) => {
-    const fileTypeArray = fileType.split('/')
-    return fileTypeArray[1]
-  }
+    const fileTypeArray = fileType.split("/");
+    return fileTypeArray[1];
+  };
 
   const aadhaarChangeHandler = async (event) => {
-    const file = event.target.files[0]
-    if (!file) return
-    const docBytes = await fileToByteArray(file)
-    const documentExtension = fileExtention(file.type)
+    const file = event.target.files[0];
+    if (!file) return;
+    const docBytes = await fileToByteArray(file);
+    const documentExtension = fileExtention(file.type);
     const requestBody = {
       documentNo: aadhaar.documentNo,
       documentTypeId: aadhaar.documentTypeId,
       docBytes,
       documentName: file.name,
       documentExtension,
-    }
-    const uploadStatus = await uploadDocument(requestBody)
+      documentId:aadhaar.documentId
+    };
+    const uploadStatus = await uploadDocument({...requestBody});
     setAadhaar((prevState) => ({
       ...prevState,
       uploadStatus,
       documentName: file.name,
-    }))
-  }
+    }));
+  };
 
   const panChangeHandler = async (event) => {
-    const file = event.target.files[0]
-    if (!file) return
-    const docBytes = await fileToByteArray(file)
-    const documentExtension = fileExtention(file.type)
+    const file = event.target.files[0];
+    if (!file) return;
+    const docBytes = await fileToByteArray(file);
+    const documentExtension = fileExtention(file.type);
     const requestBody = {
       documentNo: pan.documentNo,
       documentTypeId: pan.documentTypeId,
       docBytes,
       documentName: file.name,
       documentExtension,
-    }
-    console.log(requestBody)
-    const uploadStatus = await uploadDocument(requestBody)
+      documentId:pan.documentId
+    };
+    console.log(requestBody);
+    const uploadStatus = await uploadDocument(...requestBody);
     setPan((prevState) => ({
       ...prevState,
       uploadStatus,
       documentName: file.name,
-    }))
-  }
+    }));
+  };
 
   const bankStatementChangeHandler = async (event) => {
-    const file = event.target.files[0]
-    if (!file) return
-    const docBytes = await fileToByteArray(file)
-    const documentExtension = fileExtention(file.type)
+    const file = event.target.files[0];
+    if (!file) return;
+    const docBytes = await fileToByteArray(file);
+    const documentExtension = fileExtention(file.type);
     const requestBody = {
       documentNo: bankStatement.documentNo,
       documentTypeId: bankStatement.documentTypeId,
       docBytes,
       documentName: file.name,
       documentExtension,
-    }
-    const uploadStatus = await uploadDocument(requestBody)
+      documentId:bankStatement.documentId
+    };
+    const uploadStatus = await uploadDocument(...requestBody);
     setBankStatement((prevState) => ({
       ...prevState,
       uploadStatus,
       documentName: file.name,
-    }))
-  }
+    }));
+  };
 
   const salarySlipChangeHandler = async (event) => {
-    const file = event.target.files[0]
-    if (!file) return
-    const docBytes = await fileToByteArray(file)
-    const documentExtension = fileExtention(file.type)
+    const file = event.target.files[0];
+    if (!file) return;
+    const docBytes = await fileToByteArray(file);
+    const documentExtension = fileExtention(file.type);
     const requestBody = {
       documentNo: salarySlips.documentNo,
       documentTypeId: salarySlips.documentTypeId,
       docBytes,
       documentName: file.name,
       documentExtension,
-    }
-    const uploadStatus = await uploadDocument(requestBody)
+      documentId:salarySlips.documentId
+    };
+    const uploadStatus = await uploadDocument(...requestBody);
     setSalarySlips((prevState) => ({
       ...prevState,
       uploadStatus,
       documentName: file.name,
-    }))
-  }
+    }));
+  };
 
   const form16ChangeHandler = async (event) => {
-    const file = event.target.files[0]
-    if (!file) return
-    const docBytes = await fileToByteArray(file)
-    const documentExtension = fileExtention(file.type)
+    const file = event.target.files[0];
+    if (!file) return;
+    const docBytes = await fileToByteArray(file);
+    const documentExtension = fileExtention(file.type);
     const requestBody = {
       documentNo: form16.documentNo,
       documentTypeId: form16.documentTypeId,
       docBytes,
       documentName: file.name,
       documentExtension,
-    }
-    const uploadStatus = await uploadDocument(requestBody)
+      documentId:form16.documentId
+    };
+    const uploadStatus = await uploadDocument(...requestBody);
     setForm16((prevState) => ({
       ...prevState,
       uploadStatus,
       documentName: file.name,
-    }))
-  }
+    }));
+  };
 
   const rentAgreementChangeHandler = async (event) => {
-    const file = event.target.files[0]
-    if (!file) return
-    const docBytes = await fileToByteArray(file)
-    const documentExtension = fileExtention(file.type)
+    const file = event.target.files[0];
+    if (!file) return;
+    const docBytes = await fileToByteArray(file);
+    const documentExtension = fileExtention(file.type);
     const requestBody = {
       documentNo: rentAgreement.documentNo,
       documentTypeId: rentAgreement.documentTypeId,
       docBytes,
       documentName: file.name,
       documentExtension,
-    }
-    const uploadStatus = await uploadDocument(requestBody)
+      documentId:rentAgreement.documentId
+    };
+    const uploadStatus = await uploadDocument(...requestBody);
     setRentAgreement((prevState) => ({
       ...prevState,
       uploadStatus,
       documentName: file.name,
-    }))
-  }
+    }));
+  };
 
   const billChangeHandler = async (event) => {
-    const file = event.target.files[0]
-    if (!file) return
-    const docBytes = await fileToByteArray(file)
-    const documentExtension = fileExtention(file.type)
-
-    // setBill((prevState) => ({
-    //   ...prevState,
-    //   docBytes,
-    //   documentName: file.name,
-    //   documentExtension: file.type,
-    // }))
-
-    const requestBody = {
-      documentNo: bill.documentNo,
-      documentTypeId: bill.documentTypeId,
+    const file = event.target.files[0];
+    if (!file) return;
+    const docBytes = await fileToByteArray(file);
+    const documentExtension = fileExtention(file.type);
+    
+    const uploadStatus = await uploadDocument(
+      bill.documentNo,
+      bill.documentTypeId,
       docBytes,
-      documentName: file.name,
+      file.name,
       documentExtension,
-    }
-    const uploadStatus = await uploadDocument(requestBody)
+      bill.documentId
+    );
     setBill((prevState) => ({
       ...prevState,
       uploadStatus,
       documentName: file.name,
-    }))
-  }
+    }));
+  };
 
-  const uploadDocument = async (body) => {
+  const uploadDocument = async (
+    documentNo,
+    documentTypeId,
+    docBytes,
+    documentName,
+    documentExtension,
+    documentId
+  ) => {
     try {
-      const customerId = localStorage.getItem('customerId')
-      const responseObject = await axios.post(
-        'http://203.122.46.189:8060/customer/api/profile/v1/doc-upload',
-        {
-          ...body,
-          customerId: customerId,
-        }
-      )
-      console.log(responseObject)
+      const customerId = getItem(keys.customerId)
+      let { url, body } = getApiData("uploadDocument");
+      body = {
+        documentNo,
+        documentTypeId,
+        docBytes,
+        documentName,
+        documentExtension,
+        documentId,
+        customerId,
+      };
+      const responseObject = await axios.post( url, body );
+      console.log(responseObject);
       if (responseObject.status === 200) {
-        return responseObject.data.message
+        return responseObject.data.message;
       } else {
-        return 'Something went wrong'
+        return "Something went wrong";
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
+      return err.response.data.message?err.response.data.message:err.response.data.error
+      
     }
-  }
+  };
 
-  // console.log({
-  //   aadhaar,
-  //   pan,
-  //   bankStatement,
-  //   salarySlips,
-  //   form16,
-  //   rentAgreement,
-  //   bill,
-  // })
+
 
   const calculate = () => {
-    console.log('Calculate')
-    let progress = 0
-    // fields.map((field) => {
-    //   if (field) {
-    //     progress += 1
-    //   }
-    // })
+    console.log("Calculate");
+    let progress = 0;
     const fields = [
       aadhaar,
       pan,
@@ -320,22 +318,25 @@ const Documents = (props) => {
       bankStatement,
       form16,
       bill,
-    ]
+    ];
     fields.map((item) => {
-      if (item.documentName !== '') {
-        progress += 1
+      if (item.documentName !== "" && item.documentId !=='') {
+        progress += 1;
       }
-    })
-    setDocumentProgress(progress)
-  }
+    });
+    setDocumentProgress(progress);
+  };
 
+  const focusDocument =(id)=>{
+    document.getElementById(id).click();
+  }
   return (
     <form>
       <div className="documents-wrapper">
         <div className="docs-container">
           <span>Identity Proof</span>
           <div className="identity-options col-span">
-            <div className="options">
+            <div className="options" onClick={()=>focusDocument('aadhar')}>
               <h5>Aadhaar Card</h5>
               <div>
                 <label>
@@ -350,10 +351,11 @@ const Documents = (props) => {
                       fill="#fff"
                     ></path>
                   </svg>
-                  <input
+                  <input accept="image/*,.pdf" 
+                  id="aadhar"
                     type="file"
                     onChange={aadhaarChangeHandler}
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                   />
                 </label>
                 <h6>{aadhaar?.documentName}</h6>
@@ -362,7 +364,7 @@ const Documents = (props) => {
             </div>
           </div>
           <div className="identity-options">
-            <div className="options">
+            <div className="options" onClick={()=>focusDocument('pan')}>
               <h5>PAN Card</h5>
               <div>
                 <label>
@@ -377,10 +379,11 @@ const Documents = (props) => {
                       fill="#fff"
                     ></path>
                   </svg>
-                  <input
+                  <input accept="image/*,.pdf" 
+                  id="pan"
                     type="file"
                     onChange={panChangeHandler}
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                   />
                 </label>
                 <h6>{pan?.documentName}</h6>
@@ -393,7 +396,7 @@ const Documents = (props) => {
         <div className="docs-container">
           <span>Income Proof</span>
           <div className="identity-options col-span">
-            <div className="options">
+            <div className="options" onClick={()=>focusDocument('bankStatement')}>
               <h5>Bank Statements</h5>
               <div>
                 <label>
@@ -408,10 +411,11 @@ const Documents = (props) => {
                       fill="#fff"
                     ></path>
                   </svg>
-                  <input
+                  <input accept="image/*,.pdf" 
+                  id="bankStatement"
                     type="file"
                     onChange={bankStatementChangeHandler}
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                   />
                 </label>
                 <h6>{bankStatement?.documentName}</h6>
@@ -420,7 +424,7 @@ const Documents = (props) => {
             </div>
           </div>
           <div className="identity-options">
-            <div className="options">
+            <div className="options" onClick={()=>focusDocument('salarySlip')}>
               <h5>Salary Slips</h5>
               <div>
                 <label>
@@ -435,10 +439,11 @@ const Documents = (props) => {
                       fill="#fff"
                     ></path>
                   </svg>
-                  <input
+                  <input accept="image/*,.pdf" 
+                  id="salarySlip"
                     type="file"
                     onChange={salarySlipChangeHandler}
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                   />
                 </label>
                 <h6>{salarySlips?.documentName}</h6>
@@ -447,7 +452,7 @@ const Documents = (props) => {
             </div>
           </div>
           <div className="identity-options">
-            <div className="options">
+            <div className="options" onClick={()=>focusDocument('itr')}>
               <h5>Form 16 / 26AS / ITR</h5>
               <div>
                 <label>
@@ -462,10 +467,11 @@ const Documents = (props) => {
                       fill="#fff"
                     ></path>
                   </svg>
-                  <input
+                  <input accept="image/*,.pdf" 
+                  id="itr"
                     type="file"
                     onChange={form16ChangeHandler}
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                   />
                 </label>
                 <h6>{form16?.documentName}</h6>
@@ -478,7 +484,7 @@ const Documents = (props) => {
         <div className="docs-container">
           <span>Address Proof</span>
           <div className="identity-options col-span">
-            <div className="options">
+            <div className="options" onClick={()=>focusDocument('identity')}>
               <h5>Rent Agreement</h5>
               <div>
                 <label>
@@ -493,10 +499,11 @@ const Documents = (props) => {
                       fill="#fff"
                     ></path>
                   </svg>
-                  <input
+                  <input accept="image/*,.pdf" 
+                  id="identity"
                     type="file"
                     onChange={rentAgreementChangeHandler}
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                   />
                 </label>
                 <h6>{rentAgreement?.documentName}</h6>
@@ -505,7 +512,7 @@ const Documents = (props) => {
             </div>
           </div>
           <div className="identity-options">
-            <div className="options">
+            <div className="options" onClick={()=>focusDocument('electricity')}>
               <h5>Electricity / Water / Telephone / Utility Bill</h5>
               <div>
                 <label>
@@ -520,10 +527,11 @@ const Documents = (props) => {
                       fill="#fff"
                     ></path>
                   </svg>
-                  <input
+                  <input accept="image/*,.pdf" 
+                  id="electricity"
                     type="file"
                     onChange={billChangeHandler}
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                   />
                 </label>
                 <h6>{bill?.documentName}</h6>
@@ -534,7 +542,7 @@ const Documents = (props) => {
         </div>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default Documents
+export default Documents;

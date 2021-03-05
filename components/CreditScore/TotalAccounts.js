@@ -27,7 +27,7 @@ const TotalAccounts = ({ totalAccount }) => {
                 'orange-square': totalAccount < 3,
               })}
             >
-              <h2>{totalAccount}</h2>
+              <h2>{totalAccount} Accounts</h2>
             </div>
           </div>
           <div className="paymentRank-wrapper-content-right">

@@ -42,7 +42,7 @@ const enquiries = (props) => {
           enquiries={cpEnquiriesData?.paymentRecord}
           banks={props.data}
         />
-        <Offers data={{section_heading:'Offers For You'}} />
+        <Offers componentType="trneding" data={{section_heading:'Offers For You'}} />
       </Layout>
     </div>
   )

@@ -14,6 +14,7 @@ import { sendSignUpOtp, sendSignUpData, verifyOtp } from "../../utils/otp";
 import { messgaes } from "../../utils/messages";
 import SubHeader from "../../components/signup/subheader";
 import CustomImage from "../../components/signup/image";
+import { keys, setItem } from "../../utils/storage";
 const signUp = (props) => {
   const [counter, setcounter] = useState(0);
   const [phone, setphone] = useState("");
@@ -56,9 +57,14 @@ const signUp = (props) => {
         sendSignUpData(name, email, phone, token, null)
           .then((res) => {
             const { customerId, message } = res;
-            // setOtpId(otpId);
-            localStorage.setItem("customerId", customerId);
+            if (res.message == "OTP Verification Failed") {
+              setOtpError(true);
+              return;
+            }
+            else{
+              setItem(keys.customerId,customerId);
             setcounter(counter + 1);
+          }
           })
           .catch((err) => {
             // alert(err.message);

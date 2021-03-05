@@ -435,8 +435,35 @@ class LongForm extends React.Component {
     generateLead(data, primaryPath, lf, this.props.productType)
       .then((res) => {
         const leadId = res.data.leadId
-        let actionName = this.state.primaryPath === 'rkpl' ? 'RKPL-CC' : 'Short Form Submit'
+        
+        let actionName ;
+        actionName = this.state.primaryPath === 'rkpl' ? 'RKPL-CC' : 'Short Form Submit'
         sendNotification(leadId, actionName)
+
+      
+
+        if(this.state.primaryPath === 'talent-edge-form'){
+      
+          let cibilScore = res.data.cibilScore;
+         
+          if(cibilScore == "null"){
+            actionName = "Talent Edge Direct Submit No Match"
+            sendNotification(leadId, actionName)
+          }
+          else if( cibilScore > "700"){
+            actionName = "Talent Edge Direct Submit High"
+            sendNotification(leadId, actionName)
+          }
+          else {
+       
+            actionName = "Talent Edge Direct Submit Low"
+            sendNotification(leadId, actionName)
+          }
+          
+
+          //sendNotification(leadId, actionName)
+          
+        }
 
         documentsArray.forEach(input => {
           submitDocument(input.end_point_name, input.value)

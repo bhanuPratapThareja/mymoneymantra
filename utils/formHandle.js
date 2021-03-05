@@ -647,6 +647,8 @@ export const submitShortForm = (slides, currentSlide, primaryPath, formType, pro
     setFormData(data)
     const latestFormData = getFormData()
     if (latestFormData) {
+
+    
       generateLead(latestFormData, primaryPath, formType, productType)
         .then((res) => {
           resolve(res)

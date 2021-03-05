@@ -2,18 +2,26 @@ import CustomImage from "./image";
 
 // import * as greenUnderline from '../../public/assets/images/credit-card-flow/green-underline.png'
 const Otp = (props) => {
+
+  const validateOtp = (e) => {
+    console.log(e.target.value);
+    if (/^[0-9]{0,4}$/gi.test(e.target.value) || e.target.value === '') {
+      console.log('in here')
+      props.setotp(e.target.value);
+    }
+  }
+
   return (
     <div className="otp-wrapper login-options">
       <div className="form__group field">
         <input
-        autoComplete={"off"}
+        autoComplete="off"
           className="form__field"
-          type="text"
+          type="tel"
           id="otp"
           placeholder="otp"
-          required=""
-          val={props.otp}
-          onChange={(e) => props.setotp(e.target.value)}
+          value={props.otp}
+          onChange={(e) => validateOtp(e)}
         />
         {props.error ? <p style={{ color: 'red' }}>OTP Invalid</p> : null}
         <label className="form__label" htmlFor="phone">

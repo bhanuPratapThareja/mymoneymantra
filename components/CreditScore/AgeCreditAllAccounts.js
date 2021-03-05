@@ -68,7 +68,7 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                         <h3>
                           <b className="card_name">{bank?.bank_name}</b>
                           <br />
-                          {item.accountType}
+                          {item.productType}
                         </h3>
                         <img
                           src={`http://203.122.46.189:1338${bank?.bank_logo?.url}`}
@@ -95,8 +95,10 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                               :
                             </span>
                             <h5>
-                              {item.highestCredit
-                                ? `₹ ${formatAmount(item.highestCredit)}`
+                              {item.highestCreditOrCreditLimit
+                                ? `₹ ${formatAmount(
+                                    item.highestCreditOrCreditLimit
+                                  )}`
                                 : 'Not Available'}
                             </h5>
                           </div>
@@ -127,7 +129,7 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                         <h3>
                           <b className="card_name">{bank?.bank_name}</b>
                           <br />
-                          {item.accountType}
+                          {item.productType}
                         </h3>
                         <img
                           src={`http://203.122.46.189:1338${bank?.bank_logo?.url}`}
@@ -208,7 +210,7 @@ const AgeCreditAllAccounts = ({ active, closed, name, banks }) => {
                   <h3>
                     <span>{modalBankData?.bank_name}</span>
                     <br />
-                    {modalData?.accountType}
+                    {modalData?.productType}
                   </h3>
                   <img
                     src={`http://203.122.46.189:1338${modalBankData?.bank_logo?.url}`}

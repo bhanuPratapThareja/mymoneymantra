@@ -106,8 +106,8 @@ const TotalActiveAccounts = ({ active, closed, name, banks }) => {
                           <div className="value">
                             <span>Credit Limit:</span>
                             <h5>
-                              {item.creditLimit
-                                ? `₹ ${formatAmount(item.creditLimit)}`
+                              {item.creditLmtOrLoanAmt
+                                ? `₹ ${formatAmount(item.creditLmtOrLoanAmt)}`
                                 : 'Not Available'}
                             </h5>
                           </div>
@@ -168,8 +168,8 @@ const TotalActiveAccounts = ({ active, closed, name, banks }) => {
                           <div className="value">
                             <span>Credit Limit:</span>
                             <h5>
-                              {item.creditLimit
-                                ? `₹ ${formatAmount(item.creditLimit)}`
+                              {item.creditLmtOrLoanAmt
+                                ? `₹ ${formatAmount(item.creditLmtOrLoanAmt)}`
                                 : 'Not Available'}
                             </h5>
                           </div>
@@ -238,8 +238,8 @@ const TotalActiveAccounts = ({ active, closed, name, banks }) => {
                   <div className="values">
                     <span>Credit Limit:</span>
                     <h5>
-                      {modalData?.creditLimit
-                        ? `₹ ${formatAmount(modalData?.creditLimit)}`
+                      {modalData?.creditLmtOrLoanAmt
+                        ? `₹ ${formatAmount(modalData?.creditLmtOrLoanAmt)}`
                         : 'Not Available'}
                     </h5>
                   </div>
