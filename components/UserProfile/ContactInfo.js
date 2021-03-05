@@ -305,7 +305,7 @@ const ContactInfo = (props) => {
                 value={currentAddressDisplay}
                 autoComplete={"off"}
                 id="current-address"
-                disabled="true"
+                disabled={true}
                 placeholder="Current Address"
                 required=""
               />

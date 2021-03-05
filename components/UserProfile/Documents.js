@@ -65,6 +65,7 @@ const Documents = (props) => {
 
   const getPanAndAadhar = (doc) => {
     if (doc.documentNo == "1000000290") {
+      console.log(doc)
       setPan({ ...doc });
     }
     if (doc.documentNo == "1000000374") {
@@ -90,7 +91,7 @@ const Documents = (props) => {
 
   const getAllDocuments = async () => {
     try {
-      const customerId = localStorage.getItem("customerId");
+      const customerId = getItem(keys.customerId)
       const { url } = getApiData("allDocument");
       const responseObject = await axios.get(url, { params: { customerId } });
       console.log("All documents", responseObject);
