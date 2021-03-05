@@ -199,11 +199,28 @@ const ContactInfo = (props) => {
   const calculate = (fields) => {
     let progress = 0
     Object.keys(fields).map((field) => {
-      if (fields[field]) {
+      if (fields[field] && !/customerId/gi.test(field)) {
+        
+        if(Array.isArray(fields[field])){
+          fields[field].forEach(item=>progress+=calculateAddressProgress(item)) 
+        }
+        else{
+        progress += 1
+      }
+      }
+    })
+    console.log(progress)
+    setContactInfoProgress(progress)
+  }
+  const calculateAddressProgress=(fields)=>{
+    let progress = 0
+    Object.keys(fields).map((field) => {
+      if (fields[field] && !/addressId|addressTypeMasterId|stateName|state|cityName|city/gi.test(field)) {
         progress += 1
       }
     })
-    setContactInfoProgress(progress)
+    
+    return progress;
   }
 
   const currentPincodeQueryHandler = (e) => {
