@@ -45,7 +45,7 @@ const Offers = props => {
         let data = {}
         data.leadBank = leadBank
         clearFormData()
-        clearLeadId(primaryPath)
+        clearLeadId()
         setFormData(data)
         if (router.pathname === '/[primaryPath]') {
             props.setFormRedirection(sf)

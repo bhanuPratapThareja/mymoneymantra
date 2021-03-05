@@ -29,7 +29,7 @@ const PrimaryPage = props => {
     setFormRedirection(props.formRedirection)
     if(!props.formRedirection) {
       clearLeadBank()
-      clearLeadId(props.primaryPath)
+      clearLeadId()
     }
     const { scriptId, canonicalId, metaDescriptionId, metaKeywordId } = addSeoMetaData(props.data, props.data.id)
     return () => {
