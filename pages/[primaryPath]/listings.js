@@ -14,7 +14,7 @@ import Blogger from '../../components/common/Blogger'
 import LearnMore from '../../components/common/LearnMore'
 
 import { extractListingOffers } from '../../services/componentsService'
-import { getListingOffers, getProductDecision } from '../../services/offersService'
+import { viewListingOffers, getProductDecision } from '../../services/offersService'
 import { filterOfferCardsInFilterComponent } from '../../utils/listingsFilterHandler'
 import { getClassesForPage } from '../../utils/classesForPage'
 import { addSeoMetaData, removeSeoMetaData } from '../../utils/seoMetaData';
@@ -49,7 +49,7 @@ const Listings = props => {
             const listingOffers = await extractListingOffers(props.data)
             getCardsWithButtonText(listingOffers)
         }
-        // const apiListingOffers = await getListingOffers(props.productType)
+        // const apiListingOffers = await viewListingOffers(props.productType)
         // console.log('apiListingOffers: ', apiListingOffers)
         // const updatedListingOffers
     }

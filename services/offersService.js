@@ -66,7 +66,7 @@ export const saveOffers = async () => {
     }
 }
 
-export const getListingOffers = async productType => {
+export const viewListingOffers = async productType => {
     const { url, body } = getApiData('listing')
     body.customerId = ''
     body.leadId = getLeadId()
