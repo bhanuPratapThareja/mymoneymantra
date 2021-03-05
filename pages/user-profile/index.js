@@ -1,143 +1,146 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import Layout from '../../components/Layout'
-import Application from '../../components/UserProfile/Application'
-import ContactInfo from '../../components/UserProfile/ContactInfo'
-import Documents from '../../components/UserProfile/Documents'
-import Help from '../../components/UserProfile/Help'
-import Offers from '../../components/UserProfile/Offers'
-import PersonalInfo from '../../components/UserProfile/PersonalInfo'
-import ReferEarn from '../../components/UserProfile/ReferEarn'
-import WorkInfo from '../../components/UserProfile/WorkInfo'
-import { fileToByteArray } from '../../utils/byteArray'
-import { getClassesForPage } from '../../utils/classesForPage'
-import { getPictureservice } from '../../utils/userProfileService'
-import * as $ from 'jquery'
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Layout from "../../components/Layout";
+import Application from "../../components/UserProfile/Application";
+import ContactInfo from "../../components/UserProfile/ContactInfo";
+import Documents from "../../components/UserProfile/Documents";
+import Help from "../../components/UserProfile/Help";
+import Offers from "../../components/UserProfile/Offers";
+import PersonalInfo from "../../components/UserProfile/PersonalInfo";
+import ReferEarn from "../../components/UserProfile/ReferEarn";
+import WorkInfo from "../../components/UserProfile/WorkInfo";
+import { fileToByteArray } from "../../utils/byteArray";
+import { getClassesForPage } from "../../utils/classesForPage";
+import { getPictureservice } from "../../utils/userProfileService";
+import * as $ from "jquery";
+import { getApiData } from "../../api/api";
 const userProfile = (props) => {
-  const [picture, setPicture] = useState('')
-  const [pictureType, setPictureType] = useState('')
-  const [totalNumberOfFields, setTotalNumberOfFields] = useState(22)
-  const [profileProgress, setProfileProgress] = useState(0)
-  const [personalInfoProgress, setPersonalInfoProgress] = useState(0)
-  const [contactInfoProgress, setContactInfoProgress] = useState(0)
-  const [workInfoProgress, setWorkInfoProgress] = useState(0)
-  const [documentProgress, setDocumentProgress] = useState(0)
-  const [customerName, setCustomerName] = useState('')
+  const [picture, setPicture] = useState("");
+  const [pictureType, setPictureType] = useState("");
+  const [totalNumberOfFields, setTotalNumberOfFields] = useState(22);
+  const [profileProgress, setProfileProgress] = useState(0);
+  const [personalInfoProgress, setPersonalInfoProgress] = useState(0);
+  const [contactInfoProgress, setContactInfoProgress] = useState(0);
+  const [workInfoProgress, setWorkInfoProgress] = useState(0);
+  const [documentProgress, setDocumentProgress] = useState(0);
+  const [customerName, setCustomerName] = useState("");
+  const [documentId, setdocumentId] = useState("");
   const jq = () =>
-    $('.option-wrapper .option').click(function () {
-      console.log(this.id)
-      $('#' + this.id + '-data').slideToggle('ease-in-out')
-      $('#' + this.id + '-svg').toggleClass('question-active')
-      $('#' + this.id).toggleClass('question-open')
-    })
+    $(".option-wrapper .option").click(function () {
+      console.log(this.id);
+      $("#" + this.id + "-data").slideToggle("ease-in-out");
+      $("#" + this.id + "-svg").toggleClass("question-active");
+      $("#" + this.id).toggleClass("question-open");
+    });
   useEffect(() => {
-    getPicture()
-    jq()
-  }, [])
+    getPicture();
+    jq();
+  }, []);
   useEffect(() => {
     let curretProgress =
       personalInfoProgress +
       contactInfoProgress +
       workInfoProgress +
-      documentProgress
-
-    if (picture) curretProgress += 1
-
-    // console.log({
-    //   personalInfoProgress,
-    //   contactInfoProgress,
-    //   workInfoProgress,
-    //   documentProgress,
-    // })
+      documentProgress;
+    if (picture) curretProgress += 1;
     const progressPercentage = Math.floor(
       (curretProgress / totalNumberOfFields) * 100
-    )
-    setProfileProgress(progressPercentage)
+    );
+    setProfileProgress(progressPercentage);
   }, [
     personalInfoProgress,
     contactInfoProgress,
     workInfoProgress,
     documentProgress,
-  ])
+  ]);
 
   const fileExtention = (fileType) => {
-    const fileTypeArray = fileType.split('/')
-    return fileTypeArray[1]
-  }
+    const fileTypeArray = fileType.split("/");
+    return fileTypeArray[1];
+  };
   const pictureUpload = async (e) => {
-    console.log(e.target.files[0])
-    const file = e.target.files[0]
-    if (!file) return
-    const docBytes = await fileToByteArray(file)
-    const documentExtension = fileExtention(file.type)
-    let body = {
-      docBytes,
-      documentName: file.name,
+    console.log(e.target.files[0]);
+    const file = e.target.files[0];
+    if (!file) return;
+    const docBytes = await fileToByteArray(file);
+    const documentExtension = fileExtention(file.type);
+
+    const uploadStatus = await uploadPicture(
+      file.name,
       documentExtension,
-      documentNo: '2130000043',
-      documentTypeId: '2130000043',
-    }
-    const uploadStatus = await uploadPicture(body)
+      "2130000043",
+      "2130000043"
+    );
     if (uploadStatus) {
-      setPicture(docBytes)
-      setPictureType(documentExtension)
+      setPicture(docBytes);
+      setPictureType(documentExtension);
     }
-  }
+  };
   const getPictureByte = async (id) => {
     try {
-      const responseObject = await axios.get(
-        'http://203.122.46.189:8061/customer/api/profile/v1/doc',
-        { params: { documentId: id } }
-      )
-      console.log(responseObject.data)
-      setPicture(responseObject.data.docByte)
+      setdocumentId(id);
+      const { url } = getApiData("getDocument");
+      const responseObject = await axios.get(url, {
+        params: { documentId: id },
+      });
+      setPicture(responseObject.data.docByte);
     } catch (err) {}
-  }
+  };
   const getPicture = async () => {
     try {
-      const responseObject = await getPictureservice()
+      const responseObject = await getPictureservice();
       if (responseObject.status === 200) {
-        console.log(responseObject.data)
-        console.log('responseObject')
-        let res = responseObject.data.docList
-        let i = -1
+        console.log(responseObject.data);
+        console.log("responseObject");
+        let res = responseObject.data.docList;
+        let i = -1;
         res.forEach((item, index) => {
-          // console.log(item)
-          if (item.documentTypeId == 2130000043) i = item.documentId
-        })
-        console.log(i)
+          if (item.documentTypeId == 2130000043) i = item.documentId;
+        });
+        console.log(i);
         if (i > 0) {
-          getPictureByte(i)
+          getPictureByte(i);
         }
       }
     } catch (err) {}
-  }
+  };
 
   const contactCount = (val, max) => {
-    console.log(val, max)
-  }
-  const uploadPicture = async (body) => {
+    console.log(val, max);
+  };
+  const uploadPicture = async (
+    docBytes,
+    documentName,
+    documentExtension,
+    documentNo,
+    documentTypeId
+  ) => {
     try {
-      const customerId = localStorage.getItem('customerId')
-      const responseObject = await axios.post(
-        'http://203.122.46.189:8061/customer/api/profile/v1/doc-upload',
-        {
-          ...body,
-          customerId: customerId,
-        }
-      )
-      console.log(responseObject)
+      const customerId = localStorage.getItem("customerId");
+
+      let { url, body } = getApiData("uploadDocument");
+      body = {
+        docBytes,
+        documentName,
+        documentExtension,
+        documentNo,
+        documentTypeId,
+        customerId,
+        documentId,
+      };
+      const responseObject = await axios.post(url, body);
+      console.log(responseObject);
       if (responseObject.status === 200) {
-        return responseObject.data.message
+        return responseObject.data.message;
       } else {
-        return 'Something went wrong'
+        return "Something went wrong";
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
-  console.log({ personalInfoProgress })
+  console.log({ personalInfoProgress });
 
   return (
     <div className={props.pageClasses}>
@@ -155,14 +158,14 @@ const userProfile = (props) => {
                   src={
                     picture.length
                       ? `data:image/${pictureType};base64,${picture}`
-                      : '/assets/images/icons/profile.svg'
+                      : "/assets/images/icons/profile.svg"
                   }
                 />
                 <input
                   type="file"
                   onChange={pictureUpload}
                   accept="image/*"
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
                   id="profile-picture"
                 />
               </div>
@@ -404,13 +407,13 @@ const userProfile = (props) => {
         </div>
       </Layout>
     </div>
-  )
-}
+  );
+};
 export async function getServerSideProps(ctx) {
-  const primaryPath = 'user-profile'
-  const responseObject = await fetch('http://203.122.46.189:1338/banks')
-  const data = await responseObject.json()
-  const pageClasses = getClassesForPage(primaryPath)
-  return { props: { pageClasses, data } }
+  const primaryPath = "user-profile";
+  const responseObject = await fetch("http://203.122.46.189:1338/banks");
+  const data = await responseObject.json();
+  const pageClasses = getClassesForPage(primaryPath);
+  return { props: { pageClasses, data } };
 }
-export default userProfile
+export default userProfile;

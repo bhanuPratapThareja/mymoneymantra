@@ -56,9 +56,14 @@ const signUp = (props) => {
         sendSignUpData(name, email, phone, token, null)
           .then((res) => {
             const { customerId, message } = res;
-            // setOtpId(otpId);
+            if (res.message == "OTP Verification Failed") {
+              setOtpError(true);
+              return;
+            }
+            else{
             localStorage.setItem("customerId", customerId);
             setcounter(counter + 1);
+          }
           })
           .catch((err) => {
             // alert(err.message);
