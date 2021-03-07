@@ -3,7 +3,7 @@ import SubHeader from "./subheader";
 
 const PhoneNumberCustom = (props) => {
   const validatePhone = (e) => {
-    console.log(e.target.value);
+    
     if (/^[6-9]{1}[0-9]{0,9}$/gi.test(e.target.value) || e.target.value === '') {
       props.setNumber(e.target.value);
     }
@@ -11,7 +11,7 @@ const PhoneNumberCustom = (props) => {
   return (
 
     <div className="login-options">
-      <div className="login-options-wrapper">
+      <div className="login-options-wrapper"  onClick={()=>{document.getElementById('phone').focus();}}>
         <div className="form__group field">
           <input
             className="form__field"

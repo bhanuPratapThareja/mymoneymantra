@@ -117,12 +117,13 @@ const ContactInfo = (props) => {
             }
             setCurrentAddressLine1(a.addressline1);
             setCurrentAddressLine2(a.addressline2);
-            setCurrentCityId(a.city);
-            setCurrentCity(a.city);
+            setCurrentCityId(a.cityId);
+            setCurrentCity(a.cityName);
             
-            setCurrentStateId(a.state);
+            setCurrentStateId(a.stateId);
             setCurrentPincode(a.pincode);
-            setCurrentAddressDisplay(`${a.addressline1}, ${a.addressline2}, ${a.pincode}, ${a.city},${a.state} `)
+            
+            setCurrentAddressDisplay(`${a.addressline1?a.addressline1 +', ':''}${a.addressline2?a.addressline2 +',':''}${a.pincode?a.pincode+', ':''}${a.cityName?a.cityName+', ':''}${a.stateName?a.stateName:''}`)
           }
           if (a.addressTypeMasterId == 1000000003) {
             if (a.addressId) {
@@ -130,11 +131,11 @@ const ContactInfo = (props) => {
             }
             setPermanentAddressLine1(a.addressline1);
             setPermanentAddressLine2(a.addressline2);
-            setPermanentCityId(a.city);
-            setPermanentCity(a.city);
-            setPermanentStateId(a.state);
+            setPermanentCityId(a.cityId);
+            setPermanentCity(a.cityName);
+            setPermanentStateId(a.stateId);
             setPermanentPincode(a.pincode);
-            setPermanentAddressDisplay(`${a.addressline1}, ${a.addressline2}, ${a.pincode}, ${a.city},${a.state} `)
+            setPermanentAddressDisplay(`${a.addressline1?a.addressline1 +', ':''}${a.addressline2?a.addressline2 +',':''}${a.pincode?a.pincode+', ':''}${a.cityName?a.cityName+', ':''}${a.stateName?a.stateName:''}`)
           }
         })
         console.log('adderss', address)
@@ -215,7 +216,7 @@ const ContactInfo = (props) => {
   const calculateAddressProgress=(fields)=>{
     let progress = 0
     Object.keys(fields).map((field) => {
-      if (fields[field] && !/addressId|addressTypeMasterId|stateName|state|cityName|city/gi.test(field)) {
+      if (fields[field] && !/addressId|addressTypeMasterId|stateName|stateId|cityName|cityId/gi.test(field)) {
         progress += 1
       }
     })

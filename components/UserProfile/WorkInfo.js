@@ -412,7 +412,7 @@ const WorkInfo = (props) => {
           <input autoComplete={"off"}
             readOnly={!isedit}
             className="form__field"
-            type="text"
+            type="tel"
             autoComplete={"off"}
             value={accountNo}
             id="account-num"

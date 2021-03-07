@@ -2,7 +2,7 @@ import CustomImage from './image';
 import SubHeader from './subheader';
 const CustomEmail=(props)=>{
   const validateEmail=(e)=>{
-      console.log(e.target.value);
+      
       
           props.setEmail(e.target.value);
       
@@ -10,12 +10,12 @@ const CustomEmail=(props)=>{
   return ( 
       
         <div className="login-options">
-          <div className="login-options-wrapper">
-            <div className="form__group field">
+          <div className="login-options-wrapper" onClick={()=>document.getElementById('email').focus()}>
+            <div className="form__group field" >
               <input
                 className="form__field"
                 type="email"
-                id="name"
+                id="email"
                 
                 placeholder="email"
                 required=""
