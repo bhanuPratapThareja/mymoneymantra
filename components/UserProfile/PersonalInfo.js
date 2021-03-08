@@ -4,6 +4,7 @@ import {
   savePersonalInfo,
 } from '../../utils/userProfileService'
 import moment from 'moment'
+import { cond } from 'lodash'
 
 const PersonalInfo = (props) => {
   const [editing, setEditing] = useState(false)
@@ -108,9 +109,19 @@ const PersonalInfo = (props) => {
       }
     }
   }
-
+ const inputPanNumber = (e) =>{
+   console.log(e.target.value,/^[a-zA-Z]{0,5}[0-9]{0,4}[a-z]{0,2}$/gi.test(e.target.value),e.target.value ==''?true:false)
+  //  e.preventDefault();
+    
+    if (/^[a-zA-Z]{0,5}$|^[a-zA-Z]{5}[0-9]{0,4}$|^[a-zA-Z]{5}[0-9]{4}[a-z]{0,2}$/gi.test(e.target.value) || e.target.value =='' ) {
+      console.log('in here')
+      setPanNumber(e.target.value.toUpperCase())
+      setPanError(false)
+      setPanErrMsg('')
+    }
+  }
   const validatePanNumber = () => {
-    let pattern = /^[a-z]{5}[0-9]{4}[a-z]{1,2}$/gi
+    const pattern = /^[a-z]{5}[0-9]{4}[a-z]{1,2}$/gi
     if (pattern.test(panNumber)) {
       setPanError(false)
       setPanErrMsg('')
@@ -176,7 +187,8 @@ const PersonalInfo = (props) => {
   const calculate = (fields) => {
     let progress = 0
     Object.keys(fields).map((field) => {
-      if (fields[field]) {
+      if (fields[field] && field!=='customerId') {
+        
         progress += 1
       }
     })
@@ -383,13 +395,7 @@ const PersonalInfo = (props) => {
                 placeholder="PAN Number"
                 required=""
                 autoComplete={"off"}
-                onChange={(e) =>
-                  setPanNumber(
-                    e.target.value
-                      ? e.target.value.toUpperCase()
-                      : e.target.value
-                  )
-                }
+                onChange={(e) =>inputPanNumber(e)}
                 onBlur={validatePanNumber}
               />
               <label className="form__label" htmlFor="l-pan">

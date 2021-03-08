@@ -8,7 +8,10 @@ export default class MyDocument extends Document {
     render() {
         return (
             <Html lang="en">
-                <Head />
+                <Head >
+                    <title>MyMoneyMantra</title>
+                    <meta name="theme-color" content="#56AB2F"></meta>
+                </Head>
                 <body data-aos-easing="ease" data-aos-duration="600" data-aos-delay="0">
                     <Main />
                     <NextScript />

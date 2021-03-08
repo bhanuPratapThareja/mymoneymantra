@@ -311,24 +311,10 @@ button:disabled {
 
 /*-- Css Fateh --*/
 
-/* .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .form__group {
-  position: relative;
-  padding: 0px 20px 10px 20px;
-  border-radius: 6px;
-  border: 1px solid rgba(34, 31, 31, 0.2);
-  height: 64px;
-  width: 100%;
-  margin: 0 0 15px;
-} */
-
 .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .shortforms-container-buttons>div h4 {
   margin-right: 16px;
   /* color: rgb(34, 31, 31); */
 }
-
-/* input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
-} */
 
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -348,10 +334,6 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms h5 {
   cursor: pointer;
 }
-
-/* .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .shortforms-container-buttons {
-  bottom: 30px;
-} */
 
 .long-forms-wrapper .shortforms-container .form__group.field.file-type {
   max-width: 100%;
@@ -2383,7 +2365,12 @@ button.cstm-load-btn {
   margin-right: 10px;
   border-radius: 1px;
 }
-
+.click-here{
+  color:#89C142;
+  text-decoration: underline;
+  padding: 20px 0px;
+  cursor:pointer;
+}
 /*-- contact form --*/
 .profile-flow .profile-head .profile-container .profile-options-wrapper .option-wrapper #option-2-data > .contact-wrapper .contact-forms-wrapper h5:not(:first-child) {
   margin-top: 24px;
@@ -2479,6 +2466,45 @@ button.cstm-load-btn {
 
 .creditProfile-utilization-flow .tipSection {
   margin-top: 128px !important;
+}
+
+/*-- BLog Social icons --*/
+#blog-socials {
+  padding: 5px 34px 12px 12px;
+}
+
+.blog-details #blog-socials .slide_cell {
+  margin-top: 0;
+}
+
+/*-- input file long form --*/
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .long-address .form__group.field.file-type>img[src="/assets/images/icons/cross.svg"] {
+  position: absolute;
+  left: 90%;
+  top: 20px;
+  cursor: pointer;
+  z-index: 99;
+}
+
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .long-address h5 {
+  cursor: pointer;
+}
+
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .long-address .file-type h5 b {
+  font-size: 16px;
+  line-height: 28px;
+  color: rgba(34, 31, 31, 0.4);
+}
+
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .long-address .form__group.field.file-type>img {
+  position: absolute;
+  left: 20px;
+  background: none !important;
+  top: 20px;
+}
+
+.long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .long-address .form__group.field.file-type {
+  position: relative;
 }
 
 @media(max-width: 1199px) {
@@ -3179,6 +3205,13 @@ button.cstm-load-btn {
     padding: 0 !important;
   }
 
+  .range__slider .noUi-handle-lower .noUi-tooltip {
+    left: -10px;
+  }
+
+  .range__slider .noUi-handle-upper .noUi-tooltip {
+    right: -10px;
+  }
 
 }
 
@@ -3236,8 +3269,8 @@ letter-spacing: 0.04em;
     line-height: 15px;
   
   }
-
-  .credit-card-flow .sf-forms .form__group.field.file-type>img {
+  .credit-card-flow .sf-forms .form__group.field.file-type>img,
+  .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .long-address .form__group.field.file-type>img {
     left: 15px;
   }
   .profile-flow .profile-head .profile-container .profile-image > span{
@@ -3259,22 +3292,26 @@ letter-spacing: 0.04em;
 }
 
 @media(max-width: 375px) {
-  .credit-card-flow .lets-find-container .shortforms-container .form__group.field.file-type {
+  .credit-card-flow .lets-find-container .shortforms-container .form__group.field.file-type,
+  .long-form .form-wrapper form .long-forms-wrapper .long-address .form__group.field.file-type {
     padding: 0px 10px 10px !important;
   }
 
-  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms h5 {
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms h5,
+  .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .long-address .file-type h5 {
     font-size: 13px;
     line-height: 13px;
     top: 17px;
   }
 
-  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms h5 b {
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms h5 b,
+  .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .long-address .file-type h5 b {
     font-size: 13px;
     display: block;
   }
 
-  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .file-type-back.file-type-border h5 {
+  .credit-card-flow .lets-find-container .lets-find-forms-container .lets-find-stepper-wrapper .sf-forms .file-type-back.file-type-border h5,
+  .long-form .long-form-wrapper .form-wrapper form .long-forms-wrapper .long-address .file-type-back.file-type-border h5 {
     top: 24px;
     left: 40px;
     max-width: 177px;

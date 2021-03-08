@@ -4,16 +4,16 @@ import CustomImage from "./image";
 const Otp = (props) => {
 
   const validateOtp = (e) => {
-    console.log(e.target.value);
+    
     if (/^[0-9]{0,4}$/gi.test(e.target.value) || e.target.value === '') {
-      console.log('in here')
+      
       props.setotp(e.target.value);
     }
   }
 
   return (
     <div className="otp-wrapper login-options">
-      <div className="form__group field">
+      <div className="form__group field" onClick={()=>document.getElementById('otp').focus()}>
         <input
         autoComplete="off"
           className="form__field"

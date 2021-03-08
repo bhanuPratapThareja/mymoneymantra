@@ -12,6 +12,7 @@ import { sendLoginOtp, socialLoginAPi, verifyOtp } from "../../utils/otp";
 import {setItem,keys} from '../../utils/storage';
 import SubHeader from "../../components/signup/subheader";
 import CustomImage from "../../components/signup/image";
+import Link from "next/link";
 const login = (props) => {
   const [counter, setcounter] = useState(0);
   const [phone, setphone] = useState("");
@@ -73,6 +74,7 @@ const login = (props) => {
         })
         .catch((err) => {
           setMobileError(true);
+          
           setMobileErrorMsg(err.message);
         })
         .finally(() => {});
@@ -137,6 +139,9 @@ const login = (props) => {
                         errorMsg={mobileErrorMsg}
                         error={mobileErrorMsg}
                       ></PhoneNumberCustom>
+                      <div>
+                        <p>New User? Please <Link href="/sign-up"><b className="click-here">click here</b></Link></p>
+                      </div>
                     </div>
                   </div>
                   <div

@@ -15,6 +15,7 @@ import { messgaes } from "../../utils/messages";
 import SubHeader from "../../components/signup/subheader";
 import CustomImage from "../../components/signup/image";
 import { keys, setItem } from "../../utils/storage";
+import Link from "next/link";
 const signUp = (props) => {
   const [counter, setcounter] = useState(0);
   const [phone, setphone] = useState("");
@@ -147,6 +148,9 @@ const signUp = (props) => {
 
                         setChecked={() => setisChecked(!isChecked)}
                       ></PhoneNumberCustom>
+                      <div>
+                        <p>Already registered? Please <Link href="/login"><b className="click-here">click here</b></Link></p>
+                      </div>
                     </div>
                   </div>
                   <div

@@ -18,7 +18,7 @@ import { getItem, keys } from "../../utils/storage";
 const userProfile = (props) => {
   const [picture, setPicture] = useState("");
   const [pictureType, setPictureType] = useState("");
-  const [totalNumberOfFields, setTotalNumberOfFields] = useState(22);
+  const [totalNumberOfFields, setTotalNumberOfFields] = useState(27);
   const [profileProgress, setProfileProgress] = useState(0);
   const [personalInfoProgress, setPersonalInfoProgress] = useState(0);
   const [contactInfoProgress, setContactInfoProgress] = useState(0);
