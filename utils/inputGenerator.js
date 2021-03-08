@@ -10,7 +10,10 @@ export const generateInputs = (component, handleChange, checkInputValidity,
     let { name, value, checked } = e.target
     let field = {}
 
-    if (type === 'money') {
+    if (type === 'pan_card' && value.length > 10) {
+     return
+    }
+    else if (type === 'money') {
       value = value.toString()
       const numString = getWholeNumberFromCurrency(value)
       if (isNaN(numString)) {
