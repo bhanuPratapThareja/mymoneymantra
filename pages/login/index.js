@@ -104,7 +104,7 @@ const login = (props) => {
         {counter != 2 ? <WelcomeHeader></WelcomeHeader> : null}
         <section
           data-aos="fade-up"
-          className="container lets-find-container aos-init aos-animate"
+          className="container lets-find-container aos-init"
           style={{ display: counter == 2 ? "none" : "block" }}
         >
           <MobileWelcomeHeader></MobileWelcomeHeader>

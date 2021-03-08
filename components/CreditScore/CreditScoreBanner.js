@@ -18,7 +18,7 @@ const CreditScoreBanner = ({ accountHistory, score }) => {
   return (
     <section
       data-aos="fade-up"
-      className="container banner new-credit-wrap aos-init aos-animate"
+      className="container banner new-credit-wrap aos-init"
     >
       <div className="creditScore-wrapper">
         <div className="creditScore-wrapper-left">

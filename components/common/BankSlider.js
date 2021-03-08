@@ -20,7 +20,7 @@ const BankSlider = props => {
     }
 
     return (
-        <section data-aos="fade-up" className="banks-holder aos-init aos-animate">
+        <section data-aos="fade-up" className="banks-holder aos-init">
             <div className="blue-patch"></div>
             <div className="container banks">
                 <div dangerouslySetInnerHTML={{ __html: bank_slider_heading }}></div>

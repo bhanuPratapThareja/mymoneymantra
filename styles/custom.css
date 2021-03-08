@@ -2507,6 +2507,14 @@ button.cstm-load-btn {
   position: relative;
 }
 
+.popular-cards-slider .popular-cards-slider-card-top .head img {
+  width: auto;
+  height: auto;
+  max-height: 50px;
+  max-width: 100%;
+}
+
+
 @media(max-width: 1199px) {
   .banks h2 strong:nth-child(2) {
     display: block;
@@ -3213,6 +3221,11 @@ button.cstm-load-btn {
     right: -10px;
   }
 
+  .popular-cards-slider .popular-cards-slider-card-top .head img {
+    width: auto;
+    height: 100%;
+    max-width: 100%; 
+  }
 }
 
 @media(max-width: 767px) {

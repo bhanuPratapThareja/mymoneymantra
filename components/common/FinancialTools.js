@@ -2,7 +2,7 @@ const FinancialTools = props => {
    const { section_heading, quick_financial_tools } = props.data
 
    return (
-      <section data-aos="fade-up" className="container aos-init aos-animate">
+      <section data-aos="fade-up" className="container aos-init">
          <div className="financial">
             <h2>{section_heading}</h2>
             <div className="financial-wrapper">
