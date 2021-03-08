@@ -15,7 +15,7 @@ const CreditScore = props => {
         router.push(redirectedUrls)
     }
     return (
-        <section data-aos="fade-up" className="container score-container aos-init aos-animate">
+        <section data-aos="fade-up" className="container score-container aos-init">
             <div className="score score-cotent-cover">
                 <div className="score-content">
                     <div dangerouslySetInnerHTML={{ __html: credit_score_heading }}></div>

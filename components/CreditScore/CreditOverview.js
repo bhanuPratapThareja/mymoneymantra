@@ -20,7 +20,7 @@ const CreditOverview = (props) => {
   return (
     <section
       data-aos="fade-up"
-      className="container creditOverview aos-init aos-animate"
+      className="container creditOverview aos-init"
     >
       <div className="creditOverview-head">
         <h2>Credit Overview</h2>

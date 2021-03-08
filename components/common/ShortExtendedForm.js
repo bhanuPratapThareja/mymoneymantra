@@ -399,7 +399,7 @@ class ShortExtendedForm extends React.Component {
     render() {
         const { onboard_short_form_mobile_view_heading } = this.props.data.onboard_short_form
         return (
-            <section data-aos="fade-up" className="container lets-find-container aos-init aos-animate">
+            <section data-aos="fade-up" className="container lets-find-container aos-init">
 
                 <div className="mobile-background"></div>
                 <div className="mobile-content">

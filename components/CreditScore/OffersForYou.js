@@ -10,7 +10,7 @@ useEffect(() => {
 }, [])
 
   return (
-    <section data-aos="fade-up" className="container popular-card-container aos-init aos-animate">
+    <section data-aos="fade-up" className="container popular-card-container aos-init">
       <div className="popular-cards">
         <h2>Offers For You</h2>
         <div className="popular-cards-slider slick-initialized slick-slider" id="trending-offers-sec">

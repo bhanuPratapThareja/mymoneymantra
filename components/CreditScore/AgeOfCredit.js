@@ -5,7 +5,7 @@ const AgeOfCredit = ({ creditAge }) => {
   return (
     <section
       data-aos="fade-up"
-      className="banner container paymentRank aos-init aos-animate"
+      className="banner container paymentRank aos-init"
     >
       <div className="paymentRank-wrapper">
         <div className="paymentRank-wrapper-head">

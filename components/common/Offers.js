@@ -79,7 +79,7 @@ const Offers = props => {
     }
 
     return (
-        <section data-aos="fade-up" className="container popular-card-container aos-init aos-animate">
+        <section data-aos="fade-up" className="container popular-card-container aos-init">
             <div className="popular-cards">
                 <h2>{section_heading}</h2>
                 <div className="popular-cards-slider" id={cardsComponentId}>

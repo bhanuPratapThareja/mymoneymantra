@@ -2,7 +2,7 @@ const TipSection = () => {
   return (
     <section
       data-aos="fade-up"
-      className="container tipSection aos-init aos-animate"
+      className="container tipSection aos-init"
     >
       <div className="tipSection-wrapper">
         <div className="tipSection-wrapper-head">

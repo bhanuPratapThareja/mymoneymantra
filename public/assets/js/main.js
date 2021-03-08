@@ -1,13 +1,15 @@
-AOS.init({
-  offset: 80, // offset (in px) from the original trigger point
-  delay: 0, // values from 0 to 3000, with step 50ms
-  once: true,
-  duration: 600, // values from 0 to 3000, with step 50ms
-  easing: 'ease', // default easing for AOS animations
-});
 
 $(document).ready(function () {
 
+  AOS.init({
+    offset: 80, // offset (in px) from the original trigger point
+    delay: 0, // values from 0 to 3000, with step 50ms
+    once: true,
+    duration: 600, // values from 0 to 3000, with step 50ms
+    easing: 'ease', // default easing for AOS animations
+  });
+
+  
   // if ($(window).width() > 786) {
   // $(window).scroll(function () {
   //   var sticky = $('header'),
@@ -193,7 +195,7 @@ $(document).ready(function () {
       cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
       speed: 1000,
       autoplay: true,
-      autoplaySpeed: 7000,
+      autoplaySpeed: 5000,
       useTransform: false,
       infinite: true,
       variableWidth: true,
@@ -261,7 +263,6 @@ $(document).ready(function () {
             arrows: false
           }
         },
-
         {
           breakpoint: 768,
           settings: {

@@ -291,12 +291,14 @@ label {
             .popular-cards-slider .popular-cards-slider-card-top .head h3 b {
               color: #89C142; }
           .popular-cards-slider .popular-cards-slider-card-top .head img {
-            width: 64px;
-            height: 32px; }
-            @media (max-width: 768px) {
+            width: auto;
+            height: auto;
+            max-height: 50px;
+            max-width: 100%; }
+            /* @media (max-width: 768px) {
               .popular-cards-slider .popular-cards-slider-card-top .head img {
                 width: 48px;
-                height: 24px; } }
+                height: 24px; } } */
         .popular-cards-slider .popular-cards-slider-card-top .content {
           margin-top: 16px; }
           .popular-cards-slider .popular-cards-slider-card-top .content ul {

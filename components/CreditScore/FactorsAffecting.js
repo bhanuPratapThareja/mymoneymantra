@@ -13,7 +13,7 @@ const FactorsAffecting = () => {
   return (
     <section
       data-aos="fade-up"
-      className="banks-holder factorsSection aos-init aos-animate"
+      className="banks-holder factorsSection aos-init"
     >
       <div className="blue-patch"></div>
       <div className="container banks">
