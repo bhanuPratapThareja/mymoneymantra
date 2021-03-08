@@ -31,7 +31,7 @@ import {
     loadOtpForm,
     submitShortForm
 } from '../../utils/formHandle'
-import { setItem } from '../../utils/storage'
+import { setItem,keys } from '../../utils/storage'
 
 
 class ShortExtendedForm extends React.Component {
@@ -201,15 +201,16 @@ class ShortExtendedForm extends React.Component {
 
     onSubmitLetGoSlide = async () => {
         try {
-            const res = await this.onSubmitShortForm()
+            const res = await this.onSubmitShortForm();
+            let cid = res.data.customerId;
+            setItem(keys.customerId,cid)
             const leadId = res.data.leadId
             setLeadId(leadId)
             sendNotification(leadId)
             this.setState({ currentSlide: `${sf}-1`, slideIndex: 1, slideButtonText: 'Next' }, () => {
                 goToSlides()
             })
-            // let cid = res.data.customerId;
-            // setItem(keys.customerId,cid)
+       
             
         } catch (err) {
             this.setState({ submissionError: 'Something Went wrong. Please try again.' })
@@ -288,8 +289,7 @@ class ShortExtendedForm extends React.Component {
 
     onSubmitShortForm = () => {
         return new Promise((resolve, reject) => {
-            // let cid = res.data.customerId;
-            // setItem(keys.customerId,cid)
+        
             submitShortForm([...this.state.slides], this.state.currentSlide, this.props.primaryPath, sf, this.props.productType)
                 .then(res => {
                     resolve(res)
