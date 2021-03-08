@@ -46,6 +46,7 @@ const SFSlides = props => {
                     <SFButtons
                         onClickPrevious={props.onGoToPrevious}
                         slideButtonText={props.slideButtonText}
+                        submitButtonDisabled={props.submitButtonDisabled}
                     />
                 </form> : null}
         </div>

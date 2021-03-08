@@ -111,7 +111,7 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
         inp.list = []
       }
     })
-  } 
+  }
   // else if (field.type === "input_with_calendar") {
   //   inputs.forEach((inp) => {
   //     if (inp.input_id === field.name) {
@@ -168,29 +168,8 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
         inp.error = false
 
         // special case for radio to disable another input
+        handleRadioDependent(inputs, inp)
 
-        if (inp.radio.disable_input_with_end_point_name) {
-          inputs.forEach((secondary) => {
-            if (secondary.end_point_name === inp.radio.disable_input_with_end_point_name) {
-              if (inp.value === inp.radio.disable_when_value) {
-                secondary.value = ""
-                secondary.list = []
-                secondary.selectedId = "*"
-                secondary.selectedItem = null
-                secondary.mandatory = false
-                secondary.error = false
-                secondary.errorMsg = ""
-                secondary.verified = false
-              } else {
-                secondary.mandatory = true
-                secondary.verified = false
-                if (secondary.selectedId === '*') {
-                  secondary.selectedId = null
-                }
-              }
-            }
-          })
-        }
       }
     })
   } else {
@@ -211,6 +190,31 @@ export const handleChangeInputs = (inputs, field, preferredSelectionLists, selec
   }
 
   return { inputDropdown, propertyValue }
+}
+
+export const handleRadioDependent = (inputs, inp) => {
+  if (inp.radio.disable_input_with_end_point_name) {
+    inputs.forEach((secondary) => {
+      if (secondary.end_point_name === inp.radio.disable_input_with_end_point_name) {
+        if (inp.value === inp.radio.disable_when_value) {
+          secondary.value = ""
+          secondary.list = []
+          secondary.selectedId = "*"
+          secondary.selectedItem = null
+          secondary.mandatory = false
+          secondary.error = false
+          secondary.errorMsg = ""
+          secondary.verified = false
+        } else {
+          secondary.mandatory = true
+          secondary.verified = false
+          if (secondary.selectedId === '*') {
+            secondary.selectedId = null
+          }
+        }
+      }
+    })
+  }
 }
 
 export const updateInputsValidity = (inputs, field, errorMsgs, propertyValue) => {
@@ -470,6 +474,7 @@ export const decrementSlideId = (slideId) => {
 }
 
 export const setRadioBreakpoints = (slideIndex, breakpoints, slides, backUpSlides) => {
+  const redirectionUrl = breakpoints.redirection_url
   const currentSlideId = `${sf}-${slideIndex}`
   const breakpointSequence = breakpoints.breakpoint_sequence.split(',')
   const slidesCopy1 = JSON.parse(JSON.stringify(slides))
@@ -494,7 +499,7 @@ export const setRadioBreakpoints = (slideIndex, breakpoints, slides, backUpSlide
 
   const newSlides = [...slicedSlides, ...slidesAddtion]
 
-  return { currentSlideId, newSlides }
+  return { currentSlideId, newSlides, redirectionUrl }
 
 }
 
@@ -610,8 +615,8 @@ export const getSfData = (slides) => {
       }
     })
   })
-  const leadBank =  getLeadBank()
-  if(leadBank) data.leadBank = leadBank
+  const leadBank = getLeadBank()
+  if (leadBank) data.leadBank = leadBank
   return data
 }
 
@@ -648,7 +653,7 @@ export const submitShortForm = (slides, currentSlide, primaryPath, formType, pro
     const latestFormData = getFormData()
     if (latestFormData) {
 
-    
+
       generateLead(latestFormData, primaryPath, formType, productType)
         .then((res) => {
           resolve(res)
@@ -685,12 +690,15 @@ export const updateFormInputs = (inputs) => {
         if (!sfData[key]) {
           continue loop
         }
-        
 
-        if(inputs[i].type === 'radio' && inputs[i].radio.breakpoints && inputs[i].radio.breakpoints.length) {
+        if (inputs[i].type === 'radio') {
+          handleRadioDependent(inputs, inputs[i])
+        }
+
+        if (inputs[i].type === 'radio' && inputs[i].radio.breakpoints && inputs[i].radio.breakpoints.length) {
           continue loop
         }
-        
+
         if (typeof sfData[key] === "object" && key === inputs[i].end_point_name) {
           inputs[i].value = sfData[key][inputs[i].select_name];
           inputs[i].selectedId = sfData[key][inputs[i].select_id];

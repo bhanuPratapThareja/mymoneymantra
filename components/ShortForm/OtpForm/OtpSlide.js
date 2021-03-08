@@ -29,6 +29,7 @@ const OtpSlide = props => {
             <SFButtons
                 onClickPrevious={props.onGoToLetFindForm}
                 slideButtonText={props.slideButtonText}
+                submitButtonDisabled={props.submitButtonDisabled}
             />
         </form>
     )

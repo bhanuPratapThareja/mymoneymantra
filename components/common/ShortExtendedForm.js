@@ -3,6 +3,7 @@ import OtpSlide from '../ShortForm/OtpForm/OtpSlide'
 import SFSlides from '../ShortForm/SFSlides/SFSlides'
 import Modal from '../../components/Modal/Modal'
 import TermsAndConditions from '../Tnc'
+import ExperianTnc from '../ExperianTnc'
 import { debounce } from 'lodash'
 import { withRouter } from 'next/router'
 import { getDropdownList } from '../../services/formService'
@@ -30,6 +31,7 @@ import {
     loadOtpForm,
     submitShortForm
 } from '../../utils/formHandle'
+import { setItem,keys } from '../../utils/storage'
 
 class ShortExtendedForm extends React.Component {
     otpInterval = null;
@@ -46,7 +48,8 @@ class ShortExtendedForm extends React.Component {
         },
         slideButtonText: 'Next',
         enableCheckboxes: [],
-        showTncModal: false
+        showTncModal: false,
+        showExperianTncModal: false
     }
 
     scrollToTopOfSlide = () => {
@@ -121,16 +124,27 @@ class ShortExtendedForm extends React.Component {
 
     onShowTncModal = on_click_anchor => {
         if (on_click_anchor === 'showTnc') {
-            this.setState({ showTncModal: true })
+            this.setState({ showTncModal: true})
         }
     }
-
+   
     closShowTncModal = () => {
         this.setState({ showTncModal: false })
     }
 
+    onShowExperianTncModal = on_click_anchor => {
+        if (on_click_anchor === 'showExperiantnc') {
+            this.setState({  showExperianTncModal: true })
+        }
+       
+    }
+
+    closeExperianTncModal = () => {
+        this.setState({  showExperianTncModal: false })
+    }
+
     onGoToLetFindForm = () => {
-        this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
+        this.setState({ slideIndex: 0, currentSlide: 'onboard', submitButtonDisabled: false }, () => {
             this.scrollToTopOfSlide()
             setTimeout(() => {
                 loadLetsFindForm()
@@ -150,13 +164,15 @@ class ShortExtendedForm extends React.Component {
                 getOtp(mobileNo)
                 setTimeout(() => {
                     letsFindFormToOtpForm()
-                }, 250)
+                }, 250)            
             }
+          
         })
     }
 
     onSubmitOtp = async e => {
         e.preventDefault()
+        this.setState({ submitButtonDisabled: true })
         const inputs = document.getElementsByClassName('input_otp')
         for (let inp of inputs) {
             inp.blur()
@@ -166,7 +182,7 @@ class ShortExtendedForm extends React.Component {
                 await submitOtp(this.state.mobileNo)
                 this.onSubmitLetGoSlide()
             } catch (err) {
-                this.setState({ submissionError: err.message })
+                this.setState({ submissionError: err.message, submitButtonDisabled: false })
             } finally {
                 this.scrollToTopOfSlide()
             }
@@ -175,15 +191,18 @@ class ShortExtendedForm extends React.Component {
 
     onSubmitLetGoSlide = async () => {
         try {
-            const res = await this.onSubmitShortForm()
+            const res = await this.onSubmitShortForm();
+            let cid = res.data.customerId;
+            setItem(keys.customerId,cid)
             const leadId = res.data.leadId
             setLeadId(leadId)
             sendNotification(leadId)
-            this.setState({ currentSlide: `${sf}-1`, slideIndex: 1, slideButtonText: 'Next' }, () => {
+            
+            this.setState({ currentSlide: `${sf}-1`, slideIndex: 1, slideButtonText: 'Next', submitButtonDisabled: false }, () => {
                 goToSlides()
             })
         } catch (err) {
-            this.setState({ submissionError: 'Something Went wrong. Please try again.' })
+            this.setState({ submissionError: 'Something Went wrong. Please try again.', submitButtonDisabled: false })
         }
     }
 
@@ -224,16 +243,19 @@ class ShortExtendedForm extends React.Component {
                             showSlides(n, this.state.slideIndex)
                         })
                     } else {
+                        this.setState({ submitButtonDisabled: true })
                         this.onSubmitShortForm()
-                            .then(res => {
-                                if (this.props.formRedirection === sf) {
+                            .then(() => {
+                                if(this.state.redirectionUrl) {
+                                    this.props.router.push(this.state.redirectionUrl)
+                                } else if (this.props.formRedirection === sf) {
                                     this.props.router.push(`/thank-you`)
                                 } else {
                                     this.props.router.push(`/${this.props.primaryPath}/listings`)
                                 }
                             })
                             .catch(() => {
-                                this.setState({ submissionError: 'Something went wrong. Please try again.' })
+                                this.setState({ submissionError: 'Something went wrong. Please try again.', submitButtonDisabled: false })
                             })
                     }
                 }
@@ -248,11 +270,13 @@ class ShortExtendedForm extends React.Component {
             })
         }
 
+
         this.scrollToTopOfSlide()
     }
 
     onSubmitShortForm = () => {
         return new Promise((resolve, reject) => {
+        
             submitShortForm([...this.state.slides], this.state.currentSlide, this.props.primaryPath, sf, this.props.productType)
                 .then(res => {
                     resolve(res)
@@ -310,6 +334,7 @@ class ShortExtendedForm extends React.Component {
                 this.setState({ submitButtonDisabled: true })
             }
 
+
         })
     }
 
@@ -339,31 +364,32 @@ class ShortExtendedForm extends React.Component {
         updateInputsValidity(inputs, field, this.state.errorMsgs, this.state.propertyValue)
         this.setState({ ...this.state, slides: newSlides }, () => {
             inputs.forEach(input => {
-                if (input.type === 'radio' && input.value && input.radio.breakpoints) {
-                    const breakpoints = input.radio.breakpoints
-                    if (breakpoints.length) {
-                        for (let i = 0; i < breakpoints.length; i++) {
-                            if (breakpoints[i].breakpoint_value !== input.value) {
-                                continue
-                            }
-                            if (breakpoints[i].breakpoint_value === input.value && breakpoints[i].breakpoint_sequence) {
-                                const { currentSlideId, newSlides } = setRadioBreakpoints(slideIndex, breakpoints[i], this.state.slides, this.state.backUpSlides)
-                                this.setState({ ...this.state, slides: newSlides, currentSlide: currentSlideId, slideIndex }, () => {
-                                    this.plusSlides(1)
-                                })
+                if(input.type === 'radio' && input.value) {
+                    if (input.radio.breakpoints.length) {
+                        const breakpoints = input.radio.breakpoints
+                        if (breakpoints.length) {
+                            for (let i = 0; i < breakpoints.length; i++) {
+                                if (breakpoints[i].breakpoint_value !== input.value) {
+                                    continue
+                                }
+                                if (breakpoints[i].breakpoint_value === input.value && breakpoints[i].breakpoint_sequence) {
+                                    let { currentSlideId, newSlides, redirectionUrl } = setRadioBreakpoints(slideIndex, breakpoints[i], this.state.slides, this.state.backUpSlides)
+                                    this.setState({ ...this.state, slides: newSlides, currentSlide: currentSlideId, slideIndex, redirectionUrl }, () => {
+                                        this.plusSlides(1)
+                                    })
+                                }
                             }
                         }
                     }
+                    else if(input.radio.disable_input_with_end_point_name) {
+                        if(input.radio.disable_when_value === input.value) {
+                            this.plusSlides(1)
+                        }
+                    }  else {
+                        this.plusSlides(1)
+                    }
                 }
             })
-
-            for (let i = 0; i < inputs.length; i++) {
-                const activeEl = document.activeElement
-                if (activeEl && activeEl.type === 'radio' && !inputs[i].radio.breakpoints.length) {
-                    this.plusSlides(1)
-                    break
-                }
-            }
         })
     }
 
@@ -392,6 +418,7 @@ class ShortExtendedForm extends React.Component {
                         onClickLetsGo={this.onClickLetsGo}
                         submitButtonDisabled={this.state.submitButtonDisabled}
                         checkboxAnchorClick={this.onShowTncModal}
+                        checkboxTextClick={this.onShowExperianTncModal}
                     />
 
                     <div className="lets-find-forms-container sms-otp" id="sms-otp">
@@ -405,6 +432,7 @@ class ShortExtendedForm extends React.Component {
                                 disableOtpSubmitButton={this.state.disableOtpSubmitButton}
                                 submissionError={this.state.submissionError}
                                 removeSubmissionErrorMsg={this.removeSubmissionErrorMsg}
+                                submitButtonDisabled={this.state.submitButtonDisabled}
                             />
                         </div>
                     </div>
@@ -423,6 +451,7 @@ class ShortExtendedForm extends React.Component {
                             slideButtonText={this.state.slideButtonText}
                             onSubmitShortForm={this.onSubmitShortForm}
                             submissionError={this.state.submissionError}
+                            submitButtonDisabled={this.state.submitButtonDisabled}
                         />
                     </div>
                 </div>
@@ -431,13 +460,21 @@ class ShortExtendedForm extends React.Component {
                     <Modal openModal={this.state.showTncModal} closeOtpModal={this.closShowTncModal} className="tnc-modal">
                         <button onClick={this.closShowTncModal} className="close-btn">Close</button>
                         <TermsAndConditions tncData={this.props.tncData} />
+                       
+                    </Modal>
+                ) : null}
+
+                {this.state.showExperianTncModal && this.props.experianTncData ? (
+                    <Modal openModal={this.state.showExperianTncModal} closeOtpModal={this.closeExperianTncModal} className="tnc-modal">
+                        <button onClick={this.closeExperianTncModal} className="close-btn">Close</button>
+                       
+                        <ExperianTnc experianTncData={this.props.experianTncData} />
                     </Modal>
                 ) : null}
 
             </section>
         )
     }
-
 }
 
 export default withRouter(ShortExtendedForm)
