@@ -19,8 +19,6 @@ import {
     updateInputsValidity,
     incrementSlideId,
     decrementSlideId,
-    handleRadioDependent,
-    shouldRadioRedirectAtEndOfForm,
     setRadioBreakpoints,
     updateDropdownList,
     updateSelectionFromDropdown,
@@ -226,11 +224,11 @@ class ShortExtendedForm extends React.Component {
                             showSlides(n, this.state.slideIndex)
                         })
                     } else {
+                        this.setState({ submitButtonDisabled: true })
                         this.onSubmitShortForm()
                             .then(() => {
-                                const redirectionUrl = shouldRadioRedirectAtEndOfForm([...this.state.slides])
-                                if(redirectionUrl) {
-                                    this.props.router.push(redirectionUrl)
+                                if(this.state.redirectionUrl) {
+                                    this.props.router.push(this.state.redirectionUrl)
                                 } else if (this.props.formRedirection === sf) {
                                     this.props.router.push(`/thank-you`)
                                 } else {
@@ -238,7 +236,7 @@ class ShortExtendedForm extends React.Component {
                                 }
                             })
                             .catch(() => {
-                                this.setState({ submissionError: 'Something went wrong. Please try again.' })
+                                this.setState({ submissionError: 'Something went wrong. Please try again.', submitButtonDisabled: false })
                             })
                     }
                 }
@@ -353,8 +351,8 @@ class ShortExtendedForm extends React.Component {
                                     continue
                                 }
                                 if (breakpoints[i].breakpoint_value === input.value && breakpoints[i].breakpoint_sequence) {
-                                    const { currentSlideId, newSlides } = setRadioBreakpoints(slideIndex, breakpoints[i], this.state.slides, this.state.backUpSlides)
-                                    this.setState({ ...this.state, slides: newSlides, currentSlide: currentSlideId, slideIndex }, () => {
+                                    let { currentSlideId, newSlides, redirectionUrl } = setRadioBreakpoints(slideIndex, breakpoints[i], this.state.slides, this.state.backUpSlides)
+                                    this.setState({ ...this.state, slides: newSlides, currentSlide: currentSlideId, slideIndex, redirectionUrl }, () => {
                                         this.plusSlides(1)
                                     })
                                 }
@@ -363,7 +361,7 @@ class ShortExtendedForm extends React.Component {
                     }
                     else if(input.radio.disable_input_with_end_point_name) {
                         if(input.radio.disable_when_value === input.value) {
-                            // this.plusSlides(1)
+                            this.plusSlides(1)
                         }
                     }  else {
                         this.plusSlides(1)
@@ -429,6 +427,7 @@ class ShortExtendedForm extends React.Component {
                             slideButtonText={this.state.slideButtonText}
                             onSubmitShortForm={this.onSubmitShortForm}
                             submissionError={this.state.submissionError}
+                            submitButtonDisabled={this.state.submitButtonDisabled}
                         />
                     </div>
                 </div>

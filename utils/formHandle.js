@@ -473,22 +473,8 @@ export const decrementSlideId = (slideId) => {
   return slideId
 }
 
-export const shouldRadioRedirectAtEndOfForm = slides => {
-  let redirectionUrl = ''
-  slides.forEach(slide => {
-    slide.inputs.forEach(input => {
-      if (input.type === 'radio') {
-        const redirectWhenValue = input.radio.redirect_when_value
-        if (redirectWhenValue && redirectWhenValue === input.value) {
-          redirectionUrl = input.radio.redirection_url
-        }
-      }
-    })
-  })
-  return redirectionUrl
-}
-
 export const setRadioBreakpoints = (slideIndex, breakpoints, slides, backUpSlides) => {
+  const redirectionUrl = breakpoints.redirection_url
   const currentSlideId = `${sf}-${slideIndex}`
   const breakpointSequence = breakpoints.breakpoint_sequence.split(',')
   const slidesCopy1 = JSON.parse(JSON.stringify(slides))
@@ -513,7 +499,7 @@ export const setRadioBreakpoints = (slideIndex, breakpoints, slides, backUpSlide
 
   const newSlides = [...slicedSlides, ...slidesAddtion]
 
-  return { currentSlideId, newSlides }
+  return { currentSlideId, newSlides, redirectionUrl }
 
 }
 
