@@ -31,7 +31,7 @@ import {
     loadOtpForm,
     submitShortForm
 } from '../../utils/formHandle'
-import { setItem,keys } from '../../utils/storage'
+import { setItem, keys } from '../../utils/storage'
 
 class ShortExtendedForm extends React.Component {
     otpInterval = null;
@@ -88,9 +88,7 @@ class ShortExtendedForm extends React.Component {
         })
 
         let upDatedSlides = [...slides, { slideId, inputs: formInputs, heading, slideClass }]
-        this.setState({
-            ...this.state, slides: [...upDatedSlides],
-        }, () => {
+        this.setState({ ...this.state, slides: [...upDatedSlides] }, () => {
             let enableCheckboxes = []
             this.state.slides.forEach(slide => {
                 const inputs = slide.inputs
@@ -124,23 +122,23 @@ class ShortExtendedForm extends React.Component {
 
     onShowTncModal = on_click_anchor => {
         if (on_click_anchor === 'showTnc') {
-            this.setState({ showTncModal: true})
+            this.setState({ showTncModal: true })
         }
     }
-   
+
     closShowTncModal = () => {
         this.setState({ showTncModal: false })
     }
 
     onShowExperianTncModal = on_click_anchor => {
         if (on_click_anchor === 'showExperiantnc') {
-            this.setState({  showExperianTncModal: true })
+            this.setState({ showExperianTncModal: true })
         }
-       
+
     }
 
     closeExperianTncModal = () => {
-        this.setState({  showExperianTncModal: false })
+        this.setState({ showExperianTncModal: false })
     }
 
     onGoToLetFindForm = () => {
@@ -164,9 +162,9 @@ class ShortExtendedForm extends React.Component {
                 getOtp(mobileNo)
                 setTimeout(() => {
                     letsFindFormToOtpForm()
-                }, 250)            
+                }, 250)
             }
-          
+
         })
     }
 
@@ -193,11 +191,11 @@ class ShortExtendedForm extends React.Component {
         try {
             const res = await this.onSubmitShortForm();
             let cid = res.data.customerId;
-            setItem(keys.customerId,cid)
+            setItem(keys.customerId, cid)
             const leadId = res.data.leadId
             setLeadId(leadId)
             sendNotification(leadId)
-            
+
             this.setState({ currentSlide: `${sf}-1`, slideIndex: 1, slideButtonText: 'Next', submitButtonDisabled: false }, () => {
                 goToSlides()
             })
@@ -246,7 +244,7 @@ class ShortExtendedForm extends React.Component {
                         this.setState({ submitButtonDisabled: true })
                         this.onSubmitShortForm()
                             .then(() => {
-                                if(this.state.redirectionUrl) {
+                                if (this.state.redirectionUrl) {
                                     this.props.router.push(this.state.redirectionUrl)
                                 } else if (this.props.formRedirection === sf) {
                                     this.props.router.push(`/thank-you`)
@@ -276,7 +274,6 @@ class ShortExtendedForm extends React.Component {
 
     onSubmitShortForm = () => {
         return new Promise((resolve, reject) => {
-        
             submitShortForm([...this.state.slides], this.state.currentSlide, this.props.primaryPath, sf, this.props.productType)
                 .then(res => {
                     resolve(res)
@@ -364,7 +361,7 @@ class ShortExtendedForm extends React.Component {
         updateInputsValidity(inputs, field, this.state.errorMsgs, this.state.propertyValue)
         this.setState({ ...this.state, slides: newSlides }, () => {
             inputs.forEach(input => {
-                if(input.type === 'radio' && input.value) {
+                if (input.type === 'radio' && input.value) {
                     if (input.radio.breakpoints.length) {
                         const breakpoints = input.radio.breakpoints
                         if (breakpoints.length) {
@@ -381,11 +378,11 @@ class ShortExtendedForm extends React.Component {
                             }
                         }
                     }
-                    else if(input.radio.disable_input_with_end_point_name) {
-                        if(input.radio.disable_when_value === input.value) {
+                    else if (input.radio.disable_input_with_end_point_name) {
+                        if (input.radio.disable_when_value === input.value) {
                             this.plusSlides(1)
                         }
-                    }  else {
+                    } else {
                         this.plusSlides(1)
                     }
                 }
@@ -460,14 +457,14 @@ class ShortExtendedForm extends React.Component {
                     <Modal openModal={this.state.showTncModal} closeOtpModal={this.closShowTncModal} className="tnc-modal">
                         <button onClick={this.closShowTncModal} className="close-btn">Close</button>
                         <TermsAndConditions tncData={this.props.tncData} />
-                       
+
                     </Modal>
                 ) : null}
 
                 {this.state.showExperianTncModal && this.props.experianTncData ? (
                     <Modal openModal={this.state.showExperianTncModal} closeOtpModal={this.closeExperianTncModal} className="tnc-modal">
                         <button onClick={this.closeExperianTncModal} className="close-btn">Close</button>
-                       
+
                         <ExperianTnc experianTncData={this.props.experianTncData} />
                     </Modal>
                 ) : null}
