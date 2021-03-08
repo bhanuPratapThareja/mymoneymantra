@@ -37,7 +37,6 @@ export const initializeMoneyRange = (slider, rangeId) => {
             const start = min
             const stop = max
 
-            // setTimeout(() => {
             noUiSlider.create(rangeSlider, {
                 start: [start, stop],
                 step: 1,
@@ -49,7 +48,6 @@ export const initializeMoneyRange = (slider, rangeId) => {
                 format: moneyFormat,
                 connect: true
             });
-            // }, 1000)
         }
     }
 }
@@ -60,7 +58,8 @@ export const initializePercentRange = (slider, rangeId) => {
         const { max, min } = slider
         const start = min
         const stop = max
-
+        console.log(max, min)
+        console.log(start, stop)
         setTimeout(() => {
             noUiSlider.create(rangeSlider, {
                 start: [start, stop],

@@ -221,6 +221,9 @@ export const generateInterestRateBlock = allOfferCards => {
         if(product_interest_rate && product_interest_rate.min_value) {
             interestRates.push(product_interest_rate.min_value)
         }
+        if(product_interest_rate && product_interest_rate.max_value) {
+            interestRates.push(product_interest_rate.max_value)
+        }
     }
 
     if(interestRates.length) {
