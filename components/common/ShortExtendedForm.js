@@ -19,6 +19,8 @@ import {
     updateInputsValidity,
     incrementSlideId,
     decrementSlideId,
+    handleRadioDependent,
+    shouldRadioRedirectAtEndOfForm,
     setRadioBreakpoints,
     updateDropdownList,
     updateSelectionFromDropdown,
@@ -225,8 +227,11 @@ class ShortExtendedForm extends React.Component {
                         })
                     } else {
                         this.onSubmitShortForm()
-                            .then(res => {
-                                if (this.props.formRedirection === sf) {
+                            .then(() => {
+                                const redirectionUrl = shouldRadioRedirectAtEndOfForm([...this.state.slides])
+                                if(redirectionUrl) {
+                                    this.props.router.push(redirectionUrl)
+                                } else if (this.props.formRedirection === sf) {
                                     this.props.router.push(`/thank-you`)
                                 } else {
                                     this.props.router.push(`/${this.props.primaryPath}/listings`)
@@ -339,31 +344,32 @@ class ShortExtendedForm extends React.Component {
         updateInputsValidity(inputs, field, this.state.errorMsgs, this.state.propertyValue)
         this.setState({ ...this.state, slides: newSlides }, () => {
             inputs.forEach(input => {
-                if (input.type === 'radio' && input.value && input.radio.breakpoints) {
-                    const breakpoints = input.radio.breakpoints
-                    if (breakpoints.length) {
-                        for (let i = 0; i < breakpoints.length; i++) {
-                            if (breakpoints[i].breakpoint_value !== input.value) {
-                                continue
-                            }
-                            if (breakpoints[i].breakpoint_value === input.value && breakpoints[i].breakpoint_sequence) {
-                                const { currentSlideId, newSlides } = setRadioBreakpoints(slideIndex, breakpoints[i], this.state.slides, this.state.backUpSlides)
-                                this.setState({ ...this.state, slides: newSlides, currentSlide: currentSlideId, slideIndex }, () => {
-                                    this.plusSlides(1)
-                                })
+                if(input.type === 'radio' && input.value) {
+                    if (input.radio.breakpoints.length) {
+                        const breakpoints = input.radio.breakpoints
+                        if (breakpoints.length) {
+                            for (let i = 0; i < breakpoints.length; i++) {
+                                if (breakpoints[i].breakpoint_value !== input.value) {
+                                    continue
+                                }
+                                if (breakpoints[i].breakpoint_value === input.value && breakpoints[i].breakpoint_sequence) {
+                                    const { currentSlideId, newSlides } = setRadioBreakpoints(slideIndex, breakpoints[i], this.state.slides, this.state.backUpSlides)
+                                    this.setState({ ...this.state, slides: newSlides, currentSlide: currentSlideId, slideIndex }, () => {
+                                        this.plusSlides(1)
+                                    })
+                                }
                             }
                         }
                     }
+                    else if(input.radio.disable_input_with_end_point_name) {
+                        if(input.radio.disable_when_value === input.value) {
+                            // this.plusSlides(1)
+                        }
+                    }  else {
+                        this.plusSlides(1)
+                    }
                 }
             })
-
-            for (let i = 0; i < inputs.length; i++) {
-                const activeEl = document.activeElement
-                if (activeEl && activeEl.type === 'radio' && !inputs[i].radio.breakpoints.length) {
-                    this.plusSlides(1)
-                    break
-                }
-            }
         })
     }
 
