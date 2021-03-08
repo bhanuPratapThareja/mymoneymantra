@@ -144,7 +144,7 @@ class ShortExtendedForm extends React.Component {
     }
 
     onGoToLetFindForm = () => {
-        this.setState({ slideIndex: 0, currentSlide: 'onboard' }, () => {
+        this.setState({ slideIndex: 0, currentSlide: 'onboard', submitButtonDisabled: false }, () => {
             this.scrollToTopOfSlide()
             setTimeout(() => {
                 loadLetsFindForm()
@@ -172,6 +172,7 @@ class ShortExtendedForm extends React.Component {
 
     onSubmitOtp = async e => {
         e.preventDefault()
+        this.setState({ submitButtonDisabled: true })
         const inputs = document.getElementsByClassName('input_otp')
         for (let inp of inputs) {
             inp.blur()
@@ -181,7 +182,7 @@ class ShortExtendedForm extends React.Component {
                 await submitOtp(this.state.mobileNo)
                 this.onSubmitLetGoSlide()
             } catch (err) {
-                this.setState({ submissionError: err.message })
+                this.setState({ submissionError: err.message, submitButtonDisabled: false })
             } finally {
                 this.scrollToTopOfSlide()
             }
@@ -196,13 +197,12 @@ class ShortExtendedForm extends React.Component {
             const leadId = res.data.leadId
             setLeadId(leadId)
             sendNotification(leadId)
-            this.setState({ currentSlide: `${sf}-1`, slideIndex: 1, slideButtonText: 'Next' }, () => {
+            
+            this.setState({ currentSlide: `${sf}-1`, slideIndex: 1, slideButtonText: 'Next', submitButtonDisabled: false }, () => {
                 goToSlides()
             })
-       
-            
         } catch (err) {
-            this.setState({ submissionError: 'Something Went wrong. Please try again.' })
+            this.setState({ submissionError: 'Something Went wrong. Please try again.', submitButtonDisabled: false })
         }
     }
 
@@ -432,6 +432,7 @@ class ShortExtendedForm extends React.Component {
                                 disableOtpSubmitButton={this.state.disableOtpSubmitButton}
                                 submissionError={this.state.submissionError}
                                 removeSubmissionErrorMsg={this.removeSubmissionErrorMsg}
+                                submitButtonDisabled={this.state.submitButtonDisabled}
                             />
                         </div>
                     </div>
