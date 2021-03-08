@@ -19,7 +19,6 @@ const BlogDetail = props => {
     let strapi = new Strapi()
     useEffect(() => {
         const getOfferData = async () => {
-            console.log('product type id',props.productType)
             const apiOffers = await viewOffers(props.productType)
             if (apiOffers) {
                 const { trendings } = apiOffers
@@ -85,11 +84,9 @@ export async function getServerSideProps(ctx) {
     );
     const blog = blogData && blogData.length ? blogData[0] : null
     let slugForProductTypeData =blog? blog.post_categories[0].slug :null
-    console.log("slugForProductTypeData",slugForProductTypeData)
     const productTypeData = await strapi.processReq('GET', `product-type-v-2-s?slug=${slugForProductTypeData}`)
     let productType = productTypeData&&productTypeData.length?productTypeData[0]:null
     const data = pageData && pageData.length ? pageData[0] : null;
-    console.log('slug for offers',productTypeData[0])
     return { props: { data, pageClasses, allBlogs, query, blog, productType } };
 }
 export default BlogDetail

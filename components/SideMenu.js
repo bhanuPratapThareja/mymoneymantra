@@ -41,14 +41,12 @@ const SideMenu = (props) => {
   };
 
   const getPicture = async () => {
-    console.log("in side .........");
     try {
       const responseObject = await getPictureservice();
       if (responseObject.status === 200) {
         let res = responseObject.data.docList;
         let i = -1;
         res.forEach((item, index) => {
-          // console.log(item)
           if (item.documentTypeId == 2130000043) i = item.documentId;
         });
 
