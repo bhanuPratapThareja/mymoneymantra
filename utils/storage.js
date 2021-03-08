@@ -3,7 +3,6 @@ export const keys={
 }
 
 export const setItem = (key,data) =>{
-    
     if(!data){
         sessionStorage.setItem(key,null); 
     }

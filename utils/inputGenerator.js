@@ -4,7 +4,7 @@ import { sf, lf } from './types'
 import MaskedInput from 'react-maskedinput'
 
 export const generateInputs = (component, handleChange, checkInputValidity,
-  handleInputDropdownSelection, formType, checkboxAnchorClick) => {
+  handleInputDropdownSelection, formType, checkboxAnchorClick ,checkboxTextClick) => {
 
   const handleInputChange = (e, type, focusDropdown, style_as_dropdown) => {
     let { name, value, checked } = e.target
@@ -405,6 +405,7 @@ export const generateInputs = (component, handleChange, checkInputValidity,
                           {label.type === 'anchor' ? <a style={{ display: 'inline', marginLeft: '2px' }} onClick={(e) => {
                             e.preventDefault()
                             checkboxAnchorClick(label.on_click_anchor)
+                            checkboxTextClick(label.on_click_anchor)
                           }}>{label.label}</a> : null}
                         </React.Fragment>
                       )

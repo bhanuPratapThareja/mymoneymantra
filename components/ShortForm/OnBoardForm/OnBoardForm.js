@@ -17,7 +17,7 @@ const OnBoardForm = props => {
                         {props.slides[0].inputs.map(component => {
                             return <React.Fragment key={component.id}>
                                 {generateInputs(component, props.handleChange, props.checkInputValidity,
-                                    null, sf, props.checkboxAnchorClick)}
+                                    null, sf, props.checkboxAnchorClick,props.checkboxTextClick)}
                             </React.Fragment>
                         })}
                         <div className='lets-go-button'>

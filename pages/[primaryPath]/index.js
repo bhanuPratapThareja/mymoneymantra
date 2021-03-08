@@ -20,6 +20,8 @@ import { getClassesForPage } from '../../utils/classesForPage'
 import { addSeoMetaData, removeSeoMetaData } from '../../utils/seoMetaData'
 import { clearLeadId, clearLeadBank } from '../../utils/sessionAccess'
 import { clearFieldInFormData } from '../../utils/localAccess'
+import SimilarArticles from "../../components/common/SimilarArticles"
+
 
 const PrimaryPage = props => {
 
@@ -28,7 +30,7 @@ const PrimaryPage = props => {
   useEffect(() => {
     window.scrollTo(0, 0)
     setFormRedirection(props.formRedirection)
-    if(!props.formRedirection) {
+    if (!props.formRedirection) {
       clearLeadId()
       clearLeadBank()
       clearFieldInFormData('leadBank')
@@ -65,6 +67,7 @@ const PrimaryPage = props => {
             key={block.id}
             data={block}
             tncData={props.tncData}
+            experianTncData={props.experianTncData}
             primaryPath={props.primaryPath}
             productType={props.productType}
             preferredSelectionLists={props.preferredSelectionLists}
@@ -80,7 +83,7 @@ const PrimaryPage = props => {
             goToShortForm={goToShortForm}
             setFormRedirection={setFormRedirection}
           />
-          
+
         case 'blocks.credit-score-component':
           return <CreditScore key={block.id} data={block} />
         case 'offers.trending-offers-component':
@@ -99,7 +102,7 @@ const PrimaryPage = props => {
         case 'blocks.quick-financial-tools-component':
           return <FinancialTools key={block.id} data={block} />
         case 'blocks.blogger':
-          return <Blogger key={block.id} data={block} />
+          return <SimilarArticles key={block.id} data={props.allBlogs} categories={props.categories} heading='From our Blog'/>
         case 'blocks.learn-more-component':
           return <LearnMore key={block.id} data={block} />
       }
@@ -128,11 +131,15 @@ export async function getServerSideProps(ctx) {
   const data = pageData && pageData.length ? pageData[0] : null
   const preferredSelectionLists = await strapi.processReq('GET', `list-preferences`)
   const tncData = await strapi.processReq('GET', `tnc`)
+  const experianTncData = await strapi.processReq('GET', `experian-tnc`)
+  const allBlogs = await strapi.processReq("GET",`quick-blogs`);
+  const categories = await strapi.processReq("GET",`categories?slug=${primaryPath}`);
+
 
   return {
     props: {
       data, primaryPath, preferredSelectionLists,
-      productType, tncData, formRedirection
+      productType, tncData, formRedirection, experianTncData,allBlogs,categories
     }
   }
 }
