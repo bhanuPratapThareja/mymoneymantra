@@ -3,6 +3,7 @@ import OtpSlide from '../ShortForm/OtpForm/OtpSlide'
 import SFSlides from '../ShortForm/SFSlides/SFSlides'
 import Modal from '../../components/Modal/Modal'
 import TermsAndConditions from '../Tnc'
+import ExperianTnc from '../ExperianTnc'
 import { debounce } from 'lodash'
 import { withRouter } from 'next/router'
 import { getDropdownList } from '../../services/formService'
@@ -46,7 +47,8 @@ class ShortExtendedForm extends React.Component {
         },
         slideButtonText: 'Next',
         enableCheckboxes: [],
-        showTncModal: false
+        showTncModal: false,
+        showExperianTncModal: false
     }
 
     scrollToTopOfSlide = () => {
@@ -121,12 +123,21 @@ class ShortExtendedForm extends React.Component {
 
     onShowTncModal = on_click_anchor => {
         if (on_click_anchor === 'showTnc') {
-            this.setState({ showTncModal: true })
+            this.setState({ showTncModal: true})
         }
     }
-
+   
     closShowTncModal = () => {
         this.setState({ showTncModal: false })
+    }
+
+    onShowExperianTncModal = on_click_anchor => {
+        // if (on_click_anchor === 'showExperiantnc') {
+            this.setState({  showExperianTncModal: true })
+        // }
+    }
+    closExperianTncModal = () => {
+        this.setState({  showExperianTncModal: false })
     }
 
     onGoToLetFindForm = () => {
@@ -392,6 +403,7 @@ class ShortExtendedForm extends React.Component {
                         onClickLetsGo={this.onClickLetsGo}
                         submitButtonDisabled={this.state.submitButtonDisabled}
                         checkboxAnchorClick={this.onShowTncModal}
+                        checkboxTextClick={this.onShowExperianTncModal}
                     />
 
                     <div className="lets-find-forms-container sms-otp" id="sms-otp">
@@ -431,6 +443,15 @@ class ShortExtendedForm extends React.Component {
                     <Modal openModal={this.state.showTncModal} closeOtpModal={this.closShowTncModal} className="tnc-modal">
                         <button onClick={this.closShowTncModal} className="close-btn">Close</button>
                         <TermsAndConditions tncData={this.props.tncData} />
+                       
+                    </Modal>
+                ) : null}
+
+                {this.state.onShowExperianTncModal && this.props.experianTncData ? (
+                    <Modal openModal={this.state.onShowExperianTncModal} closeOtpModal={this.onShowExperianTncModal} className="tnc-modal">
+                        <button onClick={this.onShowExperianTncModal} className="close-btn">Close</button>
+                       
+                        <ExperianTnc experianTncData={this.props.experianTncData} />
                     </Modal>
                 ) : null}
 

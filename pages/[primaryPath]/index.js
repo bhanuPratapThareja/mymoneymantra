@@ -65,6 +65,7 @@ const PrimaryPage = props => {
             key={block.id}
             data={block}
             tncData={props.tncData}
+            experianTncData={props.experianTncData}
             primaryPath={props.primaryPath}
             productType={props.productType}
             preferredSelectionLists={props.preferredSelectionLists}
@@ -128,11 +129,14 @@ export async function getServerSideProps(ctx) {
   const data = pageData && pageData.length ? pageData[0] : null
   const preferredSelectionLists = await strapi.processReq('GET', `list-preferences`)
   const tncData = await strapi.processReq('GET', `tnc`)
+  const experianTncData = await strapi.processReq('GET', `experian-tnc`)
+  console.log("experiantncData",experianTncData)
+  console.log("tncData",tncData)
 
   return {
     props: {
       data, primaryPath, preferredSelectionLists,
-      productType, tncData, formRedirection
+      productType, tncData, formRedirection,experianTncData
     }
   }
 }

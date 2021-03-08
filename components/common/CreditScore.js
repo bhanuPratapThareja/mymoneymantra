@@ -1,11 +1,19 @@
 import Image from '../ImageComponent/ImageComponent'
+import { useRouter } from 'next/router'
+
 
 const CreditScore = props => {
+    const router = useRouter()
+
     const { credit_score_heading, credit_score_button, credit_score_image, credit_score_feature, credit_score_button_url } = props.data.credit_score
-    function comingSoon(){
-       alert("Coming Soon")
-     }
-    
+    const { primaryPath } = props;
+    // function comingSoon(){
+    //    alert("Coming Soon")
+    //  }
+    const onClickEvaluteNow = () => {
+        let redirectedUrls =`/${credit_score_button_url}`   
+        router.push(redirectedUrls)
+    }
     return (
         <section data-aos="fade-up" className="container score-container aos-init aos-animate">
             <div className="score score-cotent-cover">
@@ -21,7 +29,7 @@ const CreditScore = props => {
                             </div>
                         )
                     })}
-                    <button onClick={comingSoon}>{credit_score_button}</button>
+                    <button onClick={() => onClickEvaluteNow()}>{credit_score_button}</button>
                 </div>
                 <div className="score-chart">
                     <Image image={credit_score_image} />
