@@ -30,7 +30,6 @@ export const initializeMoneyRange = (slider, rangeId) => {
             prefix: '₹',
             tooltips: true,
         })
-
         var rangeSlider = document.getElementById(rangeId)
         if (rangeSlider) {
             const { max, min } = slider
@@ -47,7 +46,7 @@ export const initializeMoneyRange = (slider, rangeId) => {
                 tooltips: true,
                 format: moneyFormat,
                 connect: true
-            });
+            })
         }
     }
 }
@@ -58,26 +57,22 @@ export const initializePercentRange = (slider, rangeId) => {
         const { max, min } = slider
         const start = min
         const stop = max
-        console.log(max, min)
-        console.log(start, stop)
-        setTimeout(() => {
-            noUiSlider.create(rangeSlider, {
-                start: [start, stop],
-                step: 0.01,
-                range: {
-                    'min': [min],
-                    'max': [max]
-                },
-                tooltips: true,
-                format: {
-                    from: Number,
-                    to: function (value) {
-                        return (value + "%");
-                    }
-                },
-                connect: true
-            });
-        }, 1000)
+        noUiSlider.create(rangeSlider, {
+            start: [start, stop],
+            step: 0.01,
+            range: {
+                'min': [min],
+                'max': [max]
+            },
+            tooltips: true,
+            format: {
+                from: Number,
+                to: function (value) {
+                    return (value + "%")
+                }
+            },
+            connect: true
+        })
     }
 }
 
@@ -88,61 +83,54 @@ export const initializeYearRange = (slider, rangeId) => {
         const { max, min } = slider
         const start = min
         const stop = max
-
-        setTimeout(() => {
-            noUiSlider.create(rangeSlider, {
-                start: [start, stop],
-                step: 1,
-                range: {
-                    'min': [min],
-                    'max': [max]
-                },
-                tooltips: true,
-                format: {
-                    from: Number,
-                    to: function (value) {
-                        return (parseInt(value) + " yrs.");
-                    }
-                },
-                connect: true
-            });
-        }, 1000)
-    }
-}
-
-export const initializeInvestment = (el, min, max, start, stop) => {
-    setTimeout(() => {
-        noUiSlider.create(invest, {
-            start: [2000, 3000],
+        noUiSlider.create(rangeSlider, {
+            start: [start, stop],
             step: 1,
             range: {
-                'min': [500],
-                'max': [5000]
-            },
-            tooltips: true,
-            format: moneyFormat,
-            connect: true
-        });
-    }, 500);
-}
-
-export const initializeLoan = (el, min, max, start, stop) => {
-    setTimeout(() => {
-        noUiSlider.create(loan, {
-            start: [3, 8],
-            step: 1,
-            range: {
-                'min': [1],
-                'max': [10]
+                'min': [min],
+                'max': [max]
             },
             tooltips: true,
             format: {
                 from: Number,
                 to: function (value) {
-                    return (parseInt(value) + " yrs.");
+                    return (parseInt(value) + " yrs.")
                 }
             },
             connect: true
-        });
-    }, 500);
+        })
+    }
+}
+
+export const initializeInvestment = (el, min, max, start, stop) => {
+    noUiSlider.create(invest, {
+        start: [2000, 3000],
+        step: 1,
+        range: {
+            'min': [500],
+            'max': [5000]
+        },
+        tooltips: true,
+        format: moneyFormat,
+        connect: true
+    })
+}
+
+export const initializeLoan = (el, min, max, start, stop) => {
+    noUiSlider.create(loan, {
+        start: [3, 8],
+        step: 1,
+        range: {
+            'min': [1],
+            'max': [10]
+        },
+        tooltips: true,
+        format: {
+            from: Number,
+            to: function (value) {
+                return (parseInt(value) + " yrs.")
+            }
+        },
+        connect: true
+    })
 }

@@ -126,6 +126,7 @@ export const generateAnnualFeesBlock = allOfferCards => {
     if(annualFees.length) {
         const max = Math.max(...annualFees)
         const min = Math.min(...annualFees)
+        if(max === min) return null
         const annualFeesSlider = { heading: 'By Annual Fees', max, min }
         return annualFeesSlider
     }
@@ -146,6 +147,7 @@ export const generateEmiBlock = allOfferCards => {
     if(emis.length) {
         const max = Math.max(...emis)
         const min = Math.min(...emis)
+        if(max === min) return null
         const emiSlider = { heading: 'By EMI', max, min }
         return emiSlider
     }
@@ -166,6 +168,7 @@ export const generateLoanAmountBlock = allOfferCards => {
     if(loanAmounts.length) {
         const max = Math.max(...loanAmounts)
         const min = Math.min(...loanAmounts)
+        if(max === min) return null
         const loanAmountSlider = { heading: 'By Loan Amount', max, min }
         return loanAmountSlider
     }
@@ -186,6 +189,7 @@ export const generateRoiBlock = allOfferCards => {
     if(rois.length) {
         const max = Math.max(...rois)
         const min = Math.min(...rois)
+        if(max === min) return null
         const roiSlider = { heading: 'By Return On Investment', max, min }
         return roiSlider
     }
@@ -206,6 +210,7 @@ export const generateTenureBlock = allOfferCards => {
     if(tenures.length) {
         const max = Math.max(...tenures)
         const min = Math.min(...tenures)
+        if(max === min) return null
         const tenureSlider = { heading: 'By Tenure', max, min }
         return tenureSlider
     }
@@ -221,14 +226,12 @@ export const generateInterestRateBlock = allOfferCards => {
         if(product_interest_rate && product_interest_rate.min_value) {
             interestRates.push(product_interest_rate.min_value)
         }
-        if(product_interest_rate && product_interest_rate.max_value) {
-            interestRates.push(product_interest_rate.max_value)
-        }
     }
 
     if(interestRates.length) {
         const max = Math.max(...interestRates)
         const min = Math.min(...interestRates)
+        if(max === min) return null
         const interestRatesSlider = { heading: 'By Interest Rate', max, min }
         return interestRatesSlider
     }
